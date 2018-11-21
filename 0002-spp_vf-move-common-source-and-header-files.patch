@@ -1,0 +1,88 @@
+From 0ea955f7303a53c37271cbbea6c8e6ff6bfce836 Mon Sep 17 00:00:00 2001
+From: Hideyuki Yamashita <yamashita.hideyuki@po.ntt-tx.co.jp>
+Date: Wed, 31 Oct 2018 10:39:51 +0900
+Subject: [PATCH 02/23] spp_vf: move common source and header files
+
+Move common source and header files to be used from spp_vf and
+spp_mirror.
+
+Signed-off-by: Hideyuki Yamashita <yamashita.hideyuki@po.ntt-tx.co.jp>
+Signed-off-by: Naoki Takada <takada.naoki@lab.ntt.co.jp>
+---
+ src/vf/{ => common}/command_conn.c     | 0
+ src/vf/{ => common}/command_conn.h     | 0
+ src/vf/{ => common}/command_dec.c      | 0
+ src/vf/{ => common}/command_dec.h      | 0
+ src/vf/{ => common}/command_proc.c     | 0
+ src/vf/{ => common}/command_proc.h     | 0
+ src/vf/{ => common}/ringlatencystats.c | 0
+ src/vf/{ => common}/ringlatencystats.h | 0
+ src/vf/{ => common}/spp_port.c         | 0
+ src/vf/{ => common}/spp_port.h         | 0
+ src/vf/{ => common}/string_buffer.c    | 0
+ src/vf/{ => common}/string_buffer.h    | 0
+ 12 files changed, 0 insertions(+), 0 deletions(-)
+ rename src/vf/{ => common}/command_conn.c (100%)
+ rename src/vf/{ => common}/command_conn.h (100%)
+ rename src/vf/{ => common}/command_dec.c (100%)
+ rename src/vf/{ => common}/command_dec.h (100%)
+ rename src/vf/{ => common}/command_proc.c (100%)
+ rename src/vf/{ => common}/command_proc.h (100%)
+ rename src/vf/{ => common}/ringlatencystats.c (100%)
+ rename src/vf/{ => common}/ringlatencystats.h (100%)
+ rename src/vf/{ => common}/spp_port.c (100%)
+ rename src/vf/{ => common}/spp_port.h (100%)
+ rename src/vf/{ => common}/string_buffer.c (100%)
+ rename src/vf/{ => common}/string_buffer.h (100%)
+
+diff --git a/src/vf/command_conn.c b/src/vf/common/command_conn.c
+similarity index 100%
+rename from src/vf/command_conn.c
+rename to src/vf/common/command_conn.c
+diff --git a/src/vf/command_conn.h b/src/vf/common/command_conn.h
+similarity index 100%
+rename from src/vf/command_conn.h
+rename to src/vf/common/command_conn.h
+diff --git a/src/vf/command_dec.c b/src/vf/common/command_dec.c
+similarity index 100%
+rename from src/vf/command_dec.c
+rename to src/vf/common/command_dec.c
+diff --git a/src/vf/command_dec.h b/src/vf/common/command_dec.h
+similarity index 100%
+rename from src/vf/command_dec.h
+rename to src/vf/common/command_dec.h
+diff --git a/src/vf/command_proc.c b/src/vf/common/command_proc.c
+similarity index 100%
+rename from src/vf/command_proc.c
+rename to src/vf/common/command_proc.c
+diff --git a/src/vf/command_proc.h b/src/vf/common/command_proc.h
+similarity index 100%
+rename from src/vf/command_proc.h
+rename to src/vf/common/command_proc.h
+diff --git a/src/vf/ringlatencystats.c b/src/vf/common/ringlatencystats.c
+similarity index 100%
+rename from src/vf/ringlatencystats.c
+rename to src/vf/common/ringlatencystats.c
+diff --git a/src/vf/ringlatencystats.h b/src/vf/common/ringlatencystats.h
+similarity index 100%
+rename from src/vf/ringlatencystats.h
+rename to src/vf/common/ringlatencystats.h
+diff --git a/src/vf/spp_port.c b/src/vf/common/spp_port.c
+similarity index 100%
+rename from src/vf/spp_port.c
+rename to src/vf/common/spp_port.c
+diff --git a/src/vf/spp_port.h b/src/vf/common/spp_port.h
+similarity index 100%
+rename from src/vf/spp_port.h
+rename to src/vf/common/spp_port.h
+diff --git a/src/vf/string_buffer.c b/src/vf/common/string_buffer.c
+similarity index 100%
+rename from src/vf/string_buffer.c
+rename to src/vf/common/string_buffer.c
+diff --git a/src/vf/string_buffer.h b/src/vf/common/string_buffer.h
+similarity index 100%
+rename from src/vf/string_buffer.h
+rename to src/vf/common/string_buffer.h
+-- 
+2.17.0
+
