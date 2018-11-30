@@ -1,0 +1,86 @@
+From ogawa.yasufumi@lab.ntt.co.jp Wed Nov 28 18:06:14 2018
+Received: from imss04.silk.ntt-tx.co.jp (imss04.silk.ntt-tx.co.jp [10.107.0.39])
+	by pomail01.silk.ntt-tx.co.jp (unknown) with ESMTP id wAS98fUI012511;
+	Wed, 28 Nov 2018 18:08:41 +0900
+Received: from imss04.silk.ntt-tx.co.jp (localhost [127.0.0.1]) by imss04.silk.ntt-tx.co.jp (unknown) with ESMTP id wAS98e8U024160; Wed, 28 Nov 2018 18:08:40 +0900
+Received: from ml01.silk.ntt-tx.co.jp (ml01.silk.ntt-tx.co.jp [10.107.0.230]) by imss04.silk.ntt-tx.co.jp (unknown) with ESMTP id wAS98eF6024154; Wed, 28 Nov 2018 18:08:40 +0900
+Received: from ml01.silk.ntt-tx.co.jp (localhost [127.0.0.1])
+	by ml01.silk.ntt-tx.co.jp (unknown) with ESMTP id wAS98eDm024396;
+	Wed, 28 Nov 2018 18:08:40 +0900
+Received: from imss01.silk.ntt-tx.co.jp (imss01.silk.ntt-tx.co.jp [10.107.0.126])
+	by ml01.silk.ntt-tx.co.jp (unknown) with ESMTP id wAS98eTp024392
+	for unknown; Wed, 28 Nov 2018 18:08:40 +0900
+Received: from imss01.silk.ntt-tx.co.jp (localhost [127.0.0.1]) by imss01.silk.ntt-tx.co.jp (unknown) with ESMTP id wAS98eOZ017931 for unknown; Wed, 28 Nov 2018 18:08:40 +0900
+Received: from mail01.ics.ntt-tx.co.jp (mail01.ics.ntt-tx.co.jp [10.254.2.67]) by imss01.silk.ntt-tx.co.jp (unknown) with ESMTP id wAS98diG017927 for unknown; Wed, 28 Nov 2018 18:08:39 +0900
+Received: from dpdk.org (dpdk.org [92.243.14.124])
+	by mail01.ics.ntt-tx.co.jp (unknown) with SMTP id wAS98XUp018330
+	for unknown; Wed, 28 Nov 2018 18:08:39 +0900
+Received: from [92.243.14.124] (localhost [127.0.0.1])
+	by dpdk.org (Postfix) with ESMTP id 46DD61B3D7;
+	Wed, 28 Nov 2018 10:08:31 +0100 (CET)
+Received: from tama500.ecl.ntt.co.jp (tama500.ecl.ntt.co.jp [129.60.39.148])
+ by dpdk.org (Postfix) with ESMTP id 35AD21B3BB
+ for <spp@dpdk.org>; Wed, 28 Nov 2018 10:08:28 +0100 (CET)
+Received: from vc1.ecl.ntt.co.jp (vc1.ecl.ntt.co.jp [129.60.86.153])
+ by tama500.ecl.ntt.co.jp (8.13.8/8.13.8) with ESMTP id wAS98RdX011688;
+ Wed, 28 Nov 2018 18:08:27 +0900
+Received: from vc1.ecl.ntt.co.jp (localhost [127.0.0.1])
+ by vc1.ecl.ntt.co.jp (Postfix) with ESMTP id 71729EA8211;
+ Wed, 28 Nov 2018 18:08:27 +0900 (JST)
+Received: from localhost.localdomain (lobster.nslab.ecl.ntt.co.jp
+ [129.60.13.95])
+ by vc1.ecl.ntt.co.jp (Postfix) with ESMTP id 5AC6FEA7B22;
+ Wed, 28 Nov 2018 18:08:27 +0900 (JST)
+Date: Wed, 28 Nov 2018 18:06:14 +0900
+From: ogawa.yasufumi@lab.ntt.co.jp
+Subject: [spp 03680] [spp] [PATCH] makefile: add DSPP_VF_MODULE to compile as default
+Sender: "spp" <spp-bounces@dpdk.org>
+To: ferruh.yigit@intel.com, spp@dpdk.org, ogawa.yasufumi@lab.ntt.co.jp
+Message-Id: <1543395974-13569-1-git-send-email-ogawa.yasufumi@lab.ntt.co.jp>
+X-ML-Name: unknown
+X-Mail-Count: 03680
+X-MLServer: unknown
+X-ML-Info: mailing list service
+X-Mailer: git-send-email 2.7.4
+Authentication-Results: mail01.ics.ntt-tx.co.jp; spf=pass smtp.mailfrom=spp-bounces@dpdk.org
+X-TM-AS-MML: No
+X-BeenThere: spp@dpdk.org
+X-Mailman-Version: 2.1.15
+List-Id: Soft Patch Panel <spp.dpdk.org>
+List-Unsubscribe: <https://mails.dpdk.org/options/spp>,
+ <mailto:spp-request@dpdk.org?subject=unsubscribe>
+List-Archive: <http://mails.dpdk.org/archives/spp/>
+List-Post: <mailto:spp@dpdk.org>
+List-Help: <mailto:spp-request@dpdk.org?subject=help>
+List-Subscribe: <https://mails.dpdk.org/listinfo/spp>,
+ <mailto:spp-request@dpdk.org?subject=subscribe>
+Precedence: bulk
+Lines: 25
+
+From: Yasufumi Ogawa <ogawa.yasufumi@lab.ntt.co.jp>
+
+This patch is to add DSPP_VF_MODULE to activate compilation of spp_vf as
+default.
+
+Signed-off-by: Yasufumi Ogawa <ogawa.yasufumi@lab.ntt.co.jp>
+---
+ src/vf/Makefile | 1 +
+ 1 file changed, 1 insertion(+)
+
+diff --git a/src/vf/Makefile b/src/vf/Makefile
+index 42c9037..ac100bb 100644
+--- a/src/vf/Makefile
++++ b/src/vf/Makefile
+@@ -22,6 +22,7 @@ CFLAGS += -DALLOW_EXPERIMENTAL_API
+ CFLAGS += $(WERROR_FLAGS) -O3 -MMD
+ CFLAGS += -I$(SRCDIR)/../shared
+ CFLAGS += -I$(SRCDIR)/common
++CFLAGS += -DSPP_VF_MODULE
+ #CFLAGS += -DSPP_DEMONIZE
+ #CFLAGS += -DSPP_RINGLATENCYSTATS_ENABLE
+ 
+-- 
+2.7.4
+
+
+

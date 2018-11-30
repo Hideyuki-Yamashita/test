@@ -1,0 +1,659 @@
+From ogawa.yasufumi@lab.ntt.co.jp Thu Nov 29 18:48:34 2018
+Received: from imss04.silk.ntt-tx.co.jp (imss04.silk.ntt-tx.co.jp [10.107.0.39])
+	by pomail01.silk.ntt-tx.co.jp (unknown) with ESMTP id wAT9p2Yi016696;
+	Thu, 29 Nov 2018 18:51:02 +0900
+Received: from imss04.silk.ntt-tx.co.jp (localhost [127.0.0.1]) by imss04.silk.ntt-tx.co.jp (unknown) with ESMTP id wAT9p2Gf017422; Thu, 29 Nov 2018 18:51:02 +0900
+Received: from ml01.silk.ntt-tx.co.jp (ml01.silk.ntt-tx.co.jp [10.107.0.230]) by imss04.silk.ntt-tx.co.jp (unknown) with ESMTP id wAT9p2dH017419; Thu, 29 Nov 2018 18:51:02 +0900
+Received: from ml01.silk.ntt-tx.co.jp (localhost [127.0.0.1])
+	by ml01.silk.ntt-tx.co.jp (unknown) with ESMTP id wAT9p2g2012075;
+	Thu, 29 Nov 2018 18:51:02 +0900
+Received: from imss02.silk.ntt-tx.co.jp (imss02.silk.ntt-tx.co.jp [10.107.0.127])
+	by ml01.silk.ntt-tx.co.jp (unknown) with ESMTP id wAT9p28W012069
+	for unknown; Thu, 29 Nov 2018 18:51:02 +0900
+Received: from imss02.silk.ntt-tx.co.jp (localhost [127.0.0.1]) by imss02.silk.ntt-tx.co.jp (unknown) with ESMTP id wAT9p2ww019274 for unknown; Thu, 29 Nov 2018 18:51:02 +0900
+Received: from mail01.ics.ntt-tx.co.jp (mail01.ics.ntt-tx.co.jp [10.254.2.67]) by imss02.silk.ntt-tx.co.jp (unknown) with ESMTP id wAT9p1Ob019268 for unknown; Thu, 29 Nov 2018 18:51:01 +0900
+Received: from dpdk.org (dpdk.org [92.243.14.124])
+	by mail01.ics.ntt-tx.co.jp (unknown) with SMTP id wAT9otT5008561
+	for unknown; Thu, 29 Nov 2018 18:51:01 +0900
+Received: from [92.243.14.124] (localhost [127.0.0.1])
+	by dpdk.org (Postfix) with ESMTP id A8C6C1B490;
+	Thu, 29 Nov 2018 10:50:53 +0100 (CET)
+Received: from bcmv-tmail01.ecl.ntt.co.jp (bcmv-tmail01.ecl.ntt.co.jp
+ [124.146.185.148]) by dpdk.org (Postfix) with ESMTP id 0316C1B490
+ for <spp@dpdk.org>; Thu, 29 Nov 2018 10:50:51 +0100 (CET)
+Received: from bcmv-ns01.ecl.ntt.co.jp (bcmv-ns01.ecl.ntt.co.jp
+ [129.60.83.123])
+ by bcmv-tmail01.ecl.ntt.co.jp (8.14.4/8.14.4) with ESMTP id wAT9onRr026928;
+ Thu, 29 Nov 2018 18:50:49 +0900
+Received: from bcmv-ns01.ecl.ntt.co.jp (localhost [127.0.0.1])
+ by bcmv-ns01.ecl.ntt.co.jp (Postfix) with ESMTP id C9A2D132;
+ Thu, 29 Nov 2018 18:50:49 +0900 (JST)
+Received: from localhost.localdomain (lobster.nslab.ecl.ntt.co.jp
+ [129.60.13.95])
+ by bcmv-ns01.ecl.ntt.co.jp (Postfix) with ESMTP id ACD8672B;
+ Thu, 29 Nov 2018 18:50:49 +0900 (JST)
+Date: Thu, 29 Nov 2018 18:48:34 +0900
+From: ogawa.yasufumi@lab.ntt.co.jp
+Subject: [spp 03689] [spp] [PATCH 2/2] controller: add mirror command to SPP controller
+Sender: "spp" <spp-bounces@dpdk.org>
+To: ferruh.yigit@intel.com, spp@dpdk.org, ogawa.yasufumi@lab.ntt.co.jp
+Message-Id: <1543484914-25256-3-git-send-email-ogawa.yasufumi@lab.ntt.co.jp>
+In-Reply-To: <1543484914-25256-1-git-send-email-ogawa.yasufumi@lab.ntt.co.jp>
+References: <1543484914-25256-1-git-send-email-ogawa.yasufumi@lab.ntt.co.jp>
+X-ML-Name: unknown
+X-Mail-Count: 03689
+X-MLServer: unknown
+X-ML-Info: mailing list service
+X-Mailer: git-send-email 2.7.4
+Authentication-Results: mail01.ics.ntt-tx.co.jp; spf=pass smtp.mailfrom=spp-bounces@dpdk.org
+X-TM-AS-MML: No
+X-BeenThere: spp@dpdk.org
+X-Mailman-Version: 2.1.15
+List-Id: Soft Patch Panel <spp.dpdk.org>
+List-Unsubscribe: <https://mails.dpdk.org/options/spp>,
+ <mailto:spp-request@dpdk.org?subject=unsubscribe>
+List-Archive: <http://mails.dpdk.org/archives/spp/>
+List-Post: <mailto:spp@dpdk.org>
+List-Help: <mailto:spp-request@dpdk.org?subject=help>
+List-Subscribe: <https://mails.dpdk.org/listinfo/spp>,
+ <mailto:spp-request@dpdk.org?subject=subscribe>
+Precedence: bulk
+Lines: 183
+
+From: Yasufumi Ogawa <ogawa.yasufumi@lab.ntt.co.jp>
+
+This update is to 'mirror' command to Shell class for managing
+spp_mirror from 'spp.py'. Spp_mirror might have several instances, and
+deciding which of ones is also similar to other secondary processes.
+'mirror' command consists of an indicator and actual command. Here is
+an example.
+
+  spp > mirror 3; component start mr1 5 mirror
+
+In this example, the indicator 'mirror 3;' is before the command
+'component start ...'. The number in indicator is a secondary ID
+actually, so you cannot assign the same ID of others.
+
+You can refer the usage of 'mirror' command with 'help' command.
+
+  spp > help mirror
+
+Signed-off-by: Yasufumi Ogawa <ogawa.yasufumi@lab.ntt.co.jp>
+---
+ src/controller/shell.py | 100 ++++++++++++++++++++++++++++++++++++++++++++----
+ 1 file changed, 93 insertions(+), 7 deletions(-)
+
+diff --git a/src/controller/shell.py b/src/controller/shell.py
+index 529d61e..84d4e2f 100644
+--- a/src/controller/shell.py
++++ b/src/controller/shell.py
+@@ -9,6 +9,7 @@ from .commands import pri
+ from .commands import sec
+ from .commands import topo
+ from .commands import vf
++from .commands import mirror
+ import os
+ import re
+ import readline
+@@ -47,6 +48,11 @@ class Shell(cmd.Cmd, object):
+         for sec_id in self.get_sec_ids('vf'):
+             self.spp_vfs[sec_id] = vf.SppVf(self.spp_ctl_cli, sec_id)
+ 
++        self.spp_mirrors = {}
++        for sec_id in self.get_sec_ids('mirror'):
++            self.spp_mirrors[sec_id] = mirror.SppMirror(
++                    self.spp_ctl_cli, sec_id)
++
+         self.spp_topo = topo.SppTopo(self.spp_ctl_cli, {}, self.topo_size)
+         self.spp_bye = bye.SppBye(self.spp_ctl_cli, self.spp_primary,
+                                   self.spp_secondary)
+@@ -75,7 +81,7 @@ class Shell(cmd.Cmd, object):
+     def get_sec_ids(self, ptype):
+         """Return a list of IDs of running secondary processes.
+ 
+-        'ptype' is 'nfv' or 'vf'.
++        'ptype' is 'nfv', 'vf' or 'mirror'.
+         """
+ 
+         ids = []
+@@ -115,12 +121,14 @@ class Shell(cmd.Cmd, object):
+                 pri_obj = None
+                 sec_obj = {}
+                 sec_obj['nfv'] = []
++                sec_obj['vf'] = []
++                sec_obj['mirror'] = []
+ 
+                 for proc_obj in proc_objs:
+                     if proc_obj['type'] == 'primary':
+                         pri_obj = proc_obj
+-                    elif proc_obj['type'] == 'nfv':
+-                        sec_obj['nfv'].append(proc_obj)
++                    else:
++                        sec_obj[proc_obj['type']].append(proc_obj)
+ 
+                 print('- primary:')
+                 if pri_obj is not None:
+@@ -130,9 +138,11 @@ class Shell(cmd.Cmd, object):
+ 
+                 print('- secondary:')
+                 print('  - processes:')
+-                for obj in sec_obj['nfv']:
+-                    print('    %d: %s:%s' % (
+-                        obj['client-id'], obj['type'], obj['client-id']))
++                cnt = 1
++                for pt in ['nfv', 'vf', 'mirror']:
++                    for obj in sec_obj[pt]:
++                        print('    %d: %s:%s' % (cnt, obj['type'], obj['client-id']))
++                        cnt += 1
+             elif res.status_code in self.spp_ctl_cli.rest_common_error_codes:
+                 pass
+             else:
+@@ -345,7 +355,6 @@ class Shell(cmd.Cmd, object):
+         """
+ 
+         # remove unwanted spaces to avoid invalid command error
+-        # TODO change self.spp_vf to self.spp_vfs
+         tmparg = self.clean_cmd(cmd)
+         cmds = tmparg.split(';')
+         if len(cmds) < 2:
+@@ -388,6 +397,83 @@ class Shell(cmd.Cmd, object):
+                 return self.spp_vfs[idx].complete(self.get_sec_ids('vf'),
+                                                   text, line, begidx, endidx)
+ 
++    def do_mirror(self, cmd):
++        """Send a command to spp_mirror.
++
++        spp_mirror is a secondary process for duplicating incoming
++        packets to be used as similar to TaaS in OpenStack. This
++        command has four sub commands.
++          * status
++          * component
++          * port
++
++        Each of sub commands other than 'status' takes several parameters
++        for detailed operations. Notice that 'start' for launching a worker
++        is replaced with 'stop' for terminating. 'add' is also replaced with
++        'del' for deleting.
++
++        Examples:
++
++        # (1) show status of worker threads and resources
++        spp > mirror 1; status
++
++        # (2) launch or terminate a worker thread with arbitrary name
++        #   NAME: arbitrary name used as identifier
++        #   CORE_ID: one of unused cores referred from status
++        spp > mirror 1; component start NAME CORE_ID mirror
++        spp > mirror 1; component stop NAME CORE_ID mirror
++
++        # (3) add or delete a port to worker of NAME
++        #   RES_UID: resource UID such as 'ring:0' or 'vhost:1'
++        #   DIR: 'rx' or 'tx'
++        spp > mirror 1; port add RES_UID DIR NAME
++        spp > mirror 1; port del RES_UID DIR NAME
++        """
++
++        # remove unwanted spaces to avoid invalid command error
++        tmparg = self.clean_cmd(cmd)
++        cmds = tmparg.split(';')
++        if len(cmds) < 2:
++            print("Required an ID and ';' before the command.")
++        elif str.isdigit(cmds[0]):
++            self.spp_mirrors[int(cmds[0])].run(cmds[1])
++        else:
++            print('Invalid command: %s' % tmparg)
++
++    def complete_mirror(self, text, line, begidx, endidx):
++        """Completion for mirror command"""
++
++        line = self.clean_cmd(line)
++
++        tokens = line.split(';')
++        if len(tokens) == 1:
++            # Add SppMirror of sec_id if it is not exist
++            sec_ids = self.get_sec_ids('mirror')
++            for idx in sec_ids:
++                if self.spp_mirrors[idx] is None:
++                    self.spp_mirrors[idx] = mirror.SppMirror(self.spp_ctl_cli, idx)
++
++            if len(line.split()) == 1:
++                res = [str(i)+';' for i in sec_ids]
++            else:
++                if not (';' in line):
++                    res = [str(i)+';'
++                           for i in sec_ids
++                           if (str(i)+';').startswith(text)]
++            return res
++        elif len(tokens) == 2:
++            # Split tokens like as from 'mirror 1' to ['mirror', '1']
++            first_tokens = tokens[0].split(' ')
++            if len(first_tokens) == 2:
++                idx = int(first_tokens[1])
++
++                # Add SppMirror of sec_id if it is not exist
++                if self.spp_mirrors[idx] is None:
++                    self.spp_mirrors[idx] = mirror.SppMirror(self.spp_ctl_cli, idx)
++
++                return self.spp_mirrors[idx].complete(
++                        self.get_sec_ids('mirror'), text, line, begidx, endidx)
++
+     def do_record(self, fname):
+         """Save commands as a recipe file.
+ 
+-- 
+2.7.4
+
+
+
+From ogawa.yasufumi@lab.ntt.co.jp Thu Nov 29 18:48:33 2018
+Received: from imss04.silk.ntt-tx.co.jp (imss04.silk.ntt-tx.co.jp [10.107.0.39])
+	by pomail01.silk.ntt-tx.co.jp (unknown) with ESMTP id wAT9p3mk016742;
+	Thu, 29 Nov 2018 18:51:03 +0900
+Received: from imss04.silk.ntt-tx.co.jp (localhost [127.0.0.1]) by imss04.silk.ntt-tx.co.jp (unknown) with ESMTP id wAT9p33r017442; Thu, 29 Nov 2018 18:51:03 +0900
+Received: from ml01.silk.ntt-tx.co.jp (ml01.silk.ntt-tx.co.jp [10.107.0.230]) by imss04.silk.ntt-tx.co.jp (unknown) with ESMTP id wAT9p35l017439; Thu, 29 Nov 2018 18:51:03 +0900
+Received: from ml01.silk.ntt-tx.co.jp (localhost [127.0.0.1])
+	by ml01.silk.ntt-tx.co.jp (unknown) with ESMTP id wAT9p2Y4012082;
+	Thu, 29 Nov 2018 18:51:02 +0900
+Received: from imss02.silk.ntt-tx.co.jp (imss02.silk.ntt-tx.co.jp [10.107.0.127])
+	by ml01.silk.ntt-tx.co.jp (unknown) with ESMTP id wAT9p2EW012078
+	for unknown; Thu, 29 Nov 2018 18:51:02 +0900
+Received: from imss02.silk.ntt-tx.co.jp (localhost [127.0.0.1]) by imss02.silk.ntt-tx.co.jp (unknown) with ESMTP id wAT9p2jo019292 for unknown; Thu, 29 Nov 2018 18:51:02 +0900
+Received: from mail01.ics.ntt-tx.co.jp (mail01.ics.ntt-tx.co.jp [10.254.2.67]) by imss02.silk.ntt-tx.co.jp (unknown) with ESMTP id wAT9p2ZD019284 for unknown; Thu, 29 Nov 2018 18:51:02 +0900
+Received: from dpdk.org (dpdk.org [92.243.14.124])
+	by mail01.ics.ntt-tx.co.jp (unknown) with SMTP id wAT9otnx008575
+	for unknown; Thu, 29 Nov 2018 18:51:01 +0900
+Received: from [92.243.14.124] (localhost [127.0.0.1])
+	by dpdk.org (Postfix) with ESMTP id CA4FB1B4A8;
+	Thu, 29 Nov 2018 10:50:54 +0100 (CET)
+Received: from bcmv-tmail01.ecl.ntt.co.jp (bcmv-tmail01.ecl.ntt.co.jp
+ [124.146.185.148]) by dpdk.org (Postfix) with ESMTP id 00F0F1B475
+ for <spp@dpdk.org>; Thu, 29 Nov 2018 10:50:51 +0100 (CET)
+Received: from bcmv-ns01.ecl.ntt.co.jp (bcmv-ns01.ecl.ntt.co.jp
+ [129.60.83.123])
+ by bcmv-tmail01.ecl.ntt.co.jp (8.14.4/8.14.4) with ESMTP id wAT9onKw026925;
+ Thu, 29 Nov 2018 18:50:49 +0900
+Received: from bcmv-ns01.ecl.ntt.co.jp (localhost [127.0.0.1])
+ by bcmv-ns01.ecl.ntt.co.jp (Postfix) with ESMTP id BD01772C;
+ Thu, 29 Nov 2018 18:50:49 +0900 (JST)
+Received: from localhost.localdomain (lobster.nslab.ecl.ntt.co.jp
+ [129.60.13.95])
+ by bcmv-ns01.ecl.ntt.co.jp (Postfix) with ESMTP id 9D3EE729;
+ Thu, 29 Nov 2018 18:50:49 +0900 (JST)
+Date: Thu, 29 Nov 2018 18:48:33 +0900
+From: ogawa.yasufumi@lab.ntt.co.jp
+Subject: [spp 03690] [spp] [PATCH 1/2] controller: add SppMirror class
+Sender: "spp" <spp-bounces@dpdk.org>
+To: ferruh.yigit@intel.com, spp@dpdk.org, ogawa.yasufumi@lab.ntt.co.jp
+Message-Id: <1543484914-25256-2-git-send-email-ogawa.yasufumi@lab.ntt.co.jp>
+In-Reply-To: <1543484914-25256-1-git-send-email-ogawa.yasufumi@lab.ntt.co.jp>
+References: <1543484914-25256-1-git-send-email-ogawa.yasufumi@lab.ntt.co.jp>
+X-ML-Name: unknown
+X-Mail-Count: 03690
+X-MLServer: unknown
+X-ML-Info: mailing list service
+X-Mailer: git-send-email 2.7.4
+Authentication-Results: mail01.ics.ntt-tx.co.jp; spf=pass smtp.mailfrom=spp-bounces@dpdk.org
+X-TM-AS-MML: No
+X-BeenThere: spp@dpdk.org
+X-Mailman-Version: 2.1.15
+List-Id: Soft Patch Panel <spp.dpdk.org>
+List-Unsubscribe: <https://mails.dpdk.org/options/spp>,
+ <mailto:spp-request@dpdk.org?subject=unsubscribe>
+List-Archive: <http://mails.dpdk.org/archives/spp/>
+List-Post: <mailto:spp@dpdk.org>
+List-Help: <mailto:spp-request@dpdk.org?subject=help>
+List-Subscribe: <https://mails.dpdk.org/listinfo/spp>,
+ <mailto:spp-request@dpdk.org?subject=subscribe>
+Precedence: bulk
+Lines: 348
+
+From: Yasufumi Ogawa <ogawa.yasufumi@lab.ntt.co.jp>
+
+This update is to add SppMirror class behaviour as a client for spp-ctl.
+An instance of the class is intended to be used from do_mirror() and
+complete_mirror() methods of Shell class in 'spp.py'.
+
+Signed-off-by: Yasufumi Ogawa <ogawa.yasufumi@lab.ntt.co.jp>
+---
+ src/controller/commands/mirror.py | 327 ++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 327 insertions(+)
+ create mode 100644 src/controller/commands/mirror.py
+
+diff --git a/src/controller/commands/mirror.py b/src/controller/commands/mirror.py
+new file mode 100644
+index 0000000..fcc630a
+--- /dev/null
++++ b/src/controller/commands/mirror.py
+@@ -0,0 +1,327 @@
++# SPDX-License-Identifier: BSD-3-Clause
++# Copyright(c) 2018 Nippon Telegraph and Telephone Corporation
++
++
++class SppMirror(object):
++    """Exec spp_mirror command.
++
++    SppMirror class is intended to be used in Shell class as a delegator
++    for running 'mirror' command.
++
++    'self.command()' is called from do_mirror() and 'self.complete()' is called
++    from complete_() of both of which is defined in Shell.
++    """
++
++    # All of commands and sub-commands used for validation and completion.
++    MIRROR_CMDS = {
++            'status': None,
++            'component': ['start', 'stop'],
++            'port': ['add', 'del']}
++
++    WORKER_TYPES = ['mirror']
++
++    def __init__(self, spp_ctl_cli, sec_id, use_cache=False):
++        self.spp_ctl_cli = spp_ctl_cli
++        self.sec_id = sec_id
++
++        # Update 'self.worker_names' and 'self.unused_core_ids' each time
++        # 'self.run()' is called if it is 'False'.
++        # True to 'True' if you do not wait for spp_mirror's response.
++        self.use_cache = use_cache
++
++        # Names and core IDs of worker threads
++        mirror_status = self._get_status(self.sec_id)
++
++        core_ids = mirror_status['core_ids']
++        for wk in mirror_status['workers']:
++            if wk['core_id'] in core_ids:
++                core_ids.remove(wk['core_id'])
++        self.unused_core_ids = core_ids  # used while completion to exclude
++
++        self.workers = mirror_status['workers']
++        self.worker_names = [attr['name'] for attr in mirror_status['workers']]
++
++    def run(self, cmdline):
++        """Called from do_sec() to Send command to secondary process."""
++
++        # update status each time if configured not to use cache
++        if self.use_cache is False:
++            mirror_status = self._get_status(self.sec_id)
++
++            core_ids = mirror_status['core_ids']
++            for wk in mirror_status['workers']:
++                if wk['core_id'] in core_ids:
++                    core_ids.remove(wk['core_id'])
++            self.unused_core_ids = core_ids  # used while completion to exclude
++
++            self.workers = mirror_status['workers']
++            self.worker_names = [attr['name'] for attr in mirror_status['workers']]
++
++        cmd = cmdline.split(' ')[0]
++        params = cmdline.split(' ')[1:]
++
++        if cmd == 'status':
++            self._run_status()
++
++        elif cmd == 'component':
++            self._run_component(params)
++
++        elif cmd == 'port':
++            self._run_port(params)
++
++        else:
++            print('Invalid command "%s".' % cmd)
++
++    def print_status(self, json_obj):
++        """Parse and print message from SPP VF.
++
++        Print status received from spp_mirror.
++
++          spp > mirror 1; status
++          Basic Information:
++            - client-id: 3
++            - ports: [phy:0, phy:1]
++          Components:
++            - core:1, "mr1" (type: mirror)
++              - rx: ring:0
++              - tx: [vhost:0, vhost:1]
++            - core:2, "mr2" (type: mirror)
++              - rx:
++              - tx:
++            ...
++
++        """
++
++        # Basic Information
++        print('Basic Information:')
++        print('  - client-id: %d' % json_obj['client-id'])
++        print('  - ports: [%s]' % ', '.join(json_obj['ports']))
++
++        # Componennts
++        print('Components:')
++        for worker in json_obj['components']:
++            if 'name' in worker.keys():
++                print("  - core:%d '%s' (type: %s)" % (
++                      worker['core'], worker['name'], worker['type']))
++
++                if worker['type'] == 'mirror':
++                    pt = ''
++                    if len(worker['rx_port']) > 0:
++                        pt = worker['rx_port'][0]['port']
++                    msg = '    - %s: %s'
++                    print(msg % ('rx', pt))
++
++                    tx_ports = []
++                    if len(worker['tx_port']) > 0:
++                        msg = '    - %s: [%s]'
++                        for tp in worker['tx_port']:
++                            tx_ports.append(tp['port'])
++
++                    print(msg % ('tx', ', '.join(tx_ports)))
++
++            else:
++                # TODO(yasufum) should change 'unuse' to 'unused'
++                print("  - core:%d '' (type: unuse)" % worker['core'])
++
++    def complete(self, sec_ids, text, line, begidx, endidx):
++        """Completion for spp_mirrorcommands.
++
++        Called from complete_mirror() to complete.
++        """
++
++        try:
++            completions = []
++            tokens = line.split(';')
++
++            if len(tokens) == 2:
++                sub_tokens = tokens[1].split(' ')
++
++                if len(sub_tokens) == 1:
++                    if not (sub_tokens[0] in self.MIRROR_CMDS.keys()):
++                        completions = self._compl_first_tokens(sub_tokens[0])
++                else:
++                    if sub_tokens[0] == 'status':
++                        if len(sub_tokens) < 2:
++                            if 'status'.startswith(sub_tokens[1]):
++                                completions = ['status']
++
++                    elif sub_tokens[0] == 'component':
++                        completions = self._compl_component(sub_tokens)
++
++                    elif sub_tokens[0] == 'port':
++                        completions = self._compl_port(sub_tokens)
++            return completions
++        except Exception as e:
++            print(e)
++
++    def _compl_first_tokens(self, token):
++        res = []
++        for kw in self.MIRROR_CMDS.keys():
++            if kw.startswith(token):
++                res.append(kw)
++        return res
++
++    def _get_status(self, sec_id):
++        """Get status of spp_mirror.
++
++        To update status of the instance of SppMirror, get the status from
++        spp-ctl. This method returns the result as a dict. For considering
++        behaviour of spp_mirror, it is enough to return worker's name and core
++        IDs as the status, but might need to be update for future updates.
++
++        # return worker's name and used core IDs, and all of core IDs.
++        {
++          'workers': [
++            {'name': 'mr1', 'core_id': 5},
++            {'name': 'mr2', 'core_id': 6},
++            ...
++          ],
++          'core_ids': [5, 6, 7, ...]
++        }
++
++        """
++
++        status = {'workers': [], 'core_ids': []}
++        res = self.spp_ctl_cli.get('mirrors/%d' % self.sec_id)
++        if res is not None:
++            if res.status_code == 200:
++                json_obj = res.json()
++
++                if 'components' in json_obj.keys():
++                    for wk in json_obj['components']:
++                        if 'core' in wk.keys():
++                            if 'name' in wk.keys():
++                                status['workers'].append(
++                                        {'name': wk['name'],
++                                            'core_id': wk['core']})
++                            status['core_ids'].append(wk['core'])
++
++        return status
++
++    def _run_status(self):
++        res = self.spp_ctl_cli.get('mirrors/%d' % self.sec_id)
++        if res is not None:
++            error_codes = self.spp_ctl_cli.rest_common_error_codes
++            if res.status_code == 200:
++                self.print_status(res.json())
++            elif res.status_code in error_codes:
++                pass
++            else:
++                print('Error: unknown response.')
++
++    def _run_component(self, params):
++        if params[0] == 'start':
++            req_params = {'name': params[1], 'core': int(params[2]),
++                          'type': params[3]}
++            res = self.spp_ctl_cli.post('mirrors/%d/components' % self.sec_id,
++                                        req_params)
++            if res is not None:
++                error_codes = self.spp_ctl_cli.rest_common_error_codes
++                if res.status_code == 204:
++                    print("Succeeded to start component '%s' on core:%d"
++                          % (req_params['name'], req_params['core']))
++                    self.worker_names.append(req_params['name'])
++                    self.unused_core_ids.remove(req_params['core'])
++                elif res.status_code in error_codes:
++                    pass
++                else:
++                    print('Error: unknown response.')
++
++        elif params[0] == 'stop':
++            res = self.spp_ctl_cli.delete('mirrors/%d/components/%s' % (
++                                          self.sec_id, params[1]))
++            if res is not None:
++                error_codes = self.spp_ctl_cli.rest_common_error_codes
++                if res.status_code == 204:
++                    print("Succeeded to delete component '%s'" % params[1])
++
++                    # update workers and core IDs
++                    if params[1] in self.worker_names:
++                        self.worker_names.remove(params[1])
++                    for wk in self.workers:
++                        if wk['name'] == params[1]:
++                            self.unused_core_ids.append(wk['core_id'])
++                            self.workers.remove(wk)
++                            break
++                elif res.status_code in error_codes:
++                    pass
++                else:
++                    print('Error: unknown response.')
++
++    def _run_port(self, params):
++        if len(params) == 4:
++            if params[0] == 'add':
++                action = 'attach'
++            elif params[0] == 'del':
++                action = 'detach'
++            else:
++                print('Error: Invalid action.')
++                return None
++
++            req_params = {'action': action, 'port': params[1],
++                          'dir': params[2]}
++
++        res = self.spp_ctl_cli.put('mirrors/%d/components/%s/ports'
++                                   % (self.sec_id, params[3]), req_params)
++        if res is not None:
++            error_codes = self.spp_ctl_cli.rest_common_error_codes
++            if res.status_code == 204:
++                print("Succeeded to %s port" % params[0])
++            elif res.status_code in error_codes:
++                pass
++            else:
++                print('Error: unknown response.')
++
++    def _compl_component(self, sub_tokens):
++        if len(sub_tokens) < 6:
++            subsub_cmds = ['start', 'stop']
++            res = []
++            if len(sub_tokens) == 2:
++                for kw in subsub_cmds:
++                    if kw.startswith(sub_tokens[1]):
++                        res.append(kw)
++            elif len(sub_tokens) == 3:
++                # 'start' takes any of names and no need
++                #  check, required only for 'stop'.
++                if sub_tokens[1] == 'start':
++                    if 'NAME'.startswith(sub_tokens[2]):
++                        res.append('NAME')
++                if sub_tokens[1] == 'stop':
++                    for kw in self.worker_names:
++                        if kw.startswith(sub_tokens[2]):
++                            res.append(kw)
++            elif len(sub_tokens) == 4:
++                if sub_tokens[1] == 'start':
++                    for cid in [str(i) for i in self.unused_core_ids]:
++                        if cid.startswith(sub_tokens[3]):
++                            res.append(cid)
++            elif len(sub_tokens) == 5:
++                if sub_tokens[1] == 'start':
++                    for wk_type in self.WORKER_TYPES:
++                        if wk_type.startswith(sub_tokens[4]):
++                            res.append(wk_type)
++            return res
++
++    def _compl_port(self, sub_tokens):
++        if len(sub_tokens) < 9:
++            subsub_cmds = ['add', 'del']
++            res = []
++            if len(sub_tokens) == 2:
++                for kw in subsub_cmds:
++                    if kw.startswith(sub_tokens[1]):
++                        res.append(kw)
++            elif len(sub_tokens) == 3:
++                if sub_tokens[1] in subsub_cmds:
++                    if 'RES_UID'.startswith(sub_tokens[2]):
++                        res.append('RES_UID')
++            elif len(sub_tokens) == 4:
++                if sub_tokens[1] in subsub_cmds:
++                    for direction in ['rx', 'tx']:
++                        if direction.startswith(sub_tokens[3]):
++                            res.append(direction)
++            elif len(sub_tokens) == 5:
++                if sub_tokens[1] in subsub_cmds:
++                    for kw in self.worker_names:
++                        if kw.startswith(sub_tokens[4]):
++                            res.append(kw)
++            return res
+-- 
+2.7.4
+
+
+

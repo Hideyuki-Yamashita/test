@@ -1,0 +1,747 @@
+From oda@valinux.co.jp Thu Nov 29 11:04:13 2018
+Received: from imss04.silk.ntt-tx.co.jp (imss04.silk.ntt-tx.co.jp [10.107.0.39])
+	by pomail01.silk.ntt-tx.co.jp (unknown) with ESMTP id wAT24PdA027903;
+	Thu, 29 Nov 2018 11:04:25 +0900
+Received: from imss04.silk.ntt-tx.co.jp (localhost [127.0.0.1]) by imss04.silk.ntt-tx.co.jp (unknown) with ESMTP id wAT24P5a010381; Thu, 29 Nov 2018 11:04:25 +0900
+Received: from ml01.silk.ntt-tx.co.jp (ml01.silk.ntt-tx.co.jp [10.107.0.230]) by imss04.silk.ntt-tx.co.jp (unknown) with ESMTP id wAT24Ptk010378; Thu, 29 Nov 2018 11:04:25 +0900
+Received: from ml01.silk.ntt-tx.co.jp (localhost [127.0.0.1])
+	by ml01.silk.ntt-tx.co.jp (unknown) with ESMTP id wAT24Pn0023849;
+	Thu, 29 Nov 2018 11:04:25 +0900
+Received: from imss02.silk.ntt-tx.co.jp (imss02.silk.ntt-tx.co.jp [10.107.0.127])
+	by ml01.silk.ntt-tx.co.jp (unknown) with ESMTP id wAT24OqI023842
+	for unknown; Thu, 29 Nov 2018 11:04:24 +0900
+Received: from imss02.silk.ntt-tx.co.jp (localhost [127.0.0.1]) by imss02.silk.ntt-tx.co.jp (unknown) with ESMTP id wAT24OJP006519 for unknown; Thu, 29 Nov 2018 11:04:24 +0900
+Received: from mail01.ics.ntt-tx.co.jp (mail01.ics.ntt-tx.co.jp [10.254.2.67]) by imss02.silk.ntt-tx.co.jp (unknown) with ESMTP id wAT24OqV006512 for unknown; Thu, 29 Nov 2018 11:04:24 +0900
+Received: from dpdk.org (dpdk.org [92.243.14.124])
+	by mail01.ics.ntt-tx.co.jp (unknown) with SMTP id wAT24Hut030333
+	for unknown; Thu, 29 Nov 2018 11:04:23 +0900
+Received: from [92.243.14.124] (localhost [127.0.0.1])
+	by dpdk.org (Postfix) with ESMTP id C34051B3B8;
+	Thu, 29 Nov 2018 03:04:16 +0100 (CET)
+Received: from valinux.co.jp (vagw.valinux.co.jp [210.128.90.14])
+ by dpdk.org (Postfix) with ESMTP id E542F1B3B6
+ for <spp@dpdk.org>; Thu, 29 Nov 2018 03:04:14 +0100 (CET)
+Received: by valinux.co.jp (Postfix, from userid 1000)
+ id B289D2409A0; Thu, 29 Nov 2018 11:04:13 +0900 (JST)
+Date: Thu, 29 Nov 2018 11:04:13 +0900
+From: oda@valinux.co.jp
+Subject: [spp 03686] [spp] [PATCH v2 2/2] docs: add spp_mirror API api-reference
+Sender: "spp" <spp-bounces@dpdk.org>
+To: spp@dpdk.org, ferruh.yigit@intel.com, ogawa.yasufumi@lab.ntt.co.jp
+Message-Id: <20181129020413.20023-3-oda@valinux.co.jp>
+In-Reply-To: <20181129020413.20023-1-oda@valinux.co.jp>
+References: <20181129005512.18526-1-oda@valinux.co.jp>
+ <20181129020413.20023-1-oda@valinux.co.jp>
+X-ML-Name: unknown
+X-Mail-Count: 03686
+X-MLServer: unknown
+X-ML-Info: mailing list service
+X-Mailer: git-send-email 2.17.1
+Authentication-Results: mail01.ics.ntt-tx.co.jp; spf=pass smtp.mailfrom=spp-bounces@dpdk.org
+X-BeenThere: spp@dpdk.org
+X-Mailman-Version: 2.1.15
+List-Id: Soft Patch Panel <spp.dpdk.org>
+List-Unsubscribe: <https://mails.dpdk.org/options/spp>,
+ <mailto:spp-request@dpdk.org?subject=unsubscribe>
+List-Archive: <http://mails.dpdk.org/archives/spp/>
+List-Post: <mailto:spp@dpdk.org>
+List-Help: <mailto:spp-request@dpdk.org?subject=help>
+List-Subscribe: <https://mails.dpdk.org/listinfo/spp>,
+ <mailto:spp-request@dpdk.org?subject=subscribe>
+X-TM-AS-MML: No
+Precedence: bulk
+Lines: 336
+
+From: Itsuro Oda <oda@valinux.co.jp>
+
+This patch adds spp_mirror API reference for spp-ctl.
+
+Signed-off-by: Itsuro Oda <oda@valinux.co.jp>
+---
+ docs/guides/spp-ctl/api-reference.rst | 316 ++++++++++++++++++++++++++
+ 1 file changed, 316 insertions(+)
+
+diff --git a/docs/guides/spp-ctl/api-reference.rst b/docs/guides/spp-ctl/api-reference.rst
+index 70eddd6..b0d367b 100644
+--- a/docs/guides/spp-ctl/api-reference.rst
++++ b/docs/guides/spp-ctl/api-reference.rst
+@@ -1168,3 +1168,319 @@ type is ``vlan``
+ .. code-block:: none
+ 
+     classifier_table {action} vlan {vlan} {mac_address} {port}
++
++
++API for spp_mirror
++------------------
++
++GET /v1/mirrors/{client_id}
++~~~~~~~~~~~~~~~~~~~~~~~~~~~
++
++Get the information of the ``spp_mirror`` process.
++
++* Normal response codes: 200
++* Error response codes: 400, 404
++
++Request(path)
++^^^^^^^^^^^^^
++
++.. _table_spp_ctl_mirrors_get:
++
++.. table:: Request parameter for getting spp_mirror.
++
++    +-----------+---------+--------------------------+
++    | Name      | Type    | Description              |
++    |           |         |                          |
++    +===========+=========+==========================+
++    | client_id | integer | client id.               |
++    +-----------+---------+--------------------------+
++
++Request example
++^^^^^^^^^^^^^^^
++
++.. code-block:: console
++
++    curl -X GET -H 'application/json' \
++    http://127.0.0.1:7777/v1/mirrors/1
++
++Response
++^^^^^^^^
++
++.. _table_spp_ctl_spp_mirror_res:
++
++.. table:: Response params of getting spp_mirror.
++
++    +------------------+---------+-----------------------------------------------+
++    | Name             | Type    | Description                                   |
++    |                  |         |                                               |
++    +==================+=========+===============================================+
++    | client-id        | integer | client id.                                    |
++    +------------------+---------+-----------------------------------------------+
++    | ports            | array   | an array of port ids used by the process.     |
++    +------------------+---------+-----------------------------------------------+
++    | components       | array   | an array of component objects in the process. |
++    +------------------+---------+-----------------------------------------------+
++
++component object:
++
++.. _table_spp_ctl_spp_mirror_res_comp:
++
++.. table:: Component objects of getting spp_mirror.
++
++    +---------+---------+---------------------------------------------------------------------+
++    | Name    | Type    | Description                                                         |
++    |         |         |                                                                     |
++    +=========+=========+=====================================================================+
++    | core    | integer | core id running on the component                                    |
++    +---------+---------+---------------------------------------------------------------------+
++    | name    | string  | an array of port ids used by the process.                           |
++    +---------+---------+---------------------------------------------------------------------+
++    | type    | string  | an array of component objects in the process.                       |
++    +---------+---------+---------------------------------------------------------------------+
++    | rx_port | array   | an array of port objects connected to the rx side of the component. |
++    +---------+---------+---------------------------------------------------------------------+
++    | tx_port | array   | an array of port objects connected to the tx side of the component. |
++    +---------+---------+---------------------------------------------------------------------+
++
++port object:
++
++.. _table_spp_ctl_spp_mirror_res_port:
++
++.. table:: Port objects of getting spp_vf.
++
++    +---------+---------+---------------------------------------------------------------+
++    | Name    | Type    | Description                                                   |
++    |         |         |                                                               |
++    +=========+=========+===============================================================+
++    | port    | string  | port id. port id is the form {interface_type}:{interface_id}. |
++    +---------+---------+---------------------------------------------------------------+
++
++Response example
++^^^^^^^^^^^^^^^^
++
++.. code-block:: json
++
++    {
++      "client-id": 1,
++      "ports": [
++        "phy:0", "phy:1", "ring:0", "ring:1", "ring:2"
++      ],
++      "components": [
++        {
++          "core": 2,
++          "name": "mirror_0",
++          "type": "mirror",
++          "rx_port": [
++            {
++            "port": "ring:0"
++            }
++          ],
++          "tx_port": [
++            {
++              "port": "ring:1"
++            },
++            {
++              "port": "ring:2"
++            }
++          ]
++        },
++        {
++          "core": 3,
++          "type": "unuse"
++        }
++      ]
++    }
++
++The component which type is ``unused`` is to indicate unused core.
++
++Equivalent CLI command
++^^^^^^^^^^^^^^^^^^^^^^
++
++.. code-block:: none
++
++    sec {client_id};status
++
++
++POST /v1/mirrors/{client_id}/components
++~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
++
++Start the component.
++
++* Normal response codes: 204
++* Error response codes: 400, 404
++
++Request(path)
++^^^^^^^^^^^^^
++
++.. _table_spp_ctl_spp_mirror_components:
++
++.. table:: Request params of components of spp_mirror.
++
++    +-----------+---------+-------------+
++    | Name      | Type    | Description |
++    +===========+=========+=============+
++    | client_id | integer | client id.  |
++    +-----------+---------+-------------+
++
++
++Request(body)
++^^^^^^^^^^^^^
++
++.. _table_spp_ctl_spp_mirror_components_res:
++
++.. table:: Response params of components of spp_mirror.
++
++    +-----------+---------+----------------------------------------------------------------------+
++    | Name      | Type    | Description                                                          |
++    |           |         |                                                                      |
++    +===========+=========+======================================================================+
++    | name      | string  | component name. must be unique in the process.                       |
++    +-----------+---------+----------------------------------------------------------------------+
++    | core      | integer | core id.                                                             |
++    +-----------+---------+----------------------------------------------------------------------+
++    | type      | string  | component type. only ``mirror`` is available.                        |
++    +-----------+---------+----------------------------------------------------------------------+
++
++Request example
++^^^^^^^^^^^^^^^
++
++.. code-block:: console
++
++    curl -X POST -H 'application/json' \
++    -d '{"name": "mirror_1", "core": 12, "type": "mirror"}' \
++    http://127.0.0.1:7777/v1/mirrors/1/components
++
++Response
++^^^^^^^^
++
++There is no body content for the response of a successful ``POST`` request.
++
++Equivalent CLI command
++^^^^^^^^^^^^^^^^^^^^^^
++
++.. code-block:: none
++
++    sec {client_id};component start {name} {core} {type}
++
++
++DELETE /v1/mirrors/{client_id}/components/{name}
++~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
++
++Stop the component.
++
++* Normal response codes: 204
++* Error response codes: 400, 404
++
++Request(path)
++^^^^^^^^^^^^^
++
++.. _table_spp_ctl_spp_mirror_del:
++
++.. table:: Request params of deleting component of spp_mirror.
++
++    +-----------+---------+---------------------------------+
++    | Name      | Type    | Description                     |
++    |           |         |                                 |
++    +===========+=========+=================================+
++    | client_id | integer | client id.                      |
++    +-----------+---------+---------------------------------+
++    | name      | string  | component name.                 |
++    +-----------+---------+---------------------------------+
++
++Request example
++^^^^^^^^^^^^^^^
++
++.. code-block:: console
++
++    curl -X DELETE -H 'application/json' \
++    http://127.0.0.1:7777/v1/mirrors/1/components/mirror_1
++
++Response
++^^^^^^^^
++
++There is no body content for the response of a successful ``POST`` request.
++
++Equivalent CLI command
++^^^^^^^^^^^^^^^^^^^^^^
++
++.. code-block:: none
++
++    sec {client_id};component stop {name}
++
++
++PUT /v1/mirrors/{client_id}/components/{name}/ports
++~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
++
++Add or Delete port to the component.
++
++* Normal response codes: 204
++* Error response codes: 400, 404
++
++Request(path)
++^^^^^^^^^^^^^
++
++.. _table_spp_ctl_spp_mirror_comp_port:
++
++.. table:: Request params for ports of component of spp_mirror.
++
++    +-----------+---------+---------------------------+
++    | Name      | Type    | Description               |
++    |           |         |                           |
++    +===========+=========+===========================+
++    | client_id | integer | client id.                |
++    +-----------+---------+---------------------------+
++    | name      | string  | component name.           |
++    +-----------+---------+---------------------------+
++
++Request(body)
++^^^^^^^^^^^^^
++
++.. _table_spp_ctl_spp_mirror_comp_port_body:
++
++.. table:: Request body params for ports of component of spp_mirror.
++
++    +---------+---------+-----------------------------------------------------------------+
++    | Name    | Type    | Description                                                     |
++    |         |         |                                                                 |
++    +=========+=========+=================================================================+
++    | action  | string  | ``attach`` or ``detach``.                                       |
++    +---------+---------+-----------------------------------------------------------------+
++    | port    | string  | port id. port id is the form {interface_type}:{interface_id}.   |
++    +---------+---------+-----------------------------------------------------------------+
++    | dir     | string  | ``rx`` or ``tx``.                                               |
++    +---------+---------+-----------------------------------------------------------------+
++
++Request example
++^^^^^^^^^^^^^^^
++
++.. code-block:: console
++
++    curl -X PUT -H 'application/json' \
++    -d '{"action": "attach", "port": "ring:1", "dir": "rx"}' \
++    http://127.0.0.1:7777/v1/mirrors/1/components/mirror_1/ports
++
++.. code-block:: console
++
++    curl -X PUT -H 'application/json' \
++    -d '{"action": "detach", "port": "ring:0", "dir": "tx"} \
++    http://127.0.0.1:7777/v1/mirrors/1/components/mirror_1/ports
++
++Response
++^^^^^^^^
++
++There is no body content for the response of a successful ``PUT`` request.
++
++Equivalent CLI command
++^^^^^^^^^^^^^^^^^^^^^^
++
++action is ``attach``
++
++.. code-block:: none
++
++    sec {client_id};port add {port} {dir} {name}
++
++action is ``detach``
++
++.. code-block:: none
++
++    sec {client_id};port del {port} {dir} {name}
+-- 
+2.17.1
+
+
+
+From oda@valinux.co.jp Thu Nov 29 11:04:12 2018
+Received: from imss04.silk.ntt-tx.co.jp (imss04.silk.ntt-tx.co.jp [10.107.0.39])
+	by pomail01.silk.ntt-tx.co.jp (unknown) with ESMTP id wAT24PDZ027947;
+	Thu, 29 Nov 2018 11:04:25 +0900
+Received: from imss04.silk.ntt-tx.co.jp (localhost [127.0.0.1]) by imss04.silk.ntt-tx.co.jp (unknown) with ESMTP id wAT24P77010403; Thu, 29 Nov 2018 11:04:25 +0900
+Received: from ml01.silk.ntt-tx.co.jp (ml01.silk.ntt-tx.co.jp [10.107.0.230]) by imss04.silk.ntt-tx.co.jp (unknown) with ESMTP id wAT24PRG010394; Thu, 29 Nov 2018 11:04:25 +0900
+Received: from ml01.silk.ntt-tx.co.jp (localhost [127.0.0.1])
+	by ml01.silk.ntt-tx.co.jp (unknown) with ESMTP id wAT24P7G023856;
+	Thu, 29 Nov 2018 11:04:25 +0900
+Received: from imss02.silk.ntt-tx.co.jp (imss02.silk.ntt-tx.co.jp [10.107.0.127])
+	by ml01.silk.ntt-tx.co.jp (unknown) with ESMTP id wAT24PjD023852
+	for unknown; Thu, 29 Nov 2018 11:04:25 +0900
+Received: from imss02.silk.ntt-tx.co.jp (localhost [127.0.0.1]) by imss02.silk.ntt-tx.co.jp (unknown) with ESMTP id wAT24PfD006546 for unknown; Thu, 29 Nov 2018 11:04:25 +0900
+Received: from mail01.ics.ntt-tx.co.jp (mail01.ics.ntt-tx.co.jp [10.254.2.67]) by imss02.silk.ntt-tx.co.jp (unknown) with ESMTP id wAT24P2t006540 for unknown; Thu, 29 Nov 2018 11:04:25 +0900
+Received: from dpdk.org (dpdk.org [92.243.14.124])
+	by mail01.ics.ntt-tx.co.jp (unknown) with SMTP id wAT24I8H030349
+	for unknown; Thu, 29 Nov 2018 11:04:24 +0900
+Received: from [92.243.14.124] (localhost [127.0.0.1])
+	by dpdk.org (Postfix) with ESMTP id E1FCA1B42F;
+	Thu, 29 Nov 2018 03:04:17 +0100 (CET)
+Received: from valinux.co.jp (vagw.valinux.co.jp [210.128.90.14])
+ by dpdk.org (Postfix) with ESMTP id 042CE1B3B6
+ for <spp@dpdk.org>; Thu, 29 Nov 2018 03:04:16 +0100 (CET)
+Received: by valinux.co.jp (Postfix, from userid 1000)
+ id 1E625240A51; Thu, 29 Nov 2018 11:04:13 +0900 (JST)
+Date: Thu, 29 Nov 2018 11:04:12 +0900
+From: oda@valinux.co.jp
+Subject: [spp 03687] [spp] [PATCH v2 1/2] spp-ctl: add spp_mirror API support
+Sender: "spp" <spp-bounces@dpdk.org>
+To: spp@dpdk.org, ferruh.yigit@intel.com, ogawa.yasufumi@lab.ntt.co.jp
+Message-Id: <20181129020413.20023-2-oda@valinux.co.jp>
+In-Reply-To: <20181129020413.20023-1-oda@valinux.co.jp>
+References: <20181129005512.18526-1-oda@valinux.co.jp>
+ <20181129020413.20023-1-oda@valinux.co.jp>
+X-ML-Name: unknown
+X-Mail-Count: 03687
+X-MLServer: unknown
+X-ML-Info: mailing list service
+X-Mailer: git-send-email 2.17.1
+Authentication-Results: mail01.ics.ntt-tx.co.jp; spf=pass smtp.mailfrom=spp-bounces@dpdk.org
+X-BeenThere: spp@dpdk.org
+X-Mailman-Version: 2.1.15
+List-Id: Soft Patch Panel <spp.dpdk.org>
+List-Unsubscribe: <https://mails.dpdk.org/options/spp>,
+ <mailto:spp-request@dpdk.org?subject=unsubscribe>
+List-Archive: <http://mails.dpdk.org/archives/spp/>
+List-Post: <mailto:spp@dpdk.org>
+List-Help: <mailto:spp-request@dpdk.org?subject=help>
+List-Subscribe: <https://mails.dpdk.org/listinfo/spp>,
+ <mailto:spp-request@dpdk.org?subject=subscribe>
+X-TM-AS-MML: No
+Precedence: bulk
+Lines: 299
+
+From: Itsuro Oda <oda@valinux.co.jp>
+
+This patch adds spp_mirror APIs to spp-ctl.
+
+Signed-off-by: Itsuro Oda <oda@valinux.co.jp>
+---
+ src/spp-ctl/spp_ctl.py    |   2 +-
+ src/spp-ctl/spp_proc.py   |  57 +++++++++++++-----
+ src/spp-ctl/spp_webapi.py | 120 ++++++++++++++++++++++++++------------
+ 3 files changed, 127 insertions(+), 52 deletions(-)
+
+diff --git a/src/spp-ctl/spp_ctl.py b/src/spp-ctl/spp_ctl.py
+index 0576ae1..279c180 100644
+--- a/src/spp-ctl/spp_ctl.py
++++ b/src/spp-ctl/spp_ctl.py
+@@ -128,7 +128,7 @@ class Controller(object):
+         # it is a bit ad hoc. send "_get_clinet_id" command and try to
+         # decode reply for each proc type. if success, that is the type.
+         data = self._send_command(conn, "_get_client_id")
+-        for proc in [spp_proc.VfProc, spp_proc.NfvProc]:
++        for proc in [spp_proc.VfProc, spp_proc.NfvProc, spp_proc.MirrorProc]:
+             sec_id = proc._decode_client_id(data)
+             if sec_id is not None:
+                 return proc(sec_id, conn)
+diff --git a/src/spp-ctl/spp_proc.py b/src/spp-ctl/spp_proc.py
+index 83c59ea..648e085 100644
+--- a/src/spp-ctl/spp_proc.py
++++ b/src/spp-ctl/spp_proc.py
+@@ -15,6 +15,7 @@ ID_PRIMARY = 0
+ TYPE_PRIMARY = "primary"
+ TYPE_VF = "vf"
+ TYPE_NFV = "nfv"
++TYPE_MIRROR = "mirror"
+ 
+ 
+ def exec_command(func):
+@@ -53,10 +54,10 @@ class SppProc(object):
+         self.conn = conn
+ 
+ 
+-class VfProc(SppProc):
++class VfCommon(SppProc):
+ 
+-    def __init__(self, id, conn):
+-        super(VfProc, self).__init__(TYPE_VF, id, conn)
++    def __init__(self, proc_type, id, conn):
++        super(VfCommon, self).__init__(proc_type, id, conn)
+ 
+     @staticmethod
+     def _decode_reply(data):
+@@ -67,14 +68,6 @@ class VfProc(SppProc):
+             raise bottle.HTTPError(400, "command error: %s" % msg)
+         return data
+ 
+-    @staticmethod
+-    def _decode_client_id(data):
+-        try:
+-            data = VfProc._decode_reply(data)
+-            return data["client_id"]
+-        except:
+-            return None
+-
+     @exec_command
+     def get_status(self):
+         return "status"
+@@ -88,6 +81,25 @@ class VfProc(SppProc):
+     def stop_component(self, comp_name):
+         return "component stop {comp_name}".format(**locals())
+ 
++    @exec_command
++    def port_del(self, port, direction, comp_name):
++        return "port del {port} {direction} {comp_name}".format(**locals())
++
++
++class VfProc(VfCommon):
++
++    def __init__(self, id, conn):
++        super(VfProc, self).__init__(TYPE_VF, id, conn)
++
++    @staticmethod
++    def _decode_client_id(data):
++        try:
++            data = VfCommon._decode_reply(data)
++            if data["process_type"] == TYPE_VF:
++                return data["client_id"]
++        except:
++            return None
++
+     @exec_command
+     def port_add(self, port, direction, comp_name, op, vlan_id, pcp):
+         command = "port add {port} {direction} {comp_name}".format(**locals())
+@@ -97,10 +109,6 @@ class VfProc(SppProc):
+                 command += " %d %d" % (vlan_id, pcp)
+         return command
+ 
+-    @exec_command
+-    def port_del(self, port, direction, comp_name):
+-        return "port del {port} {direction} {comp_name}".format(**locals())
+-
+     @exec_command
+     def set_classifier_table(self, mac_address, port):
+         return ("classifier_table add mac {mac_address} {port}"
+@@ -124,6 +132,25 @@ class VfProc(SppProc):
+                 .format(**locals()))
+ 
+ 
++class MirrorProc(VfCommon):
++
++    def __init__(self, id, conn):
++        super(MirrorProc, self).__init__(TYPE_MIRROR, id, conn)
++
++    @staticmethod
++    def _decode_client_id(data):
++        try:
++            data = VfCommon._decode_reply(data)
++            if data["process_type"] == TYPE_MIRROR:
++                return data["client_id"]
++        except:
++            return None
++
++    @exec_command
++    def port_add(self, port, direction, comp_name):
++        return "port add {port} {direction} {comp_name}".format(**locals())
++
++
+ class NfvProc(SppProc):
+ 
+     def __init__(self, id, conn):
+diff --git a/src/spp-ctl/spp_webapi.py b/src/spp-ctl/spp_webapi.py
+index 48cc1c4..7547f0e 100644
+--- a/src/spp-ctl/spp_webapi.py
++++ b/src/spp-ctl/spp_webapi.py
+@@ -114,6 +114,7 @@ class WebServer(BaseHandler):
+     /          WebServer
+     /v1          V1Handler
+        /vfs        V1VFHandler
++       /mirrors    V1MirrorHandler
+        /nfvs       V1NFVHandler
+        /primary    V1PrimaryHandler
+     """
+@@ -141,6 +142,7 @@ class V1Handler(BaseHandler):
+         self.set_route()
+ 
+         self.mount("/vfs", V1VFHandler(controller))
++        self.mount("/mirrors", V1MirrorHandler(controller))
+         self.mount("/nfvs", V1NFVHandler(controller))
+         self.mount("/primary", V1PrimaryHandler(controller))
+ 
+@@ -154,7 +156,46 @@ class V1Handler(BaseHandler):
+         return self.ctrl.get_processes()
+ 
+ 
+-class V1VFHandler(BaseHandler):
++class V1VFCommon(object):
++    """Define common methods for vf and mirror handler."""
++
++    def convert_info(self, data):
++        info = data["info"]
++        vf = {}
++        vf["client-id"] = info["client-id"]
++        vf["ports"] = []
++        for key in ["phy", "vhost", "ring"]:
++            for idx in info[key]:
++                vf["ports"].append(key + ":" + str(idx))
++        vf["components"] = info["core"]
++        if "classifier_table" in info:
++            vf["classifier_table"] = info["classifier_table"]
++
++        return vf
++
++    def validate_comp_start(self, body, types):
++        for key in ['name', 'core', 'type']:
++            if key not in body:
++                raise KeyRequired(key)
++        if not isinstance(body['name'], str):
++            raise KeyInvalid('name', body['name'])
++        if not isinstance(body['core'], int):
++            raise KeyInvalid('core', body['core'])
++        if body['type'] not in types:
++            raise KeyInvalid('type', body['type'])
++
++    def validate_comp_port(self, body):
++        for key in ['action', 'port', 'dir']:
++            if key not in body:
++                raise KeyRequired(key)
++        if body['action'] not in ["attach", "detach"]:
++            raise KeyInvalid('action', body['action'])
++        if body['dir'] not in ["rx", "tx"]:
++            raise KeyInvalid('dir', body['dir'])
++        self._validate_port(body['port'])
++
++
++class V1VFHandler(BaseHandler, V1VFCommon):
+ 
+     def __init__(self, controller):
+         super(V1VFHandler, self).__init__(controller)
+@@ -177,50 +218,18 @@ class V1VFHandler(BaseHandler):
+         self.route('/<sec_id:int>/classifier_table', 'PUT',
+                    callback=self.vf_classifier)
+ 
+-    def convert_vf_info(self, data):
+-        info = data["info"]
+-        vf = {}
+-        vf["client-id"] = info["client-id"]
+-        vf["ports"] = []
+-        for key in ["phy", "vhost", "ring"]:
+-            for idx in info[key]:
+-                vf["ports"].append(key + ":" + str(idx))
+-        vf["components"] = info["core"]
+-        vf["classifier_table"] = info["classifier_table"]
+-
+-        return vf
+-
+     def vf_get(self, proc):
+-        return self.convert_vf_info(proc.get_status())
+-
+-    def _validate_vf_comp_start(self, body):
+-        for key in ['name', 'core', 'type']:
+-            if key not in body:
+-                raise KeyRequired(key)
+-        if not isinstance(body['name'], str):
+-            raise KeyInvalid('name', body['name'])
+-        if not isinstance(body['core'], int):
+-            raise KeyInvalid('core', body['core'])
+-        if body['type'] not in ["forward", "merge", "classifier_mac"]:
+-            raise KeyInvalid('type', body['type'])
++        return self.convert_info(proc.get_status())
+ 
+     def vf_comp_start(self, proc, body):
+-        self._validate_vf_comp_start(body)
++        self.validate_comp_start(body, ["forward", "merge", "classifier_mac"])
+         proc.start_component(body['name'], body['core'], body['type'])
+ 
+     def vf_comp_stop(self, proc, name):
+         proc.stop_component(name)
+ 
+     def _validate_vf_comp_port(self, body):
+-        for key in ['action', 'port', 'dir']:
+-            if key not in body:
+-                raise KeyRequired(key)
+-        if body['action'] not in ["attach", "detach"]:
+-            raise KeyInvalid('action', body['action'])
+-        if body['dir'] not in ["rx", "tx"]:
+-            raise KeyInvalid('dir', body['dir'])
+-        self._validate_port(body['port'])
+-
++        self.validate_comp_port(body)
+         if body['action'] == "attach":
+             vlan = body.get('vlan')
+             if vlan:
+@@ -296,6 +305,45 @@ class V1VFHandler(BaseHandler):
+                     mac_address, port, body['vlan'])
+ 
+ 
++class V1MirrorHandler(BaseHandler, V1VFCommon):
++
++    def __init__(self, controller):
++        super(V1MirrorHandler, self).__init__(controller)
++        self.type = spp_proc.TYPE_MIRROR
++
++        self.set_route()
++
++        self.install(self.check_sec_id)
++        self.install(self.get_body)
++        self.install(self.make_response)
++
++    def set_route(self):
++        self.route('/<sec_id:int>', 'GET', callback=self.mirror_get)
++        self.route('/<sec_id:int>/components', 'POST',
++                   callback=self.mirror_comp_start)
++        self.route('/<sec_id:int>/components/<name>', 'DELETE',
++                   callback=self.mirror_comp_stop)
++        self.route('/<sec_id:int>/components/<name>/ports', 'PUT',
++                   callback=self.mirror_comp_port)
++
++    def mirror_get(self, proc):
++        return self.convert_info(proc.get_status())
++
++    def mirror_comp_start(self, proc, body):
++        self.validate_comp_start(body, ["mirror"])
++        proc.start_component(body['name'], body['core'], body['type'])
++
++    def mirror_comp_stop(self, proc, name):
++        proc.stop_component(name)
++
++    def mirror_comp_port(self, proc, name, body):
++        self.validate_comp_port(body)
++        if body['action'] == "attach":
++            proc.port_add(body['port'], body['dir'], name)
++        else:
++            proc.port_del(body['port'], body['dir'], name)
++
++
+ class V1NFVHandler(BaseHandler):
+ 
+     def __init__(self, controller):
+-- 
+2.17.1
+
+
+
