@@ -1,0 +1,52 @@
+From d6eae5c8f09d7dde6d1ad78c34c8dfb9ff3c31f4 Mon Sep 17 00:00:00 2001
+From: Hideyuki-Yamashita <yamashita.hideyuki@po.ntt-tx.co.jp>
+Date: Fri, 30 Nov 2018 08:43:09 +0900
+Subject: [PATCH 00/10] add document for spp_mirror
+
+This series of patches is to add document for spp_mirror.
+It also includes changes in other documents.
+- add new label in VF document because it is referred by spp_mirror
+  docuemnt.
+- Fixing length of underline of Primary Command.
+
+Hideyuki Yamashita (10):
+  docs: add spp_mirror in overview section
+  docs: add overview image of spp_mirror
+  docs: add design for spp_mirror
+  docs: add explanation of spp_mirror
+  docs: add setup guide for spp_mirror
+  docs: add how to use guide for spp_mirror
+  docs: add usecase of spp_mirror
+  docs: add usecase images of spp_mirror
+  docs: add label for usecase to be referred
+  docs: refactor primary commands section
+
+ docs/guides/commands/primary.rst                   |    2 +-
+ docs/guides/images/spp_vf/spp_mirror_design.svg    |  564 ++++++++
+ docs/guides/images/spp_vf/spp_mirror_overview.svg  | 1433 +++++++++++++++++++
+ .../images/spp_vf/spp_mirror_usecase_nwconfig.svg  | 1434 ++++++++++++++++++++
+ .../images/spp_vf/spp_mirror_usecase_overview.svg  |  544 ++++++++
+ docs/guides/spp_vf/design.rst                      |   75 +-
+ docs/guides/spp_vf/explain/functions.rst           |  423 ------
+ docs/guides/spp_vf/explain/functions_mirror.rst    |  127 ++
+ docs/guides/spp_vf/explain/functions_vf.rst        |  423 ++++++
+ docs/guides/spp_vf/explain/index.rst               |    3 +-
+ docs/guides/spp_vf/gsg/build.rst                   |   68 +-
+ docs/guides/spp_vf/gsg/howto_use.rst               |   59 +-
+ docs/guides/spp_vf/overview.rst                    |   71 +-
+ docs/guides/spp_vf/use_cases/index.rst             |    1 +
+ docs/guides/spp_vf/use_cases/usecase1.rst          |    2 +
+ docs/guides/spp_vf/use_cases/usecase2.rst          |  266 ++++
+ 16 files changed, 5009 insertions(+), 486 deletions(-)
+ create mode 100644 docs/guides/images/spp_vf/spp_mirror_design.svg
+ create mode 100644 docs/guides/images/spp_vf/spp_mirror_overview.svg
+ create mode 100644 docs/guides/images/spp_vf/spp_mirror_usecase_nwconfig.svg
+ create mode 100644 docs/guides/images/spp_vf/spp_mirror_usecase_overview.svg
+ delete mode 100644 docs/guides/spp_vf/explain/functions.rst
+ create mode 100644 docs/guides/spp_vf/explain/functions_mirror.rst
+ create mode 100644 docs/guides/spp_vf/explain/functions_vf.rst
+ create mode 100644 docs/guides/spp_vf/use_cases/usecase2.rst
+
+-- 
+2.7.4
+
