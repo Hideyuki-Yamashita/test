@@ -1,0 +1,365 @@
+Return-path: <fw-yama-hd@pomail01.silk.ntt-tx.co.jp>
+Received: from zssg-mailmd106.ddreams.local
+ (zssg-mailmd106.ddreams.local [10.160.123.101])
+ by zssg-mailms320.ddreams.local (NTT DoCoMo Mail System)
+ with ESMTP id <0PTY00X3K3PT1U20@NTTDoCoMo.co.jp> for
+ yamashita.hideyuki@ntt-tx.co.jp; Mon, 01 Jul 2019 13:13:05 +0900 (JST)
+Original-recipient: rfc822;yamashita.hideyuki@ntt-tx.co.jp
+Received: from smtp_saver-daemon.zssg-mailmd106.ddreams.local by
+ zssg-mailmd106.ddreams.local (dDREAMS) id <0PTY00M243PT3W00@dDREAMS> for
+ yamashita.hideyuki@ntt-tx.co.jp (ORCPT yamashita.hideyuki@ntt-tx.co.jp); Mon,
+ 01 Jul 2019 13:13:05 +0900 (JST)
+Received: from zssg-mailmf105.ddreams.local
+ (zssg-mailmf900.ddreams.local [10.160.172.84]) by zssg-mailmd106.ddreams.local
+ (dDREAMS) with ESMTP id <0PTY001T53PTVYB0@dDREAMS> for
+ yamashita.hideyuki@ntt-tx.co.jp (ORCPT yamashita.hideyuki@ntt-tx.co.jp); Mon,
+ 01 Jul 2019 13:13:05 +0900 (JST)
+Received: from zssg-mailmf105.ddreams.local (unknown [127.0.0.1])
+	by zssg-mailmf105.ddreams.local (Postfix) with ESMTP id 2399F7E6034	for
+ <yamashita.hideyuki@ntt-tx.co.jp>; Mon,  1 Jul 2019 13:13:05 +0900 (JST)
+Received: from zssg-mailmf105.ddreams.local (unknown [127.0.0.1])
+	by IMSVA (Postfix) with ESMTP id 200688E6066	for
+ <yamashita.hideyuki@ntt-tx.co.jp>; Mon,  1 Jul 2019 13:13:05 +0900 (JST)
+Received: from localhost (unknown [127.0.0.1])	by IMSVA (Postfix)
+ with SMTP id 1243E8E6060	for <yamashita.hideyuki@ntt-tx.co.jp>; Mon,
+ 1 Jul 2019 13:13:05 +0900 (JST)
+X-IMSS-HAND-OFF-DIRECTIVE: localhost:10026
+Received: from zssg-mailmf105.ddreams.local (unknown [127.0.0.1])
+	by IMSVA (Postfix) with ESMTP id 21C128E6052	for
+ <yamashita.hideyuki@ntt-tx.co.jp>; Mon,  1 Jul 2019 13:13:04 +0900 (JST)
+Received: from pomail01.silk.ntt-tx.co.jp (unknown [10.160.183.139])
+	by zssg-mailmf105.ddreams.local (Postfix)
+ with ESMTPS	for <yamashita.hideyuki@ntt-tx.co.jp>; Mon,
+ 1 Jul 2019 13:13:04 +0900 (JST)
+Received: from pomail01.silk.ntt-tx.co.jp (localhost [127.0.0.1])
+	by pomail01.silk.ntt-tx.co.jp (unknown) with ESMTP id x614D3SF015881;	Mon,
+ 1 Jul 2019 13:13:03 +0900
+Received: (from yama-hd@localhost)	by pomail01.silk.ntt-tx.co.jp (unknown)
+ id x614D3Us015880;	Mon, 1 Jul 2019 13:13:03 +0900
+X-Authentication-warning: pomail01.silk.ntt-tx.co.jp: yama-hd set sender to
+ fw-yama-hd@pomail01.silk.ntt-tx.co.jp using -f
+Received: from imss04.silk.ntt-tx.co.jp
+ (imss04.silk.ntt-tx.co.jp [10.107.0.39])	by pomail01.silk.ntt-tx.co.jp
+ (unknown) with ESMTP id x614D3fY015877	for unknown; Mon,
+ 1 Jul 2019 13:13:03 +0900
+Received: from imss04.silk.ntt-tx.co.jp (localhost [127.0.0.1])
+ by imss04.silk.ntt-tx.co.jp (unknown) with ESMTP id x614D3pd030437 for
+ unknown; Mon, 1 Jul 2019 13:13:03 +0900
+Received: from ml01.silk.ntt-tx.co.jp (ml01.silk.ntt-tx.co.jp [10.107.0.230])
+ by imss04.silk.ntt-tx.co.jp (unknown) with ESMTP id x614D3J6030434; Mon,
+ 1 Jul 2019 13:13:03 +0900
+Received: from ml01.silk.ntt-tx.co.jp (localhost [127.0.0.1])
+	by ml01.silk.ntt-tx.co.jp (unknown) with ESMTP id x614D3hi019881;	Mon,
+ 1 Jul 2019 13:13:03 +0900
+Received: from imss02.silk.ntt-tx.co.jp
+ (imss02.silk.ntt-tx.co.jp [10.107.0.127])	by ml01.silk.ntt-tx.co.jp (unknown)
+ with ESMTP id x614D3GA019877	for unknown; Mon, 1 Jul 2019 13:13:03 +0900
+Received: from imss02.silk.ntt-tx.co.jp (localhost [127.0.0.1])
+ by imss02.silk.ntt-tx.co.jp (unknown) with ESMTP id x614D2qX025737 for
+ unknown; Mon, 1 Jul 2019 13:13:03 +0900
+Received: from mail01.ics.ntt-tx.co.jp (mail01.ics.ntt-tx.co.jp [10.254.2.67])
+ by imss02.silk.ntt-tx.co.jp (unknown) with ESMTP id x614D28I025731 for
+ unknown; Mon, 1 Jul 2019 13:13:02 +0900
+Received: from dpdk.org (dpdk.org [92.243.14.124])	by mail01.ics.ntt-tx.co.jp
+ (unknown) with SMTP id x614CuRL007131	for unknown; Mon,
+ 1 Jul 2019 13:13:02 +0900
+Received: from [92.243.14.124] (localhost [127.0.0.1])	by dpdk.org (Postfix)
+ with ESMTP id DCACF5587;	Mon,  1 Jul 2019 06:12:55 +0200 (CEST)
+Received: from mail-pg1-f195.google.com
+ (mail-pg1-f195.google.com [209.85.215.195]) by dpdk.org (Postfix)
+ with ESMTP id 40C2A3195 for <spp@dpdk.org>; Mon,
+ 1 Jul 2019 06:12:54 +0200 (CEST)
+Received: by mail-pg1-f195.google.com with SMTP id f25so5337483pgv.10 for
+ <spp@dpdk.org>; Sun, 30 Jun 2019 21:12:54 -0700 (PDT)
+Received: from localhost.localdomain ([192.47.164.146])
+ by smtp.gmail.com with ESMTPSA id cx22sm9305604pjb.25.2019.06.30.21.12.51
+ (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128); Sun,
+ 30 Jun 2019 21:12:52 -0700 (PDT)
+Date: Mon, 01 Jul 2019 13:12:44 +0900
+From: yasufum.o@gmail.com
+Subject: [spp 04468] [spp] [PATCH 2/2] recipes: update old rcps for spp_vf
+Sender: spp <spp-bounces@dpdk.org>
+To: spp@dpdk.org, ferruh.yigit@intel.com, yasufum.o@gmail.com
+Message-id: <20190701041244.34176-3-yasufum.o@gmail.com>
+In-reply-to: <20190701041244.34176-1-yasufum.o@gmail.com>
+References: <20190701041244.34176-1-yasufum.o@gmail.com>
+X-ML-Name: unknown
+X-Mail-Count: 04468
+X-MLServer: unknown
+X-ML-Info: mailing list service
+X-Mailer: git-send-email 2.17.1
+Authentication-results: mail01.ics.ntt-tx.co.jp; spf=pass
+ smtp.mailfrom=spp-bounces@dpdk.org
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
+ h=from:to:subject:date:message-id:in-reply-to:references;
+ bh=1tjS1H0k1Y3Dqwshh2DauA3wjw1NVZ9ON46ij9kALu0=;
+ b=LTygaOCjTfpvFfu810X22aYG4BqB/uL0UKtNo0LmH13OOfPmRJ0V+l45LvJfvFXX0b
+ GY56uaED93rL8kuxDbVDqk4eReZApCCKl4neEshweeO8Nw9VCbqVsKDoekpxA723fMXz
+ RODn21crDSbZAyHb5R/w43dAnmw1KYWYadqpa5XVTA9GN1JYM+Pc2kK+NwIz2rZVpWgA
+ xaQKqCn27acfxozaiy1MXym8pAituPczcn4I0dr1Zd/Zo7+TS1MChuHywCizFR5zngtW
+ Vov596EkSrqs8o9nh3Q9R8VTuxw9LPc9viMS8Mmm45BiA0GCICZgZlqn1lomX64Svhvk KnlA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=1e100.net;
+ s=20161025; h=x-gm-message-state:from:to:subject:date:message-id:in-reply-to
+ :references; bh=1tjS1H0k1Y3Dqwshh2DauA3wjw1NVZ9ON46ij9kALu0=;
+ b=mlP3I7bdtap0uiPN6hV+gA7Xd9Px6VQAweOvHt2cyT5Zxr5eQQrwxptdl6SZwBn9P2
+ r2dICweehhSbJMyAnZRWUNqp4v4qOsbyJwolku521SAnxPVSO+oKhrJc7IRGB+WB9IjS
+ QzxZn79FSNtDTBoypVAV2YGeCTz86qdQw+qdizqH9zhd6C+eKdEdJzK1hb/jOHkY75N7
+ 6Bg8p413BlVP/yxOGrFO5j1LuNEI1ImXgQsmyNnQPhxw0hteymeXs6AefuTKNBRr6DpI
+ 7enbQdbH2faKiX75E+SI921eG3Docjq7Kp01PIf+lk9vhc+KwFXFO7xfCWE4M6jV0DCp hdGg==
+X-Gm-Message-State: APjAAAVYfwJFVidCHtJJc1PBbLJ1F//DmeX0g9NuPXNu5dyL/aMFuEv0
+ RRSAylfM9pj1evqirek8Pz6x8Yxw
+X-Google-Smtp-Source:
+ APXvYqwxzLKXiXAx03eQ6MSec4M/gzOHWgIXolGfaugBn/4+q5aCV6CyWePWahV9zaYkY8MFgEgJhg==
+X-Received: by 2002:a63:460c:: with SMTP id t12mr19485781pga.69.1561954373185;
+ Sun, 30 Jun 2019 21:12:53 -0700 (PDT)
+X-BeenThere: spp@dpdk.org
+X-Mailman-Version: 2.1.15
+List-Id: Soft Patch Panel <spp.dpdk.org>
+List-Unsubscribe: <https://mails.dpdk.org/options/spp>,
+ <mailto:spp-request@dpdk.org?subject=unsubscribe>
+List-Archive: <http://mails.dpdk.org/archives/spp/>
+List-Post: <mailto:spp@dpdk.org>
+List-Help: <mailto:spp-request@dpdk.org?subject=help>
+List-Subscribe: <https://mails.dpdk.org/listinfo/spp>,
+ <mailto:spp-request@dpdk.org?subject=subscribe>
+X-TM-AS-MML: No
+Precedence: bulk
+Lines: 234
+X-TM-AS-GCONF: 00
+X-MD-STAMP: ON
+
+From: Yasufumi Ogawa <yasufum.o@gmail.com>
+
+This patch is to update rcps for spp_vf for the latest documents as
+previous patch.
+
+Signed-off-by: Yasufumi Ogawa <yasufum.o@gmail.com>
+---
+ .../ssh_login/setup/1-start_components.rcps   |  7 -------
+ .../ssh_login/setup/1_start_components.rcps   |  7 +++++++
+ .../ssh_login/setup/2-add_ports_path1.rcps    | 20 -------------------
+ .../ssh_login/setup/2_add_ports_path1.rcps    | 18 +++++++++++++++++
+ .../ssh_login/setup/3-reg_mac_path1.rcps      |  3 ---
+ .../ssh_login/setup/3_reg_mac_path1.rcps      |  3 +++
+ .../ssh_login/setup/4-start_components.rcps   |  7 -------
+ .../ssh_login/setup/4_start_components.rcps   |  7 +++++++
+ .../ssh_login/setup/5-add_ports_path2.rcps    | 20 -------------------
+ .../ssh_login/setup/5_add_ports_path2.rcps    | 19 ++++++++++++++++++
+ .../ssh_login/setup/6-reg_mac_path2.rcps      |  3 ---
+ .../ssh_login/setup/6_reg_mac_path2.rcps      |  3 +++
+ .../spp_vf/ssh_login/setup/7-flush.rcps       |  1 -
+ 13 files changed, 57 insertions(+), 61 deletions(-)
+ delete mode 100644 recipes/usecases/spp_vf/ssh_login/setup/1-start_components.rcps
+ create mode 100644 recipes/usecases/spp_vf/ssh_login/setup/1_start_components.rcps
+ delete mode 100644 recipes/usecases/spp_vf/ssh_login/setup/2-add_ports_path1.rcps
+ create mode 100644 recipes/usecases/spp_vf/ssh_login/setup/2_add_ports_path1.rcps
+ delete mode 100644 recipes/usecases/spp_vf/ssh_login/setup/3-reg_mac_path1.rcps
+ create mode 100644 recipes/usecases/spp_vf/ssh_login/setup/3_reg_mac_path1.rcps
+ delete mode 100644 recipes/usecases/spp_vf/ssh_login/setup/4-start_components.rcps
+ create mode 100644 recipes/usecases/spp_vf/ssh_login/setup/4_start_components.rcps
+ delete mode 100644 recipes/usecases/spp_vf/ssh_login/setup/5-add_ports_path2.rcps
+ create mode 100644 recipes/usecases/spp_vf/ssh_login/setup/5_add_ports_path2.rcps
+ delete mode 100644 recipes/usecases/spp_vf/ssh_login/setup/6-reg_mac_path2.rcps
+ create mode 100644 recipes/usecases/spp_vf/ssh_login/setup/6_reg_mac_path2.rcps
+ delete mode 100644 recipes/usecases/spp_vf/ssh_login/setup/7-flush.rcps
+
+diff --git a/recipes/usecases/spp_vf/ssh_login/setup/1-start_components.rcps b/recipes/usecases/spp_vf/ssh_login/setup/1-start_components.rcps
+deleted file mode 100644
+index 52e2bba..0000000
+--- a/recipes/usecases/spp_vf/ssh_login/setup/1-start_components.rcps
++++ /dev/null
+@@ -1,7 +0,0 @@
+-# Start component for path1
+-sec 1;component start classifier1 2 classifier_mac
+-sec 1;component start forwarder1 3 forward
+-sec 1;component start forwarder2 4 forward
+-sec 1;component start forwarder3 5 forward
+-sec 1;component start forwarder4 6 forward
+-sec 1;component start merger1 7 merge
+diff --git a/recipes/usecases/spp_vf/ssh_login/setup/1_start_components.rcps b/recipes/usecases/spp_vf/ssh_login/setup/1_start_components.rcps
+new file mode 100644
+index 0000000..e864628
+--- /dev/null
++++ b/recipes/usecases/spp_vf/ssh_login/setup/1_start_components.rcps
+@@ -0,0 +1,7 @@
++# Start component for path1
++vf 1; component start cls1 2 classifier_mac
++vf 1; component start fwd1 3 forward
++vf 1; component start fwd2 4 forward
++vf 1; component start fwd3 5 forward
++vf 1; component start fwd4 6 forward
++vf 1; component start mgr1 7 merge
+diff --git a/recipes/usecases/spp_vf/ssh_login/setup/2-add_ports_path1.rcps b/recipes/usecases/spp_vf/ssh_login/setup/2-add_ports_path1.rcps
+deleted file mode 100644
+index bfb59ba..0000000
+--- a/recipes/usecases/spp_vf/ssh_login/setup/2-add_ports_path1.rcps
++++ /dev/null
+@@ -1,20 +0,0 @@
+-# classifier1
+-sec 1;port add phy:0 rx classifier1
+-sec 1;port add ring:0 tx classifier1
+-sec 1;port add ring:1 tx classifier1
+-# forwarder1
+-sec 1;port add ring:0 rx forwarder1
+-sec 1;port add vhost:0 tx forwarder1
+-# forwarder2
+-sec 1;port add ring:1 rx forwarder2
+-sec 1;port add vhost:2 tx forwarder2
+-# forwarder3
+-sec 1;port add vhost:0 rx forwarder3
+-sec 1;port add ring:2 tx forwarder3
+-# forwarder4
+-sec 1;port add vhost:2 rx forwarder4
+-sec 1;port add ring:3 tx forwarder4
+-# merger1
+-sec 1;port add ring:2 rx merger1
+-sec 1;port add ring:3 rx merger1
+-sec 1;port add phy:0 tx merger1
+diff --git a/recipes/usecases/spp_vf/ssh_login/setup/2_add_ports_path1.rcps b/recipes/usecases/spp_vf/ssh_login/setup/2_add_ports_path1.rcps
+new file mode 100644
+index 0000000..8c116c9
+--- /dev/null
++++ b/recipes/usecases/spp_vf/ssh_login/setup/2_add_ports_path1.rcps
+@@ -0,0 +1,18 @@
++# Add ports of path1
++# classifier1
++vf 1; port add phy:0 rx cls1
++vf 1; port add ring:0 tx cls1
++vf 1; port add ring:1 tx cls1
++# forwarders
++vf 1; port add ring:0 rx fwd1
++vf 1; port add vhost:0 tx fwd1
++vf 1; port add ring:1 rx fwd2
++vf 1; port add vhost:2 tx fwd2
++vf 1; port add vhost:0 rx fwd3
++vf 1; port add ring:2 tx fwd3
++vf 1; port add vhost:2 rx fwd4
++vf 1; port add ring:3 tx fwd4
++# merger
++vf 1; port add ring:2 rx mgr1
++vf 1; port add ring:3 rx mgr1
++vf 1; port add phy:0 tx mgr1
+diff --git a/recipes/usecases/spp_vf/ssh_login/setup/3-reg_mac_path1.rcps b/recipes/usecases/spp_vf/ssh_login/setup/3-reg_mac_path1.rcps
+deleted file mode 100644
+index 3365291..0000000
+--- a/recipes/usecases/spp_vf/ssh_login/setup/3-reg_mac_path1.rcps
++++ /dev/null
+@@ -1,3 +0,0 @@
+-# Register MAC address to classifier
+-sec 1;classifier_table add mac 52:54:00:12:34:56 ring:0
+-sec 1;classifier_table add mac 52:54:00:12:34:58 ring:1
+diff --git a/recipes/usecases/spp_vf/ssh_login/setup/3_reg_mac_path1.rcps b/recipes/usecases/spp_vf/ssh_login/setup/3_reg_mac_path1.rcps
+new file mode 100644
+index 0000000..f98f1bd
+--- /dev/null
++++ b/recipes/usecases/spp_vf/ssh_login/setup/3_reg_mac_path1.rcps
+@@ -0,0 +1,3 @@
++# Register MAC addresses to mgr1
++vf 1; classifier_table add mac 52:54:00:12:34:56 ring:0
++vf 1; classifier_table add mac 52:54:00:12:34:58 ring:1
+diff --git a/recipes/usecases/spp_vf/ssh_login/setup/4-start_components.rcps b/recipes/usecases/spp_vf/ssh_login/setup/4-start_components.rcps
+deleted file mode 100644
+index 2adc721..0000000
+--- a/recipes/usecases/spp_vf/ssh_login/setup/4-start_components.rcps
++++ /dev/null
+@@ -1,7 +0,0 @@
+-# Start component for path2
+-sec 1;component start classifier2 8 classifier_mac
+-sec 1;component start forwarder5 9 forward
+-sec 1;component start forwarder6 10 forward
+-sec 1;component start forwarder7 11 forward
+-sec 1;component start forwarder8 12 forward
+-sec 1;component start merger2 13 merge
+diff --git a/recipes/usecases/spp_vf/ssh_login/setup/4_start_components.rcps b/recipes/usecases/spp_vf/ssh_login/setup/4_start_components.rcps
+new file mode 100644
+index 0000000..7ce2c0d
+--- /dev/null
++++ b/recipes/usecases/spp_vf/ssh_login/setup/4_start_components.rcps
+@@ -0,0 +1,7 @@
++# Start component for path2
++vf 1; component start cls2 8 classifier_mac
++vf 1; component start fwd5 9 forward
++vf 1; component start fwd6 10 forward
++vf 1; component start fwd7 11 forward
++vf 1; component start fwd8 12 forward
++vf 1; component start mgr2 13 merge
+diff --git a/recipes/usecases/spp_vf/ssh_login/setup/5-add_ports_path2.rcps b/recipes/usecases/spp_vf/ssh_login/setup/5-add_ports_path2.rcps
+deleted file mode 100644
+index d5334a5..0000000
+--- a/recipes/usecases/spp_vf/ssh_login/setup/5-add_ports_path2.rcps
++++ /dev/null
+@@ -1,20 +0,0 @@
+-# classifier2
+-sec 1;port add phy:1 rx classifier2
+-sec 1;port add ring:4 tx classifier2
+-sec 1;port add ring:5 tx classifier2
+-# forwarder5
+-sec 1;port add ring:4 rx forwarder5
+-sec 1;port add vhost:1 tx forwarder5
+-# forwarder6
+-sec 1;port add ring:5 rx forwarder6
+-sec 1;port add vhost:3 tx forwarder6
+-# forwarder7
+-sec 1;port add vhost:1 rx forwarder7
+-sec 1;port add ring:6 tx forwarder7
+-# forwarder8
+-sec 1;port add vhost:3 rx forwarder8
+-sec 1;port add ring:7 tx forwarder8
+-# merger2
+-sec 1;port add ring:6 rx merger2
+-sec 1;port add ring:7 rx merger2
+-sec 1;port add phy:1 tx merger2
+diff --git a/recipes/usecases/spp_vf/ssh_login/setup/5_add_ports_path2.rcps b/recipes/usecases/spp_vf/ssh_login/setup/5_add_ports_path2.rcps
+new file mode 100644
+index 0000000..581bf72
+--- /dev/null
++++ b/recipes/usecases/spp_vf/ssh_login/setup/5_add_ports_path2.rcps
+@@ -0,0 +1,19 @@
++# classifier
++vf 1; port add phy:1 rx cls2
++vf 1; port add ring:4 tx cls2
++vf 1; port add ring:5 tx cls2
++
++# forwarders
++vf 1; port add ring:4 rx fwd5
++vf 1; port add vhost:1 tx fwd5
++vf 1; port add ring:5 rx fwd6
++vf 1; port add vhost:3 tx fwd6
++vf 1; port add vhost:1 rx fwd7
++vf 1; port add ring:6 tx fwd7
++vf 1; port add vhost:3 rx fwd8
++vf 1; port add ring:7 tx fwd8
++
++# merger
++vf 1; port add ring:6 rx mgr2
++vf 1; port add ring:7 rx mgr2
++vf 1; port add phy:1 tx mgr2
+diff --git a/recipes/usecases/spp_vf/ssh_login/setup/6-reg_mac_path2.rcps b/recipes/usecases/spp_vf/ssh_login/setup/6-reg_mac_path2.rcps
+deleted file mode 100644
+index 9cab6b4..0000000
+--- a/recipes/usecases/spp_vf/ssh_login/setup/6-reg_mac_path2.rcps
++++ /dev/null
+@@ -1,3 +0,0 @@
+-# Register MAC address to classifier
+-sec 1;classifier_table add mac 52:54:00:12:34:57 ring:4
+-sec 1;classifier_table add mac 52:54:00:12:34:59 ring:5
+diff --git a/recipes/usecases/spp_vf/ssh_login/setup/6_reg_mac_path2.rcps b/recipes/usecases/spp_vf/ssh_login/setup/6_reg_mac_path2.rcps
+new file mode 100644
+index 0000000..e812b79
+--- /dev/null
++++ b/recipes/usecases/spp_vf/ssh_login/setup/6_reg_mac_path2.rcps
+@@ -0,0 +1,3 @@
++# Register MAC address to classifier
++spp > vf 1; classifier_table add mac 52:54:00:12:34:57 ring:4
++spp > vf 1; classifier_table add mac 52:54:00:12:34:59 ring:5
+diff --git a/recipes/usecases/spp_vf/ssh_login/setup/7-flush.rcps b/recipes/usecases/spp_vf/ssh_login/setup/7-flush.rcps
+deleted file mode 100644
+index 9ea2237..0000000
+--- a/recipes/usecases/spp_vf/ssh_login/setup/7-flush.rcps
++++ /dev/null
+@@ -1 +0,0 @@
+-sec 1;flush
+-- 
+2.17.1
+
+

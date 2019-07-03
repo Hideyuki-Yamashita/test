@@ -1,0 +1,331 @@
+Return-path: <fw-yama-hd@pomail01.silk.ntt-tx.co.jp>
+Received: from zssg-mailmd104.ddreams.local
+ (zssg-mailmd104.ddreams.local [10.160.123.99]) by zssg-mailms320.ddreams.local
+ (NTT DoCoMo Mail System) with ESMTP id <0PU1002OYO2DQ790@NTTDoCoMo.co.jp> for
+ yamashita.hideyuki@ntt-tx.co.jp; Wed, 03 Jul 2019 11:25:25 +0900 (JST)
+Original-recipient: rfc822;yamashita.hideyuki@ntt-tx.co.jp
+Received: from smtp_saver-daemon.zssg-mailmd104.ddreams.local by
+ zssg-mailmd104.ddreams.local (dDREAMS) id <0PU101236O2DM600@dDREAMS> for
+ yamashita.hideyuki@ntt-tx.co.jp (ORCPT yamashita.hideyuki@ntt-tx.co.jp); Wed,
+ 03 Jul 2019 11:25:25 +0900 (JST)
+Received: from zssg-mailmf101.ddreams.local
+ (zssg-mailmf900.ddreams.local [10.160.172.84]) by zssg-mailmd104.ddreams.local
+ (dDREAMS) with ESMTP id <0PU100UAVO2D6S50@dDREAMS> for
+ yamashita.hideyuki@ntt-tx.co.jp (ORCPT yamashita.hideyuki@ntt-tx.co.jp); Wed,
+ 03 Jul 2019 11:25:25 +0900 (JST)
+Received: from zssg-mailmf101.ddreams.local (unknown [127.0.0.1])
+	by zssg-mailmf101.ddreams.local (Postfix) with ESMTP id A1A857E6034	for
+ <yamashita.hideyuki@ntt-tx.co.jp>; Wed,  3 Jul 2019 11:25:25 +0900 (JST)
+Received: from zssg-mailmf101.ddreams.local (unknown [127.0.0.1])
+	by IMSVA (Postfix) with ESMTP id 9D7E88E6056	for
+ <yamashita.hideyuki@ntt-tx.co.jp>; Wed,  3 Jul 2019 11:25:25 +0900 (JST)
+Received: from localhost (unknown [127.0.0.1])	by IMSVA (Postfix)
+ with SMTP id 801758E605B	for <yamashita.hideyuki@ntt-tx.co.jp>; Wed,
+ 3 Jul 2019 11:25:25 +0900 (JST)
+X-IMSS-HAND-OFF-DIRECTIVE: localhost:10026
+Received: from zssg-mailmf101.ddreams.local (unknown [127.0.0.1])
+	by IMSVA (Postfix) with ESMTP id 43DA38E6054	for
+ <yamashita.hideyuki@ntt-tx.co.jp>; Wed,  3 Jul 2019 11:25:24 +0900 (JST)
+Received: from pomail01.silk.ntt-tx.co.jp (unknown [10.160.183.139])
+	by zssg-mailmf101.ddreams.local (Postfix)
+ with ESMTPS	for <yamashita.hideyuki@ntt-tx.co.jp>; Wed,
+ 3 Jul 2019 11:25:24 +0900 (JST)
+Received: from pomail01.silk.ntt-tx.co.jp (localhost [127.0.0.1])
+	by pomail01.silk.ntt-tx.co.jp (unknown) with ESMTP id x632POOV025510;	Wed,
+ 3 Jul 2019 11:25:24 +0900
+Received: (from yama-hd@localhost)	by pomail01.silk.ntt-tx.co.jp (unknown)
+ id x632POSQ025509;	Wed, 3 Jul 2019 11:25:24 +0900
+X-Authentication-warning: pomail01.silk.ntt-tx.co.jp: yama-hd set sender to
+ fw-yama-hd@pomail01.silk.ntt-tx.co.jp using -f
+Received: from imss04.silk.ntt-tx.co.jp
+ (imss04.silk.ntt-tx.co.jp [10.107.0.39])	by pomail01.silk.ntt-tx.co.jp
+ (unknown) with ESMTP id x632PNrv025502	for unknown; Wed,
+ 3 Jul 2019 11:25:23 +0900
+Received: from imss04.silk.ntt-tx.co.jp (localhost [127.0.0.1])
+ by imss04.silk.ntt-tx.co.jp (unknown) with ESMTP id x632PNsJ019685 for
+ unknown; Wed, 3 Jul 2019 11:25:23 +0900
+Received: from ml01.silk.ntt-tx.co.jp (ml01.silk.ntt-tx.co.jp [10.107.0.230])
+ by imss04.silk.ntt-tx.co.jp (unknown) with ESMTP id x632PNkV019680; Wed,
+ 3 Jul 2019 11:25:23 +0900
+Received: from ml01.silk.ntt-tx.co.jp (localhost [127.0.0.1])
+	by ml01.silk.ntt-tx.co.jp (unknown) with ESMTP id x632PNJG008922;	Wed,
+ 3 Jul 2019 11:25:23 +0900
+Received: from imss01.silk.ntt-tx.co.jp
+ (imss01.silk.ntt-tx.co.jp [10.107.0.126])	by ml01.silk.ntt-tx.co.jp (unknown)
+ with ESMTP id x632PNRn008917	for unknown; Wed, 3 Jul 2019 11:25:23 +0900
+Received: from imss01.silk.ntt-tx.co.jp (localhost [127.0.0.1])
+ by imss01.silk.ntt-tx.co.jp (unknown) with ESMTP id x632PNXQ015623 for
+ unknown; Wed, 3 Jul 2019 11:25:23 +0900
+Received: from mail01.ics.ntt-tx.co.jp (mail01.ics.ntt-tx.co.jp [10.254.2.67])
+ by imss01.silk.ntt-tx.co.jp (unknown) with ESMTP id x632PNYV015617 for
+ unknown; Wed, 3 Jul 2019 11:25:23 +0900
+Received: from dpdk.org (dpdk.org [92.243.14.124])	by mail01.ics.ntt-tx.co.jp
+ (unknown) with SMTP id x632PGUq012228	for unknown; Wed,
+ 3 Jul 2019 11:25:22 +0900
+Received: from [92.243.14.124] (localhost [127.0.0.1])	by dpdk.org (Postfix)
+ with ESMTP id D28791BDFB;	Wed,  3 Jul 2019 04:25:15 +0200 (CEST)
+Received: from mail-pf1-f194.google.com
+ (mail-pf1-f194.google.com [209.85.210.194]) by dpdk.org (Postfix)
+ with ESMTP id D5EBC1BDF4 for <spp@dpdk.org>; Wed,
+ 3 Jul 2019 04:25:14 +0200 (CEST)
+Received: by mail-pf1-f194.google.com with SMTP id q10so397788pff.9 for
+ <spp@dpdk.org>; Tue, 02 Jul 2019 19:25:14 -0700 (PDT)
+Received: from localhost.localdomain ([192.47.164.146])
+ by smtp.gmail.com with ESMTPSA id o130sm416096pfg.171.2019.07.02.19.25.12
+ (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128); Tue,
+ 02 Jul 2019 19:25:13 -0700 (PDT)
+Date: Wed, 03 Jul 2019 11:25:01 +0900
+From: yasufum.o@gmail.com
+Subject: [spp 04473] [spp] [PATCH 3/3] docs: update implementation of spp_pcap
+Sender: spp <spp-bounces@dpdk.org>
+To: spp@dpdk.org, ferruh.yigit@intel.com, yasufum.o@gmail.com
+Message-id: <20190703022501.23738-4-yasufum.o@gmail.com>
+In-reply-to: <20190703022501.23738-1-yasufum.o@gmail.com>
+References: <20190703022501.23738-1-yasufum.o@gmail.com>
+X-ML-Name: unknown
+X-Mail-Count: 04473
+X-MLServer: unknown
+X-ML-Info: mailing list service
+X-Mailer: git-send-email 2.17.1
+Authentication-results: mail01.ics.ntt-tx.co.jp; spf=pass
+ smtp.mailfrom=spp-bounces@dpdk.org
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
+ h=from:to:subject:date:message-id:in-reply-to:references;
+ bh=/GBNxOfvp5FYAmTvAywWzGZFMxlLRtBi6WKEeu6ODN4=;
+ b=szLwladrmUqfqFO2jLM+3AzrdiNgC1ltERhMBGeN9V7wi5ymRrf5yE2es7b6wQlNbR
+ OZo7nuewZvylrRxkgfdkuWnsjFjenJXgfcpGV441mhvv42wokwxU6Ruj347jMDTRuPDH
+ 2bICoeFcQHEOEZ1f/PLDzi68Q24k1vBYEFmQxLdukPYG2JhKsksZ4yM/7GURPi3HjcTT
+ ioNwTL40gGvCJ1qivaGGA6BUziDbcm+FACXq1veAdAGlXqZG8bTg1B8pSHxLLctU8nSj
+ LnT2Y0RymSUj5X/g3+cCl0dalzKRr0UuFPpnUgZCTM20rUWQ9aky+0o2tNvU5GWAnrFB I7Sw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=1e100.net;
+ s=20161025; h=x-gm-message-state:from:to:subject:date:message-id:in-reply-to
+ :references; bh=/GBNxOfvp5FYAmTvAywWzGZFMxlLRtBi6WKEeu6ODN4=;
+ b=E4ngNte0pumON+/ykqp7ssnjZDDpUleRg8/OHSj59TqsHcJWb7Dp3tyiHdtqra+3AH
+ rsuSkYaBCSZ7EYu6jDMwCfW17VEFETxNrgEniUVbWERZTqOcmRlMeRafhOoNxKeo+Thl
+ f2JXcO/bjn6o+uUG+i07KxV1Ma5iEox94GUs7bFOl7c8Pgb0+2W/0lHOEAud0mme6wLR
+ Q5i4+mL6WKDy0G2KgeKmg8kIL07MK8jTsiwdj/0VwgNl4iczMUl7x3Dwhbrv1Vbzm5jw
+ SdDy0wPGyJ7/HaQ/2ryPowLT+iHFnyKwfKcS4qbNfn//80bOiIpIxBJqg6ziMpir675R WIuA==
+X-Gm-Message-State: APjAAAUPVxbU9QoqYLVPTPWfYzPlnyRQ0R+BagWp+B+CWjqr0A8OA5tq
+ ba3Xfp3901uS1da6N2lQsqOB8Z2x
+X-Google-Smtp-Source:
+ APXvYqzQAr1Xb+c/oVfrrym9b3C5x1ldbsr5oJ97kjq7owJTrOANx1mLf2F/eApmVCZIPhQOmGRb2Q==
+X-Received: by 2002:a17:90a:bb94:: with SMTP id
+ v20mr9410866pjr.88.1562120713938; Tue, 02 Jul 2019 19:25:13 -0700 (PDT)
+X-BeenThere: spp@dpdk.org
+X-Mailman-Version: 2.1.15
+List-Id: Soft Patch Panel <spp.dpdk.org>
+List-Unsubscribe: <https://mails.dpdk.org/options/spp>,
+ <mailto:spp-request@dpdk.org?subject=unsubscribe>
+List-Archive: <http://mails.dpdk.org/archives/spp/>
+List-Post: <mailto:spp@dpdk.org>
+List-Help: <mailto:spp-request@dpdk.org?subject=help>
+List-Subscribe: <https://mails.dpdk.org/listinfo/spp>,
+ <mailto:spp-request@dpdk.org?subject=subscribe>
+X-TM-AS-MML: No
+Precedence: bulk
+Lines: 201
+X-TM-AS-GCONF: 00
+X-MD-STAMP: ON
+
+From: Yasufumi Ogawa <yasufum.o@gmail.com>
+
+This patch is to update description and examples of spp_pcap.
+
+Signed-off-by: Yasufumi Ogawa <yasufum.o@gmail.com>
+---
+ docs/guides/design/impl/spp_pcap.rst | 156 ++++++++-------------------
+ 1 file changed, 45 insertions(+), 111 deletions(-)
+
+diff --git a/docs/guides/design/impl/spp_pcap.rst b/docs/guides/design/impl/spp_pcap.rst
+index 8c3f624..1f93d41 100644
+--- a/docs/guides/design/impl/spp_pcap.rst
++++ b/docs/guides/design/impl/spp_pcap.rst
+@@ -6,139 +6,73 @@
+ spp_pcap
+ ========
+ 
+-The following sections provide some explanation of the code.
++This section describes implementation of ``spp_pcap``.
+ 
+-Initializing
+-------------
+ 
+-A manager thread of ``spp_pcap`` initialize eal by ``rte_eal_init()``.
+-Then each of component threads are launched by
+-``rte_eal_remote_launch()``.
++Slave Main
++----------
+ 
++In ``slave_main()``, it calls ``pcap_proc_receive()`` if thread type is
++receiver, or ``pcap_proc_write()`` if the type is writer.
+ 
+ .. code-block:: c
+ 
+     /* spp_pcap.c */
+-    int ret_dpdk = rte_eal_init(argc, argv);
+ 
+-    /* Start worker threads of classifier and forwarder */
+-    RTE_LCORE_FOREACH_SLAVE(lcore_id) {
+-        g_core_info[lcore_id].core[0].num = 1;
+-        g_pcap_info[lcore_id].thread_no = thread_no++;
+-        rte_eal_remote_launch(slave_main, NULL, lcore_id);
+-    }
++    while ((status = spp_get_core_status(lcore_id)) !=
++                    SPP_CORE_STOP_REQUEST) {
+ 
++            if (pcap_info->type == TYPE_RECIVE)
++                    ret = pcap_proc_receive(lcore_id);
++            else
++                    ret = pcap_proc_write(lcore_id);
++            }
++    }
+ 
+-Main function of slave thread
+------------------------------
++Receiving Pakcets
++-----------------
+ 
+-``slave_main()`` is called from ``rte_eal_remote_launch()``.
+-It call ``pcap_proc_receive()`` or ``pcap_proc_write()``
+-depending on the core assignment.
+-``pcap_proc_write();`` provides function for ``receive``,
+-and ``pcap_proc_write();`` provides function for ``write``.
++``pcap_proc_receive()`` is for receiving packets with ``rte_eth_rx_burst``
++and sending the packets to the writer thread via ring memory by using
++``rte_ring_enqueue_bulk()``.
+ 
+ .. code-block:: c
+ 
+     /* spp_pcap.c */
+-        int ret = SPP_RET_OK;
+-        unsigned int lcore_id = rte_lcore_id();
+-        enum spp_core_status status = SPP_CORE_STOP;
+-        struct pcap_mng_info *pcap_info = &g_pcap_info[lcore_id];
+-
+-        if (pcap_info->thread_no == 0) {
+-                RTE_LOG(INFO, PCAP, "Core[%d] Start recive.\n", lcore_id);
+-                pcap_info->type = TYPE_RECIVE;
+-        } else {
+-                RTE_LOG(INFO, PCAP, "Core[%d] Start write(%d).\n",
+-                                        lcore_id, pcap_info->thread_no);
+-                pcap_info->type = TYPE_WRITE;
+-        }
+-        RTE_LOG(INFO, PCAP, "Core[%d] Start.\n", lcore_id);
+-        set_core_status(lcore_id, SPP_CORE_IDLE);
+-
+-        while ((status = spp_get_core_status(lcore_id)) !=
+-                        SPP_CORE_STOP_REQUEST) {
+-
+-                if (pcap_info->type == TYPE_RECIVE)
+-                        ret = pcap_proc_receive(lcore_id);
+-                else
+-                        ret = pcap_proc_write(lcore_id);
+-                if (unlikely(ret != SPP_RET_OK)) {
+-                        RTE_LOG(ERR, PCAP, "Core[%d] Thread Error.\n",
+-                                                                lcore_id);
+-                        break;
+-                }
+-        }
+-
+-Receive Pakcet
+---------------
+-
+-``pcap_proc_receive()`` is the function to realize
+-receiving incoming packets. This function is called in the while loop and
+-receive packets. Everytime it receves packet via ``spp_eth_rx_burst()``, then
+-it enqueue those packet into the ring using ``rte_ring_enqueue_bulk()``.
+-Those packets are trnsfered to ``write`` cores via the ring.
+-
+-
+-.. code-block:: c
+ 
+-        /* spp_pcap.c */
+-        /* Receive packets */
+-        rx = &g_pcap_option.port_cap;
++    rx = &g_pcap_option.port_cap;
++	nb_rx = rte_eth_rx_burst(rx->ethdev_port_id, 0, bufs, MAX_PCAP_BURST);
+ 
+-        nb_rx = spp_eth_rx_burst(rx->dpdk_port, 0, bufs, MAX_PKT_BURST);
+-        if (unlikely(nb_rx == 0))
+-                return SPP_RET_OK;
++	/* Forward to ring for writer thread */
++	nb_tx = rte_ring_enqueue_burst(write_ring, (void *)bufs, nb_rx, NULL);
+ 
+-        /* Write ring packets */
+ 
+-        nb_tx = rte_ring_enqueue_bulk(write_ring, (void *)bufs, nb_rx, NULL);
+-
+-        /* Discard remained packets to release mbuf */
+-
+-        if (unlikely(nb_tx < nb_rx)) {
+-                for (buf = nb_tx; buf < nb_rx; buf++)
+-                        rte_pktmbuf_free(bufs[buf]);
+-        }
+-
+-        return SPP_RET_OK;
+-
+-
+-Write Packet
+-------------
++Writing Packet
++--------------
+ 
+-In ``pcap_proc_write()``, it dequeue packets from ring.Then it writes to
+-storage after data compression using LZ4 libraries. ``compress_file_packet``
+-is the function to write packet with LZ4. LZ4 is lossless compression
+-algorithm, providing compression speed > 500 MB/s per core, scalable with
+-multi-cores CPU. It features an extremely fast decoder, with speed in multiple
+-GB/s per core, typically reaching RAM speed limits on multi-core systems.
+-Please see details in
++``pcap_proc_write()`` is for capturing packets to a file. The captured file
++is compressed with
+ `LZ4
+ <https://github.com/lz4/lz4>`_
++which is a lossless compression algorithm and providing compression
++speed > 500 MB/s per core.
+ 
+ .. code-block:: c
+ 
+-        /* Read packets */
+-        nb_rx =  rte_ring_dequeue_bulk(read_ring, (void *)bufs, MAX_PKT_BURST,
+-                                                                        NULL);
+-        if (unlikely(nb_rx == 0))
+-                return SPP_RET_OK;
+-
+-        for (buf = 0; buf < nb_rx; buf++) {
+-                mbuf = bufs[buf];
+-                rte_prefetch0(rte_pktmbuf_mtod(mbuf, void *));
+-                if (compress_file_packet(&g_pcap_info[lcore_id], mbuf)
+-                                                        != SPP_RET_OK) {
+-                        RTE_LOG(ERR, PCAP, "capture file write error: "
+-                                "%d (%s)\n", errno, strerror(errno));
+-                        ret = SPP_RET_NG;
+-                        info->status = SPP_CAPTURE_IDLE;
+-                        compress_file_operation(info, CLOSE_MODE);
+-                        break;
+-                }
+-        }
+-        for (buf = nb_rx; buf < nb_rx; buf++)
+-                rte_pktmbuf_free(bufs[buf]);
+-        return ret;
++    nb_rx =  rte_ring_dequeue_bulk(read_ring, (void *)bufs, MAX_PKT_BURST,
++                                                                    NULL);
++    for (buf = 0; buf < nb_rx; buf++) {
++            mbuf = bufs[buf];
++            rte_prefetch0(rte_pktmbuf_mtod(mbuf, void *));
++            if (compress_file_packet(&g_pcap_info[lcore_id], mbuf)
++                                                    != SPP_RET_OK) {
++                    RTE_LOG(ERR, PCAP, "capture file write error: "
++                            "%d (%s)\n", errno, strerror(errno));
++                    ret = SPP_RET_NG;
++                    info->status = SPP_CAPTURE_IDLE;
++                    compress_file_operation(info, CLOSE_MODE);
++                    break;
++            }
++    }
++    for (buf = nb_rx; buf < nb_rx; buf++)
++            rte_pktmbuf_free(bufs[buf]);
+-- 
+2.17.1
+
+

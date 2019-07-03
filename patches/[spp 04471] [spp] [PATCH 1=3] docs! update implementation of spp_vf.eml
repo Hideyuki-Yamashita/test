@@ -1,0 +1,728 @@
+Return-path: <fw-yama-hd@pomail01.silk.ntt-tx.co.jp>
+Received: from zssg-mailmd106.ddreams.local
+ (zssg-mailmd106.ddreams.local [10.160.123.101])
+ by zssg-mailms320.ddreams.local (NTT DoCoMo Mail System)
+ with ESMTP id <0PU1002NWO2BQ790@NTTDoCoMo.co.jp> for
+ yamashita.hideyuki@ntt-tx.co.jp; Wed, 03 Jul 2019 11:25:23 +0900 (JST)
+Original-recipient: rfc822;yamashita.hideyuki@ntt-tx.co.jp
+Received: from smtp_saver-daemon.zssg-mailmd106.ddreams.local by
+ zssg-mailmd106.ddreams.local (dDREAMS) id <0PU10101EO2BBQ00@dDREAMS> for
+ yamashita.hideyuki@ntt-tx.co.jp (ORCPT yamashita.hideyuki@ntt-tx.co.jp); Wed,
+ 03 Jul 2019 11:25:23 +0900 (JST)
+Received: from zssg-mailmf105.ddreams.local
+ (zssg-mailmf900.ddreams.local [10.160.172.84]) by zssg-mailmd106.ddreams.local
+ (dDREAMS) with ESMTP id <0PU100L9BO2B8Y90@dDREAMS> for
+ yamashita.hideyuki@ntt-tx.co.jp (ORCPT yamashita.hideyuki@ntt-tx.co.jp); Wed,
+ 03 Jul 2019 11:25:23 +0900 (JST)
+Received: from zssg-mailmf105.ddreams.local (unknown [127.0.0.1])
+	by zssg-mailmf105.ddreams.local (Postfix) with ESMTP id 38B127E6034	for
+ <yamashita.hideyuki@ntt-tx.co.jp>; Wed,  3 Jul 2019 11:25:23 +0900 (JST)
+Received: from zssg-mailmf105.ddreams.local (unknown [127.0.0.1])
+	by IMSVA (Postfix) with ESMTP id 3704B8E6060	for
+ <yamashita.hideyuki@ntt-tx.co.jp>; Wed,  3 Jul 2019 11:25:23 +0900 (JST)
+Received: from localhost (unknown [127.0.0.1])	by IMSVA (Postfix)
+ with SMTP id 2B1398E605A	for <yamashita.hideyuki@ntt-tx.co.jp>; Wed,
+ 3 Jul 2019 11:25:23 +0900 (JST)
+X-IMSS-HAND-OFF-DIRECTIVE: localhost:10026
+Received: from zssg-mailmf105.ddreams.local (unknown [127.0.0.1])
+	by IMSVA (Postfix) with ESMTP id 108A88E605D	for
+ <yamashita.hideyuki@ntt-tx.co.jp>; Wed,  3 Jul 2019 11:25:22 +0900 (JST)
+Received: from pomail01.silk.ntt-tx.co.jp (unknown [10.160.183.139])
+	by zssg-mailmf105.ddreams.local (Postfix)
+ with ESMTPS	for <yamashita.hideyuki@ntt-tx.co.jp>; Wed,
+ 3 Jul 2019 11:25:22 +0900 (JST)
+Received: from pomail01.silk.ntt-tx.co.jp (localhost [127.0.0.1])
+	by pomail01.silk.ntt-tx.co.jp (unknown) with ESMTP id x632PL6f025484;	Wed,
+ 3 Jul 2019 11:25:21 +0900
+Received: (from yama-hd@localhost)	by pomail01.silk.ntt-tx.co.jp (unknown)
+ id x632PLiT025483;	Wed, 3 Jul 2019 11:25:21 +0900
+X-Authentication-warning: pomail01.silk.ntt-tx.co.jp: yama-hd set sender to
+ fw-yama-hd@pomail01.silk.ntt-tx.co.jp using -f
+Received: from imss04.silk.ntt-tx.co.jp
+ (imss04.silk.ntt-tx.co.jp [10.107.0.39])	by pomail01.silk.ntt-tx.co.jp
+ (unknown) with ESMTP id x632PLXK025477	for unknown; Wed,
+ 3 Jul 2019 11:25:21 +0900
+Received: from imss04.silk.ntt-tx.co.jp (localhost [127.0.0.1])
+ by imss04.silk.ntt-tx.co.jp (unknown) with ESMTP id x632PLaN019591 for
+ unknown; Wed, 3 Jul 2019 11:25:21 +0900
+Received: from ml01.silk.ntt-tx.co.jp (ml01.silk.ntt-tx.co.jp [10.107.0.230])
+ by imss04.silk.ntt-tx.co.jp (unknown) with ESMTP id x632PLR0019587; Wed,
+ 3 Jul 2019 11:25:21 +0900
+Received: from ml01.silk.ntt-tx.co.jp (localhost [127.0.0.1])
+	by ml01.silk.ntt-tx.co.jp (unknown) with ESMTP id x632PLeO008882;	Wed,
+ 3 Jul 2019 11:25:21 +0900
+Received: from imss01.silk.ntt-tx.co.jp
+ (imss01.silk.ntt-tx.co.jp [10.107.0.126])	by ml01.silk.ntt-tx.co.jp (unknown)
+ with ESMTP id x632PLoq008878	for unknown; Wed, 3 Jul 2019 11:25:21 +0900
+Received: from imss01.silk.ntt-tx.co.jp (localhost [127.0.0.1])
+ by imss01.silk.ntt-tx.co.jp (unknown) with ESMTP id x632PK7V015570 for
+ unknown; Wed, 3 Jul 2019 11:25:20 +0900
+Received: from mail01.ics.ntt-tx.co.jp (mail01.ics.ntt-tx.co.jp [10.254.2.67])
+ by imss01.silk.ntt-tx.co.jp (unknown) with ESMTP id x632PKGl015567 for
+ unknown; Wed, 3 Jul 2019 11:25:20 +0900
+Received: from dpdk.org (dpdk.org [92.243.14.124])	by mail01.ics.ntt-tx.co.jp
+ (unknown) with SMTP id x632PENo012196	for unknown; Wed,
+ 3 Jul 2019 11:25:20 +0900
+Received: from [92.243.14.124] (localhost [127.0.0.1])	by dpdk.org (Postfix)
+ with ESMTP id A67EA1B9E7;	Wed,  3 Jul 2019 04:25:13 +0200 (CEST)
+Received: from mail-pl1-f193.google.com
+ (mail-pl1-f193.google.com [209.85.214.193]) by dpdk.org (Postfix)
+ with ESMTP id 25AA41B994 for <spp@dpdk.org>; Wed,
+ 3 Jul 2019 04:25:12 +0200 (CEST)
+Received: by mail-pl1-f193.google.com with SMTP id bh12so330846plb.4 for
+ <spp@dpdk.org>; Tue, 02 Jul 2019 19:25:12 -0700 (PDT)
+Received: from localhost.localdomain ([192.47.164.146])
+ by smtp.gmail.com with ESMTPSA id o130sm416096pfg.171.2019.07.02.19.25.09
+ (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128); Tue,
+ 02 Jul 2019 19:25:10 -0700 (PDT)
+Date: Wed, 03 Jul 2019 11:24:59 +0900
+From: yasufum.o@gmail.com
+Subject: [spp 04471] [spp] [PATCH 1/3] docs: update implementation of spp_vf
+Sender: spp <spp-bounces@dpdk.org>
+To: spp@dpdk.org, ferruh.yigit@intel.com, yasufum.o@gmail.com
+Message-id: <20190703022501.23738-2-yasufum.o@gmail.com>
+In-reply-to: <20190703022501.23738-1-yasufum.o@gmail.com>
+References: <20190703022501.23738-1-yasufum.o@gmail.com>
+X-ML-Name: unknown
+X-Mail-Count: 04471
+X-MLServer: unknown
+X-ML-Info: mailing list service
+X-Mailer: git-send-email 2.17.1
+Authentication-results: mail01.ics.ntt-tx.co.jp; spf=pass
+ smtp.mailfrom=spp-bounces@dpdk.org
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
+ h=from:to:subject:date:message-id:in-reply-to:references;
+ bh=pmr+3SAo4iTe81WNpwoAoImURmHWNqx2Xx0KYv4f930=;
+ b=Lb7YOlbOByW10mhTB4jLOmKAWptH7ml+M0UM7NK1YIQqjH4GtMn1BB74BATcvRaTJx
+ myPIEva3Sbj+BRSjenIQb2HlUrox+DdUYWV3VyQSrOonWjDleQFTwdz8SNciP81BEsKo
+ RSJaVuSRhEmun9fNE8PeoZ3SiTvkJ4cmCduJP1VOBLuPCUNkML4gb9E123XsXV2gZPHf
+ K0dw1Sq2CR3dAczz/A2u5rl4sIClgyQFZu+Scxvs2n9xET8oeRK8nj6QcwCDOlGX/NL5
+ Qgme4cS9V4NFgatd7NFTjyXo7yUdMRmELabapK+eN4b5wO3nqwZggGa8+aLtJDqsb7zn c1ZQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=1e100.net;
+ s=20161025; h=x-gm-message-state:from:to:subject:date:message-id:in-reply-to
+ :references; bh=pmr+3SAo4iTe81WNpwoAoImURmHWNqx2Xx0KYv4f930=;
+ b=AxdXCKpvP68bLX2rvUORyjCrF9VhJC6InvN/qCjPZq4Z140FPi00IWELGGAB6ZM3fl
+ 8JntRtwBj8QtOsXY3yM3llb5Gd9c6aIxSc7zVfma1mDRjYFfxrBLDE/5A8aZLbfqfzAM
+ XmKA1kma+wj1xDvKybnWxoyIQjRdefFF2TlT/UqbZv6FCT96dij2AN+auX0gTt9QcnkV
+ Mibzy75gRIiqJczRNpf4e5GGyZxHxn1fDOdNir9cPpqkIGjYDhH+rKPPLvy2/KLa+PVD
+ hXt9jJxq6GhGTAnGeh1arUZT2Sh/+54pMIxAPMdEDTyj1AAECZnr0G6EaTPQolQT5xAu GmyA==
+X-Gm-Message-State: APjAAAVJCnIa8bEtByqu8oOSNFigVFo7MI05IsyXyIme5WqJRSZOsLGZ
+ usoKLHHyVzOML0wh5egCWSAqHFRs
+X-Google-Smtp-Source:
+ APXvYqx5KuPnJ7NAWPuNJgRaL5jQ4Bi9kJtDlhud6TN8k15FPD8iFMOfss343ybewPS6LBDzQw3zdg==
+X-Received: by 2002:a17:902:2889:: with SMTP id
+ f9mr36984848plb.230.1562120711073; Tue, 02 Jul 2019 19:25:11 -0700 (PDT)
+X-BeenThere: spp@dpdk.org
+X-Mailman-Version: 2.1.15
+List-Id: Soft Patch Panel <spp.dpdk.org>
+List-Unsubscribe: <https://mails.dpdk.org/options/spp>,
+ <mailto:spp-request@dpdk.org?subject=unsubscribe>
+List-Archive: <http://mails.dpdk.org/archives/spp/>
+List-Post: <mailto:spp@dpdk.org>
+List-Help: <mailto:spp-request@dpdk.org?subject=help>
+List-Subscribe: <https://mails.dpdk.org/listinfo/spp>,
+ <mailto:spp-request@dpdk.org?subject=subscribe>
+X-TM-AS-MML: No
+Precedence: bulk
+Lines: 597
+X-TM-AS-GCONF: 00
+X-MD-STAMP: ON
+
+From: Yasufumi Ogawa <yasufum.o@gmail.com>
+
+This update is to update description and examples of spp_vf because
+of previous updates for.
+
+Signed-off-by: Yasufumi Ogawa <yasufum.o@gmail.com>
+---
+ docs/guides/api_ref/proc_independ.rst |  11 +-
+ docs/guides/design/impl/spp_vf.rst    | 438 ++++++++------------------
+ 2 files changed, 140 insertions(+), 309 deletions(-)
+
+diff --git a/docs/guides/api_ref/proc_independ.rst b/docs/guides/api_ref/proc_independ.rst
+index c6180fa..8d4b830 100644
+--- a/docs/guides/api_ref/proc_independ.rst
++++ b/docs/guides/api_ref/proc_independ.rst
+@@ -100,7 +100,7 @@ logical cores if hyper threading is enabled.
+     +-------+-----------------------+
+ 
+ 
+-.. _table_spp_ctl_cpu_layout:
++.. _table_spp_ctl_cpu_layout_params:
+ 
+ .. table:: Response params of getting CPU layout.
+ 
+@@ -144,11 +144,14 @@ Response
+             "core_id": 0,
+             "lcores": [0, 1]
+           },
+-          ...
+           {
+             "core_id": 2,
+             "lcores": [4, 5]
+           }
++          {
++            "core_id": 3,
++            "lcores": [6, 7]
++          }
+         ],
+         "socket_id": 0
+       }
+@@ -167,7 +170,7 @@ Response
+ An array of CPU usage of each of SPP processes. This usage consists of
+ two params, master lcore and lcore set including master and slaves.
+ 
+-.. _table_spp_ctl_cpu_layout_codes:
++.. _table_spp_ctl_cpu_usage_codes:
+ 
+ .. table:: Response code of CPU layout.
+ 
+@@ -179,7 +182,7 @@ two params, master lcore and lcore set including master and slaves.
+     +-------+-----------------------+
+ 
+ 
+-.. _table_spp_ctl_cpu_layout:
++.. _table_spp_ctl_cpu_usage_params:
+ 
+ .. table:: Response params of getting CPU layout.
+ 
+diff --git a/docs/guides/design/impl/spp_vf.rst b/docs/guides/design/impl/spp_vf.rst
+index 76e4a4c..ed5dc27 100644
+--- a/docs/guides/design/impl/spp_vf.rst
++++ b/docs/guides/design/impl/spp_vf.rst
+@@ -6,21 +6,34 @@
+ spp_vf
+ ======
+ 
+-The following sections provide some explanation of the code.
++This section describes implementation of key features of ``spp_vf``.
+ 
+-Initializing
+-------------
++``spp_vf`` consists of master thread and several worker threads,
++``forwarder``, ``classifier`` or ``merger``, as slaves.
++For classifying packets, ``spp_vf`` has a worker thread named ``classifier``
++and a table for registering MAC address entries.
+ 
+-A manager thread of ``spp_vf`` initialize eal by ``rte_eal_init()``.
+-Then each of component threads are launched by
+-``rte_eal_remote_launch()``.
+ 
++Initialization
++--------------
++
++In master thread, data of classifier and VLAN features are initialized
++after ``rte_eal_init()`` is called.
++Port capability is a set of data for describing VLAN features.
++Then, each of worker threads are launched with ``rte_eal_remote_launch()``
++on assigned lcores..
+ 
+ .. code-block:: c
+ 
+     /* spp_vf.c */
++
+     int ret_dpdk = rte_eal_init(argc, argv);
+ 
++    int ret_classifier_mac_init = spp_classifier_mac_init();
++
++    init_forwarder();
++    sppwk_port_capability_init();
++
+     /* Start worker threads of classifier and forwarder */
+     unsigned int lcore_id = 0;
+     RTE_LCORE_FOREACH_SLAVE(lcore_id) {
+@@ -28,260 +41,118 @@ Then each of component threads are launched by
+     }
+ 
+ 
+-Main function of slave thread
+------------------------------
++Slave Main
++----------
+ 
+-``slave_main()`` is called from ``rte_eal_remote_launch()``.
+-It call ``spp_classifier_mac_do()`` or ``spp_forward()`` depending
+-on the component command setting.
+-``spp_classifier_mac_do()`` provides function for classifier,
+-and ``spp_forward()`` provides forwarder and merger.
++Main function of worker thread is defined as ``slave_main()`` which is called
++from ``rte_eal_remote_launch()``.
++Behavior of worker thread is decided in while loop in this function.
++If lcore status is not ``SPPWK_LCORE_RUNNING``, worker thread does nothing.
++On the other hand, it does packet forwarding with or without classifying.
++It classifies incoming packets if component type is ``SPPWK_TYPE_CLS``,
++or simply forwards packets.
+ 
+ .. code-block:: c
+ 
+     /* spp_vf.c */
+-    RTE_LOG(INFO, APP, "Core[%d] Start.\n", lcore_id);
+-    set_core_status(lcore_id, SPP_CORE_IDLE);
+ 
+     while ((status = spp_get_core_status(lcore_id)) !=
+-            SPP_CORE_STOP_REQUEST) {
+-            if (status != SPP_CORE_FORWARD)
+-                    continue;
+-
+-            if (spp_check_core_index(lcore_id)) {
+-                    /* Setting with the flush command trigger. */
+-                    info->ref_index = (info->upd_index+1) %
+-                            SPP_INFO_AREA_MAX;
+-                    core = get_core_info(lcore_id);
+-            }
+-
+-            for (cnt = 0; cnt < core->num; cnt++) {
+-                    if (spp_get_component_type(lcore_id) ==
+-                                    SPP_COMPONENT_CLASSIFIER_MAC) {
+-                            /* Classifier loops inside the function. */
+-                            ret = spp_classifier_mac_do(core->id[cnt]);
+-                            break;
+-                    }
+-
+-                    /*
+-                     * Forward / Merge returns at once.
+-                     * It is for processing multiple components.
+-                     */
+-                    ret = spp_forward(core->id[cnt]);
+-                    if (unlikely(ret != 0))
+-                            break;
+-            }
+-            if (unlikely(ret != 0)) {
+-                    RTE_LOG(ERR, APP,
+-                            "Core[%d] Component Error. (id = %d)\n",
+-                            lcore_id, core->id[cnt]);
++        SPPWK_LCORE_REQ_STOP) {
++    	if (status != SPPWK_LCORE_RUNNING)
++    	    continue;
++
++        // skipping lines ...
++
++        /* It is for processing multiple components. */
++        for (cnt = 0; cnt < core->num; cnt++) {
++        /* Component classification to call a function. */
++        if (spp_get_component_type(core->id[cnt]) ==
++            SPPWK_TYPE_CLS) {
++           	/* Component type for classifier. */
++           	ret = spp_classifier_mac_do(core->id[cnt]);
++           	if (unlikely(ret != 0))
++            break;
++        } else {
++            /* Component type for forward or merge. */
++                ret = forward_packets(core->id[cnt]);
++                if (unlikely(ret != 0))
+                     break;
+             }
+-    }
+-
+-    set_core_status(lcore_id, SPP_CORE_STOP);
+-    RTE_LOG(INFO, APP, "Core[%d] End.\n", lcore_id);
+-
+-Data structure of classifier table
+-----------------------------------
+-
+-``spp_classifier_mac_do()`` lookup following data defined in
+-``classifier_mac.c``,
+-when it process the packets.
+-Configuration of classifier is stored in the structure of
+-``classified_data``, ``classifier_mac_info`` and
+-``classifier_mac_mng_info``.
+-The ``classified_data`` has member variables for expressing the port
+-to be classified, ``classifier_mac_info`` has member variables
+-for determining the direction of packets such as hash tables.
+-Classifier manages two ``classifier_mac_info``, one is for updating by
+-commands, the other is for looking up to process packets.
+-Then the ``classifier_mac_mng_info`` has
+-two(``NUM_CLASSIFIER_MAC_INFO``) ``classifier_mac_info``
+-and index number for updating or reference.
+-
+-.. code-block:: c
++        }
+ 
+-    /* classifier_mac.c */
+-    /* classified data (destination port, target packets, etc) */
+-    struct classified_data {
+-            /* interface type (see "enum port_type") */
+-            enum port_type  iface_type;
+ 
+-            /* index of ports handled by classifier */
+-            int             iface_no;
++Data structure of classifier
++----------------------------
+ 
+-            /* id for interface generated by spp_vf */
+-            int             iface_no_global;
++Classifier has a set of attributes for classification as
++struct ``mac_classifier``, which consists of a table of MAC addresses,
++number of classifying ports, indices of ports
++and default index of port.
++Clasifier table is implemented as hash of struct ``rte_hash``.
+ 
+-            /* port id generated by DPDK */
+-            uint16_t        port;
++.. code-block:: c
+ 
+-            /* the number of packets in pkts[] */
+-            uint16_t        num_pkt;
++    /* shared/secondary/spp_worker_th/vf_deps.h */
+ 
+-            /* packet array to be classified */
+-            struct rte_mbuf *pkts[MAX_PKT_BURST];
++    /* Classifier for MAC addresses. */
++    struct mac_classifier {
++        struct rte_hash *cls_tbl;  /* Hash table for MAC classification. */
++        int nof_cls_ports;  /* Num of ports classified validly. */
++        int cls_ports[RTE_MAX_ETHPORTS];  /* Ports for classification. */
++        int default_cls_idx;  /* Default index for classification. */
+     };
+ 
+-    /* classifier information */
+-    struct classifier_mac_info {
+-            /* component name */
+-            char name[SPP_NAME_STR_LEN];
+-
+-            /* hash table keeps classifier_table */
+-            struct rte_hash *classifier_table;
+-
+-            /* number of valid classification */
+-            int num_active_classified;
+-
+-            /* index of valid classification */
+-            int active_classifieds[RTE_MAX_ETHPORTS];
++Classifier itself is defined as a struct ``cls_comp_info``.
++There are several attributes in this struct including ``mac_classifier``
++or ``cls_port_info`` or so.
++``cls_port_info`` is for defining a set of attributes of ports, such as
++interface type, device ID or packet data.
+ 
+-            /* index of default classification */
+-            int default_classified;
+-
+-            /* number of transmission ports */
+-            int n_classified_data_tx;
+-
+-            /* receive port handled by classifier */
+-            struct classified_data classified_data_rx;
++.. code-block:: c
+ 
+-            /* transmission ports handled by classifier */
+-            struct classified_data classified_data_tx[RTE_MAX_ETHPORTS];
++    /* shared/secondary/spp_worker_th/vf_deps.h */
++
++    /* classifier component information */
++    struct cls_comp_info {
++        char name[STR_LEN_NAME];  /* component name */
++        int mac_addr_entry;  /* mac address entry flag */
++        struct mac_classifier *mac_clfs[NOF_VLAN];  /* classifiers per VLAN. */
++        int nof_tx_ports;  /* Number of TX ports info entries. */
++        /* Classifier has one RX port and several TX ports. */
++        struct cls_port_info rx_port_i;  /* RX port info classified. */
++        struct cls_port_info tx_ports_i[RTE_MAX_ETHPORTS];  /* TX info. */
+     };
+ 
+-    /* classifier management information */
+-    struct classifier_mac_mng_info {
+-            /* classifier information */
+-            struct classifier_mac_info info[NUM_CLASSIFIER_MAC_INFO];
+-
+-            /* Reference index number for classifier information */
+-            volatile int ref_index;
+-
+-            /* Update index number for classifier information */
+-            volatile int upd_index;
++    /* Attirbutes of port for classification. */
++    struct cls_port_info {
++        enum port_type iface_type;
++        int iface_no;   /* Index of ports handled by classifier. */
++        int iface_no_global;  /* ID for interface generated by spp_vf */
++        uint16_t ethdev_port_id;  /* Ethdev port ID. */
++        uint16_t nof_pkts;  /* Number of packets in pkts[]. */
++        struct rte_mbuf *pkts[MAX_PKT_BURST];  /* packets to be classified. */
+     };
+ 
+ 
+-Packet processing in classifier
+--------------------------------
++Classifying the packet
++----------------------
+ 
+-In ``spp_classifier_mac_do()``, it receives packets from rx port and
+-send them to destinations with ``classify_packet()``.
+-``classifier_info`` is an argument of ``classify_packet()`` and is used
+-to decide the destinations.
++If component type is ``SPPWK_TYPE_CLS``, worker thread behaves as a classifier,
++so component calls ``spp_classifier_mac_do()``. In this function, packets
++from RX port are received with ``sppwk_eth_vlan_rx_burst()`` which is derived
++from ``rte_eth_rx_burst()`` for adding or deleting VLAN tags.
++Received packets are classified with ``classify_packet()``.
+ 
+ .. code-block:: c
+ 
+     /* classifier_mac.c */
+-        while (likely(spp_get_core_status(lcore_id) == SPP_CORE_FORWARD) &&
+-                        likely(spp_check_core_index(lcore_id) == 0)) {
+-                /* change index of update side */
+-                change_update_index(classifier_mng_info, id);
+-
+-                /* decide classifier information of the current cycle */
+-                classifier_info = classifier_mng_info->info +
+-                                classifier_mng_info->ref_index;
+-                classified_data_rx = &classifier_info->classified_data_rx;
+-                classified_data_tx = classifier_info->classified_data_tx;
+-
+-                /* drain tx packets, if buffer is not filled for interval */
+-                cur_tsc = rte_rdtsc();
+-                if (unlikely(cur_tsc - prev_tsc > drain_tsc)) {
+-                        for (i = 0; i < classifier_info->n_classified_data_tx;
+-                                        i++) {
+-                                if (likely(classified_data_tx[i].num_pkt == 0))
+-                                        continue;
+-
+-                                RTE_LOG(DEBUG, SPP_CLASSIFIER_MAC,
+-                                                "transmit packets (drain). "
+-                                                "index=%d, "
+-                                                "num_pkt=%hu, "
+-                                                "interval=%lu\n",
+-                                                i,
+-                                                classified_data_tx[i].num_pkt,
+-                                                cur_tsc - prev_tsc);
+-                                transmit_packet(&classified_data_tx[i]);
+-                        }
+-                        prev_tsc = cur_tsc;
+-                }
+-
+-                if (classified_data_rx->iface_type == UNDEF)
+-                        continue;
+-
+-                /* retrieve packets */
+-                n_rx = rte_eth_rx_burst(classified_data_rx->port, 0,
+-                                rx_pkts, MAX_PKT_BURST);
+-                if (unlikely(n_rx == 0))
+-                        continue;
+-
+-    #ifdef SPP_RINGLATENCYSTATS_ENABLE
+-                    if (classified_data_rx->iface_type == RING)
+-                            spp_ringlatencystats_calculate_latency(
+-                                            classified_data_rx->iface_no,
+-                                            rx_pkts, n_rx);
+-    #endif
+-
+-                /* classify and transmit (filled) */
+-                classify_packet(rx_pkts, n_rx, classifier_info,
+-                                classified_data_tx);
+-        }
+-
+-Classifying the packets
+------------------------
+ 
+-``classify_packet()`` uses hash function of DPDK to determine
+-destination.
+-Hash has MAC address as Key, it retrieves destination information
+-from destination MAC address in the packet.
++    n_rx = sppwk_eth_vlan_rx_burst(clsd_data_rx->ethdev_port_id, 0,
++        rx_pkts, MAX_PKT_BURST);
+ 
+-.. code-block:: c
++    // skipping lines ...
+ 
+-    for (i = 0; i < n_rx; i++) {
+-            eth = rte_pktmbuf_mtod(rx_pkts[i], struct ether_hdr *);
+-
+-            /* find in table (by destination mac address)*/
+-            ret = rte_hash_lookup_data(classifier_info->classifier_table,
+-                            (const void *)&eth->d_addr, &lookup_data);
+-            if (ret < 0) {
+-                    /* L2 multicast(include broadcast) ? */
+-                    if (unlikely(is_multicast_ether_addr(&eth->d_addr))) {
+-                            RTE_LOG(DEBUG, SPP_CLASSIFIER_MAC,
+-                                            "multicast mac address.\n");
+-                            handle_l2multicast_packet(rx_pkts[i],
+-                                            classifier_info,
+-                                            classified_data);
+-                            continue;
+-                    }
+-
+-                    /* if no default, drop packet */
+-                    if (unlikely(classifier_info->default_classified ==
+-                                    -1)) {
+-                            ether_format_addr(mac_addr_str,
+-                                            sizeof(mac_addr_str),
+-                                            &eth->d_addr);
+-                            RTE_LOG(ERR, SPP_CLASSIFIER_MAC,
+-                                            "unknown mac address. "
+-                                            "ret=%d, mac_addr=%s\n",
+-                                            ret, mac_addr_str);
+-                            rte_pktmbuf_free(rx_pkts[i]);
+-                            continue;
+-                    }
+-
+-                    /* to default classified */
+-                    RTE_LOG(DEBUG, SPP_CLASSIFIER_MAC,
+-                                    "to default classified.\n");
+-                    lookup_data = (void *)(long)classifier_info->
+-                                    default_classified;
+-            }
+-
+-            /*
+-             * set mbuf pointer to tx buffer
+-             * and transmit packet, if buffer is filled
+-             */
+-            push_packet(rx_pkts[i], classified_data + (long)lookup_data);
+-    }
++    classify_packet(rx_pkts, n_rx, cmp_info, clsd_data_tx);
+ 
+ 
+ Packet processing in forwarder and merger
+@@ -325,78 +196,34 @@ packets.
+     };
+ 
+ 
+-Forward and merge the packets
+------------------------------
+-
+-``spp_forward()`` defined in ``spp_forward.c`` is a main function
+-for both forwarder and merger.
+-``spp_forward()`` simply passes packet received from rx port to
+-tx port of the pair.
+-
+-.. code-block:: c
+-
+-    /* spp_forward.c */
+-            for (cnt = 0; cnt < num; cnt++) {
+-                    rx = &path->ports[cnt].rx;
+-                    tx = &path->ports[cnt].tx;
+-
+-                    /* Receive packets */
+-                    nb_rx = rte_eth_rx_burst(
+-                            rx->dpdk_port, 0, bufs, MAX_PKT_BURST);
+-                    if (unlikely(nb_rx == 0))
+-                            continue;
+-
+-    #ifdef SPP_RINGLATENCYSTATS_ENABLE
+-                    if (rx->iface_type == RING)
+-                            spp_ringlatencystats_calculate_latency(
+-                                            rx->iface_no,
+-                                            bufs, nb_rx);
+-
+-                    if (tx->iface_type == RING)
+-                            spp_ringlatencystats_add_time_stamp(
+-                                            tx->iface_no,
+-                                            bufs, nb_rx);
+-    #endif /* SPP_RINGLATENCYSTATS_ENABLE */
+-
+-                    /* Send packets */
+-                    if (tx->dpdk_port >= 0)
+-                            nb_tx = rte_eth_tx_burst(
+-                                    tx->dpdk_port, 0, bufs, nb_rx);
+-
+-                    /* Discard remained packets to release mbuf */
+-                    if (unlikely(nb_tx < nb_rx)) {
+-                            for (buf = nb_tx; buf < nb_rx; buf++)
+-                                    rte_pktmbuf_free(bufs[buf]);
+-                    }
+-            }
+-
+-
+ L2 Multicast Support
+ --------------------
+ 
+-SPP_VF also supports multicast for resolving ARP requests.
++``spp_vf`` supports multicast for resolving ARP requests.
+ It is implemented as ``handle_l2multicast_packet()`` and called from
+ ``classify_packet()`` for incoming multicast packets.
+ 
+ .. code-block:: c
+ 
+-  /* classify_packet() in classifier_mac.c */
+-               /* L2 multicast(include broadcast) ? */
+-               if (unlikely(is_multicast_ether_addr(&eth->d_addr))) {
+-                       RTE_LOG(DEBUG, SPP_CLASSIFIER_MAC,
+-                                       "multicast mac address.\n");
+-                       handle_l2multicast_packet(rx_pkts[i],
+-                                       classifier_info,
+-                                       classified_data);
+-                       continue;
+-               }
++    /* classify_packet() in classifier_mac.c */
++
++    /* L2 multicast(include broadcast) ? */
++    if (unlikely(is_multicast_ether_addr(&eth->d_addr))) {
++            RTE_LOG(DEBUG, SPP_CLASSIFIER_MAC,
++                            "multicast mac address.\n");
++            handle_l2multicast_packet(rx_pkts[i],
++                            classifier_info,
++                            classified_data);
++            continue;
++    }
+ 
+-For distributing multicast packet, it is cloned with
+-``rte_mbuf_refcnt_update()``.
++Packets are cloned with ``rte_mbuf_refcnt_update()`` for distributing
++multicast packets.
+ 
+ .. code-block:: c
+ 
+     /* classifier_mac.c */
++
+     /* handle L2 multicast(include broadcast) packet */
+     static inline void
+     handle_l2multicast_packet(struct rte_mbuf *pkt,
+@@ -422,10 +249,11 @@ For distributing multicast packet, it is cloned with
+             }
+     }
+ 
++
+ Two phase update for forwarding
+ -------------------------------
+ 
+-Updating netowrk configuration in ``spp_vf`` is done in a short period of
++Update of netowrk configuration in ``spp_vf`` is done in a short period of
+ time, but not so short considering the time scale of packet forwarding.
+ It might forward packets before the updating is completed possibly.
+ To avoid such kind of situation, ``spp_vf`` has two phase update mechanism.
+@@ -433,25 +261,25 @@ Status info is referred from forwarding process after the update is completed.
+ 
+ .. code-block:: c
+ 
+-        spp_flush(void)
+-        {
+-                int ret = SPP_RET_NG;
+-                struct cancel_backup_info *backup_info = NULL;
++    int
++    flush_cmd(void)
++    {
++        int ret;
++        int *p_change_comp;
++        struct sppwk_comp_info *p_comp_info;
++        struct cancel_backup_info *backup_info;
+ 
+-                spp_get_mng_data_addr(NULL, NULL, NULL,
+-                                        NULL, NULL, NULL, &backup_info);
++        sppwk_get_mng_data(NULL, &p_comp_info, NULL, NULL, &p_change_comp,
++                &backup_info);
+ 
+-                /* Initial setting of each interface. */
+-                ret = flush_port();
+-                        if (ret < SPP_RET_OK)
+-                        return ret;
++        ret = update_port_info();
++        if (ret < SPP_RET_OK)
++            return ret;
+ 
+-                /* Flush of core index. */
+-                flush_core();
++        update_lcore_info();
+ 
+-                /* Flush of component */
+-                ret = flush_component();
++        ret = update_comp_info(p_comp_info, p_change_comp);
+ 
+-                backup_mng_info(backup_info);
+-                return ret;
+-        }
++        backup_mng_info(backup_info);
++        return ret;
++    }
+-- 
+2.17.1
+
+

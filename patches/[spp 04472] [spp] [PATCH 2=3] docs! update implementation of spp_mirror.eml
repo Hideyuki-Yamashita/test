@@ -1,0 +1,255 @@
+Return-path: <fw-yama-hd@pomail01.silk.ntt-tx.co.jp>
+Received: from zssg-mailmd104.ddreams.local
+ (zssg-mailmd104.ddreams.local [10.160.123.99]) by zssg-mailms320.ddreams.local
+ (NTT DoCoMo Mail System) with ESMTP id <0PU1002OAO2CQ790@NTTDoCoMo.co.jp> for
+ yamashita.hideyuki@ntt-tx.co.jp; Wed, 03 Jul 2019 11:25:24 +0900 (JST)
+Original-recipient: rfc822;yamashita.hideyuki@ntt-tx.co.jp
+Received: from smtp_saver-daemon.zssg-mailmd104.ddreams.local by
+ zssg-mailmd104.ddreams.local (dDREAMS) id <0PU101212O2CUA00@dDREAMS> for
+ yamashita.hideyuki@ntt-tx.co.jp (ORCPT yamashita.hideyuki@ntt-tx.co.jp); Wed,
+ 03 Jul 2019 11:25:24 +0900 (JST)
+Received: from zssg-mailmf106.ddreams.local
+ (zssg-mailmf900.ddreams.local [10.160.172.84]) by zssg-mailmd104.ddreams.local
+ (dDREAMS) with ESMTP id <0PU100UA1O2C6S50@dDREAMS> for
+ yamashita.hideyuki@ntt-tx.co.jp (ORCPT yamashita.hideyuki@ntt-tx.co.jp); Wed,
+ 03 Jul 2019 11:25:24 +0900 (JST)
+Received: from zssg-mailmf106.ddreams.local (unknown [127.0.0.1])
+	by zssg-mailmf106.ddreams.local (Postfix) with ESMTP id A45237E6032	for
+ <yamashita.hideyuki@ntt-tx.co.jp>; Wed,  3 Jul 2019 11:25:24 +0900 (JST)
+Received: from zssg-mailmf106.ddreams.local (unknown [127.0.0.1])
+	by IMSVA (Postfix) with ESMTP id A22828E6063	for
+ <yamashita.hideyuki@ntt-tx.co.jp>; Wed,  3 Jul 2019 11:25:24 +0900 (JST)
+Received: from localhost (unknown [127.0.0.1])	by IMSVA (Postfix)
+ with SMTP id 9FD818E6061	for <yamashita.hideyuki@ntt-tx.co.jp>; Wed,
+ 3 Jul 2019 11:25:24 +0900 (JST)
+X-IMSS-HAND-OFF-DIRECTIVE: localhost:10026
+Received: from zssg-mailmf106.ddreams.local (unknown [127.0.0.1])
+	by IMSVA (Postfix) with ESMTP id 33F128E6055	for
+ <yamashita.hideyuki@ntt-tx.co.jp>; Wed,  3 Jul 2019 11:25:23 +0900 (JST)
+Received: from pomail01.silk.ntt-tx.co.jp (unknown [10.160.183.139])
+	by zssg-mailmf106.ddreams.local (Postfix)
+ with ESMTPS	for <yamashita.hideyuki@ntt-tx.co.jp>; Wed,
+ 3 Jul 2019 11:25:23 +0900 (JST)
+Received: from pomail01.silk.ntt-tx.co.jp (localhost [127.0.0.1])
+	by pomail01.silk.ntt-tx.co.jp (unknown) with ESMTP id x632PNqM025492;	Wed,
+ 3 Jul 2019 11:25:23 +0900
+Received: (from yama-hd@localhost)	by pomail01.silk.ntt-tx.co.jp (unknown)
+ id x632PNaN025491;	Wed, 3 Jul 2019 11:25:23 +0900
+X-Authentication-warning: pomail01.silk.ntt-tx.co.jp: yama-hd set sender to
+ fw-yama-hd@pomail01.silk.ntt-tx.co.jp using -f
+Received: from imss04.silk.ntt-tx.co.jp
+ (imss04.silk.ntt-tx.co.jp [10.107.0.39])	by pomail01.silk.ntt-tx.co.jp
+ (unknown) with ESMTP id x632PMV7025487	for unknown; Wed,
+ 3 Jul 2019 11:25:22 +0900
+Received: from imss04.silk.ntt-tx.co.jp (localhost [127.0.0.1])
+ by imss04.silk.ntt-tx.co.jp (unknown) with ESMTP id x632PMbL019645 for
+ unknown; Wed, 3 Jul 2019 11:25:22 +0900
+Received: from ml01.silk.ntt-tx.co.jp (ml01.silk.ntt-tx.co.jp [10.107.0.230])
+ by imss04.silk.ntt-tx.co.jp (unknown) with ESMTP id x632PMR0019642; Wed,
+ 3 Jul 2019 11:25:22 +0900
+Received: from ml01.silk.ntt-tx.co.jp (localhost [127.0.0.1])
+	by ml01.silk.ntt-tx.co.jp (unknown) with ESMTP id x632PMYx008889;	Wed,
+ 3 Jul 2019 11:25:22 +0900
+Received: from imss01.silk.ntt-tx.co.jp
+ (imss01.silk.ntt-tx.co.jp [10.107.0.126])	by ml01.silk.ntt-tx.co.jp (unknown)
+ with ESMTP id x632PMvW008885	for unknown; Wed, 3 Jul 2019 11:25:22 +0900
+Received: from imss01.silk.ntt-tx.co.jp (localhost [127.0.0.1])
+ by imss01.silk.ntt-tx.co.jp (unknown) with ESMTP id x632PMXY015590 for
+ unknown; Wed, 3 Jul 2019 11:25:22 +0900
+Received: from mail01.ics.ntt-tx.co.jp (mail01.ics.ntt-tx.co.jp [10.254.2.67])
+ by imss01.silk.ntt-tx.co.jp (unknown) with ESMTP id x632PL1n015587 for
+ unknown; Wed, 3 Jul 2019 11:25:21 +0900
+Received: from dpdk.org (dpdk.org [92.243.14.124])	by mail01.ics.ntt-tx.co.jp
+ (unknown) with SMTP id x632PFM0012214	for unknown; Wed,
+ 3 Jul 2019 11:25:21 +0900
+Received: from [92.243.14.124] (localhost [127.0.0.1])	by dpdk.org (Postfix)
+ with ESMTP id B9CDA1BDF3;	Wed,  3 Jul 2019 04:25:14 +0200 (CEST)
+Received: from mail-pf1-f181.google.com
+ (mail-pf1-f181.google.com [209.85.210.181]) by dpdk.org (Postfix)
+ with ESMTP id 6DC691B994 for <spp@dpdk.org>; Wed,
+ 3 Jul 2019 04:25:13 +0200 (CEST)
+Received: by mail-pf1-f181.google.com with SMTP id 81so386854pfy.13 for
+ <spp@dpdk.org>; Tue, 02 Jul 2019 19:25:13 -0700 (PDT)
+Received: from localhost.localdomain ([192.47.164.146])
+ by smtp.gmail.com with ESMTPSA id o130sm416096pfg.171.2019.07.02.19.25.11
+ (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128); Tue,
+ 02 Jul 2019 19:25:12 -0700 (PDT)
+Date: Wed, 03 Jul 2019 11:25:00 +0900
+From: yasufum.o@gmail.com
+Subject: [spp 04472] [spp] [PATCH 2/3] docs: update implementation of spp_mirror
+Sender: spp <spp-bounces@dpdk.org>
+To: spp@dpdk.org, ferruh.yigit@intel.com, yasufum.o@gmail.com
+Message-id: <20190703022501.23738-3-yasufum.o@gmail.com>
+In-reply-to: <20190703022501.23738-1-yasufum.o@gmail.com>
+References: <20190703022501.23738-1-yasufum.o@gmail.com>
+X-ML-Name: unknown
+X-Mail-Count: 04472
+X-MLServer: unknown
+X-ML-Info: mailing list service
+X-Mailer: git-send-email 2.17.1
+Authentication-results: mail01.ics.ntt-tx.co.jp; spf=pass
+ smtp.mailfrom=spp-bounces@dpdk.org
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
+ h=from:to:subject:date:message-id:in-reply-to:references;
+ bh=/+dqe3RJelfMicyCoMb1LBelhCFPw8goyxs5oE0tkEc=;
+ b=BJWhVTd0apQPQONpZGqGrUlH4Cqe7OKXPS3P9CQNH6of+SWin1Kkeqj96xvLpX40ze
+ s4kmAPMR4hN6X6jFHqLcEQgYA4TJdV3xQezzUpbv9DcxRV22d4lowwYv2uXlpCDOe+eN
+ kCN2k8hW5+aC/AStDXvEiIDvUb25yPmokhRQHND0lXr7/56QLPUkKvipfwwzNDX3MmFI
+ x6RlwB7tQz03l6MLSsWXyVi7iBq1VGmpKXuoprAZ1R8Z7iFmaQ++BKSmUM6E4r5gPqzv
+ IJEUMyiKDz7Q7aC3Hi6QyxrTBD1FqvUbfWZl5BIqt7GAvMK9jkg11e4pJkmxRxDUudNh LxIg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=1e100.net;
+ s=20161025; h=x-gm-message-state:from:to:subject:date:message-id:in-reply-to
+ :references; bh=/+dqe3RJelfMicyCoMb1LBelhCFPw8goyxs5oE0tkEc=;
+ b=U0NiXFtWT0ZKFkXRpEvQymFpzCpkcsmkcWDiP+TnPEuMY2Sbvk5nWpRda+5YPF8i+Q
+ 0fdex3t186I+0LNOJD28r5MZpWEO9P9teAxIqLAK9Zax9QiKCov9lX6Bh5nH8XhBuEHC
+ LD51Bmfj3LOEbnzpHZK4rjSmwlY/XJ3VWl19I8TmalESn49OEpcbkgQm+067ggbYT/IO
+ GWxkL89XNFknuFQ3EjVIIpRZvO7dKRoFuzubmQZbosDd9u9HkYLtowoATzJ/BYtmC2rV
+ E/2+qg24OZhYFz/3LPmtcJWh8+JdqQfDdkwhBPioIVG8FiyfQACp7mKHugA9/m//ZhEq 7XJQ==
+X-Gm-Message-State: APjAAAXWh4b1GcHHbVZZXJLOOx74Q+O13uvZU9xcBRhoYS5rwbZ0v204
+ XEZuORLddaC14SQ7JWDVzu6cWCVO
+X-Google-Smtp-Source:
+ APXvYqxq3cxuflFBWOrzeiURsrJPZtgGfb0fjnMRLQh7zpGRHfcLadyfOZ0dfWrdmd0DNvabIOWFww==
+X-Received: by 2002:a63:480e:: with SMTP id v14mr33204501pga.182.1562120712454;
+ Tue, 02 Jul 2019 19:25:12 -0700 (PDT)
+X-BeenThere: spp@dpdk.org
+X-Mailman-Version: 2.1.15
+List-Id: Soft Patch Panel <spp.dpdk.org>
+List-Unsubscribe: <https://mails.dpdk.org/options/spp>,
+ <mailto:spp-request@dpdk.org?subject=unsubscribe>
+List-Archive: <http://mails.dpdk.org/archives/spp/>
+List-Post: <mailto:spp@dpdk.org>
+List-Help: <mailto:spp-request@dpdk.org?subject=help>
+List-Subscribe: <https://mails.dpdk.org/listinfo/spp>,
+ <mailto:spp-request@dpdk.org?subject=subscribe>
+X-TM-AS-MML: No
+Precedence: bulk
+Lines: 125
+X-TM-AS-GCONF: 00
+X-MD-STAMP: ON
+
+From: Yasufumi Ogawa <yasufum.o@gmail.com>
+
+This patch is to update description and examples of spp_mirror.
+
+Signed-off-by: Yasufumi Ogawa <yasufum.o@gmail.com>
+---
+ docs/guides/design/impl/spp_mirror.rst | 85 ++++++++------------------
+ 1 file changed, 27 insertions(+), 58 deletions(-)
+
+diff --git a/docs/guides/design/impl/spp_mirror.rst b/docs/guides/design/impl/spp_mirror.rst
+index bb4548e..6233de9 100644
+--- a/docs/guides/design/impl/spp_mirror.rst
++++ b/docs/guides/design/impl/spp_mirror.rst
+@@ -6,81 +6,50 @@
+ spp_mirror
+ ==========
+ 
+-Initializing
+-------------
++This section describes implementation of ``spp_mirror``.
++It consists of master thread and several worker threads for duplicating
++packets.
+ 
+-A main thread of ``spp_mirror`` initialize eal by ``rte_eal_init()``.
+-Then each of worker threads is launched from ``rte_eal_remote_launch()``
+-by giving a function ``slave_main()`` for forwarding.
+-
+-.. code-block:: c
+-
+-    /* spp_mirror.c */
+-    int ret_dpdk = rte_eal_init(argc, argv);
+-
+-    /* Start worker threads of classifier and forwarder */
+-    unsigned int lcore_id = 0;
+-    RTE_LCORE_FOREACH_SLAVE(lcore_id) {
+-            rte_eal_remote_launch(slave_main, NULL, lcore_id);
+-    }
+ 
++Slave Main
++----------
+ 
+-Main function of slave thread
+------------------------------
+-
+-In ``slave_main()``, it calls ``mirror_proc()`` in which packet processing for
+-duplicating is defined after finding a core on which running the duplicating.
++Main function of worker thread is defined as ``slave_main()`` in which
++for duplicating packets is ``mirror_proc()`` on each of lcores.
+ 
+ .. code-block:: c
+ 
+-	RTE_LOG(INFO, MIRROR, "Core[%d] Start.\n", lcore_id);
+-	set_core_status(lcore_id, SPP_CORE_IDLE);
+-
+-	while ((status = spp_get_core_status(lcore_id)) !=
+-			SPP_CORE_STOP_REQUEST) {
+-		if (status != SPP_CORE_FORWARD)
+-			continue;
+-
+-		if (spp_check_core_index(lcore_id)) {
+-			/* Setting with the flush command trigger. */
+-			info->ref_index = (info->upd_index+1) %
+-					SPP_INFO_AREA_MAX;
+-			core = get_core_info(lcore_id);
+-		}
+-
+ 		for (cnt = 0; cnt < core->num; cnt++) {
+-			/*
+-			 * mirror returns at once.
+-			 * It is for processing multiple components.
+-			 */
++
+ 			ret = mirror_proc(core->id[cnt]);
+ 			if (unlikely(ret != 0))
+ 				break;
+ 		}
+-		if (unlikely(ret != 0)) {
+-			RTE_LOG(ERR, MIRROR,
+-				"Core[%d] Component Error. (id = %d)\n",
+-					lcore_id, core->id[cnt]);
+-			break;
+-		}
+-	}
+ 
+-	set_core_status(lcore_id, SPP_CORE_STOP);
+-	RTE_LOG(INFO, MIRROR, "Core[%d] End.\n", lcore_id);
+ 
+-Packet mirroring
+-----------------
++Mirroring Packets
++-----------------
+ 
+-In ``mirror_proc()``, it receives packets from rx port.
++Worker thread receives and duplicate packets. There are two modes of copying
++packets, ``shallowcopy`` and ``deepcopy``.
++Deep copy is for duplicating whole of packet data, but less performance than
++shallow copy. Shallow copy duplicates only packet header and body is not shared
++among original packet and duplicated packet. So, changing packet data affects
++both of original and copied packet.
+ 
+-.. code-block:: c
++You can configure using which of modes in Makefile. Default mode is
++``shallowcopy``. If you change the mode to ``deepcopy``, comment out this
++line of CFLAGS.
++
++.. code-block:: makefile
+ 
+-        /* Receive packets */
+-        nb_rx = spp_eth_rx_burst(rx->dpdk_port, 0, bufs, MAX_PKT_BURST);
++    # Default mode is shallow copy.
++    CFLAGS += -DSPP_MIRROR_SHALLOWCOPY
+ 
+-Each of received packet is copied with ``rte_pktmbuf_clone()`` if you use
+-``shallowcopy`` defined as default in Makefile.
+-If you use ``deepcopy``, several mbuf objects are allocated for copying.
++This code is a part of ``mirror_proc()``. In this function,
++``rte_pktmbuf_clone()`` is just called if in shallow copy
++mode, or create a new packet with ``rte_pktmbuf_alloc()`` for duplicated
++packet if in deep copy mode.
+ 
+ .. code-block:: c
+ 
+-- 
+2.17.1
+
+
