@@ -1,0 +1,393 @@
+Return-path: <fw-yama-hd@pomail01.silk.ntt-tx.co.jp>
+Received: from zssg-mailmd102.ddreams.local
+ (zssg-mailmd102.ddreams.local [10.160.123.97]) by zssg-mailms320.ddreams.local
+ (NTT DoCoMo Mail System) with ESMTP id <0PTL0010DN92R170@NTTDoCoMo.co.jp> for
+ yamashita.hideyuki@ntt-tx.co.jp; Mon, 24 Jun 2019 19:46:14 +0900 (JST)
+Original-recipient: rfc822;yamashita.hideyuki@ntt-tx.co.jp
+Received: from smtp_saver-daemon.zssg-mailmd102.ddreams.local by
+ zssg-mailmd102.ddreams.local (dDREAMS) id <0PTL00Q2SN92Z600@dDREAMS> for
+ yamashita.hideyuki@ntt-tx.co.jp (ORCPT yamashita.hideyuki@ntt-tx.co.jp); Mon,
+ 24 Jun 2019 19:46:14 +0900 (JST)
+Received: from zssg-mailmf105.ddreams.local
+ (zssg-mailmf900.ddreams.local [10.160.172.84]) by zssg-mailmd102.ddreams.local
+ (dDREAMS) with ESMTP id <0PTL00907N927Y70@dDREAMS> for
+ yamashita.hideyuki@ntt-tx.co.jp (ORCPT yamashita.hideyuki@ntt-tx.co.jp); Mon,
+ 24 Jun 2019 19:46:14 +0900 (JST)
+Received: from zssg-mailmf105.ddreams.local (unknown [127.0.0.1])
+	by zssg-mailmf105.ddreams.local (Postfix) with ESMTP id 317027E6036	for
+ <yamashita.hideyuki@ntt-tx.co.jp>; Mon, 24 Jun 2019 19:46:14 +0900 (JST)
+Received: from zssg-mailmf105.ddreams.local (unknown [127.0.0.1])
+	by IMSVA (Postfix) with ESMTP id 309158E605A	for
+ <yamashita.hideyuki@ntt-tx.co.jp>; Mon, 24 Jun 2019 19:46:14 +0900 (JST)
+Received: from localhost (unknown [127.0.0.1])	by IMSVA (Postfix)
+ with SMTP id 2F1DE8E605D	for <yamashita.hideyuki@ntt-tx.co.jp>; Mon,
+ 24 Jun 2019 19:46:14 +0900 (JST)
+X-IMSS-HAND-OFF-DIRECTIVE: localhost:10026
+Received: from zssg-mailmf105.ddreams.local (unknown [127.0.0.1])
+	by IMSVA (Postfix) with ESMTP id 29D3C8E6058	for
+ <yamashita.hideyuki@ntt-tx.co.jp>; Mon, 24 Jun 2019 19:46:13 +0900 (JST)
+Received: from pomail01.silk.ntt-tx.co.jp (unknown [10.160.183.139])
+	by zssg-mailmf105.ddreams.local (Postfix)
+ with ESMTPS	for <yamashita.hideyuki@ntt-tx.co.jp>; Mon,
+ 24 Jun 2019 19:46:13 +0900 (JST)
+Received: from pomail01.silk.ntt-tx.co.jp (localhost [127.0.0.1])
+	by pomail01.silk.ntt-tx.co.jp (unknown) with ESMTP id x5OAkCW4000366;	Mon,
+ 24 Jun 2019 19:46:12 +0900
+Received: (from yama-hd@localhost)	by pomail01.silk.ntt-tx.co.jp (unknown)
+ id x5OAkCuC000365;	Mon, 24 Jun 2019 19:46:12 +0900
+X-Authentication-warning: pomail01.silk.ntt-tx.co.jp: yama-hd set sender to
+ fw-yama-hd@pomail01.silk.ntt-tx.co.jp using -f
+Received: from imss04.silk.ntt-tx.co.jp
+ (imss04.silk.ntt-tx.co.jp [10.107.0.39])	by pomail01.silk.ntt-tx.co.jp
+ (unknown) with ESMTP id x5OAkCLp000362	for unknown; Mon,
+ 24 Jun 2019 19:46:12 +0900
+Received: from imss04.silk.ntt-tx.co.jp (localhost [127.0.0.1])
+ by imss04.silk.ntt-tx.co.jp (unknown) with ESMTP id x5OAkCRn008053 for
+ unknown; Mon, 24 Jun 2019 19:46:12 +0900
+Received: from ml01.silk.ntt-tx.co.jp (ml01.silk.ntt-tx.co.jp [10.107.0.230])
+ by imss04.silk.ntt-tx.co.jp (unknown) with ESMTP id x5OAkClB008050; Mon,
+ 24 Jun 2019 19:46:12 +0900
+Received: from ml01.silk.ntt-tx.co.jp (localhost [127.0.0.1])
+	by ml01.silk.ntt-tx.co.jp (unknown) with ESMTP id x5OAkCC0008992;	Mon,
+ 24 Jun 2019 19:46:12 +0900
+Received: from imss02.silk.ntt-tx.co.jp
+ (imss02.silk.ntt-tx.co.jp [10.107.0.127])	by ml01.silk.ntt-tx.co.jp (unknown)
+ with ESMTP id x5OAkC84008988	for unknown; Mon, 24 Jun 2019 19:46:12 +0900
+Received: from imss02.silk.ntt-tx.co.jp (localhost [127.0.0.1])
+ by imss02.silk.ntt-tx.co.jp (unknown) with ESMTP id x5OAkB8j023533 for
+ unknown; Mon, 24 Jun 2019 19:46:12 +0900
+Received: from mail01.ics.ntt-tx.co.jp (mail01.ics.ntt-tx.co.jp [10.254.2.67])
+ by imss02.silk.ntt-tx.co.jp (unknown) with ESMTP id x5OAkBS5023526 for
+ unknown; Mon, 24 Jun 2019 19:46:11 +0900
+Received: from dpdk.org (dpdk.org [92.243.14.124])	by mail01.ics.ntt-tx.co.jp
+ (unknown) with SMTP id x5OAk5N1020959	for unknown; Mon,
+ 24 Jun 2019 19:46:11 +0900
+Received: from [92.243.14.124] (localhost [127.0.0.1])	by dpdk.org (Postfix)
+ with ESMTP id E71FB1BED8;	Mon, 24 Jun 2019 12:46:04 +0200 (CEST)
+Received: from mail-pf1-f196.google.com
+ (mail-pf1-f196.google.com [209.85.210.196]) by dpdk.org (Postfix)
+ with ESMTP id 68C892AB for <spp@dpdk.org>; Mon,
+ 24 Jun 2019 12:46:03 +0200 (CEST)
+Received: by mail-pf1-f196.google.com with SMTP id r1so7266207pfq.12 for
+ <spp@dpdk.org>; Mon, 24 Jun 2019 03:46:03 -0700 (PDT)
+Received: from localhost.localdomain ([192.47.164.146])
+ by smtp.gmail.com with ESMTPSA id k19sm4470865pgl.42.2019.06.24.03.46.01
+ (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128); Mon,
+ 24 Jun 2019 03:46:02 -0700 (PDT)
+Date: Mon, 24 Jun 2019 19:45:58 +0900
+From: yasufum.o@gmail.com
+Subject: [spp 04433] [spp] [PATCH] docs: add API refs for cpu_layout and
+ cpu_usage
+Sender: spp <spp-bounces@dpdk.org>
+To: spp@dpdk.org, ferruh.yigit@intel.com, yasufum.o@gmail.com
+Message-id: <20190624104558.25306-1-yasufum.o@gmail.com>
+X-ML-Name: unknown
+X-Mail-Count: 04433
+X-MLServer: unknown
+X-ML-Info: mailing list service
+X-Mailer: git-send-email 2.17.1
+Authentication-results: mail01.ics.ntt-tx.co.jp; spf=pass
+ smtp.mailfrom=spp-bounces@dpdk.org
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
+ h=from:to:subject:date:message-id;
+ bh=kkhh6+SrPZgmlllABDkUyznSdyqL3hIJGaPrkWUY5Fg=;
+ b=m0oRuBKs7JYwD0vfW9n2OUlLxAIQbS4gBi7AsIpFJoOErUy8Ly+u0bZaJpBGTYaFxj
+ ZgMQixGGRzRY/8dZbRZfZXQWO613DTB5iLeAeT4+2VW+7qYB/swZdGkFFZzyqA/pYkGe
+ wAe7sIFweatBghtCQ8m/wZlpwcoMut8fl1TVG/q6Mt06exDw+RYJo1gH6KIiLHe3uKLz
+ XXW6FQS51GN+Atf/B9d1PQsKM5J3ul3br9pUrtAUnkqK2cJcqRAeyphUp81MYaXzQ7RR
+ Qk9Xkyp6t/Yyv3tQldLWmiMIvdR3B3hl9Y+5RJfhq+a+DRfqI1pKWbhpWs8ckZol3rZh NCHQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=1e100.net;
+ s=20161025; h=x-gm-message-state:from:to:subject:date:message-id;
+ bh=kkhh6+SrPZgmlllABDkUyznSdyqL3hIJGaPrkWUY5Fg=;
+ b=IsJ0Ht+pMuz37F/yEFwCefoihsKGIVi6TG1+viru/LrfQ++nV3rXrdbyEKqynirgfM
+ J9OLRTL4idpkLF21FVWfE2WVU9lofEuwAlKp4RdRDNFyeiNkV7oL8h5RctdJmWCNl193
+ W/F2+pgVs2AvhFLumzyeC1oBcU2YJc10c2qyMPYNKB7ztZbLt81CKSVXQcrwiuAUyk+i
+ uIABZW/ROFrzsSKaNWUXhPVTle+OuU2EV5zgbTwHO4EzEmKxSkT0aW4j08yP5MO7CmTa
+ dVDZxDw3JxSKFSPm+veAEK761fUp5IC7fbcDMc7ospw5J9PnyBxhXh0PofYcZqyN6+lp 9mmA==
+X-Gm-Message-State: APjAAAU5A3+iJedYeTbaDcDV+juBpAYpWRmCHuTXByMDprploUWqhLvm
+ PMDakvrhv047nc+PfAQAaBPqbn4k
+X-Google-Smtp-Source:
+ APXvYqxQEyL4Gs8JOEWc+21IsVYW4aylexAto5+/fPQb4OpvwIWcU/0Dy/5q8IFBhiy0JdqO50LXBw==
+X-Received: by 2002:a65:4841:: with SMTP id i1mr32768673pgs.37.1561373162411;
+ Mon, 24 Jun 2019 03:46:02 -0700 (PDT)
+X-BeenThere: spp@dpdk.org
+X-Mailman-Version: 2.1.15
+List-Id: Soft Patch Panel <spp.dpdk.org>
+List-Unsubscribe: <https://mails.dpdk.org/options/spp>,
+ <mailto:spp-request@dpdk.org?subject=unsubscribe>
+List-Archive: <http://mails.dpdk.org/archives/spp/>
+List-Post: <mailto:spp@dpdk.org>
+List-Help: <mailto:spp-request@dpdk.org?subject=help>
+List-Subscribe: <https://mails.dpdk.org/listinfo/spp>,
+ <mailto:spp-request@dpdk.org?subject=subscribe>
+X-TM-AS-MML: No
+Precedence: bulk
+Lines: 264
+X-TM-AS-GCONF: 00
+X-MD-STAMP: ON
+
+From: Yasufumi Ogawa <yasufum.o@gmail.com>
+
+This update is to add REST APIs for cpu_layout and cpu_usage of a server
+on which spp-ctl running.
+
+Signed-off-by: Yasufumi Ogawa <yasufum.o@gmail.com>
+---
+ docs/guides/api_ref/proc_independ.rst | 218 +++++++++++++++++++++++---
+ 1 file changed, 193 insertions(+), 25 deletions(-)
+
+diff --git a/docs/guides/api_ref/proc_independ.rst b/docs/guides/api_ref/proc_independ.rst
+index 52e3002..c6180fa 100644
+--- a/docs/guides/api_ref/proc_independ.rst
++++ b/docs/guides/api_ref/proc_independ.rst
+@@ -4,49 +4,60 @@
+ 
+ .. _spp_ctl_rest_api_proc_independ:
+ 
+-API Independent of Process Type
+-===============================
++Independent of Process Type
++===========================
++
+ 
+ GET /v1/processes
+ -----------------
+ 
+-Show the SPP processes connected to the ``spp-ctl``.
++Show SPP processes connected with ``spp-ctl``.
+ 
+-* Normarl response codes: 200
+ 
++Response
++~~~~~~~~
+ 
+-Request example
+-~~~~~~~~~~~~~~~
++An array of dict of processes in which process type and secondary ID are
++defined. So, primary process does not have this ID.
+ 
+-.. code-block:: console
++.. _table_spp_ctl_processes_codes:
+ 
+-    $ curl -X GET -H 'application/json' \
+-    http://127.0.0.1:7777/v1/processes
++.. table:: Response code of getting processes.
+ 
++    +-------+-----------------------+
++    | Value | Description           |
++    |       |                       |
++    +=======+=======================+
++    | 200   | Normal response code. |
++    +-------+-----------------------+
+ 
+-Response
+-~~~~~~~~
++.. _table_spp_ctl_processes:
+ 
+-An array of process objects.
++.. table:: Response params of getting processes.
+ 
+-Process objects:
++    +-----------+---------+--------------------------------------------------+
++    | Name      | Type    | Description                                      |
++    |           |         |                                                  |
++    +===========+=========+==================================================+
++    | type      | string  | Process type such as ``primary``, ``nfv`` or so. |
++    +-----------+---------+--------------------------------------------------+
++    | client-id | integer | Secondary ID, so ``primary`` does not have it.   |
++    +-----------+---------+--------------------------------------------------+
+ 
+-.. _table_spp_ctl_processes:
+ 
+-.. table:: Response params of getting processes info.
++Examples
++~~~~~~~~
+ 
+-    +-----------+---------+-----------------------------------------------------------------+
+-    | Name      | Type    | Description                                                     |
+-    |           |         |                                                                 |
+-    +===========+=========+=================================================================+
+-    | type      | string  | process type. one of ``primary``, ``nfv`` or ``vf``.            |
+-    +-----------+---------+-----------------------------------------------------------------+
+-    | client-id | integer | client id. if type is ``primary`` this member does not exist.   |
+-    +-----------+---------+-----------------------------------------------------------------+
++Request
++^^^^^^^
+ 
++.. code-block:: console
+ 
+-Response example
+-~~~~~~~~~~~~~~~~
++    $ curl -X GET -H 'application/json' \
++    http://127.0.0.1:7777/v1/processes
++
++Response
++^^^^^^^^
+ 
+ .. code-block:: json
+ 
+@@ -63,3 +74,160 @@ Response example
+         "client-id": 2
+       }
+     ]
++
++
++GET /v1/cpu_layout
++------------------
++
++Show CPU layout of a server on which ``spp-ctl`` running.
++
++
++Response
++~~~~~~~~
++
++An array of CPU socket params which consists of each of physical core ID and
++logical cores if hyper threading is enabled.
++
++.. _table_spp_ctl_cpu_layout_codes:
++
++.. table:: Response code of CPU layout.
++
++    +-------+-----------------------+
++    | Value | Description           |
++    |       |                       |
++    +=======+=======================+
++    | 200   | Normal response code. |
++    +-------+-----------------------+
++
++
++.. _table_spp_ctl_cpu_layout:
++
++.. table:: Response params of getting CPU layout.
++
++    +-----------+---------+-------------------------------+
++    | Name      | Type    | Description                   |
++    |           |         |                               |
++    +===========+=========+===============================+
++    | cores     | array   | Set of cores on a socket.     |
++    +-----------+---------+-------------------------------+
++    | core_id   | integer | ID of physical core.          |
++    +-----------+---------+-------------------------------+
++    | lcores    | array   | Set of IDs of logical cores.  |
++    +-----------+---------+-------------------------------+
++    | socket_id | integer | Socket ID.                    |
++    +-----------+---------+-------------------------------+
++
++Examples
++~~~~~~~~
++
++Request
++^^^^^^^
++
++.. code-block:: console
++
++    $ curl -X GET -H 'application/json' \
++    http://127.0.0.1:7777/v1/cpu_layout
++
++Response
++^^^^^^^^
++
++.. code-block:: json
++
++    [
++      {
++        "cores": [
++          {
++            "core_id": 1,
++            "lcores": [2, 3]
++          },
++          {
++            "core_id": 0,
++            "lcores": [0, 1]
++          },
++          ...
++          {
++            "core_id": 2,
++            "lcores": [4, 5]
++          }
++        ],
++        "socket_id": 0
++      }
++    ]
++
++
++GET /v1/cpu_usage
++------------------
++
++Show CPU usage of a server on which ``spp-ctl`` running.
++
++
++Response
++~~~~~~~~
++
++An array of CPU usage of each of SPP processes. This usage consists of
++two params, master lcore and lcore set including master and slaves.
++
++.. _table_spp_ctl_cpu_layout_codes:
++
++.. table:: Response code of CPU layout.
++
++    +-------+-----------------------+
++    | Value | Description           |
++    |       |                       |
++    +=======+=======================+
++    | 200   | Normal response code. |
++    +-------+-----------------------+
++
++
++.. _table_spp_ctl_cpu_layout:
++
++.. table:: Response params of getting CPU layout.
++
++    +--------------+---------+-----------------------------------------------+
++    | Name         | Type    | Description                                   |
++    |              |         |                                               |
++    +==============+=========+===============================================+
++    | proc-type    | string  | Proc type such as ``primary``, ``nfv`` or so. |
++    +--------------+---------+-----------------------------------------------+
++    | master-lcore | integer | Lcore ID of master.                           |
++    +--------------+---------+-----------------------------------------------+
++    | lcores       | array   | All of Lcore IDs including master and slaves. |
++    +--------------+---------+-----------------------------------------------+
++
++Examples
++~~~~~~~~
++
++Request
++^^^^^^^
++
++.. code-block:: console
++
++    $ curl -X GET -H 'application/json' \
++    http://127.0.0.1:7777/v1/cpu_usage
++
++Response
++^^^^^^^^
++
++.. code-block:: json
++
++    [
++      {
++        "proc-type": "primary",
++        "master-lcore": 0,
++        "lcores": [
++          0
++        ]
++      },
++      {
++        "proc-type": "nfv",
++        "client-id": 2,
++        "master-lcore": 1,
++        "lcores": [1, 2]
++      },
++      {
++        "proc-type": "vf",
++        "client-id": 3,
++        "master-lcore": 1,
++        "lcores": [1, 3, 4, 5]
++      }
++    ]
+-- 
+2.17.1
+
+

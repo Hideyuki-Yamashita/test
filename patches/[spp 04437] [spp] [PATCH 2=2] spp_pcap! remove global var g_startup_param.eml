@@ -1,0 +1,323 @@
+Return-path: <fw-yama-hd@pomail01.silk.ntt-tx.co.jp>
+Received: from zssg-mailmd102.ddreams.local
+ (zssg-mailmd102.ddreams.local [10.160.123.97]) by zssg-mailms320.ddreams.local
+ (NTT DoCoMo Mail System) with ESMTP id <0PTO00QRUY8JV480@NTTDoCoMo.co.jp> for
+ yamashita.hideyuki@ntt-tx.co.jp; Wed, 26 Jun 2019 14:36:19 +0900 (JST)
+Original-recipient: rfc822;yamashita.hideyuki@ntt-tx.co.jp
+Received: from smtp_saver-daemon.zssg-mailmd102.ddreams.local by
+ zssg-mailmd102.ddreams.local (dDREAMS) id <0PTO00544Y8JSI00@dDREAMS> for
+ yamashita.hideyuki@ntt-tx.co.jp (ORCPT yamashita.hideyuki@ntt-tx.co.jp); Wed,
+ 26 Jun 2019 14:36:19 +0900 (JST)
+Received: from zssg-mailmf103.ddreams.local
+ (zssg-mailmf900.ddreams.local [10.160.172.84]) by zssg-mailmd102.ddreams.local
+ (dDREAMS) with ESMTP id <0PTO004TIY8JZR00@dDREAMS> for
+ yamashita.hideyuki@ntt-tx.co.jp (ORCPT yamashita.hideyuki@ntt-tx.co.jp); Wed,
+ 26 Jun 2019 14:36:19 +0900 (JST)
+Received: from zssg-mailmf103.ddreams.local (unknown [127.0.0.1])
+	by zssg-mailmf103.ddreams.local (Postfix) with ESMTP id 427047E6038	for
+ <yamashita.hideyuki@ntt-tx.co.jp>; Wed, 26 Jun 2019 14:36:19 +0900 (JST)
+Received: from zssg-mailmf103.ddreams.local (unknown [127.0.0.1])
+	by IMSVA (Postfix) with ESMTP id 40E3E8E6058	for
+ <yamashita.hideyuki@ntt-tx.co.jp>; Wed, 26 Jun 2019 14:36:19 +0900 (JST)
+Received: from localhost (unknown [127.0.0.1])	by IMSVA (Postfix)
+ with SMTP id 34CF98E605E	for <yamashita.hideyuki@ntt-tx.co.jp>; Wed,
+ 26 Jun 2019 14:36:19 +0900 (JST)
+X-IMSS-HAND-OFF-DIRECTIVE: localhost:10026
+Received: from zssg-mailmf103.ddreams.local (unknown [127.0.0.1])
+	by IMSVA (Postfix) with ESMTP id C80C58E605A	for
+ <yamashita.hideyuki@ntt-tx.co.jp>; Wed, 26 Jun 2019 14:36:18 +0900 (JST)
+Received: from pomail01.silk.ntt-tx.co.jp (unknown [10.160.183.139])
+	by zssg-mailmf103.ddreams.local (Postfix)
+ with ESMTPS	for <yamashita.hideyuki@ntt-tx.co.jp>; Wed,
+ 26 Jun 2019 14:36:18 +0900 (JST)
+Received: from pomail01.silk.ntt-tx.co.jp (localhost [127.0.0.1])
+	by pomail01.silk.ntt-tx.co.jp (unknown) with ESMTP id x5Q5aIbV019168;	Wed,
+ 26 Jun 2019 14:36:18 +0900
+Received: (from yama-hd@localhost)	by pomail01.silk.ntt-tx.co.jp (unknown)
+ id x5Q5aIcs019166;	Wed, 26 Jun 2019 14:36:18 +0900
+X-Authentication-warning: pomail01.silk.ntt-tx.co.jp: yama-hd set sender to
+ fw-yama-hd@pomail01.silk.ntt-tx.co.jp using -f
+Received: from imss04.silk.ntt-tx.co.jp
+ (imss04.silk.ntt-tx.co.jp [10.107.0.39])	by pomail01.silk.ntt-tx.co.jp
+ (unknown) with ESMTP id x5Q5aIRa019163	for unknown; Wed,
+ 26 Jun 2019 14:36:18 +0900
+Received: from imss04.silk.ntt-tx.co.jp (localhost [127.0.0.1])
+ by imss04.silk.ntt-tx.co.jp (unknown) with ESMTP id x5Q5aIOj031848 for
+ unknown; Wed, 26 Jun 2019 14:36:18 +0900
+Received: from ml01.silk.ntt-tx.co.jp (ml01.silk.ntt-tx.co.jp [10.107.0.230])
+ by imss04.silk.ntt-tx.co.jp (unknown) with ESMTP id x5Q5aIUW031845; Wed,
+ 26 Jun 2019 14:36:18 +0900
+Received: from ml01.silk.ntt-tx.co.jp (localhost [127.0.0.1])
+	by ml01.silk.ntt-tx.co.jp (unknown) with ESMTP id x5Q5aHuj015788;	Wed,
+ 26 Jun 2019 14:36:17 +0900
+Received: from imss01.silk.ntt-tx.co.jp
+ (imss01.silk.ntt-tx.co.jp [10.107.0.126])	by ml01.silk.ntt-tx.co.jp (unknown)
+ with ESMTP id x5Q5aHaP015784	for unknown; Wed, 26 Jun 2019 14:36:17 +0900
+Received: from imss01.silk.ntt-tx.co.jp (localhost [127.0.0.1])
+ by imss01.silk.ntt-tx.co.jp (unknown) with ESMTP id x5Q5aHmJ010880 for
+ unknown; Wed, 26 Jun 2019 14:36:17 +0900
+Received: from mail01.ics.ntt-tx.co.jp (mail01.ics.ntt-tx.co.jp [10.254.2.67])
+ by imss01.silk.ntt-tx.co.jp (unknown) with ESMTP id x5Q5aHGs010877 for
+ unknown; Wed, 26 Jun 2019 14:36:17 +0900
+Received: from dpdk.org (dpdk.org [92.243.14.124])	by mail01.ics.ntt-tx.co.jp
+ (unknown) with SMTP id x5Q5aAAD026350	for unknown; Wed,
+ 26 Jun 2019 14:36:16 +0900
+Received: from [92.243.14.124] (localhost [127.0.0.1])	by dpdk.org (Postfix)
+ with ESMTP id 7A1E61B95A;	Wed, 26 Jun 2019 07:36:10 +0200 (CEST)
+Received: from mail-pg1-f196.google.com
+ (mail-pg1-f196.google.com [209.85.215.196]) by dpdk.org (Postfix)
+ with ESMTP id BC00B1B955 for <spp@dpdk.org>; Wed,
+ 26 Jun 2019 07:36:08 +0200 (CEST)
+Received: by mail-pg1-f196.google.com with SMTP id z75so633132pgz.5 for
+ <spp@dpdk.org>; Tue, 25 Jun 2019 22:36:08 -0700 (PDT)
+Received: from localhost.localdomain ([192.47.164.146])
+ by smtp.gmail.com with ESMTPSA id u1sm15315180pgr.94.2019.06.25.22.36.06
+ (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128); Tue,
+ 25 Jun 2019 22:36:07 -0700 (PDT)
+Date: Wed, 26 Jun 2019 14:35:58 +0900
+From: yasufum.o@gmail.com
+Subject: [spp 04437] [spp] [PATCH 2/2] spp_pcap: remove global var
+ g_startup_param
+Sender: spp <spp-bounces@dpdk.org>
+To: spp@dpdk.org, ferruh.yigit@intel.com, yasufum.o@gmail.com
+Message-id: <20190626053558.39847-3-yasufum.o@gmail.com>
+In-reply-to: <20190626053558.39847-1-yasufum.o@gmail.com>
+References: <20190626053558.39847-1-yasufum.o@gmail.com>
+X-ML-Name: unknown
+X-Mail-Count: 04437
+X-MLServer: unknown
+X-ML-Info: mailing list service
+X-Mailer: git-send-email 2.17.1
+Authentication-results: mail01.ics.ntt-tx.co.jp; spf=pass
+ smtp.mailfrom=spp-bounces@dpdk.org
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
+ h=from:to:subject:date:message-id:in-reply-to:references;
+ bh=gyeGH6yJscEbrWy4gW3lASbdZ4NKKJCEOWZhMe+nyM4=;
+ b=ISU9FtYe/IN6vDyuMqeX8aWC3nX8VEJEHNe7arF0Wtmjn9QERhY0e1CDGGBiYmAAsZ
+ QJKa2Le9iTMaEYVlkwG51wQZfwVcukVxshH6s7AFoU5gGay1ufiyY2o/wfUPstjwNqh0
+ dY8hyAKAIb7F7rwd3Fbf2CBYYJa/At7DgFX1Y/e9O+VbDyU1fCL9J4OUI6CvXjh7qg4C
+ rGnyAEU/IM+tZf7vSxGSamcxHgKh5LhLkpjG3PUELM+dfL46Zq/iyeArEUhiIhsftaEZ
+ e3lDM9s1t2AWP81dhsimsve9USD+3VZma3V4WhNs75ozlG5UegPEAuyqZg0UxgG9HLow /O2A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=1e100.net;
+ s=20161025; h=x-gm-message-state:from:to:subject:date:message-id:in-reply-to
+ :references; bh=gyeGH6yJscEbrWy4gW3lASbdZ4NKKJCEOWZhMe+nyM4=;
+ b=SN2gMOqY/KHfpBg/yB7iPKNehHLBGQHL+x3fdVhXVgfdK/4W7wP2R0iIO5OndQLXh5
+ a1pLLdSa8xAwhmT+gBMghKfQgpWDkfiebHSlPfR1VwTMvqjDgv7wpB7LWa3XB12pnY6+
+ ngCt+MME4TlSspew4g5GPCVP6W6R4ZlFtsKjadz8ukqzYAAzS5ghkxLYyRo4lN9q8SoY
+ 3HVBKHE6TfZ+/mRHmNtDZeIK3pJqLjDK4OZRKhtzuJmh+J/UFlrugumYPoFsWj4/wXbM
+ t2QgqhoCD3dWqClj+sno1IoAUw0QMwrfN9DOn+z9wLt/A2guHDWMDssV3Yni7L6/Mo33 8Wng==
+X-Gm-Message-State: APjAAAXMEr5h+oHyVag4ORkjCA7K2nsx8FLpQxuHAiSNx8rD1Rzak2rS
+ Uzj5FcR1gP4NQWLvtMdlTC+pCxj9
+X-Google-Smtp-Source:
+ APXvYqxT7kLHEtp33DribsRH3mL3ncXT9VywMsFQY7XIhyZ2VO6EbxR/0XWwwvPXMZSWgEzaYFaV1Q==
+X-Received: by 2002:a17:90a:bd93:: with SMTP id
+ z19mr2422025pjr.49.1561527367799; Tue, 25 Jun 2019 22:36:07 -0700 (PDT)
+X-BeenThere: spp@dpdk.org
+X-Mailman-Version: 2.1.15
+List-Id: Soft Patch Panel <spp.dpdk.org>
+List-Unsubscribe: <https://mails.dpdk.org/options/spp>,
+ <mailto:spp-request@dpdk.org?subject=unsubscribe>
+List-Archive: <http://mails.dpdk.org/archives/spp/>
+List-Post: <mailto:spp@dpdk.org>
+List-Help: <mailto:spp-request@dpdk.org?subject=help>
+List-Subscribe: <https://mails.dpdk.org/listinfo/spp>,
+ <mailto:spp-request@dpdk.org?subject=subscribe>
+X-TM-AS-MML: No
+Precedence: bulk
+Lines: 192
+X-TM-AS-GCONF: 00
+X-MD-STAMP: ON
+
+From: Yasufumi Ogawa <yasufum.o@gmail.com>
+
+This update for spp_pcap is the same as previous one for removing global
+`g_startup_param`.
+
+Signed-off-by: Yasufumi Ogawa <yasufum.o@gmail.com>
+---
+ src/pcap/cmd_runner.c |  8 +++-----
+ src/pcap/cmd_utils.c  | 13 +++----------
+ src/pcap/cmd_utils.h  | 15 ++-------------
+ src/pcap/spp_pcap.c   | 15 +++------------
+ 4 files changed, 11 insertions(+), 40 deletions(-)
+
+diff --git a/src/pcap/cmd_runner.c b/src/pcap/cmd_runner.c
+index 4c1891e..48e8eba 100644
+--- a/src/pcap/cmd_runner.c
++++ b/src/pcap/cmd_runner.c
+@@ -373,7 +373,7 @@ append_capture_status_value(const char *name, char **output,
+ {
+ 	int *capture_status = NULL;
+ 
+-	spp_get_mng_data_addr(NULL, NULL, NULL, NULL, &capture_status);
++	spp_get_mng_data_addr(NULL, NULL, NULL, &capture_status);
+ 
+ 	return append_json_str_value(name, output,
+ 			CAPTURE_STATUS_STRINGS[*capture_status]);
+@@ -797,15 +797,13 @@ send_command_result_response(int *sock,
+ 
+ 	/* pcap start command */
+ 	if (request->is_requested_start) {
+-		spp_get_mng_data_addr(NULL, NULL, NULL,
+-				      &capture_request, NULL);
++		spp_get_mng_data_addr(NULL, NULL, &capture_request, NULL);
+ 		*capture_request = SPP_CAPTURE_RUNNING;
+ 	}
+ 
+ 	/* pcap stop command */
+ 	if (request->is_requested_stop) {
+-		spp_get_mng_data_addr(NULL, NULL, NULL,
+-					&capture_request, NULL);
++		spp_get_mng_data_addr(NULL, NULL, &capture_request, NULL);
+ 		*capture_request = SPP_CAPTURE_IDLE;
+ 	}
+ 
+diff --git a/src/pcap/cmd_utils.c b/src/pcap/cmd_utils.c
+index d9e09e5..52ca905 100644
+--- a/src/pcap/cmd_utils.c
++++ b/src/pcap/cmd_utils.c
+@@ -14,7 +14,6 @@
+ 
+ /* Manage data to addoress */
+ struct mng_data_info {
+-	struct startup_param	  *p_startup_param;
+ 	struct iface_info	  *p_iface_info;
+ 	struct core_mng_info	  *p_core_info;
+ 	int			  *p_capture_request;
+@@ -258,21 +257,18 @@ int spp_format_port_string(char *port, enum port_type iface_type, int iface_no)
+ }
+ 
+ /* Set mange data address */
+-int spp_set_mng_data_addr(struct startup_param *startup_param_p,
+-			  struct iface_info *iface_p,
++int spp_set_mng_data_addr(struct iface_info *iface_p,
+ 			  struct core_mng_info *core_mng_p,
+ 			  int *capture_request_p,
+ 			  int *capture_status_p,
+ 			  unsigned int main_lcore_id)
+ {
+-	if (startup_param_p == NULL || iface_p == NULL ||
+-			core_mng_p == NULL ||
++	if (iface_p == NULL || core_mng_p == NULL ||
+ 			capture_request_p == NULL ||
+ 			capture_status_p == NULL ||
+ 			main_lcore_id == 0xffffffff)
+ 		return SPPWK_RET_NG;
+ 
+-	g_mng_data_addr.p_startup_param = startup_param_p;
+ 	g_mng_data_addr.p_iface_info = iface_p;
+ 	g_mng_data_addr.p_core_info = core_mng_p;
+ 	g_mng_data_addr.p_capture_request = capture_request_p;
+@@ -283,15 +279,12 @@ int spp_set_mng_data_addr(struct startup_param *startup_param_p,
+ }
+ 
+ /* Get manage data address */
+-void spp_get_mng_data_addr(struct startup_param **startup_param_p,
+-			   struct iface_info **iface_p,
++void spp_get_mng_data_addr(struct iface_info **iface_p,
+ 			   struct core_mng_info **core_mng_p,
+ 			   int **capture_request_p,
+ 			   int **capture_status_p)
+ {
+ 
+-	if (startup_param_p != NULL)
+-		*startup_param_p = g_mng_data_addr.p_startup_param;
+ 	if (iface_p != NULL)
+ 		*iface_p = g_mng_data_addr.p_iface_info;
+ 	if (core_mng_p != NULL)
+diff --git a/src/pcap/cmd_utils.h b/src/pcap/cmd_utils.h
+index 8281a3b..4fa2ea9 100644
+--- a/src/pcap/cmd_utils.h
++++ b/src/pcap/cmd_utils.h
+@@ -155,13 +155,6 @@ struct sppwk_comp_info {
+ 	struct sppwk_port_info *tx_ports[RTE_MAX_ETHPORTS]; /**< tx ports */
+ };
+ 
+-/* Manage given options as global variable */
+-struct startup_param {
+-	//int client_id;  /* Client ID */
+-	char server_ip[INET_ADDRSTRLEN];  /* IP address of spp-ctl */
+-	int server_port;  /* Port Number of spp-ctl */
+-};
+-
+ /* Manage interfaces and port information as global variable */
+ /* TODO(yasufum) confirm why nof_rings is required not used in anywhere. */
+ struct iface_info {
+@@ -327,7 +320,6 @@ spp_format_port_string(char *port, enum port_type iface_type, int iface_no);
+ /**
+  * Set mange data address
+  *
+- * @param startup_param_p Pointer to g_startup_param address.
+  * @param iface_p Pointer to g_iface_info address.
+  * @param core_mng_p Pointer to g_core_info address.
+  * @param capture_status_p Pointer to status of pcap.
+@@ -336,8 +328,7 @@ spp_format_port_string(char *port, enum port_type iface_type, int iface_no);
+  * @retval SPP_RET_OK If succeeded.
+  * @retval SPP_RET_NG If failed.
+  */
+-int spp_set_mng_data_addr(struct startup_param *startup_param_p,
+-			  struct iface_info *iface_p,
++int spp_set_mng_data_addr(struct iface_info *iface_p,
+ 			  struct core_mng_info *core_mng_p,
+ 			  int *capture_request_p,
+ 			  int *capture_status_p,
+@@ -346,14 +337,12 @@ int spp_set_mng_data_addr(struct startup_param *startup_param_p,
+ /**
+  * Get mange data address
+  *
+- * @param startup_param_p Pointer to startup params.
+  * @param iface_p Pointer to g_iface_info.
+  * @param core_mng_p Pointer to g_core_mng_info.
+  * @param capture_request_p Pointer to status of pcap.
+  * @param capture_status_p Pointer to req of pcap.
+  */
+-void spp_get_mng_data_addr(struct startup_param **startup_param_p,
+-			   struct iface_info **iface_p,
++void spp_get_mng_data_addr(struct iface_info **iface_p,
+ 			   struct core_mng_info **core_mng_p,
+ 			   int **capture_request_p,
+ 			   int **capture_status_p);
+diff --git a/src/pcap/spp_pcap.c b/src/pcap/spp_pcap.c
+index b69ffdd..0b846f3 100644
+--- a/src/pcap/spp_pcap.c
++++ b/src/pcap/spp_pcap.c
+@@ -132,9 +132,6 @@ struct pcap_status_info {
+ /* Lcore ID of main thread. */
+ static unsigned int g_main_lcore_id = 0xffffffff;
+ 
+-/* Arguments for spp_pcap process. */
+-static struct startup_param g_startup_param;
+-
+ /* Interface management information */
+ static struct iface_info g_iface_info;
+ 
+@@ -273,9 +270,6 @@ parse_app_args(int argc, char *argv[])
+ 	for (cnt = 0; cnt < argcopt; cnt++)
+ 		argvopt[cnt] = argv[cnt];
+ 
+-	/* Clear startup parameters */
+-	memset(&g_startup_param, 0x00, sizeof(g_startup_param));
+-
+ 	/* option parameters init */
+ 	memset(&g_pcap_option, 0x00, sizeof(g_pcap_option));
+ 	strcpy(g_pcap_option.compress_file_path, DEFAULT_OUTPUT_DIR);
+@@ -940,12 +934,9 @@ main(int argc, char *argv[])
+ 		g_main_lcore_id = rte_lcore_id();
+ 
+ 		/* set manage address */
+-		if (spp_set_mng_data_addr(&g_startup_param,
+-					  &g_iface_info,
+-					  g_core_info,
+-					  &g_capture_request,
+-					  &g_capture_status,
+-					  g_main_lcore_id) < 0) {
++		if (spp_set_mng_data_addr(&g_iface_info, g_core_info,
++					&g_capture_request, &g_capture_status,
++					g_main_lcore_id) < 0) {
+ 			RTE_LOG(ERR, SPP_PCAP,
+ 				"manage address set is failed.\n");
+ 			break;
+-- 
+2.17.1
+
+

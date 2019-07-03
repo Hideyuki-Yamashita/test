@@ -1,0 +1,304 @@
+Return-path: <fw-yama-hd@pomail01.silk.ntt-tx.co.jp>
+Received: from zssg-mailmd106.ddreams.local
+ (zssg-mailmd106.ddreams.local [10.160.123.101])
+ by zssg-mailms320.ddreams.local (NTT DoCoMo Mail System)
+ with ESMTP id <0PTL00DMRDBRFR70@NTTDoCoMo.co.jp> for
+ yamashita.hideyuki@ntt-tx.co.jp; Mon, 24 Jun 2019 16:11:51 +0900 (JST)
+Original-recipient: rfc822;yamashita.hideyuki@ntt-tx.co.jp
+Received: from smtp_saver-daemon.zssg-mailmd106.ddreams.local by
+ zssg-mailmd106.ddreams.local (dDREAMS) id <0PTL00022DBRM400@dDREAMS> for
+ yamashita.hideyuki@ntt-tx.co.jp (ORCPT yamashita.hideyuki@ntt-tx.co.jp); Mon,
+ 24 Jun 2019 16:11:51 +0900 (JST)
+Received: from zssg-mailmf106.ddreams.local
+ (zssg-mailmf900.ddreams.local [10.160.172.84]) by zssg-mailmd106.ddreams.local
+ (dDREAMS) with ESMTP id <0PTL01B20DBRKR20@dDREAMS> for
+ yamashita.hideyuki@ntt-tx.co.jp (ORCPT yamashita.hideyuki@ntt-tx.co.jp); Mon,
+ 24 Jun 2019 16:11:51 +0900 (JST)
+Received: from zssg-mailmf106.ddreams.local (unknown [127.0.0.1])
+	by zssg-mailmf106.ddreams.local (Postfix) with ESMTP id 3F4D17E6034	for
+ <yamashita.hideyuki@ntt-tx.co.jp>; Mon, 24 Jun 2019 16:11:51 +0900 (JST)
+Received: from zssg-mailmf106.ddreams.local (unknown [127.0.0.1])
+	by IMSVA (Postfix) with ESMTP id 3E6358E605A	for
+ <yamashita.hideyuki@ntt-tx.co.jp>; Mon, 24 Jun 2019 16:11:51 +0900 (JST)
+Received: from localhost (unknown [127.0.0.1])	by IMSVA (Postfix)
+ with SMTP id 3C5A88E6057	for <yamashita.hideyuki@ntt-tx.co.jp>; Mon,
+ 24 Jun 2019 16:11:51 +0900 (JST)
+X-IMSS-HAND-OFF-DIRECTIVE: localhost:10026
+Received: from zssg-mailmf106.ddreams.local (unknown [127.0.0.1])
+	by IMSVA (Postfix) with ESMTP id 17FA18E6063	for
+ <yamashita.hideyuki@ntt-tx.co.jp>; Mon, 24 Jun 2019 16:11:50 +0900 (JST)
+Received: from pomail01.silk.ntt-tx.co.jp (unknown [10.160.183.139])
+	by zssg-mailmf106.ddreams.local (Postfix)
+ with ESMTPS	for <yamashita.hideyuki@ntt-tx.co.jp>; Mon,
+ 24 Jun 2019 16:11:50 +0900 (JST)
+Received: from pomail01.silk.ntt-tx.co.jp (localhost [127.0.0.1])
+	by pomail01.silk.ntt-tx.co.jp (unknown) with ESMTP id x5O7BnZa017181;	Mon,
+ 24 Jun 2019 16:11:49 +0900
+Received: (from yama-hd@localhost)	by pomail01.silk.ntt-tx.co.jp (unknown)
+ id x5O7Bnwf017180;	Mon, 24 Jun 2019 16:11:49 +0900
+X-Authentication-warning: pomail01.silk.ntt-tx.co.jp: yama-hd set sender to
+ fw-yama-hd@pomail01.silk.ntt-tx.co.jp using -f
+Received: from imss04.silk.ntt-tx.co.jp
+ (imss04.silk.ntt-tx.co.jp [10.107.0.39])	by pomail01.silk.ntt-tx.co.jp
+ (unknown) with ESMTP id x5O7BnK2017177	for unknown; Mon,
+ 24 Jun 2019 16:11:49 +0900
+Received: from imss04.silk.ntt-tx.co.jp (localhost [127.0.0.1])
+ by imss04.silk.ntt-tx.co.jp (unknown) with ESMTP id x5O7BnCE021567 for
+ unknown; Mon, 24 Jun 2019 16:11:49 +0900
+Received: from ml01.silk.ntt-tx.co.jp (ml01.silk.ntt-tx.co.jp [10.107.0.230])
+ by imss04.silk.ntt-tx.co.jp (unknown) with ESMTP id x5O7BnDE021564; Mon,
+ 24 Jun 2019 16:11:49 +0900
+Received: from ml01.silk.ntt-tx.co.jp (localhost [127.0.0.1])
+	by ml01.silk.ntt-tx.co.jp (unknown) with ESMTP id x5O7BnvR017087;	Mon,
+ 24 Jun 2019 16:11:49 +0900
+Received: from imss02.silk.ntt-tx.co.jp
+ (imss02.silk.ntt-tx.co.jp [10.107.0.127])	by ml01.silk.ntt-tx.co.jp (unknown)
+ with ESMTP id x5O7Bn7e017083	for unknown; Mon, 24 Jun 2019 16:11:49 +0900
+Received: from imss02.silk.ntt-tx.co.jp (localhost [127.0.0.1])
+ by imss02.silk.ntt-tx.co.jp (unknown) with ESMTP id x5O7BmpE031518 for
+ unknown; Mon, 24 Jun 2019 16:11:48 +0900
+Received: from mail01.ics.ntt-tx.co.jp (mail01.ics.ntt-tx.co.jp [10.254.2.67])
+ by imss02.silk.ntt-tx.co.jp (unknown) with ESMTP id x5O7Bmld031512 for
+ unknown; Mon, 24 Jun 2019 16:11:48 +0900
+Received: from dpdk.org (dpdk.org [92.243.14.124])	by mail01.ics.ntt-tx.co.jp
+ (unknown) with SMTP id x5O7BgLh023439	for unknown; Mon,
+ 24 Jun 2019 16:11:48 +0900
+Received: from [92.243.14.124] (localhost [127.0.0.1])	by dpdk.org (Postfix)
+ with ESMTP id CC1391BF47;	Mon, 24 Jun 2019 09:11:41 +0200 (CEST)
+Received: from mail-pf1-f169.google.com
+ (mail-pf1-f169.google.com [209.85.210.169]) by dpdk.org (Postfix)
+ with ESMTP id 1ABA71BED2 for <spp@dpdk.org>; Mon,
+ 24 Jun 2019 09:11:41 +0200 (CEST)
+Received: by mail-pf1-f169.google.com with SMTP id r1so6951971pfq.12 for
+ <spp@dpdk.org>; Mon, 24 Jun 2019 00:11:41 -0700 (PDT)
+Received: from localhost.localdomain ([192.47.164.146])
+ by smtp.gmail.com with ESMTPSA id y17sm6357948pfe.148.2019.06.24.00.11.39
+ (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128); Mon,
+ 24 Jun 2019 00:11:39 -0700 (PDT)
+Date: Mon, 24 Jun 2019 16:11:22 +0900
+From: yasufum.o@gmail.com
+Subject: [spp 04407] [spp] [PATCH 08/10] controller: move topo help msg to
+ SppBye
+Sender: spp <spp-bounces@dpdk.org>
+To: spp@dpdk.org, ferruh.yigit@intel.com, yasufum.o@gmail.com
+Message-id: <20190624071124.23451-9-yasufum.o@gmail.com>
+In-reply-to: <20190624071124.23451-1-yasufum.o@gmail.com>
+References: <20190624071124.23451-1-yasufum.o@gmail.com>
+X-ML-Name: unknown
+X-Mail-Count: 04407
+X-MLServer: unknown
+X-ML-Info: mailing list service
+X-Mailer: git-send-email 2.17.1
+Authentication-results: mail01.ics.ntt-tx.co.jp; spf=pass
+ smtp.mailfrom=spp-bounces@dpdk.org
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
+ h=from:to:subject:date:message-id:in-reply-to:references;
+ bh=//y2hC3C1B5+PfW0eRqNP+aYUd3shCOS1OnGn7QbAf4=;
+ b=ZVAC6/gUQIWf1RQrjyyTyyzhLSVxkMFa/nXQ258Nyw6zzIEC4gUxTDof1/3AfujszD
+ yJGTiyC9lcBrLN6jmJMOD8/QD6tywzDyUtE+PWjQl+yYBg5eM2KXDCWAJ4Osxp/kRElA
+ Fi7DC15IzX3OLEWnheSEgJWQkJH0++L8/RDvKafpfZfDjfT6hQmV4KS1ITYdQLO3Zb5E
+ uQi9tiyutbt9DWCYF0sTCBPRQ2WFoRcD8Ya+jI1C86STiI/qmT5ZUc7+DDEFV+5PorM4
+ Hjach+zFsHGtoB2amH+oj21lpNpaX1s/HNPJnmJOx8hhq1qHshvPHZQ+QAn2hJXpgFhc 9Ntw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=1e100.net;
+ s=20161025; h=x-gm-message-state:from:to:subject:date:message-id:in-reply-to
+ :references; bh=//y2hC3C1B5+PfW0eRqNP+aYUd3shCOS1OnGn7QbAf4=;
+ b=Kfd5kxAqYQk+p4ISyeJMAVneHn9nM+8pbUx//qMXBri8jcAGALfWbwtRvTeTn7e6Do
+ I2T2UXr7eXV0s3ps2ZSngV4dt43M8qRQDs50SdCZwMmSNKkSuDwK29sWKlVRQczFM72x
+ eNPYPW2Caou7vUPGN8DJ38E36pg/HeEwsqS/NOSOCEdmDu5jzytJOKUfSBGr8GaqpdDk
+ 9KGAH8wsLWJJcoV+t6odpq7xNgn3f1WU/a8GHm9LDP+54nyhvsRTr/eBzlSorNx/4Buk
+ qwQ3F4jUo8MnlirIh33h43ulXFBEiiu8mOu9+7oPUVNk07mk09mAmSiF7YyvVrGAHULJ DDFw==
+X-Gm-Message-State: APjAAAXH49IIY56rJw6xwJHYLPrkvUuo6DFEkbLsYjSznq3/ZkBitHYA
+ GeZ/B0ZNNTpv0bhn9cf90vtHU7Rx
+X-Google-Smtp-Source:
+ APXvYqzH6I75JAFjDyykppQeNQL5JHTIDYcgyteGpcFBV+rbbQJpWIk9Du27ZhAWUJ6yru1vFcVYXA==
+X-Received: by 2002:a65:41c5:: with SMTP id b5mr12147494pgq.128.1561360300187;
+ Mon, 24 Jun 2019 00:11:40 -0700 (PDT)
+X-BeenThere: spp@dpdk.org
+X-Mailman-Version: 2.1.15
+List-Id: Soft Patch Panel <spp.dpdk.org>
+List-Unsubscribe: <https://mails.dpdk.org/options/spp>,
+ <mailto:spp-request@dpdk.org?subject=unsubscribe>
+List-Archive: <http://mails.dpdk.org/archives/spp/>
+List-Post: <mailto:spp@dpdk.org>
+List-Help: <mailto:spp-request@dpdk.org?subject=help>
+List-Subscribe: <https://mails.dpdk.org/listinfo/spp>,
+ <mailto:spp-request@dpdk.org?subject=subscribe>
+X-TM-AS-MML: No
+Precedence: bulk
+Lines: 172
+X-TM-AS-GCONF: 00
+X-MD-STAMP: ON
+
+From: Yasufumi Ogawa <yasufum.o@gmail.com>
+
+This patch is to move comment of `do_topo`, `do_topo_subgraph` and
+`do_topo_resize` to `SppTopo.help` to reduce the number of lines.
+
+Signed-off-by: Yasufumi Ogawa <yasufum.o@gmail.com>
+---
+ src/controller/commands/topo.py | 52 ++++++++++++++++++++++++++++
+ src/controller/shell.py         | 61 +++++++++------------------------
+ 2 files changed, 68 insertions(+), 45 deletions(-)
+
+diff --git a/src/controller/commands/topo.py b/src/controller/commands/topo.py
+index 3b24c1a..21ef1ec 100644
+--- a/src/controller/commands/topo.py
++++ b/src/controller/commands/topo.py
+@@ -459,3 +459,55 @@ class SppTopo(object):
+             return True
+         else:
+             return False
++
++    @classmethod
++    def help(cls):
++        msg = """Output network topology.
++
++        Support four types of output.
++        * terminal (but very few terminals supporting to display images)
++        * browser (websocket server is required)
++        * image file (jpg, png, bmp)
++        * text (dot, js or json, yml or yaml)
++
++        spp > topo term  # terminal
++        spp > topo http  # browser
++        spp > topo network_conf.jpg  # image
++        spp > topo network_conf.dot  # text
++        spp > topo network_conf.js# text
++        """
++
++        print(msg)
++
++    @classmethod
++    def help_resize(cls):
++        msg = """Change the size of the image of topo command.
++
++        You can specify the size by percentage or ratio.
++
++        spp > topo resize 60%  # percentage
++        spp > topo resize 0.6  # ratio
++        """
++
++        print(msg)
++
++    @classmethod
++    def help_subgraph(cls):
++        msg = """Edit subgarph for topo command.
++
++        Subgraph is a group of object defined in dot language. For topo
++        command, it is used for grouping resources of each of VM or
++        container to topology be more understandable.
++
++        (1) Add subgraph labeled 'vm1'.
++            spp > topo_subgraph add vm1 vhost:1;vhost:2
++
++        (2) Delete subgraph 'vm1'.
++            spp > topo_subgraph del vm1
++
++        (3) Show subgraphs by running topo_subgraph without args.
++            spp > topo_subgraph
++            label: vm1	subgraph: "vhost:1;vhost:2"
++        """
++
++        print(msg)
+diff --git a/src/controller/shell.py b/src/controller/shell.py
+index 8cb74a0..54376c9 100644
+--- a/src/controller/shell.py
++++ b/src/controller/shell.py
+@@ -824,11 +824,7 @@ class Shell(cmd.Cmd, object):
+         {'cmdqueue': [],
+          'completekey': 'tab',
+          'completion_matches': ['inspect'],
+-         'lastcmd': 'inspect',
+-         'old_completer': None,
+-         'stdin': <open file '<stdin>', mode 'r' at 0x7fe96bddf0c0>,
+-         'stdout': <open file '<stdout>', mode 'w' at 0x7fe96bddf150>}
+-
++         ...
+         """
+ 
+         from pprint import pprint
+@@ -841,22 +837,7 @@ class Shell(cmd.Cmd, object):
+         return ['add', 'del']
+ 
+     def do_topo_subgraph(self, args):
+-        """Edit subgarph for topo command.
+-
+-        Subgraph is a group of object defined in dot language. For topo
+-        command, it is used for grouping resources of each of VM or
+-        container to topology be more understandable.
+-
+-        (1) Add subgraph labeled 'vm1'.
+-        spp > topo_subgraph add vm1 vhost:1;vhost:2
+-
+-        (2) Delete subgraph 'vm1'.
+-        spp > topo_subgraph del vm1
+-
+-        (3) Show subgraphs by running topo_subgraph without args.
+-        spp > topo_subgraph
+-        label: vm1	subgraph: "vhost:1;vhost:2"
+-        """
++        """Edit subgarph for topo command."""
+ 
+         # logger.info("Topo initialized with sec IDs %s" % sec_ids)
+ 
+@@ -897,6 +878,10 @@ class Shell(cmd.Cmd, object):
+             else:
+                 print("Ivalid subcommand '%s'!" % tokens[0])
+ 
++    def help_topo_subgraph(self):
++        """Print help message of topo_subgraph command."""
++        topo.SppTopo.help_subgraph()
++
+     def complete_topo_subgraph(self, text, line, begidx, endidx):
+         terms = self.terms_topo_subgraph()
+ 
+@@ -921,35 +906,21 @@ class Shell(cmd.Cmd, object):
+             pass
+ 
+     def do_topo_resize(self, args):
+-        """Change the size of the image of topo command.
+-
+-        You can specify the size by percentage or ratio.
+-
+-        spp > topo resize 60%  # percentage
+-        spp > topo resize 0.6  # ratio
+-
+-        """
+-
++        """Change the size of the image of topo_resize command."""
+         self.spp_topo.resize_graph(args)
+ 
+-    def do_topo(self, args):
+-        """Output network topology.
+-
+-        Support four types of output.
+-        * terminal (but very few terminals supporting to display images)
+-        * browser (websocket server is required)
+-        * image file (jpg, png, bmp)
+-        * text (dot, js or json, yml or yaml)
+-
+-        spp > topo term  # terminal
+-        spp > topo http  # browser
+-        spp > topo network_conf.jpg  # image
+-        spp > topo network_conf.dot  # text
+-        spp > topo network_conf.js# text
+-        """
++    def help_topo_resize(self):
++        """Print help message of topo command."""
++        topo.SppTopo.help_resize()
+ 
++    def do_topo(self, args):
++        """Output network topology."""
+         self.spp_topo.run(args, self.get_sec_ids('nfv'))
+ 
++    def help_topo(self):
++        """Print help message of topo command."""
++        topo.SppTopo.help()
++
+     def complete_topo(self, text, line, begidx, endidx):
+ 
+         return self.spp_topo.complete(text, line, begidx, endidx)
+-- 
+2.17.1
+
+

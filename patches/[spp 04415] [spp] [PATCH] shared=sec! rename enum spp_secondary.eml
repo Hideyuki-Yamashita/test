@@ -1,0 +1,234 @@
+Return-path: <fw-yama-hd@pomail01.silk.ntt-tx.co.jp>
+Received: from zssg-mailmd103.ddreams.local
+ (zssg-mailmd103.ddreams.local [10.160.123.98]) by zssg-mailms320.ddreams.local
+ (NTT DoCoMo Mail System) with ESMTP id <0PTL00DTCI4ONOD0@NTTDoCoMo.co.jp> for
+ yamashita.hideyuki@ntt-tx.co.jp; Mon, 24 Jun 2019 17:55:36 +0900 (JST)
+Original-recipient: rfc822;yamashita.hideyuki@ntt-tx.co.jp
+Received: from smtp_saver-daemon.zssg-mailmd103.ddreams.local by
+ zssg-mailmd103.ddreams.local (dDREAMS) id <0PTL00C26I4OWR00@dDREAMS> for
+ yamashita.hideyuki@ntt-tx.co.jp (ORCPT yamashita.hideyuki@ntt-tx.co.jp); Mon,
+ 24 Jun 2019 17:55:36 +0900 (JST)
+Received: from zssg-mailmf106.ddreams.local
+ (zssg-mailmf900.ddreams.local [10.160.172.84]) by zssg-mailmd103.ddreams.local
+ (dDREAMS) with ESMTP id <0PTL00AO5I4O3310@dDREAMS> for
+ yamashita.hideyuki@ntt-tx.co.jp (ORCPT yamashita.hideyuki@ntt-tx.co.jp); Mon,
+ 24 Jun 2019 17:55:36 +0900 (JST)
+Received: from zssg-mailmf106.ddreams.local (unknown [127.0.0.1])
+	by zssg-mailmf106.ddreams.local (Postfix) with ESMTP id AE6A87E603A	for
+ <yamashita.hideyuki@ntt-tx.co.jp>; Mon, 24 Jun 2019 17:55:36 +0900 (JST)
+Received: from zssg-mailmf106.ddreams.local (unknown [127.0.0.1])
+	by IMSVA (Postfix) with ESMTP id ACC508E605F	for
+ <yamashita.hideyuki@ntt-tx.co.jp>; Mon, 24 Jun 2019 17:55:36 +0900 (JST)
+Received: from localhost (unknown [127.0.0.1])	by IMSVA (Postfix)
+ with SMTP id ABB808E6055	for <yamashita.hideyuki@ntt-tx.co.jp>; Mon,
+ 24 Jun 2019 17:55:36 +0900 (JST)
+X-IMSS-HAND-OFF-DIRECTIVE: localhost:10026
+Received: from zssg-mailmf106.ddreams.local (unknown [127.0.0.1])
+	by IMSVA (Postfix) with ESMTP id AF5028E6042	for
+ <yamashita.hideyuki@ntt-tx.co.jp>; Mon, 24 Jun 2019 17:55:35 +0900 (JST)
+Received: from pomail01.silk.ntt-tx.co.jp (unknown [10.160.183.139])
+	by zssg-mailmf106.ddreams.local (Postfix)
+ with ESMTPS	for <yamashita.hideyuki@ntt-tx.co.jp>; Mon,
+ 24 Jun 2019 17:55:35 +0900 (JST)
+Received: from pomail01.silk.ntt-tx.co.jp (localhost [127.0.0.1])
+	by pomail01.silk.ntt-tx.co.jp (unknown) with ESMTP id x5O8tZYq012349;	Mon,
+ 24 Jun 2019 17:55:35 +0900
+Received: (from yama-hd@localhost)	by pomail01.silk.ntt-tx.co.jp (unknown)
+ id x5O8tZG3012348;	Mon, 24 Jun 2019 17:55:35 +0900
+X-Authentication-warning: pomail01.silk.ntt-tx.co.jp: yama-hd set sender to
+ fw-yama-hd@pomail01.silk.ntt-tx.co.jp using -f
+Received: from imss04.silk.ntt-tx.co.jp
+ (imss04.silk.ntt-tx.co.jp [10.107.0.39])	by pomail01.silk.ntt-tx.co.jp
+ (unknown) with ESMTP id x5O8tZ6Q012345	for unknown; Mon,
+ 24 Jun 2019 17:55:35 +0900
+Received: from imss04.silk.ntt-tx.co.jp (localhost [127.0.0.1])
+ by imss04.silk.ntt-tx.co.jp (unknown) with ESMTP id x5O8tYd7006764 for
+ unknown; Mon, 24 Jun 2019 17:55:35 +0900
+Received: from ml01.silk.ntt-tx.co.jp (ml01.silk.ntt-tx.co.jp [10.107.0.230])
+ by imss04.silk.ntt-tx.co.jp (unknown) with ESMTP id x5O8tYnQ006760; Mon,
+ 24 Jun 2019 17:55:34 +0900
+Received: from ml01.silk.ntt-tx.co.jp (localhost [127.0.0.1])
+	by ml01.silk.ntt-tx.co.jp (unknown) with ESMTP id x5O8tYeI030528;	Mon,
+ 24 Jun 2019 17:55:34 +0900
+Received: from imss02.silk.ntt-tx.co.jp
+ (imss02.silk.ntt-tx.co.jp [10.107.0.127])	by ml01.silk.ntt-tx.co.jp (unknown)
+ with ESMTP id x5O8tYSP030524	for unknown; Mon, 24 Jun 2019 17:55:34 +0900
+Received: from imss02.silk.ntt-tx.co.jp (localhost [127.0.0.1])
+ by imss02.silk.ntt-tx.co.jp (unknown) with ESMTP id x5O8tYJR029435 for
+ unknown; Mon, 24 Jun 2019 17:55:34 +0900
+Received: from mail01.ics.ntt-tx.co.jp (mail01.ics.ntt-tx.co.jp [10.254.2.67])
+ by imss02.silk.ntt-tx.co.jp (unknown) with ESMTP id x5O8tYW6029429 for
+ unknown; Mon, 24 Jun 2019 17:55:34 +0900
+Received: from dpdk.org (dpdk.org [92.243.14.124])	by mail01.ics.ntt-tx.co.jp
+ (unknown) with SMTP id x5O8tRi7007618	for unknown; Mon,
+ 24 Jun 2019 17:55:33 +0900
+Received: from [92.243.14.124] (localhost [127.0.0.1])	by dpdk.org (Postfix)
+ with ESMTP id DADAB1BF26;	Mon, 24 Jun 2019 10:55:26 +0200 (CEST)
+Received: from mail-pf1-f196.google.com
+ (mail-pf1-f196.google.com [209.85.210.196]) by dpdk.org (Postfix)
+ with ESMTP id 847F51BF24 for <spp@dpdk.org>; Mon,
+ 24 Jun 2019 10:55:25 +0200 (CEST)
+Received: by mail-pf1-f196.google.com with SMTP id i189so7106911pfg.10 for
+ <spp@dpdk.org>; Mon, 24 Jun 2019 01:55:25 -0700 (PDT)
+Received: from localhost.localdomain ([192.47.164.146])
+ by smtp.gmail.com with ESMTPSA id 5sm10115646pfh.109.2019.06.24.01.55.23
+ (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128); Mon,
+ 24 Jun 2019 01:55:24 -0700 (PDT)
+Date: Mon, 24 Jun 2019 17:55:20 +0900
+From: yasufum.o@gmail.com
+Subject: [spp 04415] [spp] [PATCH] shared/sec: rename enum spp_secondary
+Sender: spp <spp-bounces@dpdk.org>
+To: spp@dpdk.org, ferruh.yigit@intel.com, yasufum.o@gmail.com
+Message-id: <20190624085520.23929-1-yasufum.o@gmail.com>
+X-ML-Name: unknown
+X-Mail-Count: 04415
+X-MLServer: unknown
+X-ML-Info: mailing list service
+X-Mailer: git-send-email 2.17.1
+Authentication-results: mail01.ics.ntt-tx.co.jp; spf=pass
+ smtp.mailfrom=spp-bounces@dpdk.org
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
+ h=from:to:subject:date:message-id;
+ bh=voou+l+4NK9iFXm8iMFDQMJX+cm6jwH6oC56R5IflDA=;
+ b=Bks8skNgIGe7vLI+ffIyiUuKr6YUbZ8lW9QZDJRq0BHVSOn5xAk+51pDHClD0beCgI
+ ktNwD0+gduMW3k6kbbUYke43H1JFNofLCs4L9JHkULD0YS1TCeICyFRaHXijvX4ONVOR
+ ziu/KLgsXx+/fIYBdU5cKl/0rjskzQ3elwk3hb395j0Ekbn16FoXgoCU6y7mGYU3veTN
+ wbeJHwpHKGu/eI08QOovfh4vW9joH3v2U7LwbQej7FGlrfwctL4Ai7+EVxhr3RbjtvwJ
+ BmSJizJlbwTJb8J7Vo1+r+vv3TwJFUKhYKGFLnZ07vJmZHFR+npyG6k9H07EAUbT3xo1 pWcA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=1e100.net;
+ s=20161025; h=x-gm-message-state:from:to:subject:date:message-id;
+ bh=voou+l+4NK9iFXm8iMFDQMJX+cm6jwH6oC56R5IflDA=;
+ b=Tqxh2shIpVxOJe0B7Z3AGRI9ytA+QOxUJr0UP4zEIrq+apCPw1MheO5w6h5PV9b2Ik
+ 5TcSQ2xqPZ1UgbnirmY/COgbY2sNmZTB6pMwUtxLrdW1+FaYnNCDgTOjGxvGYastC/wC
+ 1swWHns/ZjEV6uz/fKlj4fvRfv5VIKWnHreAZ1wFOa6+EVhywhw8wqGyw8PODxDJhaDt
+ tdpDDcBJJUGSJw0vPjhZcizZLUSFWR/ryat009ciV6+o0oKF6bnN+wgfO0KJPziEXf1B
+ 1KZ+EjQTKY+S+5MnCofxRJQDvLCZt6fU7Pl6FR0+vsD27dWfh1ssY3Y5mXDhuC9wcN7k EMiQ==
+X-Gm-Message-State: APjAAAWGRJyjGF8WZ52VtChgPHIUFb+HFu0zSiNpl6iS9otI7bPYG7Hz
+ JQbtLYciEA68z76K6yfelLMroMW8
+X-Google-Smtp-Source:
+ APXvYqzuyDTuB/9zSnwtF2jKJ/aDcKPQW+rluYgXZZubhjftUHjdz5Jur7Z/oIo5gnfl6zIkI6mGGA==
+X-Received: by 2002:a65:5a42:: with SMTP id z2mr32580148pgs.421.1561366524592;
+ Mon, 24 Jun 2019 01:55:24 -0700 (PDT)
+X-BeenThere: spp@dpdk.org
+X-Mailman-Version: 2.1.15
+List-Id: Soft Patch Panel <spp.dpdk.org>
+List-Unsubscribe: <https://mails.dpdk.org/options/spp>,
+ <mailto:spp-request@dpdk.org?subject=unsubscribe>
+List-Archive: <http://mails.dpdk.org/archives/spp/>
+List-Post: <mailto:spp@dpdk.org>
+List-Help: <mailto:spp-request@dpdk.org?subject=help>
+List-Subscribe: <https://mails.dpdk.org/listinfo/spp>,
+ <mailto:spp-request@dpdk.org?subject=subscribe>
+X-TM-AS-MML: No
+Precedence: bulk
+Lines: 106
+X-TM-AS-GCONF: 00
+X-MD-STAMP: ON
+
+From: Yasufumi Ogawa <yasufum.o@gmail.com>
+
+This update is to rename enum `spp_secondary` to `sppwk_proc_type` and
+its members start with `SECONDARY_` to `WK_PROC_`.
+
+Signed-off-by: Yasufumi Ogawa <yasufum.o@gmail.com>
+---
+ src/mirror/spp_mirror.c                              |  4 ++--
+ .../secondary/spp_worker_th/cmd_res_formatter.c      |  4 ++--
+ src/shared/secondary/spp_worker_th/cmd_utils.h       | 12 ++++++------
+ src/vf/spp_vf.c                                      |  4 ++--
+ 4 files changed, 12 insertions(+), 12 deletions(-)
+
+diff --git a/src/mirror/spp_mirror.c b/src/mirror/spp_mirror.c
+index 2cae48a..cb76005 100644
+--- a/src/mirror/spp_mirror.c
++++ b/src/mirror/spp_mirror.c
+@@ -216,12 +216,12 @@ parse_app_args(int argc, char *argv[])
+ 		usage(progname);
+ 		return SPP_RET_NG;
+ 	}
+-	g_startup_param.secondary_type = SECONDARY_TYPE_MIRROR;
++	g_startup_param.wk_proc_type = WK_PROC_TYPE_MIRROR;
+ 	RTE_LOG(INFO, MIRROR,
+ 			"app opts (client_id=%d,type=%d,"
+ 			"server=%s:%d,vhost_client=%d,)\n",
+ 			g_startup_param.client_id,
+-			g_startup_param.secondary_type,
++			g_startup_param.wk_proc_type,
+ 			g_startup_param.server_ip,
+ 			g_startup_param.server_port,
+ 			g_startup_param.vhost_client);
+diff --git a/src/shared/secondary/spp_worker_th/cmd_res_formatter.c b/src/shared/secondary/spp_worker_th/cmd_res_formatter.c
+index 3c2c3a6..f51157a 100644
+--- a/src/shared/secondary/spp_worker_th/cmd_res_formatter.c
++++ b/src/shared/secondary/spp_worker_th/cmd_res_formatter.c
+@@ -25,7 +25,7 @@ static int append_error_details_value(const char *name, char **output,
+  * List of worker process type. The order of items should be same as the order
+  * of enum `secondary_type` in cmd_utils.h.
+  */
+-/* TODO(yasufum) rename `secondary_type` to `sppwk_proc_type`. */
++/* TODO(yasufum) Add "pcap" after spp_pcap is made to use shared. */
+ const char *SPPWK_PROC_TYPE_LIST[] = {
+ 	"none",
+ 	"vf",
+@@ -128,7 +128,7 @@ get_wk_type(void)
+ {
+ 	struct startup_param *params;
+ 	sppwk_get_mng_data(&params, NULL, NULL, NULL, NULL, NULL, NULL);
+-	return params->secondary_type;
++	return params->wk_proc_type;
+ }
+ 
+ /* append a secondary process type for JSON format */
+diff --git a/src/shared/secondary/spp_worker_th/cmd_utils.h b/src/shared/secondary/spp_worker_th/cmd_utils.h
+index b15b40a..4582a82 100644
+--- a/src/shared/secondary/spp_worker_th/cmd_utils.h
++++ b/src/shared/secondary/spp_worker_th/cmd_utils.h
+@@ -130,11 +130,11 @@ enum copy_mng_flg {
+ };
+ 
+ /* secondary process type used only from spp_vf and spp_mirror */
+-/* TODO(yasufum) rename `secondary_type` to `sppwk_proc_type`. */
+-enum secondary_type {
+-	SECONDARY_TYPE_NONE,
+-	SECONDARY_TYPE_VF,
+-	SECONDARY_TYPE_MIRROR,
++/* TODO(yasufum) Add WK_PROC_TYPE_PCAP. */
++enum sppwk_proc_type {
++	WK_PROC_TYPE_NONE,
++	WK_PROC_TYPE_VF,
++	WK_PROC_TYPE_MIRROR,
+ };
+ 
+ /** VLAN tag information */
+@@ -200,7 +200,7 @@ struct startup_param {
+ 	char server_ip[INET_ADDRSTRLEN];  /* IP address of spp-ctl */
+ 	int server_port;   /* Port Number of spp-ctl */
+ 	int vhost_client;  /* Flag for --vhost-client option */
+-	enum secondary_type secondary_type;
++	enum sppwk_proc_type wk_proc_type;
+ };
+ 
+ /* Manage number of interfaces  and port information as global variable. */
+diff --git a/src/vf/spp_vf.c b/src/vf/spp_vf.c
+index 7ba894e..5bed735 100644
+--- a/src/vf/spp_vf.c
++++ b/src/vf/spp_vf.c
+@@ -172,12 +172,12 @@ parse_app_args(int argc, char *argv[])
+ 		usage(progname);
+ 		return SPP_RET_NG;
+ 	}
+-	g_startup_param.secondary_type = SECONDARY_TYPE_VF;
++	g_startup_param.wk_proc_type = WK_PROC_TYPE_VF;
+ 	RTE_LOG(INFO, APP,
+ 			"app opts (client_id=%d,type=%d,server=%s:%d,"
+ 			"vhost_client=%d)\n",
+ 			g_startup_param.client_id,
+-			g_startup_param.secondary_type,
++			g_startup_param.wk_proc_type,
+ 			g_startup_param.server_ip,
+ 			g_startup_param.server_port,
+ 			g_startup_param.vhost_client);
+-- 
+2.17.1
+
+

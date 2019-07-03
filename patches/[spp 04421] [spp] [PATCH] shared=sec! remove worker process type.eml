@@ -1,0 +1,310 @@
+Return-path: <fw-yama-hd@pomail01.silk.ntt-tx.co.jp>
+Received: from zssg-mailmd104.ddreams.local
+ (zssg-mailmd104.ddreams.local [10.160.123.99]) by zssg-mailms320.ddreams.local
+ (NTT DoCoMo Mail System) with ESMTP id <0PTL001AHN20R160@NTTDoCoMo.co.jp> for
+ yamashita.hideyuki@ntt-tx.co.jp; Mon, 24 Jun 2019 19:42:00 +0900 (JST)
+Original-recipient: rfc822;yamashita.hideyuki@ntt-tx.co.jp
+Received: from smtp_saver-daemon.zssg-mailmd104.ddreams.local by
+ zssg-mailmd104.ddreams.local (dDREAMS) id <0PTL0031GN207E00@dDREAMS> for
+ yamashita.hideyuki@ntt-tx.co.jp (ORCPT yamashita.hideyuki@ntt-tx.co.jp); Mon,
+ 24 Jun 2019 19:42:00 +0900 (JST)
+Received: from zssg-mailmf104.ddreams.local
+ (zssg-mailmf900.ddreams.local [10.160.172.84]) by zssg-mailmd104.ddreams.local
+ (dDREAMS) with ESMTP id <0PTL00T85N20O590@dDREAMS> for
+ yamashita.hideyuki@ntt-tx.co.jp (ORCPT yamashita.hideyuki@ntt-tx.co.jp); Mon,
+ 24 Jun 2019 19:42:00 +0900 (JST)
+Received: from zssg-mailmf104.ddreams.local (unknown [127.0.0.1])
+	by zssg-mailmf104.ddreams.local (Postfix) with ESMTP id 4FD087E6032	for
+ <yamashita.hideyuki@ntt-tx.co.jp>; Mon, 24 Jun 2019 19:42:00 +0900 (JST)
+Received: from zssg-mailmf104.ddreams.local (unknown [127.0.0.1])
+	by IMSVA (Postfix) with ESMTP id 4EC198E605A	for
+ <yamashita.hideyuki@ntt-tx.co.jp>; Mon, 24 Jun 2019 19:42:00 +0900 (JST)
+Received: from localhost (unknown [127.0.0.1])	by IMSVA (Postfix)
+ with SMTP id 4D9E68E6050	for <yamashita.hideyuki@ntt-tx.co.jp>; Mon,
+ 24 Jun 2019 19:42:00 +0900 (JST)
+X-IMSS-HAND-OFF-DIRECTIVE: localhost:10026
+Received: from zssg-mailmf104.ddreams.local (unknown [127.0.0.1])
+	by IMSVA (Postfix) with ESMTP id F24918E6050	for
+ <yamashita.hideyuki@ntt-tx.co.jp>; Mon, 24 Jun 2019 19:41:58 +0900 (JST)
+Received: from pomail01.silk.ntt-tx.co.jp (unknown [10.160.183.139])
+	by zssg-mailmf104.ddreams.local (Postfix)
+ with ESMTPS	for <yamashita.hideyuki@ntt-tx.co.jp>; Mon,
+ 24 Jun 2019 19:41:58 +0900 (JST)
+Received: from pomail01.silk.ntt-tx.co.jp (localhost [127.0.0.1])
+	by pomail01.silk.ntt-tx.co.jp (unknown) with ESMTP id x5OAfwxJ032238;	Mon,
+ 24 Jun 2019 19:41:58 +0900
+Received: (from yama-hd@localhost)	by pomail01.silk.ntt-tx.co.jp (unknown)
+ id x5OAfweV032237;	Mon, 24 Jun 2019 19:41:58 +0900
+X-Authentication-warning: pomail01.silk.ntt-tx.co.jp: yama-hd set sender to
+ fw-yama-hd@pomail01.silk.ntt-tx.co.jp using -f
+Received: from imss04.silk.ntt-tx.co.jp
+ (imss04.silk.ntt-tx.co.jp [10.107.0.39])	by pomail01.silk.ntt-tx.co.jp
+ (unknown) with ESMTP id x5OAfw13032234	for unknown; Mon,
+ 24 Jun 2019 19:41:58 +0900
+Received: from imss04.silk.ntt-tx.co.jp (localhost [127.0.0.1])
+ by imss04.silk.ntt-tx.co.jp (unknown) with ESMTP id x5OAfwct006994 for
+ unknown; Mon, 24 Jun 2019 19:41:58 +0900
+Received: from ml01.silk.ntt-tx.co.jp (ml01.silk.ntt-tx.co.jp [10.107.0.230])
+ by imss04.silk.ntt-tx.co.jp (unknown) with ESMTP id x5OAfwDd006991; Mon,
+ 24 Jun 2019 19:41:58 +0900
+Received: from ml01.silk.ntt-tx.co.jp (localhost [127.0.0.1])
+	by ml01.silk.ntt-tx.co.jp (unknown) with ESMTP id x5OAfwse008592;	Mon,
+ 24 Jun 2019 19:41:58 +0900
+Received: from imss02.silk.ntt-tx.co.jp
+ (imss02.silk.ntt-tx.co.jp [10.107.0.127])	by ml01.silk.ntt-tx.co.jp (unknown)
+ with ESMTP id x5OAfv6a008588	for unknown; Mon, 24 Jun 2019 19:41:58 +0900
+Received: from imss02.silk.ntt-tx.co.jp (localhost [127.0.0.1])
+ by imss02.silk.ntt-tx.co.jp (unknown) with ESMTP id x5OAfvlR022493 for
+ unknown; Mon, 24 Jun 2019 19:41:57 +0900
+Received: from mail01.ics.ntt-tx.co.jp (mail01.ics.ntt-tx.co.jp [10.254.2.67])
+ by imss02.silk.ntt-tx.co.jp (unknown) with ESMTP id x5OAfvj7022487 for
+ unknown; Mon, 24 Jun 2019 19:41:57 +0900
+Received: from dpdk.org (dpdk.org [92.243.14.124])	by mail01.ics.ntt-tx.co.jp
+ (unknown) with SMTP id x5OAfpQd020431	for unknown; Mon,
+ 24 Jun 2019 19:41:56 +0900
+Received: from [92.243.14.124] (localhost [127.0.0.1])	by dpdk.org (Postfix)
+ with ESMTP id B4CDB1BF0C;	Mon, 24 Jun 2019 12:41:50 +0200 (CEST)
+Received: from mail-pf1-f194.google.com
+ (mail-pf1-f194.google.com [209.85.210.194]) by dpdk.org (Postfix)
+ with ESMTP id ED0D91BED0 for <spp@dpdk.org>; Mon,
+ 24 Jun 2019 12:41:49 +0200 (CEST)
+Received: by mail-pf1-f194.google.com with SMTP id t16so7257475pfe.11 for
+ <spp@dpdk.org>; Mon, 24 Jun 2019 03:41:49 -0700 (PDT)
+Received: from localhost.localdomain ([192.47.164.146])
+ by smtp.gmail.com with ESMTPSA id d123sm14365330pfc.144.2019.06.24.03.41.47
+ (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128); Mon,
+ 24 Jun 2019 03:41:48 -0700 (PDT)
+Date: Mon, 24 Jun 2019 19:41:44 +0900
+From: yasufum.o@gmail.com
+Subject: [spp 04421] [spp] [PATCH] shared/sec: remove worker process type
+Sender: spp <spp-bounces@dpdk.org>
+To: spp@dpdk.org, ferruh.yigit@intel.com, yasufum.o@gmail.com
+Message-id: <20190624104144.24869-1-yasufum.o@gmail.com>
+X-ML-Name: unknown
+X-Mail-Count: 04421
+X-MLServer: unknown
+X-ML-Info: mailing list service
+X-Mailer: git-send-email 2.17.1
+Authentication-results: mail01.ics.ntt-tx.co.jp; spf=pass
+ smtp.mailfrom=spp-bounces@dpdk.org
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
+ h=from:to:subject:date:message-id;
+ bh=uoGaV6QOl1mfmDoFaJW2BeEtIm1QoWH9JfogYzL88oY=;
+ b=CZKn2RcnbhFVOmFLXCZNwi1BOiCKxqvQ6SWoH5myvhBmvYjXMyipYxh13VnqP1MANP
+ PDsPzDu5UPduxGVZp9uaQkTwbbM/toK4B358+e/6kkFjBl6hoT/n0IAeIuPTff5PE8sj
+ xwBMFah6Oo2IbZ7PXefcfgWaCgwI18WYNu/2Zj4zE7AUgb1InaP+LyTP2MXvc6SatgBs
+ KaXvH6HFL/HlSccSRe6hVSIAnbRvL4HwHFBRmAo88KlIZSbStXiEEAqD8jxjCauxLvFp
+ jwfIs77UIzPLPynYFddA2mG+CzrZUA7xdg7rhcAOjuIdamWIa9NZI4pp4aCuplf+OEiI PvgQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=1e100.net;
+ s=20161025; h=x-gm-message-state:from:to:subject:date:message-id;
+ bh=uoGaV6QOl1mfmDoFaJW2BeEtIm1QoWH9JfogYzL88oY=;
+ b=l34Y2ylRZLv9ahJS9au3AGnBua/gCoFgpvjeqyZU4iGIRB1fJJyd/aLhmSWFNQk0L2
+ AhG59SG0yDjtqPT2LiBLx8WtYIlJWXV7PdDXFH8jICSgiby05bTp/wQ3BwPVgbO1ijCW
+ HdzsD9kyy7djmGWiZwiLiv/MIZKW1rCzjC4+lYwj9/u0TCtD0Tq4FeN6UABZFgneOQYG
+ jkS0fuJdyfU9FP7TAK6HBOwFrfmVOH0xcZ2hhBWezZioqWVL4s1dBaUo5S9hD77omuMF
+ k0oKC5f5bJugQK7J+esPGWCThrJEgSRC0lGll5ikZY1LHIJNqgOzXzItOW7HEIETnBVR i64A==
+X-Gm-Message-State: APjAAAUG0yGTOLlWEEAiIwCU9992rA++pUSMeTuRrWR3+0dFfwvJYgiI
+ RSMZrXyUEy7+J81rYBzl3MXi0DnU
+X-Google-Smtp-Source:
+ APXvYqzKkFTXqrX/25PuwVUMuol/6R6JWDfYXqm9bZ8f/sKZLTjjtIhk+vgb6WlBPClRK2KPvPDxDw==
+X-Received: by 2002:a63:595e:: with SMTP id j30mr13092106pgm.2.1561372908774;
+ Mon, 24 Jun 2019 03:41:48 -0700 (PDT)
+X-BeenThere: spp@dpdk.org
+X-Mailman-Version: 2.1.15
+List-Id: Soft Patch Panel <spp.dpdk.org>
+List-Unsubscribe: <https://mails.dpdk.org/options/spp>,
+ <mailto:spp-request@dpdk.org?subject=unsubscribe>
+List-Archive: <http://mails.dpdk.org/archives/spp/>
+List-Post: <mailto:spp@dpdk.org>
+List-Help: <mailto:spp-request@dpdk.org?subject=help>
+List-Subscribe: <https://mails.dpdk.org/listinfo/spp>,
+ <mailto:spp-request@dpdk.org?subject=subscribe>
+X-TM-AS-MML: No
+Precedence: bulk
+Lines: 182
+X-TM-AS-GCONF: 00
+X-MD-STAMP: ON
+
+From: Yasufumi Ogawa <yasufum.o@gmail.com>
+
+Three of SPP worker process types are defined as an enum for vf,
+mirror and none. It is only used as index for getting name of types of
+string value from an array.
+
+  enum sppwk_proc_type {
+       WK_PROC_TYPE_NONE,
+       WK_PROC_TYPE_VF,
+       WK_PROC_TYPE_MIRROR,
+  }
+
+However, it is menaingless because type for vf is not used in
+spp_mirror, or vise versa. In addition, type none is not used from
+anywhere. It should be simply replaced with fixed string values in each
+of processes because it is not needed to be shared among processes.
+
+This update is to replace this enum and array of string with
+`#define WK_PROC_TYPE "vf"` and `#define WK_PROC_TYPE "mirror"` in each
+of processes independently.
+
+Signed-off-by: Yasufumi Ogawa <yasufum.o@gmail.com>
+---
+ src/mirror/spp_mirror.c                       | 12 +++------
+ .../spp_worker_th/cmd_res_formatter.c         | 25 +------------------
+ .../secondary/spp_worker_th/cmd_utils.h       |  9 -------
+ .../secondary/spp_worker_th/mirror_deps.h     |  2 ++
+ src/shared/secondary/spp_worker_th/vf_deps.h  |  2 ++
+ src/vf/spp_vf.c                               | 10 +++-----
+ 6 files changed, 12 insertions(+), 48 deletions(-)
+
+diff --git a/src/mirror/spp_mirror.c b/src/mirror/spp_mirror.c
+index 19d79ef..9d9b4a8 100644
+--- a/src/mirror/spp_mirror.c
++++ b/src/mirror/spp_mirror.c
+@@ -194,15 +194,11 @@ parse_app_args(int argc, char *argv[])
+ 		usage(progname);
+ 		return SPP_RET_NG;
+ 	}
+-	g_startup_param.wk_proc_type = WK_PROC_TYPE_MIRROR;
+ 	RTE_LOG(INFO, MIRROR,
+-			"app opts (client_id=%d,type=%d,"
+-			"server=%s:%d,vhost_client=%d,)\n",
+-			cli_id,
+-			g_startup_param.wk_proc_type,
+-			g_startup_param.server_ip,
+-			g_startup_param.server_port,
+-			g_enable_vhost_cli);
++			"Parsed app args (client_id=%d, server=%s:%d, "
++			"vhost_client=%d,)\n",
++			cli_id, g_startup_param.server_ip,
++			g_startup_param.server_port, g_enable_vhost_cli);
+ 	return SPP_RET_OK;
+ }
+ 
+diff --git a/src/shared/secondary/spp_worker_th/cmd_res_formatter.c b/src/shared/secondary/spp_worker_th/cmd_res_formatter.c
+index 291c1f5..f095b08 100644
+--- a/src/shared/secondary/spp_worker_th/cmd_res_formatter.c
++++ b/src/shared/secondary/spp_worker_th/cmd_res_formatter.c
+@@ -21,18 +21,6 @@ static int append_result_value(const char *name, char **output, void *tmp);
+ static int append_error_details_value(const char *name, char **output,
+ 		void *tmp);
+ 
+-/**
+- * List of worker process type. The order of items should be same as the order
+- * of enum `wk_proc_type` in cmd_utils.h.
+- */
+-/* TODO(yasufum) Add "pcap" after spp_pcap is made to use shared. */
+-const char *SPPWK_PROC_TYPE_LIST[] = {
+-	"none",
+-	"vf",
+-	"mirror",
+-	"",  /* termination */
+-};
+-
+ /**
+  * List of port abilities. The order of items should be same as the order of
+  * enum `sppwk_port_abl_ops` in spp_vf.h.
+@@ -121,23 +109,12 @@ append_interface_array(char **output, const enum port_type type)
+ 	return SPP_RET_OK;
+ }
+ 
+-/* TODO(yasufum) move to another file for util funcs. */
+-/* Get proc type from global command params. */
+-static int
+-get_wk_type(void)
+-{
+-	struct startup_param *params;
+-	sppwk_get_mng_data(&params, NULL, NULL, NULL, NULL, NULL, NULL);
+-	return params->wk_proc_type;
+-}
+-
+ /* append a secondary process type for JSON format */
+ int
+ append_process_type_value(const char *name, char **output,
+ 		void *tmp __attribute__ ((unused)))
+ {
+-	return append_json_str_value(output, name,
+-			SPPWK_PROC_TYPE_LIST[get_wk_type()]);
++	return append_json_str_value(output, name, SPPWK_PROC_TYPE);
+ }
+ 
+ /* append a value of vlan for JSON format */
+diff --git a/src/shared/secondary/spp_worker_th/cmd_utils.h b/src/shared/secondary/spp_worker_th/cmd_utils.h
+index 9022589..425d3eb 100644
+--- a/src/shared/secondary/spp_worker_th/cmd_utils.h
++++ b/src/shared/secondary/spp_worker_th/cmd_utils.h
+@@ -134,14 +134,6 @@ enum copy_mng_flg {
+ 	COPY_MNG_FLG_ALLCOPY,
+ };
+ 
+-/* secondary process type used only from spp_vf and spp_mirror */
+-/* TODO(yasufum) Add WK_PROC_TYPE_PCAP. */
+-enum sppwk_proc_type {
+-	WK_PROC_TYPE_NONE,
+-	WK_PROC_TYPE_VF,
+-	WK_PROC_TYPE_MIRROR,
+-};
+-
+ /** VLAN tag information */
+ struct sppwk_vlan_tag {
+ 	int vid; /**< VLAN ID */
+@@ -203,7 +195,6 @@ struct sppwk_comp_info {
+ struct startup_param {
+ 	char server_ip[INET_ADDRSTRLEN];  /* IP address of spp-ctl */
+ 	int server_port;   /* Port Number of spp-ctl */
+-	enum sppwk_proc_type wk_proc_type;
+ };
+ 
+ /* Manage number of interfaces  and port information as global variable. */
+diff --git a/src/shared/secondary/spp_worker_th/mirror_deps.h b/src/shared/secondary/spp_worker_th/mirror_deps.h
+index 1446027..085b01e 100644
+--- a/src/shared/secondary/spp_worker_th/mirror_deps.h
++++ b/src/shared/secondary/spp_worker_th/mirror_deps.h
+@@ -9,6 +9,8 @@
+ #include "cmd_parser.h"
+ #include "cmd_res_formatter.h"
+ 
++#define SPPWK_PROC_TYPE "mirror"
++
+ /* Num of entries of ops_list in mir_cmd_runner.c. */
+ #define NOF_STAT_OPS 7
+ 
+diff --git a/src/shared/secondary/spp_worker_th/vf_deps.h b/src/shared/secondary/spp_worker_th/vf_deps.h
+index 8da81a5..fd3c201 100644
+--- a/src/shared/secondary/spp_worker_th/vf_deps.h
++++ b/src/shared/secondary/spp_worker_th/vf_deps.h
+@@ -11,6 +11,8 @@
+ #include "cmd_parser.h"
+ #include "cmd_res_formatter.h"
+ 
++#define SPPWK_PROC_TYPE "vf"
++
+ /* Number of VLAN ID */
+ #define NOF_VLAN 4096
+ 
+diff --git a/src/vf/spp_vf.c b/src/vf/spp_vf.c
+index d8b0c87..f4bafb4 100644
+--- a/src/vf/spp_vf.c
++++ b/src/vf/spp_vf.c
+@@ -151,15 +151,11 @@ parse_app_args(int argc, char *argv[])
+ 		usage(progname);
+ 		return SPP_RET_NG;
+ 	}
+-	g_startup_param.wk_proc_type = WK_PROC_TYPE_VF;
+ 	RTE_LOG(INFO, APP,
+-			"app opts (client_id=%d,type=%d,server=%s:%d,"
++			"Parsed app args (client_id=%d,server=%s:%d,"
+ 			"vhost_client=%d)\n",
+-			cli_id,
+-			g_startup_param.wk_proc_type,
+-			g_startup_param.server_ip,
+-			g_startup_param.server_port,
+-			g_enable_vhost_cli);
++			cli_id, g_startup_param.server_ip,
++			g_startup_param.server_port, g_enable_vhost_cli);
+ 	return SPP_RET_OK;
+ }
+ 
+-- 
+2.17.1
+
+

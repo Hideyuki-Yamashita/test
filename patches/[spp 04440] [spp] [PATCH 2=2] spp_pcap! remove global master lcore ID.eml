@@ -1,0 +1,339 @@
+Return-path: <fw-yama-hd@pomail01.silk.ntt-tx.co.jp>
+Received: from zssg-mailmd104.ddreams.local
+ (zssg-mailmd104.ddreams.local [10.160.123.99]) by zssg-mailms320.ddreams.local
+ (NTT DoCoMo Mail System) with ESMTP id <0PTO00QUVY90V480@NTTDoCoMo.co.jp> for
+ yamashita.hideyuki@ntt-tx.co.jp; Wed, 26 Jun 2019 14:36:36 +0900 (JST)
+Original-recipient: rfc822;yamashita.hideyuki@ntt-tx.co.jp
+Received: from smtp_saver-daemon.zssg-mailmd104.ddreams.local by
+ zssg-mailmd104.ddreams.local (dDREAMS) id <0PTO00Z24Y90FQ00@dDREAMS> for
+ yamashita.hideyuki@ntt-tx.co.jp (ORCPT yamashita.hideyuki@ntt-tx.co.jp); Wed,
+ 26 Jun 2019 14:36:36 +0900 (JST)
+Received: from zssg-mailmf101.ddreams.local
+ (zssg-mailmf900.ddreams.local [10.160.172.84]) by zssg-mailmd104.ddreams.local
+ (dDREAMS) with ESMTP id <0PTO00WX0Y906T10@dDREAMS> for
+ yamashita.hideyuki@ntt-tx.co.jp (ORCPT yamashita.hideyuki@ntt-tx.co.jp); Wed,
+ 26 Jun 2019 14:36:36 +0900 (JST)
+Received: from zssg-mailmf101.ddreams.local (unknown [127.0.0.1])
+	by zssg-mailmf101.ddreams.local (Postfix) with ESMTP id 150007E6036	for
+ <yamashita.hideyuki@ntt-tx.co.jp>; Wed, 26 Jun 2019 14:36:36 +0900 (JST)
+Received: from zssg-mailmf101.ddreams.local (unknown [127.0.0.1])
+	by IMSVA (Postfix) with ESMTP id 0CCB58E6056	for
+ <yamashita.hideyuki@ntt-tx.co.jp>; Wed, 26 Jun 2019 14:36:36 +0900 (JST)
+Received: from localhost (unknown [127.0.0.1])	by IMSVA (Postfix)
+ with SMTP id F0F058E6054	for <yamashita.hideyuki@ntt-tx.co.jp>; Wed,
+ 26 Jun 2019 14:36:35 +0900 (JST)
+X-IMSS-HAND-OFF-DIRECTIVE: localhost:10026
+Received: from zssg-mailmf101.ddreams.local (unknown [127.0.0.1])
+	by IMSVA (Postfix) with ESMTP id DE5F18E6051	for
+ <yamashita.hideyuki@ntt-tx.co.jp>; Wed, 26 Jun 2019 14:36:34 +0900 (JST)
+Received: from pomail01.silk.ntt-tx.co.jp (unknown [10.160.183.139])
+	by zssg-mailmf101.ddreams.local (Postfix)
+ with ESMTPS	for <yamashita.hideyuki@ntt-tx.co.jp>; Wed,
+ 26 Jun 2019 14:36:34 +0900 (JST)
+Received: from pomail01.silk.ntt-tx.co.jp (localhost [127.0.0.1])
+	by pomail01.silk.ntt-tx.co.jp (unknown) with ESMTP id x5Q5aYYF019222;	Wed,
+ 26 Jun 2019 14:36:34 +0900
+Received: (from yama-hd@localhost)	by pomail01.silk.ntt-tx.co.jp (unknown)
+ id x5Q5aYOn019221;	Wed, 26 Jun 2019 14:36:34 +0900
+X-Authentication-warning: pomail01.silk.ntt-tx.co.jp: yama-hd set sender to
+ fw-yama-hd@pomail01.silk.ntt-tx.co.jp using -f
+Received: from imss04.silk.ntt-tx.co.jp
+ (imss04.silk.ntt-tx.co.jp [10.107.0.39])	by pomail01.silk.ntt-tx.co.jp
+ (unknown) with ESMTP id x5Q5aY3D019218	for unknown; Wed,
+ 26 Jun 2019 14:36:34 +0900
+Received: from imss04.silk.ntt-tx.co.jp (localhost [127.0.0.1])
+ by imss04.silk.ntt-tx.co.jp (unknown) with ESMTP id x5Q5aY6X031996 for
+ unknown; Wed, 26 Jun 2019 14:36:34 +0900
+Received: from ml01.silk.ntt-tx.co.jp (ml01.silk.ntt-tx.co.jp [10.107.0.230])
+ by imss04.silk.ntt-tx.co.jp (unknown) with ESMTP id x5Q5aYQU031993; Wed,
+ 26 Jun 2019 14:36:34 +0900
+Received: from ml01.silk.ntt-tx.co.jp (localhost [127.0.0.1])
+	by ml01.silk.ntt-tx.co.jp (unknown) with ESMTP id x5Q5aYuv015830;	Wed,
+ 26 Jun 2019 14:36:34 +0900
+Received: from imss01.silk.ntt-tx.co.jp
+ (imss01.silk.ntt-tx.co.jp [10.107.0.126])	by ml01.silk.ntt-tx.co.jp (unknown)
+ with ESMTP id x5Q5aXQ8015826	for unknown; Wed, 26 Jun 2019 14:36:33 +0900
+Received: from imss01.silk.ntt-tx.co.jp (localhost [127.0.0.1])
+ by imss01.silk.ntt-tx.co.jp (unknown) with ESMTP id x5Q5aX5d011007 for
+ unknown; Wed, 26 Jun 2019 14:36:33 +0900
+Received: from mail01.ics.ntt-tx.co.jp (mail01.ics.ntt-tx.co.jp [10.254.2.67])
+ by imss01.silk.ntt-tx.co.jp (unknown) with ESMTP id x5Q5aXiw011003 for
+ unknown; Wed, 26 Jun 2019 14:36:33 +0900
+Received: from dpdk.org (dpdk.org [92.243.14.124])	by mail01.ics.ntt-tx.co.jp
+ (unknown) with SMTP id x5Q5aR2o026421	for unknown; Wed,
+ 26 Jun 2019 14:36:32 +0900
+Received: from [92.243.14.124] (localhost [127.0.0.1])	by dpdk.org (Postfix)
+ with ESMTP id ADD8D1B952;	Wed, 26 Jun 2019 07:36:26 +0200 (CEST)
+Received: from mail-pl1-f196.google.com
+ (mail-pl1-f196.google.com [209.85.214.196]) by dpdk.org (Postfix)
+ with ESMTP id EF5545B34 for <spp@dpdk.org>; Wed,
+ 26 Jun 2019 07:36:24 +0200 (CEST)
+Received: by mail-pl1-f196.google.com with SMTP id ay6so753901plb.9 for
+ <spp@dpdk.org>; Tue, 25 Jun 2019 22:36:24 -0700 (PDT)
+Received: from localhost.localdomain ([192.47.164.146])
+ by smtp.gmail.com with ESMTPSA id 201sm22719973pfz.24.2019.06.25.22.36.22
+ (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128); Tue,
+ 25 Jun 2019 22:36:23 -0700 (PDT)
+Date: Wed, 26 Jun 2019 14:36:17 +0900
+From: yasufum.o@gmail.com
+Subject: [spp 04440] [spp] [PATCH 2/2] spp_pcap: remove global master lcore ID
+Sender: spp <spp-bounces@dpdk.org>
+To: spp@dpdk.org, ferruh.yigit@intel.com, yasufum.o@gmail.com
+Message-id: <20190626053617.39907-3-yasufum.o@gmail.com>
+In-reply-to: <20190626053617.39907-1-yasufum.o@gmail.com>
+References: <20190626053617.39907-1-yasufum.o@gmail.com>
+X-ML-Name: unknown
+X-Mail-Count: 04440
+X-MLServer: unknown
+X-ML-Info: mailing list service
+X-Mailer: git-send-email 2.17.1
+Authentication-results: mail01.ics.ntt-tx.co.jp; spf=pass
+ smtp.mailfrom=spp-bounces@dpdk.org
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
+ h=from:to:subject:date:message-id:in-reply-to:references;
+ bh=nGO/JIFcR/kM6EpLHzuqcwbLpONdsGYDuXEPQjPsd04=;
+ b=fYnoGXAVVa5ixaBr6wYnhN1nfbEqwLH6tWF5oSTE/UbyhS9ARRNW+0kciTSgF9T2Wn
+ B/47sBdOYWy8RNeGkG5uLhS5zitmFV/y7rhT+CjOhDe68PSbwL/8QuN/fCLYXHpoZ46a
+ vieot15094QZfOk4x8KnQIjm8OtueumpbNFXor181fBj89Lb1Llqg5RPDO10I7XV26jk
+ li9tL2+fywSdNNEg57fVrpl23lUFsu5rVeKKyn4oPe/FtjSi5EZuXVOh+fezST2TA9vk
+ 4yth4kE8aRh+yrse/feh4rwypWxaao3XKmDGPgWUjLxu784t1kRaPtLD9GIG5k6BejEy hqow==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=1e100.net;
+ s=20161025; h=x-gm-message-state:from:to:subject:date:message-id:in-reply-to
+ :references; bh=nGO/JIFcR/kM6EpLHzuqcwbLpONdsGYDuXEPQjPsd04=;
+ b=QwCLpxsJSlRIyIFNLqUfqn66VdQauoLQzpLDltRESjft5IImnQo0P+wY0Ne8mvjdoS
+ X/ZTPhRywKF/97xDZ2zeERCNovfnArC3hdbQFpMaludvRhgBjhMBBsvz0N7yhO0o8rAF
+ o8w3Xy6vv09wgI86BwZY90ROAPyBakjORfitI2OTvC0gTjHsoQt8Zyz6TwGnNXU5bLdB
+ mxFqyHjWV0h7g4fqaHn3HZ3rEi/bO/qSMKSMLTubFkqIiKJiMLZaEruWVEODjhtPhgY7
+ /Fxj5zXOeQ/8f53jcUajG2OXEA1zbIuD01AwAtID1XalkGNJ4rVPWjsAeRmEo+tHPOXz 3ZUA==
+X-Gm-Message-State: APjAAAUVuOzPiIM96hZ0Wsy37m7JpfgIifDUvEKDKqzXAEtvAWxatLDo
+ Z3iwtVmiYEZx6TNt9vrz+T9BHDmg
+X-Google-Smtp-Source:
+ APXvYqyiyfX/Awf6QnM6ruon9hi6F2/v5D9WeKxwUguzCdvJPRuX84XPKBwNMI+5tb2lUilIK0QyUg==
+X-Received: by 2002:a17:902:124:: with SMTP id
+ 33mr3191479plb.145.1561527384003; Tue, 25 Jun 2019 22:36:24 -0700 (PDT)
+X-BeenThere: spp@dpdk.org
+X-Mailman-Version: 2.1.15
+List-Id: Soft Patch Panel <spp.dpdk.org>
+List-Unsubscribe: <https://mails.dpdk.org/options/spp>,
+ <mailto:spp-request@dpdk.org?subject=unsubscribe>
+List-Archive: <http://mails.dpdk.org/archives/spp/>
+List-Post: <mailto:spp@dpdk.org>
+List-Help: <mailto:spp-request@dpdk.org?subject=help>
+List-Subscribe: <https://mails.dpdk.org/listinfo/spp>,
+ <mailto:spp-request@dpdk.org?subject=subscribe>
+X-TM-AS-MML: No
+Precedence: bulk
+Lines: 209
+X-TM-AS-GCONF: 00
+X-MD-STAMP: ON
+
+From: Yasufumi Ogawa <yasufum.o@gmail.com>
+
+As previous patch, this update is to remove variable of master lcore ID
+and change to use rte_get_master_lcore().
+
+Signed-off-by: Yasufumi Ogawa <yasufum.o@gmail.com>
+---
+ src/pcap/cmd_utils.c | 13 ++++++-----
+ src/pcap/cmd_utils.h |  4 +---
+ src/pcap/spp_pcap.c  | 51 +++++++++++++++++++++-----------------------
+ 3 files changed, 31 insertions(+), 37 deletions(-)
+
+diff --git a/src/pcap/cmd_utils.c b/src/pcap/cmd_utils.c
+index 52ca905..66e6d05 100644
+--- a/src/pcap/cmd_utils.c
++++ b/src/pcap/cmd_utils.c
+@@ -18,7 +18,6 @@ struct mng_data_info {
+ 	struct core_mng_info	  *p_core_info;
+ 	int			  *p_capture_request;
+ 	int			  *p_capture_status;
+-	unsigned int		  main_lcore_id;
+ };
+ 
+ /* Declare global variables */
+@@ -130,12 +129,15 @@ set_all_core_status(enum sppwk_lcore_status status)
+ void
+ stop_process(int signal)
+ {
++	unsigned int master_lcore;
++
+ 	if (unlikely(signal != SIGTERM) &&
+ 			unlikely(signal != SIGINT)) {
+ 		return;
+ 	}
+ 
+-	(g_mng_data_addr.p_core_info + g_mng_data_addr.main_lcore_id)->status =
++	master_lcore = rte_get_master_lcore();
++	(g_mng_data_addr.p_core_info + master_lcore)->status =
+ 							SPP_CORE_STOP_REQUEST;
+ 	set_all_core_status(SPP_CORE_STOP_REQUEST);
+ }
+@@ -260,20 +262,17 @@ int spp_format_port_string(char *port, enum port_type iface_type, int iface_no)
+ int spp_set_mng_data_addr(struct iface_info *iface_p,
+ 			  struct core_mng_info *core_mng_p,
+ 			  int *capture_request_p,
+-			  int *capture_status_p,
+-			  unsigned int main_lcore_id)
++			  int *capture_status_p)
+ {
+ 	if (iface_p == NULL || core_mng_p == NULL ||
+ 			capture_request_p == NULL ||
+-			capture_status_p == NULL ||
+-			main_lcore_id == 0xffffffff)
++			capture_status_p == NULL)
+ 		return SPPWK_RET_NG;
+ 
+ 	g_mng_data_addr.p_iface_info = iface_p;
+ 	g_mng_data_addr.p_core_info = core_mng_p;
+ 	g_mng_data_addr.p_capture_request = capture_request_p;
+ 	g_mng_data_addr.p_capture_status = capture_status_p;
+-	g_mng_data_addr.main_lcore_id = main_lcore_id;
+ 
+ 	return SPPWK_RET_OK;
+ }
+diff --git a/src/pcap/cmd_utils.h b/src/pcap/cmd_utils.h
+index 4fa2ea9..9b7ae52 100644
+--- a/src/pcap/cmd_utils.h
++++ b/src/pcap/cmd_utils.h
+@@ -324,15 +324,13 @@ spp_format_port_string(char *port, enum port_type iface_type, int iface_no);
+  * @param core_mng_p Pointer to g_core_info address.
+  * @param capture_status_p Pointer to status of pcap.
+  * @param capture_request_p Pointer to req of pcap.
+- * @param main_lcore_id Lcore ID of main thread.
+  * @retval SPP_RET_OK If succeeded.
+  * @retval SPP_RET_NG If failed.
+  */
+ int spp_set_mng_data_addr(struct iface_info *iface_p,
+ 			  struct core_mng_info *core_mng_p,
+ 			  int *capture_request_p,
+-			  int *capture_status_p,
+-			  unsigned int main_lcore_id);
++			  int *capture_status_p);
+ 
+ /**
+  * Get mange data address
+diff --git a/src/pcap/spp_pcap.c b/src/pcap/spp_pcap.c
+index 0b846f3..6762337 100644
+--- a/src/pcap/spp_pcap.c
++++ b/src/pcap/spp_pcap.c
+@@ -129,9 +129,6 @@ struct pcap_status_info {
+ 	int start_up_cnt;  /* thread start up count */
+ };
+ 
+-/* Lcore ID of main thread. */
+-static unsigned int g_main_lcore_id = 0xffffffff;
+-
+ /* Interface management information */
+ static struct iface_info g_iface_info;
+ 
+@@ -855,11 +852,12 @@ slave_main(void *arg __attribute__ ((unused)))
+ 	struct pcap_mng_info *pcap_info = &g_pcap_info[lcore_id];
+ 
+ 	if (pcap_info->thread_no == 0) {
+-		RTE_LOG(INFO, SPP_PCAP, "Core[%d] Start recive.\n", lcore_id);
++		RTE_LOG(INFO, SPP_PCAP, "Receiver started on lcore %d.\n",
++				lcore_id);
+ 		pcap_info->type = PCAP_RECEIVE;
+ 	} else {
+-		RTE_LOG(INFO, SPP_PCAP, "Core[%d] Start write(%d).\n",
+-					lcore_id, pcap_info->thread_no);
++		RTE_LOG(INFO, SPP_PCAP, "Writer %d started on lcore %d.\n",
++					pcap_info->thread_no, lcore_id);
+ 		pcap_info->type = PCAP_WRITE;
+ 	}
+ 	set_core_status(lcore_id, SPP_CORE_IDLE);
+@@ -877,14 +875,16 @@ slave_main(void *arg __attribute__ ((unused)))
+ 		else
+ 			ret = pcap_proc_write(lcore_id);
+ 		if (unlikely(ret != SPPWK_RET_OK)) {
+-			RTE_LOG(ERR, SPP_PCAP, "Core[%d] Thread Error.\n",
+-								lcore_id);
++			RTE_LOG(ERR, SPP_PCAP,
++					"Failed to capture on lcore %d.\n",
++					lcore_id);
+ 			break;
+ 		}
+ 	}
+ 
+ 	set_core_status(lcore_id, SPP_CORE_STOP);
+-	RTE_LOG(INFO, SPP_PCAP, "Core[%d] End.\n", lcore_id);
++	RTE_LOG(INFO, SPP_PCAP,
++			"Terminated slave on lcore %d.\n", lcore_id);
+ 	return ret;
+ }
+ 
+@@ -900,6 +900,7 @@ main(int argc, char *argv[])
+ 	char ctl_ip[IPADDR_LEN] = { 0 };
+ 	int ctl_port;
+ 	int ret_cmd_init;
++	unsigned int master_lcore;
+ 	unsigned int lcore_id;
+ 	unsigned int thread_no;
+ 
+@@ -930,13 +931,10 @@ main(int argc, char *argv[])
+ 		if (unlikely(ret_parse != 0))
+ 			break;
+ 
+-		/* Get lcore id of main thread to set its status after */
+-		g_main_lcore_id = rte_lcore_id();
+-
+ 		/* set manage address */
+ 		if (spp_set_mng_data_addr(&g_iface_info, g_core_info,
+-					&g_capture_request, &g_capture_status,
+-					g_main_lcore_id) < 0) {
++					&g_capture_request,
++					&g_capture_status) < 0) {
+ 			RTE_LOG(ERR, SPP_PCAP,
+ 				"manage address set is failed.\n");
+ 			break;
+@@ -1025,7 +1023,8 @@ main(int argc, char *argv[])
+ 		}
+ 
+ 		/* Set the status of main thread to idle */
+-		g_core_info[g_main_lcore_id].status = SPP_CORE_IDLE;
++		master_lcore = rte_get_master_lcore();
++		g_core_info[master_lcore].status = SPP_CORE_IDLE;
+ 		int ret_wait = check_core_status_wait(SPP_CORE_IDLE);
+ 		if (unlikely(ret_wait != 0))
+ 			break;
+@@ -1036,7 +1035,7 @@ main(int argc, char *argv[])
+ 
+ 		/* Enter loop for accepting commands */
+ 		int ret_do = 0;
+-		while (likely(g_core_info[g_main_lcore_id].status !=
++		while (likely(g_core_info[master_lcore].status !=
+ 				SPP_CORE_STOP_REQUEST)) {
+ 			/* Receive command */
+ 			ret_do = spp_command_proc_do();
+@@ -1059,18 +1058,16 @@ main(int argc, char *argv[])
+ 	}
+ 
+ 	/* Finalize to exit */
+-	if (g_main_lcore_id == rte_lcore_id()) {
+-		g_core_info[g_main_lcore_id].status = SPP_CORE_STOP;
+-		int ret_core_end = check_core_status_wait(SPP_CORE_STOP);
+-		if (unlikely(ret_core_end != 0))
+-			RTE_LOG(ERR, SPP_PCAP, "Core did not stop.\n");
+-
+-		/* capture write ring free */
+-		if (g_pcap_option.cap_ring != NULL)
+-			rte_ring_free(g_pcap_option.cap_ring);
+-	}
++	g_core_info[master_lcore].status = SPP_CORE_STOP;
++	int ret_core_end = check_core_status_wait(SPP_CORE_STOP);
++	if (unlikely(ret_core_end != 0))
++		RTE_LOG(ERR, SPP_PCAP, "Failed to terminate master thread.\n");
++
++	/* capture write ring free */
++	if (g_pcap_option.cap_ring != NULL)
++		rte_ring_free(g_pcap_option.cap_ring);
+ 
+ 
+-	RTE_LOG(INFO, SPP_PCAP, "spp_pcap exit.\n");
++	RTE_LOG(INFO, SPP_PCAP, "Exit spp_pcap.\n");
+ 	return ret;
+ }
+-- 
+2.17.1
+
+

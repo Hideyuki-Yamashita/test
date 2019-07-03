@@ -1,0 +1,370 @@
+Return-path: <fw-yama-hd@pomail01.silk.ntt-tx.co.jp>
+Received: from zssg-mailmd105.ddreams.local
+ (zssg-mailmd105.ddreams.local [10.160.123.100])
+ by zssg-mailms320.ddreams.local (NTT DoCoMo Mail System)
+ with ESMTP id <0PTL00D4365ASMD0@NTTDoCoMo.co.jp> for
+ yamashita.hideyuki@ntt-tx.co.jp; Mon, 24 Jun 2019 13:36:46 +0900 (JST)
+Original-recipient: rfc822;yamashita.hideyuki@ntt-tx.co.jp
+Received: from smtp_saver-daemon.zssg-mailmd105.ddreams.local by
+ zssg-mailmd105.ddreams.local (dDREAMS) id <0PTL0091K659XI00@dDREAMS> for
+ yamashita.hideyuki@ntt-tx.co.jp (ORCPT yamashita.hideyuki@ntt-tx.co.jp); Mon,
+ 24 Jun 2019 13:36:45 +0900 (JST)
+Received: from zssg-mailmf103.ddreams.local
+ (zssg-mailmf900.ddreams.local [10.160.172.84]) by zssg-mailmd105.ddreams.local
+ (dDREAMS) with ESMTP id <0PTL01ALL659CE70@dDREAMS> for
+ yamashita.hideyuki@ntt-tx.co.jp (ORCPT yamashita.hideyuki@ntt-tx.co.jp); Mon,
+ 24 Jun 2019 13:36:45 +0900 (JST)
+Received: from zssg-mailmf103.ddreams.local (unknown [127.0.0.1])
+	by zssg-mailmf103.ddreams.local (Postfix) with ESMTP id DF64D7E6038	for
+ <yamashita.hideyuki@ntt-tx.co.jp>; Mon, 24 Jun 2019 13:36:45 +0900 (JST)
+Received: from zssg-mailmf103.ddreams.local (unknown [127.0.0.1])
+	by IMSVA (Postfix) with ESMTP id DE4B78E6068	for
+ <yamashita.hideyuki@ntt-tx.co.jp>; Mon, 24 Jun 2019 13:36:45 +0900 (JST)
+Received: from localhost (unknown [127.0.0.1])	by IMSVA (Postfix)
+ with SMTP id DCE0B8E606C	for <yamashita.hideyuki@ntt-tx.co.jp>; Mon,
+ 24 Jun 2019 13:36:45 +0900 (JST)
+X-IMSS-HAND-OFF-DIRECTIVE: localhost:10026
+Received: from zssg-mailmf103.ddreams.local (unknown [127.0.0.1])
+	by IMSVA (Postfix) with ESMTP id 5D0728E6054	for
+ <yamashita.hideyuki@ntt-tx.co.jp>; Mon, 24 Jun 2019 13:36:45 +0900 (JST)
+Received: from pomail01.silk.ntt-tx.co.jp (unknown [10.160.183.139])
+	by zssg-mailmf103.ddreams.local (Postfix)
+ with ESMTPS	for <yamashita.hideyuki@ntt-tx.co.jp>; Mon,
+ 24 Jun 2019 13:36:45 +0900 (JST)
+Received: from pomail01.silk.ntt-tx.co.jp (localhost [127.0.0.1])
+	by pomail01.silk.ntt-tx.co.jp (unknown) with ESMTP id x5O4ajlx008159;	Mon,
+ 24 Jun 2019 13:36:45 +0900
+Received: (from yama-hd@localhost)	by pomail01.silk.ntt-tx.co.jp (unknown)
+ id x5O4ajHV008158;	Mon, 24 Jun 2019 13:36:45 +0900
+X-Authentication-warning: pomail01.silk.ntt-tx.co.jp: yama-hd set sender to
+ fw-yama-hd@pomail01.silk.ntt-tx.co.jp using -f
+Received: from imss04.silk.ntt-tx.co.jp
+ (imss04.silk.ntt-tx.co.jp [10.107.0.39])	by pomail01.silk.ntt-tx.co.jp
+ (unknown) with ESMTP id x5O4aiPH008155	for unknown; Mon,
+ 24 Jun 2019 13:36:45 +0900
+Received: from imss04.silk.ntt-tx.co.jp (localhost [127.0.0.1])
+ by imss04.silk.ntt-tx.co.jp (unknown) with ESMTP id x5O4aiNG016545 for
+ unknown; Mon, 24 Jun 2019 13:36:44 +0900
+Received: from ml01.silk.ntt-tx.co.jp (ml01.silk.ntt-tx.co.jp [10.107.0.230])
+ by imss04.silk.ntt-tx.co.jp (unknown) with ESMTP id x5O4aiSP016542; Mon,
+ 24 Jun 2019 13:36:44 +0900
+Received: from ml01.silk.ntt-tx.co.jp (localhost [127.0.0.1])
+	by ml01.silk.ntt-tx.co.jp (unknown) with ESMTP id x5O4aiPD030519;	Mon,
+ 24 Jun 2019 13:36:44 +0900
+Received: from imss02.silk.ntt-tx.co.jp
+ (imss02.silk.ntt-tx.co.jp [10.107.0.127])	by ml01.silk.ntt-tx.co.jp (unknown)
+ with ESMTP id x5O4aiT7030515	for unknown; Mon, 24 Jun 2019 13:36:44 +0900
+Received: from imss02.silk.ntt-tx.co.jp (localhost [127.0.0.1])
+ by imss02.silk.ntt-tx.co.jp (unknown) with ESMTP id x5O4aiJI013372 for
+ unknown; Mon, 24 Jun 2019 13:36:44 +0900
+Received: from mail01.ics.ntt-tx.co.jp (mail01.ics.ntt-tx.co.jp [10.254.2.67])
+ by imss02.silk.ntt-tx.co.jp (unknown) with ESMTP id x5O4aikI013365 for
+ unknown; Mon, 24 Jun 2019 13:36:44 +0900
+Received: from dpdk.org (dpdk.org [92.243.14.124])	by mail01.ics.ntt-tx.co.jp
+ (unknown) with SMTP id x5O4abO8027529	for unknown; Mon,
+ 24 Jun 2019 13:36:43 +0900
+Received: from [92.243.14.124] (localhost [127.0.0.1])	by dpdk.org (Postfix)
+ with ESMTP id 1780E1BF59;	Mon, 24 Jun 2019 06:36:37 +0200 (CEST)
+Received: from mail-pg1-f195.google.com
+ (mail-pg1-f195.google.com [209.85.215.195]) by dpdk.org (Postfix)
+ with ESMTP id E09241BF2C for <spp@dpdk.org>; Mon,
+ 24 Jun 2019 06:36:34 +0200 (CEST)
+Received: by mail-pg1-f195.google.com with SMTP id f25so6393879pgv.10 for
+ <spp@dpdk.org>; Sun, 23 Jun 2019 21:36:34 -0700 (PDT)
+Received: from localhost.localdomain ([192.47.164.146])
+ by smtp.gmail.com with ESMTPSA id c10sm9005178pjq.14.2019.06.23.21.36.31
+ (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128); Sun,
+ 23 Jun 2019 21:36:32 -0700 (PDT)
+Date: Mon, 24 Jun 2019 13:36:02 +0900
+From: yasufum.o@gmail.com
+Subject: [spp 04374] [spp] [PATCH 02/13] shared/sec: rename functions for
+ spp_mirror
+Sender: spp <spp-bounces@dpdk.org>
+To: spp@dpdk.org, ferruh.yigit@intel.com, yasufum.o@gmail.com
+Message-id: <20190624043613.19271-3-yasufum.o@gmail.com>
+In-reply-to: <20190624043613.19271-1-yasufum.o@gmail.com>
+References: <20190624043613.19271-1-yasufum.o@gmail.com>
+X-ML-Name: unknown
+X-Mail-Count: 04374
+X-MLServer: unknown
+X-ML-Info: mailing list service
+X-Mailer: git-send-email 2.17.1
+Authentication-results: mail01.ics.ntt-tx.co.jp; spf=pass
+ smtp.mailfrom=spp-bounces@dpdk.org
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
+ h=from:to:subject:date:message-id:in-reply-to:references;
+ bh=EmnGmhmGNvg2Zlyf+hbl+r4Ku3CS2DSe5+pK2fsyHXg=;
+ b=f0jsJLHmYoMYTs2R7AEyCZoclRTPyNMRZHWopw5OkPMF4iy7bThhozOwzmNERUvZWs
+ 865EikMfNuaaE9wJnj5N/AUDNV41Ny0GcY/RYJCSihmKTkxZvgdtjZVeSX34CQFeaxgm
+ /msluTBB8iJokxcwcyM3dMkPWnP3Cl2mMfRq77cWcteeczgGkosHMDCZlFHpT0Hxtg9N
+ HXAdFKiVCMXqRiUUkHxvkNeGZbCFD3AYqrUMGEzfXEYIx2I5FFq/k+4sew2Iv1qf4WDg
+ gTvh69KpOA5qW3rMT/ilt3iNA1qckIjgr930GGcE3KcLpJoTsUbs8GSKnU+EjgT9f4W0 0K/Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=1e100.net;
+ s=20161025; h=x-gm-message-state:from:to:subject:date:message-id:in-reply-to
+ :references; bh=EmnGmhmGNvg2Zlyf+hbl+r4Ku3CS2DSe5+pK2fsyHXg=;
+ b=CAJNP6+ObWU2FHPH2h8/352wdINk+85HNMr/WI5nLHeixpLKFmjHBO7+gJtpvK93ZA
+ iZhc65Iw0nPX9oSpQ/RccU2F7kZ+lHUHPAluSGjkkY7CluUybGCexzcKdC/hbZGtFyyl
+ HhhA6vbuNK/bR3UWQFYL10MyvbeLkvrpP3eZshLahNrHrtfKR/8ZGk7GwjfI2twOFbzX
+ b9nv62BTWhtrkEVCwu+LDrOfVVRVu3FYBwggdaP7DsanycQSISGUXH9pLxPGXkds9Ldl
+ Wu3gWzHNQ7Evsb/kei9gA/WKHMtHpIG9qskjpJBLK/k99lyOVtBQMfyo2uOivwUhypDn mlmQ==
+X-Gm-Message-State: APjAAAWmjOCPOP0OBm+OCg3fZL2Bi8TwecCJHY6loF9etuCm8OhMHT1V
+ GYoEVeY6bLVDlxbvjZc3Q7WmGkDD
+X-Google-Smtp-Source:
+ APXvYqyFtOOQuSEn6AlQfGCyor/tOZBZetOnt1ATAb0ecXXgKaRtjkBH5itubzBDZQVTjHlW48WBqw==
+X-Received: by 2002:a63:4f5b:: with SMTP id p27mr30432791pgl.273.1561350993117;
+ Sun, 23 Jun 2019 21:36:33 -0700 (PDT)
+X-BeenThere: spp@dpdk.org
+X-Mailman-Version: 2.1.15
+List-Id: Soft Patch Panel <spp.dpdk.org>
+List-Unsubscribe: <https://mails.dpdk.org/options/spp>,
+ <mailto:spp-request@dpdk.org?subject=unsubscribe>
+List-Archive: <http://mails.dpdk.org/archives/spp/>
+List-Post: <mailto:spp@dpdk.org>
+List-Help: <mailto:spp-request@dpdk.org?subject=help>
+List-Subscribe: <https://mails.dpdk.org/listinfo/spp>,
+ <mailto:spp-request@dpdk.org?subject=subscribe>
+X-TM-AS-MML: No
+Precedence: bulk
+Lines: 238
+X-TM-AS-GCONF: 00
+X-MD-STAMP: ON
+
+From: Yasufumi Ogawa <yasufum.o@gmail.com>
+
+Rename spp_mirror_get_component_status() to get_mirror_status(), and
+spp_mirror_update() to update_mirror(). This update also revises
+comments for the functions.
+
+Signed-off-by: Yasufumi Ogawa <yasufum.o@gmail.com>
+---
+ src/mirror/spp_mirror.c                       | 72 ++++++++-----------
+ .../secondary/spp_worker_th/cmd_runner.c      |  6 +-
+ .../secondary/spp_worker_th/cmd_utils.c       |  2 +-
+ .../secondary/spp_worker_th/mirror_deps.h     | 33 ++++-----
+ src/shared/secondary/spp_worker_th/vf_deps.h  |  2 +-
+ 5 files changed, 47 insertions(+), 68 deletions(-)
+
+diff --git a/src/mirror/spp_mirror.c b/src/mirror/spp_mirror.c
+index f62ae7e..c2ec09d 100644
+--- a/src/mirror/spp_mirror.c
++++ b/src/mirror/spp_mirror.c
+@@ -277,50 +277,45 @@ mirror_proc_init(void)
+ 
+ /* Update mirror info */
+ int
+-spp_mirror_update(struct sppwk_comp_info *component)
++update_mirror(struct sppwk_comp_info *wk_comp)
+ {
+ 	int cnt = 0;
+-	int num_rx = component->nof_rx;
+-	int num_tx = component->nof_tx;
+-	struct mirror_info *info = &g_mirror_info[component->comp_id];
++	int nof_rx = wk_comp->nof_rx;
++	int nof_tx = wk_comp->nof_tx;
++	struct mirror_info *info = &g_mirror_info[wk_comp->comp_id];
+ 	struct mirror_path *path = &info->path[info->upd_index];
+ 
+-	/* mirror component allows only one receiving port. */
+-	if (unlikely(num_rx > 1)) {
++	/* Check mirror has just one RX and two TX port. */
++	if (unlikely(nof_rx > 1)) {
+ 		RTE_LOG(ERR, MIRROR,
+-			"Component[%d] Setting error. (type = %d, rx = %d)\n",
+-			component->comp_id, component->wk_type, num_rx);
++			"Invalid num of RX (id=%d, type=%d, nof_rx=%d)\n",
++			wk_comp->comp_id, wk_comp->wk_type, nof_rx);
+ 		return SPP_RET_NG;
+ 	}
+-
+-	/* Component allows only tewo transmit port. */
+-	if (unlikely(num_tx > 2)) {
++	if (unlikely(nof_tx > 2)) {
+ 		RTE_LOG(ERR, MIRROR,
+-			"Component[%d] Setting error. (type = %d, tx = %d)\n",
+-			component->comp_id, component->wk_type, num_tx);
++			"Invalid num of TX (id=%d, type=%d, nof_tx=%d)\n",
++			wk_comp->comp_id, wk_comp->wk_type, nof_tx);
+ 		return SPP_RET_NG;
+ 	}
+ 
+ 	memset(path, 0x00, sizeof(struct mirror_path));
+ 
+ 	RTE_LOG(INFO, MIRROR,
+-			"Component[%d] Start update component. "
+-			"(name = %s, type = %d)\n",
+-			component->comp_id,
+-			component->name,
+-			component->wk_type);
+-
+-	memcpy(&path->name, component->name, STR_LEN_NAME);
+-	path->wk_type = component->wk_type;
+-	path->nof_rx = component->nof_rx;
+-	path->nof_tx = component->nof_tx;
+-	for (cnt = 0; cnt < num_rx; cnt++)
+-		memcpy(&path->ports[cnt].rx, component->rx_ports[cnt],
++			"Start updating mirror (id=%d, name=%s, type=%d)\n",
++			wk_comp->comp_id, wk_comp->name, wk_comp->wk_type);
++
++	memcpy(&path->name, wk_comp->name, STR_LEN_NAME);
++	path->wk_type = wk_comp->wk_type;
++	path->nof_rx = wk_comp->nof_rx;
++	path->nof_tx = wk_comp->nof_tx;
++	for (cnt = 0; cnt < nof_rx; cnt++)
++		memcpy(&path->ports[cnt].rx, wk_comp->rx_ports[cnt],
+ 				sizeof(struct sppwk_port_info));
+ 
+-	/* Transmit port is set according with larger num_rx / num_tx. */
+-	for (cnt = 0; cnt < num_tx; cnt++)
+-		memcpy(&path->ports[cnt].tx, component->tx_ports[cnt],
++	/* Transmit port is set according with larger nof_rx / nof_tx. */
++	for (cnt = 0; cnt < nof_tx; cnt++)
++		memcpy(&path->ports[cnt].tx, wk_comp->tx_ports[cnt],
+ 				sizeof(struct sppwk_port_info));
+ 
+ 	info->upd_index = info->ref_index;
+@@ -328,10 +323,8 @@ spp_mirror_update(struct sppwk_comp_info *component)
+ 		rte_delay_us_block(SPP_CHANGE_UPDATE_INTERVAL);
+ 
+ 	RTE_LOG(INFO, MIRROR,
+-			"Component[%d] Complete update component. "
+-			"(name = %s, type = %d)\n",
+-			component->comp_id, component->name,
+-			component->wk_type);
++			"Done update mirror (id=%d, name=%s, type=%d)\n",
++			wk_comp->comp_id, wk_comp->name, wk_comp->wk_type);
+ 
+ 	return SPP_RET_OK;
+ }
+@@ -465,8 +458,7 @@ mirror_proc(int id)
+ 
+ /* Mirror get component status */
+ int
+-spp_mirror_get_component_status(
+-		unsigned int lcore_id, int id,
++get_mirror_status(unsigned int lcore_id, int id,
+ 		struct spp_iterate_core_params *params)
+ {
+ 	int ret = SPP_RET_NG;
+@@ -479,9 +471,8 @@ spp_mirror_get_component_status(
+ 
+ 	if (unlikely(path->wk_type == SPPWK_TYPE_NONE)) {
+ 		RTE_LOG(ERR, MIRROR,
+-				"Component[%d] Not used. "
+-				"(status)(core = %d, type = %d)\n",
+-				id, lcore_id, path->wk_type);
++			"Mirror is not used. (id=%d, lcore=%d, type=%d)\n",
++			id, lcore_id, path->wk_type);
+ 		return SPP_RET_NG;
+ 	}
+ 
+@@ -500,10 +491,9 @@ spp_mirror_get_component_status(
+ 	}
+ 
+ 	/* Set the information with the function specified by the command. */
+-	ret = (*params->element_proc)(
+-		params, lcore_id,
+-		path->name, component_type,
+-		path->nof_rx, rx_ports, path->nof_tx, tx_ports);
++	ret = (*params->element_proc)(params, lcore_id, path->name,
++			component_type, path->nof_rx, rx_ports, path->nof_tx,
++			tx_ports);
+ 	if (unlikely(ret != 0))
+ 		return SPP_RET_NG;
+ 
+diff --git a/src/shared/secondary/spp_worker_th/cmd_runner.c b/src/shared/secondary/spp_worker_th/cmd_runner.c
+index f686209..4c4abd8 100644
+--- a/src/shared/secondary/spp_worker_th/cmd_runner.c
++++ b/src/shared/secondary/spp_worker_th/cmd_runner.c
+@@ -540,10 +540,8 @@ spp_iterate_core_info(struct spp_iterate_core_params *params)
+ 			}
+ #endif /* SPP_VF_MODULE */
+ #ifdef SPP_MIRROR_MODULE
+-			ret = spp_mirror_get_component_status(
+-						lcore_id,
+-						core->id[cnt],
+-						params);
++			ret = get_mirror_status(lcore_id, core->id[cnt],
++					params);
+ #endif /* SPP_MIRROR_MODULE */
+ 			if (unlikely(ret != 0)) {
+ 				RTE_LOG(ERR, WK_CMD_RUNNER, "Cannot iterate core "
+diff --git a/src/shared/secondary/spp_worker_th/cmd_utils.c b/src/shared/secondary/spp_worker_th/cmd_utils.c
+index 709c3da..79dd2e7 100644
+--- a/src/shared/secondary/spp_worker_th/cmd_utils.c
++++ b/src/shared/secondary/spp_worker_th/cmd_utils.c
+@@ -897,7 +897,7 @@ update_comp_info(void)
+ #endif /* SPP_VF_MODULE */
+ 
+ #ifdef SPP_MIRROR_MODULE
+-		ret = spp_mirror_update(comp_info);
++		ret = update_mirror(comp_info);
+ #endif /* SPP_MIRROR_MODULE */
+ 
+ 		if (unlikely(ret < 0)) {
+diff --git a/src/shared/secondary/spp_worker_th/mirror_deps.h b/src/shared/secondary/spp_worker_th/mirror_deps.h
+index 83edc1f..bfa715d 100644
+--- a/src/shared/secondary/spp_worker_th/mirror_deps.h
++++ b/src/shared/secondary/spp_worker_th/mirror_deps.h
+@@ -8,33 +8,24 @@
+ #include "cmd_utils.h"
+ 
+ /**
+- * Update Mirror info
++ * Update mirror info.
+  *
+- * @param component
+- *  The pointer to struct sppwk_comp_info.@n
+- *  The data for updating the internal data of mirror.
+- *
+- * @retval SPP_RET_OK succeeded.
+- * @retval SPP_RET_NG failed.
++ * @param wk_comp_info Pointer to internal data of mirror.
++ * @retval SPP_RET_OK If succeeded.
++ * @retval SPP_RET_NG If failed.
+  */
+-int spp_mirror_update(struct sppwk_comp_info *component);
++int update_mirror(struct sppwk_comp_info *wk_comp_info);
+ 
+ /**
+- * Mirror get component status
+- *
+- * @param lcore_id
+- *  The logical core ID for forwarder and merger.
+- * @param id
+- *  The unique component ID.
+- * @param params
+- *  The pointer to struct spp_iterate_core_params.@n
+- *  Detailed data of mirror status.
++ * Get mirror status.
+  *
+- * @retval SPP_RET_OK succeeded.
+- * @retval SPP_RET_NG failed.
++ * @param lcore_id Lcore ID for forwarder and merger.
++ * @param id Unique component ID.
++ * @param params Pointer to detailed data of mirror status.
++ * @retval SPP_RET_OK If succeeded.
++ * @retval SPP_RET_NG If failed.
+  */
+-int spp_mirror_get_component_status(
+-		unsigned int lcore_id, int id,
++int get_mirror_status(unsigned int lcore_id, int id,
+ 		struct spp_iterate_core_params *params);
+ 
+ #endif  /* __SPP_WORKER_TH_MIRROR_DEPS_H__ */
+diff --git a/src/shared/secondary/spp_worker_th/vf_deps.h b/src/shared/secondary/spp_worker_th/vf_deps.h
+index beafc64..73e0f9a 100644
+--- a/src/shared/secondary/spp_worker_th/vf_deps.h
++++ b/src/shared/secondary/spp_worker_th/vf_deps.h
+@@ -56,7 +56,7 @@ free_mac_classifier(struct mac_classifier *mac_clf)
+ /**
+  * Update classifier info.
+  *
+- * @param comp_info Pointer to internal data of classifier.
++ * @param wk_comp_info Pointer to internal data of classifier.
+  * @retval SPP_RET_OK If succeeded.
+  * @retval SPP_RET_NG If failed.
+  */
+-- 
+2.17.1
+
+

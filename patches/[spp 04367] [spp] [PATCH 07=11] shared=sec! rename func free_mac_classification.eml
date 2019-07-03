@@ -1,0 +1,195 @@
+Return-path: <fw-yama-hd@pomail01.silk.ntt-tx.co.jp>
+Received: from zssg-mailmd103.ddreams.local
+ (zssg-mailmd103.ddreams.local [10.160.123.98]) by zssg-mailms320.ddreams.local
+ (NTT DoCoMo Mail System) with ESMTP id <0PTL00UK202R8Y40@NTTDoCoMo.co.jp> for
+ yamashita.hideyuki@ntt-tx.co.jp; Mon, 24 Jun 2019 11:25:39 +0900 (JST)
+Original-recipient: rfc822;yamashita.hideyuki@ntt-tx.co.jp
+Received: from smtp_saver-daemon.zssg-mailmd103.ddreams.local by
+ zssg-mailmd103.ddreams.local (dDREAMS) id <0PTL0170202RDE00@dDREAMS> for
+ yamashita.hideyuki@ntt-tx.co.jp (ORCPT yamashita.hideyuki@ntt-tx.co.jp); Mon,
+ 24 Jun 2019 11:25:39 +0900 (JST)
+Received: from zssg-mailmf104.ddreams.local
+ (zssg-mailmf900.ddreams.local [10.160.172.84]) by zssg-mailmd103.ddreams.local
+ (dDREAMS) with ESMTP id <0PTL00UCD02RQ170@dDREAMS> for
+ yamashita.hideyuki@ntt-tx.co.jp (ORCPT yamashita.hideyuki@ntt-tx.co.jp); Mon,
+ 24 Jun 2019 11:25:39 +0900 (JST)
+Received: from zssg-mailmf104.ddreams.local (unknown [127.0.0.1])
+	by zssg-mailmf104.ddreams.local (Postfix) with ESMTP id 565217E6032	for
+ <yamashita.hideyuki@ntt-tx.co.jp>; Mon, 24 Jun 2019 11:25:39 +0900 (JST)
+Received: from zssg-mailmf104.ddreams.local (unknown [127.0.0.1])
+	by IMSVA (Postfix) with ESMTP id 53B038E606A	for
+ <yamashita.hideyuki@ntt-tx.co.jp>; Mon, 24 Jun 2019 11:25:39 +0900 (JST)
+Received: from localhost (unknown [127.0.0.1])	by IMSVA (Postfix)
+ with SMTP id 519FA8E6066	for <yamashita.hideyuki@ntt-tx.co.jp>; Mon,
+ 24 Jun 2019 11:25:39 +0900 (JST)
+X-IMSS-HAND-OFF-DIRECTIVE: localhost:10026
+Received: from zssg-mailmf104.ddreams.local (unknown [127.0.0.1])
+	by IMSVA (Postfix) with ESMTP id C810B8E6050	for
+ <yamashita.hideyuki@ntt-tx.co.jp>; Mon, 24 Jun 2019 11:25:38 +0900 (JST)
+Received: from pomail01.silk.ntt-tx.co.jp (unknown [10.160.183.139])
+	by zssg-mailmf104.ddreams.local (Postfix)
+ with ESMTPS	for <yamashita.hideyuki@ntt-tx.co.jp>; Mon,
+ 24 Jun 2019 11:25:38 +0900 (JST)
+Received: from pomail01.silk.ntt-tx.co.jp (localhost [127.0.0.1])
+	by pomail01.silk.ntt-tx.co.jp (unknown) with ESMTP id x5O2Pc9g013619;	Mon,
+ 24 Jun 2019 11:25:38 +0900
+Received: (from yama-hd@localhost)	by pomail01.silk.ntt-tx.co.jp (unknown)
+ id x5O2PcSP013617;	Mon, 24 Jun 2019 11:25:38 +0900
+X-Authentication-warning: pomail01.silk.ntt-tx.co.jp: yama-hd set sender to
+ fw-yama-hd@pomail01.silk.ntt-tx.co.jp using -f
+Received: from imss04.silk.ntt-tx.co.jp
+ (imss04.silk.ntt-tx.co.jp [10.107.0.39])	by pomail01.silk.ntt-tx.co.jp
+ (unknown) with ESMTP id x5O2PcVB013614	for unknown; Mon,
+ 24 Jun 2019 11:25:38 +0900
+Received: from imss04.silk.ntt-tx.co.jp (localhost [127.0.0.1])
+ by imss04.silk.ntt-tx.co.jp (unknown) with ESMTP id x5O2Pcta006050 for
+ unknown; Mon, 24 Jun 2019 11:25:38 +0900
+Received: from ml01.silk.ntt-tx.co.jp (ml01.silk.ntt-tx.co.jp [10.107.0.230])
+ by imss04.silk.ntt-tx.co.jp (unknown) with ESMTP id x5O2PcIk006047; Mon,
+ 24 Jun 2019 11:25:38 +0900
+Received: from ml01.silk.ntt-tx.co.jp (localhost [127.0.0.1])
+	by ml01.silk.ntt-tx.co.jp (unknown) with ESMTP id x5O2PbtS016487;	Mon,
+ 24 Jun 2019 11:25:37 +0900
+Received: from imss02.silk.ntt-tx.co.jp
+ (imss02.silk.ntt-tx.co.jp [10.107.0.127])	by ml01.silk.ntt-tx.co.jp (unknown)
+ with ESMTP id x5O2PbY9016483	for unknown; Mon, 24 Jun 2019 11:25:37 +0900
+Received: from imss02.silk.ntt-tx.co.jp (localhost [127.0.0.1])
+ by imss02.silk.ntt-tx.co.jp (unknown) with ESMTP id x5O2PbB6006598 for
+ unknown; Mon, 24 Jun 2019 11:25:37 +0900
+Received: from mail01.ics.ntt-tx.co.jp (mail01.ics.ntt-tx.co.jp [10.254.2.67])
+ by imss02.silk.ntt-tx.co.jp (unknown) with ESMTP id x5O2PbA0006595 for
+ unknown; Mon, 24 Jun 2019 11:25:37 +0900
+Received: from dpdk.org (dpdk.org [92.243.14.124])	by mail01.ics.ntt-tx.co.jp
+ (unknown) with SMTP id x5O2PTFw003872	for unknown; Mon,
+ 24 Jun 2019 11:25:36 +0900
+Received: from [92.243.14.124] (localhost [127.0.0.1])	by dpdk.org (Postfix)
+ with ESMTP id F016D1BF72;	Mon, 24 Jun 2019 04:25:35 +0200 (CEST)
+Received: from mail-pg1-f196.google.com
+ (mail-pg1-f196.google.com [209.85.215.196]) by dpdk.org (Postfix)
+ with ESMTP id 0C0D11BF71 for <spp@dpdk.org>; Mon,
+ 24 Jun 2019 04:25:35 +0200 (CEST)
+Received: by mail-pg1-f196.google.com with SMTP id f25so6241887pgv.10 for
+ <spp@dpdk.org>; Sun, 23 Jun 2019 19:25:34 -0700 (PDT)
+Received: from localhost.localdomain ([192.47.164.146])
+ by smtp.gmail.com with ESMTPSA id a3sm9927461pje.3.2019.06.23.19.25.32
+ (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128); Sun,
+ 23 Jun 2019 19:25:33 -0700 (PDT)
+Date: Mon, 24 Jun 2019 11:25:00 +0900
+From: yasufum.o@gmail.com
+Subject: [spp 04367] [spp] [PATCH 07/11] shared/sec: rename func
+ free_mac_classification
+Sender: spp <spp-bounces@dpdk.org>
+To: spp@dpdk.org, ferruh.yigit@intel.com, yasufum.o@gmail.com
+Message-id: <20190624022504.18752-8-yasufum.o@gmail.com>
+In-reply-to: <20190624022504.18752-1-yasufum.o@gmail.com>
+References: <20190624022504.18752-1-yasufum.o@gmail.com>
+X-ML-Name: unknown
+X-Mail-Count: 04367
+X-MLServer: unknown
+X-ML-Info: mailing list service
+X-Mailer: git-send-email 2.17.1
+Authentication-results: mail01.ics.ntt-tx.co.jp; spf=pass
+ smtp.mailfrom=spp-bounces@dpdk.org
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
+ h=from:to:subject:date:message-id:in-reply-to:references;
+ bh=aXlKJpo65Y8u4I4qZysfxWpuwxkvufWmEDK9IZjvR1A=;
+ b=ZUWdH2NMJbMHkpnA1j/72ioMVJPaSs8LsuiOwyUOz5TzcEczM+YJ6psXHH8NktCjBX
+ brwy3pYe+sFDIIUak3Sl41E4AlFOqXLEBqhfkecTqi1GTSrcksQXpugTs3aKHYVPHuCz
+ Uo5Ejwi9rpTRQSrVe8PYar5zLslkUCBMvnBf+W8ZrlFVBc+ByDHk40EKt5IQBH+JoQwm
+ nEgarlDCZmrdJ0dZ2sWFAlAMSWpaUNF+uHpu1G8QEPU8yyWRYhVRDLEe8+b3ULiyn+IH
+ uuzU7kH7Awee+At67hpb9Lj0Pd/ZN61N3LztvUNw7lwc9PT1lFAnO/9qTS7pwvaQCIek HkGQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=1e100.net;
+ s=20161025; h=x-gm-message-state:from:to:subject:date:message-id:in-reply-to
+ :references; bh=aXlKJpo65Y8u4I4qZysfxWpuwxkvufWmEDK9IZjvR1A=;
+ b=Pc7nj/mj1AeR4OqMgnbcdVb1wSHg7aYk2tC1wLLygYOc5tKnAjDKk31lhPqEpiZ46g
+ mR/IBg4hiWD+TkojpjKB4yJtwymHCOXFZPWyZiy8+i3+WVhnNN2LAB9NksfMekMcxX6F
+ U3XnRhmHZo6V826s+9GsTnlYLgF6T7y+UG7+NJytNr1RnAKkfo4+UtZylAQSaOeZluZK
+ S/TSNz4TaQ0pjRoBcTlIhnRg8qZySiwwmR6iqCmcT7KLh7XduKjY3o0a0eCFdRuDUPRC
+ MyRD1G7EM2co3cFUwwLIHqVQzROvVBoxeC/FtEoy4P5L9SwMYie+WCP+yBNKZbyLNz6M ou4Q==
+X-Gm-Message-State: APjAAAX3nH5AUAXlsamrptjYO1Eu7CxtsLWiGuJbvWNw4e+Vr82Sesb3
+ 3ZE3SyMkGbeXBBWj2QGkEdVQe5r5
+X-Google-Smtp-Source:
+ APXvYqzJ56sXRm6Pjnp5Ho15CI2OQwSqAiz8BR0kLegHQI6zDRf8BsQfuBmt0mL/n7Jc7k4cCrf53Q==
+X-Received: by 2002:a17:90a:b903:: with SMTP id
+ p3mr21552742pjr.79.1561343134151; Sun, 23 Jun 2019 19:25:34 -0700 (PDT)
+X-BeenThere: spp@dpdk.org
+X-Mailman-Version: 2.1.15
+List-Id: Soft Patch Panel <spp.dpdk.org>
+List-Unsubscribe: <https://mails.dpdk.org/options/spp>,
+ <mailto:spp-request@dpdk.org?subject=unsubscribe>
+List-Archive: <http://mails.dpdk.org/archives/spp/>
+List-Post: <mailto:spp@dpdk.org>
+List-Help: <mailto:spp-request@dpdk.org?subject=help>
+List-Subscribe: <https://mails.dpdk.org/listinfo/spp>,
+ <mailto:spp-request@dpdk.org?subject=subscribe>
+X-TM-AS-MML: No
+Precedence: bulk
+Lines: 64
+X-TM-AS-GCONF: 00
+X-MD-STAMP: ON
+
+From: Yasufumi Ogawa <yasufum.o@gmail.com>
+
+Rename free_mac_classification() to free_mac_classifier() for releasing
+resources of classifier.
+
+Signed-off-by: Yasufumi Ogawa <yasufum.o@gmail.com>
+---
+ src/shared/secondary/spp_worker_th/vf_deps.h | 14 ++++++--------
+ src/vf/classifier_mac.c                      |  8 +++-----
+ 2 files changed, 9 insertions(+), 13 deletions(-)
+
+diff --git a/src/shared/secondary/spp_worker_th/vf_deps.h b/src/shared/secondary/spp_worker_th/vf_deps.h
+index 79e2abb..9b59b3d 100644
+--- a/src/shared/secondary/spp_worker_th/vf_deps.h
++++ b/src/shared/secondary/spp_worker_th/vf_deps.h
+@@ -42,17 +42,15 @@ struct cls_comp_info {
+ 	struct cls_port_info tx_ports_i[RTE_MAX_ETHPORTS];  /* TX info. */
+ };
+ 
+-/* free mac classification instance. */
++/* Release instance of mac classifier. */
+ static inline void
+-free_mac_classification(struct mac_classifier *mac_cls)
++free_mac_classifier(struct mac_classifier *mac_clf)
+ {
+-	if (mac_cls == NULL)
++	if (mac_clf == NULL)
+ 		return;
+-
+-	if (mac_cls->cls_tbl != NULL)
+-		rte_hash_free(mac_cls->cls_tbl);
+-
+-	rte_free(mac_cls);
++	if (mac_clf->cls_tbl != NULL)
++		rte_hash_free(mac_clf->cls_tbl);
++	rte_free(mac_clf);
+ }
+ 
+ /**
+diff --git a/src/vf/classifier_mac.c b/src/vf/classifier_mac.c
+index 4213372..232ed19 100644
+--- a/src/vf/classifier_mac.c
++++ b/src/vf/classifier_mac.c
+@@ -437,14 +437,12 @@ init_component_info(struct cls_comp_info *cmp_info,
+ 
+ /* uninitialize classifier information. */
+ void
+-uninit_component_info(struct cls_comp_info *cmp_info)
++uninit_component_info(struct cls_comp_info *comp_info)
+ {
+ 	int i;
+-
+ 	for (i = 0; i < NOF_VLAN; ++i)
+-		free_mac_classification(cmp_info->mac_clfs[i]);
+-
+-	memset(cmp_info, 0, sizeof(struct cls_comp_info));
++		free_mac_classifier(comp_info->mac_clfs[i]);
++	memset(comp_info, 0, sizeof(struct cls_comp_info));
+ }
+ 
+ /* transmit packet to one destination. */
+-- 
+2.17.1
+
+

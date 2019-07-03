@@ -1,0 +1,374 @@
+Return-path: <fw-yama-hd@pomail01.silk.ntt-tx.co.jp>
+Received: from zssg-mailmd101.ddreams.local
+ (zssg-mailmd101.ddreams.local [10.160.123.96]) by zssg-mailms320.ddreams.local
+ (NTT DoCoMo Mail System) with ESMTP id <0PTO00QMUY82V480@NTTDoCoMo.co.jp> for
+ yamashita.hideyuki@ntt-tx.co.jp; Wed, 26 Jun 2019 14:36:02 +0900 (JST)
+Original-recipient: rfc822;yamashita.hideyuki@ntt-tx.co.jp
+Received: from smtp_saver-daemon.zssg-mailmd101.ddreams.local by
+ zssg-mailmd101.ddreams.local (dDREAMS) id <0PTO00G24Y820F00@dDREAMS> for
+ yamashita.hideyuki@ntt-tx.co.jp (ORCPT yamashita.hideyuki@ntt-tx.co.jp); Wed,
+ 26 Jun 2019 14:36:02 +0900 (JST)
+Received: from zssg-mailmf104.ddreams.local
+ (zssg-mailmf900.ddreams.local [10.160.172.84]) by zssg-mailmd101.ddreams.local
+ (dDREAMS) with ESMTP id <0PTO0126MY82WUF0@dDREAMS> for
+ yamashita.hideyuki@ntt-tx.co.jp (ORCPT yamashita.hideyuki@ntt-tx.co.jp); Wed,
+ 26 Jun 2019 14:36:02 +0900 (JST)
+Received: from zssg-mailmf104.ddreams.local (unknown [127.0.0.1])
+	by zssg-mailmf104.ddreams.local (Postfix) with ESMTP id B8E5B7E6038	for
+ <yamashita.hideyuki@ntt-tx.co.jp>; Wed, 26 Jun 2019 14:36:02 +0900 (JST)
+Received: from zssg-mailmf104.ddreams.local (unknown [127.0.0.1])
+	by IMSVA (Postfix) with ESMTP id B80FB8E6056	for
+ <yamashita.hideyuki@ntt-tx.co.jp>; Wed, 26 Jun 2019 14:36:02 +0900 (JST)
+Received: from localhost (unknown [127.0.0.1])	by IMSVA (Postfix)
+ with SMTP id ABD388E6063	for <yamashita.hideyuki@ntt-tx.co.jp>; Wed,
+ 26 Jun 2019 14:36:02 +0900 (JST)
+X-IMSS-HAND-OFF-DIRECTIVE: localhost:10026
+Received: from zssg-mailmf104.ddreams.local (unknown [127.0.0.1])
+	by IMSVA (Postfix) with ESMTP id 4243F8E6050	for
+ <yamashita.hideyuki@ntt-tx.co.jp>; Wed, 26 Jun 2019 14:36:02 +0900 (JST)
+Received: from pomail01.silk.ntt-tx.co.jp (unknown [10.160.183.139])
+	by zssg-mailmf104.ddreams.local (Postfix)
+ with ESMTPS	for <yamashita.hideyuki@ntt-tx.co.jp>; Wed,
+ 26 Jun 2019 14:36:02 +0900 (JST)
+Received: from pomail01.silk.ntt-tx.co.jp (localhost [127.0.0.1])
+	by pomail01.silk.ntt-tx.co.jp (unknown) with ESMTP id x5Q5a2EN018980;	Wed,
+ 26 Jun 2019 14:36:02 +0900
+Received: (from yama-hd@localhost)	by pomail01.silk.ntt-tx.co.jp (unknown)
+ id x5Q5a2ll018979;	Wed, 26 Jun 2019 14:36:02 +0900
+X-Authentication-warning: pomail01.silk.ntt-tx.co.jp: yama-hd set sender to
+ fw-yama-hd@pomail01.silk.ntt-tx.co.jp using -f
+Received: from imss04.silk.ntt-tx.co.jp
+ (imss04.silk.ntt-tx.co.jp [10.107.0.39])	by pomail01.silk.ntt-tx.co.jp
+ (unknown) with ESMTP id x5Q5a1P5018976	for unknown; Wed,
+ 26 Jun 2019 14:36:01 +0900
+Received: from imss04.silk.ntt-tx.co.jp (localhost [127.0.0.1])
+ by imss04.silk.ntt-tx.co.jp (unknown) with ESMTP id x5Q5a1F1031536 for
+ unknown; Wed, 26 Jun 2019 14:36:01 +0900
+Received: from ml01.silk.ntt-tx.co.jp (ml01.silk.ntt-tx.co.jp [10.107.0.230])
+ by imss04.silk.ntt-tx.co.jp (unknown) with ESMTP id x5Q5a1Rt031532; Wed,
+ 26 Jun 2019 14:36:01 +0900
+Received: from ml01.silk.ntt-tx.co.jp (localhost [127.0.0.1])
+	by ml01.silk.ntt-tx.co.jp (unknown) with ESMTP id x5Q5a17p015713;	Wed,
+ 26 Jun 2019 14:36:01 +0900
+Received: from imss01.silk.ntt-tx.co.jp
+ (imss01.silk.ntt-tx.co.jp [10.107.0.126])	by ml01.silk.ntt-tx.co.jp (unknown)
+ with ESMTP id x5Q5a1RO015709	for unknown; Wed, 26 Jun 2019 14:36:01 +0900
+Received: from imss01.silk.ntt-tx.co.jp (localhost [127.0.0.1])
+ by imss01.silk.ntt-tx.co.jp (unknown) with ESMTP id x5Q5a1C1010731 for
+ unknown; Wed, 26 Jun 2019 14:36:01 +0900
+Received: from mail01.ics.ntt-tx.co.jp (mail01.ics.ntt-tx.co.jp [10.254.2.67])
+ by imss01.silk.ntt-tx.co.jp (unknown) with ESMTP id x5Q5a15N010727 for
+ unknown; Wed, 26 Jun 2019 14:36:01 +0900
+Received: from dpdk.org (dpdk.org [92.243.14.124])	by mail01.ics.ntt-tx.co.jp
+ (unknown) with SMTP id x5Q5Zsui026265	for unknown; Wed,
+ 26 Jun 2019 14:36:00 +0900
+Received: from [92.243.14.124] (localhost [127.0.0.1])	by dpdk.org (Postfix)
+ with ESMTP id 4A4181B464;	Wed, 26 Jun 2019 07:35:53 +0200 (CEST)
+Received: from mail-pg1-f171.google.com
+ (mail-pg1-f171.google.com [209.85.215.171]) by dpdk.org (Postfix)
+ with ESMTP id 402E84F98 for <spp@dpdk.org>; Wed,
+ 26 Jun 2019 07:35:52 +0200 (CEST)
+Received: by mail-pg1-f171.google.com with SMTP id v9so613015pgr.13 for
+ <spp@dpdk.org>; Tue, 25 Jun 2019 22:35:52 -0700 (PDT)
+Received: from localhost.localdomain ([192.47.164.146])
+ by smtp.gmail.com with ESMTPSA id a22sm17148188pfn.173.2019.06.25.22.35.49
+ (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128); Tue,
+ 25 Jun 2019 22:35:50 -0700 (PDT)
+Date: Wed, 26 Jun 2019 14:35:44 +0900
+From: yasufum.o@gmail.com
+Subject: [spp 04434] [spp] [PATCH] shared/sec: add shared lib for getting vhost
+ cli
+Sender: spp <spp-bounces@dpdk.org>
+To: spp@dpdk.org, ferruh.yigit@intel.com, yasufum.o@gmail.com
+Message-id: <20190626053544.39794-1-yasufum.o@gmail.com>
+X-ML-Name: unknown
+X-Mail-Count: 04434
+X-MLServer: unknown
+X-ML-Info: mailing list service
+X-Mailer: git-send-email 2.17.1
+Authentication-results: mail01.ics.ntt-tx.co.jp; spf=pass
+ smtp.mailfrom=spp-bounces@dpdk.org
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
+ h=from:to:subject:date:message-id;
+ bh=xi40IseHDsKLj5wJPWhcv1MenGz4C8rj1LUVJr0wx8Y=;
+ b=N5EvvRFLNGw/gHE9Esaa11w+w+axMr5AY+W1kRmjfLrb/Bd07vrlATmXgyYEYmjynP
+ JBFw7/71jT6a3NGgAyc/RRRvA8xv1Z8tHUn9XaorGZgd41WpFpKxvzJjtUOc/5w1oDhP
+ HAIEBoXlwf2DutssC9dQ3eS2q7gEHDIOdMX4r9Mstg2UOor/hh0zbPPXy20wfKntwYQS
+ 4LW32/hzu+n+L/PHJ71HLFF6qkfT7nyfGVfOE5vH1OAVdxOjGAsKSWuo4KGFsYdPxpQj
+ 7lxXsjBTUfUstV6x+oRU+p1ImvJz2y+35IahTTAiHyijhnWfPr1bowr/aWjPLbQI3hmX AfgQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=1e100.net;
+ s=20161025; h=x-gm-message-state:from:to:subject:date:message-id;
+ bh=xi40IseHDsKLj5wJPWhcv1MenGz4C8rj1LUVJr0wx8Y=;
+ b=tIUaKACe2/yB3hfO3ArxAkREMy46sXDDOZAdFLMC9B8SRyues17Am+GZHKOEbgOm5O
+ dPOjkw1ZzejDOwAPYuxmjSQf9URXAJ9ADgavAww0fC8z1+PYhE8//NswOgDWu0nwoRki
+ wMwPweVst3Mw232eyq+3Ujd4jU175yZQ3nTOGaVX4YD8VuWD3v1ALutnbr3mhus31QWR
+ At03sm48mH6ypstyVblhXU7z+zkHxcltxSs1OqwQ83UvI7no86H4YWR2SmX+GV7nJa/A
+ o81ViNLUJE6SjnanrdfBGcCMeIQlWKUHgfku+7THHKzWjoA0ylxhL8fykUQlTnOegm2X xHfg==
+X-Gm-Message-State: APjAAAUN0c3TqWdH6aCAaWxBphQEonLGmXz1Q0WjuDJcl3aFkAX2OIMi
+ 0pygQfbyHvd8wO3O2sz50xzAx8h+
+X-Google-Smtp-Source:
+ APXvYqzTkm1/es5G/JwJTHSZZUJR88fIzNnhcIf0zQ+lz9ZlSCYvu7Q1PbHB73O75LfDb5YXW9iEiw==
+X-Received: by 2002:a17:90a:20c6:: with SMTP id
+ f64mr2405012pjg.57.1561527351250; Tue, 25 Jun 2019 22:35:51 -0700 (PDT)
+X-BeenThere: spp@dpdk.org
+X-Mailman-Version: 2.1.15
+List-Id: Soft Patch Panel <spp.dpdk.org>
+List-Unsubscribe: <https://mails.dpdk.org/options/spp>,
+ <mailto:spp-request@dpdk.org?subject=unsubscribe>
+List-Archive: <http://mails.dpdk.org/archives/spp/>
+List-Post: <mailto:spp@dpdk.org>
+List-Help: <mailto:spp-request@dpdk.org?subject=help>
+List-Subscribe: <https://mails.dpdk.org/listinfo/spp>,
+ <mailto:spp-request@dpdk.org?subject=subscribe>
+X-TM-AS-MML: No
+Precedence: bulk
+Lines: 245
+X-TM-AS-GCONF: 00
+X-MD-STAMP: ON
+
+From: Yasufumi Ogawa <yasufum.o@gmail.com>
+
+To remove global variable `g_enable_vhost_cli`, add functions for
+getting and setting vhost clinet mode and change to use them instead of
+the global variable.
+
+Signed-off-by: Yasufumi Ogawa <yasufum.o@gmail.com>
+---
+ src/mirror/spp_mirror.c                       |  9 ++++---
+ src/nfv/main.c                                |  7 +++--
+ src/shared/secondary/add_port.c               |  4 +--
+ src/shared/secondary/add_port.h               |  3 ---
+ .../secondary/spp_worker_th/cmd_utils.c       |  2 +-
+ src/shared/secondary/utils.c                  | 21 +++++++++++++++
+ src/shared/secondary/utils.h                  | 27 +++++++++++++++++++
+ src/vf/spp_vf.c                               |  7 +++--
+ 8 files changed, 66 insertions(+), 14 deletions(-)
+
+diff --git a/src/mirror/spp_mirror.c b/src/mirror/spp_mirror.c
+index 305e977..32489ed 100644
+--- a/src/mirror/spp_mirror.c
++++ b/src/mirror/spp_mirror.c
+@@ -137,6 +137,9 @@ parse_app_args(int argc, char *argv[])
+ 	/* Clear startup parameters */
+ 	memset(&g_startup_param, 0x00, sizeof(g_startup_param));
+ 
++	/* vhost_cli is disabled as default. */
++	set_vhost_cli_mode(0);
++
+ 	/* Check options of application */
+ 	optind = 0;
+ 	opterr = 0;
+@@ -153,7 +156,7 @@ parse_app_args(int argc, char *argv[])
+ 			proc_flg = 1;
+ 			break;
+ 		case SPP_LONGOPT_RETVAL_VHOST_CLIENT:
+-			g_enable_vhost_cli = 1;
++			set_vhost_cli_mode(1);
+ 			break;
+ 		case 's':
+ 			ret = parse_server(&ctl_ip, &ctl_port, optarg);
+@@ -178,8 +181,8 @@ parse_app_args(int argc, char *argv[])
+ 	}
+ 	RTE_LOG(INFO, MIRROR,
+ 			"Parsed app args (client_id=%d, server=%s:%d, "
+-			"vhost_client=%d,)\n",
+-			cli_id, ctl_ip, ctl_port, g_enable_vhost_cli);
++			"vhost_client=%d)\n",
++			cli_id, ctl_ip, ctl_port, get_vhost_cli_mode());
+ 	return SPP_RET_OK;
+ }
+ 
+diff --git a/src/nfv/main.c b/src/nfv/main.c
+index 9cfe49a..9117d9b 100644
+--- a/src/nfv/main.c
++++ b/src/nfv/main.c
+@@ -69,11 +69,14 @@ parse_app_args(int argc, char *argv[])
+ 	int ctl_port;  /* Port num to connect spp_ctl. */
+ 	int ret;
+ 
++	/* vhost_cli is disabled as default. */
++	set_vhost_cli_mode(0);
++
+ 	while ((opt = getopt_long(argc, argvopt, "n:s:", lgopts,
+ 			&option_index)) != EOF) {
+ 		switch (opt) {
+ 		case CMD_OPT_ENABLE_VHOST_CLI:
+-			g_enable_vhost_cli = 1;
++			set_vhost_cli_mode(1);
+ 			break;
+ 		case 'n':
+ 			if (parse_client_id(&cli_id, optarg) != 0) {
+@@ -203,7 +206,7 @@ main(int argc, char *argv[])
+ 	if (parse_app_args(argc, argv) < 0)
+ 		rte_exit(EXIT_FAILURE, "Invalid command-line arguments\n");
+ 
+-	if (g_enable_vhost_cli == 1)
++	if (get_vhost_cli_mode() == 1)
+ 		RTE_LOG(INFO, SPP_NFV, "vhost client mode is enabled.\n");
+ 
+ 	/* initialize port forward array*/
+diff --git a/src/shared/secondary/add_port.c b/src/shared/secondary/add_port.c
+index e0de36f..2981085 100644
+--- a/src/shared/secondary/add_port.c
++++ b/src/shared/secondary/add_port.c
+@@ -12,8 +12,6 @@
+ #include "shared/secondary/add_port.h"
+ #include "shared/secondary/utils.h"
+ 
+-int g_enable_vhost_cli;
+-
+ char *
+ get_vhost_backend_name(unsigned int id)
+ {
+@@ -164,7 +162,7 @@ add_vhost_pmd(int index)
+ 	iface = get_vhost_iface_name(index);
+ 
+ 	sprintf(devargs, "%s,iface=%s,queues=%d,client=%d",
+-			name, iface, nr_queues, g_enable_vhost_cli);
++			name, iface, nr_queues, get_vhost_cli_mode());
+ 	RTE_LOG(DEBUG, SHARED, "Devargs for vhost: '%s'.\n", devargs);
+ 	ret = dev_attach_by_devargs(devargs, &vhost_port_id);
+ 	if (ret < 0) {
+diff --git a/src/shared/secondary/add_port.h b/src/shared/secondary/add_port.h
+index 943d0d6..cfae1af 100644
+--- a/src/shared/secondary/add_port.h
++++ b/src/shared/secondary/add_port.h
+@@ -20,9 +20,6 @@
+ 
+ #define RTE_LOGTYPE_SHARED RTE_LOGTYPE_USER1
+ 
+-/* TODO(yasufum) remove it after --vhost-client is retrieved from a func. */
+-extern int g_enable_vhost_cli;
+-
+ /**
+  * Get unique name used to reserve vhost interface.
+  *
+diff --git a/src/shared/secondary/spp_worker_th/cmd_utils.c b/src/shared/secondary/spp_worker_th/cmd_utils.c
+index f24d1a6..8a40d92 100644
+--- a/src/shared/secondary/spp_worker_th/cmd_utils.c
++++ b/src/shared/secondary/spp_worker_th/cmd_utils.c
+@@ -488,7 +488,7 @@ del_vhost_sockfile(struct sppwk_port_info *vhost)
+ 	int cnt;
+ 
+ 	/* Do not remove for if it is running in vhost-client mode. */
+-	if (g_enable_vhost_cli != 0)
++	if (get_vhost_cli_mode() != 0)
+ 		return;
+ 
+ 	for (cnt = 0; cnt < RTE_MAX_ETHPORTS; cnt++) {
+diff --git a/src/shared/secondary/utils.c b/src/shared/secondary/utils.c
+index 73800d3..c80a478 100644
+--- a/src/shared/secondary/utils.c
++++ b/src/shared/secondary/utils.c
+@@ -9,6 +9,7 @@
+ #define RTE_LOGTYPE_SHARED RTE_LOGTYPE_USER1
+ 
+ int client_id;
++int vhost_cli;
+ 
+ int set_client_id(int cid)
+ {
+@@ -25,6 +26,26 @@ int get_client_id(void)
+ 	return client_id;
+ }
+ 
++int set_vhost_cli_mode(int mode)
++{
++	if (mode == 0 || mode == 1)
++		vhost_cli = mode;
++	else {
++		RTE_LOG(ERR, SHARED, "Invalid value of vhost client\n");
++		return -1;
++	}
++	return 0;
++}
++
++int get_vhost_cli_mode(void)
++{
++	if (vhost_cli < 0) {
++		RTE_LOG(ERR, SHARED, "Vhost client is not initialized.\n");
++		return -1;
++	}
++	return vhost_cli;
++}
++
+ /* Parse client ID from given value of string. */
+ int
+ parse_client_id(int *cli_id, const char *cli_id_str)
+diff --git a/src/shared/secondary/utils.h b/src/shared/secondary/utils.h
+index 74531b0..eba221f 100644
+--- a/src/shared/secondary/utils.h
++++ b/src/shared/secondary/utils.h
+@@ -9,9 +9,36 @@ int parse_resource_uid(char *str, char **port_type, int *port_id);
+ 
+ int spp_atoi(const char *str, int *val);
+ 
++/**
++ * Set client ID from given command argment.
++ *
++ * @params[in] cid Client ID.
++ * @return 0 if succeeded, or -1 if failed.
++ */
+ int set_client_id(int cid);
++
++/**
++ * Get client ID.
++ *
++ * @return int value of client ID if succeeded, or -1 if failed.
++ */
+ int get_client_id(void);
+ 
++/**
++ * Set vhost client mode from given command argument.
++ *
++ * @params[in] vhost_cli Enabled if 1, or disabled if 0.
++ * @return 0 if succeeded, or -1 if failed.
++ */
++int set_vhost_cli_mode(int vhost_cli);
++
++/**
++ * Get vhost client mode.
++ *
++ * @return 1 if vhost client is enabled, or 0 if disabled.
++ */
++int get_vhost_cli_mode(void);
++
+ /**
+  * Parse client ID from given value of string.
+  *
+diff --git a/src/vf/spp_vf.c b/src/vf/spp_vf.c
+index d8098f2..25997db 100644
+--- a/src/vf/spp_vf.c
++++ b/src/vf/spp_vf.c
+@@ -93,6 +93,9 @@ parse_app_args(int argc, char *argv[])
+ 	/* Clear startup parameters */
+ 	memset(&g_startup_param, 0x00, sizeof(g_startup_param));
+ 
++	/* vhost_cli is disabled as default. */
++	set_vhost_cli_mode(0);
++
+ 	/* Check options of application */
+ 	optind = 0;
+ 	opterr = 0;
+@@ -109,7 +112,7 @@ parse_app_args(int argc, char *argv[])
+ 			proc_flg = 1;
+ 			break;
+ 		case SPP_LONGOPT_RETVAL_VHOST_CLIENT:
+-			g_enable_vhost_cli = 1;
++			set_vhost_cli_mode(1);
+ 			break;
+ 		case 's':
+ 			ret = parse_server(&ctl_ip, &ctl_port, optarg);
+@@ -135,7 +138,7 @@ parse_app_args(int argc, char *argv[])
+ 	RTE_LOG(INFO, APP,
+ 			"Parsed app args (client_id=%d,server=%s:%d,"
+ 			"vhost_client=%d)\n",
+-			cli_id, ctl_ip, ctl_port, g_enable_vhost_cli);
++			cli_id, ctl_ip, ctl_port, get_vhost_cli_mode());
+ 	return SPP_RET_OK;
+ }
+ 
+-- 
+2.17.1
+
+

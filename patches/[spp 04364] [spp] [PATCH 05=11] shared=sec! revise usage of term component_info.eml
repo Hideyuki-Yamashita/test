@@ -1,0 +1,447 @@
+Return-path: <fw-yama-hd@pomail01.silk.ntt-tx.co.jp>
+Received: from zssg-mailmd103.ddreams.local
+ (zssg-mailmd103.ddreams.local [10.160.123.98]) by zssg-mailms320.ddreams.local
+ (NTT DoCoMo Mail System) with ESMTP id <0PTL00UIT02N8Y40@NTTDoCoMo.co.jp> for
+ yamashita.hideyuki@ntt-tx.co.jp; Mon, 24 Jun 2019 11:25:35 +0900 (JST)
+Original-recipient: rfc822;yamashita.hideyuki@ntt-tx.co.jp
+Received: from smtp_saver-daemon.zssg-mailmd103.ddreams.local by
+ zssg-mailmd103.ddreams.local (dDREAMS) id <0PTL0164402NU300@dDREAMS> for
+ yamashita.hideyuki@ntt-tx.co.jp (ORCPT yamashita.hideyuki@ntt-tx.co.jp); Mon,
+ 24 Jun 2019 11:25:35 +0900 (JST)
+Received: from zssg-mailmf104.ddreams.local
+ (zssg-mailmf900.ddreams.local [10.160.172.84]) by zssg-mailmd103.ddreams.local
+ (dDREAMS) with ESMTP id <0PTL00U9202NQ170@dDREAMS> for
+ yamashita.hideyuki@ntt-tx.co.jp (ORCPT yamashita.hideyuki@ntt-tx.co.jp); Mon,
+ 24 Jun 2019 11:25:35 +0900 (JST)
+Received: from zssg-mailmf104.ddreams.local (unknown [127.0.0.1])
+	by zssg-mailmf104.ddreams.local (Postfix) with ESMTP id 0AD677E6032	for
+ <yamashita.hideyuki@ntt-tx.co.jp>; Mon, 24 Jun 2019 11:25:35 +0900 (JST)
+Received: from zssg-mailmf104.ddreams.local (unknown [127.0.0.1])
+	by IMSVA (Postfix) with ESMTP id 09A618E605E	for
+ <yamashita.hideyuki@ntt-tx.co.jp>; Mon, 24 Jun 2019 11:25:35 +0900 (JST)
+Received: from localhost (unknown [127.0.0.1])	by IMSVA (Postfix)
+ with SMTP id F30F78E6050	for <yamashita.hideyuki@ntt-tx.co.jp>; Mon,
+ 24 Jun 2019 11:25:34 +0900 (JST)
+X-IMSS-HAND-OFF-DIRECTIVE: localhost:10026
+Received: from zssg-mailmf104.ddreams.local (unknown [127.0.0.1])
+	by IMSVA (Postfix) with ESMTP id 7FD4A8E6056	for
+ <yamashita.hideyuki@ntt-tx.co.jp>; Mon, 24 Jun 2019 11:25:34 +0900 (JST)
+Received: from pomail01.silk.ntt-tx.co.jp (unknown [10.160.183.139])
+	by zssg-mailmf104.ddreams.local (Postfix)
+ with ESMTPS	for <yamashita.hideyuki@ntt-tx.co.jp>; Mon,
+ 24 Jun 2019 11:25:34 +0900 (JST)
+Received: from pomail01.silk.ntt-tx.co.jp (localhost [127.0.0.1])
+	by pomail01.silk.ntt-tx.co.jp (unknown) with ESMTP id x5O2PYE7013590;	Mon,
+ 24 Jun 2019 11:25:34 +0900
+Received: (from yama-hd@localhost)	by pomail01.silk.ntt-tx.co.jp (unknown)
+ id x5O2PYew013589;	Mon, 24 Jun 2019 11:25:34 +0900
+X-Authentication-warning: pomail01.silk.ntt-tx.co.jp: yama-hd set sender to
+ fw-yama-hd@pomail01.silk.ntt-tx.co.jp using -f
+Received: from imss04.silk.ntt-tx.co.jp
+ (imss04.silk.ntt-tx.co.jp [10.107.0.39])	by pomail01.silk.ntt-tx.co.jp
+ (unknown) with ESMTP id x5O2PYnl013586	for unknown; Mon,
+ 24 Jun 2019 11:25:34 +0900
+Received: from imss04.silk.ntt-tx.co.jp (localhost [127.0.0.1])
+ by imss04.silk.ntt-tx.co.jp (unknown) with ESMTP id x5O2PXMk006005 for
+ unknown; Mon, 24 Jun 2019 11:25:33 +0900
+Received: from ml01.silk.ntt-tx.co.jp (ml01.silk.ntt-tx.co.jp [10.107.0.230])
+ by imss04.silk.ntt-tx.co.jp (unknown) with ESMTP id x5O2PX4m006002; Mon,
+ 24 Jun 2019 11:25:33 +0900
+Received: from ml01.silk.ntt-tx.co.jp (localhost [127.0.0.1])
+	by ml01.silk.ntt-tx.co.jp (unknown) with ESMTP id x5O2PXFT016450;	Mon,
+ 24 Jun 2019 11:25:33 +0900
+Received: from imss02.silk.ntt-tx.co.jp
+ (imss02.silk.ntt-tx.co.jp [10.107.0.127])	by ml01.silk.ntt-tx.co.jp (unknown)
+ with ESMTP id x5O2PXUn016446	for unknown; Mon, 24 Jun 2019 11:25:33 +0900
+Received: from imss02.silk.ntt-tx.co.jp (localhost [127.0.0.1])
+ by imss02.silk.ntt-tx.co.jp (unknown) with ESMTP id x5O2PX3j006560 for
+ unknown; Mon, 24 Jun 2019 11:25:33 +0900
+Received: from mail01.ics.ntt-tx.co.jp (mail01.ics.ntt-tx.co.jp [10.254.2.67])
+ by imss02.silk.ntt-tx.co.jp (unknown) with ESMTP id x5O2PXmR006557 for
+ unknown; Mon, 24 Jun 2019 11:25:33 +0900
+Received: from dpdk.org (dpdk.org [92.243.14.124])	by mail01.ics.ntt-tx.co.jp
+ (unknown) with SMTP id x5O2PK2l003816	for unknown; Mon,
+ 24 Jun 2019 11:25:32 +0900
+Received: from [92.243.14.124] (localhost [127.0.0.1])	by dpdk.org (Postfix)
+ with ESMTP id CAE6D1BF6D;	Mon, 24 Jun 2019 04:25:31 +0200 (CEST)
+Received: from mail-pg1-f196.google.com
+ (mail-pg1-f196.google.com [209.85.215.196]) by dpdk.org (Postfix)
+ with ESMTP id E82191BF54 for <spp@dpdk.org>; Mon,
+ 24 Jun 2019 04:25:29 +0200 (CEST)
+Received: by mail-pg1-f196.google.com with SMTP id f25so6241810pgv.10 for
+ <spp@dpdk.org>; Sun, 23 Jun 2019 19:25:29 -0700 (PDT)
+Received: from localhost.localdomain ([192.47.164.146])
+ by smtp.gmail.com with ESMTPSA id a3sm9927461pje.3.2019.06.23.19.25.27
+ (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128); Sun,
+ 23 Jun 2019 19:25:28 -0700 (PDT)
+Date: Mon, 24 Jun 2019 11:24:58 +0900
+From: yasufum.o@gmail.com
+Subject: [spp 04364] [spp] [PATCH 05/11] shared/sec: revise usage of term
+ component_info
+Sender: spp <spp-bounces@dpdk.org>
+To: spp@dpdk.org, ferruh.yigit@intel.com, yasufum.o@gmail.com
+Message-id: <20190624022504.18752-6-yasufum.o@gmail.com>
+In-reply-to: <20190624022504.18752-1-yasufum.o@gmail.com>
+References: <20190624022504.18752-1-yasufum.o@gmail.com>
+X-ML-Name: unknown
+X-Mail-Count: 04364
+X-MLServer: unknown
+X-ML-Info: mailing list service
+X-Mailer: git-send-email 2.17.1
+Authentication-results: mail01.ics.ntt-tx.co.jp; spf=pass
+ smtp.mailfrom=spp-bounces@dpdk.org
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
+ h=from:to:subject:date:message-id:in-reply-to:references;
+ bh=iPegI9YpO85+RR3vQVZdvLajIzzbJEn+T8wTloHQBrU=;
+ b=biWwqJceYNe9AxLy30KFzCZ1fUgxmL5jlvop0epG4VZTp9obx+YCRuLbV23uaRQcfz
+ chSfJ5uDqT16GFzN66v3BO+DV/8sgJ7NnJYE663t4w37buKjFQYIsmfz/n0gOycIO12M
+ ACI159UE5ft0oWb2NZQa5wjV8sR/5ZU9s/X6rBrcSofjtxoKf1rqVhAVyl+wmhhHl3Oe
+ nHtRADH6I+74IHHHgS6DtNjgk9M7OWbVEjVU8/9lawXETHCuyZKHWmQFnO5uZtmxwRsz
+ z+SbznwhcwPreiGuxzJAPtGMZmCCeYgIqJ3Artf4+t8LUgDwwZn6Nw1aSetnvl9DkmjX K0zg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=1e100.net;
+ s=20161025; h=x-gm-message-state:from:to:subject:date:message-id:in-reply-to
+ :references; bh=iPegI9YpO85+RR3vQVZdvLajIzzbJEn+T8wTloHQBrU=;
+ b=pnnYM5aRgjabu1vmFKFudLx1QRZcIzYkAFRC6MhbaXnClixynINuYjdjSB7Ey5rC95
+ XJS5aTrr5t4AIoUFDwJQJXi2JU3IkKWmfA42MZow92rCjPMwrf+8NjQsNjRvSESPWhC2
+ jdaB0ENv+9amJAI9GXGtybiBTsGvPofIANIrPO/6JdyhdZ0n5wHMzC7RAW+sX3xwCWp/
+ htteLxwuwJ7aGbnRKcwAtq8SRlMDFQSuEgg1mtd7M35unBTmxyGMJNSv+BdAhA4Zqs7R
+ siDIspJlsx4t+c6tMsx3ZOsteY7XJrSKTFnM/rwR76XlmLDR9kMC8q65XKVDFdt76XZs vDUg==
+X-Gm-Message-State: APjAAAUcnCQChwyhwn5a0NY93NdjXPvoH7SU7bVDnNDlr5CIrH1lGnmz
+ t/8Nx/VAUeXlp8CLZfYU+BJ4uTFa
+X-Google-Smtp-Source:
+ APXvYqwCmRM5upSOAWULbg1WTsKsEZONJSzs6JBgn3InbVFg4Mbz4yY3JmwvwIiusCfQvqQvydKfYw==
+X-Received: by 2002:a63:b953:: with SMTP id v19mr19723351pgo.69.1561343128944;
+ Sun, 23 Jun 2019 19:25:28 -0700 (PDT)
+X-BeenThere: spp@dpdk.org
+X-Mailman-Version: 2.1.15
+List-Id: Soft Patch Panel <spp.dpdk.org>
+List-Unsubscribe: <https://mails.dpdk.org/options/spp>,
+ <mailto:spp-request@dpdk.org?subject=unsubscribe>
+List-Archive: <http://mails.dpdk.org/archives/spp/>
+List-Post: <mailto:spp@dpdk.org>
+List-Help: <mailto:spp-request@dpdk.org?subject=help>
+List-Subscribe: <https://mails.dpdk.org/listinfo/spp>,
+ <mailto:spp-request@dpdk.org?subject=subscribe>
+X-TM-AS-MML: No
+Precedence: bulk
+Lines: 316
+X-TM-AS-GCONF: 00
+X-MD-STAMP: ON
+
+From: Yasufumi Ogawa <yasufum.o@gmail.com>
+
+Several types of `component`s and its attributes are defined as structs.
+Some of instances of attributes of components are roughly named as
+`component_info`, but it is confusing because it has no info which
+type of component. This update is to fix the issue by revising the
+names.
+
+Signed-off-by: Yasufumi Ogawa <yasufum.o@gmail.com>
+---
+ src/shared/secondary/spp_worker_th/vf_deps.h |  9 +--
+ src/vf/classifier_mac.c                      | 79 ++++++++++----------
+ 2 files changed, 42 insertions(+), 46 deletions(-)
+
+diff --git a/src/shared/secondary/spp_worker_th/vf_deps.h b/src/shared/secondary/spp_worker_th/vf_deps.h
+index 8085357..8364a13 100644
+--- a/src/shared/secondary/spp_worker_th/vf_deps.h
++++ b/src/shared/secondary/spp_worker_th/vf_deps.h
+@@ -32,13 +32,10 @@ struct cls_port_info {
+ };
+ 
+ /* classifier component information */
+-struct component_info {
++struct cls_comp_info {
+ 	char name[STR_LEN_NAME];  /* component name */
+ 	int mac_addr_entry;  /* mac address entry flag */
+-
+-	/* mac address classification per vlan-id */
+-	struct mac_classifier *mac_classifications[NOF_VLAN];
+-
++	struct mac_classifier *mac_clfs[NOF_VLAN];  /* classifiers per VLAN. */
+ 	int n_classified_data_tx;  /* number of transmission ports */
+ 	struct cls_port_info classified_data_rx;  /* RX handled by cls */
+ 	/* transmission ports handled by classifier */
+@@ -78,7 +75,7 @@ int spp_forward_update(struct sppwk_comp_info *component);
+ 
+ void init_classifier_info(int component_id);
+ 
+-void uninit_component_info(struct component_info *cmp_info);
++void uninit_component_info(struct cls_comp_info *cmp_info);
+ 
+ int spp_classifier_mac_iterate_table(
+ 		struct spp_iterate_classifier_table_params *params);
+diff --git a/src/vf/classifier_mac.c b/src/vf/classifier_mac.c
+index b2388af..8edad6d 100644
+--- a/src/vf/classifier_mac.c
++++ b/src/vf/classifier_mac.c
+@@ -56,7 +56,7 @@
+ /* classifier management information */
+ struct management_info {
+ 	/* classifier information */
+-	struct component_info cmp_infos[NOF_CLS_INFO];
++	struct cls_comp_info cmp_infos[NOF_CLS_INFO];
+ 
+ 	/* Reference index number for classifier information */
+ 	volatile int ref_index;
+@@ -182,7 +182,7 @@ static void
+ log_classification(
+ 		long clsd_idx,
+ 		struct rte_mbuf *pkt,
+-		struct component_info *cmp_info,
++		struct cls_comp_info *cmp_info,
+ 		struct cls_port_info *clsd_data,
+ 		const char *func_name,
+ 		int line_num)
+@@ -229,7 +229,7 @@ log_entry(
+ 		long clsd_idx,
+ 		uint16_t vid,
+ 		const char *mac_addr_str,
+-		struct component_info *cmp_info,
++		struct cls_comp_info *cmp_info,
+ 		struct cls_port_info *clsd_data,
+ 		const char *func_name,
+ 		int line_num)
+@@ -322,8 +322,8 @@ create_mac_classification(void)
+ 
+ /* initialize classifier information. */
+ static int
+-init_component_info(struct component_info *cmp_info,
+-		const struct sppwk_comp_info *component_info)
++init_component_info(struct cls_comp_info *cmp_info,
++		const struct sppwk_comp_info *wk_comp_info)
+ {
+ 	int ret = SPP_RET_NG;
+ 	int i;
+@@ -336,7 +336,7 @@ init_component_info(struct component_info *cmp_info,
+ 	uint16_t vid;
+ 
+ 	/* set rx */
+-	if (component_info->nof_rx == 0) {
++	if (wk_comp_info->nof_rx == 0) {
+ 		clsd_data_rx->iface_type = UNDEF;
+ 		clsd_data_rx->iface_no = 0;
+ 		clsd_data_rx->iface_no_global = 0;
+@@ -344,20 +344,20 @@ init_component_info(struct component_info *cmp_info,
+ 		clsd_data_rx->nof_pkts = 0;
+ 	} else {
+ 		clsd_data_rx->iface_type =
+-			component_info->rx_ports[0]->iface_type;
++			wk_comp_info->rx_ports[0]->iface_type;
+ 		clsd_data_rx->iface_no = 0;
+ 		clsd_data_rx->iface_no_global =
+-			component_info->rx_ports[0]->iface_no;
++			wk_comp_info->rx_ports[0]->iface_no;
+ 		clsd_data_rx->ethdev_port_id =
+-			component_info->rx_ports[0]->ethdev_port_id;
++			wk_comp_info->rx_ports[0]->ethdev_port_id;
+ 		clsd_data_rx->nof_pkts = 0;
+ 	}
+ 
+ 	/* set tx */
+-	cmp_info->n_classified_data_tx = component_info->nof_tx;
++	cmp_info->n_classified_data_tx = wk_comp_info->nof_tx;
+ 	cmp_info->mac_addr_entry = 0;
+-	for (i = 0; i < component_info->nof_tx; i++) {
+-		tx_port = component_info->tx_ports[i];
++	for (i = 0; i < wk_comp_info->nof_tx; i++) {
++		tx_port = wk_comp_info->tx_ports[i];
+ 		vid = tx_port->cls_attrs.vlantag.vid;
+ 
+ 		/* store ports information */
+@@ -371,17 +371,16 @@ init_component_info(struct component_info *cmp_info,
+ 			continue;
+ 
+ 		/* if mac classification is NULL, make instance */
+-		if (unlikely(cmp_info->mac_classifications[vid] == NULL)) {
++		if (unlikely(cmp_info->mac_clfs[vid] == NULL)) {
+ 			RTE_LOG(DEBUG, SPP_CLASSIFIER_MAC,
+ 					"Mac classification is not registered."
+ 					" create. vid=%hu\n", vid);
+-			cmp_info->mac_classifications[vid] =
++			cmp_info->mac_clfs[vid] =
+ 					create_mac_classification();
+-			if (unlikely(cmp_info->mac_classifications[vid] ==
+-					NULL))
++			if (unlikely(cmp_info->mac_clfs[vid] == NULL))
+ 				return SPP_RET_NG;
+ 		}
+-		mac_cls = cmp_info->mac_classifications[vid];
++		mac_cls = cmp_info->mac_clfs[vid];
+ 
+ 		/* store active tx_port that associate with mac address */
+ 		mac_cls->cls_ports[mac_cls->nof_cls_ports++] = i;
+@@ -437,14 +436,14 @@ init_component_info(struct component_info *cmp_info,
+ 
+ /* uninitialize classifier information. */
+ void
+-uninit_component_info(struct component_info *cmp_info)
++uninit_component_info(struct cls_comp_info *cmp_info)
+ {
+ 	int i;
+ 
+ 	for (i = 0; i < NOF_VLAN; ++i)
+-		free_mac_classification(cmp_info->mac_classifications[i]);
++		free_mac_classification(cmp_info->mac_clfs[i]);
+ 
+-	memset(cmp_info, 0, sizeof(struct component_info));
++	memset(cmp_info, 0, sizeof(struct cls_comp_info));
+ }
+ 
+ /* transmit packet to one destination. */
+@@ -473,7 +472,7 @@ transmit_packet(struct cls_port_info *clsd_data)
+ 
+ /* transmit packet to one destination. */
+ static inline void
+-transmit_all_packet(struct component_info *cmp_info)
++transmit_all_packet(struct cls_comp_info *cmp_info)
+ {
+ 	int i;
+ 	struct cls_port_info *clsd_data_tx = cmp_info->classified_data_tx;
+@@ -514,11 +513,11 @@ push_packet(struct rte_mbuf *pkt, struct cls_port_info *clsd_data)
+ 
+ /* get index of general default classified */
+ static inline int
+-get_general_default_classified_index(struct component_info *cmp_info)
++get_general_default_classified_index(struct cls_comp_info *cmp_info)
+ {
+ 	struct mac_classifier *mac_cls;
+ 
+-	mac_cls = cmp_info->mac_classifications[VLAN_UNTAGGED_VID];
++	mac_cls = cmp_info->mac_clfs[VLAN_UNTAGGED_VID];
+ 	if (unlikely(mac_cls == NULL)) {
+ 		LOG_DBG(cmp_info->name, "Untagged's default is not set. "
+ 				"vid=%d\n", (int)VLAN_UNTAGGED_VID);
+@@ -531,7 +530,7 @@ get_general_default_classified_index(struct component_info *cmp_info)
+ /* handle L2 multicast(include broadcast) packet */
+ static inline void
+ handle_l2multicast_packet(struct rte_mbuf *pkt,
+-		struct component_info *cmp_info,
++		struct cls_comp_info *cmp_info,
+ 		struct cls_port_info *clsd_data)
+ {
+ 	int i;
+@@ -541,7 +540,7 @@ handle_l2multicast_packet(struct rte_mbuf *pkt,
+ 	int n_act_clsd;
+ 
+ 	/* select mac address classification by vid */
+-	mac_cls = cmp_info->mac_classifications[vid];
++	mac_cls = cmp_info->mac_clfs[vid];
+ 	if (unlikely(mac_cls == NULL ||
+ 			mac_cls->nof_cls_ports == 0)) {
+ 		/* specific vlan is not registered
+@@ -583,7 +582,7 @@ handle_l2multicast_packet(struct rte_mbuf *pkt,
+ /* select index of classified */
+ static inline int
+ select_classified_index(const struct rte_mbuf *pkt,
+-		struct component_info *cmp_info)
++		struct cls_comp_info *cmp_info)
+ {
+ 	int ret;
+ 	struct ether_hdr *eth;
+@@ -595,7 +594,7 @@ select_classified_index(const struct rte_mbuf *pkt,
+ 	vid = get_vid(pkt);
+ 
+ 	/* select mac address classification by vid */
+-	mac_cls = cmp_info->mac_classifications[vid];
++	mac_cls = cmp_info->mac_clfs[vid];
+ 	if (unlikely(mac_cls == NULL)) {
+ 		LOG_DBG(cmp_info->name, "Mac classification is not "
+ 				"registered. vid=%hu\n", vid);
+@@ -638,7 +637,7 @@ select_classified_index(const struct rte_mbuf *pkt,
+  */
+ static inline void
+ classify_packet(struct rte_mbuf **rx_pkts, uint16_t n_rx,
+-		struct component_info *cmp_info,
++		struct cls_comp_info *cmp_info,
+ 		struct cls_port_info *clsd_data)
+ {
+ 	int i;
+@@ -697,12 +696,12 @@ spp_classifier_mac_init(void)
+ 
+ /* classifier(mac address) update component info. */
+ int
+-spp_classifier_mac_update(struct sppwk_comp_info *component_info)
++spp_classifier_mac_update(struct sppwk_comp_info *wk_comp_info)
+ {
+ 	int ret = SPP_RET_NG;
+-	int id = component_info->comp_id;
++	int id = wk_comp_info->comp_id;
+ 	struct management_info *mng_info = g_mng_infos + id;
+-	struct component_info *cmp_info = NULL;
++	struct cls_comp_info *cmp_info = NULL;
+ 
+ 	RTE_LOG(INFO, SPP_CLASSIFIER_MAC,
+ 			"Component[%u] Start update component.\n", id);
+@@ -710,13 +709,13 @@ spp_classifier_mac_update(struct sppwk_comp_info *component_info)
+ 	cmp_info = mng_info->cmp_infos + mng_info->upd_index;
+ 
+ 	/* initialize update side classifier information */
+-	ret = init_component_info(cmp_info, component_info);
++	ret = init_component_info(cmp_info, wk_comp_info);
+ 	if (unlikely(ret != SPP_RET_OK)) {
+ 		RTE_LOG(ERR, SPP_CLASSIFIER_MAC,
+ 				"Cannot update classifier mac. ret=%d\n", ret);
+ 		return ret;
+ 	}
+-	memcpy(cmp_info->name, component_info->name, STR_LEN_NAME);
++	memcpy(cmp_info->name, wk_comp_info->name, STR_LEN_NAME);
+ 
+ 	/* change index of reference side */
+ 	mng_info->upd_index = mng_info->ref_index;
+@@ -743,7 +742,7 @@ spp_classifier_mac_do(int id)
+ 	int i;
+ 	int n_rx;
+ 	struct management_info *mng_info = g_mng_infos + id;
+-	struct component_info *cmp_info = NULL;
++	struct cls_comp_info *cmp_info = NULL;
+ 	struct rte_mbuf *rx_pkts[MAX_PKT_BURST];
+ 
+ 	struct cls_port_info *clsd_data_rx = NULL;
+@@ -811,7 +810,7 @@ spp_classifier_get_component_status(
+ 	int ret = SPP_RET_NG;
+ 	int i, nof_tx, nof_rx = 0;  /* Num of RX and TX ports. */
+ 	struct management_info *mng_info;
+-	struct component_info *cmp_info;
++	struct cls_comp_info *cmp_info;
+ 	struct cls_port_info *clsd_data;
+ 	struct sppwk_port_idx rx_ports[RTE_MAX_ETHPORTS];
+ 	struct sppwk_port_idx tx_ports[RTE_MAX_ETHPORTS];
+@@ -860,7 +859,7 @@ mac_classification_iterate_table(
+ 		struct spp_iterate_classifier_table_params *params,
+ 		uint16_t vid,
+ 		struct mac_classifier *mac_cls,
+-		__rte_unused struct component_info *cmp_info,
++		__rte_unused struct cls_comp_info *cmp_info,
+ 		struct cls_port_info *clsd_data)
+ {
+ 	int ret;
+@@ -917,7 +916,7 @@ spp_classifier_mac_iterate_table(
+ {
+ 	int i, n;
+ 	struct management_info *mng_info;
+-	struct component_info *cmp_info;
++	struct cls_comp_info *cmp_info;
+ 	struct cls_port_info *clsd_data;
+ 
+ 	for (i = 0; i < RTE_MAX_LCORE; i++) {
+@@ -932,12 +931,12 @@ spp_classifier_mac_iterate_table(
+ 			"Core[%u] Start iterate classifier table.\n", i);
+ 
+ 		for (n = 0; n < NOF_VLAN; ++n) {
+-			if (cmp_info->mac_classifications[n] == NULL)
++			if (cmp_info->mac_clfs[n] == NULL)
+ 				continue;
+ 
+ 			mac_classification_iterate_table(params, (uint16_t) n,
+-					cmp_info->mac_classifications[n],
+-					cmp_info, clsd_data);
++					cmp_info->mac_clfs[n], cmp_info,
++					clsd_data);
+ 		}
+ 	}
+ 
+-- 
+2.17.1
+
+

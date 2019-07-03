@@ -1,0 +1,683 @@
+Return-path: <fw-yama-hd@pomail01.silk.ntt-tx.co.jp>
+Received: from zssg-mailmd106.ddreams.local
+ (zssg-mailmd106.ddreams.local [10.160.123.101])
+ by zssg-mailms320.ddreams.local (NTT DoCoMo Mail System)
+ with ESMTP id <0PTL00DDMHGDNO90@NTTDoCoMo.co.jp> for
+ yamashita.hideyuki@ntt-tx.co.jp; Mon, 24 Jun 2019 17:41:01 +0900 (JST)
+Original-recipient: rfc822;yamashita.hideyuki@ntt-tx.co.jp
+Received: from smtp_saver-daemon.zssg-mailmd106.ddreams.local by
+ zssg-mailmd106.ddreams.local (dDREAMS) id <0PTL0032GHGDQ000@dDREAMS> for
+ yamashita.hideyuki@ntt-tx.co.jp (ORCPT yamashita.hideyuki@ntt-tx.co.jp); Mon,
+ 24 Jun 2019 17:41:01 +0900 (JST)
+Received: from zssg-mailmf106.ddreams.local
+ (zssg-mailmf900.ddreams.local [10.160.172.84]) by zssg-mailmd106.ddreams.local
+ (dDREAMS) with ESMTP id <0PTL011PKHGDAG90@dDREAMS> for
+ yamashita.hideyuki@ntt-tx.co.jp (ORCPT yamashita.hideyuki@ntt-tx.co.jp); Mon,
+ 24 Jun 2019 17:41:01 +0900 (JST)
+Received: from zssg-mailmf106.ddreams.local (unknown [127.0.0.1])
+	by zssg-mailmf106.ddreams.local (Postfix) with ESMTP id D6D2C7E6034	for
+ <yamashita.hideyuki@ntt-tx.co.jp>; Mon, 24 Jun 2019 17:41:01 +0900 (JST)
+Received: from zssg-mailmf106.ddreams.local (unknown [127.0.0.1])
+	by IMSVA (Postfix) with ESMTP id D4F508E6057	for
+ <yamashita.hideyuki@ntt-tx.co.jp>; Mon, 24 Jun 2019 17:41:01 +0900 (JST)
+Received: from localhost (unknown [127.0.0.1])	by IMSVA (Postfix)
+ with SMTP id C9F6A8E6042	for <yamashita.hideyuki@ntt-tx.co.jp>; Mon,
+ 24 Jun 2019 17:41:01 +0900 (JST)
+X-IMSS-HAND-OFF-DIRECTIVE: localhost:10026
+Received: from zssg-mailmf106.ddreams.local (unknown [127.0.0.1])
+	by IMSVA (Postfix) with ESMTP id EC9918E6057	for
+ <yamashita.hideyuki@ntt-tx.co.jp>; Mon, 24 Jun 2019 17:41:00 +0900 (JST)
+Received: from pomail01.silk.ntt-tx.co.jp (unknown [10.160.183.139])
+	by zssg-mailmf106.ddreams.local (Postfix)
+ with ESMTPS	for <yamashita.hideyuki@ntt-tx.co.jp>; Mon,
+ 24 Jun 2019 17:41:00 +0900 (JST)
+Received: from pomail01.silk.ntt-tx.co.jp (localhost [127.0.0.1])
+	by pomail01.silk.ntt-tx.co.jp (unknown) with ESMTP id x5O8f0X6008095;	Mon,
+ 24 Jun 2019 17:41:00 +0900
+Received: (from yama-hd@localhost)	by pomail01.silk.ntt-tx.co.jp (unknown)
+ id x5O8f0qi008094;	Mon, 24 Jun 2019 17:41:00 +0900
+X-Authentication-warning: pomail01.silk.ntt-tx.co.jp: yama-hd set sender to
+ fw-yama-hd@pomail01.silk.ntt-tx.co.jp using -f
+Received: from imss04.silk.ntt-tx.co.jp
+ (imss04.silk.ntt-tx.co.jp [10.107.0.39])	by pomail01.silk.ntt-tx.co.jp
+ (unknown) with ESMTP id x5O8f0Ik008091	for unknown; Mon,
+ 24 Jun 2019 17:41:00 +0900
+Received: from imss04.silk.ntt-tx.co.jp (localhost [127.0.0.1])
+ by imss04.silk.ntt-tx.co.jp (unknown) with ESMTP id x5O8f00Y032561 for
+ unknown; Mon, 24 Jun 2019 17:41:00 +0900
+Received: from ml01.silk.ntt-tx.co.jp (ml01.silk.ntt-tx.co.jp [10.107.0.230])
+ by imss04.silk.ntt-tx.co.jp (unknown) with ESMTP id x5O8f0fu032555; Mon,
+ 24 Jun 2019 17:41:00 +0900
+Received: from ml01.silk.ntt-tx.co.jp (localhost [127.0.0.1])
+	by ml01.silk.ntt-tx.co.jp (unknown) with ESMTP id x5O8f0XO028623;	Mon,
+ 24 Jun 2019 17:41:00 +0900
+Received: from imss02.silk.ntt-tx.co.jp
+ (imss02.silk.ntt-tx.co.jp [10.107.0.127])	by ml01.silk.ntt-tx.co.jp (unknown)
+ with ESMTP id x5O8f0ve028619	for unknown; Mon, 24 Jun 2019 17:41:00 +0900
+Received: from imss02.silk.ntt-tx.co.jp (localhost [127.0.0.1])
+ by imss02.silk.ntt-tx.co.jp (unknown) with ESMTP id x5O8exxB025064 for
+ unknown; Mon, 24 Jun 2019 17:40:59 +0900
+Received: from mail01.ics.ntt-tx.co.jp (mail01.ics.ntt-tx.co.jp [10.254.2.67])
+ by imss02.silk.ntt-tx.co.jp (unknown) with ESMTP id x5O8exbn025061 for
+ unknown; Mon, 24 Jun 2019 17:40:59 +0900
+Received: from dpdk.org (dpdk.org [92.243.14.124])	by mail01.ics.ntt-tx.co.jp
+ (unknown) with SMTP id x5O8erCd005213	for unknown; Mon,
+ 24 Jun 2019 17:40:58 +0900
+Received: from [92.243.14.124] (localhost [127.0.0.1])	by dpdk.org (Postfix)
+ with ESMTP id A302B1BF35;	Mon, 24 Jun 2019 10:40:52 +0200 (CEST)
+Received: from mail-pf1-f196.google.com
+ (mail-pf1-f196.google.com [209.85.210.196]) by dpdk.org (Postfix)
+ with ESMTP id 3248D1BF31 for <spp@dpdk.org>; Mon,
+ 24 Jun 2019 10:40:51 +0200 (CEST)
+Received: by mail-pf1-f196.google.com with SMTP id y15so2457742pfn.5 for
+ <spp@dpdk.org>; Mon, 24 Jun 2019 01:40:51 -0700 (PDT)
+Received: from localhost.localdomain ([192.47.164.146])
+ by smtp.gmail.com with ESMTPSA id 30sm28759534pjk.17.2019.06.24.01.40.48
+ (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128); Mon,
+ 24 Jun 2019 01:40:49 -0700 (PDT)
+Date: Mon, 24 Jun 2019 17:40:41 +0900
+From: yasufum.o@gmail.com
+Subject: [spp 04412] [spp] [PATCH 1/3] shared/sec: revise enum spp_port_rxtx
+Sender: spp <spp-bounces@dpdk.org>
+To: spp@dpdk.org, ferruh.yigit@intel.com, yasufum.o@gmail.com
+Message-id: <20190624084043.23718-2-yasufum.o@gmail.com>
+In-reply-to: <20190624084043.23718-1-yasufum.o@gmail.com>
+References: <20190624084043.23718-1-yasufum.o@gmail.com>
+X-ML-Name: unknown
+X-Mail-Count: 04412
+X-MLServer: unknown
+X-ML-Info: mailing list service
+X-Mailer: git-send-email 2.17.1
+Authentication-results: mail01.ics.ntt-tx.co.jp; spf=pass
+ smtp.mailfrom=spp-bounces@dpdk.org
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
+ h=from:to:subject:date:message-id:in-reply-to:references;
+ bh=MEn8Sfi+77eW4zMRF2zegl6DrD5WQNnMZzL7RWM2AUE=;
+ b=mF5uYoFZ4En9uSOVg4cMkefEkfidhIvg8DnyEewVwpfDxzYhofvwBBMTg9cjUbEOY4
+ 6Qnyf6IXxEspn45Q9flVWxDEBBexax4+J3J3tHgQ6nl3NIoS+y+8c2cLlzd4D9vBEdRw
+ UzNablU4KlDaDwIZglwW/6200ued9K6iAhe3stvSAsJylzyH4zIXbZVcd+RBDsbZ2tQ7
+ 0/VRqDtkRLnONRhDe9INZqIit5YizVQmsrs6UEYCIVrkXvWBitoMi5uQSVmtGwLnI4ZM
+ eSvXoDYjANgKwoMuBPMfdzRo3e0ffX/p/R8qmJAro6bJpTrsEiaaYMLY+HJuBB3AEo+r Nc4g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=1e100.net;
+ s=20161025; h=x-gm-message-state:from:to:subject:date:message-id:in-reply-to
+ :references; bh=MEn8Sfi+77eW4zMRF2zegl6DrD5WQNnMZzL7RWM2AUE=;
+ b=QGbmAwL/yCCFSDdGBhj2a6B1cAWatSxMSTF9kb8casJ5soBP18dsQHoiyHFvij1aJW
+ br2l8ODsJsX7DN9DxNE6CPCHnqudR7KTrqKY+7m8CKVnr9sNuLLnARwRDaSbch4Z5mXS
+ zkVnmjJDWM6h0jQQjs9ZEkqMJoGYlX9lic21brBMUG6LbJQ/vhYM4k/9oHfbEDt399iB
+ m4VM7FhU7n06LUD3rYCgYYemDhxsEHhGI9GYDJ0pJNzMEKRQ7qymqiYIVGPqdmDT6CFw
+ M37HJLiCB9NMZkzup71+fBMrwzBPhviTqtF9ju+5vN0iaZk7pTZVKLnYJBh7UaAbn882 4ehg==
+X-Gm-Message-State: APjAAAXKEz2F32emcbNsqp8Y2CjB0D7yBHRtvNhTWCn/qFQFWT4jAKCR
+ VM0BxhVXnX5lJI1vxNVveP06uvk4
+X-Google-Smtp-Source:
+ APXvYqy9quM9muQ83qD3si9EbOZhqyWlWpX633Pc5MRf+HnNMq9OzHKbSms4ZOFoAvHLUpVbr7yWcA==
+X-Received: by 2002:a17:90a:30cf:: with SMTP id
+ h73mr23779464pjb.42.1561365650087; Mon, 24 Jun 2019 01:40:50 -0700 (PDT)
+X-BeenThere: spp@dpdk.org
+X-Mailman-Version: 2.1.15
+List-Id: Soft Patch Panel <spp.dpdk.org>
+List-Unsubscribe: <https://mails.dpdk.org/options/spp>,
+ <mailto:spp-request@dpdk.org?subject=unsubscribe>
+List-Archive: <http://mails.dpdk.org/archives/spp/>
+List-Post: <mailto:spp@dpdk.org>
+List-Help: <mailto:spp-request@dpdk.org?subject=help>
+List-Subscribe: <https://mails.dpdk.org/listinfo/spp>,
+ <mailto:spp-request@dpdk.org?subject=subscribe>
+X-TM-AS-MML: No
+Precedence: bulk
+Lines: 552
+X-TM-AS-GCONF: 00
+X-MD-STAMP: ON
+
+From: Yasufumi Ogawa <yasufum.o@gmail.com>
+
+This update is to revise the name of enum `spp_port_rxtx` to
+`sppwk_port_dir` because it is used to specify which of direction
+packets are forwarded on a port. Term `rxtx` is used for a set of RX and
+TX, so it should not be used for specifying the direction. This update
+is also rename a member of structs using this enum from `rxtx` to `dir`.
+
+Some error are occured while compiling spp_pcap for this update. It is
+fixed by next pathces.
+
+Signed-off-by: Yasufumi Ogawa <yasufum.o@gmail.com>
+---
+ src/mirror/mir_cmd_runner.c                   | 24 +++++++--------
+ .../secondary/spp_worker_th/cmd_parser.c      | 14 ++++-----
+ .../secondary/spp_worker_th/cmd_parser.h      |  4 +--
+ .../spp_worker_th/cmd_res_formatter.c         | 12 ++++----
+ .../spp_worker_th/cmd_res_formatter.h         |  6 ++--
+ .../secondary/spp_worker_th/cmd_utils.c       | 13 ++++----
+ .../secondary/spp_worker_th/cmd_utils.h       | 19 +++++-------
+ src/shared/secondary/spp_worker_th/spp_port.c | 20 ++++++-------
+ src/shared/secondary/spp_worker_th/spp_port.h |  4 +--
+ src/vf/vf_cmd_runner.c                        | 30 +++++++++----------
+ 10 files changed, 72 insertions(+), 74 deletions(-)
+
+diff --git a/src/mirror/mir_cmd_runner.c b/src/mirror/mir_cmd_runner.c
+index a4ca397..eda4d1a 100644
+--- a/src/mirror/mir_cmd_runner.c
++++ b/src/mirror/mir_cmd_runner.c
+@@ -107,19 +107,19 @@ update_comp(enum sppwk_action wk_action, const char *name,
+ 
+ /* Check if over the maximum num of rx and tx ports of component. */
+ static int
+-check_mir_port_count(enum spp_port_rxtx rxtx, int num_rx, int num_tx)
++check_mir_port_count(enum sppwk_port_dir dir, int nof_rx, int nof_tx)
+ {
+ 	RTE_LOG(INFO, MIR_CMD_RUNNER, "port count, port_type=%d,"
+-				" rx=%d, tx=%d\n", rxtx, num_rx, num_tx);
+-	if (rxtx == SPP_PORT_RXTX_RX)
+-		num_rx++;
++				" rx=%d, tx=%d\n", dir, nof_rx, nof_tx);
++	if (dir == SPP_PORT_RXTX_RX)
++		nof_rx++;
+ 	else
+-		num_tx++;
++		nof_tx++;
+ 	/* Add rx or tx port appointed in port_type. */
+ 	RTE_LOG(INFO, MIR_CMD_RUNNER, "Num of ports after count up,"
+ 				" port_type=%d, rx=%d, tx=%d\n",
+-				rxtx, num_rx, num_tx);
+-	if (num_rx > 1 || num_tx > 2)
++				dir, nof_rx, nof_tx);
++	if (nof_rx > 1 || nof_tx > 2)
+ 		return SPP_RET_NG;
+ 
+ 	return SPP_RET_OK;
+@@ -129,7 +129,7 @@ check_mir_port_count(enum spp_port_rxtx rxtx, int num_rx, int num_tx)
+ static int
+ update_port(enum sppwk_action wk_action,
+ 		const struct sppwk_port_idx *port,
+-		enum spp_port_rxtx rxtx,
++		enum sppwk_port_dir dir,
+ 		const char *name,
+ 		const struct spp_port_ability *ability)
+ {
+@@ -155,7 +155,7 @@ update_port(enum sppwk_action wk_action,
+ 			&comp_info_base, NULL, NULL, &change_component, NULL);
+ 	comp_info = (comp_info_base + comp_lcore_id);
+ 	port_info = get_sppwk_port(port->iface_type, port->iface_no);
+-	if (rxtx == SPP_PORT_RXTX_RX) {
++	if (dir == SPP_PORT_RXTX_RX) {
+ 		nof_ports = &comp_info->nof_rx;
+ 		ports = comp_info->rx_ports;
+ 	} else {
+@@ -166,7 +166,7 @@ update_port(enum sppwk_action wk_action,
+ 	switch (wk_action) {
+ 	case SPPWK_ACT_ADD:
+ 		/* Check if over the maximum num of ports of component. */
+-		if (check_mir_port_count(rxtx, comp_info->nof_rx,
++		if (check_mir_port_count(dir, comp_info->nof_rx,
+ 				comp_info->nof_tx) != SPP_RET_OK)
+ 			return SPP_RET_NG;
+ 
+@@ -228,7 +228,7 @@ update_port(enum sppwk_action wk_action,
+ 					SPPWK_PORT_ABL_OPS_NONE)
+ 				continue;
+ 
+-			if (port_info->ability[cnt].rxtx == rxtx)
++			if (port_info->ability[cnt].dir == dir)
+ 				memset(&port_info->ability[cnt], 0x00,
+ 					sizeof(struct spp_port_ability));
+ 		}
+@@ -274,7 +274,7 @@ exec_one_cmd(const struct sppwk_cmd_attrs *cmd)
+ 		RTE_LOG(INFO, MIR_CMD_RUNNER, "with action `%s`.\n",
+ 				sppwk_action_str(cmd->spec.port.wk_action));
+ 		ret = update_port(cmd->spec.port.wk_action,
+-				&cmd->spec.port.port, cmd->spec.port.rxtx,
++				&cmd->spec.port.port, cmd->spec.port.dir,
+ 				cmd->spec.port.name, &cmd->spec.port.ability);
+ 		if (ret == 0) {
+ 			RTE_LOG(INFO, MIR_CMD_RUNNER, "Exec flush.\n");
+diff --git a/src/shared/secondary/spp_worker_th/cmd_parser.c b/src/shared/secondary/spp_worker_th/cmd_parser.c
+index 5a2fb82..c1b311c 100644
+--- a/src/shared/secondary/spp_worker_th/cmd_parser.c
++++ b/src/shared/secondary/spp_worker_th/cmd_parser.c
+@@ -480,14 +480,14 @@ parse_port(void *output, const char *arg_val, int allow_override)
+ 
+ /* Parse port rx and tx value. */
+ static int
+-parse_port_rxtx(void *output, const char *arg_val, int allow_override)
++parse_port_direction(void *output, const char *arg_val, int allow_override)
+ {
+-	int ret = SPP_RET_OK;
++	int ret;
+ 	struct sppwk_cmd_port *port = output;
+ 
+ 	ret = get_list_idx(arg_val, PORT_DIR_LIST);
+ 	if (unlikely(ret <= 0)) {
+-		RTE_LOG(ERR, WK_CMD_PARSER, "Unknown port rxtx. val=%s\n",
++		RTE_LOG(ERR, WK_CMD_PARSER, "Unknown port direction. val=%s\n",
+ 				arg_val);
+ 		return SPP_RET_NG;
+ 	}
+@@ -504,7 +504,7 @@ parse_port_rxtx(void *output, const char *arg_val, int allow_override)
+ 		}
+ 	}
+ 
+-	port->rxtx = ret;
++	port->dir = ret;
+ 	return SPP_RET_OK;
+ }
+ 
+@@ -551,8 +551,8 @@ parse_port_vlan_ops(void *output, const char *arg_val,
+ 					arg_val);
+ 			return SPP_RET_NG;
+ 		}
+-		ability->ops  = ret;
+-		ability->rxtx = port->rxtx;
++		ability->ops = ret;
++		ability->dir = port->dir;
+ 		break;
+ 	case SPPWK_PORT_ABL_OPS_ADD_VLANTAG:
+ 		/* Nothing to do. */
+@@ -875,7 +875,7 @@ cmd_ops_list[][SPPWK_MAX_PARAMS] = {
+ 		{
+ 			.name = "port rxtx",
+ 			.offset = offsetof(struct sppwk_cmd_attrs, spec.port),
+-			.func = parse_port_rxtx
++			.func = parse_port_direction
+ 		},
+ 		{
+ 			.name = "component name",
+diff --git a/src/shared/secondary/spp_worker_th/cmd_parser.h b/src/shared/secondary/spp_worker_th/cmd_parser.h
+index 1018444..d50e3a6 100644
+--- a/src/shared/secondary/spp_worker_th/cmd_parser.h
++++ b/src/shared/secondary/spp_worker_th/cmd_parser.h
+@@ -102,8 +102,8 @@ struct sppwk_cmd_comp {
+ /* `port` command parameters. */
+ struct sppwk_cmd_port {
+ 	enum sppwk_action wk_action;  /**< add or del */
+-	struct sppwk_port_idx port;  /**< port type and number */
+-	enum spp_port_rxtx rxtx;  /**< rx or tx identifier */
++	struct sppwk_port_idx port;   /**< port type and number */
++	enum sppwk_port_dir dir;  /**< Direction of RX, TX or both. */
+ 	char name[SPPWK_NAME_BUFSZ];  /**<  component name */
+ 	struct spp_port_ability ability;  /**< port ability */
+ };
+diff --git a/src/shared/secondary/spp_worker_th/cmd_res_formatter.c b/src/shared/secondary/spp_worker_th/cmd_res_formatter.c
+index fdc8675..a174890 100644
+--- a/src/shared/secondary/spp_worker_th/cmd_res_formatter.c
++++ b/src/shared/secondary/spp_worker_th/cmd_res_formatter.c
+@@ -164,7 +164,7 @@ append_vlan_value(char **output, const int ope, const int vid, const int pcp)
+ /* append a block of vlan for JSON format */
+ int
+ append_vlan_block(const char *name, char **output,
+-		const int port_id, const enum spp_port_rxtx rxtx)
++		const int port_id, const enum sppwk_port_dir dir)
+ {
+ 	int ret = SPP_RET_NG;
+ 	int i = 0;
+@@ -178,7 +178,7 @@ append_vlan_block(const char *name, char **output,
+ 		return SPP_RET_NG;
+ 	}
+ 
+-	spp_port_ability_get_info(port_id, rxtx, &info);
++	spp_port_ability_get_info(port_id, dir, &info);
+ 	for (i = 0; i < SPP_PORT_ABILITY_MAX; i++) {
+ 		switch (info[i].ops) {
+ 		case SPPWK_PORT_ABL_OPS_ADD_VLANTAG:
+@@ -239,7 +239,7 @@ get_ethdev_port_id(enum port_type iface_type, int iface_no)
+ /* append a block of port numbers for JSON format */
+ int
+ append_port_block(char **output, const struct sppwk_port_idx *port,
+-		const enum spp_port_rxtx rxtx)
++		const enum sppwk_port_dir dir)
+ {
+ 	int ret = SPP_RET_NG;
+ 	char port_str[CMD_TAG_APPEND_SIZE];
+@@ -259,7 +259,7 @@ append_port_block(char **output, const struct sppwk_port_idx *port,
+ 	ret = append_vlan_block("vlan", &tmp_buff,
+ 			get_ethdev_port_id(
+ 				port->iface_type, port->iface_no),
+-			rxtx);
++			dir);
+ 	if (unlikely(ret < SPP_RET_OK))
+ 		return SPP_RET_NG;
+ 
+@@ -272,7 +272,7 @@ append_port_block(char **output, const struct sppwk_port_idx *port,
+ int
+ append_port_array(const char *name, char **output, const int num,
+ 		const struct sppwk_port_idx *ports,
+-		const enum spp_port_rxtx rxtx)
++		const enum sppwk_port_dir dir)
+ {
+ 	int ret = SPP_RET_NG;
+ 	int i = 0;
+@@ -286,7 +286,7 @@ append_port_array(const char *name, char **output, const int num,
+ 	}
+ 
+ 	for (i = 0; i < num; i++) {
+-		ret = append_port_block(&tmp_buff, &ports[i], rxtx);
++		ret = append_port_block(&tmp_buff, &ports[i], dir);
+ 		if (unlikely(ret < SPP_RET_OK))
+ 			return SPP_RET_NG;
+ 	}
+diff --git a/src/shared/secondary/spp_worker_th/cmd_res_formatter.h b/src/shared/secondary/spp_worker_th/cmd_res_formatter.h
+index d304e4f..66eabb5 100644
+--- a/src/shared/secondary/spp_worker_th/cmd_res_formatter.h
++++ b/src/shared/secondary/spp_worker_th/cmd_res_formatter.h
+@@ -40,14 +40,14 @@ int append_vlan_value(char **output, const int ope, const int vid,
+ 		const int pcp);
+ 
+ int append_vlan_block(const char *name, char **output,
+-		const int port_id, const enum spp_port_rxtx rxtx);
++		const int port_id, const enum sppwk_port_dir dir);
+ 
+ int append_port_block(char **output, const struct sppwk_port_idx *port,
+-		const enum spp_port_rxtx rxtx);
++		const enum sppwk_port_dir dir);
+ 
+ int append_port_array(const char *name, char **output, const int num,
+ 		const struct sppwk_port_idx *ports,
+-		const enum spp_port_rxtx rxtx);
++		const enum sppwk_port_dir dir);
+ 
+ int append_core_element_value(struct spp_iterate_core_params *params,
+ 		const unsigned int lcore_id,
+diff --git a/src/shared/secondary/spp_worker_th/cmd_utils.c b/src/shared/secondary/spp_worker_th/cmd_utils.c
+index e61f59c..4f80b2e 100644
+--- a/src/shared/secondary/spp_worker_th/cmd_utils.c
++++ b/src/shared/secondary/spp_worker_th/cmd_utils.c
+@@ -661,7 +661,7 @@ int
+ spp_check_used_port(
+ 		enum port_type iface_type,
+ 		int iface_no,
+-		enum spp_port_rxtx rxtx)
++		enum sppwk_port_dir dir)
+ {
+ 	int cnt, port_cnt, max = 0;
+ 	struct sppwk_comp_info *component = NULL;
+@@ -678,10 +678,10 @@ spp_check_used_port(
+ 		if (component->wk_type == SPPWK_TYPE_NONE)
+ 			continue;
+ 
+-		if (rxtx == SPP_PORT_RXTX_RX) {
++		if (dir == SPP_PORT_RXTX_RX) {
+ 			max = component->nof_rx;
+ 			port_array = component->rx_ports;
+-		} else if (rxtx == SPP_PORT_RXTX_TX) {
++		} else if (dir == SPP_PORT_RXTX_TX) {
+ 			max = component->nof_tx;
+ 			port_array = component->tx_ports;
+ 		}
+@@ -696,17 +696,18 @@ spp_check_used_port(
+ 
+ /* Set component update flag for given port */
+ void
+-set_component_change_port(struct sppwk_port_info *port, enum spp_port_rxtx rxtx)
++set_component_change_port(struct sppwk_port_info *port,
++		enum sppwk_port_dir dir)
+ {
+ 	int ret = 0;
+-	if ((rxtx == SPP_PORT_RXTX_RX) || (rxtx == SPP_PORT_RXTX_ALL)) {
++	if ((dir == SPP_PORT_RXTX_RX) || (dir == SPP_PORT_RXTX_ALL)) {
+ 		ret = spp_check_used_port(port->iface_type, port->iface_no,
+ 				SPP_PORT_RXTX_RX);
+ 		if (ret >= 0)
+ 			*(g_mng_data.p_change_component + ret) = 1;
+ 	}
+ 
+-	if ((rxtx == SPP_PORT_RXTX_TX) || (rxtx == SPP_PORT_RXTX_ALL)) {
++	if ((dir == SPP_PORT_RXTX_TX) || (dir == SPP_PORT_RXTX_ALL)) {
+ 		ret = spp_check_used_port(port->iface_type, port->iface_no,
+ 				SPP_PORT_RXTX_TX);
+ 		if (ret >= 0)
+diff --git a/src/shared/secondary/spp_worker_th/cmd_utils.h b/src/shared/secondary/spp_worker_th/cmd_utils.h
+index b0009c3..e08e4fb 100644
+--- a/src/shared/secondary/spp_worker_th/cmd_utils.h
++++ b/src/shared/secondary/spp_worker_th/cmd_utils.h
+@@ -95,11 +95,8 @@ enum spp_classifier_type {
+ 	SPP_CLASSIFIER_TYPE_VLAN  /**< VLAN ID */
+ };
+ 
+-/**
+- * Port type (rx or tx) to indicate which direction packet goes
+- * (e.g. receiving or transmitting)
+- */
+-enum spp_port_rxtx {
++/* Direction of RX or TX on a port. */
++enum sppwk_port_dir {
+ 	SPP_PORT_RXTX_NONE, /**< none */
+ 	SPP_PORT_RXTX_RX,   /**< rx port */
+ 	SPP_PORT_RXTX_TX,   /**< tx port */
+@@ -155,9 +152,9 @@ union spp_ability_data {
+ 
+ /* Port ability information. */
+ struct spp_port_ability {
+-	enum sppwk_port_abl_ops ops;  /**< Port ability Operations */
+-	enum spp_port_rxtx rxtx;      /**< rx/tx identifier */
+-	union spp_ability_data data;  /**< Port ability data */
++	enum sppwk_port_abl_ops ops;   /**< Port ability Operations */
++	enum sppwk_port_dir dir;  /**< Direction of RX, TX or both */
++	union spp_ability_data data;   /**< Port ability data */
+ };
+ 
+ /* Attributes for classifying. */
+@@ -436,7 +433,7 @@ int spp_check_core_update(unsigned int lcore_id);
+ int spp_check_used_port(
+ 		enum port_type iface_type,
+ 		int iface_no,
+-		enum spp_port_rxtx rxtx);
++		enum sppwk_port_dir dir);
+ 
+ /**
+  * Set component update flag for given port.
+@@ -448,8 +445,8 @@ int spp_check_used_port(
+  *
+  */
+ void
+-set_component_change_port(
+-		struct sppwk_port_info *port, enum spp_port_rxtx rxtx);
++set_component_change_port(struct sppwk_port_info *port,
++		enum sppwk_port_dir dir);
+ 
+ /**
+  * Get ID of unused lcore.
+diff --git a/src/shared/secondary/spp_worker_th/spp_port.c b/src/shared/secondary/spp_worker_th/spp_port.c
+index 3163274..7ac6858 100644
+--- a/src/shared/secondary/spp_worker_th/spp_port.c
++++ b/src/shared/secondary/spp_worker_th/spp_port.c
+@@ -60,12 +60,12 @@ spp_port_ability_init(void)
+ /* Get information of port ability. */
+ void
+ spp_port_ability_get_info(
+-		int port_id, enum spp_port_rxtx rxtx,
++		int port_id, enum sppwk_port_dir dir,
+ 		struct spp_port_ability **info)
+ {
+ 	struct port_ability_mng_info *mng = NULL;
+ 
+-	switch (rxtx) {
++	switch (dir) {
+ 	case SPP_PORT_RXTX_RX:
+ 		mng = &g_port_mng_info[port_id].rx;
+ 		break;
+@@ -202,7 +202,7 @@ del_vlantag_all_packets(
+ void
+ spp_port_ability_change_index(
+ 		enum port_ability_chg_index_type type,
+-		int port_id, enum spp_port_rxtx rxtx)
++		int port_id, enum sppwk_port_dir dir)
+ {
+ 	int cnt;
+ 	static int num_rx;
+@@ -212,7 +212,7 @@ spp_port_ability_change_index(
+ 	struct port_ability_mng_info *mng = NULL;
+ 
+ 	if (type == PORT_ABILITY_CHG_INDEX_UPD) {
+-		switch (rxtx) {
++		switch (dir) {
+ 		case SPP_PORT_RXTX_RX:
+ 			mng = &g_port_mng_info[port_id].rx;
+ 			mng->upd_index = mng->ref_index;
+@@ -249,7 +249,7 @@ spp_port_ability_change_index(
+ static void
+ port_ability_set_ability(
+ 		struct sppwk_port_info *port,
+-		enum spp_port_rxtx rxtx)
++		enum sppwk_port_dir dir)
+ {
+ 	int in_cnt, out_cnt = 0;
+ 	int port_id = port->ethdev_port_id;
+@@ -263,7 +263,7 @@ port_ability_set_ability(
+ 	port_mng->iface_type = port->iface_type;
+ 	port_mng->iface_no   = port->iface_no;
+ 
+-	switch (rxtx) {
++	switch (dir) {
+ 	case SPP_PORT_RXTX_RX:
+ 		mng = &port_mng->rx;
+ 		break;
+@@ -279,7 +279,7 @@ port_ability_set_ability(
+ 	memset(out_ability, 0x00, sizeof(struct spp_port_ability)
+ 			* SPP_PORT_ABILITY_MAX);
+ 	for (in_cnt = 0; in_cnt < SPP_PORT_ABILITY_MAX; in_cnt++) {
+-		if (in_ability[in_cnt].rxtx != rxtx)
++		if (in_ability[in_cnt].dir != dir)
+ 			continue;
+ 
+ 		memcpy(&out_ability[out_cnt], &in_ability[in_cnt],
+@@ -301,7 +301,7 @@ port_ability_set_ability(
+ 	}
+ 
+ 	spp_port_ability_change_index(PORT_ABILITY_CHG_INDEX_UPD,
+-			port_id, rxtx);
++			port_id, dir);
+ }
+ 
+ /* Update port capability. */
+@@ -338,13 +338,13 @@ port_ability_func port_ability_function_list[] = {
+ static inline int
+ port_ability_each_operation(uint16_t port_id,
+ 		struct rte_mbuf **pkts, const uint16_t nb_pkts,
+-		enum spp_port_rxtx rxtx)
++		enum sppwk_port_dir dir)
+ {
+ 	int cnt, buf;
+ 	int ok_pkts = nb_pkts;
+ 	struct spp_port_ability *info = NULL;
+ 
+-	spp_port_ability_get_info(port_id, rxtx, &info);
++	spp_port_ability_get_info(port_id, dir, &info);
+ 	if (unlikely(info[0].ops == SPPWK_PORT_ABL_OPS_NONE))
+ 		return nb_pkts;
+ 
+diff --git a/src/shared/secondary/spp_worker_th/spp_port.h b/src/shared/secondary/spp_worker_th/spp_port.h
+index 274b24b..5cde7d2 100644
+--- a/src/shared/secondary/spp_worker_th/spp_port.h
++++ b/src/shared/secondary/spp_worker_th/spp_port.h
+@@ -40,7 +40,7 @@ void spp_port_ability_init(void);
+  *  Port ability information.
+  */
+ void spp_port_ability_get_info(
+-		int port_id, enum spp_port_rxtx rxtx,
++		int port_id, enum sppwk_port_dir dir,
+ 		struct spp_port_ability **info);
+ 
+ /**
+@@ -55,7 +55,7 @@ void spp_port_ability_get_info(
+  */
+ void spp_port_ability_change_index(
+ 		enum port_ability_chg_index_type type,
+-		int port_id, enum spp_port_rxtx rxtx);
++		int port_id, enum sppwk_port_dir dir);
+ 
+ /**
+  * Update port capability.
+diff --git a/src/vf/vf_cmd_runner.c b/src/vf/vf_cmd_runner.c
+index 51f50a7..89cf12f 100644
+--- a/src/vf/vf_cmd_runner.c
++++ b/src/vf/vf_cmd_runner.c
+@@ -209,32 +209,32 @@ update_comp(enum sppwk_action wk_action, const char *name,
+ 
+ /* Check if over the maximum num of rx and tx ports of component. */
+ static int
+-check_vf_port_count(int component_type, enum spp_port_rxtx rxtx, int num_rx,
+-								int num_tx)
++check_vf_port_count(int component_type, enum sppwk_port_dir dir,
++		int nof_rx, int nof_tx)
+ {
+ 	RTE_LOG(INFO, VF_CMD_RUNNER, "port count, port_type=%d,"
+-				" rx=%d, tx=%d\n", rxtx, num_rx, num_tx);
+-	if (rxtx == SPP_PORT_RXTX_RX)
+-		num_rx++;
++				" rx=%d, tx=%d\n", dir, nof_rx, nof_tx);
++	if (dir == SPP_PORT_RXTX_RX)
++		nof_rx++;
+ 	else
+-		num_tx++;
++		nof_tx++;
+ 	/* Add rx or tx port appointed in port_type. */
+ 	RTE_LOG(INFO, VF_CMD_RUNNER, "Num of ports after count up,"
+ 				" port_type=%d, rx=%d, tx=%d\n",
+-				rxtx, num_rx, num_tx);
++				dir, nof_rx, nof_tx);
+ 	switch (component_type) {
+ 	case SPPWK_TYPE_FWD:
+-		if (num_rx > 1 || num_tx > 1)
++		if (nof_rx > 1 || nof_tx > 1)
+ 			return SPP_RET_NG;
+ 		break;
+ 
+ 	case SPPWK_TYPE_MRG:
+-		if (num_tx > 1)
++		if (nof_tx > 1)
+ 			return SPP_RET_NG;
+ 		break;
+ 
+ 	case SPPWK_TYPE_CLS:
+-		if (num_rx > 1)
++		if (nof_rx > 1)
+ 			return SPP_RET_NG;
+ 		break;
+ 
+@@ -250,7 +250,7 @@ check_vf_port_count(int component_type, enum spp_port_rxtx rxtx, int num_rx,
+ static int
+ update_port(enum sppwk_action wk_action,
+ 		const struct sppwk_port_idx *port,
+-		enum spp_port_rxtx rxtx,
++		enum sppwk_port_dir dir,
+ 		const char *name,
+ 		const struct spp_port_ability *ability)
+ {
+@@ -276,7 +276,7 @@ update_port(enum sppwk_action wk_action,
+ 			&comp_info_base, NULL, NULL, &change_component, NULL);
+ 	comp_info = (comp_info_base + comp_lcore_id);
+ 	port_info = get_sppwk_port(port->iface_type, port->iface_no);
+-	if (rxtx == SPP_PORT_RXTX_RX) {
++	if (dir == SPP_PORT_RXTX_RX) {
+ 		nof_ports = &comp_info->nof_rx;
+ 		ports = comp_info->rx_ports;
+ 	} else {
+@@ -287,7 +287,7 @@ update_port(enum sppwk_action wk_action,
+ 	switch (wk_action) {
+ 	case SPPWK_ACT_ADD:
+ 		/* Check if over the maximum num of ports of component. */
+-		if (check_vf_port_count(comp_info->wk_type, rxtx,
++		if (check_vf_port_count(comp_info->wk_type, dir,
+ 				comp_info->nof_rx,
+ 				comp_info->nof_tx) != SPP_RET_OK)
+ 			return SPP_RET_NG;
+@@ -349,7 +349,7 @@ update_port(enum sppwk_action wk_action,
+ 					SPPWK_PORT_ABL_OPS_NONE)
+ 				continue;
+ 
+-			if (port_info->ability[cnt].rxtx == rxtx)
++			if (port_info->ability[cnt].dir == dir)
+ 				memset(&port_info->ability[cnt], 0x00,
+ 					sizeof(struct spp_port_ability));
+ 		}
+@@ -408,7 +408,7 @@ exec_one_cmd(const struct sppwk_cmd_attrs *cmd)
+ 		RTE_LOG(INFO, VF_CMD_RUNNER, "with action `%s`.\n",
+ 				sppwk_action_str(cmd->spec.port.wk_action));
+ 		ret = update_port(cmd->spec.port.wk_action,
+-				&cmd->spec.port.port, cmd->spec.port.rxtx,
++				&cmd->spec.port.port, cmd->spec.port.dir,
+ 				cmd->spec.port.name, &cmd->spec.port.ability);
+ 		if (ret == 0) {
+ 			RTE_LOG(INFO, VF_CMD_RUNNER, "Exec flush.\n");
+-- 
+2.17.1
+
+

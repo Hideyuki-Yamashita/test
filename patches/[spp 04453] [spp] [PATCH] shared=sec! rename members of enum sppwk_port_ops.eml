@@ -1,0 +1,359 @@
+Return-path: <fw-yama-hd@pomail01.silk.ntt-tx.co.jp>
+Received: from zssg-mailmd104.ddreams.local
+ (zssg-mailmd104.ddreams.local [10.160.123.99]) by zssg-mailms320.ddreams.local
+ (NTT DoCoMo Mail System) with ESMTP id <0PTY00XGZ3N71U10@NTTDoCoMo.co.jp> for
+ yamashita.hideyuki@ntt-tx.co.jp; Mon, 01 Jul 2019 13:11:31 +0900 (JST)
+Original-recipient: rfc822;yamashita.hideyuki@ntt-tx.co.jp
+Received: from smtp_saver-daemon.zssg-mailmd104.ddreams.local by
+ zssg-mailmd104.ddreams.local (dDREAMS) id <0PTY00W263N6VA00@dDREAMS> for
+ yamashita.hideyuki@ntt-tx.co.jp (ORCPT yamashita.hideyuki@ntt-tx.co.jp); Mon,
+ 01 Jul 2019 13:11:30 +0900 (JST)
+Received: from zssg-mailmf106.ddreams.local
+ (zssg-mailmf900.ddreams.local [10.160.172.84]) by zssg-mailmd104.ddreams.local
+ (dDREAMS) with ESMTP id <0PTY00ART3N6M8C0@dDREAMS> for
+ yamashita.hideyuki@ntt-tx.co.jp (ORCPT yamashita.hideyuki@ntt-tx.co.jp); Mon,
+ 01 Jul 2019 13:11:30 +0900 (JST)
+Received: from zssg-mailmf106.ddreams.local (unknown [127.0.0.1])
+	by zssg-mailmf106.ddreams.local (Postfix) with ESMTP id EA0857E6032	for
+ <yamashita.hideyuki@ntt-tx.co.jp>; Mon,  1 Jul 2019 13:11:30 +0900 (JST)
+Received: from zssg-mailmf106.ddreams.local (unknown [127.0.0.1])
+	by IMSVA (Postfix) with ESMTP id E8E018E6042	for
+ <yamashita.hideyuki@ntt-tx.co.jp>; Mon,  1 Jul 2019 13:11:30 +0900 (JST)
+Received: from localhost (unknown [127.0.0.1])	by IMSVA (Postfix)
+ with SMTP id DDB068E6057	for <yamashita.hideyuki@ntt-tx.co.jp>; Mon,
+ 1 Jul 2019 13:11:30 +0900 (JST)
+X-IMSS-HAND-OFF-DIRECTIVE: localhost:10026
+Received: from zssg-mailmf106.ddreams.local (unknown [127.0.0.1])
+	by IMSVA (Postfix) with ESMTP id 7BEBD8E6042	for
+ <yamashita.hideyuki@ntt-tx.co.jp>; Mon,  1 Jul 2019 13:11:29 +0900 (JST)
+Received: from pomail01.silk.ntt-tx.co.jp (unknown [10.160.183.139])
+	by zssg-mailmf106.ddreams.local (Postfix)
+ with ESMTPS	for <yamashita.hideyuki@ntt-tx.co.jp>; Mon,
+ 1 Jul 2019 13:11:29 +0900 (JST)
+Received: from pomail01.silk.ntt-tx.co.jp (localhost [127.0.0.1])
+	by pomail01.silk.ntt-tx.co.jp (unknown) with ESMTP id x614BTvO015355;	Mon,
+ 1 Jul 2019 13:11:29 +0900
+Received: (from yama-hd@localhost)	by pomail01.silk.ntt-tx.co.jp (unknown)
+ id x614BTfj015354;	Mon, 1 Jul 2019 13:11:29 +0900
+X-Authentication-warning: pomail01.silk.ntt-tx.co.jp: yama-hd set sender to
+ fw-yama-hd@pomail01.silk.ntt-tx.co.jp using -f
+Received: from imss04.silk.ntt-tx.co.jp
+ (imss04.silk.ntt-tx.co.jp [10.107.0.39])	by pomail01.silk.ntt-tx.co.jp
+ (unknown) with ESMTP id x614BTqK015351	for unknown; Mon,
+ 1 Jul 2019 13:11:29 +0900
+Received: from imss04.silk.ntt-tx.co.jp (localhost [127.0.0.1])
+ by imss04.silk.ntt-tx.co.jp (unknown) with ESMTP id x614BSsh029367 for
+ unknown; Mon, 1 Jul 2019 13:11:28 +0900
+Received: from ml01.silk.ntt-tx.co.jp (ml01.silk.ntt-tx.co.jp [10.107.0.230])
+ by imss04.silk.ntt-tx.co.jp (unknown) with ESMTP id x614BSHK029356; Mon,
+ 1 Jul 2019 13:11:28 +0900
+Received: from ml01.silk.ntt-tx.co.jp (localhost [127.0.0.1])
+	by ml01.silk.ntt-tx.co.jp (unknown) with ESMTP id x614BR3i019604;	Mon,
+ 1 Jul 2019 13:11:27 +0900
+Received: from imss02.silk.ntt-tx.co.jp
+ (imss02.silk.ntt-tx.co.jp [10.107.0.127])	by ml01.silk.ntt-tx.co.jp (unknown)
+ with ESMTP id x614BRQD019600	for unknown; Mon, 1 Jul 2019 13:11:27 +0900
+Received: from imss02.silk.ntt-tx.co.jp (localhost [127.0.0.1])
+ by imss02.silk.ntt-tx.co.jp (unknown) with ESMTP id x614BRVx024954 for
+ unknown; Mon, 1 Jul 2019 13:11:27 +0900
+Received: from mail01.ics.ntt-tx.co.jp (mail01.ics.ntt-tx.co.jp [10.254.2.67])
+ by imss02.silk.ntt-tx.co.jp (unknown) with ESMTP id x614BRsE024946 for
+ unknown; Mon, 1 Jul 2019 13:11:27 +0900
+Received: from dpdk.org (dpdk.org [92.243.14.124])	by mail01.ics.ntt-tx.co.jp
+ (unknown) with SMTP id x614BJHn006657	for unknown; Mon,
+ 1 Jul 2019 13:11:25 +0900
+Received: from [92.243.14.124] (localhost [127.0.0.1])	by dpdk.org (Postfix)
+ with ESMTP id 571AE31FC;	Mon,  1 Jul 2019 06:11:17 +0200 (CEST)
+Received: from mail-pf1-f194.google.com
+ (mail-pf1-f194.google.com [209.85.210.194]) by dpdk.org (Postfix)
+ with ESMTP id 146062AB for <spp@dpdk.org>; Mon,
+ 1 Jul 2019 06:11:16 +0200 (CEST)
+Received: by mail-pf1-f194.google.com with SMTP id q10so5858826pff.9 for
+ <spp@dpdk.org>; Sun, 30 Jun 2019 21:11:15 -0700 (PDT)
+Received: from localhost.localdomain ([192.47.164.146])
+ by smtp.gmail.com with ESMTPSA id p6sm7744955pgs.77.2019.06.30.21.11.13
+ (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128); Sun,
+ 30 Jun 2019 21:11:14 -0700 (PDT)
+Date: Mon, 01 Jul 2019 13:11:07 +0900
+From: yasufum.o@gmail.com
+Subject: [spp 04453] [spp] [PATCH] shared/sec: rename members of enum
+ sppwk_port_ops
+Sender: spp <spp-bounces@dpdk.org>
+To: spp@dpdk.org, ferruh.yigit@intel.com, yasufum.o@gmail.com
+Message-id: <20190701041107.33893-1-yasufum.o@gmail.com>
+X-ML-Name: unknown
+X-Mail-Count: 04453
+X-MLServer: unknown
+X-ML-Info: mailing list service
+X-Mailer: git-send-email 2.17.1
+Authentication-results: mail01.ics.ntt-tx.co.jp; spf=pass
+ smtp.mailfrom=spp-bounces@dpdk.org
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
+ h=from:to:subject:date:message-id;
+ bh=zpJjzDU8VvqvTbLPr88WW+EkctWikWWfCOuKd4jw96E=;
+ b=njTTzmwrtLkxfHzsZRR1dBOrTG6zkCtpJBkK9t/JYEpfB5CxmXYVJSagDmZgvl3qnJ
+ 5YmBd09x6eNdYIsdoqaPIdI7BFwGCzTxhmnKjz0Qam676HwtH3tBsOoVcS88Daglax1N
+ 4dKaxOs9lPMcyL0cgQ8n9SJu+J+LVqFldAJXjEQlOybxmbCITfIFgClqi2+Itb8tyryD
+ 7vXYci8rZM79Ii2W1dtmbPACp4dpBKmve+1xzEKhnrsxXzg6A6/lsBaARA86g/PwSnl7
+ NuwKRn8Y8tuYKPB9y7mkmxByc/JEncyTy2L4kYMhnBOBAgbz/vRRO3+YhDMWDD1TOqgq iZXw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=1e100.net;
+ s=20161025; h=x-gm-message-state:from:to:subject:date:message-id;
+ bh=zpJjzDU8VvqvTbLPr88WW+EkctWikWWfCOuKd4jw96E=;
+ b=BnHv5R3XWLWl2bXHZ7GfJYTm1Wjadx2gN1cCpROfHDR2OS7/LOWOYutcfLnswRl0HE
+ 6CX1Y0zJZ3XohfzYcMeczDm/KimgR5djEiV+LqmaYmjIXeL4GlYThK3n6AR7BKD7qzu/
+ 0yS8mzYHTr+2qNuEmUEao4xx4ngVwZ5v3r3gzY0LgO5SWvGDSR1HQmLk7yGM6sNQxE0p
+ pFERi36PREPiRfk82ZMYl521oAtEi8Thl98ALDGlwebnKhXcJ5mM10SDqqcoo/c1lIgy
+ lztAHe/0Qjd9S0kScRUunVuth9oICCwzGCnVacB3WtTKxvzXdOaa9uWkx4grGcuJcnDc sh3Q==
+X-Gm-Message-State: APjAAAWXaYONCpqPj3+iSMmye+PjBQxM3bbAwNH2fPPCwigWUPSoywd4
+ 0XpuAuVQPCxBVGjgI16SIgZvsqgc
+X-Google-Smtp-Source:
+ APXvYqyMm7GlxsPfrxS0XjkGNU+4TllTYQDp7Idvpovz6jp8eJe7R3bJC1VGvnOpUGEwZo9xLRQjMQ==
+X-Received: by 2002:a63:5045:: with SMTP id q5mr21489604pgl.380.1561954274974;
+ Sun, 30 Jun 2019 21:11:14 -0700 (PDT)
+X-BeenThere: spp@dpdk.org
+X-Mailman-Version: 2.1.15
+List-Id: Soft Patch Panel <spp.dpdk.org>
+List-Unsubscribe: <https://mails.dpdk.org/options/spp>,
+ <mailto:spp-request@dpdk.org?subject=unsubscribe>
+List-Archive: <http://mails.dpdk.org/archives/spp/>
+List-Post: <mailto:spp@dpdk.org>
+List-Help: <mailto:spp-request@dpdk.org?subject=help>
+List-Subscribe: <https://mails.dpdk.org/listinfo/spp>,
+ <mailto:spp-request@dpdk.org?subject=subscribe>
+X-TM-AS-MML: No
+Precedence: bulk
+Lines: 230
+X-TM-AS-GCONF: 00
+X-MD-STAMP: ON
+
+From: Yasufumi Ogawa <yasufum.o@gmail.com>
+
+Name of Members of enum `sppwk_port_ops` such as
+`SPPWK_PORT_ABL_OPS_ADD_VLANTAG` or `SPPWK_PORT_ABL_OPS_DEL_VLANTAG`
+are too long. It is enough, for example `SPPWK_PORT_OPS_ADD_VLAN` or
+so.
+
+Signed-off-by: Yasufumi Ogawa <yasufum.o@gmail.com>
+---
+ src/mirror/mir_cmd_runner.c                            | 10 +++++-----
+ src/pcap/cmd_utils.h                                   |  6 +++---
+ src/shared/secondary/spp_worker_th/cmd_parser.c        |  8 ++++----
+ src/shared/secondary/spp_worker_th/cmd_res_formatter.c |  6 +++---
+ src/shared/secondary/spp_worker_th/cmd_utils.h         |  6 +++---
+ src/shared/secondary/spp_worker_th/spp_port.c          |  8 ++++----
+ src/vf/vf_cmd_runner.c                                 | 10 +++++-----
+ 7 files changed, 27 insertions(+), 27 deletions(-)
+
+diff --git a/src/mirror/mir_cmd_runner.c b/src/mirror/mir_cmd_runner.c
+index 307b3f6..2f63f77 100644
+--- a/src/mirror/mir_cmd_runner.c
++++ b/src/mirror/mir_cmd_runner.c
+@@ -176,10 +176,10 @@ update_port(enum sppwk_action wk_action,
+ 		if (port_idx >= SPP_RET_OK) {
+ 			/* registered */
+ 			/* TODO(yasufum) confirm it is needed for spp_mirror. */
+-			if (port_attrs->ops == SPPWK_PORT_ABL_OPS_ADD_VLANTAG) {
++			if (port_attrs->ops == SPPWK_PORT_OPS_ADD_VLAN) {
+ 				while ((cnt < PORT_ABL_MAX) &&
+ 					    (port_info->port_attrs[cnt].ops !=
+-					    SPPWK_PORT_ABL_OPS_ADD_VLANTAG))
++					    SPPWK_PORT_OPS_ADD_VLAN))
+ 					cnt++;
+ 				if (cnt >= PORT_ABL_MAX) {
+ 					RTE_LOG(ERR, MIR_CMD_RUNNER, "update VLAN tag "
+@@ -201,10 +201,10 @@ update_port(enum sppwk_action wk_action,
+ 			return SPP_RET_NG;
+ 		}
+ 
+-		if (port_attrs->ops != SPPWK_PORT_ABL_OPS_NONE) {
++		if (port_attrs->ops != SPPWK_PORT_OPS_NONE) {
+ 			while ((cnt < PORT_ABL_MAX) &&
+ 					(port_info->port_attrs[cnt].ops !=
+-					SPPWK_PORT_ABL_OPS_NONE)) {
++					SPPWK_PORT_OPS_NONE)) {
+ 				cnt++;
+ 			}
+ 			if (cnt >= PORT_ABL_MAX) {
+@@ -226,7 +226,7 @@ update_port(enum sppwk_action wk_action,
+ 	case SPPWK_ACT_DEL:
+ 		for (cnt = 0; cnt < PORT_ABL_MAX; cnt++) {
+ 			if (port_info->port_attrs[cnt].ops ==
+-					SPPWK_PORT_ABL_OPS_NONE)
++					SPPWK_PORT_OPS_NONE)
+ 				continue;
+ 
+ 			if (port_info->port_attrs[cnt].dir == dir)
+diff --git a/src/pcap/cmd_utils.h b/src/pcap/cmd_utils.h
+index e3714a5..f2cb9ef 100644
+--- a/src/pcap/cmd_utils.h
++++ b/src/pcap/cmd_utils.h
+@@ -76,9 +76,9 @@ enum sppwk_worker_type {
+  * (e.g. add vlan tag or delete vlan tag)
+  */
+ enum sppwk_port_ops {
+-	SPPWK_PORT_ABL_OPS_NONE,
+-	SPPWK_PORT_ABL_OPS_ADD_VLANTAG,
+-	SPPWK_PORT_ABL_OPS_DEL_VLANTAG,
++	SPPWK_PORT_OPS_NONE,
++	SPPWK_PORT_OPS_ADD_VLAN,  /* Add vlan tag. */
++	SPPWK_PORT_OPS_DEL_VLAN,  /* Delete vlan tag. */
+ };
+ 
+ /* getopt_long return value for long option */
+diff --git a/src/shared/secondary/spp_worker_th/cmd_parser.c b/src/shared/secondary/spp_worker_th/cmd_parser.c
+index 7933ed2..84de7e4 100644
+--- a/src/shared/secondary/spp_worker_th/cmd_parser.c
++++ b/src/shared/secondary/spp_worker_th/cmd_parser.c
+@@ -543,7 +543,7 @@ parse_port_vlan_ops(void *output, const char *arg_val,
+ 	struct sppwk_port_attrs *port_attrs = &port->port_attrs;
+ 
+ 	switch (port_attrs->ops) {
+-	case SPPWK_PORT_ABL_OPS_NONE:
++	case SPPWK_PORT_OPS_NONE:
+ 		ret = get_list_idx(arg_val, PORT_ABILITY_LIST);
+ 		if (unlikely(ret <= 0)) {
+ 			RTE_LOG(ERR, WK_CMD_PARSER,
+@@ -554,7 +554,7 @@ parse_port_vlan_ops(void *output, const char *arg_val,
+ 		port_attrs->ops = ret;
+ 		port_attrs->dir = port->dir;
+ 		break;
+-	case SPPWK_PORT_ABL_OPS_ADD_VLANTAG:
++	case SPPWK_PORT_OPS_ADD_VLAN:
+ 		/* Nothing to do. */
+ 		break;
+ 	default:
+@@ -575,7 +575,7 @@ parse_port_vid(void *output, const char *arg_val,
+ 	struct sppwk_port_attrs *port_attrs = &port->port_attrs;
+ 
+ 	switch (port_attrs->ops) {
+-	case SPPWK_PORT_ABL_OPS_ADD_VLANTAG:
++	case SPPWK_PORT_OPS_ADD_VLAN:
+ 		vlan_id = get_int_in_range(&port_attrs->capability.vlantag.vid,
+ 			arg_val, 0, ETH_VLAN_ID_MAX);
+ 		if (unlikely(vlan_id < SPP_RET_OK)) {
+@@ -604,7 +604,7 @@ parse_port_pcp(void *output, const char *arg_val,
+ 	struct sppwk_port_attrs *port_attrs = &port->port_attrs;
+ 
+ 	switch (port_attrs->ops) {
+-	case SPPWK_PORT_ABL_OPS_ADD_VLANTAG:
++	case SPPWK_PORT_OPS_ADD_VLAN:
+ 		pcp = get_int_in_range(&port_attrs->capability.vlantag.pcp,
+ 				arg_val, 0, SPP_VLAN_PCP_MAX);
+ 		if (unlikely(pcp < SPP_RET_OK)) {
+diff --git a/src/shared/secondary/spp_worker_th/cmd_res_formatter.c b/src/shared/secondary/spp_worker_th/cmd_res_formatter.c
+index c18f8e5..73ef4c2 100644
+--- a/src/shared/secondary/spp_worker_th/cmd_res_formatter.c
++++ b/src/shared/secondary/spp_worker_th/cmd_res_formatter.c
+@@ -157,8 +157,8 @@ append_vlan_block(const char *name, char **output,
+ 	spp_port_ability_get_info(port_id, dir, &port_attrs);
+ 	for (i = 0; i < PORT_ABL_MAX; i++) {
+ 		switch (port_attrs[i].ops) {
+-		case SPPWK_PORT_ABL_OPS_ADD_VLANTAG:
+-		case SPPWK_PORT_ABL_OPS_DEL_VLANTAG:
++		case SPPWK_PORT_OPS_ADD_VLAN:
++		case SPPWK_PORT_OPS_DEL_VLAN:
+ 			ret = append_vlan_value(&tmp_buff, port_attrs[i].ops,
+ 					port_attrs[i].capability.vlantag.vid,
+ 					port_attrs[i].capability.vlantag.pcp);
+@@ -178,7 +178,7 @@ append_vlan_block(const char *name, char **output,
+ 		}
+ 	}
+ 	if (i == PORT_ABL_MAX) {
+-		ret = append_vlan_value(&tmp_buff, SPPWK_PORT_ABL_OPS_NONE,
++		ret = append_vlan_value(&tmp_buff, SPPWK_PORT_OPS_NONE,
+ 				0, 0);
+ 		if (unlikely(ret < SPP_RET_OK))
+ 			return SPP_RET_NG;
+diff --git a/src/shared/secondary/spp_worker_th/cmd_utils.h b/src/shared/secondary/spp_worker_th/cmd_utils.h
+index 69e0a69..1d32228 100644
+--- a/src/shared/secondary/spp_worker_th/cmd_utils.h
++++ b/src/shared/secondary/spp_worker_th/cmd_utils.h
+@@ -113,9 +113,9 @@ enum sppwk_port_dir {
+  * (e.g. add vlan tag or delete vlan tag)
+  */
+ enum sppwk_port_ops {
+-	SPPWK_PORT_ABL_OPS_NONE,
+-	SPPWK_PORT_ABL_OPS_ADD_VLANTAG,
+-	SPPWK_PORT_ABL_OPS_DEL_VLANTAG,
++	SPPWK_PORT_OPS_NONE,
++	SPPWK_PORT_OPS_ADD_VLAN,  /* Add vlan tag. */
++	SPPWK_PORT_OPS_DEL_VLAN,  /* Delete vlan tag. */
+ };
+ 
+ /* getopt_long return value for long option */
+diff --git a/src/shared/secondary/spp_worker_th/spp_port.c b/src/shared/secondary/spp_worker_th/spp_port.c
+index cc87200..6fe0dc5 100644
+--- a/src/shared/secondary/spp_worker_th/spp_port.c
++++ b/src/shared/secondary/spp_worker_th/spp_port.c
+@@ -276,12 +276,12 @@ port_ability_set_ability(struct sppwk_port_info *port,
+ 				sizeof(struct sppwk_port_attrs));
+ 
+ 		switch (port_attrs_out[out_cnt].ops) {
+-		case SPPWK_PORT_ABL_OPS_ADD_VLANTAG:
++		case SPPWK_PORT_OPS_ADD_VLAN:
+ 			tag = &port_attrs_out[out_cnt].capability.vlantag;
+ 			tag->tci = rte_cpu_to_be_16(SPP_VLANTAG_CALC_TCI(
+ 					tag->vid, tag->pcp));
+ 			break;
+-		case SPPWK_PORT_ABL_OPS_DEL_VLANTAG:
++		case SPPWK_PORT_OPS_DEL_VLAN:
+ 		default:
+ 			/* Nothing to do. */
+ 			break;
+@@ -335,11 +335,11 @@ port_ability_each_operation(uint16_t port_id,
+ 	struct sppwk_port_attrs *port_attrs = NULL;
+ 
+ 	spp_port_ability_get_info(port_id, dir, &port_attrs);
+-	if (unlikely(port_attrs[0].ops == SPPWK_PORT_ABL_OPS_NONE))
++	if (unlikely(port_attrs[0].ops == SPPWK_PORT_OPS_NONE))
+ 		return nb_pkts;
+ 
+ 	for (cnt = 0; cnt < PORT_ABL_MAX; cnt++) {
+-		if (port_attrs[cnt].ops == SPPWK_PORT_ABL_OPS_NONE)
++		if (port_attrs[cnt].ops == SPPWK_PORT_OPS_NONE)
+ 			break;
+ 
+ 		ok_pkts = port_ability_function_list[port_attrs[cnt].ops](
+diff --git a/src/vf/vf_cmd_runner.c b/src/vf/vf_cmd_runner.c
+index e9388e0..fe37a19 100644
+--- a/src/vf/vf_cmd_runner.c
++++ b/src/vf/vf_cmd_runner.c
+@@ -297,10 +297,10 @@ update_port(enum sppwk_action wk_action,
+ 		port_idx = get_idx_port_info(port_info, *nof_ports, ports);
+ 		if (port_idx >= SPP_RET_OK) {
+ 			/* registered */
+-			if (port_attrs->ops == SPPWK_PORT_ABL_OPS_ADD_VLANTAG) {
++			if (port_attrs->ops == SPPWK_PORT_OPS_ADD_VLAN) {
+ 				while ((cnt < PORT_ABL_MAX) &&
+ 					    (port_info->port_attrs[cnt].ops !=
+-					    SPPWK_PORT_ABL_OPS_ADD_VLANTAG))
++					    SPPWK_PORT_OPS_ADD_VLAN))
+ 					cnt++;
+ 				if (cnt >= PORT_ABL_MAX) {
+ 					RTE_LOG(ERR, VF_CMD_RUNNER, "update VLAN tag "
+@@ -322,10 +322,10 @@ update_port(enum sppwk_action wk_action,
+ 			return SPP_RET_NG;
+ 		}
+ 
+-		if (port_attrs->ops != SPPWK_PORT_ABL_OPS_NONE) {
++		if (port_attrs->ops != SPPWK_PORT_OPS_NONE) {
+ 			while ((cnt < PORT_ABL_MAX) &&
+ 					(port_info->port_attrs[cnt].ops !=
+-					SPPWK_PORT_ABL_OPS_NONE)) {
++					SPPWK_PORT_OPS_NONE)) {
+ 				cnt++;
+ 			}
+ 			if (cnt >= PORT_ABL_MAX) {
+@@ -347,7 +347,7 @@ update_port(enum sppwk_action wk_action,
+ 	case SPPWK_ACT_DEL:
+ 		for (cnt = 0; cnt < PORT_ABL_MAX; cnt++) {
+ 			if (port_info->port_attrs[cnt].ops ==
+-					SPPWK_PORT_ABL_OPS_NONE)
++					SPPWK_PORT_OPS_NONE)
+ 				continue;
+ 
+ 			if (port_info->port_attrs[cnt].dir == dir)
+-- 
+2.17.1
+
+

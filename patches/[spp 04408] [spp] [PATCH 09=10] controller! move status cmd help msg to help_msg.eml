@@ -1,0 +1,211 @@
+Return-path: <fw-yama-hd@pomail01.silk.ntt-tx.co.jp>
+Received: from zssg-mailmd102.ddreams.local
+ (zssg-mailmd102.ddreams.local [10.160.123.97]) by zssg-mailms320.ddreams.local
+ (NTT DoCoMo Mail System) with ESMTP id <0PTL00DN7DBSFR70@NTTDoCoMo.co.jp> for
+ yamashita.hideyuki@ntt-tx.co.jp; Mon, 24 Jun 2019 16:11:52 +0900 (JST)
+Original-recipient: rfc822;yamashita.hideyuki@ntt-tx.co.jp
+Received: from smtp_saver-daemon.zssg-mailmd102.ddreams.local by
+ zssg-mailmd102.ddreams.local (dDREAMS) id <0PTL00U1GDBSMZ00@dDREAMS> for
+ yamashita.hideyuki@ntt-tx.co.jp (ORCPT yamashita.hideyuki@ntt-tx.co.jp); Mon,
+ 24 Jun 2019 16:11:52 +0900 (JST)
+Received: from zssg-mailmf103.ddreams.local
+ (zssg-mailmf900.ddreams.local [10.160.172.84]) by zssg-mailmd102.ddreams.local
+ (dDREAMS) with ESMTP id <0PTL00DU5DBSAT90@dDREAMS> for
+ yamashita.hideyuki@ntt-tx.co.jp (ORCPT yamashita.hideyuki@ntt-tx.co.jp); Mon,
+ 24 Jun 2019 16:11:52 +0900 (JST)
+Received: from zssg-mailmf103.ddreams.local (unknown [127.0.0.1])
+	by zssg-mailmf103.ddreams.local (Postfix) with ESMTP id B8F637E6036	for
+ <yamashita.hideyuki@ntt-tx.co.jp>; Mon, 24 Jun 2019 16:11:52 +0900 (JST)
+Received: from zssg-mailmf103.ddreams.local (unknown [127.0.0.1])
+	by IMSVA (Postfix) with ESMTP id B6BF68E605A	for
+ <yamashita.hideyuki@ntt-tx.co.jp>; Mon, 24 Jun 2019 16:11:52 +0900 (JST)
+Received: from localhost (unknown [127.0.0.1])	by IMSVA (Postfix)
+ with SMTP id B07098E6058	for <yamashita.hideyuki@ntt-tx.co.jp>; Mon,
+ 24 Jun 2019 16:11:52 +0900 (JST)
+X-IMSS-HAND-OFF-DIRECTIVE: localhost:10026
+Received: from zssg-mailmf103.ddreams.local (unknown [127.0.0.1])
+	by IMSVA (Postfix) with ESMTP id 396418E6054	for
+ <yamashita.hideyuki@ntt-tx.co.jp>; Mon, 24 Jun 2019 16:11:52 +0900 (JST)
+Received: from pomail01.silk.ntt-tx.co.jp (unknown [10.160.183.139])
+	by zssg-mailmf103.ddreams.local (Postfix)
+ with ESMTPS	for <yamashita.hideyuki@ntt-tx.co.jp>; Mon,
+ 24 Jun 2019 16:11:52 +0900 (JST)
+Received: from pomail01.silk.ntt-tx.co.jp (localhost [127.0.0.1])
+	by pomail01.silk.ntt-tx.co.jp (unknown) with ESMTP id x5O7Bqlc017196;	Mon,
+ 24 Jun 2019 16:11:52 +0900
+Received: (from yama-hd@localhost)	by pomail01.silk.ntt-tx.co.jp (unknown)
+ id x5O7BqKI017195;	Mon, 24 Jun 2019 16:11:52 +0900
+X-Authentication-warning: pomail01.silk.ntt-tx.co.jp: yama-hd set sender to
+ fw-yama-hd@pomail01.silk.ntt-tx.co.jp using -f
+Received: from imss04.silk.ntt-tx.co.jp
+ (imss04.silk.ntt-tx.co.jp [10.107.0.39])	by pomail01.silk.ntt-tx.co.jp
+ (unknown) with ESMTP id x5O7Bpi3017192	for unknown; Mon,
+ 24 Jun 2019 16:11:51 +0900
+Received: from imss04.silk.ntt-tx.co.jp (localhost [127.0.0.1])
+ by imss04.silk.ntt-tx.co.jp (unknown) with ESMTP id x5O7BpjV021598 for
+ unknown; Mon, 24 Jun 2019 16:11:51 +0900
+Received: from ml01.silk.ntt-tx.co.jp (ml01.silk.ntt-tx.co.jp [10.107.0.230])
+ by imss04.silk.ntt-tx.co.jp (unknown) with ESMTP id x5O7BpRb021595; Mon,
+ 24 Jun 2019 16:11:51 +0900
+Received: from ml01.silk.ntt-tx.co.jp (localhost [127.0.0.1])
+	by ml01.silk.ntt-tx.co.jp (unknown) with ESMTP id x5O7BpwM017094;	Mon,
+ 24 Jun 2019 16:11:51 +0900
+Received: from imss02.silk.ntt-tx.co.jp
+ (imss02.silk.ntt-tx.co.jp [10.107.0.127])	by ml01.silk.ntt-tx.co.jp (unknown)
+ with ESMTP id x5O7Bptd017090	for unknown; Mon, 24 Jun 2019 16:11:51 +0900
+Received: from imss02.silk.ntt-tx.co.jp (localhost [127.0.0.1])
+ by imss02.silk.ntt-tx.co.jp (unknown) with ESMTP id x5O7BoGE031542 for
+ unknown; Mon, 24 Jun 2019 16:11:51 +0900
+Received: from mail01.ics.ntt-tx.co.jp (mail01.ics.ntt-tx.co.jp [10.254.2.67])
+ by imss02.silk.ntt-tx.co.jp (unknown) with ESMTP id x5O7BoJO031534 for
+ unknown; Mon, 24 Jun 2019 16:11:50 +0900
+Received: from dpdk.org (dpdk.org [92.243.14.124])	by mail01.ics.ntt-tx.co.jp
+ (unknown) with SMTP id x5O7BisL023453	for unknown; Mon,
+ 24 Jun 2019 16:11:50 +0900
+Received: from [92.243.14.124] (localhost [127.0.0.1])	by dpdk.org (Postfix)
+ with ESMTP id D877B1BF33;	Mon, 24 Jun 2019 09:11:43 +0200 (CEST)
+Received: from mail-pl1-f171.google.com
+ (mail-pl1-f171.google.com [209.85.214.171]) by dpdk.org (Postfix)
+ with ESMTP id 771391BF29 for <spp@dpdk.org>; Mon,
+ 24 Jun 2019 09:11:42 +0200 (CEST)
+Received: by mail-pl1-f171.google.com with SMTP id c14so6356057plo.0 for
+ <spp@dpdk.org>; Mon, 24 Jun 2019 00:11:42 -0700 (PDT)
+Received: from localhost.localdomain ([192.47.164.146])
+ by smtp.gmail.com with ESMTPSA id y17sm6357948pfe.148.2019.06.24.00.11.40
+ (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128); Mon,
+ 24 Jun 2019 00:11:41 -0700 (PDT)
+Date: Mon, 24 Jun 2019 16:11:23 +0900
+From: yasufum.o@gmail.com
+Subject: [spp 04408] [spp] [PATCH 09/10] controller: move status cmd help msg
+ to help_msg
+Sender: spp <spp-bounces@dpdk.org>
+To: spp@dpdk.org, ferruh.yigit@intel.com, yasufum.o@gmail.com
+Message-id: <20190624071124.23451-10-yasufum.o@gmail.com>
+In-reply-to: <20190624071124.23451-1-yasufum.o@gmail.com>
+References: <20190624071124.23451-1-yasufum.o@gmail.com>
+X-ML-Name: unknown
+X-Mail-Count: 04408
+X-MLServer: unknown
+X-ML-Info: mailing list service
+X-Mailer: git-send-email 2.17.1
+Authentication-results: mail01.ics.ntt-tx.co.jp; spf=pass
+ smtp.mailfrom=spp-bounces@dpdk.org
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
+ h=from:to:subject:date:message-id:in-reply-to:references;
+ bh=NIG/cRCy9enOss2M4vQQYEluXQ8bINQiDe5LetEMGXs=;
+ b=OMbQ5L2si63fkYxvK5fWCEjmbs0wWcU1naUVyBMy1KVH9jH8cDGba1r2fM4oRuLuyz
+ eQV7Wnl+wuuZ8UKm26pqMxj6UomUl0DF/rRzyVcPUOyJlmhtrsRKvY5EkUvzT8o9clGL
+ hQ6RkY5x80jl3DnnnoseabfY9ee9AfhiTez9atLn9dcd54IeksGiQBXjaJ+g89asxT5W
+ Q2w3VfvQQGB96wtnKVEnnkx2MI2VTFsqrUJqrE90Ep0keJaUrbTfoG/JoycMQwvqt3GY
+ mrmOD4DDEE228fgsHCO7iG177RLuvHplEEeGAfgdW9ZEvFyduWRiI00V/vkNFpUCxDWj gLRA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=1e100.net;
+ s=20161025; h=x-gm-message-state:from:to:subject:date:message-id:in-reply-to
+ :references; bh=NIG/cRCy9enOss2M4vQQYEluXQ8bINQiDe5LetEMGXs=;
+ b=AYAuch0pVXwYe8fBKl5HxkLhwucFmqiWF8otOdEZwzqNQ9zPP93XOV7foWcB91cVvL
+ jH4M2/Bk6usXHZdR+Fm3eIn2LR6acGg9jtiiC9I3+Z8YN7OSwOymwpvW8erdsfhHWmvB
+ BdFv9LiyM01mgmZcvmehB7GEY+7Ipdn9B65t4iP5RM0zLVX8jKGKGLVboN8pAmTLwpiF
+ 7uAlDfvDnZAxGAiLL9wmKVs10CNHltQVqODP2v162FvG2WhyEB0ybskxWxcMVhpCdTql
+ 6pYivS2QSgmqWE6scYOWQnha2AniX4PrEnMavzljGuVM0AtAQg0omAashg8WquiDZLWl +4Nw==
+X-Gm-Message-State: APjAAAV3ahbOrQamf9AjtzptqAz0iE752Rs/E+bQwL+J7BUPgZrkXswD
+ 68nkSwfRxuKY9X8fPF9IrGMCL0dc
+X-Google-Smtp-Source:
+ APXvYqxQkr9nXZO37py7uXc4FU1m4wHP7eaBHAGqPMshsy7iQZJ9xNsAW/cL9eIB+aFZGGpBQnl4xA==
+X-Received: by 2002:a17:902:3fa5:: with SMTP id
+ a34mr141190961pld.317.1561360301645; Mon, 24 Jun 2019 00:11:41 -0700 (PDT)
+X-BeenThere: spp@dpdk.org
+X-Mailman-Version: 2.1.15
+List-Id: Soft Patch Panel <spp.dpdk.org>
+List-Unsubscribe: <https://mails.dpdk.org/options/spp>,
+ <mailto:spp-request@dpdk.org?subject=unsubscribe>
+List-Archive: <http://mails.dpdk.org/archives/spp/>
+List-Post: <mailto:spp@dpdk.org>
+List-Help: <mailto:spp-request@dpdk.org?subject=help>
+List-Subscribe: <https://mails.dpdk.org/listinfo/spp>,
+ <mailto:spp-request@dpdk.org?subject=subscribe>
+X-TM-AS-MML: No
+Precedence: bulk
+Lines: 80
+X-TM-AS-GCONF: 00
+X-MD-STAMP: ON
+
+From: Yasufumi Ogawa <yasufum.o@gmail.com>
+
+This update is to move help message of status command to `help_msg`
+module which is for defining a set of command name and message.
+
+Signed-off-by: Yasufumi Ogawa <yasufum.o@gmail.com>
+---
+ src/controller/commands/help_msg.py | 10 ++++++++++
+ src/controller/shell.py             | 15 ++++++++-------
+ 2 files changed, 18 insertions(+), 7 deletions(-)
+ create mode 100644 src/controller/commands/help_msg.py
+
+diff --git a/src/controller/commands/help_msg.py b/src/controller/commands/help_msg.py
+new file mode 100644
+index 0000000..9e15123
+--- /dev/null
++++ b/src/controller/commands/help_msg.py
+@@ -0,0 +1,10 @@
++# SPDX-License-Identifier: BSD-3-Clause
++# Copyright(c) 2019 Nippon Telegraph and Telephone Corporation
++
++commands = {
++        'status':
++        """Display status info of SPP processes.
++
++        spp > status
++        """
++        }
+diff --git a/src/controller/shell.py b/src/controller/shell.py
+index 54376c9..065fb07 100644
+--- a/src/controller/shell.py
++++ b/src/controller/shell.py
+@@ -10,6 +10,7 @@ from .commands import topo
+ from .commands import vf
+ from .commands import mirror
+ from .commands import pcap
++from .commands import help_msg
+ import os
+ import re
+ import readline
+@@ -29,7 +30,7 @@ class Shell(cmd.Cmd, object):
+         config_file = "{}/config/default.yml".format(
+                 os.path.dirname(__file__))
+         cli_config = yaml.load(open(config_file),
+-                Loader=yaml.FullLoader)
++                               Loader=yaml.FullLoader)
+     except IOError as e:
+         print('Error: no config file found!')
+         print(e)
+@@ -205,7 +206,7 @@ class Shell(cmd.Cmd, object):
+                 pt2 = id2.split(delim)[0]
+                 if (pt1 in spp_common.PORT_TYPES) \
+                         and (pt2 in spp_common.PORT_TYPES):
+-                            return True
++                    return True
+         return False
+ 
+     def clean_cmd(self, cmdstr):
+@@ -270,13 +271,13 @@ class Shell(cmd.Cmd, object):
+         return res
+ 
+     def do_status(self, _):
+-        """Display status info of SPP processes
+-
+-        spp > status
+-        """
+-
++        """Display status info of SPP processes."""
+         self.print_status()
+ 
++    def help_status(self):
++        """Print help message of status command."""
++        print(help_msg.commads['status'])
++
+     def do_pri(self, command):
+         """Send a command to primary process."""
+ 
+-- 
+2.17.1
+
+

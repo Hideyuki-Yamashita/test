@@ -1,0 +1,252 @@
+Return-path: <fw-yama-hd@pomail01.silk.ntt-tx.co.jp>
+Received: from zssg-mailmd106.ddreams.local
+ (zssg-mailmd106.ddreams.local [10.160.123.101])
+ by zssg-mailms320.ddreams.local (NTT DoCoMo Mail System)
+ with ESMTP id <0PTL015K1B1V1J50@NTTDoCoMo.co.jp> for
+ yamashita.hideyuki@ntt-tx.co.jp; Mon, 24 Jun 2019 15:22:43 +0900 (JST)
+Original-recipient: rfc822;yamashita.hideyuki@ntt-tx.co.jp
+Received: from smtp_saver-daemon.zssg-mailmd106.ddreams.local by
+ zssg-mailmd106.ddreams.local (dDREAMS) id <0PTL00K22B1V7N00@dDREAMS> for
+ yamashita.hideyuki@ntt-tx.co.jp (ORCPT yamashita.hideyuki@ntt-tx.co.jp); Mon,
+ 24 Jun 2019 15:22:43 +0900 (JST)
+Received: from zssg-mailmf101.ddreams.local
+ (zssg-mailmf900.ddreams.local [10.160.172.84]) by zssg-mailmd106.ddreams.local
+ (dDREAMS) with ESMTP id <0PTL00C7AB1V5R50@dDREAMS> for
+ yamashita.hideyuki@ntt-tx.co.jp (ORCPT yamashita.hideyuki@ntt-tx.co.jp); Mon,
+ 24 Jun 2019 15:22:43 +0900 (JST)
+Received: from zssg-mailmf101.ddreams.local (unknown [127.0.0.1])
+	by zssg-mailmf101.ddreams.local (Postfix) with ESMTP id 15B607E6034	for
+ <yamashita.hideyuki@ntt-tx.co.jp>; Mon, 24 Jun 2019 15:22:43 +0900 (JST)
+Received: from zssg-mailmf101.ddreams.local (unknown [127.0.0.1])
+	by IMSVA (Postfix) with ESMTP id 149798E605A	for
+ <yamashita.hideyuki@ntt-tx.co.jp>; Mon, 24 Jun 2019 15:22:43 +0900 (JST)
+Received: from localhost (unknown [127.0.0.1])	by IMSVA (Postfix)
+ with SMTP id 094188E6054	for <yamashita.hideyuki@ntt-tx.co.jp>; Mon,
+ 24 Jun 2019 15:22:43 +0900 (JST)
+X-IMSS-HAND-OFF-DIRECTIVE: localhost:10026
+Received: from zssg-mailmf101.ddreams.local (unknown [127.0.0.1])
+	by IMSVA (Postfix) with ESMTP id AF8588E6054	for
+ <yamashita.hideyuki@ntt-tx.co.jp>; Mon, 24 Jun 2019 15:22:41 +0900 (JST)
+Received: from pomail01.silk.ntt-tx.co.jp (unknown [10.160.183.139])
+	by zssg-mailmf101.ddreams.local (Postfix)
+ with ESMTPS	for <yamashita.hideyuki@ntt-tx.co.jp>; Mon,
+ 24 Jun 2019 15:22:41 +0900 (JST)
+Received: from pomail01.silk.ntt-tx.co.jp (localhost [127.0.0.1])
+	by pomail01.silk.ntt-tx.co.jp (unknown) with ESMTP id x5O6MfcE005012;	Mon,
+ 24 Jun 2019 15:22:41 +0900
+Received: (from yama-hd@localhost)	by pomail01.silk.ntt-tx.co.jp (unknown)
+ id x5O6Mf2E005011;	Mon, 24 Jun 2019 15:22:41 +0900
+X-Authentication-warning: pomail01.silk.ntt-tx.co.jp: yama-hd set sender to
+ fw-yama-hd@pomail01.silk.ntt-tx.co.jp using -f
+Received: from imss04.silk.ntt-tx.co.jp
+ (imss04.silk.ntt-tx.co.jp [10.107.0.39])	by pomail01.silk.ntt-tx.co.jp
+ (unknown) with ESMTP id x5O6Mf3x005007	for unknown; Mon,
+ 24 Jun 2019 15:22:41 +0900
+Received: from imss04.silk.ntt-tx.co.jp (localhost [127.0.0.1])
+ by imss04.silk.ntt-tx.co.jp (unknown) with ESMTP id x5O6MeVR029992 for
+ unknown; Mon, 24 Jun 2019 15:22:41 +0900
+Received: from ml01.silk.ntt-tx.co.jp (ml01.silk.ntt-tx.co.jp [10.107.0.230])
+ by imss04.silk.ntt-tx.co.jp (unknown) with ESMTP id x5O6Mes8029989; Mon,
+ 24 Jun 2019 15:22:40 +0900
+Received: from ml01.silk.ntt-tx.co.jp (localhost [127.0.0.1])
+	by ml01.silk.ntt-tx.co.jp (unknown) with ESMTP id x5O6MeJt010792;	Mon,
+ 24 Jun 2019 15:22:40 +0900
+Received: from imss02.silk.ntt-tx.co.jp
+ (imss02.silk.ntt-tx.co.jp [10.107.0.127])	by ml01.silk.ntt-tx.co.jp (unknown)
+ with ESMTP id x5O6MeVf010788	for unknown; Mon, 24 Jun 2019 15:22:40 +0900
+Received: from imss02.silk.ntt-tx.co.jp (localhost [127.0.0.1])
+ by imss02.silk.ntt-tx.co.jp (unknown) with ESMTP id x5O6Me3u017182 for
+ unknown; Mon, 24 Jun 2019 15:22:40 +0900
+Received: from mail01.ics.ntt-tx.co.jp (mail01.ics.ntt-tx.co.jp [10.254.2.67])
+ by imss02.silk.ntt-tx.co.jp (unknown) with ESMTP id x5O6MeJM017178 for
+ unknown; Mon, 24 Jun 2019 15:22:40 +0900
+Received: from dpdk.org (dpdk.org [92.243.14.124])	by mail01.ics.ntt-tx.co.jp
+ (unknown) with SMTP id x5O6MXQB015403	for unknown; Mon,
+ 24 Jun 2019 15:22:39 +0900
+Received: from [92.243.14.124] (localhost [127.0.0.1])	by dpdk.org (Postfix)
+ with ESMTP id 5DBB11BF4B;	Mon, 24 Jun 2019 08:22:33 +0200 (CEST)
+Received: from mail-pf1-f193.google.com
+ (mail-pf1-f193.google.com [209.85.210.193]) by dpdk.org (Postfix)
+ with ESMTP id 92EF31BF48 for <spp@dpdk.org>; Mon,
+ 24 Jun 2019 08:22:31 +0200 (CEST)
+Received: by mail-pf1-f193.google.com with SMTP id t16so6875971pfe.11 for
+ <spp@dpdk.org>; Sun, 23 Jun 2019 23:22:31 -0700 (PDT)
+Received: from localhost.localdomain ([192.47.164.146])
+ by smtp.gmail.com with ESMTPSA id j1sm1126788pfa.73.2019.06.23.23.22.29
+ (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128); Sun,
+ 23 Jun 2019 23:22:30 -0700 (PDT)
+Date: Mon, 24 Jun 2019 15:22:25 +0900
+From: yasufum.o@gmail.com
+Subject: [spp 04391] [spp] [PATCH] shared/sec: add ifdef switch for deps headers
+Sender: spp <spp-bounces@dpdk.org>
+To: spp@dpdk.org, ferruh.yigit@intel.com, yasufum.o@gmail.com
+Message-id: <20190624062225.22666-1-yasufum.o@gmail.com>
+X-ML-Name: unknown
+X-Mail-Count: 04391
+X-MLServer: unknown
+X-ML-Info: mailing list service
+X-Mailer: git-send-email 2.17.1
+Authentication-results: mail01.ics.ntt-tx.co.jp; spf=pass
+ smtp.mailfrom=spp-bounces@dpdk.org
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
+ h=from:to:subject:date:message-id;
+ bh=UnHseczSDLKcHAcLbJBrtJ9fOIqiX0dqW55DNkTMOoI=;
+ b=k+/q3oY7xNLppv8cGdQ8pMCkGO2xfIeIQ2StyIvbNTE3m9NfiOmg9Rf0tX1QKwUZ+d
+ g5D3wJufx9Y+uu6PMEkCojCSmoODe8JpDKSZZwNvLH4CNBbeohgDXwr6aSexn2IQEvrL
+ yX/7S4Acmp5zNKeD6GJltkj0+Vc9HlZOTsKABzoNsA9aG3YSk2BZmYOKpGKwnADAAIu0
+ G715r/csQbsQdYsdY5uyoT7D3pFSGseTXuW4Fjs4XPBAl8jnkBTFsNz2WogbEUkbRVfB
+ Pjh66ig6ex2BwasFqnd76gi3YF/EADgBrfGjHF99rjR4UWPuqYglKqSEQOH9n0e8QL0v XhYA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=1e100.net;
+ s=20161025; h=x-gm-message-state:from:to:subject:date:message-id;
+ bh=UnHseczSDLKcHAcLbJBrtJ9fOIqiX0dqW55DNkTMOoI=;
+ b=HIQz84r7J4CkrIvQuGIVZ+r0fzl6GI8Wyzr0qRMorXJ/INzzyb+6tUf44aBRRCHsoD
+ IhjGMJoBAviCQh7t22nIvm4blRCwuZxvTm9+/ut5cE27pBT62NGv7pRLBsnIzrheKLWY
+ HMq/3dptJedZNEnk0HSZzWbxK7KszYlQkiLmG/hnDvdoJYSV+94u38z9AKCIQGq41f1E
+ tsL+OJKYLGqR2OAmfRKbTxU9Dtz5hFu7VfnLXnK15xVGwLtTlGWk7zU61He2QskXxHuU
+ LwbcBzn3DsVgvBMHGwKoPxL7bPZ2mWv54CKbjVHKgKQpnWRBFBC4akznYe8VIlJvixl/ Pg1w==
+X-Gm-Message-State: APjAAAX+1Im6ncNaamJeAXe6K85DA0D8Pc/BVSuj0Fy5xMr1Boyfl+1U
+ K0ViiQWPIUZWPU8T4fJpSFyO5TFQ
+X-Google-Smtp-Source:
+ APXvYqxP78fLI/cwx//qZYOb6G8wx/xevpQOomdGYIBrkbAMM6t+F9/A1FGYaD0C3985RDNqTRArmQ==
+X-Received: by 2002:a17:90a:d587:: with SMTP id
+ v7mr23436721pju.28.1561357350762; Sun, 23 Jun 2019 23:22:30 -0700 (PDT)
+X-BeenThere: spp@dpdk.org
+X-Mailman-Version: 2.1.15
+List-Id: Soft Patch Panel <spp.dpdk.org>
+List-Unsubscribe: <https://mails.dpdk.org/options/spp>,
+ <mailto:spp-request@dpdk.org?subject=unsubscribe>
+List-Archive: <http://mails.dpdk.org/archives/spp/>
+List-Post: <mailto:spp@dpdk.org>
+List-Help: <mailto:spp-request@dpdk.org?subject=help>
+List-Subscribe: <https://mails.dpdk.org/listinfo/spp>,
+ <mailto:spp-request@dpdk.org?subject=subscribe>
+X-TM-AS-MML: No
+Precedence: bulk
+Lines: 123
+X-TM-AS-GCONF: 00
+X-MD-STAMP: ON
+
+From: Yasufumi Ogawa <yasufum.o@gmail.com>
+
+This update is to switch `vf_deps.h` and `mirror_deps.h` in shared dir
+for compiling each of worker processes.
+
+Signed-off-by: Yasufumi Ogawa <yasufum.o@gmail.com>
+---
+ src/shared/secondary/spp_worker_th/cmd_parser.c    |  8 +++++++-
+ .../secondary/spp_worker_th/cmd_res_formatter.c    |  8 +++++++-
+ src/shared/secondary/spp_worker_th/cmd_runner.c    | 14 ++++++++++----
+ src/shared/secondary/spp_worker_th/cmd_utils.c     | 10 ++++++++--
+ src/shared/secondary/spp_worker_th/vf_deps.h       |  1 +
+ 5 files changed, 33 insertions(+), 8 deletions(-)
+
+diff --git a/src/shared/secondary/spp_worker_th/cmd_parser.c b/src/shared/secondary/spp_worker_th/cmd_parser.c
+index fcec28b..5a2fb82 100644
+--- a/src/shared/secondary/spp_worker_th/cmd_parser.c
++++ b/src/shared/secondary/spp_worker_th/cmd_parser.c
+@@ -10,9 +10,15 @@
+ #include <rte_branch_prediction.h>
+ 
+ #include "cmd_parser.h"
++#include "shared/secondary/return_codes.h"
++
++#ifdef SPP_VF_MODULE
+ #include "vf_deps.h"
++#endif
++
++#ifdef SPP_MIRROR_MODULE
+ #include "mirror_deps.h"
+-#include "shared/secondary/return_codes.h"
++#endif
+ 
+ #define RTE_LOGTYPE_WK_CMD_PARSER RTE_LOGTYPE_USER1
+ 
+diff --git a/src/shared/secondary/spp_worker_th/cmd_res_formatter.c b/src/shared/secondary/spp_worker_th/cmd_res_formatter.c
+index bfe13e5..f389939 100644
+--- a/src/shared/secondary/spp_worker_th/cmd_res_formatter.c
++++ b/src/shared/secondary/spp_worker_th/cmd_res_formatter.c
+@@ -4,9 +4,15 @@
+ 
+ #include "cmd_res_formatter.h"
+ #include "cmd_utils.h"
++#include "shared/secondary/json_helper.h"
++
++#ifdef SPP_VF_MODULE
+ #include "vf_deps.h"
++#endif
++
++#ifdef SPP_MIRROR_MODULE
+ #include "mirror_deps.h"
+-#include "shared/secondary/json_helper.h"
++#endif
+ 
+ #define RTE_LOGTYPE_WK_CMD_RES_FMT RTE_LOGTYPE_USER1
+ 
+diff --git a/src/shared/secondary/spp_worker_th/cmd_runner.c b/src/shared/secondary/spp_worker_th/cmd_runner.c
+index 68436f3..3684a2c 100644
+--- a/src/shared/secondary/spp_worker_th/cmd_runner.c
++++ b/src/shared/secondary/spp_worker_th/cmd_runner.c
+@@ -9,14 +9,20 @@
+ #include <rte_branch_prediction.h>
+ 
+ #include "cmd_runner.h"
+-#include "vf_deps.h"
+-#include "mirror_deps.h"
+ #include "spp_port.h"
+-#include "shared/secondary/string_buffer.h"
+-#include "shared/secondary/json_helper.h"
+ #include "cmd_res_formatter.h"
+ #include "conn_spp_ctl.h"
+ #include "cmd_parser.h"
++#include "shared/secondary/string_buffer.h"
++#include "shared/secondary/json_helper.h"
++
++#ifdef SPP_VF_MODULE
++#include "vf_deps.h"
++#endif
++
++#ifdef SPP_MIRROR_MODULE
++#include "mirror_deps.h"
++#endif
+ 
+ #define RTE_LOGTYPE_WK_CMD_RUNNER RTE_LOGTYPE_USER1
+ 
+diff --git a/src/shared/secondary/spp_worker_th/cmd_utils.c b/src/shared/secondary/spp_worker_th/cmd_utils.c
+index 5a089c6..e61f59c 100644
+--- a/src/shared/secondary/spp_worker_th/cmd_utils.c
++++ b/src/shared/secondary/spp_worker_th/cmd_utils.c
+@@ -11,12 +11,18 @@
+ #include <rte_log.h>
+ #include <rte_branch_prediction.h>
+ 
+-#include "vf_deps.h"
+-#include "mirror_deps.h"
+ #include "shared/secondary/return_codes.h"
+ #include "cmd_utils.h"
+ #include "spp_port.h"
+ 
++#ifdef SPP_VF_MODULE
++#include "vf_deps.h"
++#endif
++
++#ifdef SPP_MIRROR_MODULE
++#include "mirror_deps.h"
++#endif
++
+ #include "shared/secondary/add_port.h"
+ #include "shared/secondary/utils.h"
+ 
+diff --git a/src/shared/secondary/spp_worker_th/vf_deps.h b/src/shared/secondary/spp_worker_th/vf_deps.h
+index 81fc18f..7d77e87 100644
+--- a/src/shared/secondary/spp_worker_th/vf_deps.h
++++ b/src/shared/secondary/spp_worker_th/vf_deps.h
+@@ -101,4 +101,5 @@ int add_classifier_table_val(
+ int update_comp_info(struct sppwk_comp_info *p_comp_info, int *p_change_comp);
+ 
+ enum sppwk_worker_type get_comp_type_from_str(const char *type_str);
++
+ #endif  /* _SPPWK_TH_VF_DEPS_H_ */
+-- 
+2.17.1
+
+

@@ -1,0 +1,321 @@
+Return-path: <fw-yama-hd@pomail01.silk.ntt-tx.co.jp>
+Received: from zssg-mailmd102.ddreams.local
+ (zssg-mailmd102.ddreams.local [10.160.123.97]) by zssg-mailms320.ddreams.local
+ (NTT DoCoMo Mail System) with ESMTP id <0PTL001X0N8BR160@NTTDoCoMo.co.jp> for
+ yamashita.hideyuki@ntt-tx.co.jp; Mon, 24 Jun 2019 19:45:47 +0900 (JST)
+Original-recipient: rfc822;yamashita.hideyuki@ntt-tx.co.jp
+Received: from smtp_saver-daemon.zssg-mailmd102.ddreams.local by
+ zssg-mailmd102.ddreams.local (dDREAMS) id <0PTL00Q18N8BY700@dDREAMS> for
+ yamashita.hideyuki@ntt-tx.co.jp (ORCPT yamashita.hideyuki@ntt-tx.co.jp); Mon,
+ 24 Jun 2019 19:45:47 +0900 (JST)
+Received: from zssg-mailmf104.ddreams.local
+ (zssg-mailmf900.ddreams.local [10.160.172.84]) by zssg-mailmd102.ddreams.local
+ (dDREAMS) with ESMTP id <0PTL009VWN8B7Y60@dDREAMS> for
+ yamashita.hideyuki@ntt-tx.co.jp (ORCPT yamashita.hideyuki@ntt-tx.co.jp); Mon,
+ 24 Jun 2019 19:45:47 +0900 (JST)
+Received: from zssg-mailmf104.ddreams.local (unknown [127.0.0.1])
+	by zssg-mailmf104.ddreams.local (Postfix) with ESMTP id 11E197E6032	for
+ <yamashita.hideyuki@ntt-tx.co.jp>; Mon, 24 Jun 2019 19:45:47 +0900 (JST)
+Received: from zssg-mailmf104.ddreams.local (unknown [127.0.0.1])
+	by IMSVA (Postfix) with ESMTP id 10BD58E605D	for
+ <yamashita.hideyuki@ntt-tx.co.jp>; Mon, 24 Jun 2019 19:45:47 +0900 (JST)
+Received: from localhost (unknown [127.0.0.1])	by IMSVA (Postfix)
+ with SMTP id 055B28E6050	for <yamashita.hideyuki@ntt-tx.co.jp>; Mon,
+ 24 Jun 2019 19:45:47 +0900 (JST)
+X-IMSS-HAND-OFF-DIRECTIVE: localhost:10026
+Received: from zssg-mailmf104.ddreams.local (unknown [127.0.0.1])
+	by IMSVA (Postfix) with ESMTP id EE9618E6050	for
+ <yamashita.hideyuki@ntt-tx.co.jp>; Mon, 24 Jun 2019 19:45:45 +0900 (JST)
+Received: from pomail01.silk.ntt-tx.co.jp (unknown [10.160.183.139])
+	by zssg-mailmf104.ddreams.local (Postfix)
+ with ESMTPS	for <yamashita.hideyuki@ntt-tx.co.jp>; Mon,
+ 24 Jun 2019 19:45:45 +0900 (JST)
+Received: from pomail01.silk.ntt-tx.co.jp (localhost [127.0.0.1])
+	by pomail01.silk.ntt-tx.co.jp (unknown) with ESMTP id x5OAjj1t032657;	Mon,
+ 24 Jun 2019 19:45:45 +0900
+Received: (from yama-hd@localhost)	by pomail01.silk.ntt-tx.co.jp (unknown)
+ id x5OAjjat032656;	Mon, 24 Jun 2019 19:45:45 +0900
+X-Authentication-warning: pomail01.silk.ntt-tx.co.jp: yama-hd set sender to
+ fw-yama-hd@pomail01.silk.ntt-tx.co.jp using -f
+Received: from imss04.silk.ntt-tx.co.jp
+ (imss04.silk.ntt-tx.co.jp [10.107.0.39])	by pomail01.silk.ntt-tx.co.jp
+ (unknown) with ESMTP id x5OAjjBh032653	for unknown; Mon,
+ 24 Jun 2019 19:45:45 +0900
+Received: from imss04.silk.ntt-tx.co.jp (localhost [127.0.0.1])
+ by imss04.silk.ntt-tx.co.jp (unknown) with ESMTP id x5OAjjPj007931 for
+ unknown; Mon, 24 Jun 2019 19:45:45 +0900
+Received: from ml01.silk.ntt-tx.co.jp (ml01.silk.ntt-tx.co.jp [10.107.0.230])
+ by imss04.silk.ntt-tx.co.jp (unknown) with ESMTP id x5OAjj2Z007928; Mon,
+ 24 Jun 2019 19:45:45 +0900
+Received: from ml01.silk.ntt-tx.co.jp (localhost [127.0.0.1])
+	by ml01.silk.ntt-tx.co.jp (unknown) with ESMTP id x5OAjjAY008932;	Mon,
+ 24 Jun 2019 19:45:45 +0900
+Received: from imss02.silk.ntt-tx.co.jp
+ (imss02.silk.ntt-tx.co.jp [10.107.0.127])	by ml01.silk.ntt-tx.co.jp (unknown)
+ with ESMTP id x5OAji3w008928	for unknown; Mon, 24 Jun 2019 19:45:44 +0900
+Received: from imss02.silk.ntt-tx.co.jp (localhost [127.0.0.1])
+ by imss02.silk.ntt-tx.co.jp (unknown) with ESMTP id x5OAjisc023392 for
+ unknown; Mon, 24 Jun 2019 19:45:44 +0900
+Received: from mail01.ics.ntt-tx.co.jp (mail01.ics.ntt-tx.co.jp [10.254.2.67])
+ by imss02.silk.ntt-tx.co.jp (unknown) with ESMTP id x5OAjiRQ023388 for
+ unknown; Mon, 24 Jun 2019 19:45:44 +0900
+Received: from dpdk.org (dpdk.org [92.243.14.124])	by mail01.ics.ntt-tx.co.jp
+ (unknown) with SMTP id x5OAjcJg020885	for unknown; Mon,
+ 24 Jun 2019 19:45:43 +0900
+Received: from [92.243.14.124] (localhost [127.0.0.1])	by dpdk.org (Postfix)
+ with ESMTP id B23441B9B1;	Mon, 24 Jun 2019 12:45:37 +0200 (CEST)
+Received: from mail-pl1-f193.google.com
+ (mail-pl1-f193.google.com [209.85.214.193]) by dpdk.org (Postfix)
+ with ESMTP id 134B72C2B for <spp@dpdk.org>; Mon,
+ 24 Jun 2019 12:45:36 +0200 (CEST)
+Received: by mail-pl1-f193.google.com with SMTP id p1so6671922plo.2 for
+ <spp@dpdk.org>; Mon, 24 Jun 2019 03:45:36 -0700 (PDT)
+Received: from localhost.localdomain ([192.47.164.146])
+ by smtp.gmail.com with ESMTPSA id h6sm11483096pfn.79.2019.06.24.03.45.33
+ (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128); Mon,
+ 24 Jun 2019 03:45:34 -0700 (PDT)
+Date: Mon, 24 Jun 2019 19:45:30 +0900
+From: yasufum.o@gmail.com
+Subject: [spp 04430] [spp] [PATCH] spp-ctl: add API for getting CPU usage
+Sender: spp <spp-bounces@dpdk.org>
+To: spp@dpdk.org, ferruh.yigit@intel.com, yasufum.o@gmail.com
+Message-id: <20190624104530.25143-1-yasufum.o@gmail.com>
+X-ML-Name: unknown
+X-Mail-Count: 04430
+X-MLServer: unknown
+X-ML-Info: mailing list service
+X-Mailer: git-send-email 2.17.1
+Authentication-results: mail01.ics.ntt-tx.co.jp; spf=pass
+ smtp.mailfrom=spp-bounces@dpdk.org
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
+ h=from:to:subject:date:message-id;
+ bh=cSVkT8sIigBkXMVuGCq77m6j7ZUOmdKGs7WfSAEXJPE=;
+ b=RAzR7yySW0NfXa3SmtBCyueMLVRD1bDXnd9wmdkqeb2eJwgqxbWvugg0CpLc2rjLX1
+ CAGyZnWhgP682U5cEyOCgyvm/1BQP1scvwoyv/dxgqSaS+QB6Qv3/P6Pkma8FJtF5cgP
+ mm6kQ9Q5+GYVDCfx4xOlAYszKSWzNM9K9WFysxgbGlXx1VPGBdsayHP7CCQKOS6Zl787
+ epnnIg5w/SjNK4Gg8i8zTw4Wp2mIXTMdg2/8n10Vy4qGdA9cvDcfsW+V0yyqCB6epyO6
+ EtCmqahBuTOKPg6o3gzaLMnj2cn10bnrM4NB4aXNXhltyNsRpzGsBSANnxnNfJJ3grIN 6hng==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=1e100.net;
+ s=20161025; h=x-gm-message-state:from:to:subject:date:message-id;
+ bh=cSVkT8sIigBkXMVuGCq77m6j7ZUOmdKGs7WfSAEXJPE=;
+ b=XznNNCrDm/OLvf0SqJ1GBPWJuBMX/inlu+ZqyE8H2dFEnu0xLuGWZC0ZPbtYWCmA97
+ dKSZ29Juj4bmGohFqMqp5VTU1NxjbB7j5BA4bYIjJiNOEQgG3crO1mphPcQ6v7WizJSG
+ ppvUmCWphbNB7zGepMGSu4P//kGRNCYkMhXs/ROKcrFeH0FOoZgXEztpTCTq5zuH3p30
+ n1/qDwpj9DAiEc5xAzborp2Mc6WbYkSnhQMPWaryjg1XKTNFVydSuZoBixzPpJl3nR7h
+ cyl71YmOTDJmTj2Q+Swbkc/IZ5fRQOgmvnO+ywWcSsBNxeO3GHp/wGk7xcrem878LY6y uE5Q==
+X-Gm-Message-State: APjAAAXwidAkrnINBM9nXnaKUdT1WL0O1z5MKe8B7h0HoUgp1ocPudIA
+ nnCst0TksoRDU/gZO4X1VE4SSugN
+X-Google-Smtp-Source:
+ APXvYqzRK8JP+NvRkYqhG56xGqCvwFGWjPoCWBY6UIphRpX3+5Mzq/3YffRoiVnbZCXU26R1YHfB8A==
+X-Received: by 2002:a17:902:61:: with SMTP id 88mr66625921pla.50.1561373135186;
+ Mon, 24 Jun 2019 03:45:35 -0700 (PDT)
+X-BeenThere: spp@dpdk.org
+X-Mailman-Version: 2.1.15
+List-Id: Soft Patch Panel <spp.dpdk.org>
+List-Unsubscribe: <https://mails.dpdk.org/options/spp>,
+ <mailto:spp-request@dpdk.org?subject=unsubscribe>
+List-Archive: <http://mails.dpdk.org/archives/spp/>
+List-Post: <mailto:spp@dpdk.org>
+List-Help: <mailto:spp-request@dpdk.org?subject=help>
+List-Subscribe: <https://mails.dpdk.org/listinfo/spp>,
+ <mailto:spp-request@dpdk.org?subject=subscribe>
+X-TM-AS-MML: No
+Precedence: bulk
+Lines: 193
+X-TM-AS-GCONF: 00
+X-MD-STAMP: ON
+
+From: Yasufumi Ogawa <yasufum.o@gmail.com>
+
+API for getting CPU usage is intended to be used for suggesting unused
+lcores for `pri; launch` command.
+
+This update is also revise method of primary for getting status to be
+the same as other secondary processes.
+
+Signed-off-by: Yasufumi Ogawa <yasufum.o@gmail.com>
+---
+ src/spp-ctl/spp_ctl.py    | 54 ++++++++++++++++++++++++++++++++++++++-
+ src/spp-ctl/spp_proc.py   |  6 +----
+ src/spp-ctl/spp_webapi.py | 18 ++++++++-----
+ 3 files changed, 66 insertions(+), 12 deletions(-)
+
+diff --git a/src/spp-ctl/spp_ctl.py b/src/spp-ctl/spp_ctl.py
+index 93b87dd..ea19aa6 100644
+--- a/src/spp-ctl/spp_ctl.py
++++ b/src/spp-ctl/spp_ctl.py
+@@ -18,12 +18,12 @@ import spp_webapi
+ 
+ LOG = logging.getLogger(__name__)
+ 
+-
+ MSG_SIZE = 4096
+ 
+ # relative path of `cpu_layout.py`
+ CPU_LAYOUT_TOOL = 'tools/helpers/cpu_layout.py'
+ 
++
+ class Controller(object):
+ 
+     def __init__(self, host, pri_port, sec_port, api_port):
+@@ -143,6 +143,7 @@ class Controller(object):
+ 
+     def _update_procs(self):
+         """Remove no existing processes from `self.procs`."""
++
+         removed_ids = []
+         for idx, proc in self.procs.items():
+             if proc.id != spp_proc.ID_PRIMARY:
+@@ -168,6 +169,57 @@ class Controller(object):
+             procs.append(p)
+         return procs
+ 
++    def get_cpu_usage(self):
++        """Get cpu usage from each of status of SPP processes.
++
++        If process returns invalid message or cannot connect, remove
++        it from `self.procs` as in _update_procs().
++        """
++
++        removed_ids = []
++        cpus = []
++        for idx, proc in self.procs.items():
++            try:
++                # Check the process can be accessed. If not, go
++                # to except block.
++                stat = proc.get_status()
++                if proc.id == spp_proc.ID_PRIMARY:
++                    cpus.append(
++                            {'proc-type': proc.type,
++                                'master-lcore': stat['lcores'][0],
++                                'lcores': stat['lcores']})
++                elif proc.type == 'nfv':
++                    cpus.append(
++                            {'proc-type': proc.type,
++                                'client-id': proc.id,
++                                'master-lcore': stat['master-lcore'],
++                                'lcores': stat['lcores']})
++                elif proc.type in ['vf', 'mirror', 'pcap']:
++                    master_lcore = stat['info']['master-lcore']
++                    lcores = [stat['info']['master-lcore']]
++                    # TODO(yasufum) revise tag name 'core'.
++                    for val in stat['info']['core']:
++                        lcores.append(val['core'])
++                    cpus.append(
++                            {'proc-type': proc.type,
++                                'client-id': proc.id,
++                                'master-lcore': master_lcore,
++                                'lcores': lcores})
++                else:
++                    LOG.debug('No supported proc type: {}'.format(
++                        roc.type))
++
++            except Exception as e:
++                LOG.error("get_cpu_usage: {}".format(e))
++                removed_ids.append(idx)
++
++        for idx in removed_ids:
++            LOG.info("Remove no existing {}:{}.".format(
++                self.procs[idx].type, self.procs[idx].id))
++            del self.procs[idx]
++
++        return cpus
++
+     def get_cpu_layout(self):
+         """Get cpu layout with helper tool 'cpu_layout.py'."""
+ 
+diff --git a/src/spp-ctl/spp_proc.py b/src/spp-ctl/spp_proc.py
+index cdd7b49..fe7ecea 100644
+--- a/src/spp-ctl/spp_proc.py
++++ b/src/spp-ctl/spp_proc.py
+@@ -284,12 +284,8 @@ class PrimaryProc(SppProc):
+     def __init__(self, conn):
+         super(PrimaryProc, self).__init__(TYPE_PRIMARY, ID_PRIMARY, conn)
+ 
+-    @staticmethod
+-    def _decode_reply(data):
+-        return data.strip('\0')
+-
+     @exec_command
+-    def status(self):
++    def get_status(self):
+         return "status"
+ 
+     @exec_command
+diff --git a/src/spp-ctl/spp_webapi.py b/src/spp-ctl/spp_webapi.py
+index 3ad34d0..7f2baad 100644
+--- a/src/spp-ctl/spp_webapi.py
++++ b/src/spp-ctl/spp_webapi.py
+@@ -53,7 +53,7 @@ class BaseHandler(bottle.Bottle):
+             if if_type not in ["phy", "vhost", "ring", "pcap", "nullpmd"]:
+                 raise
+             int(if_num)
+-        except:
++        except Exception:
+             raise KeyInvalid('port', port)
+ 
+     def log_url(self):
+@@ -152,16 +152,22 @@ class V1Handler(BaseHandler):
+ 
+     def set_route(self):
+         self.route('/processes', 'GET', callback=self.get_processes)
+-        self.route('/cpus', 'GET', callback=self.get_cpu_layout)
++        self.route('/cpu_usage', 'GET', callback=self.get_cpu_usage)
++        self.route('/cpu_layout', 'GET', callback=self.get_cpu_layout)
+ 
+     def get_processes(self):
+         LOG.info("get processes called.")
+         return self.ctrl.get_processes()
+ 
++    def get_cpu_usage(self):
++        LOG.info("get cpu usage called.")
++        return self.ctrl.get_cpu_usage()
++
+     def get_cpu_layout(self):
+         LOG.info("get cpu layout called.")
+         return self.ctrl.get_cpu_layout()
+ 
++
+ class V1VFCommon(object):
+     """Define common methods for vf and mirror handler."""
+ 
+@@ -251,7 +257,7 @@ class V1VFHandler(BaseHandler, V1VFCommon):
+                     if vlan['operation'] == "add":
+                         int(vlan['id'])
+                         int(vlan['pcp'])
+-                except:
++                except Exception:
+                     raise KeyInvalid('vlan', vlan)
+ 
+     def vf_comp_port(self, proc, name, body):
+@@ -277,7 +283,7 @@ class V1VFHandler(BaseHandler, V1VFCommon):
+     def _validate_mac(self, mac_address):
+         try:
+             netaddr.EUI(mac_address)
+-        except:
++        except Exception:
+             raise KeyInvalid('mac_address', mac_address)
+ 
+     def _validate_vf_classifier(self, body):
+@@ -296,7 +302,7 @@ class V1VFHandler(BaseHandler, V1VFCommon):
+         if body['type'] == "vlan":
+             try:
+                 int(body['vlan'])
+-            except:
++            except Exception:
+                 raise KeyInvalid('vlan', body.get('vlan'))
+ 
+     def vf_classifier(self, proc, body):
+@@ -466,7 +472,7 @@ class V1PrimaryHandler(BaseHandler):
+ 
+     def get_status(self):
+         proc = self._get_proc()
+-        return self.convert_status(proc.status())
++        return proc.get_status()
+ 
+     def clear_status(self):
+         proc = self._get_proc()
+-- 
+2.17.1
+
+

@@ -1,0 +1,404 @@
+Return-path: <fw-yama-hd@pomail01.silk.ntt-tx.co.jp>
+Received: from zssg-mailmd101.ddreams.local
+ (zssg-mailmd101.ddreams.local [10.160.123.96]) by zssg-mailms320.ddreams.local
+ (NTT DoCoMo Mail System) with ESMTP id <0PTL00DE0DB0FR70@NTTDoCoMo.co.jp> for
+ yamashita.hideyuki@ntt-tx.co.jp; Mon, 24 Jun 2019 16:11:24 +0900 (JST)
+Original-recipient: rfc822;yamashita.hideyuki@ntt-tx.co.jp
+Received: from smtp_saver-daemon.zssg-mailmd101.ddreams.local by
+ zssg-mailmd101.ddreams.local (dDREAMS) id <0PTL0154MDB0U500@dDREAMS> for
+ yamashita.hideyuki@ntt-tx.co.jp (ORCPT yamashita.hideyuki@ntt-tx.co.jp); Mon,
+ 24 Jun 2019 16:11:24 +0900 (JST)
+Received: from zssg-mailmf103.ddreams.local
+ (zssg-mailmf900.ddreams.local [10.160.172.84]) by zssg-mailmd101.ddreams.local
+ (dDREAMS) with ESMTP id <0PTL00PH9DB0B090@dDREAMS> for
+ yamashita.hideyuki@ntt-tx.co.jp (ORCPT yamashita.hideyuki@ntt-tx.co.jp); Mon,
+ 24 Jun 2019 16:11:24 +0900 (JST)
+Received: from zssg-mailmf103.ddreams.local (unknown [127.0.0.1])
+	by zssg-mailmf103.ddreams.local (Postfix) with ESMTP id 51AB47E6036	for
+ <yamashita.hideyuki@ntt-tx.co.jp>; Mon, 24 Jun 2019 16:11:24 +0900 (JST)
+Received: from zssg-mailmf103.ddreams.local (unknown [127.0.0.1])
+	by IMSVA (Postfix) with ESMTP id 500AE8E605C	for
+ <yamashita.hideyuki@ntt-tx.co.jp>; Mon, 24 Jun 2019 16:11:24 +0900 (JST)
+Received: from localhost (unknown [127.0.0.1])	by IMSVA (Postfix)
+ with SMTP id 4537D8E6054	for <yamashita.hideyuki@ntt-tx.co.jp>; Mon,
+ 24 Jun 2019 16:11:24 +0900 (JST)
+X-IMSS-HAND-OFF-DIRECTIVE: localhost:10026
+Received: from zssg-mailmf103.ddreams.local (unknown [127.0.0.1])
+	by IMSVA (Postfix) with ESMTP id C777D8E6054	for
+ <yamashita.hideyuki@ntt-tx.co.jp>; Mon, 24 Jun 2019 16:11:23 +0900 (JST)
+Received: from pomail01.silk.ntt-tx.co.jp (unknown [10.160.183.139])
+	by zssg-mailmf103.ddreams.local (Postfix)
+ with ESMTPS	for <yamashita.hideyuki@ntt-tx.co.jp>; Mon,
+ 24 Jun 2019 16:11:23 +0900 (JST)
+Received: from pomail01.silk.ntt-tx.co.jp (localhost [127.0.0.1])
+	by pomail01.silk.ntt-tx.co.jp (unknown) with ESMTP id x5O7BNli016963;	Mon,
+ 24 Jun 2019 16:11:23 +0900
+Received: (from yama-hd@localhost)	by pomail01.silk.ntt-tx.co.jp (unknown)
+ id x5O7BNgu016962;	Mon, 24 Jun 2019 16:11:23 +0900
+X-Authentication-warning: pomail01.silk.ntt-tx.co.jp: yama-hd set sender to
+ fw-yama-hd@pomail01.silk.ntt-tx.co.jp using -f
+Received: from imss04.silk.ntt-tx.co.jp
+ (imss04.silk.ntt-tx.co.jp [10.107.0.39])	by pomail01.silk.ntt-tx.co.jp
+ (unknown) with ESMTP id x5O7BNQR016959	for unknown; Mon,
+ 24 Jun 2019 16:11:23 +0900
+Received: from imss04.silk.ntt-tx.co.jp (localhost [127.0.0.1])
+ by imss04.silk.ntt-tx.co.jp (unknown) with ESMTP id x5O7BN8f021336 for
+ unknown; Mon, 24 Jun 2019 16:11:23 +0900
+Received: from ml01.silk.ntt-tx.co.jp (ml01.silk.ntt-tx.co.jp [10.107.0.230])
+ by imss04.silk.ntt-tx.co.jp (unknown) with ESMTP id x5O7BNSW021330; Mon,
+ 24 Jun 2019 16:11:23 +0900
+Received: from ml01.silk.ntt-tx.co.jp (localhost [127.0.0.1])
+	by ml01.silk.ntt-tx.co.jp (unknown) with ESMTP id x5O7BMHR016991;	Mon,
+ 24 Jun 2019 16:11:22 +0900
+Received: from imss02.silk.ntt-tx.co.jp
+ (imss02.silk.ntt-tx.co.jp [10.107.0.127])	by ml01.silk.ntt-tx.co.jp (unknown)
+ with ESMTP id x5O7BMY1016984	for unknown; Mon, 24 Jun 2019 16:11:22 +0900
+Received: from imss02.silk.ntt-tx.co.jp (localhost [127.0.0.1])
+ by imss02.silk.ntt-tx.co.jp (unknown) with ESMTP id x5O7BMUe031170 for
+ unknown; Mon, 24 Jun 2019 16:11:22 +0900
+Received: from mail01.ics.ntt-tx.co.jp (mail01.ics.ntt-tx.co.jp [10.254.2.67])
+ by imss02.silk.ntt-tx.co.jp (unknown) with ESMTP id x5O7BMH9031166 for
+ unknown; Mon, 24 Jun 2019 16:11:22 +0900
+Received: from dpdk.org (dpdk.org [92.243.14.124])	by mail01.ics.ntt-tx.co.jp
+ (unknown) with SMTP id x5O7BFUP023292	for unknown; Mon,
+ 24 Jun 2019 16:11:21 +0900
+Received: from [92.243.14.124] (localhost [127.0.0.1])	by dpdk.org (Postfix)
+ with ESMTP id 296711BDD2;	Mon, 24 Jun 2019 09:11:15 +0200 (CEST)
+Received: from mail-pf1-f195.google.com
+ (mail-pf1-f195.google.com [209.85.210.195]) by dpdk.org (Postfix)
+ with ESMTP id 1C4121BCAC for <spp@dpdk.org>; Mon,
+ 24 Jun 2019 09:11:13 +0200 (CEST)
+Received: by mail-pf1-f195.google.com with SMTP id q10so6959158pff.9 for
+ <spp@dpdk.org>; Mon, 24 Jun 2019 00:11:13 -0700 (PDT)
+Received: from localhost.localdomain ([192.47.164.146])
+ by smtp.gmail.com with ESMTPSA id j15sm11556574pfr.146.2019.06.24.00.11.10
+ (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128); Mon,
+ 24 Jun 2019 00:11:11 -0700 (PDT)
+Date: Mon, 24 Jun 2019 16:11:07 +0900
+From: yasufum.o@gmail.com
+Subject: [spp 04398] [spp] [PATCH] shared/sec: move op funcs for getting status
+Sender: spp <spp-bounces@dpdk.org>
+To: spp@dpdk.org, ferruh.yigit@intel.com, yasufum.o@gmail.com
+Message-id: <20190624071107.23398-1-yasufum.o@gmail.com>
+X-ML-Name: unknown
+X-Mail-Count: 04398
+X-MLServer: unknown
+X-ML-Info: mailing list service
+X-Mailer: git-send-email 2.17.1
+Authentication-results: mail01.ics.ntt-tx.co.jp; spf=pass
+ smtp.mailfrom=spp-bounces@dpdk.org
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
+ h=from:to:subject:date:message-id;
+ bh=fCAzz9YRPrYv034D/Acw+w7elp6cdjSt0o6fOgRUZHg=;
+ b=fmtN+ngBEfbT3LPG/uCpFu7u6Rg3orCCBhsAsA1c2VbWApESnoIJ5pdmcNHXiIajRp
+ hdrtjSFNDsSV21bizWIeRmB+Wnqn4sDfvifZHLMGAnuWaIapafaZrBAsofVln9iDKt+k
+ rj6H72Byvawjqmi91zLa4SV0weIpGr6Sowbh+kaFWR//Lt1PQNOd544JA0SChNNTyO7b
+ kCjWCoaMIU6IrvWyKYgSHkhZ/tRAL8nMMvmZuCTYleyR3k1KUkzIsNvvOirGYK0Iky0H
+ sidxG7kj9MJvOG64TMCFK7jVOOfvkpYuQroDcLxNlz+ia0o9E8VuMoO6XG/bTAhGWIUw QjKw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=1e100.net;
+ s=20161025; h=x-gm-message-state:from:to:subject:date:message-id;
+ bh=fCAzz9YRPrYv034D/Acw+w7elp6cdjSt0o6fOgRUZHg=;
+ b=hTa7eiIVaAOxqlYsYbGOpMX9FfJRnCIlYvTop2GKQy39eOQaMFYtaOFXEF4bk6tNXN
+ M/stEtZkiVoFbwKlz9ajK10ZK2t82MUX+T5L3ujiIratkqTs5Uu4on2wXVNE7mP0CzUY
+ IFtRqQPx/O9buJQGwh4wLeseZqOFFU/jgL6+iQCJkoHEcZkCf6cChb/9UW0PzPfUkK0X
+ 5lihtyopkEQCRi1klxct1J14WRZLFEBiq/03nL9h7axJG4SWYYq1DfcdWcpNuduUhqOm
+ WxLKwLlboHskofah2VIBnJb2OfQWVeqMnM131R3LoZIQiTsoxCMa+3yKEjYMN3T6ePlA yVeA==
+X-Gm-Message-State: APjAAAVI7DTtw2r+lw1zZXagtobLdDqT/VkRbNyWgphxvKAmcFM1SXjr
+ cBKPbA65X8ucpit7RAPCBSLCvODa
+X-Google-Smtp-Source:
+ APXvYqyY4inSsqe+T8wAoWqlJ6NWbkl8DSPu4gp8PwmJ8k61dSnWTsOHaWlbh+dtKQNkhpqusOKJrw==
+X-Received: by 2002:a65:4347:: with SMTP id k7mr31822958pgq.253.1561360272145;
+ Mon, 24 Jun 2019 00:11:12 -0700 (PDT)
+X-BeenThere: spp@dpdk.org
+X-Mailman-Version: 2.1.15
+List-Id: Soft Patch Panel <spp.dpdk.org>
+List-Unsubscribe: <https://mails.dpdk.org/options/spp>,
+ <mailto:spp-request@dpdk.org?subject=unsubscribe>
+List-Archive: <http://mails.dpdk.org/archives/spp/>
+List-Post: <mailto:spp@dpdk.org>
+List-Help: <mailto:spp-request@dpdk.org?subject=help>
+List-Subscribe: <https://mails.dpdk.org/listinfo/spp>,
+ <mailto:spp-request@dpdk.org?subject=subscribe>
+X-TM-AS-MML: No
+Precedence: bulk
+Lines: 276
+X-TM-AS-GCONF: 00
+X-MD-STAMP: ON
+
+From: Yasufumi Ogawa <yasufum.o@gmail.com>
+
+This update is to move a set of operation functions `response_info_list`
+for getting status from shared dir to dirs of each of spp_vf and
+spp_mirror as a function get_status_ops().
+
+Signed-off-by: Yasufumi Ogawa <yasufum.o@gmail.com>
+---
+ src/mirror/mir_cmd_runner.c                   | 34 +++++++++++++
+ .../spp_worker_th/cmd_res_formatter.c         | 51 +++++++------------
+ .../spp_worker_th/cmd_res_formatter.h         |  6 +++
+ .../secondary/spp_worker_th/mirror_deps.h     |  6 +++
+ src/shared/secondary/spp_worker_th/vf_deps.h  |  8 ++-
+ src/vf/vf_cmd_runner.c                        | 35 +++++++++++++
+ 6 files changed, 105 insertions(+), 35 deletions(-)
+
+diff --git a/src/mirror/mir_cmd_runner.c b/src/mirror/mir_cmd_runner.c
+index 5f0932a..a4ca397 100644
+--- a/src/mirror/mir_cmd_runner.c
++++ b/src/mirror/mir_cmd_runner.c
+@@ -414,3 +414,37 @@ get_comp_type_from_str(const char *type_str)
+ 
+ 	return SPPWK_TYPE_NONE;
+ }
++
++/**
++ * List of combination of tag and operator function. It is used to assemble
++ * a result of command in JSON like as following.
++ *
++ *     {
++ *         "client-id": 1,
++ *         "ports": ["phy:0", "phy:1", "vhost:0", "ring:0"],
++ *         "components": [
++ *             {
++ *                 "core": 2,
++ *                 ...
++ */
++/* TODO(yasufum) consider to create and move to vf_cmd_formatter.c */
++int get_status_ops(struct cmd_res_formatter_ops *ops_list)
++{
++	/* Num of entries should be the same as NOF_STAT_OPS in vf_deps.h. */
++	struct cmd_res_formatter_ops tmp_ops_list[] = {
++		{ "client-id", add_client_id },
++		{ "phy", add_interface },
++		{ "vhost", add_interface },
++		{ "ring", add_interface },
++		{ "master-lcore", add_master_lcore},
++		{ "core", add_core},
++		{ "", NULL }
++	};
++	memcpy(ops_list, tmp_ops_list, sizeof(tmp_ops_list));
++	if (unlikely(ops_list == NULL)) {
++		RTE_LOG(ERR, MIR_CMD_RUNNER, "Failed to setup ops_list.\n");
++		return -1;
++	}
++
++	return 0;
++}
+diff --git a/src/shared/secondary/spp_worker_th/cmd_res_formatter.c b/src/shared/secondary/spp_worker_th/cmd_res_formatter.c
+index 8d64c21..fdc8675 100644
+--- a/src/shared/secondary/spp_worker_th/cmd_res_formatter.c
++++ b/src/shared/secondary/spp_worker_th/cmd_res_formatter.c
+@@ -16,14 +16,10 @@
+ 
+ #define RTE_LOGTYPE_WK_CMD_RES_FMT RTE_LOGTYPE_USER1
+ 
+-/* Proto type declaration for a list of operator functions. */
++/* Proto type declaration for a list of operation functions. */
+ static int append_result_value(const char *name, char **output, void *tmp);
+ static int append_error_details_value(const char *name, char **output,
+ 		void *tmp);
+-static int add_interface(const char *name, char **output,
+-		void *tmp __attribute__ ((unused)));
+-static int add_master_lcore(const char *name, char **output,
+-		void *tmp __attribute__ ((unused)));
+ 
+ /**
+  * List of worker process type. The order of items should be same as the order
+@@ -55,31 +51,6 @@ struct cmd_res_formatter_ops response_result_list[] = {
+ 	{ "", NULL }
+ };
+ 
+-/**
+- * List of combination of tag and operator function. It is used to assemble
+- * a result of command in JSON like as following.
+- *
+- *     {
+- *         "client-id": 1,
+- *         "ports": ["phy:0", "phy:1", "vhost:0", "ring:0"],
+- *         "components": [
+- *             {
+- *                 "core": 2,
+- *                 ...
+- */
+-struct cmd_res_formatter_ops response_info_list[] = {
+-	{ "client-id", add_client_id },
+-	{ "phy", add_interface },
+-	{ "vhost", add_interface },
+-	{ "ring", add_interface },
+-	{ "master-lcore", add_master_lcore},
+-	{ "core", add_core},
+-#ifdef SPP_VF_MODULE
+-	{ "classifier_table", add_classifier_table},
+-#endif /* SPP_VF_MODULE */
+-	{ "", NULL }
+-};
+-
+ /* Append a command result in JSON format. */
+ static int
+ append_result_value(const char *name, char **output, void *tmp)
+@@ -527,6 +498,8 @@ append_info_value(const char *name, char **output)
+ {
+ 	int ret = SPP_RET_NG;
+ 	char *tmp_buff = spp_strbuf_allocate(CMD_RES_BUF_INIT_SIZE);
++	struct cmd_res_formatter_ops ops_list[NOF_STAT_OPS];
++
+ 	if (unlikely(tmp_buff == NULL)) {
+ 		RTE_LOG(ERR, WK_CMD_RES_FMT,
+ 				"Failed to get empty buf for append `%s`.\n",
+@@ -534,8 +507,18 @@ append_info_value(const char *name, char **output)
+ 		return SPP_RET_NG;
+ 	}
+ 
++	memset(ops_list, 0x00,
++			sizeof(struct cmd_res_formatter_ops) * NOF_STAT_OPS);
++
++	int is_got_ops = get_status_ops(ops_list);
++	if (unlikely(is_got_ops < 0)) {
++		RTE_LOG(ERR, WK_CMD_RES_FMT,
++				"Failed to get ops_list.\n");
++		return SPP_RET_NG;
++	}
++
+ 	/* Setup JSON msg in value of `info` key. */
+-	ret = append_response_list_value(&tmp_buff, response_info_list, NULL);
++	ret = append_response_list_value(&tmp_buff, ops_list, NULL);
+ 	if (unlikely(ret < SPP_RET_OK)) {
+ 		spp_strbuf_free(tmp_buff);
+ 		return SPP_RET_NG;
+@@ -558,7 +541,7 @@ wk_get_client_id(void)
+ }
+ 
+ /**
+- * Operator functions start with prefix `add_` defined in `response_info_list`
++ * Operation functions start with prefix `add_` defined in get_status_ops()
+  * of struct `cmd_res_formatter_ops` which are for making each of parts of
+  * command response.
+  */
+@@ -572,7 +555,7 @@ add_client_id(const char *name, char **output,
+ }
+ 
+ /* Add entry of port to a response in JSON such as "phy:0". */
+-static int
++int
+ add_interface(const char *name, char **output,
+ 		void *tmp __attribute__ ((unused)))
+ {
+@@ -606,7 +589,7 @@ add_interface(const char *name, char **output,
+ }
+ 
+ /* Add entry of master lcore to a response in JSON. */
+-static int
++int
+ add_master_lcore(const char *name, char **output,
+ 		void *tmp __attribute__ ((unused)))
+ {
+diff --git a/src/shared/secondary/spp_worker_th/cmd_res_formatter.h b/src/shared/secondary/spp_worker_th/cmd_res_formatter.h
+index b1de209..d304e4f 100644
+--- a/src/shared/secondary/spp_worker_th/cmd_res_formatter.h
++++ b/src/shared/secondary/spp_worker_th/cmd_res_formatter.h
+@@ -73,4 +73,10 @@ int add_client_id(const char *name, char **output,
+ 
+ int add_classifier_table(const char *name, char **output,
+ 		void *tmp __attribute__ ((unused)));
++
++int add_interface(const char *name, char **output,
++		void *tmp __attribute__ ((unused)));
++
++int add_master_lcore(const char *name, char **output,
++		void *tmp __attribute__ ((unused)));
+ #endif
+diff --git a/src/shared/secondary/spp_worker_th/mirror_deps.h b/src/shared/secondary/spp_worker_th/mirror_deps.h
+index 43326ed..31f0b0c 100644
+--- a/src/shared/secondary/spp_worker_th/mirror_deps.h
++++ b/src/shared/secondary/spp_worker_th/mirror_deps.h
+@@ -7,6 +7,10 @@
+ 
+ #include "cmd_utils.h"
+ #include "cmd_parser.h"
++#include "cmd_res_formatter.h"
++
++/* Num of entries of ops_list in mir_cmd_runner.c. */
++#define NOF_STAT_OPS 7
+ 
+ int exec_one_cmd(const struct sppwk_cmd_attrs *cmd);
+ 
+@@ -34,4 +38,6 @@ int update_comp_info(struct sppwk_comp_info *p_comp_info, int *p_change_comp);
+ 
+ enum sppwk_worker_type get_comp_type_from_str(const char *type_str);
+ 
++int get_status_ops(struct cmd_res_formatter_ops *ops_list);
++
+ #endif  /* __SPP_WORKER_TH_MIRROR_DEPS_H__ */
+diff --git a/src/shared/secondary/spp_worker_th/vf_deps.h b/src/shared/secondary/spp_worker_th/vf_deps.h
+index 72a6960..41ea1b9 100644
+--- a/src/shared/secondary/spp_worker_th/vf_deps.h
++++ b/src/shared/secondary/spp_worker_th/vf_deps.h
+@@ -9,10 +9,14 @@
+ #include <rte_hash.h>
+ #include "cmd_utils.h"
+ #include "cmd_parser.h"
++#include "cmd_res_formatter.h"
+ 
+-/** Number of VLAN ID */
++/* Number of VLAN ID */
+ #define NOF_VLAN 4096
+ 
++/* Num of entries of ops_list in vf_cmd_runner.c. */
++#define NOF_STAT_OPS 8
++
+ /* Classifier for MAC addresses. */
+ struct mac_classifier {
+ 	struct rte_hash *cls_tbl;  /* Hash table for MAC classification. */
+@@ -111,4 +115,6 @@ int add_classifier_table(const char *name, char **output,
+ 
+ enum sppwk_worker_type get_comp_type_from_str(const char *type_str);
+ 
++int get_status_ops(struct cmd_res_formatter_ops *ops_list);
++
+ #endif  /* _SPPWK_TH_VF_DEPS_H_ */
+diff --git a/src/vf/vf_cmd_runner.c b/src/vf/vf_cmd_runner.c
+index 4c75b7e..46d54b4 100644
+--- a/src/vf/vf_cmd_runner.c
++++ b/src/vf/vf_cmd_runner.c
+@@ -624,3 +624,38 @@ get_comp_type_from_str(const char *type_str)
+ 
+ 	return SPPWK_TYPE_NONE;
+ }
++
++/**
++ * List of combination of tag and operator function. It is used to assemble
++ * a result of command in JSON like as following.
++ *
++ *     {
++ *         "client-id": 1,
++ *         "ports": ["phy:0", "phy:1", "vhost:0", "ring:0"],
++ *         "components": [
++ *             {
++ *                 "core": 2,
++ *                 ...
++ */
++/* TODO(yasufum) consider to create and move to vf_cmd_formatter.c */
++int get_status_ops(struct cmd_res_formatter_ops *ops_list)
++{
++	/* Num of entries should be the same as NOF_STAT_OPS in vf_deps.h. */
++	struct cmd_res_formatter_ops tmp_ops_list[] = {
++		{ "client-id", add_client_id },
++		{ "phy", add_interface },
++		{ "vhost", add_interface },
++		{ "ring", add_interface },
++		{ "master-lcore", add_master_lcore},
++		{ "core", add_core},
++		{ "classifier_table", add_classifier_table},
++		{ "", NULL }
++	};
++	memcpy(ops_list, tmp_ops_list, sizeof(tmp_ops_list));
++	if (unlikely(ops_list == NULL)) {
++		RTE_LOG(ERR, VF_CMD_RUNNER, "Failed to setup ops_list.\n");
++		return -1;
++	}
++
++	return 0;
++}
+-- 
+2.17.1
+
+

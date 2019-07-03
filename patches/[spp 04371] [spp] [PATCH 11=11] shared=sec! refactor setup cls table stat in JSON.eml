@@ -1,0 +1,413 @@
+Return-path: <fw-yama-hd@pomail01.silk.ntt-tx.co.jp>
+Received: from zssg-mailmd102.ddreams.local
+ (zssg-mailmd102.ddreams.local [10.160.123.97]) by zssg-mailms320.ddreams.local
+ (NTT DoCoMo Mail System) with ESMTP id <0PTL00UP00378Y40@NTTDoCoMo.co.jp> for
+ yamashita.hideyuki@ntt-tx.co.jp; Mon, 24 Jun 2019 11:25:55 +0900 (JST)
+Original-recipient: rfc822;yamashita.hideyuki@ntt-tx.co.jp
+Received: from smtp_saver-daemon.zssg-mailmd102.ddreams.local by
+ zssg-mailmd102.ddreams.local (dDREAMS) id <0PTL00Z0Q037MC00@dDREAMS> for
+ yamashita.hideyuki@ntt-tx.co.jp (ORCPT yamashita.hideyuki@ntt-tx.co.jp); Mon,
+ 24 Jun 2019 11:25:55 +0900 (JST)
+Received: from zssg-mailmf102.ddreams.local
+ (zssg-mailmf900.ddreams.local [10.160.172.84]) by zssg-mailmd102.ddreams.local
+ (dDREAMS) with ESMTP id <0PTL00V4T036YD20@dDREAMS> for
+ yamashita.hideyuki@ntt-tx.co.jp (ORCPT yamashita.hideyuki@ntt-tx.co.jp); Mon,
+ 24 Jun 2019 11:25:54 +0900 (JST)
+Received: from zssg-mailmf102.ddreams.local (unknown [127.0.0.1])
+	by zssg-mailmf102.ddreams.local (Postfix) with ESMTP id F30B87E6032	for
+ <yamashita.hideyuki@ntt-tx.co.jp>; Mon, 24 Jun 2019 11:25:54 +0900 (JST)
+Received: from zssg-mailmf102.ddreams.local (unknown [127.0.0.1])
+	by IMSVA (Postfix) with ESMTP id F1D598E6052	for
+ <yamashita.hideyuki@ntt-tx.co.jp>; Mon, 24 Jun 2019 11:25:54 +0900 (JST)
+Received: from localhost (unknown [127.0.0.1])	by IMSVA (Postfix)
+ with SMTP id E69368E6054	for <yamashita.hideyuki@ntt-tx.co.jp>; Mon,
+ 24 Jun 2019 11:25:54 +0900 (JST)
+X-IMSS-HAND-OFF-DIRECTIVE: localhost:10026
+Received: from zssg-mailmf102.ddreams.local (unknown [127.0.0.1])
+	by IMSVA (Postfix) with ESMTP id 775AA8E6054	for
+ <yamashita.hideyuki@ntt-tx.co.jp>; Mon, 24 Jun 2019 11:25:54 +0900 (JST)
+Received: from pomail01.silk.ntt-tx.co.jp (unknown [10.160.183.139])
+	by zssg-mailmf102.ddreams.local (Postfix)
+ with ESMTPS	for <yamashita.hideyuki@ntt-tx.co.jp>; Mon,
+ 24 Jun 2019 11:25:54 +0900 (JST)
+Received: from pomail01.silk.ntt-tx.co.jp (localhost [127.0.0.1])
+	by pomail01.silk.ntt-tx.co.jp (unknown) with ESMTP id x5O2PsTZ013689;	Mon,
+ 24 Jun 2019 11:25:54 +0900
+Received: (from yama-hd@localhost)	by pomail01.silk.ntt-tx.co.jp (unknown)
+ id x5O2PsfO013688;	Mon, 24 Jun 2019 11:25:54 +0900
+X-Authentication-warning: pomail01.silk.ntt-tx.co.jp: yama-hd set sender to
+ fw-yama-hd@pomail01.silk.ntt-tx.co.jp using -f
+Received: from imss04.silk.ntt-tx.co.jp
+ (imss04.silk.ntt-tx.co.jp [10.107.0.39])	by pomail01.silk.ntt-tx.co.jp
+ (unknown) with ESMTP id x5O2PsGc013685	for unknown; Mon,
+ 24 Jun 2019 11:25:54 +0900
+Received: from imss04.silk.ntt-tx.co.jp (localhost [127.0.0.1])
+ by imss04.silk.ntt-tx.co.jp (unknown) with ESMTP id x5O2Prf7006168 for
+ unknown; Mon, 24 Jun 2019 11:25:53 +0900
+Received: from ml01.silk.ntt-tx.co.jp (ml01.silk.ntt-tx.co.jp [10.107.0.230])
+ by imss04.silk.ntt-tx.co.jp (unknown) with ESMTP id x5O2PrWk006165; Mon,
+ 24 Jun 2019 11:25:53 +0900
+Received: from ml01.silk.ntt-tx.co.jp (localhost [127.0.0.1])
+	by ml01.silk.ntt-tx.co.jp (unknown) with ESMTP id x5O2Pr2n016559;	Mon,
+ 24 Jun 2019 11:25:53 +0900
+Received: from imss02.silk.ntt-tx.co.jp
+ (imss02.silk.ntt-tx.co.jp [10.107.0.127])	by ml01.silk.ntt-tx.co.jp (unknown)
+ with ESMTP id x5O2PrHB016555	for unknown; Mon, 24 Jun 2019 11:25:53 +0900
+Received: from imss02.silk.ntt-tx.co.jp (localhost [127.0.0.1])
+ by imss02.silk.ntt-tx.co.jp (unknown) with ESMTP id x5O2PrBl006818 for
+ unknown; Mon, 24 Jun 2019 11:25:53 +0900
+Received: from mail01.ics.ntt-tx.co.jp (mail01.ics.ntt-tx.co.jp [10.254.2.67])
+ by imss02.silk.ntt-tx.co.jp (unknown) with ESMTP id x5O2ProO006811 for
+ unknown; Mon, 24 Jun 2019 11:25:53 +0900
+Received: from dpdk.org (dpdk.org [92.243.14.124])	by mail01.ics.ntt-tx.co.jp
+ (unknown) with SMTP id x5O2PktC004010	for unknown; Mon,
+ 24 Jun 2019 11:25:52 +0900
+Received: from [92.243.14.124] (localhost [127.0.0.1])	by dpdk.org (Postfix)
+ with ESMTP id 38AE41BF70;	Mon, 24 Jun 2019 04:25:46 +0200 (CEST)
+Received: from mail-pf1-f196.google.com
+ (mail-pf1-f196.google.com [209.85.210.196]) by dpdk.org (Postfix)
+ with ESMTP id 19DAA1BF6D for <spp@dpdk.org>; Mon,
+ 24 Jun 2019 04:25:45 +0200 (CEST)
+Received: by mail-pf1-f196.google.com with SMTP id i189so6583711pfg.10 for
+ <spp@dpdk.org>; Sun, 23 Jun 2019 19:25:45 -0700 (PDT)
+Received: from localhost.localdomain ([192.47.164.146])
+ by smtp.gmail.com with ESMTPSA id a3sm9927461pje.3.2019.06.23.19.25.42
+ (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128); Sun,
+ 23 Jun 2019 19:25:43 -0700 (PDT)
+Date: Mon, 24 Jun 2019 11:25:04 +0900
+From: yasufum.o@gmail.com
+Subject: [spp 04371] [spp] [PATCH 11/11] shared/sec: refactor setup cls table
+ stat in	JSON
+Sender: spp <spp-bounces@dpdk.org>
+To: spp@dpdk.org, ferruh.yigit@intel.com, yasufum.o@gmail.com
+Message-id: <20190624022504.18752-12-yasufum.o@gmail.com>
+In-reply-to: <20190624022504.18752-1-yasufum.o@gmail.com>
+References: <20190624022504.18752-1-yasufum.o@gmail.com>
+X-ML-Name: unknown
+X-Mail-Count: 04371
+X-MLServer: unknown
+X-ML-Info: mailing list service
+X-Mailer: git-send-email 2.17.1
+Authentication-results: mail01.ics.ntt-tx.co.jp; spf=pass
+ smtp.mailfrom=spp-bounces@dpdk.org
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
+ h=from:to:subject:date:message-id:in-reply-to:references;
+ bh=+cbyUcBSoFrseuZIc7cwHYWVHW8HsBTCMsM4qQDAsBw=;
+ b=KAMm46Cqm8jQS2w23xmBk4BoS7mDmiBehpzz9g1YoS9ci8fb1pUoRhVqiOpMSsG/9U
+ +oX6VVwDatRSj1TYmZt3kzJv2UuzTAbOFSzkMDgI08T/VbZhDjKAe5Vd/DXe6lOi8nHF
+ oYxfWkjYGJRctpViOkWKfXFDm4cVgHLas5Zli03Sw789Txo5XZ84q7fg6RhCHbCxoBiU
+ wZyhXRbHVWgaAyYTU+ugaY3d1GBadc45uI4YnSbk+ESFuGS9FYscponc6KM+kAJNQWuE
+ 01x530oZlMETeXYjmWgbyH+ppH66asnD67dQse4LcY06nRJcmrIjgXj0cggS1iuPY3Vs CdVQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=1e100.net;
+ s=20161025; h=x-gm-message-state:from:to:subject:date:message-id:in-reply-to
+ :references; bh=+cbyUcBSoFrseuZIc7cwHYWVHW8HsBTCMsM4qQDAsBw=;
+ b=HpWBSlf97lvlREsK0agoqftKvVeg+Sa+hczJbeVxdPibu0NeVmh1La1qbyH5c6lbdI
+ a81Wuhijv2etW8wB/MqFgyKB/aHcGDYIHFRCr21/LtsGGPfGbW0oHI8Ndc8VZ8WLnlm0
+ PebzHVmj94CNJ6VSpUn+08yDVcxiSKMg8O4np/3tQttCncLfwA2FKghn1DYTqYwf7QmN
+ 1DezXCMcBktmYvNmopAoxswxNMHQNPB4cbNN2WRi0NbRTsAYn09NYhKUGckhuIuLsHwf
+ e1MKV7+VC9mI+npLhs6YmQ14L/xI4Q8EK5SXOh1ZvqYll1/iYfhFS6Mf6vpATazJLoCg huqg==
+X-Gm-Message-State: APjAAAVOoxq/8Pn+2+SO0RP0bDxbo5/qNZOapzCeztiVNi9dpydG56vV
+ 2Abd9itYNcsDgIntNRnjtBvYJn1v
+X-Google-Smtp-Source:
+ APXvYqyEwSiDkHvWzMS+/7Q9J/4lHAgn5/XsArQlcJO2Ir4gKZjiGb2EuOXvrEs04BaJcmHeBK4xPw==
+X-Received: by 2002:a17:90a:30cf:: with SMTP id
+ h73mr22275708pjb.42.1561343144123; Sun, 23 Jun 2019 19:25:44 -0700 (PDT)
+X-BeenThere: spp@dpdk.org
+X-Mailman-Version: 2.1.15
+List-Id: Soft Patch Panel <spp.dpdk.org>
+List-Unsubscribe: <https://mails.dpdk.org/options/spp>,
+ <mailto:spp-request@dpdk.org?subject=unsubscribe>
+List-Archive: <http://mails.dpdk.org/archives/spp/>
+List-Post: <mailto:spp@dpdk.org>
+List-Help: <mailto:spp-request@dpdk.org?subject=help>
+List-Subscribe: <https://mails.dpdk.org/listinfo/spp>,
+ <mailto:spp-request@dpdk.org?subject=subscribe>
+X-TM-AS-MML: No
+Precedence: bulk
+Lines: 282
+X-TM-AS-GCONF: 00
+X-MD-STAMP: ON
+
+From: Yasufumi Ogawa <yasufum.o@gmail.com>
+
+This update is to refactor setting up a list of entries in classifier
+table for `status` command. Names of function for setting up JSON are
+revised, but still hard to understand the features.
+append_classifier_table() for setting up the entries calls several
+nested functions as in the following order.
+
+  append_classifier_table()  // This function.
+    -> add_classifier_table()  // Wrapper and doesn't almost nothing.
+      -> add_classifier_table_val()  // Setup data and call iterator.
+        -> iterate_adding_mac_entry()
+
+Signed-off-by: Yasufumi Ogawa <yasufum.o@gmail.com>
+---
+ .../secondary/spp_worker_th/cmd_parser.c      |  2 +-
+ .../secondary/spp_worker_th/cmd_runner.c      | 25 ++++++--
+ .../secondary/spp_worker_th/cmd_utils.h       |  2 +-
+ src/shared/secondary/spp_worker_th/vf_deps.h  |  8 ++-
+ src/vf/classifier_mac.c                       | 64 +++++++++++--------
+ src/vf/classifier_mac.h                       |  2 +-
+ 6 files changed, 67 insertions(+), 36 deletions(-)
+
+diff --git a/src/shared/secondary/spp_worker_th/cmd_parser.c b/src/shared/secondary/spp_worker_th/cmd_parser.c
+index 55fc1d2..13e7013 100644
+--- a/src/shared/secondary/spp_worker_th/cmd_parser.c
++++ b/src/shared/secondary/spp_worker_th/cmd_parser.c
+@@ -651,7 +651,7 @@ parse_mac_addr(void *output, const char *arg_val,
+ 	const char *str_val = arg_val;
+ 
+ 	/* If given value is the default, use dummy address instead. */
+-	if (unlikely(strcmp(str_val, SPP_DEFAULT_CLASSIFIED_SPEC_STR) == 0))
++	if (unlikely(strcmp(str_val, SPPWK_TERM_DEFAULT) == 0))
+ 		str_val = SPP_DEFAULT_CLASSIFIED_DMY_ADDR_STR;
+ 
+ 	/* Check if the given value is valid. */
+diff --git a/src/shared/secondary/spp_worker_th/cmd_runner.c b/src/shared/secondary/spp_worker_th/cmd_runner.c
+index 856e79e..bc3ae06 100644
+--- a/src/shared/secondary/spp_worker_th/cmd_runner.c
++++ b/src/shared/secondary/spp_worker_th/cmd_runner.c
+@@ -561,12 +561,12 @@ spp_iterate_core_info(struct spp_iterate_core_params *params)
+ /* Iterate classifier_table to create response to status command */
+ #ifdef SPP_VF_MODULE
+ static int
+-spp_iterate_classifier_table(
++add_classifier_table(
+ 		struct spp_iterate_classifier_table_params *params)
+ {
+ 	int ret;
+ 
+-	ret = spp_classifier_mac_iterate_table(params);
++	ret = add_classifier_table_val(params);
+ 	if (unlikely(ret != 0)) {
+ 		RTE_LOG(ERR, WK_CMD_RUNNER, "Cannot iterate classifier_mac_table.\n");
+ 		return SPP_RET_NG;
+@@ -1219,7 +1219,10 @@ append_core_value(const char *name, char **output,
+ 	return ret;
+ }
+ 
+-/* append one element of classifier table for JSON format */
++/**
++ * Operator function called in iterator for getting each of entries of
++ * classifier table named as iterate_adding_mac_entry().
++ */
+ #ifdef SPP_VF_MODULE
+ static int
+ append_classifier_element_value(
+@@ -1276,10 +1279,18 @@ append_classifier_element_value(
+ }
+ #endif /* SPP_VF_MODULE */
+ 
+-/* append a list of classifier table for JSON format */
++/**
++ * Append entries of classifier table in JSON. Before iterating the entries,
++ * this function calls several nested functions.
++ *   append_classifier_table()  // This function.
++ *     -> add_classifier_table()  // Wrapper and doesn't almost nothing.
++ *       -> add_classifier_table_val()  // Setup data and call iterator.
++ *         -> iterate_adding_mac_entry()
++ *
++ */
+ #ifdef SPP_VF_MODULE
+ static int
+-append_classifier_table_value(const char *name, char **output,
++append_classifier_table(const char *name, char **output,
+ 		void *tmp __attribute__ ((unused)))
+ {
+ 	int ret = SPP_RET_NG;
+@@ -1296,7 +1307,7 @@ append_classifier_table_value(const char *name, char **output,
+ 	itr_params.output = tmp_buff;
+ 	itr_params.element_proc = append_classifier_element_value;
+ 
+-	ret = spp_iterate_classifier_table(&itr_params);
++	ret = add_classifier_table(&itr_params);
+ 	if (unlikely(ret != SPP_RET_OK)) {
+ 		spp_strbuf_free(itr_params.output);
+ 		return SPP_RET_NG;
+@@ -1388,7 +1399,7 @@ struct cmd_response response_info_list[] = {
+ 	{ "master-lcore", append_master_lcore_value },
+ 	{ "core", append_core_value },
+ #ifdef SPP_VF_MODULE
+-	{ "classifier_table", append_classifier_table_value },
++	{ "classifier_table", append_classifier_table},
+ #endif /* SPP_VF_MODULE */
+ 	{ "", NULL }
+ };
+diff --git a/src/shared/secondary/spp_worker_th/cmd_utils.h b/src/shared/secondary/spp_worker_th/cmd_utils.h
+index 1d6c332..b8ab10c 100644
+--- a/src/shared/secondary/spp_worker_th/cmd_utils.h
++++ b/src/shared/secondary/spp_worker_th/cmd_utils.h
+@@ -47,7 +47,7 @@
+ #define SPP_CORE_STATUS_CHECK_MAX 5
+ 
+ /** Character sting for default port of classifier */
+-#define SPP_DEFAULT_CLASSIFIED_SPEC_STR     "default"
++#define SPPWK_TERM_DEFAULT "default"
+ 
+ /** Value for default MAC address of classifier */
+ #define SPP_DEFAULT_CLASSIFIED_DMY_ADDR     0x010000000000
+diff --git a/src/shared/secondary/spp_worker_th/vf_deps.h b/src/shared/secondary/spp_worker_th/vf_deps.h
+index fb34215..beafc64 100644
+--- a/src/shared/secondary/spp_worker_th/vf_deps.h
++++ b/src/shared/secondary/spp_worker_th/vf_deps.h
+@@ -75,7 +75,13 @@ void init_classifier_info(int component_id);
+ 
+ void uninit_component_info(struct cls_comp_info *cmp_info);
+ 
+-int spp_classifier_mac_iterate_table(
++/**
++ * Setup data of classifier table and call iterator function for getting
++ * each of entries.
++ *
++ * @params[in] params Object which has pointer of operator func and attrs.
++ */
++int add_classifier_table_val(
+ 		struct spp_iterate_classifier_table_params *params);
+ 
+ /**
+diff --git a/src/vf/classifier_mac.c b/src/vf/classifier_mac.c
+index 9023a69..8d677a9 100644
+--- a/src/vf/classifier_mac.c
++++ b/src/vf/classifier_mac.c
+@@ -224,6 +224,7 @@ log_classification(
+ 		log_classification(clsd_idx, pkt, cmp_info, clsd_data, \
+ 				__func__, __LINE__)
+ 
++/* Log DEBUG message for classified MAC and VLAN info. */
+ static void
+ log_entry(
+ 		long clsd_idx,
+@@ -852,13 +853,17 @@ get_classifier_status(unsigned int lcore_id, int id,
+ 	return SPP_RET_OK;
+ }
+ 
++/**
++ * For setting up a response for `status` command, iterate adding each of
++ * entries in MAC address table to the result message.
++ */
+ static void
+-mac_classification_iterate_table(
++iterate_adding_mac_entry(
+ 		struct spp_iterate_classifier_table_params *params,
+ 		uint16_t vid,
+ 		struct mac_classifier *mac_cls,
+ 		__rte_unused struct cls_comp_info *cmp_info,
+-		struct cls_port_info *clsd_data)
++		struct cls_port_info *port_info)
+ {
+ 	int ret;
+ 	const void *key;
+@@ -873,18 +878,20 @@ mac_classification_iterate_table(
+ 		type = SPP_CLASSIFIER_TYPE_MAC;
+ 
+ 	if (mac_cls->default_cls_idx >= 0) {
+-		port.iface_type = (clsd_data +
++		port.iface_type = (port_info +
+ 				mac_cls->default_cls_idx)->iface_type;
+-		port.iface_no   = (clsd_data +
++		port.iface_no = (port_info +
+ 				mac_cls->default_cls_idx)->iface_no_global;
+ 
+-		LOG_ENT((long)mac_cls->default_cls_idx,
+-				vid,
+-				SPP_DEFAULT_CLASSIFIED_SPEC_STR,
+-				cmp_info, clsd_data);
+-
+-		(*params->element_proc)(params, type, vid,
+-				SPP_DEFAULT_CLASSIFIED_SPEC_STR, &port);
++		/* Logging DEBUG message. */
++		LOG_ENT((long)mac_cls->default_cls_idx, vid,
++				SPPWK_TERM_DEFAULT, cmp_info, port_info);
++		/**
++		 * Append "default" entry. `element_proc` is a funciton
++		 * pointer to append_classifier_element_value().
++		 */
++		(*params->element_proc)(params, type, vid, SPPWK_TERM_DEFAULT,
++				&port);
+ 	}
+ 
+ 	next = 0;
+@@ -897,25 +904,32 @@ mac_classification_iterate_table(
+ 		ether_format_addr(mac_addr_str, sizeof(mac_addr_str),
+ 				(const struct ether_addr *)key);
+ 
+-		port.iface_type = (clsd_data + (long)data)->iface_type;
+-		port.iface_no   = (clsd_data + (long)data)->iface_no_global;
++		port.iface_type = (port_info + (long)data)->iface_type;
++		port.iface_no = (port_info + (long)data)->iface_no_global;
+ 
+-		LOG_ENT((long)data, vid, mac_addr_str, cmp_info, clsd_data);
++		LOG_ENT((long)data, vid, mac_addr_str, cmp_info, port_info);
+ 
++		/**
++		 * Append each entry of MAC address. `element_proc` is a
++		 * funciton pointer to append_classifier_element_value().
++		 */
+ 		(*params->element_proc)(params, type, vid, mac_addr_str,
+ 				&port);
+ 	}
+ }
+ 
+-/* classifier(mac address) iterate classifier table. */
++/**
++ * Setup data of classifier table and call iterator function for getting
++ * each of entries.
++ */
+ int
+-spp_classifier_mac_iterate_table(
++add_classifier_table_val(
+ 		struct spp_iterate_classifier_table_params *params)
+ {
+-	int i, n;
++	int i, vlan_id;
+ 	struct management_info *mng_info;
+ 	struct cls_comp_info *cmp_info;
+-	struct cls_port_info *clsd_data;
++	struct cls_port_info *port_info;
+ 
+ 	for (i = 0; i < RTE_MAX_LCORE; i++) {
+ 		mng_info = g_mng_infos + i;
+@@ -923,18 +937,18 @@ spp_classifier_mac_iterate_table(
+ 			continue;
+ 
+ 		cmp_info = mng_info->cmp_infos + mng_info->ref_index;
+-		clsd_data = cmp_info->tx_ports_i;
++		port_info = cmp_info->tx_ports_i;
+ 
+ 		RTE_LOG(DEBUG, SPP_CLASSIFIER_MAC,
+-			"Core[%u] Start iterate classifier table.\n", i);
++			"Start iterate classifier table on lcore %u.\n", i);
+ 
+-		for (n = 0; n < NOF_VLAN; ++n) {
+-			if (cmp_info->mac_clfs[n] == NULL)
++		for (vlan_id = 0; vlan_id < NOF_VLAN; ++vlan_id) {
++			if (cmp_info->mac_clfs[vlan_id] == NULL)
+ 				continue;
+ 
+-			mac_classification_iterate_table(params, (uint16_t) n,
+-					cmp_info->mac_clfs[n], cmp_info,
+-					clsd_data);
++			iterate_adding_mac_entry(params, (uint16_t) vlan_id,
++					cmp_info->mac_clfs[vlan_id], cmp_info,
++					port_info);
+ 		}
+ 	}
+ 
+diff --git a/src/vf/classifier_mac.h b/src/vf/classifier_mac.h
+index d3c5ab6..21433e6 100644
+--- a/src/vf/classifier_mac.h
++++ b/src/vf/classifier_mac.h
+@@ -56,7 +56,7 @@ int spp_classifier_mac_do(int id);
+  * @retval SPP_RET_OK succeeded.
+  * @retval SPP_RET_NG failed.
+  */
+-int spp_classifier_mac_iterate_table(
++int add_classifier_table_val(
+ 		struct spp_iterate_classifier_table_params *params);
+ 
+ #endif /* _CLASSIFIER_MAC_H_ */
+-- 
+2.17.1
+
+

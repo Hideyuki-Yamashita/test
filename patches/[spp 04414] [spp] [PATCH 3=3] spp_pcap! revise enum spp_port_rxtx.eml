@@ -1,0 +1,223 @@
+Return-path: <fw-yama-hd@pomail01.silk.ntt-tx.co.jp>
+Received: from zssg-mailmd103.ddreams.local
+ (zssg-mailmd103.ddreams.local [10.160.123.98]) by zssg-mailms320.ddreams.local
+ (NTT DoCoMo Mail System) with ESMTP id <0PTL00DEOHGGNO90@NTTDoCoMo.co.jp> for
+ yamashita.hideyuki@ntt-tx.co.jp; Mon, 24 Jun 2019 17:41:04 +0900 (JST)
+Original-recipient: rfc822;yamashita.hideyuki@ntt-tx.co.jp
+Received: from smtp_saver-daemon.zssg-mailmd103.ddreams.local by
+ zssg-mailmd103.ddreams.local (dDREAMS) id <0PTL0170OHGG8B00@dDREAMS> for
+ yamashita.hideyuki@ntt-tx.co.jp (ORCPT yamashita.hideyuki@ntt-tx.co.jp); Mon,
+ 24 Jun 2019 17:41:04 +0900 (JST)
+Received: from zssg-mailmf101.ddreams.local
+ (zssg-mailmf900.ddreams.local [10.160.172.84]) by zssg-mailmd103.ddreams.local
+ (dDREAMS) with ESMTP id <0PTL00UVDHGFT460@dDREAMS> for
+ yamashita.hideyuki@ntt-tx.co.jp (ORCPT yamashita.hideyuki@ntt-tx.co.jp); Mon,
+ 24 Jun 2019 17:41:04 +0900 (JST)
+Received: from zssg-mailmf101.ddreams.local (unknown [127.0.0.1])
+	by zssg-mailmf101.ddreams.local (Postfix) with ESMTP id C04617E603D	for
+ <yamashita.hideyuki@ntt-tx.co.jp>; Mon, 24 Jun 2019 17:41:04 +0900 (JST)
+Received: from zssg-mailmf101.ddreams.local (unknown [127.0.0.1])
+	by IMSVA (Postfix) with ESMTP id BEB488E605C	for
+ <yamashita.hideyuki@ntt-tx.co.jp>; Mon, 24 Jun 2019 17:41:04 +0900 (JST)
+Received: from localhost (unknown [127.0.0.1])	by IMSVA (Postfix)
+ with SMTP id BD30D8E6054	for <yamashita.hideyuki@ntt-tx.co.jp>; Mon,
+ 24 Jun 2019 17:41:04 +0900 (JST)
+X-IMSS-HAND-OFF-DIRECTIVE: localhost:10026
+Received: from zssg-mailmf101.ddreams.local (unknown [127.0.0.1])
+	by IMSVA (Postfix) with ESMTP id 667318E6056	for
+ <yamashita.hideyuki@ntt-tx.co.jp>; Mon, 24 Jun 2019 17:41:04 +0900 (JST)
+Received: from pomail01.silk.ntt-tx.co.jp (unknown [10.160.183.139])
+	by zssg-mailmf101.ddreams.local (Postfix)
+ with ESMTPS	for <yamashita.hideyuki@ntt-tx.co.jp>; Mon,
+ 24 Jun 2019 17:41:04 +0900 (JST)
+Received: from pomail01.silk.ntt-tx.co.jp (localhost [127.0.0.1])
+	by pomail01.silk.ntt-tx.co.jp (unknown) with ESMTP id x5O8f48L008123;	Mon,
+ 24 Jun 2019 17:41:04 +0900
+Received: (from yama-hd@localhost)	by pomail01.silk.ntt-tx.co.jp (unknown)
+ id x5O8f4CN008122;	Mon, 24 Jun 2019 17:41:04 +0900
+X-Authentication-warning: pomail01.silk.ntt-tx.co.jp: yama-hd set sender to
+ fw-yama-hd@pomail01.silk.ntt-tx.co.jp using -f
+Received: from imss04.silk.ntt-tx.co.jp
+ (imss04.silk.ntt-tx.co.jp [10.107.0.39])	by pomail01.silk.ntt-tx.co.jp
+ (unknown) with ESMTP id x5O8f4AQ008119	for unknown; Mon,
+ 24 Jun 2019 17:41:04 +0900
+Received: from imss04.silk.ntt-tx.co.jp (localhost [127.0.0.1])
+ by imss04.silk.ntt-tx.co.jp (unknown) with ESMTP id x5O8f3t3032618 for
+ unknown; Mon, 24 Jun 2019 17:41:03 +0900
+Received: from ml01.silk.ntt-tx.co.jp (ml01.silk.ntt-tx.co.jp [10.107.0.230])
+ by imss04.silk.ntt-tx.co.jp (unknown) with ESMTP id x5O8f3pF032613; Mon,
+ 24 Jun 2019 17:41:03 +0900
+Received: from ml01.silk.ntt-tx.co.jp (localhost [127.0.0.1])
+	by ml01.silk.ntt-tx.co.jp (unknown) with ESMTP id x5O8f3bH028651;	Mon,
+ 24 Jun 2019 17:41:03 +0900
+Received: from imss02.silk.ntt-tx.co.jp
+ (imss02.silk.ntt-tx.co.jp [10.107.0.127])	by ml01.silk.ntt-tx.co.jp (unknown)
+ with ESMTP id x5O8f3ak028647	for unknown; Mon, 24 Jun 2019 17:41:03 +0900
+Received: from imss02.silk.ntt-tx.co.jp (localhost [127.0.0.1])
+ by imss02.silk.ntt-tx.co.jp (unknown) with ESMTP id x5O8f3EP025135 for
+ unknown; Mon, 24 Jun 2019 17:41:03 +0900
+Received: from mail01.ics.ntt-tx.co.jp (mail01.ics.ntt-tx.co.jp [10.254.2.67])
+ by imss02.silk.ntt-tx.co.jp (unknown) with ESMTP id x5O8f3V0025128 for
+ unknown; Mon, 24 Jun 2019 17:41:03 +0900
+Received: from dpdk.org (dpdk.org [92.243.14.124])	by mail01.ics.ntt-tx.co.jp
+ (unknown) with SMTP id x5O8euU1005237	for unknown; Mon,
+ 24 Jun 2019 17:41:02 +0900
+Received: from [92.243.14.124] (localhost [127.0.0.1])	by dpdk.org (Postfix)
+ with ESMTP id D100A1BF3D;	Mon, 24 Jun 2019 10:40:55 +0200 (CEST)
+Received: from mail-pl1-f196.google.com
+ (mail-pl1-f196.google.com [209.85.214.196]) by dpdk.org (Postfix)
+ with ESMTP id EA0BF1BF3C for <spp@dpdk.org>; Mon,
+ 24 Jun 2019 10:40:53 +0200 (CEST)
+Received: by mail-pl1-f196.google.com with SMTP id bi6so6472569plb.12 for
+ <spp@dpdk.org>; Mon, 24 Jun 2019 01:40:53 -0700 (PDT)
+Received: from localhost.localdomain ([192.47.164.146])
+ by smtp.gmail.com with ESMTPSA id 30sm28759534pjk.17.2019.06.24.01.40.51
+ (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128); Mon,
+ 24 Jun 2019 01:40:52 -0700 (PDT)
+Date: Mon, 24 Jun 2019 17:40:43 +0900
+From: yasufum.o@gmail.com
+Subject: [spp 04414] [spp] [PATCH 3/3] spp_pcap: revise enum spp_port_rxtx
+Sender: spp <spp-bounces@dpdk.org>
+To: spp@dpdk.org, ferruh.yigit@intel.com, yasufum.o@gmail.com
+Message-id: <20190624084043.23718-4-yasufum.o@gmail.com>
+In-reply-to: <20190624084043.23718-1-yasufum.o@gmail.com>
+References: <20190624084043.23718-1-yasufum.o@gmail.com>
+X-ML-Name: unknown
+X-Mail-Count: 04414
+X-MLServer: unknown
+X-ML-Info: mailing list service
+X-Mailer: git-send-email 2.17.1
+Authentication-results: mail01.ics.ntt-tx.co.jp; spf=pass
+ smtp.mailfrom=spp-bounces@dpdk.org
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
+ h=from:to:subject:date:message-id:in-reply-to:references;
+ bh=iVV2oib/h+WQEDKywP6TXQs8AhFaDH7Y6moZ12STyj4=;
+ b=vNlVCHT+onHPqf8hl9ppjD91ozjzj5bba13Ex8wIU7oDka0WyBC3JBL4Xdxb0MDksk
+ rvDXKHK69TAssBgkjHvOdt9jjTFTtcV/PZbmY/aYM4FGVj9thLG9d/0/BkXRsWK0hBRU
+ PwhGnht6UOfKVQSu1f3OYr/pIibADW/kxFohiJXOmtfrrdnbvq5d7RJyfrDzhaBG/9NL
+ m13nBDXXplom6uisBhyj4/CvWcb+NJ34evgitkmFRQVaC8StX29aebZ/Lh6Wpp6kh31C
+ 0KZ3rKcG2ube5DUvglzyVh8z5dbqj+nJQpAYsJudnDNu21lDwOqzrcePF9eZNQ4TVol1 jytw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=1e100.net;
+ s=20161025; h=x-gm-message-state:from:to:subject:date:message-id:in-reply-to
+ :references; bh=iVV2oib/h+WQEDKywP6TXQs8AhFaDH7Y6moZ12STyj4=;
+ b=D8iPnU6dq3RWzwueAYTCSrf+sdpLsU8d1sLV9gia+/OFp11NCGkc5X8ejE1JqslXLi
+ s8ic45QUOyGq/6pU6HmkRfkJVhFYageWkWF6AujK8gSZ8Jr7OMkVohQyynvvGB0o1gHf
+ 5yx49c1bRWCv+Kw7VVK0lVfKcIiGzZjNqcBl5aJqaAMxg4AXdLu/wYCXsfd3Eyc0EOEg
+ Te6w3jtvXR6XYXa2wiFzhyarabCpgG6wLhr/rqoAjAql1deL6Ypxtsz/pf8XQsrtZIdx
+ yEdRdLmovb8meHfi2kIzXuQf8c5U0flxjtxIADjRshqCRMaxd3Lcs6Z8oa51QS0kt2rc WBwA==
+X-Gm-Message-State: APjAAAUQlBGSF6+XRkPcyfxefcV8lNyghw/a0iVu7MmfH7cD3y3g6SO7
+ 850QepJtF3C5Qj8Hq8zjb1fKAzca
+X-Google-Smtp-Source:
+ APXvYqyg2dTSK1GGvLMAfuRHhfMqcUH+jsegRDPDtVevoIzornarwojR6bbdL4mPgmMXCQR+P/OH+w==
+X-Received: by 2002:a17:902:8f81:: with SMTP id
+ z1mr79037475plo.290.1561365653139; Mon, 24 Jun 2019 01:40:53 -0700 (PDT)
+X-BeenThere: spp@dpdk.org
+X-Mailman-Version: 2.1.15
+List-Id: Soft Patch Panel <spp.dpdk.org>
+List-Unsubscribe: <https://mails.dpdk.org/options/spp>,
+ <mailto:spp-request@dpdk.org?subject=unsubscribe>
+List-Archive: <http://mails.dpdk.org/archives/spp/>
+List-Post: <mailto:spp@dpdk.org>
+List-Help: <mailto:spp-request@dpdk.org?subject=help>
+List-Subscribe: <https://mails.dpdk.org/listinfo/spp>,
+ <mailto:spp-request@dpdk.org?subject=subscribe>
+X-TM-AS-MML: No
+Precedence: bulk
+Lines: 93
+X-TM-AS-GCONF: 00
+X-MD-STAMP: ON
+
+From: Yasufumi Ogawa <yasufum.o@gmail.com>
+
+This update is to revise the name of enum `spp_port_rxtx` to
+`sppwk_port_dir` because it is used to specify which of direction
+packets are forwarded on a port. Term `rxtx` is used for a set of RX and
+TX, so it should not be used for specifying the direction. This update
+is also rename members of the enum, and a member of structs using this
+enum from `rxtx` to `dir`.
+
+Signed-off-by: Yasufumi Ogawa <yasufum.o@gmail.com>
+---
+ src/pcap/cmd_runner.c |  8 ++++----
+ src/pcap/cmd_utils.h  | 17 +++++++----------
+ 2 files changed, 11 insertions(+), 14 deletions(-)
+
+diff --git a/src/pcap/cmd_runner.c b/src/pcap/cmd_runner.c
+index 4a74af2..7f17d40 100644
+--- a/src/pcap/cmd_runner.c
++++ b/src/pcap/cmd_runner.c
+@@ -399,7 +399,7 @@ append_client_id_value(const char *name, char **output,
+ /* append a block of port entry for JSON format */
+ static int
+ append_port_entry(char **output, const struct sppwk_port_idx *port,
+-		const enum spp_port_rxtx rxtx __attribute__ ((unused)))
++		const enum sppwk_port_dir dir __attribute__ ((unused)))
+ {
+ 	int ret = SPPWK_RET_NG;
+ 	char port_str[CMD_TAG_APPEND_SIZE];
+@@ -424,7 +424,7 @@ append_port_entry(char **output, const struct sppwk_port_idx *port,
+ static int
+ append_port_array(const char *name, char **output, const int num,
+ 		const struct sppwk_port_idx *ports,
+-		const enum spp_port_rxtx rxtx)
++		const enum sppwk_port_dir dir)
+ {
+ 	int ret = SPPWK_RET_NG;
+ 	int i = 0;
+@@ -437,7 +437,7 @@ append_port_array(const char *name, char **output, const int num,
+ 	}
+ 
+ 	for (i = 0; i < num; i++) {
+-		ret = append_port_entry(&tmp_buff, &ports[i], rxtx);
++		ret = append_port_entry(&tmp_buff, &ports[i], dir);
+ 		if (unlikely(ret < SPPWK_RET_OK))
+ 			return SPPWK_RET_NG;
+ 	}
+@@ -493,7 +493,7 @@ append_pcap_core_element_value(
+ 
+ 	if (num_rx != 0)
+ 		ret = append_port_array("rx_port", &tmp_buff,
+-				num_rx, rx_ports, SPP_PORT_RXTX_RX);
++				num_rx, rx_ports, SPPWK_PORT_DIR_RX);
+ 	else
+ 		ret = append_json_str_value("filename", &tmp_buff, name);
+ 	if (unlikely(ret < 0))
+diff --git a/src/pcap/cmd_utils.h b/src/pcap/cmd_utils.h
+index 5528e00..d38e0eb 100644
+--- a/src/pcap/cmd_utils.h
++++ b/src/pcap/cmd_utils.h
+@@ -59,15 +59,12 @@ enum sppwk_return_val {
+ 	SPPWK_RET_NG = -1, /**< failed */
+ };
+ 
+-/**
+- * Port type (rx or tx) to indicate which direction packet goes
+- * (e.g. receiving or transmitting)
+- */
+-enum spp_port_rxtx {
+-	SPP_PORT_RXTX_NONE, /**< none */
+-	SPP_PORT_RXTX_RX,   /**< rx port */
+-	SPP_PORT_RXTX_TX,   /**< tx port */
+-	SPP_PORT_RXTX_ALL,  /**< rx/tx port */
++/* Direction of RX or TX on a port. */
++enum sppwk_port_dir {
++	SPPWK_PORT_DIR_NONE,  /**< None */
++	SPPWK_PORT_DIR_RX,    /**< RX port */
++	SPPWK_PORT_DIR_TX,    /**< TX port */
++	SPPWK_PORT_DIR_BOTH,  /**< Both of RX and TX */
+ };
+ 
+ /* TODO(yasufum) merge it to the same definition in shared/.../cmd_utils.h */
+@@ -122,7 +119,7 @@ union spp_ability_data {
+ /** Port ability information */
+ struct spp_port_ability {
+ 	enum spp_port_ability_ope ope; /**< Operation */
+-	enum spp_port_rxtx rxtx;       /**< rx/tx identifier */
++	enum sppwk_port_dir dir;  /**< Direction of RX, TX or both */
+ 	union spp_ability_data data;   /**< Port ability data */
+ };
+ 
+-- 
+2.17.1
+
+

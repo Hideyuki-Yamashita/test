@@ -1,0 +1,883 @@
+Return-path: <fw-yama-hd@pomail01.silk.ntt-tx.co.jp>
+Received: from zssg-mailmd105.ddreams.local
+ (zssg-mailmd105.ddreams.local [10.160.123.100])
+ by zssg-mailms320.ddreams.local (NTT DoCoMo Mail System)
+ with ESMTP id <0PTY00XX63OT1U10@NTTDoCoMo.co.jp> for
+ yamashita.hideyuki@ntt-tx.co.jp; Mon, 01 Jul 2019 13:12:29 +0900 (JST)
+Original-recipient: rfc822;yamashita.hideyuki@ntt-tx.co.jp
+Received: from smtp_saver-daemon.zssg-mailmd105.ddreams.local by
+ zssg-mailmd105.ddreams.local (dDREAMS) id <0PTY01A0Y3OTWC00@dDREAMS> for
+ yamashita.hideyuki@ntt-tx.co.jp (ORCPT yamashita.hideyuki@ntt-tx.co.jp); Mon,
+ 01 Jul 2019 13:12:29 +0900 (JST)
+Received: from zssg-mailmf103.ddreams.local
+ (zssg-mailmf900.ddreams.local [10.160.172.84]) by zssg-mailmd105.ddreams.local
+ (dDREAMS) with ESMTP id <0PTY00XUW3OTGS70@dDREAMS> for
+ yamashita.hideyuki@ntt-tx.co.jp (ORCPT yamashita.hideyuki@ntt-tx.co.jp); Mon,
+ 01 Jul 2019 13:12:29 +0900 (JST)
+Received: from zssg-mailmf103.ddreams.local (unknown [127.0.0.1])
+	by zssg-mailmf103.ddreams.local (Postfix) with ESMTP id 61B837E6036	for
+ <yamashita.hideyuki@ntt-tx.co.jp>; Mon,  1 Jul 2019 13:12:29 +0900 (JST)
+Received: from zssg-mailmf103.ddreams.local (unknown [127.0.0.1])
+	by IMSVA (Postfix) with ESMTP id 605CD8E6056	for
+ <yamashita.hideyuki@ntt-tx.co.jp>; Mon,  1 Jul 2019 13:12:29 +0900 (JST)
+Received: from localhost (unknown [127.0.0.1])	by IMSVA (Postfix)
+ with SMTP id 5548F8E6054	for <yamashita.hideyuki@ntt-tx.co.jp>; Mon,
+ 1 Jul 2019 13:12:29 +0900 (JST)
+X-IMSS-HAND-OFF-DIRECTIVE: localhost:10026
+Received: from zssg-mailmf103.ddreams.local (unknown [127.0.0.1])
+	by IMSVA (Postfix) with ESMTP id 868ED8E6056	for
+ <yamashita.hideyuki@ntt-tx.co.jp>; Mon,  1 Jul 2019 13:12:28 +0900 (JST)
+Received: from pomail01.silk.ntt-tx.co.jp (unknown [10.160.183.139])
+	by zssg-mailmf103.ddreams.local (Postfix)
+ with ESMTPS	for <yamashita.hideyuki@ntt-tx.co.jp>; Mon,
+ 1 Jul 2019 13:12:28 +0900 (JST)
+Received: from pomail01.silk.ntt-tx.co.jp (localhost [127.0.0.1])
+	by pomail01.silk.ntt-tx.co.jp (unknown) with ESMTP id x614CSpn015767;	Mon,
+ 1 Jul 2019 13:12:28 +0900
+Received: (from yama-hd@localhost)	by pomail01.silk.ntt-tx.co.jp (unknown)
+ id x614CS1B015766;	Mon, 1 Jul 2019 13:12:28 +0900
+X-Authentication-warning: pomail01.silk.ntt-tx.co.jp: yama-hd set sender to
+ fw-yama-hd@pomail01.silk.ntt-tx.co.jp using -f
+Received: from imss04.silk.ntt-tx.co.jp
+ (imss04.silk.ntt-tx.co.jp [10.107.0.39])	by pomail01.silk.ntt-tx.co.jp
+ (unknown) with ESMTP id x614CSg4015763	for unknown; Mon,
+ 1 Jul 2019 13:12:28 +0900
+Received: from imss04.silk.ntt-tx.co.jp (localhost [127.0.0.1])
+ by imss04.silk.ntt-tx.co.jp (unknown) with ESMTP id x614CRih030185 for
+ unknown; Mon, 1 Jul 2019 13:12:28 +0900
+Received: from ml01.silk.ntt-tx.co.jp (ml01.silk.ntt-tx.co.jp [10.107.0.230])
+ by imss04.silk.ntt-tx.co.jp (unknown) with ESMTP id x614CRKH030182; Mon,
+ 1 Jul 2019 13:12:27 +0900
+Received: from ml01.silk.ntt-tx.co.jp (localhost [127.0.0.1])
+	by ml01.silk.ntt-tx.co.jp (unknown) with ESMTP id x614CRwo019812;	Mon,
+ 1 Jul 2019 13:12:27 +0900
+Received: from imss02.silk.ntt-tx.co.jp
+ (imss02.silk.ntt-tx.co.jp [10.107.0.127])	by ml01.silk.ntt-tx.co.jp (unknown)
+ with ESMTP id x614CRJd019808	for unknown; Mon, 1 Jul 2019 13:12:27 +0900
+Received: from imss02.silk.ntt-tx.co.jp (localhost [127.0.0.1])
+ by imss02.silk.ntt-tx.co.jp (unknown) with ESMTP id x614CRIR025439 for
+ unknown; Mon, 1 Jul 2019 13:12:27 +0900
+Received: from mail01.ics.ntt-tx.co.jp (mail01.ics.ntt-tx.co.jp [10.254.2.67])
+ by imss02.silk.ntt-tx.co.jp (unknown) with ESMTP id x614CR2D025432 for
+ unknown; Mon, 1 Jul 2019 13:12:27 +0900
+Received: from dpdk.org (dpdk.org [92.243.14.124])	by mail01.ics.ntt-tx.co.jp
+ (unknown) with SMTP id x614CKww006946	for unknown; Mon,
+ 1 Jul 2019 13:12:26 +0900
+Received: from [92.243.14.124] (localhost [127.0.0.1])	by dpdk.org (Postfix)
+ with ESMTP id 5543C374C;	Mon,  1 Jul 2019 06:12:20 +0200 (CEST)
+Received: from mail-pl1-f182.google.com
+ (mail-pl1-f182.google.com [209.85.214.182]) by dpdk.org (Postfix)
+ with ESMTP id AD556325F for <spp@dpdk.org>; Mon,
+ 1 Jul 2019 06:12:18 +0200 (CEST)
+Received: by mail-pl1-f182.google.com with SMTP id i2so6609269plt.1 for
+ <spp@dpdk.org>; Sun, 30 Jun 2019 21:12:18 -0700 (PDT)
+Received: from localhost.localdomain ([192.47.164.146])
+ by smtp.gmail.com with ESMTPSA id j21sm9531126pfh.86.2019.06.30.21.12.16
+ (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128); Sun,
+ 30 Jun 2019 21:12:17 -0700 (PDT)
+Date: Mon, 01 Jul 2019 13:12:10 +0900
+From: yasufum.o@gmail.com
+Subject: [spp 04463] [spp] [PATCH 1/2] shared/sec: fix compile error of
+ ringlatencystats
+Sender: spp <spp-bounces@dpdk.org>
+To: spp@dpdk.org, ferruh.yigit@intel.com, yasufum.o@gmail.com
+Message-id: <20190701041211.34060-2-yasufum.o@gmail.com>
+In-reply-to: <20190701041211.34060-1-yasufum.o@gmail.com>
+References: <20190701041211.34060-1-yasufum.o@gmail.com>
+X-ML-Name: unknown
+X-Mail-Count: 04463
+X-MLServer: unknown
+X-ML-Info: mailing list service
+X-Mailer: git-send-email 2.17.1
+Authentication-results: mail01.ics.ntt-tx.co.jp; spf=pass
+ smtp.mailfrom=spp-bounces@dpdk.org
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
+ h=from:to:subject:date:message-id:in-reply-to:references;
+ bh=z5WTmbw32DRAaxhPrJjBUFI5nonpUWukoeF5wW10/Bo=;
+ b=oVwQ0xVdT/J9ezU6Uy7r1xFC4UPnyd5uroZ6zVcf4g4q8Ulko/h0jBmLKJjXpzl8dN
+ HzOGtuLy9J4J/3yVkDJyTpspcRspPUQhAyr5Hq5MiLv0NBqocap5mWmuvrTGWLP6WOru
+ zGX8M/iVNa991jU2mcD1jZQ1CyC94wrIWfD/b7SAMN99RC208pyKPZqXq0R/iNGzNsiQ
+ NA7CtJ2Q/8WsuIok5793oPnn3ELojYia2IiQWcTC64M6eth9DRfwdbpfY3tlXOwmnbMy
+ co1fHfq8zf+gE8MDXLTAM6NoPmZZuukKhkNMUu8nWGO1CNzclizmybcEUOoX1rRUkH6Y 1oHQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=1e100.net;
+ s=20161025; h=x-gm-message-state:from:to:subject:date:message-id:in-reply-to
+ :references; bh=z5WTmbw32DRAaxhPrJjBUFI5nonpUWukoeF5wW10/Bo=;
+ b=D95l4Bu6U/o2yr8nk63jiDM3vy45KOnKbgQfuJwtHe2bW9wgLDtfoUgY6jiQNy5jC6
+ ezw/BD+72Ixn/08qJB7UE1/es5v1h8F63gQx+R192c4xGRMMhVrVXSIrJeIYYkGWZ5mb
+ JQuyjQ5JTnfw5Q1rLDo9LxI/s/bABWpBsXyDy7VZmcycIcZRYnB8tIwFJplqUZgT57z6
+ IR7n6CTI61li1n3Pr0ZylgnLUvl6jdbQPcYdK/XdifT9wq1HwyA+Fz/mYRMYjCCcNe54
+ Q720e10Lo4hHU2295Ym8JcyVU49SSPxdXmYLfGopA+Cm1u4nULSrFDm/DdhbiLi0ocqc 7Dbg==
+X-Gm-Message-State: APjAAAVvCD1Mw1RXvQa+elVcR8N5KUhDlpbXtq/Y5ZXfLa7WkEyx0btS
+ yZ/b3cMP7CP/Nq6HiOTw0wZ+tGde
+X-Google-Smtp-Source:
+ APXvYqzAMLXlPuQOBsTt62HjqWTntAVHsBDeO8m0N1V/ZFbDzqqmWTW1BkpKkl/bFJ7peBVb2Ri5PQ==
+X-Received: by 2002:a17:902:704a:: with SMTP id
+ h10mr25922205plt.337.1561954337521; Sun, 30 Jun 2019 21:12:17 -0700 (PDT)
+X-BeenThere: spp@dpdk.org
+X-Mailman-Version: 2.1.15
+List-Id: Soft Patch Panel <spp.dpdk.org>
+List-Unsubscribe: <https://mails.dpdk.org/options/spp>,
+ <mailto:spp-request@dpdk.org?subject=unsubscribe>
+List-Archive: <http://mails.dpdk.org/archives/spp/>
+List-Post: <mailto:spp@dpdk.org>
+List-Help: <mailto:spp-request@dpdk.org?subject=help>
+List-Subscribe: <https://mails.dpdk.org/listinfo/spp>,
+ <mailto:spp-request@dpdk.org?subject=subscribe>
+X-TM-AS-MML: No
+Precedence: bulk
+Lines: 751
+X-TM-AS-GCONF: 00
+X-MD-STAMP: ON
+
+From: Yasufumi Ogawa <yasufum.o@gmail.com>
+
+As refactored each of burst functions of SPP workers in previous
+patches, it causes compile errors if `DSPP_RINGLATENCYSTATS_ENABLE` is
+activated in each of Makefiles.
+
+This update is to fix this issue. Both of burst functions for
+supporting ring latency statistics are moved to `ringlatencystats.c`.
+
+Signed-off-by: Yasufumi Ogawa <yasufum.o@gmail.com>
+---
+ src/mirror/spp_mirror.c                       | 36 +++++++--
+ src/pcap/spp_pcap.c                           | 12 ++-
+ .../secondary/spp_worker_th/cmd_utils.c       | 40 ---------
+ .../secondary/spp_worker_th/cmd_utils.h       |  5 --
+ .../secondary/spp_worker_th/port_capability.c | 60 ++++++++++----
+ .../secondary/spp_worker_th/port_capability.h |  4 +-
+ .../spp_worker_th/ringlatencystats.c          | 81 +++++++++++++++++++
+ .../spp_worker_th/ringlatencystats.h          | 65 +++++++++++++++
+ src/shared/secondary/spp_worker_th/spp_port.c | 45 -----------
+ src/shared/secondary/spp_worker_th/spp_port.h | 24 ------
+ src/vf/Makefile                               |  3 +-
+ src/vf/classifier_mac.c                       | 17 ++++
+ src/vf/forwarder.c                            | 17 +++-
+ src/vf/spp_vf.c                               |  8 +-
+ 14 files changed, 274 insertions(+), 143 deletions(-)
+
+diff --git a/src/mirror/spp_mirror.c b/src/mirror/spp_mirror.c
+index 37327c7..aefb4f5 100644
+--- a/src/mirror/spp_mirror.c
++++ b/src/mirror/spp_mirror.c
+@@ -21,6 +21,10 @@
+ #include "shared/secondary/spp_worker_th/spp_port.h"
+ #include "shared/secondary/spp_worker_th/port_capability.h"
+ 
++#ifdef SPP_RINGLATENCYSTATS_ENABLE
++#include "shared/secondary/spp_worker_th/ringlatencystats.h"
++#endif
++
+ /* Declare global variables */
+ #define RTE_LOGTYPE_MIRROR RTE_LOGTYPE_USER1
+ 
+@@ -323,8 +327,14 @@ mirror_proc(int id)
+ 		return SPP_RET_OK;
+ 
+ 	rx = &path->ports[0].rx;
+-	/* Receive packets */
+-	nb_rx = sppwk_eth_rx_burst(rx->ethdev_port_id, 0, bufs, MAX_PKT_BURST);
++
++#ifdef SPP_RINGLATENCYSTATS_ENABLE
++	nb_rx = sppwk_eth_ring_stats_rx_burst(rx->ethdev_port_id,
++			rx->iface_type, rx->iface_no, 0, bufs, MAX_PKT_BURST);
++#else
++	nb_rx = rte_eth_rx_burst(rx->ethdev_port_id, 0, bufs, MAX_PKT_BURST);
++#endif
++
+ 	if (unlikely(nb_rx == 0))
+ 		return SPP_RET_OK;
+ 
+@@ -378,15 +388,27 @@ mirror_proc(int id)
+ 
+ #endif /* SPP_MIRROR_SHALLOWCOPY */
+ 		}
++
+ 		if (cnt != 0)
+-			nb_tx2 = sppwk_eth_tx_burst(
+-					tx->ethdev_port_id, 0, copybufs, cnt);
++#ifdef SPP_RINGLATENCYSTATS_ENABLE
++			nb_tx2 = sppwk_eth_ring_stats_tx_burst(
++					tx->ethdev_port_id, tx->iface_type,
++					tx->iface_no, 0, copybufs, cnt);
++#else
++			nb_tx2 = rte_eth_tx_burst(tx->ethdev_port_id, 0,
++					copybufs, cnt);
++#endif
+ 	}
+ 
+ 	/* orginal */
+ 	tx = &path->ports[0].tx;
+ 	if (tx->ethdev_port_id >= 0)
+-		nb_tx1 = sppwk_eth_tx_burst(tx->ethdev_port_id, 0, bufs, nb_rx);
++#ifdef SPP_RINGLATENCYSTATS_ENABLE
++		nb_tx1 = sppwk_eth_ring_stats_tx_burst(tx->ethdev_port_id,
++				tx->iface_type, tx->iface_no, 0, bufs, nb_rx);
++#else
++		nb_tx1 = rte_eth_tx_burst(tx->ethdev_port_id, 0, bufs, nb_rx);
++#endif
+ 	nb_tx = nb_tx1;
+ 
+ 	if (nb_tx1 != nb_tx2)
+@@ -533,7 +555,7 @@ main(int argc, char *argv[])
+ #ifdef SPP_RINGLATENCYSTATS_ENABLE
+ 		int ret_ringlatency = spp_ringlatencystats_init(
+ 				SPP_RING_LATENCY_STATS_SAMPLING_INTERVAL,
+-				g_iface_info.num_ring);
++				g_iface_info.nof_rings);
+ 		if (unlikely(ret_ringlatency != SPP_RET_OK))
+ 			break;
+ #endif /* SPP_RINGLATENCYSTATS_ENABLE */
+@@ -583,7 +605,7 @@ main(int argc, char *argv[])
+ 			usleep(100);
+ 
+ #ifdef SPP_RINGLATENCYSTATS_ENABLE
+-			print_ring_latency_stats();
++			print_ring_latency_stats(&g_iface_info);
+ #endif /* SPP_RINGLATENCYSTATS_ENABLE */
+ 		}
+ 
+diff --git a/src/pcap/spp_pcap.c b/src/pcap/spp_pcap.c
+index bcce13f..909787d 100644
+--- a/src/pcap/spp_pcap.c
++++ b/src/pcap/spp_pcap.c
+@@ -21,6 +21,10 @@
+ #include "shared/secondary/spp_worker_th/spp_port.h"
+ #include "shared/secondary/spp_worker_th/port_capability.h"
+ 
++#ifdef SPP_RINGLATENCYSTATS_ENABLE
++#include "shared/secondary/spp_worker_th/ringlatencystats.h"
++#endif
++
+ /* Declare global variables */
+ #define RTE_LOGTYPE_SPP_PCAP RTE_LOGTYPE_USER2
+ 
+@@ -750,8 +754,12 @@ static int pcap_proc_receive(int lcore_id)
+ 
+ 	/* Receive packets */
+ 	rx = &g_pcap_option.port_cap;
+-	nb_rx = sppwk_eth_rx_burst(rx->ethdev_port_id, 0, bufs,
+-			MAX_PCAP_BURST);
++#ifdef SPP_RINGLATENCYSTATS_ENABLE
++	nb_rx = sppwk_eth_ring_stats_rx_burst(rx->ethdev_port_id,
++			rx->iface_type, rx->iface_no, 0, bufs, MAX_PCAP_BURST);
++#else
++	nb_rx = rte_eth_rx_burst(rx->ethdev_port_id, 0, bufs, MAX_PCAP_BURST);
++#endif
+ 	if (unlikely(nb_rx == 0))
+ 		return SPPWK_RET_OK;
+ 
+diff --git a/src/shared/secondary/spp_worker_th/cmd_utils.c b/src/shared/secondary/spp_worker_th/cmd_utils.c
+index a4d8031..338054f 100644
+--- a/src/shared/secondary/spp_worker_th/cmd_utils.c
++++ b/src/shared/secondary/spp_worker_th/cmd_utils.c
+@@ -441,46 +441,6 @@ init_mng_data(void)
+ 	return SPP_RET_OK;
+ }
+ 
+-#ifdef SPP_RINGLATENCYSTATS_ENABLE
+-/* Print statistics of time for packet processing in ring interface */
+-static void
+-print_ring_latency_stats(void)
+-{
+-	/* Clear screen and move cursor to top left */
+-	const char topLeft[] = { 27, '[', '1', ';', '1', 'H', '\0' };
+-	const char clr[] = { 27, '[', '2', 'J', '\0' };
+-	printf("%s%s", clr, topLeft);
+-
+-	int ring_cnt, stats_cnt;
+-	struct spp_ringlatencystats_ring_latency_stats stats[RTE_MAX_ETHPORTS];
+-	memset(&stats, 0x00, sizeof(stats));
+-
+-	struct iface_info *p_iface_info = g_mng_data_addr.p_iface_info;
+-	printf("RING Latency\n");
+-	printf(" RING");
+-	for (ring_cnt = 0; ring_cnt < RTE_MAX_ETHPORTS; ring_cnt++) {
+-		if (p_iface_info->ring[ring_cnt].iface_type == UNDEF)
+-			continue;
+-
+-		spp_ringlatencystats_get_stats(ring_cnt, &stats[ring_cnt]);
+-		printf(", %-18d", ring_cnt);
+-	}
+-	printf("\n");
+-
+-	for (stats_cnt = 0; stats_cnt < SPP_RINGLATENCYSTATS_STATS_SLOT_COUNT;
+-			stats_cnt++) {
+-		printf("%3dns", stats_cnt);
+-		for (ring_cnt = 0; ring_cnt < RTE_MAX_ETHPORTS; ring_cnt++) {
+-			if (p_iface_info->ring[ring_cnt].iface_type == UNDEF)
+-				continue;
+-
+-			printf(", 0x%-16lx", stats[ring_cnt].slot[stats_cnt]);
+-		}
+-		printf("\n");
+-	}
+-}
+-#endif /* SPP_RINGLATENCYSTATS_ENABLE */
+-
+ /* Remove sock file if spp is not running */
+ void
+ del_vhost_sockfile(struct sppwk_port_info *vhost)
+diff --git a/src/shared/secondary/spp_worker_th/cmd_utils.h b/src/shared/secondary/spp_worker_th/cmd_utils.h
+index 1d32228..6578cb8 100644
+--- a/src/shared/secondary/spp_worker_th/cmd_utils.h
++++ b/src/shared/secondary/spp_worker_th/cmd_utils.h
+@@ -378,11 +378,6 @@ void backup_mng_info(struct cancel_backup_info *backup);
+ /* Setup management info for spp_vf */
+ int init_mng_data(void);
+ 
+-#ifdef SPP_RINGLATENCYSTATS_ENABLE
+-/* Print statistics of time for packet processing in ring interface */
+-void print_ring_latency_stats(void);
+-#endif /* SPP_RINGLATENCYSTATS_ENABLE */
+-
+ /* Remove sock file if spp is not running */
+ void del_vhost_sockfile(struct sppwk_port_info *vhost);
+ 
+diff --git a/src/shared/secondary/spp_worker_th/port_capability.c b/src/shared/secondary/spp_worker_th/port_capability.c
+index db12f0c..917d5fc 100644
+--- a/src/shared/secondary/spp_worker_th/port_capability.c
++++ b/src/shared/secondary/spp_worker_th/port_capability.c
+@@ -10,7 +10,10 @@
+ 
+ #include "port_capability.h"
+ #include "shared/secondary/return_codes.h"
++
++#ifdef SPP_RINGLATENCYSTATS_ENABLE
+ #include "ringlatencystats.h"
++#endif
+ 
+ /**
+  * TODO(yasufum) This `port capability` is intended to be used mainly for VLAN
+@@ -372,7 +375,6 @@ vlan_operation(uint16_t port_id, struct rte_mbuf **pkts, const uint16_t nb_pkts,
+ 	return ok_pkts;
+ }
+ 
+-/* TODO(yasufum) move to outside of this file. */
+ /* Wrapper function for rte_eth_rx_burst() with VLAN feature. */
+ uint16_t
+ sppwk_eth_vlan_rx_burst(uint16_t port_id,
+@@ -384,22 +386,53 @@ sppwk_eth_vlan_rx_burst(uint16_t port_id,
+ 	if (unlikely(nb_rx == 0))
+ 		return SPP_RET_OK;
+ 
++	/* Add or delete VLAN tag. */
++	return vlan_operation(port_id, rx_pkts, nb_rx, SPPWK_PORT_DIR_RX);
++}
++
++/* Wrapper function for rte_eth_tx_burst() with VLAN feature. */
++uint16_t
++sppwk_eth_vlan_tx_burst(uint16_t port_id,
++		uint16_t queue_id __attribute__ ((unused)),
++		struct rte_mbuf **tx_pkts, uint16_t nb_pkts)
++{
++	uint16_t nb_tx;
++
++	/* Add or delete VLAN tag. */
++	nb_tx = vlan_operation(port_id, tx_pkts, nb_pkts, SPPWK_PORT_DIR_TX);
++
++	if (unlikely(nb_tx == 0))
++		return SPP_RET_OK;
++
++	return rte_eth_tx_burst(port_id, 0, tx_pkts, nb_tx);
++}
++
+ #ifdef SPP_RINGLATENCYSTATS_ENABLE
+-	if (g_port_mng_info[port_id].iface_type == RING)
+-		spp_ringlatencystats_calculate_latency(
+-				g_port_mng_info[port_id].iface_no,
++
++/* Wrapper function for rte_eth_rx_burst() with VLAN feature. */
++uint16_t
++sppwk_eth_vlan_ring_stats_rx_burst(uint16_t port_id,
++		enum port_type iface_type, int iface_no,
++		uint16_t queue_id __attribute__ ((unused)),
++		struct rte_mbuf **rx_pkts, const uint16_t nb_pkts)
++{
++	uint16_t nb_rx;
++	nb_rx = rte_eth_rx_burst(port_id, 0, rx_pkts, nb_pkts);
++	if (unlikely(nb_rx == 0))
++		return SPP_RET_OK;
++
++	if (iface_type == RING)
++		spp_ringlatencystats_calculate_latency(iface_no,
+ 				rx_pkts, nb_pkts);
+-#endif /* SPP_RINGLATENCYSTATS_ENABLE */
+ 
+ 	/* Add or delete VLAN tag. */
+ 	return vlan_operation(port_id, rx_pkts, nb_rx, SPPWK_PORT_DIR_RX);
+ }
+ 
+-
+-/* TODO(yasufum) move to outside of this file. */
+ /* Wrapper function for rte_eth_tx_burst() with VLAN feature. */
+ uint16_t
+-sppwk_eth_vlan_tx_burst(uint16_t port_id,
++sppwk_eth_vlan_ring_stats_tx_burst(uint16_t port_id,
++		enum port_type iface_type, int iface_no,
+ 		uint16_t queue_id __attribute__ ((unused)),
+ 		struct rte_mbuf **tx_pkts, uint16_t nb_pkts)
+ {
+@@ -411,12 +444,11 @@ sppwk_eth_vlan_tx_burst(uint16_t port_id,
+ 	if (unlikely(nb_tx == 0))
+ 		return SPP_RET_OK;
+ 
+-#ifdef SPP_RINGLATENCYSTATS_ENABLE
+-	if (g_port_mng_info[port_id].iface_type == RING)
+-		spp_ringlatencystats_add_time_stamp(
+-				g_port_mng_info[port_id].iface_no,
+-				tx_pkts, nb_pkts);
+-#endif /* SPP_RINGLATENCYSTATS_ENABLE */
++	if (iface_type == RING) {
++		spp_ringlatencystats_add_time_stamp(iface_no, tx_pkts, nb_pkts);
++	}
+ 
+ 	return rte_eth_tx_burst(port_id, 0, tx_pkts, nb_tx);
+ }
++
++#endif /* SPP_RINGLATENCYSTATS_ENABLE */
+diff --git a/src/shared/secondary/spp_worker_th/port_capability.h b/src/shared/secondary/spp_worker_th/port_capability.h
+index 0593f10..284ba30 100644
+--- a/src/shared/secondary/spp_worker_th/port_capability.h
++++ b/src/shared/secondary/spp_worker_th/port_capability.h
+@@ -59,7 +59,7 @@ void sppwk_swap_two_sides(
+ void sppwk_update_port_dir(const struct sppwk_comp_info *comp);
+ 
+ /**
+- * Wrapper function for rte_eth_rx_burst() with ring latency feature.
++ * Wrapper function for rte_eth_rx_burst() with VLAN feature.
+  *
+  * @param[in] port_id Etherdev ID.
+  * @param[in] queue_id RX queue ID, but fixed value 0 in SPP.
+@@ -71,7 +71,7 @@ uint16_t sppwk_eth_vlan_rx_burst(uint16_t port_id, uint16_t queue_id,
+ 		struct rte_mbuf **rx_pkts, const uint16_t nb_pkts);
+ 
+ /**
+- * Wrapper function for rte_eth_tx_burst() with ring latency feature.
++ * Wrapper function for rte_eth_tx_burst() with VLAN feature.
+  *
+  * @param port_id Etherdev ID.
+  * @param[in] queue_id TX queue ID, but fixed value 0 in SPP.
+diff --git a/src/shared/secondary/spp_worker_th/ringlatencystats.c b/src/shared/secondary/spp_worker_th/ringlatencystats.c
+index e0cc1aa..5678e37 100644
+--- a/src/shared/secondary/spp_worker_th/ringlatencystats.c
++++ b/src/shared/secondary/spp_worker_th/ringlatencystats.c
+@@ -16,6 +16,8 @@
+ 
+ #include "ringlatencystats.h"
+ #include "cmd_utils.h"
++#include "port_capability.h"
++#include "../return_codes.h"
+ 
+ #define NS_PER_SEC 1E9
+ 
+@@ -160,4 +162,83 @@ spp_ringlatencystats_get_stats(int ring_id,
+ 			sizeof(struct spp_ringlatencystats_ring_latency_stats));
+ }
+ 
++/* Print statistics of time for packet processing in ring interface */
++void
++print_ring_latency_stats(struct iface_info *if_info)
++{
++	/* Clear screen and move cursor to top left */
++	const char topLeft[] = { 27, '[', '1', ';', '1', 'H', '\0' };
++	const char clr[] = { 27, '[', '2', 'J', '\0' };
++	printf("%s%s", clr, topLeft);
++
++	int ring_cnt, stats_cnt;
++	struct spp_ringlatencystats_ring_latency_stats stats[RTE_MAX_ETHPORTS];
++	memset(&stats, 0x00, sizeof(stats));
++
++	printf("RING Latency\n");
++	printf(" RING");
++	for (ring_cnt = 0; ring_cnt < RTE_MAX_ETHPORTS; ring_cnt++) {
++		if (if_info->ring[ring_cnt].iface_type == UNDEF)
++			continue;
++
++		spp_ringlatencystats_get_stats(ring_cnt, &stats[ring_cnt]);
++		printf(", %-18d", ring_cnt);
++	}
++	printf("\n");
++
++	for (stats_cnt = 0; stats_cnt < SPP_RINGLATENCYSTATS_STATS_SLOT_COUNT;
++			stats_cnt++) {
++		printf("%3dns", stats_cnt);
++		for (ring_cnt = 0; ring_cnt < RTE_MAX_ETHPORTS; ring_cnt++) {
++			if (if_info->ring[ring_cnt].iface_type == UNDEF)
++				continue;
++
++			printf(", 0x%-16lx", stats[ring_cnt].slot[stats_cnt]);
++		}
++		printf("\n");
++	}
++}
++
++/* Wrapper function for rte_eth_rx_burst() with ring latency feature. */
++uint16_t
++sppwk_eth_ring_stats_rx_burst(uint16_t port_id,
++		enum port_type iface_type,
++		int iface_no,
++		uint16_t queue_id  __attribute__ ((unused)),
++		struct rte_mbuf **rx_pkts, const uint16_t nb_pkts)
++{
++	uint16_t nb_rx;
++
++	nb_rx = rte_eth_rx_burst(port_id, 0, rx_pkts, nb_pkts);
++
++	/* TODO(yasufum) confirm why it returns SPP_RET_OK. */
++	if (unlikely(nb_rx == 0))
++		return SPP_RET_OK;
++
++	if (iface_type == RING)
++		spp_ringlatencystats_calculate_latency(
++				iface_no,
++				rx_pkts, nb_pkts);
++	return nb_rx;
++}
++
++/* Wrapper function for rte_eth_tx_burst() with ring latency feature. */
++uint16_t
++sppwk_eth_ring_stats_tx_burst(uint16_t port_id,
++		enum port_type iface_type,
++		int iface_no,
++		uint16_t queue_id __attribute__ ((unused)),
++		struct rte_mbuf **tx_pkts, uint16_t nb_pkts)
++{
++	uint16_t nb_tx;
++
++	nb_tx = rte_eth_tx_burst(port_id, 0, tx_pkts, nb_pkts);
++
++	if (iface_type == RING)
++		spp_ringlatencystats_add_time_stamp(
++				iface_no,
++				tx_pkts, nb_pkts);
++	return nb_tx;
++}
++
+ #endif /* SPP_RINGLATENCYSTATS_ENABLE */
+diff --git a/src/shared/secondary/spp_worker_th/ringlatencystats.h b/src/shared/secondary/spp_worker_th/ringlatencystats.h
+index b919c62..33c456d 100644
+--- a/src/shared/secondary/spp_worker_th/ringlatencystats.h
++++ b/src/shared/secondary/spp_worker_th/ringlatencystats.h
+@@ -13,6 +13,7 @@
+  */
+ 
+ #include <rte_mbuf.h>
++#include "cmd_utils.h"
+ 
+ /** number of slots to save latency. 0ns~99ns and 100ns over */
+ #define SPP_RINGLATENCYSTATS_STATS_SLOT_COUNT 101
+@@ -93,6 +94,65 @@ int spp_ringlatencystats_get_count(void);
+ void spp_ringlatencystats_get_stats(int ring_id,
+ 		struct spp_ringlatencystats_ring_latency_stats *stats);
+ 
++/* Print statistics of time for packet processing in ring interface */
++void print_ring_latency_stats(struct iface_info *if_info);
++
++/**
++ * Wrapper function for rte_eth_rx_burst() with ring latency feature.
++ *
++ * @param[in] port_id Etherdev ID.
++ * @param[in] queue_id RX queue ID, but fixed value 0 in SPP.
++ * @param[in] rx_pkts Pointers to mbuf should be enough to store nb_pkts.
++ * @param nb_pkts Maximum number of RX packets.
++ * @return Number of RX packets as number of pointers to mbuf.
++ */
++uint16_t sppwk_eth_ring_stats_rx_burst(uint16_t port_id,
++		enum port_type iface_type,
++		int iface_no, uint16_t queue_id,
++		struct rte_mbuf **rx_pkts, const uint16_t nb_pkts);
++
++/**
++ * Wrapper function for rte_eth_tx_burst() with ring latency feature.
++ *
++ * @param port_id Etherdev ID.
++ * @param[in] queue_id TX queue ID, but fixed value 0 in SPP.
++ * @param[in] tx_pkts Pointers to mbuf should be enough to store nb_pkts.
++ * @param nb_pkts Maximum number of TX packets.
++ * @return Number of TX packets as number of pointers to mbuf.
++ */
++uint16_t sppwk_eth_ring_stats_tx_burst(uint16_t port_id,
++		enum port_type iface_type,
++		int iface_no, uint16_t queue_id,
++		struct rte_mbuf **tx_pkts, uint16_t nb_pkts);
++
++/**
++ * Wrapper function for rte_eth_rx_burst() with VLAN and ring latency feature.
++ *
++ * @param[in] port_id Etherdev ID.
++ * @param[in] queue_id RX queue ID, but fixed value 0 in SPP.
++ * @param[in] rx_pkts Pointers to mbuf should be enough to store nb_pkts.
++ * @param nb_pkts Maximum number of RX packets.
++ * @return Number of RX packets as number of pointers to mbuf.
++ */
++uint16_t sppwk_eth_vlan_ring_stats_rx_burst(uint16_t port_id,
++		enum port_type iface_type,
++		int iface_no, uint16_t queue_id,
++		struct rte_mbuf **rx_pkts, const uint16_t nb_pkts);
++
++/**
++ * Wrapper function for rte_eth_tx_burst() with VLAN and ring latency feature.
++ *
++ * @param port_id Etherdev ID.
++ * @param[in] queue_id TX queue ID, but fixed value 0 in SPP.
++ * @param[in] tx_pkts Pointers to mbuf should be enough to store nb_pkts.
++ * @param nb_pkts Maximum number of TX packets.
++ * @return Number of TX packets as number of pointers to mbuf.
++ */
++uint16_t sppwk_eth_vlan_ring_stats_tx_burst(uint16_t port_id,
++		enum port_type iface_type,
++		int iface_no, uint16_t queue_id,
++		struct rte_mbuf **tx_pkts, uint16_t nb_pkts);
++
+ #else
+ 
+ #define spp_ringlatencystats_init(arg1, arg2) 0
+@@ -101,6 +161,11 @@ void spp_ringlatencystats_get_stats(int ring_id,
+ #define spp_ringlatencystats_calculate_latency(arg1, arg2, arg3)
+ #define spp_ringlatencystats_get_count() 0
+ #define spp_ringlatencystats_get_stats(arg1, arg2)
++#define print_ringlatencystats_stats(arg)
++#define sppwk_eth_ring_stats_rx_burst(arg1, arg2, arg3, arg4, arg5, arg6)
++#define sppwk_eth_ring_stats_tx_burst(arg1, arg2, arg3, arg4, arg5, arg6)
++#define sppwk_eth_vlan_ring_stats_rx_burst(arg1, arg2, arg3, arg4, arg5, arg6)
++#define sppwk_eth_vlan_ring_stats_tx_burst(arg1, arg2, arg3, arg4, arg5, arg6)
+ 
+ #endif /* SPP_RINGLATENCYSTATS_ENABLE */
+ 
+diff --git a/src/shared/secondary/spp_worker_th/spp_port.c b/src/shared/secondary/spp_worker_th/spp_port.c
+index 0c7df2b..66f73df 100644
+--- a/src/shared/secondary/spp_worker_th/spp_port.c
++++ b/src/shared/secondary/spp_worker_th/spp_port.c
+@@ -10,48 +10,3 @@
+ 
+ #include "spp_port.h"
+ #include "shared/secondary/return_codes.h"
+-#include "ringlatencystats.h"
+-
+-/* Wrapper function for rte_eth_rx_burst() with ring latency feature. */
+-uint16_t
+-sppwk_eth_rx_burst(uint16_t port_id,
+-		uint16_t queue_id  __attribute__ ((unused)),
+-		struct rte_mbuf **rx_pkts, const uint16_t nb_pkts)
+-{
+-	uint16_t nb_rx;
+-
+-	nb_rx = rte_eth_rx_burst(port_id, 0, rx_pkts, nb_pkts);
+-
+-	/* TODO(yasufum) confirm why it returns SPP_RET_OK. */
+-	if (unlikely(nb_rx == 0))
+-		return SPP_RET_OK;
+-
+-#ifdef SPP_RINGLATENCYSTATS_ENABLE
+-	if (g_port_mng_info[port_id].iface_type == RING)
+-		spp_ringlatencystats_calculate_latency(
+-				g_port_mng_info[port_id].iface_no,
+-				rx_pkts, nb_pkts);
+-#endif /* SPP_RINGLATENCYSTATS_ENABLE */
+-
+-	return nb_rx;
+-}
+-
+-/* Wrapper function for rte_eth_tx_burst() with ring latency feature. */
+-uint16_t
+-sppwk_eth_tx_burst(uint16_t port_id,
+-		uint16_t queue_id __attribute__ ((unused)),
+-		struct rte_mbuf **tx_pkts, uint16_t nb_pkts)
+-{
+-	uint16_t nb_tx;
+-
+-	nb_tx = rte_eth_tx_burst(port_id, 0, tx_pkts, nb_pkts);
+-
+-#ifdef SPP_RINGLATENCYSTATS_ENABLE
+-	if (g_port_mng_info[port_id].iface_type == RING)
+-		spp_ringlatencystats_add_time_stamp(
+-				g_port_mng_info[port_id].iface_no,
+-				tx_pkts, nb_pkts);
+-#endif /* SPP_RINGLATENCYSTATS_ENABLE */
+-
+-	return nb_tx;
+-}
+diff --git a/src/shared/secondary/spp_worker_th/spp_port.h b/src/shared/secondary/spp_worker_th/spp_port.h
+index eaeaea5..9b6132b 100644
+--- a/src/shared/secondary/spp_worker_th/spp_port.h
++++ b/src/shared/secondary/spp_worker_th/spp_port.h
+@@ -7,28 +7,4 @@
+ 
+ #include "cmd_utils.h"
+ 
+-/**
+- * Wrapper function for rte_eth_rx_burst() with ring latency feature.
+- *
+- * @param[in] port_id Etherdev ID.
+- * @param[in] queue_id RX queue ID, but fixed value 0 in SPP.
+- * @param[in] rx_pkts Pointers to mbuf should be enough to store nb_pkts.
+- * @param nb_pkts Maximum number of RX packets.
+- * @return Number of RX packets as number of pointers to mbuf.
+- */
+-uint16_t sppwk_eth_rx_burst(uint16_t port_id, uint16_t queue_id,
+-		struct rte_mbuf **rx_pkts, const uint16_t nb_pkts);
+-
+-/**
+- * Wrapper function for rte_eth_tx_burst() with ring latency feature.
+- *
+- * @param port_id Etherdev ID.
+- * @param[in] queue_id TX queue ID, but fixed value 0 in SPP.
+- * @param[in] tx_pkts Pointers to mbuf should be enough to store nb_pkts.
+- * @param nb_pkts Maximum number of TX packets.
+- * @return Number of TX packets as number of pointers to mbuf.
+- */
+-uint16_t sppwk_eth_tx_burst(uint16_t port_id, uint16_t queue_id,
+-		struct rte_mbuf **tx_pkts, uint16_t nb_pkts);
+-
+ #endif /*  __WK_SPP_PORT_H__ */
+diff --git a/src/vf/Makefile b/src/vf/Makefile
+index 35f13e5..07870ac 100644
+--- a/src/vf/Makefile
++++ b/src/vf/Makefile
+@@ -19,14 +19,15 @@ SRCS-y := spp_vf.c classifier_mac.c forwarder.c
+ SRCS-y += $(SPP_SEC_DIR)/string_buffer.c
+ SRCS-y += $(SPP_SEC_DIR)/json_helper.c
+ SRCS-y += $(SPP_SEC_DIR)/utils.c $(SPP_SEC_DIR)/add_port.c
++SRCS-y += $(SPP_WKT_DIR)/spp_port.c
+ SRCS-y += $(SPP_WKT_DIR)/ringlatencystats.c
+ SRCS-y += $(SPP_WKT_DIR)/port_capability.c
+ SRCS-y += $(SPP_WKT_DIR)/conn_spp_ctl.c
+ SRCS-y += $(SPP_WKT_DIR)/cmd_parser.c
+-SRCS-y += ../shared/common.c
+ SRCS-y += $(SPP_WKT_DIR)/cmd_runner.c
+ SRCS-y += $(SPP_WKT_DIR)/cmd_utils.c
+ SRCS-y += $(SPP_WKT_DIR)/cmd_res_formatter.c
++SRCS-y += ../shared/common.c
+ SRCS-y += vf_cmd_runner.c
+ 
+ CFLAGS += -DALLOW_EXPERIMENTAL_API
+diff --git a/src/vf/classifier_mac.c b/src/vf/classifier_mac.c
+index e41c65a..893f01d 100644
+--- a/src/vf/classifier_mac.c
++++ b/src/vf/classifier_mac.c
+@@ -28,8 +28,13 @@
+ #include "shared/secondary/json_helper.h"
+ #include "shared/secondary/spp_worker_th/cmd_res_formatter.h"
+ #include "shared/secondary/spp_worker_th/vf_deps.h"
++#include "shared/secondary/spp_worker_th/spp_port.h"
+ #include "shared/secondary/spp_worker_th/port_capability.h"
+ 
++#ifdef SPP_RINGLATENCYSTATS_ENABLE
++#include "shared/secondary/spp_worker_th/ringlatencystats.h"
++#endif
++
+ #define RTE_LOGTYPE_SPP_CLASSIFIER_MAC RTE_LOGTYPE_USER1
+ 
+ #ifdef RTE_MACHINE_CPUFLAG_SSE4_2
+@@ -460,8 +465,14 @@ transmit_packet(struct cls_port_info *clsd_data)
+ 	uint16_t n_tx;
+ 
+ 	/* transmit packets */
++#ifdef SPP_RINGLATENCYSTATS_ENABLE
++	n_tx = sppwk_eth_vlan_ring_stats_tx_burst(clsd_data->ethdev_port_id,
++			clsd_data->iface_type, clsd_data->iface_no,
++			0, clsd_data->pkts, clsd_data->nof_pkts);
++#else
+ 	n_tx = sppwk_eth_vlan_tx_burst(clsd_data->ethdev_port_id, 0,
+ 			clsd_data->pkts, clsd_data->nof_pkts);
++#endif
+ 
+ 	/* free cannot transmit packets */
+ 	if (unlikely(n_tx != clsd_data->nof_pkts)) {
+@@ -796,8 +807,14 @@ spp_classifier_mac_do(int id)
+ 		return SPP_RET_OK;
+ 
+ 	/* retrieve packets */
++#ifdef SPP_RINGLATENCYSTATS_ENABLE
++	n_rx = sppwk_eth_vlan_ring_stats_rx_burst(clsd_data_rx->ethdev_port_id,
++			clsd_data_rx->iface_type, clsd_data_rx->iface_no,
++			0, rx_pkts, MAX_PKT_BURST);
++#else
+ 	n_rx = sppwk_eth_vlan_rx_burst(clsd_data_rx->ethdev_port_id, 0,
+ 			rx_pkts, MAX_PKT_BURST);
++#endif
+ 	if (unlikely(n_rx == 0))
+ 		return SPP_RET_OK;
+ 
+diff --git a/src/vf/forwarder.c b/src/vf/forwarder.c
+index cd28a58..5a061ad 100644
+--- a/src/vf/forwarder.c
++++ b/src/vf/forwarder.c
+@@ -11,6 +11,10 @@
+ #include "shared/secondary/spp_worker_th/spp_port.h"
+ #include "shared/secondary/spp_worker_th/port_capability.h"
+ 
++#ifdef SPP_RINGLATENCYSTATS_ENABLE
++#include "shared/secondary/spp_worker_th/ringlatencystats.h"
++#endif
++
+ #define RTE_LOGTYPE_FORWARD RTE_LOGTYPE_USER1
+ 
+ /* A set of port info of rx and tx */
+@@ -211,16 +215,27 @@ forward_packets(int id)
+ 		rx = &path->ports[cnt].rx;
+ 		tx = &path->ports[cnt].tx;
+ 
+-		/* Receive packets */
++#ifdef SPP_RINGLATENCYSTATS_ENABLE
++		nb_rx = sppwk_eth_vlan_ring_stats_rx_burst(rx->ethdev_port_id,
++				rx->iface_type, rx->iface_no, 0,
++				bufs, MAX_PKT_BURST);
++#else
+ 		nb_rx = sppwk_eth_vlan_rx_burst(rx->ethdev_port_id, 0,
+ 				bufs, MAX_PKT_BURST);
++#endif
+ 		if (unlikely(nb_rx == 0))
+ 			continue;
+ 
+ 		/* Send packets */
+ 		if (tx->ethdev_port_id >= 0)
++#ifdef SPP_RINGLATENCYSTATS_ENABLE
++			nb_tx = sppwk_eth_vlan_ring_stats_tx_burst(
++					tx->ethdev_port_id, tx->iface_type,
++					tx->iface_no, 0, bufs, nb_rx);
++#else
+ 			nb_tx = sppwk_eth_vlan_tx_burst(tx->ethdev_port_id,
+ 					0, bufs, nb_rx);
++#endif
+ 
+ 		/* Discard remained packets to release mbuf */
+ 		if (unlikely(nb_tx < nb_rx)) {
+diff --git a/src/vf/spp_vf.c b/src/vf/spp_vf.c
+index dbd47bf..1ef8e4f 100644
+--- a/src/vf/spp_vf.c
++++ b/src/vf/spp_vf.c
+@@ -18,6 +18,10 @@
+ #include "shared/secondary/spp_worker_th/spp_port.h"
+ #include "shared/secondary/spp_worker_th/port_capability.h"
+ 
++#ifdef SPP_RINGLATENCYSTATS_ENABLE
++#include "shared/secondary/spp_worker_th/ringlatencystats.h"
++#endif
++
+ /* Declare global variables */
+ /* Interface management information */
+ static struct iface_info g_iface_info;
+@@ -260,7 +264,7 @@ main(int argc, char *argv[])
+ #ifdef SPP_RINGLATENCYSTATS_ENABLE
+ 		int ret_ringlatency = spp_ringlatencystats_init(
+ 				SPP_RING_LATENCY_STATS_SAMPLING_INTERVAL,
+-				g_iface_info.num_ring);
++				g_iface_info.nof_rings);
+ 		if (unlikely(ret_ringlatency != SPP_RET_OK))
+ 			break;
+ #endif /* SPP_RINGLATENCYSTATS_ENABLE */
+@@ -304,7 +308,7 @@ main(int argc, char *argv[])
+ 			usleep(100);
+ 
+ #ifdef SPP_RINGLATENCYSTATS_ENABLE
+-			print_ring_latency_stats();
++			print_ring_latency_stats(&g_iface_info);
+ #endif /* SPP_RINGLATENCYSTATS_ENABLE */
+ 		}
+ 
+-- 
+2.17.1
+
+

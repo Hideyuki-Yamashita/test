@@ -1,0 +1,249 @@
+Return-path: <fw-yama-hd@pomail01.silk.ntt-tx.co.jp>
+Received: from zssg-mailmd102.ddreams.local
+ (zssg-mailmd102.ddreams.local [10.160.123.97]) by zssg-mailms320.ddreams.local
+ (NTT DoCoMo Mail System) with ESMTP id <0PTL00UX50048Y30@NTTDoCoMo.co.jp> for
+ yamashita.hideyuki@ntt-tx.co.jp; Mon, 24 Jun 2019 11:24:04 +0900 (JST)
+Original-recipient: rfc822;yamashita.hideyuki@ntt-tx.co.jp
+Received: from smtp_saver-daemon.zssg-mailmd102.ddreams.local by
+ zssg-mailmd102.ddreams.local (dDREAMS) id <0PTL00W28004N300@dDREAMS> for
+ yamashita.hideyuki@ntt-tx.co.jp (ORCPT yamashita.hideyuki@ntt-tx.co.jp); Mon,
+ 24 Jun 2019 11:24:04 +0900 (JST)
+Received: from zssg-mailmf102.ddreams.local
+ (zssg-mailmf900.ddreams.local [10.160.172.84]) by zssg-mailmd102.ddreams.local
+ (dDREAMS) with ESMTP id <0PTL00VLS004YD00@dDREAMS> for
+ yamashita.hideyuki@ntt-tx.co.jp (ORCPT yamashita.hideyuki@ntt-tx.co.jp); Mon,
+ 24 Jun 2019 11:24:04 +0900 (JST)
+Received: from zssg-mailmf102.ddreams.local (unknown [127.0.0.1])
+	by zssg-mailmf102.ddreams.local (Postfix) with ESMTP id 049E97E603A	for
+ <yamashita.hideyuki@ntt-tx.co.jp>; Mon, 24 Jun 2019 11:24:04 +0900 (JST)
+Received: from zssg-mailmf102.ddreams.local (unknown [127.0.0.1])
+	by IMSVA (Postfix) with ESMTP id 035548E6056	for
+ <yamashita.hideyuki@ntt-tx.co.jp>; Mon, 24 Jun 2019 11:24:04 +0900 (JST)
+Received: from localhost (unknown [127.0.0.1])	by IMSVA (Postfix)
+ with SMTP id 011088E6042	for <yamashita.hideyuki@ntt-tx.co.jp>; Mon,
+ 24 Jun 2019 11:24:04 +0900 (JST)
+X-IMSS-HAND-OFF-DIRECTIVE: localhost:10026
+Received: from zssg-mailmf102.ddreams.local (unknown [127.0.0.1])
+	by IMSVA (Postfix) with ESMTP id 866918E6052	for
+ <yamashita.hideyuki@ntt-tx.co.jp>; Mon, 24 Jun 2019 11:24:02 +0900 (JST)
+Received: from pomail01.silk.ntt-tx.co.jp (unknown [10.160.183.139])
+	by zssg-mailmf102.ddreams.local (Postfix)
+ with ESMTPS	for <yamashita.hideyuki@ntt-tx.co.jp>; Mon,
+ 24 Jun 2019 11:24:02 +0900 (JST)
+Received: from pomail01.silk.ntt-tx.co.jp (localhost [127.0.0.1])
+	by pomail01.silk.ntt-tx.co.jp (unknown) with ESMTP id x5O2O2Cj013228;	Mon,
+ 24 Jun 2019 11:24:02 +0900
+Received: (from yama-hd@localhost)	by pomail01.silk.ntt-tx.co.jp (unknown)
+ id x5O2O2Od013227;	Mon, 24 Jun 2019 11:24:02 +0900
+X-Authentication-warning: pomail01.silk.ntt-tx.co.jp: yama-hd set sender to
+ fw-yama-hd@pomail01.silk.ntt-tx.co.jp using -f
+Received: from imss04.silk.ntt-tx.co.jp
+ (imss04.silk.ntt-tx.co.jp [10.107.0.39])	by pomail01.silk.ntt-tx.co.jp
+ (unknown) with ESMTP id x5O2O2I5013224	for unknown; Mon,
+ 24 Jun 2019 11:24:02 +0900
+Received: from imss04.silk.ntt-tx.co.jp (localhost [127.0.0.1])
+ by imss04.silk.ntt-tx.co.jp (unknown) with ESMTP id x5O2O1YP005441 for
+ unknown; Mon, 24 Jun 2019 11:24:01 +0900
+Received: from ml01.silk.ntt-tx.co.jp (ml01.silk.ntt-tx.co.jp [10.107.0.230])
+ by imss04.silk.ntt-tx.co.jp (unknown) with ESMTP id x5O2O12O005438; Mon,
+ 24 Jun 2019 11:24:01 +0900
+Received: from ml01.silk.ntt-tx.co.jp (localhost [127.0.0.1])
+	by ml01.silk.ntt-tx.co.jp (unknown) with ESMTP id x5O2O11D016211;	Mon,
+ 24 Jun 2019 11:24:01 +0900
+Received: from imss02.silk.ntt-tx.co.jp
+ (imss02.silk.ntt-tx.co.jp [10.107.0.127])	by ml01.silk.ntt-tx.co.jp (unknown)
+ with ESMTP id x5O2O1r2016207	for unknown; Mon, 24 Jun 2019 11:24:01 +0900
+Received: from imss02.silk.ntt-tx.co.jp (localhost [127.0.0.1])
+ by imss02.silk.ntt-tx.co.jp (unknown) with ESMTP id x5O2O1rE006012 for
+ unknown; Mon, 24 Jun 2019 11:24:01 +0900
+Received: from mail01.ics.ntt-tx.co.jp (mail01.ics.ntt-tx.co.jp [10.254.2.67])
+ by imss02.silk.ntt-tx.co.jp (unknown) with ESMTP id x5O2O1bs006009 for
+ unknown; Mon, 24 Jun 2019 11:24:01 +0900
+Received: from dpdk.org (dpdk.org [92.243.14.124])	by mail01.ics.ntt-tx.co.jp
+ (unknown) with SMTP id x5O2NsxL003549	for unknown; Mon,
+ 24 Jun 2019 11:24:00 +0900
+Received: from [92.243.14.124] (localhost [127.0.0.1])	by dpdk.org (Postfix)
+ with ESMTP id 44AB11BF6C;	Mon, 24 Jun 2019 04:23:54 +0200 (CEST)
+Received: from mail-pf1-f195.google.com
+ (mail-pf1-f195.google.com [209.85.210.195]) by dpdk.org (Postfix)
+ with ESMTP id DCAE51BF51 for <spp@dpdk.org>; Mon,
+ 24 Jun 2019 04:23:52 +0200 (CEST)
+Received: by mail-pf1-f195.google.com with SMTP id x15so6615321pfq.0 for
+ <spp@dpdk.org>; Sun, 23 Jun 2019 19:23:52 -0700 (PDT)
+Received: from localhost.localdomain ([192.47.164.146])
+ by smtp.gmail.com with ESMTPSA id y5sm9127726pgv.12.2019.06.23.19.23.50
+ (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128); Sun,
+ 23 Jun 2019 19:23:51 -0700 (PDT)
+Date: Mon, 24 Jun 2019 11:23:25 +0900
+From: yasufum.o@gmail.com
+Subject: [spp 04359] [spp] [PATCH 5/5] shared/sec: add prefix to defines of
+ worker types
+Sender: spp <spp-bounces@dpdk.org>
+To: spp@dpdk.org, ferruh.yigit@intel.com, yasufum.o@gmail.com
+Message-id: <20190624022325.18695-6-yasufum.o@gmail.com>
+In-reply-to: <20190624022325.18695-1-yasufum.o@gmail.com>
+References: <20190624022325.18695-1-yasufum.o@gmail.com>
+X-ML-Name: unknown
+X-Mail-Count: 04359
+X-MLServer: unknown
+X-ML-Info: mailing list service
+X-Mailer: git-send-email 2.17.1
+Authentication-results: mail01.ics.ntt-tx.co.jp; spf=pass
+ smtp.mailfrom=spp-bounces@dpdk.org
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
+ h=from:to:subject:date:message-id:in-reply-to:references;
+ bh=4ZItEurUjU5k/vUJWgZNxqAAQQ2u6SYqgjrd0lxzZ8E=;
+ b=DlJYrK9Qx8oqqYhkm3OZWtlWmAd4qXOTjRRoGciffaTkvXh5NE++H65DllZa5X04xu
+ LyWgJ0CqoA0qUZZgNztKE/MwdW+0J38jZ/3GdA020S8tTYriohP5cH46zmU/ZTGToR6A
+ 6RUQm+6hKIPB3mpIpF4SvWnU+vUKUZZKfr5HrtpGb+tIVPOrP8CRWyA3Ww2p7+ablNdz
+ rvAjS7UZ1FX7jgnV/ynHtLTS/aum12WVqFREdMf8TQ50n9WPT3TfQ9zU8iLE8swO7RhC
+ wGdZLl2gO9v+Aa2k6noFfDqoA9FsDn+rNSBHK+QkiDM/WnDX2Ax3SkRT4nbcFJjp0e0V hWcw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=1e100.net;
+ s=20161025; h=x-gm-message-state:from:to:subject:date:message-id:in-reply-to
+ :references; bh=4ZItEurUjU5k/vUJWgZNxqAAQQ2u6SYqgjrd0lxzZ8E=;
+ b=PGSYk2xmEEyWqDKPHaCZfX1svr/+9Dpg7oTRTvCXNgvh1GJTubyWiIy/FGngRWwot3
+ ZMBQ0dFN1T74hB1ClEZHWZWtq6dkvY+JNsbcuEYligXHE+LEEmvMPirmTtw4hbzeV3+4
+ Nj79RStAKGmixMinqnlFRzpSe/OHGYetbKSdk8u6zQiAFGaXYf4WJYMbbWwex7u0Lypb
+ KyVloX3pCRUeVTVCZNh+9vUKmFkuG0qGS8e8sTq1sF7ZPJwBc3SfPQcLVt1xwiNUh5/X
+ ZCQF/8b8DFDEH31I9t8j1fJEpsLwZDseSgmT3XGxj1+58EKXRhI4Q1x+dcAl2X+596xj MxoA==
+X-Gm-Message-State: APjAAAWlpcEyHfOu32Ufed18G3YqqF96B1DxNPbUI4YrIw0oCtruJEWj
+ uPZ3Bfu5IMg6SflPDtIRPlIYl5s0
+X-Google-Smtp-Source:
+ APXvYqyRokrNq1a3R3/7fsT1IL5aZpfVMecQU8ZPRVOoNUW5lKeNoLzW6oVOvnmuNgzEbEqkV/I8qQ==
+X-Received: by 2002:a63:60d:: with SMTP id 13mr25350453pgg.272.1561343031678;
+ Sun, 23 Jun 2019 19:23:51 -0700 (PDT)
+X-BeenThere: spp@dpdk.org
+X-Mailman-Version: 2.1.15
+List-Id: Soft Patch Panel <spp.dpdk.org>
+List-Unsubscribe: <https://mails.dpdk.org/options/spp>,
+ <mailto:spp-request@dpdk.org?subject=unsubscribe>
+List-Archive: <http://mails.dpdk.org/archives/spp/>
+List-Post: <mailto:spp@dpdk.org>
+List-Help: <mailto:spp-request@dpdk.org?subject=help>
+List-Subscribe: <https://mails.dpdk.org/listinfo/spp>,
+ <mailto:spp-request@dpdk.org?subject=subscribe>
+X-TM-AS-MML: No
+Precedence: bulk
+Lines: 118
+X-TM-AS-GCONF: 00
+X-MD-STAMP: ON
+
+From: Yasufumi Ogawa <yasufum.o@gmail.com>
+
+This update is to prefix `SPPWK_` to defines of strings of worker types
+such as `classifier_mac`, `merge` or so.
+
+Signed-off-by: Yasufumi Ogawa <yasufum.o@gmail.com>
+---
+ src/mirror/spp_mirror.c                         |  2 +-
+ src/shared/secondary/spp_worker_th/cmd_parser.c |  4 ++--
+ src/shared/secondary/spp_worker_th/cmd_runner.c |  4 ++--
+ src/shared/secondary/spp_worker_th/cmd_utils.h  | 10 +++++-----
+ src/vf/classifier_mac.c                         |  2 +-
+ src/vf/spp_forward.c                            |  4 ++--
+ 6 files changed, 13 insertions(+), 13 deletions(-)
+
+diff --git a/src/mirror/spp_mirror.c b/src/mirror/spp_mirror.c
+index b68eccc..f62ae7e 100644
+--- a/src/mirror/spp_mirror.c
++++ b/src/mirror/spp_mirror.c
+@@ -485,7 +485,7 @@ spp_mirror_get_component_status(
+ 		return SPP_RET_NG;
+ 	}
+ 
+-	component_type = SPP_TYPE_MIRROR_STR;
++	component_type = SPPWK_TYPE_MIR_STR;
+ 
+ 	memset(rx_ports, 0x00, sizeof(rx_ports));
+ 	for (cnt = 0; cnt < path->nof_rx; cnt++) {
+diff --git a/src/shared/secondary/spp_worker_th/cmd_parser.c b/src/shared/secondary/spp_worker_th/cmd_parser.c
+index 9fc88dd..55fc1d2 100644
+--- a/src/shared/secondary/spp_worker_th/cmd_parser.c
++++ b/src/shared/secondary/spp_worker_th/cmd_parser.c
+@@ -197,8 +197,8 @@ get_comp_type_from_str(const char *type_str)
+ #endif /* SPP_VF_MODULE */
+ 
+ #ifdef SPP_MIRROR_MODULE
+-	if (strncmp(type_str, SPP_TYPE_MIRROR_STR,
+-			strlen(SPP_TYPE_MIRROR_STR)+1) == 0)
++	if (strncmp(type_str, SPPWK_TYPE_MIR_STR,
++			strlen(SPPWK_TYPE_MIR_STR)+1) == 0)
+ 		return SPPWK_TYPE_MIR;
+ #endif /* SPP_MIRROR_MODULE */
+ 
+diff --git a/src/shared/secondary/spp_worker_th/cmd_runner.c b/src/shared/secondary/spp_worker_th/cmd_runner.c
+index 9235857..a768575 100644
+--- a/src/shared/secondary/spp_worker_th/cmd_runner.c
++++ b/src/shared/secondary/spp_worker_th/cmd_runner.c
+@@ -514,7 +514,7 @@ spp_iterate_core_info(struct spp_iterate_core_params *params)
+ 		if (core->num == 0) {
+ 			ret = (*params->element_proc)(
+ 				params, lcore_id,
+-				"", SPP_TYPE_UNUSE_STR,
++				"", SPPWK_TYPE_NONE_STR,
+ 				0, NULL, 0, NULL);
+ 			if (unlikely(ret != 0)) {
+ 				RTE_LOG(ERR, WK_CMD_RUNNER, "Cannot iterate core "
+@@ -1145,7 +1145,7 @@ append_core_element_value(
+ 	}
+ 
+ 	/* there is unnecessary data when "unuse" by type */
+-	unuse_flg = strcmp(type, SPP_TYPE_UNUSE_STR);
++	unuse_flg = strcmp(type, SPPWK_TYPE_NONE_STR);
+ 
+ 	/**
+ 	 * TODO(yasufum) change ambiguous "core" to more specific one such as
+diff --git a/src/shared/secondary/spp_worker_th/cmd_utils.h b/src/shared/secondary/spp_worker_th/cmd_utils.h
+index ed46370..ee44cee 100644
+--- a/src/shared/secondary/spp_worker_th/cmd_utils.h
++++ b/src/shared/secondary/spp_worker_th/cmd_utils.h
+@@ -19,11 +19,11 @@
+  *  "merge" -> "merger", "forward" -> "forwarder".
+  */
+ /** Identifier string for each component (status command) */
+-#define SPP_TYPE_CLASSIFIER_MAC_STR "classifier_mac"
+-#define SPP_TYPE_MERGE_STR	    "merge"
+-#define SPP_TYPE_FORWARD_STR	    "forward"
+-#define SPP_TYPE_MIRROR_STR	    "mirror"
+-#define SPP_TYPE_UNUSE_STR	    "unuse"
++#define SPPWK_TYPE_CLS_STR "classifier_mac"
++#define SPPWK_TYPE_MRG_STR "merge"
++#define SPPWK_TYPE_FWD_STR "forward"
++#define SPPWK_TYPE_MIR_STR "mirror"
++#define SPPWK_TYPE_NONE_STR "unuse"
+ 
+ /** Identifier string for each interface */
+ #define SPP_IFTYPE_NIC_STR   "phy"
+diff --git a/src/vf/classifier_mac.c b/src/vf/classifier_mac.c
+index 8f9c0f5..b3a6cba 100644
+--- a/src/vf/classifier_mac.c
++++ b/src/vf/classifier_mac.c
+@@ -850,7 +850,7 @@ spp_classifier_get_component_status(
+ 	/* Set the information with the function specified by the command. */
+ 	ret = (*params->element_proc)(
+ 		params, lcore_id,
+-		cmp_info->name, SPP_TYPE_CLASSIFIER_MAC_STR,
++		cmp_info->name, SPPWK_TYPE_CLS_STR,
+ 		nof_rx, rx_ports, nof_tx, tx_ports);
+ 	if (unlikely(ret != SPP_RET_OK))
+ 		return SPP_RET_NG;
+diff --git a/src/vf/spp_forward.c b/src/vf/spp_forward.c
+index 668b31c..909f084 100644
+--- a/src/vf/spp_forward.c
++++ b/src/vf/spp_forward.c
+@@ -205,9 +205,9 @@ spp_forward_get_component_status(
+ 	}
+ 
+ 	if (path->wk_type == SPPWK_TYPE_MRG)
+-		component_type = SPP_TYPE_MERGE_STR;
++		component_type = SPPWK_TYPE_MRG_STR;
+ 	else
+-		component_type = SPP_TYPE_FORWARD_STR;
++		component_type = SPPWK_TYPE_FWD_STR;
+ 
+ 	memset(rx_ports, 0x00, sizeof(rx_ports));
+ 	for (cnt = 0; cnt < path->num_rx; cnt++) {
+-- 
+2.17.1
+
+

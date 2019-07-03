@@ -1,0 +1,441 @@
+Return-path: <fw-yama-hd@pomail01.silk.ntt-tx.co.jp>
+Received: from zssg-mailmd104.ddreams.local
+ (zssg-mailmd104.ddreams.local [10.160.123.99]) by zssg-mailms320.ddreams.local
+ (NTT DoCoMo Mail System) with ESMTP id <0PTY00XZY3PC1U10@NTTDoCoMo.co.jp> for
+ yamashita.hideyuki@ntt-tx.co.jp; Mon, 01 Jul 2019 13:12:48 +0900 (JST)
+Original-recipient: rfc822;yamashita.hideyuki@ntt-tx.co.jp
+Received: from smtp_saver-daemon.zssg-mailmd104.ddreams.local by
+ zssg-mailmd104.ddreams.local (dDREAMS) id <0PTY00Y2W3PCYA00@dDREAMS> for
+ yamashita.hideyuki@ntt-tx.co.jp (ORCPT yamashita.hideyuki@ntt-tx.co.jp); Mon,
+ 01 Jul 2019 13:12:48 +0900 (JST)
+Received: from zssg-mailmf104.ddreams.local
+ (zssg-mailmf900.ddreams.local [10.160.172.84]) by zssg-mailmd104.ddreams.local
+ (dDREAMS) with ESMTP id <0PTY00A2G3PCM8E0@dDREAMS> for
+ yamashita.hideyuki@ntt-tx.co.jp (ORCPT yamashita.hideyuki@ntt-tx.co.jp); Mon,
+ 01 Jul 2019 13:12:48 +0900 (JST)
+Received: from zssg-mailmf104.ddreams.local (unknown [127.0.0.1])
+	by zssg-mailmf104.ddreams.local (Postfix) with ESMTP id 4145C7E6032	for
+ <yamashita.hideyuki@ntt-tx.co.jp>; Mon,  1 Jul 2019 13:12:48 +0900 (JST)
+Received: from zssg-mailmf104.ddreams.local (unknown [127.0.0.1])
+	by IMSVA (Postfix) with ESMTP id 3FF1C8E605A	for
+ <yamashita.hideyuki@ntt-tx.co.jp>; Mon,  1 Jul 2019 13:12:48 +0900 (JST)
+Received: from localhost (unknown [127.0.0.1])	by IMSVA (Postfix)
+ with SMTP id 350D38E605E	for <yamashita.hideyuki@ntt-tx.co.jp>; Mon,
+ 1 Jul 2019 13:12:48 +0900 (JST)
+X-IMSS-HAND-OFF-DIRECTIVE: localhost:10026
+Received: from zssg-mailmf104.ddreams.local (unknown [127.0.0.1])
+	by IMSVA (Postfix) with ESMTP id B8EF28E605A	for
+ <yamashita.hideyuki@ntt-tx.co.jp>; Mon,  1 Jul 2019 13:12:47 +0900 (JST)
+Received: from pomail01.silk.ntt-tx.co.jp (unknown [10.160.183.139])
+	by zssg-mailmf104.ddreams.local (Postfix)
+ with ESMTPS	for <yamashita.hideyuki@ntt-tx.co.jp>; Mon,
+ 1 Jul 2019 13:12:47 +0900 (JST)
+Received: from pomail01.silk.ntt-tx.co.jp (localhost [127.0.0.1])
+	by pomail01.silk.ntt-tx.co.jp (unknown) with ESMTP id x614ClE5015804;	Mon,
+ 1 Jul 2019 13:12:47 +0900
+Received: (from yama-hd@localhost)	by pomail01.silk.ntt-tx.co.jp (unknown)
+ id x614Clea015803;	Mon, 1 Jul 2019 13:12:47 +0900
+X-Authentication-warning: pomail01.silk.ntt-tx.co.jp: yama-hd set sender to
+ fw-yama-hd@pomail01.silk.ntt-tx.co.jp using -f
+Received: from imss04.silk.ntt-tx.co.jp
+ (imss04.silk.ntt-tx.co.jp [10.107.0.39])	by pomail01.silk.ntt-tx.co.jp
+ (unknown) with ESMTP id x614ClsB015800	for unknown; Mon,
+ 1 Jul 2019 13:12:47 +0900
+Received: from imss04.silk.ntt-tx.co.jp (localhost [127.0.0.1])
+ by imss04.silk.ntt-tx.co.jp (unknown) with ESMTP id x614Clar030286 for
+ unknown; Mon, 1 Jul 2019 13:12:47 +0900
+Received: from ml01.silk.ntt-tx.co.jp (ml01.silk.ntt-tx.co.jp [10.107.0.230])
+ by imss04.silk.ntt-tx.co.jp (unknown) with ESMTP id x614ClrF030283; Mon,
+ 1 Jul 2019 13:12:47 +0900
+Received: from ml01.silk.ntt-tx.co.jp (localhost [127.0.0.1])
+	by ml01.silk.ntt-tx.co.jp (unknown) with ESMTP id x614CkHS019846;	Mon,
+ 1 Jul 2019 13:12:46 +0900
+Received: from imss02.silk.ntt-tx.co.jp
+ (imss02.silk.ntt-tx.co.jp [10.107.0.127])	by ml01.silk.ntt-tx.co.jp (unknown)
+ with ESMTP id x614Ckil019842	for unknown; Mon, 1 Jul 2019 13:12:46 +0900
+Received: from imss02.silk.ntt-tx.co.jp (localhost [127.0.0.1])
+ by imss02.silk.ntt-tx.co.jp (unknown) with ESMTP id x614Ck9L025572 for
+ unknown; Mon, 1 Jul 2019 13:12:46 +0900
+Received: from mail01.ics.ntt-tx.co.jp (mail01.ics.ntt-tx.co.jp [10.254.2.67])
+ by imss02.silk.ntt-tx.co.jp (unknown) with ESMTP id x614Ckfe025562 for
+ unknown; Mon, 1 Jul 2019 13:12:46 +0900
+Received: from dpdk.org (dpdk.org [92.243.14.124])	by mail01.ics.ntt-tx.co.jp
+ (unknown) with SMTP id x614CdSQ007032	for unknown; Mon,
+ 1 Jul 2019 13:12:45 +0900
+Received: from [92.243.14.124] (localhost [127.0.0.1])	by dpdk.org (Postfix)
+ with ESMTP id 8C42831FC;	Mon,  1 Jul 2019 06:12:39 +0200 (CEST)
+Received: from mail-pl1-f170.google.com
+ (mail-pl1-f170.google.com [209.85.214.170]) by dpdk.org (Postfix)
+ with ESMTP id 8264D2AB for <spp@dpdk.org>; Mon,
+ 1 Jul 2019 06:12:37 +0200 (CEST)
+Received: by mail-pl1-f170.google.com with SMTP id k8so6605256plt.3 for
+ <spp@dpdk.org>; Sun, 30 Jun 2019 21:12:37 -0700 (PDT)
+Received: from localhost.localdomain ([192.47.164.146])
+ by smtp.gmail.com with ESMTPSA id b19sm8589765pgh.57.2019.06.30.21.12.35
+ (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128); Sun,
+ 30 Jun 2019 21:12:36 -0700 (PDT)
+Date: Mon, 01 Jul 2019 13:12:32 +0900
+From: yasufum.o@gmail.com
+Subject: [spp 04465] [spp] [PATCH] readme: update README
+Sender: spp <spp-bounces@dpdk.org>
+To: spp@dpdk.org, ferruh.yigit@intel.com, yasufum.o@gmail.com
+Message-id: <20190701041232.34122-1-yasufum.o@gmail.com>
+X-ML-Name: unknown
+X-Mail-Count: 04465
+X-MLServer: unknown
+X-ML-Info: mailing list service
+X-Mailer: git-send-email 2.17.1
+Authentication-results: mail01.ics.ntt-tx.co.jp; spf=pass
+ smtp.mailfrom=spp-bounces@dpdk.org
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
+ h=from:to:subject:date:message-id;
+ bh=LX1JIJOKeTn9GpdKiv43vNUR13tsPvw0KRXYNb62+5Q=;
+ b=Pg609TyrUh4r74CRL7hWpQR+1PqRJhNlDt0rlnBaZQn3o2gX1mON+xIvRqpSnqPOVD
+ JZ/rP6at7+8OkpsEuEk0UfOjadBuMgaxd40FVyIVYRgDdFZ48BIn7DUPzTrw2AZ0rEYM
+ cafbZ818vJ51aG6i/3uCQ5uJP4iP/BbMi0LIB6zBrTTJyk0XJ+2D6gPQ6FYVTNQ8dUJW
+ BN8SJ20ANb/V7jIK2w36udxvJad62Ybb01zL4kgOpsmvqvCbrZJGI6amlS8PUFDEvjs+
+ Od73eXYQD5U0x9qoSih2e3CKfw8Av7ix2cIQiiZKxNmDAlQ0jjG3TV/1/1xlKIqMDCj6 fI+A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=1e100.net;
+ s=20161025; h=x-gm-message-state:from:to:subject:date:message-id;
+ bh=LX1JIJOKeTn9GpdKiv43vNUR13tsPvw0KRXYNb62+5Q=;
+ b=LULKU0EB8TwlOU29SmdEtxzj/R3Z+rM7UtmpHp/fJmRfNF6JbfjdNko6RanO7kGYHo
+ 8dO8I/NCou+OBNYnnJ6czwBPk3/2X6tvboxMaZXrrb3cfqQofGDSz0l+wuyEED4hh/oX
+ /QqFBi9RQMgjGNytdlY3lcW8pI537VmAqJMfuiy08a6gtBtm4fCXixld4mX/yKoth+jm
+ FxLK2j7qAcsuAfiXt5eZhsiHxBl6KiRFgaduNqO0UpRURpUUALxztVj31+GTlndoSBTs
+ us3HNhZi6AZNpTX6WoifU/E5dmpK50SaefrMUZCQK5ziuvUh56zV/QIvLDy4F1JKmJ3k LYYQ==
+X-Gm-Message-State: APjAAAVubnM5AIN9OxH+RhBQn0TYPRuPtqNDjTuv7Ed/wz5AHA+djoOz
+ OF8XjqMa3/ZI/gAuYB14J/DmpWeS
+X-Google-Smtp-Source:
+ APXvYqzocIhzHSrmyTOdPn77QXAxrpYUw0etREg59WmwHJX8Pwes9nyOPhdsl/uwTkhkoFgmynFa1w==
+X-Received: by 2002:a17:902:f082:: with SMTP id
+ go2mr27790406plb.25.1561954356455; Sun, 30 Jun 2019 21:12:36 -0700 (PDT)
+X-BeenThere: spp@dpdk.org
+X-Mailman-Version: 2.1.15
+List-Id: Soft Patch Panel <spp.dpdk.org>
+List-Unsubscribe: <https://mails.dpdk.org/options/spp>,
+ <mailto:spp-request@dpdk.org?subject=unsubscribe>
+List-Archive: <http://mails.dpdk.org/archives/spp/>
+List-Post: <mailto:spp@dpdk.org>
+List-Help: <mailto:spp-request@dpdk.org?subject=help>
+List-Subscribe: <https://mails.dpdk.org/listinfo/spp>,
+ <mailto:spp-request@dpdk.org?subject=subscribe>
+X-TM-AS-MML: No
+Precedence: bulk
+Lines: 313
+X-TM-AS-GCONF: 00
+X-MD-STAMP: ON
+
+From: Yasufumi Ogawa <yasufum.o@gmail.com>
+
+This patch is to `README.md` on project root for adding new features
+such as `launch` command or `config`.
+
+Signed-off-by: Yasufumi Ogawa <yasufum.o@gmail.com>
+---
+ README.md | 213 +++++++++++++++++++++++++++++++++++++++++-------------
+ 1 file changed, 161 insertions(+), 52 deletions(-)
+
+diff --git a/README.md b/README.md
+index 4ede2f2..e1085e0 100644
+--- a/README.md
++++ b/README.md
+@@ -23,43 +23,40 @@ with patch panel like simple interface.
+ 
+ ## Architecture Overview
+ 
+-The framework is composed of a primary DPDK application that is
+-responsible for resource management and secondary processes as workers
+-for packet forwarding. This primary application doesn't
+-interact with any traffic, and is used to manage creation and freeing of
+-resources only.
+-
+-A Python based management interfaces, `spp-ctl` and `SPP CLI`,
+-are provided to control the primary DPDK application to create resources,
+-which are then to be used by secondary applications.
+-
+-This management application provides a socket based interface for
+-the primary and secondary DPDK applications to
+-interface to the manager.
++SPP is a kind of DPDK
++[multi-process application](https://doc.dpdk.org/guides/prog_guide/multi_proc_support.html).
++It is composed of primary process which is responsible for resource
++management, and secondary processes as workers for packet forwarding.
++This primary process does not interact with any traffic. It is
++responsible for creation and freeing of resources shared among other
++secondary processes.
++
++A Python based management interface called SPP controller consists of
++`spp-ctl` and `SPP CLI`.
++`SPP CLI` is a command line interface of SPP, and `spp-ctl` a backend
++server for managing primary and secondary processes.
++`spp-ctl` behaves as a REST API server and `SPP CLI` sends a command via
++the REST API.
+ 
+ 
+ ## Install
+ 
+-Before using SPP, you need to install DPDK. Briefly describ here how to install
+-and setup DPDK. Please refer to SPP's
++Before using SPP, you need to install DPDK. Briefly describ here how to
++install and setup DPDK. Please refer to SPP's
+ [Getting Started](https://doc.dpdk.org/spp/setup/getting_started.html) guide
+ for more details. For DPDK, refer to
+ [Getting Started Guide for Linux](https://doc.dpdk.org/guides/linux_gsg/index.html).
+ 
+-### Install DPDK
+-
+-It is required to install Python and libnuma-devel library before.
++It is required to install Python3 and libnuma-devel library before.
++SPP does not support Python2 anymore.
+ 
+ ```sh
+-$ sudo apt install libnuma-dev
+-
+-# Python2
+-$ sudo apt install python python-pip
+-
+-# Python3
+ $ sudo apt install python3 python3-pip
++$ sudo apt install libnuma-dev
+ ```
+ 
++### DPDK
++
+ Clone repository and compile DPDK in any directory.
+ 
+ ```
+@@ -76,7 +73,7 @@ $ export RTE_TARGET=x86_64-native-linuxapp-gcc  # depends on your env
+ $ make install T=$RTE_TARGET
+ ```
+ 
+-### Install SPP
++### SPP
+ 
+ Clone repository and compile SPP in any directory.
+ 
+@@ -89,12 +86,13 @@ $ make  # Confirm that $RTE_SDK and $RTE_TARGET are set
+ 
+ ### Binding Network Ports to DPDK
+ 
+-Network ports must be bound to DPDK with a UIO (Userspace IO) driver. UIO driver
+-is for mapping device memory to userspace and registering interrupts.
++Network ports must be bound to DPDK with a UIO (Userspace IO) driver.
++UIO driver is for mapping device memory to userspace and registering
++interrupts.
+ 
+-You usually use the standard `uio_pci_generic` for many use cases or `vfio-pci`
+-for more robust and secure cases. Both of drivers are included by default in
+-modern Linux kernel.
++You usually use the standard `uio_pci_generic` for many use cases or
++`vfio-pci` for more robust and secure cases. Both of drivers are
++included by default in modern Linux kernel.
+ 
+ ```sh
+ # Activate uio_pci_generic
+@@ -104,8 +102,9 @@ $ sudo modprobe uio_pci_generic
+ $ sudo modprobe vfio-pci
+ ```
+ 
+-Once UIO driver is activated, bind network ports with the driver. DPDK provides
+-`usertools/dpdk-devbind.py` for managing devices.
++Once UIO driver is activated, bind network ports with the driver.
++DPDK provides `usertools/dpdk-devbind.py` for managing devices.
++Here are some examples.
+ 
+ ```
+ # Bind a port with 2a:00.0 (PCI address)
+@@ -115,8 +114,8 @@ $ ./usertools/dpdk-devbind.py --bind=uio_pci_generic 2a:00.0
+ $ ./usertools/dpdk-devbind.py --bind=uio_pci_generic eth0
+ ```
+ 
+-After binding two ports, you can find it is under the DPDK driver, and cannot
+-find it by using `ifconfig` or `ip`.
++After binding a port, you can find it is under the DPDK driver,
++and cannot find it by using `ifconfig` or `ip`.
+ 
+ ```sh
+ $ $RTE_SDK/usertools/dpdk-devbind.py -s
+@@ -129,43 +128,154 @@ Network devices using DPDK-compatible driver
+ 
+ ## How to Use
+ 
+-You should keep in mind the order of launching processes. Primary process must
+-be launched before secondary processes. `spp-ctl` need to be launched before
+-`spp.py`, but no need to be launched before other processes.
+-In general, `spp-ctl` should be launched first, then `spp.py` and `spp_primary`
+-in each of terminals without running as background process.
++You can use SPP from `bin/start.sh` script or launching each of
++processes manually. This startup script is provided for skipping to
++input many options for multiple DPDK applications.
++
++### Quick Start
++
++Start with `bin/start.sh` with configuration file `bin/config.sh`.
++First time you run the startup script, it generates the config file
++and asks to edit the config without launchin processes.
++
++Here is a part of config parameters. You do not need to change most of
++params.
++If you do not have physical NICs on your server, activate
++`PRI_VHOST_IDS` which is for setting up vhost interfaces instead of
++physical.
++
++```sh
++SPP_HOST_IP=127.0.0.1
++SPP_HUGEPAGES=/dev/hugepages
++
++# spp_primary options
++LOGLEVEL=7  # change to 8 if you refer debug messages.
++PRI_CORE_LIST=0  # required one lcore usually.
++PRI_MEM=1024
++PRI_MEMCHAN=4  # change for your memory channels.
++NUM_RINGS=8
++PRI_PORTMASK=0x03  # total num of ports of spp_primary.
++#PRI_VHOST_IDS=(11 12)  # you use if you have no phy ports.
++```
++
++After you edit configuration, you can launch `spp-ctl`,
++`spp_primary` and `SPP CLI` from startup script.
++
++```sh
++$ ./bin/start.sh
++Start spp-ctl
++Start spp_primary
++Waiting for spp-ctl is ready ...
++Welcome to the SPP CLI. Type `help` or `?` to list commands.
++
++spp >
++```
++
++Check status of `spp_primary` because it takes several seconds to be
++ready. Confirm that the status is `running`.
++
++```sh
++spp > status
++- spp-ctl:
++  - address: 127.0.0.1:7777
++- primary:
++  - status: running
++- secondary:
++  - processes:
++```
++
++Now you are ready to launch secondary processes from `pri; launch`
++command, or another terminal.
++Here is an example for launching `spp_nfv` with options from
++`pri; launch`. Log file of this process is created as
++`log/spp_nfv1.log`.
++
++```sh
++spp > pri; launch nfv 1 -l 1,2 -m 512 -- -n 1 -s 127.0.0.1:6666
++```
+ 
+-It has a option -b for binding address explicitly to be accessed from other
+-than default, `127.0.0.1` or `localhost`.
++This `launch` command supports TAB completion. Parameters for `spp_nfv`
++are completed after secondary ID `1`.
+ 
++```sh
++spp > pri; launch nfv 1
+ 
+-### SPP Controller
++# Press TAB
++spp > pri; launch nfv 1 -l 1,2 -m 512 -- -n 1 -s 127.0.0.1:6666
++```
++
++It is same as following options launching from terminal.
++
++```sh
++$ sudo ./src/nfv/x86_64-native-linuxapp-gcc/spp_nfv \
++    -l 1,2 -n 4 -m 512 \
++    --proc-type secondary \
++    -- \
++    -n 1 \
++    -s 127.0.0.1:6666
++```
++
++Parameters for completion are defined in `SPP CLI`, and you can find
++parameters with `config` command.
++
++```sh
++spp > config
++- max_secondary: "16"   # The maximum number of secondary processes
++- prompt: "spp > "  # Command prompt
++- topo_size: "60%"  # Percentage or ratio of topo
++- sec_mem: "-m 512" # Mem size
++...
++```
++
++You can launch consequence secondary processes from CLI.
++
++```sh
++spp > pri; launch nfv 2 -l 1,3 -m 512 -- -n 2 -s 127.0.0.1:6666
++spp > pri; launch vf 3 -l 1,4,5,6 -m 512 -- -n 3 -s 127.0.0.1:6666
++...
++```
++
++### Startup Manually
++
++You should keep in mind the order of launching processes if you launch
++processes without using startup script.
++`spp-ctl` should be launched before all of other processes. Then,
++primary process must be launched before secondary processes.
++On the other hand, you can launch SPP CLI `spp.py` in any time
++after `spp-ctl`. In general, `spp-ctl` is launched first,
++then `spp.py`, `spp_primary` and secondary processes.
++
++It has a option -b for binding address explicitly to be accessed from
++other than default, `127.0.0.1` or `localhost`.
++
++In the following example, processes are launched in different terminals
++for describing options, although you can launch them with
++`pri; launch` command.
++
++#### SPP Controller
+ 
+ SPP controller consists of `spp-ctl` and SPP CLI.
+ `spp-ctl` is a HTTP server for REST APIs for managing SPP processes.
+ 
+ ```sh
+ # terminal 1
+-$ cd /path/to/spp
+ $ python3 src/spp-ctl/spp-ctl -b 192.168.1.100
+ ```
+ 
+-SPP CLI is a client of `spp-ctl` for providing simple user interface without
+-using REST APIs.
++SPP CLI is a client of `spp-ctl` for providing simple user interface
++without using REST APIs.
+ 
+ ```sh
+ # terminal 2
+-$ cd /path/to/spp
+ $ python3 src/spp.py -b 192.168.1.100
+ ```
+ 
+-
+-### SPP Primary
++#### SPP Processes
+ 
+ Launch SPP primary and secondary processes.
+-SPP primary is a resource manager and initializing EAL for secondary processes.
+-Secondary process behaves as a client of primary process and a worker for doing
+-tasks.
++SPP primary is a resource manager and initializing EAL for secondary
++processes. Secondary process behaves as a client of primary process
++and a worker for doing tasks.
+ 
+ ```sh
+ # terminal 3
+@@ -185,7 +295,6 @@ one.
+ 
+ ```sh
+ # terminal 4
+-$ cd /path/to/spp
+ $ sudo ./src/nfv/x86_64-native-linuxapp-gcc/spp_nfv \
+     -l 2-3 -n 4 \
+     --proc-type=secondary \
+-- 
+2.17.1
+
+

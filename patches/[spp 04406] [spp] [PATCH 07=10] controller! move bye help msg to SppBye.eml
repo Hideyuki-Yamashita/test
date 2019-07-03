@@ -1,0 +1,208 @@
+Return-path: <fw-yama-hd@pomail01.silk.ntt-tx.co.jp>
+Received: from zssg-mailmd101.ddreams.local
+ (zssg-mailmd101.ddreams.local [10.160.123.96]) by zssg-mailms320.ddreams.local
+ (NTT DoCoMo Mail System) with ESMTP id <0PTL00DMFDBQFR70@NTTDoCoMo.co.jp> for
+ yamashita.hideyuki@ntt-tx.co.jp; Mon, 24 Jun 2019 16:11:50 +0900 (JST)
+Original-recipient: rfc822;yamashita.hideyuki@ntt-tx.co.jp
+Received: from smtp_saver-daemon.zssg-mailmd101.ddreams.local by
+ zssg-mailmd101.ddreams.local (dDREAMS) id <0PTL0160GDBQTL00@dDREAMS> for
+ yamashita.hideyuki@ntt-tx.co.jp (ORCPT yamashita.hideyuki@ntt-tx.co.jp); Mon,
+ 24 Jun 2019 16:11:50 +0900 (JST)
+Received: from zssg-mailmf102.ddreams.local
+ (zssg-mailmf900.ddreams.local [10.160.172.84]) by zssg-mailmd101.ddreams.local
+ (dDREAMS) with ESMTP id <0PTL00PVCDBQB090@dDREAMS> for
+ yamashita.hideyuki@ntt-tx.co.jp (ORCPT yamashita.hideyuki@ntt-tx.co.jp); Mon,
+ 24 Jun 2019 16:11:50 +0900 (JST)
+Received: from zssg-mailmf102.ddreams.local (unknown [127.0.0.1])
+	by zssg-mailmf102.ddreams.local (Postfix) with ESMTP id 5D78A7E6038	for
+ <yamashita.hideyuki@ntt-tx.co.jp>; Mon, 24 Jun 2019 16:11:50 +0900 (JST)
+Received: from zssg-mailmf102.ddreams.local (unknown [127.0.0.1])
+	by IMSVA (Postfix) with ESMTP id 5C89E8E6056	for
+ <yamashita.hideyuki@ntt-tx.co.jp>; Mon, 24 Jun 2019 16:11:50 +0900 (JST)
+Received: from localhost (unknown [127.0.0.1])	by IMSVA (Postfix)
+ with SMTP id 5B03A8E6054	for <yamashita.hideyuki@ntt-tx.co.jp>; Mon,
+ 24 Jun 2019 16:11:50 +0900 (JST)
+X-IMSS-HAND-OFF-DIRECTIVE: localhost:10026
+Received: from zssg-mailmf102.ddreams.local (unknown [127.0.0.1])
+	by IMSVA (Postfix) with ESMTP id 1C2B88E6054	for
+ <yamashita.hideyuki@ntt-tx.co.jp>; Mon, 24 Jun 2019 16:11:49 +0900 (JST)
+Received: from pomail01.silk.ntt-tx.co.jp (unknown [10.160.183.139])
+	by zssg-mailmf102.ddreams.local (Postfix)
+ with ESMTPS	for <yamashita.hideyuki@ntt-tx.co.jp>; Mon,
+ 24 Jun 2019 16:11:49 +0900 (JST)
+Received: from pomail01.silk.ntt-tx.co.jp (localhost [127.0.0.1])
+	by pomail01.silk.ntt-tx.co.jp (unknown) with ESMTP id x5O7Bm5D017166;	Mon,
+ 24 Jun 2019 16:11:48 +0900
+Received: (from yama-hd@localhost)	by pomail01.silk.ntt-tx.co.jp (unknown)
+ id x5O7Bmc5017165;	Mon, 24 Jun 2019 16:11:48 +0900
+X-Authentication-warning: pomail01.silk.ntt-tx.co.jp: yama-hd set sender to
+ fw-yama-hd@pomail01.silk.ntt-tx.co.jp using -f
+Received: from imss04.silk.ntt-tx.co.jp
+ (imss04.silk.ntt-tx.co.jp [10.107.0.39])	by pomail01.silk.ntt-tx.co.jp
+ (unknown) with ESMTP id x5O7BmWE017162	for unknown; Mon,
+ 24 Jun 2019 16:11:48 +0900
+Received: from imss04.silk.ntt-tx.co.jp (localhost [127.0.0.1])
+ by imss04.silk.ntt-tx.co.jp (unknown) with ESMTP id x5O7Bm5Y021553 for
+ unknown; Mon, 24 Jun 2019 16:11:48 +0900
+Received: from ml01.silk.ntt-tx.co.jp (ml01.silk.ntt-tx.co.jp [10.107.0.230])
+ by imss04.silk.ntt-tx.co.jp (unknown) with ESMTP id x5O7BmIr021550; Mon,
+ 24 Jun 2019 16:11:48 +0900
+Received: from ml01.silk.ntt-tx.co.jp (localhost [127.0.0.1])
+	by ml01.silk.ntt-tx.co.jp (unknown) with ESMTP id x5O7BmLc017080;	Mon,
+ 24 Jun 2019 16:11:48 +0900
+Received: from imss02.silk.ntt-tx.co.jp
+ (imss02.silk.ntt-tx.co.jp [10.107.0.127])	by ml01.silk.ntt-tx.co.jp (unknown)
+ with ESMTP id x5O7Bmqp017076	for unknown; Mon, 24 Jun 2019 16:11:48 +0900
+Received: from imss02.silk.ntt-tx.co.jp (localhost [127.0.0.1])
+ by imss02.silk.ntt-tx.co.jp (unknown) with ESMTP id x5O7BlM6031388 for
+ unknown; Mon, 24 Jun 2019 16:11:47 +0900
+Received: from mail01.ics.ntt-tx.co.jp (mail01.ics.ntt-tx.co.jp [10.254.2.67])
+ by imss02.silk.ntt-tx.co.jp (unknown) with ESMTP id x5O7BlMg031382 for
+ unknown; Mon, 24 Jun 2019 16:11:47 +0900
+Received: from dpdk.org (dpdk.org [92.243.14.124])	by mail01.ics.ntt-tx.co.jp
+ (unknown) with SMTP id x5O7BfCk023431	for unknown; Mon,
+ 24 Jun 2019 16:11:46 +0900
+Received: from [92.243.14.124] (localhost [127.0.0.1])	by dpdk.org (Postfix)
+ with ESMTP id BF0C51BF14;	Mon, 24 Jun 2019 09:11:40 +0200 (CEST)
+Received: from mail-pf1-f180.google.com
+ (mail-pf1-f180.google.com [209.85.210.180]) by dpdk.org (Postfix)
+ with ESMTP id A9D041BED6 for <spp@dpdk.org>; Mon,
+ 24 Jun 2019 09:11:39 +0200 (CEST)
+Received: by mail-pf1-f180.google.com with SMTP id j2so6966366pfe.6 for
+ <spp@dpdk.org>; Mon, 24 Jun 2019 00:11:39 -0700 (PDT)
+Received: from localhost.localdomain ([192.47.164.146])
+ by smtp.gmail.com with ESMTPSA id y17sm6357948pfe.148.2019.06.24.00.11.37
+ (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128); Mon,
+ 24 Jun 2019 00:11:38 -0700 (PDT)
+Date: Mon, 24 Jun 2019 16:11:21 +0900
+From: yasufum.o@gmail.com
+Subject: [spp 04406] [spp] [PATCH 07/10] controller: move bye help msg to SppBye
+Sender: spp <spp-bounces@dpdk.org>
+To: spp@dpdk.org, ferruh.yigit@intel.com, yasufum.o@gmail.com
+Message-id: <20190624071124.23451-8-yasufum.o@gmail.com>
+In-reply-to: <20190624071124.23451-1-yasufum.o@gmail.com>
+References: <20190624071124.23451-1-yasufum.o@gmail.com>
+X-ML-Name: unknown
+X-Mail-Count: 04406
+X-MLServer: unknown
+X-ML-Info: mailing list service
+X-Mailer: git-send-email 2.17.1
+Authentication-results: mail01.ics.ntt-tx.co.jp; spf=pass
+ smtp.mailfrom=spp-bounces@dpdk.org
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
+ h=from:to:subject:date:message-id:in-reply-to:references;
+ bh=j+y+cR4Yp915byt6XPJ0lArLADDC9QY9fTfvc+TYuKU=;
+ b=UUUpUZww1J+t7e2R2FEhNBDvtWnrUyov2rdVN48ds8iFcT1B/hfXffyUdNBpKlpwcO
+ uyMVE7QS9hJCOMPT/dT8ZekrFxi+I4CnVWPthQ7Idn++Nqi+JMYdkGjTNzY2r11hcbMc
+ dbzGl+FUOycTB1+14DO5uvqQkMrNXDby3PXm2OS/teaIP7hM8dXEm3otR3DVERkZ3Omh
+ BQxUyl57GiBO9JhAY+qXEaRsfIYjeDykGJf+bnK3dqHQ1WfaNUCR7pD2cCzd3tv85oQU
+ fNEW/yrDD9CjTHChBcGrhRIh/OQIWvi9ROwr7WSnIIM7fJ0EERhG5avFmgmWJS44Jf1z RYXQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=1e100.net;
+ s=20161025; h=x-gm-message-state:from:to:subject:date:message-id:in-reply-to
+ :references; bh=j+y+cR4Yp915byt6XPJ0lArLADDC9QY9fTfvc+TYuKU=;
+ b=mmRnuSj2wfk5jHfES3xELYUprCDHRaI72N/t8HhCf9J6CV8lQN5ejkK5F4oyG32DP0
+ 2wMXseyH+R04vSE1BrBzd+opOqkPEU6+DyU0/UEiTR962UNDMrCUWBGSxBEVKYW7JFJz
+ 8YJTJ/K8ih/grciEcOdnsoRJD3qg5f4nnDLILvP8LVvFOSKrJX1d3QmjoSx09QqorZhl
+ UwBuuU6eIkVvaOb1c0c8svqcsa1bJ3KyjcO3JX4Ao2Tik2tmCqFHhy+2+D6u3FuLD5Y9
+ dfL+Zn1TWSMJRt+K5R34DBFQbB2+G7s4DTAK2c3QGOHfhj/vQs4rpT6kZQUFuReyMML4 xfpA==
+X-Gm-Message-State: APjAAAWIFydMev+OOjMV0J2ragnRMKaOCCKmSTD3jkxAmMY03RX96Moz
+ 39f9GUgPqKcG5hcdfYJKhPVyTOGI
+X-Google-Smtp-Source:
+ APXvYqzIOYxfe39We9ieTDs3UgXLi21BtZR8oe1lTbyidR7DxvQ6jN1NtAc2CEZqSnZ6odDqfGcMkg==
+X-Received: by 2002:a63:4518:: with SMTP id s24mr27605923pga.123.1561360298677;
+ Mon, 24 Jun 2019 00:11:38 -0700 (PDT)
+X-BeenThere: spp@dpdk.org
+X-Mailman-Version: 2.1.15
+List-Id: Soft Patch Panel <spp.dpdk.org>
+List-Unsubscribe: <https://mails.dpdk.org/options/spp>,
+ <mailto:spp-request@dpdk.org?subject=unsubscribe>
+List-Archive: <http://mails.dpdk.org/archives/spp/>
+List-Post: <mailto:spp@dpdk.org>
+List-Help: <mailto:spp-request@dpdk.org?subject=help>
+List-Subscribe: <https://mails.dpdk.org/listinfo/spp>,
+ <mailto:spp-request@dpdk.org?subject=subscribe>
+X-TM-AS-MML: No
+Precedence: bulk
+Lines: 78
+X-TM-AS-GCONF: 00
+X-MD-STAMP: ON
+
+From: Yasufumi Ogawa <yasufum.o@gmail.com>
+
+This patch is to move comment of `do_bye` to `SppBye.help` to reduce
+the number of lines.
+
+Signed-off-by: Yasufumi Ogawa <yasufum.o@gmail.com>
+---
+ src/controller/commands/bye.py | 19 +++++++++++++++++++
+ src/controller/shell.py        | 19 +++++--------------
+ 2 files changed, 24 insertions(+), 14 deletions(-)
+
+diff --git a/src/controller/commands/bye.py b/src/controller/commands/bye.py
+index cd14961..df06500 100644
+--- a/src/controller/commands/bye.py
++++ b/src/controller/commands/bye.py
+@@ -47,3 +47,22 @@ class SppBye(object):
+         for sec_type, spp_procs in spp_secondaries.items():
+             for sec in spp_procs.values():
+                 sec.run('exit')
++
++    @classmethod
++    def help(cls):
++        msg = """Terminate SPP processes and controller.
++
++        There are three usages for terminating processes.
++        It terminates logging if you activated recording.
++
++        (1) Terminate secondary processes
++            spp > bye sec
++
++        (2) Terminate primary and secondary processes
++            spp > bye all
++
++        (3) Terminate SPP controller (not for primary and secondary)
++            spp > bye
++        """
++
++        print(msg)
+diff --git a/src/controller/shell.py b/src/controller/shell.py
+index 52fe645..8cb74a0 100644
+--- a/src/controller/shell.py
++++ b/src/controller/shell.py
+@@ -696,20 +696,7 @@ class Shell(cmd.Cmd, object):
+         return common.compl_common(text, line)
+ 
+     def do_bye(self, args):
+-        """Terminate SPP processes and controller.
+-
+-        There are three usages for terminating processes.
+-        It terminates logging if you activated recording.
+-
+-        (1) Terminate secondary processes
+-        spp > bye sec
+-
+-        (2) Terminate primary and secondary processes
+-        spp > bye all
+-
+-        (3) Terminate SPP controller (not for primary and secondary)
+-        spp > bye
+-        """
++        """Terminate SPP processes and controller."""
+ 
+         cmds = args.split(' ')
+         if cmds[0] == '':  # terminate SPP CLI itself
+@@ -719,6 +706,10 @@ class Shell(cmd.Cmd, object):
+             spp_bye = bye.SppBye()
+             spp_bye.run(args, self.primary, self.secondaries)
+ 
++    def help_bye(self):
++        """Print help message of bye command."""
++        bye.SppBye.help()
++
+     def complete_bye(self, text, line, begidx, endidx):
+         """Completion for bye commands"""
+ 
+-- 
+2.17.1
+
+

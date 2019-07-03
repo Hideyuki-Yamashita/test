@@ -1,0 +1,406 @@
+Return-path: <fw-yama-hd@pomail01.silk.ntt-tx.co.jp>
+Received: from zssg-mailmd103.ddreams.local
+ (zssg-mailmd103.ddreams.local [10.160.123.98]) by zssg-mailms320.ddreams.local
+ (NTT DoCoMo Mail System) with ESMTP id <0PTK00U8ZZX08Y30@NTTDoCoMo.co.jp> for
+ yamashita.hideyuki@ntt-tx.co.jp; Mon, 24 Jun 2019 11:22:12 +0900 (JST)
+Original-recipient: rfc822;yamashita.hideyuki@ntt-tx.co.jp
+Received: from smtp_saver-daemon.zssg-mailmd103.ddreams.local by
+ zssg-mailmd103.ddreams.local (dDREAMS) id <0PTK0110UZX05Q00@dDREAMS> for
+ yamashita.hideyuki@ntt-tx.co.jp (ORCPT yamashita.hideyuki@ntt-tx.co.jp); Mon,
+ 24 Jun 2019 11:22:12 +0900 (JST)
+Received: from zssg-mailmf106.ddreams.local
+ (zssg-mailmf900.ddreams.local [10.160.172.84]) by zssg-mailmd103.ddreams.local
+ (dDREAMS) with ESMTP id <0PTK00UPZZX0Q130@dDREAMS> for
+ yamashita.hideyuki@ntt-tx.co.jp (ORCPT yamashita.hideyuki@ntt-tx.co.jp); Mon,
+ 24 Jun 2019 11:22:12 +0900 (JST)
+Received: from zssg-mailmf106.ddreams.local (unknown [127.0.0.1])
+	by zssg-mailmf106.ddreams.local (Postfix) with ESMTP id 5D6497E6034	for
+ <yamashita.hideyuki@ntt-tx.co.jp>; Mon, 24 Jun 2019 11:22:12 +0900 (JST)
+Received: from zssg-mailmf106.ddreams.local (unknown [127.0.0.1])
+	by IMSVA (Postfix) with ESMTP id 58EA68E6063	for
+ <yamashita.hideyuki@ntt-tx.co.jp>; Mon, 24 Jun 2019 11:22:12 +0900 (JST)
+Received: from localhost (unknown [127.0.0.1])	by IMSVA (Postfix)
+ with SMTP id 4DBCE8E6067	for <yamashita.hideyuki@ntt-tx.co.jp>; Mon,
+ 24 Jun 2019 11:22:12 +0900 (JST)
+X-IMSS-HAND-OFF-DIRECTIVE: localhost:10026
+Received: from zssg-mailmf106.ddreams.local (unknown [127.0.0.1])
+	by IMSVA (Postfix) with ESMTP id 0D2F58E6065	for
+ <yamashita.hideyuki@ntt-tx.co.jp>; Mon, 24 Jun 2019 11:22:11 +0900 (JST)
+Received: from pomail01.silk.ntt-tx.co.jp (unknown [10.160.183.139])
+	by zssg-mailmf106.ddreams.local (Postfix)
+ with ESMTPS	for <yamashita.hideyuki@ntt-tx.co.jp>; Mon,
+ 24 Jun 2019 11:22:11 +0900 (JST)
+Received: from pomail01.silk.ntt-tx.co.jp (localhost [127.0.0.1])
+	by pomail01.silk.ntt-tx.co.jp (unknown) with ESMTP id x5O2MAHN012685;	Mon,
+ 24 Jun 2019 11:22:10 +0900
+Received: (from yama-hd@localhost)	by pomail01.silk.ntt-tx.co.jp (unknown)
+ id x5O2MAhG012684;	Mon, 24 Jun 2019 11:22:10 +0900
+X-Authentication-warning: pomail01.silk.ntt-tx.co.jp: yama-hd set sender to
+ fw-yama-hd@pomail01.silk.ntt-tx.co.jp using -f
+Received: from imss04.silk.ntt-tx.co.jp
+ (imss04.silk.ntt-tx.co.jp [10.107.0.39])	by pomail01.silk.ntt-tx.co.jp
+ (unknown) with ESMTP id x5O2MAKV012681	for unknown; Mon,
+ 24 Jun 2019 11:22:10 +0900
+Received: from imss04.silk.ntt-tx.co.jp (localhost [127.0.0.1])
+ by imss04.silk.ntt-tx.co.jp (unknown) with ESMTP id x5O2MAwh004472 for
+ unknown; Mon, 24 Jun 2019 11:22:10 +0900
+Received: from ml01.silk.ntt-tx.co.jp (ml01.silk.ntt-tx.co.jp [10.107.0.230])
+ by imss04.silk.ntt-tx.co.jp (unknown) with ESMTP id x5O2MAW8004469; Mon,
+ 24 Jun 2019 11:22:10 +0900
+Received: from ml01.silk.ntt-tx.co.jp (localhost [127.0.0.1])
+	by ml01.silk.ntt-tx.co.jp (unknown) with ESMTP id x5O2MAGF015957;	Mon,
+ 24 Jun 2019 11:22:10 +0900
+Received: from imss02.silk.ntt-tx.co.jp
+ (imss02.silk.ntt-tx.co.jp [10.107.0.127])	by ml01.silk.ntt-tx.co.jp (unknown)
+ with ESMTP id x5O2MAiN015953	for unknown; Mon, 24 Jun 2019 11:22:10 +0900
+Received: from imss02.silk.ntt-tx.co.jp (localhost [127.0.0.1])
+ by imss02.silk.ntt-tx.co.jp (unknown) with ESMTP id x5O2M902005430 for
+ unknown; Mon, 24 Jun 2019 11:22:09 +0900
+Received: from mail01.ics.ntt-tx.co.jp (mail01.ics.ntt-tx.co.jp [10.254.2.67])
+ by imss02.silk.ntt-tx.co.jp (unknown) with ESMTP id x5O2M9IO005424 for
+ unknown; Mon, 24 Jun 2019 11:22:09 +0900
+Received: from dpdk.org (dpdk.org [92.243.14.124])	by mail01.ics.ntt-tx.co.jp
+ (unknown) with SMTP id x5O2M3Kq003176	for unknown; Mon,
+ 24 Jun 2019 11:22:08 +0900
+Received: from [92.243.14.124] (localhost [127.0.0.1])	by dpdk.org (Postfix)
+ with ESMTP id 970E41BF6E;	Mon, 24 Jun 2019 04:22:02 +0200 (CEST)
+Received: from mail-pl1-f193.google.com
+ (mail-pl1-f193.google.com [209.85.214.193]) by dpdk.org (Postfix)
+ with ESMTP id 38E6D1BF6B for <spp@dpdk.org>; Mon,
+ 24 Jun 2019 04:22:01 +0200 (CEST)
+Received: by mail-pl1-f193.google.com with SMTP id b7so5995677pls.6 for
+ <spp@dpdk.org>; Sun, 23 Jun 2019 19:22:01 -0700 (PDT)
+Received: from localhost.localdomain ([192.47.164.146])
+ by smtp.gmail.com with ESMTPSA id e10sm5916173pfi.153.2019.06.23.19.21.59
+ (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128); Sun,
+ 23 Jun 2019 19:21:59 -0700 (PDT)
+Date: Mon, 24 Jun 2019 11:21:46 +0900
+From: yasufum.o@gmail.com
+Subject: [spp 04352] [spp] [PATCH 1/2] shared/sec: revise funcs to connect to
+ spp-ctl
+Sender: spp <spp-bounces@dpdk.org>
+To: spp@dpdk.org, ferruh.yigit@intel.com, yasufum.o@gmail.com
+Message-id: <20190624022147.18639-2-yasufum.o@gmail.com>
+In-reply-to: <20190624022147.18639-1-yasufum.o@gmail.com>
+References: <20190624022147.18639-1-yasufum.o@gmail.com>
+X-ML-Name: unknown
+X-Mail-Count: 04352
+X-MLServer: unknown
+X-ML-Info: mailing list service
+X-Mailer: git-send-email 2.17.1
+Authentication-results: mail01.ics.ntt-tx.co.jp; spf=pass
+ smtp.mailfrom=spp-bounces@dpdk.org
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
+ h=from:to:subject:date:message-id:in-reply-to:references;
+ bh=wa8iuHzhF1bHduyL5ohHxNMXzzTGtXiXRRjFqr2YVEk=;
+ b=TgfEMZ9Svfmn+995qC4LmYMk/MFrHCSgD0nNs3oD4u+nCso+WyWnaC8Nh6U9bMe/7i
+ IwRzq+JgtqiQHzyoGbFiz6i9I+x+vjhyAcpuTLSG2QMNMzDInuoqY74pN0h0ADTUEUnF
+ bMHM14kwV1IdrMV4xTk3bLsu0azeTnoifiYV00bFZ8m8ZCcz3UqKlcQ1HJdyqAxJONjA
+ 1701GP8aXbO6SHvzdhdKiHwS0fYeZ/ijPsSH+h4koAj3gUtOPUk8mi+w4cT5JBiWUELk
+ JJy5LnsI0EAMq1EtKWt2lS8MxHipXREpjf6ysZrzaCrtb5uCCXiOg+OXYHIJrFi15YYB tf7g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=1e100.net;
+ s=20161025; h=x-gm-message-state:from:to:subject:date:message-id:in-reply-to
+ :references; bh=wa8iuHzhF1bHduyL5ohHxNMXzzTGtXiXRRjFqr2YVEk=;
+ b=fMR89a+nlrlhyHF2oXjz/GFNL+Fi7NPnmCYA2wNtVmRnrMnI1EFstU64sS0s3gGHAy
+ Fw8PKND7iDRIjdLeBy45l6MdWRXAwqU7Vi31ynC3o1u7xgCvlpNPhsecOm9KJicudDD8
+ hkiZsUIN0pMYxvsiBDLPLli9of7L4n2Itxpb39lORHwUoT/PRAitRyLn1ZP76s45A2SI
+ Yycgb/frZrlswRV9IHXsACU0Sl2L5Ftxc+dw4P1HClhhLII98cTmb6+DgYBmQM1mNTlG
+ D8YWGWafWsJVsDs5HIYe5HG5uXNq2w+T3WoQIXHt+18qqyb7fACj1r0XjS24KHOjBmZN NkYw==
+X-Gm-Message-State: APjAAAXSHuJ1DwBDf71boC+3aTY7wo/SyJXQUHRSaqFognNJS4fxIM9b
+ kmYi6NYJsUrVraE0Qhqst8pVGNSe
+X-Google-Smtp-Source:
+ APXvYqzMj/s4fty3Zsjd47zdSJ/WoQitboq/5Yi/aHIgoGUqDo/l3GSiDbmnwHY9fP6abXQEvXIumQ==
+X-Received: by 2002:a17:902:8ec3:: with SMTP id
+ x3mr57907988plo.313.1561342920233; Sun, 23 Jun 2019 19:22:00 -0700 (PDT)
+X-BeenThere: spp@dpdk.org
+X-Mailman-Version: 2.1.15
+List-Id: Soft Patch Panel <spp.dpdk.org>
+List-Unsubscribe: <https://mails.dpdk.org/options/spp>,
+ <mailto:spp-request@dpdk.org?subject=unsubscribe>
+List-Archive: <http://mails.dpdk.org/archives/spp/>
+List-Post: <mailto:spp@dpdk.org>
+List-Help: <mailto:spp-request@dpdk.org?subject=help>
+List-Subscribe: <https://mails.dpdk.org/listinfo/spp>,
+ <mailto:spp-request@dpdk.org?subject=subscribe>
+X-TM-AS-MML: No
+Precedence: bulk
+Lines: 275
+X-TM-AS-GCONF: 00
+X-MD-STAMP: ON
+
+From: Yasufumi Ogawa <yasufum.o@gmail.com>
+
+Functions defined in `command_conn.c` and its header are prefixed as
+`spp_`, but there are not application wide and the prefix should be
+removed. This update is to simplize the name of functions, and revise
+comments.
+
+Signed-off-by: Yasufumi Ogawa <yasufum.o@gmail.com>
+---
+ src/pcap/cmd_runner.c                         | 12 +--
+ .../secondary/spp_worker_th/cmd_runner.c      | 10 +--
+ .../secondary/spp_worker_th/command_conn.c    | 18 ++---
+ .../secondary/spp_worker_th/command_conn.h    | 74 ++++++++-----------
+ 4 files changed, 51 insertions(+), 63 deletions(-)
+
+diff --git a/src/pcap/cmd_runner.c b/src/pcap/cmd_runner.c
+index d623d8c..9541cbb 100644
+--- a/src/pcap/cmd_runner.c
++++ b/src/pcap/cmd_runner.c
+@@ -743,7 +743,7 @@ send_parse_error_response(int *sock,
+ 			"response_str=\n%s\n", msg);
+ 
+ 	/* send response to requester */
+-	ret = spp_send_message(sock, msg, strlen(msg));
++	ret = send_ctl_msg(sock, msg, strlen(msg));
+ 	if (unlikely(ret != SPPWK_RET_OK)) {
+ 		RTE_LOG(ERR, PCAP_RUNNER,
+ 				"Failed to send parse error response.\n");
+@@ -839,7 +839,7 @@ send_command_result_response(int *sock,
+ 			"response_str=\n%s\n", msg);
+ 
+ 	/* send response to requester */
+-	ret = spp_send_message(sock, msg, strlen(msg));
++	ret = send_ctl_msg(sock, msg, strlen(msg));
+ 	if (unlikely(ret != SPPWK_RET_OK)) {
+ 		RTE_LOG(ERR, PCAP_RUNNER,
+ 			"Failed to send command result response.\n");
+@@ -923,9 +923,9 @@ process_request(int *sock, const char *request_str, size_t request_str_len)
+ 
+ /* initialize command processor. */
+ int
+-spp_command_proc_init(const char *controller_ip, int controller_port)
++spp_command_proc_init(const char *ctl_ipaddr, int ctl_port)
+ {
+-	return spp_command_conn_init(controller_ip, controller_port);
++	return conn_spp_ctl_init(ctl_ipaddr, ctl_port);
+ }
+ 
+ /* process command from controller. */
+@@ -948,11 +948,11 @@ spp_command_proc_do(void)
+ 		}
+ 	}
+ 
+-	ret = spp_connect_to_controller(&sock);
++	ret = conn_spp_ctl(&sock);
+ 	if (unlikely(ret != SPPWK_RET_OK))
+ 		return SPPWK_RET_OK;
+ 
+-	msg_ret = spp_receive_message(&sock, &msgbuf);
++	msg_ret = recv_ctl_msg(&sock, &msgbuf);
+ 	if (unlikely(msg_ret <= 0)) {
+ 		if (likely(msg_ret == 0))
+ 			return SPPWK_RET_OK;
+diff --git a/src/shared/secondary/spp_worker_th/cmd_runner.c b/src/shared/secondary/spp_worker_th/cmd_runner.c
+index ef3b2d9..92d727b 100644
+--- a/src/shared/secondary/spp_worker_th/cmd_runner.c
++++ b/src/shared/secondary/spp_worker_th/cmd_runner.c
+@@ -1525,7 +1525,7 @@ send_decode_error_response(int *sock,
+ 			"response_str=\n%s\n", msg);
+ 
+ 	/* send response to requester */
+-	ret = spp_send_message(sock, msg, strlen(msg));
++	ret = send_ctl_msg(sock, msg, strlen(msg));
+ 	if (unlikely(ret != SPP_RET_OK)) {
+ 		RTE_LOG(ERR, WK_CMD_RUNNER,
+ 				"Failed to send decode error response.\n");
+@@ -1608,7 +1608,7 @@ send_command_result_response(int *sock,
+ 			"response_str=\n%s\n", msg);
+ 
+ 	/* send response to requester */
+-	ret = spp_send_message(sock, msg, strlen(msg));
++	ret = send_ctl_msg(sock, msg, strlen(msg));
+ 	if (unlikely(ret != SPP_RET_OK)) {
+ 		RTE_LOG(ERR, WK_CMD_RUNNER,
+ 			"Failed to send command result response.\n");
+@@ -1687,7 +1687,7 @@ exec_cmds(int *sock, const char *req_str, size_t req_str_len)
+ int
+ sppwk_cmd_runner_conn(const char *ctl_ipaddr, int ctl_port)
+ {
+-	return spp_command_conn_init(ctl_ipaddr, ctl_port);
++	return conn_spp_ctl_init(ctl_ipaddr, ctl_port);
+ }
+ 
+ /* Run command sent from spp-ctl. */
+@@ -1710,12 +1710,12 @@ sppwk_run_cmd(void)
+ 		}
+ 	}
+ 
+-	ret = spp_connect_to_controller(&sock);
++	ret = conn_spp_ctl(&sock);
+ 
+ 	if (unlikely(ret != SPP_RET_OK))
+ 		return SPP_RET_OK;
+ 
+-	msg_ret = spp_receive_message(&sock, &msgbuf);
++	msg_ret = recv_ctl_msg(&sock, &msgbuf);
+ 	if (unlikely(msg_ret <= 0)) {
+ 		if (likely(msg_ret == 0))
+ 			return SPP_RET_OK;
+diff --git a/src/shared/secondary/spp_worker_th/command_conn.c b/src/shared/secondary/spp_worker_th/command_conn.c
+index 915ad20..b80c54b 100644
+--- a/src/shared/secondary/spp_worker_th/command_conn.c
++++ b/src/shared/secondary/spp_worker_th/command_conn.c
+@@ -27,19 +27,19 @@ static char g_controller_ip[128] = "";
+ /* controller's port number */
+ static int g_controller_port;
+ 
+-/* initialize command connection */
++/* Initialize connection to spp-ctl. */
+ int
+-spp_command_conn_init(const char *controller_ip, int controller_port)
++conn_spp_ctl_init(const char *ctl_ipaddr, int ctl_port)
+ {
+-	strcpy(g_controller_ip, controller_ip);
+-	g_controller_port = controller_port;
++	strcpy(g_controller_ip, ctl_ipaddr);
++	g_controller_port = ctl_port;
+ 
+ 	return SPP_RET_OK;
+ }
+ 
+ /* connect to controller */
+ int
+-spp_connect_to_controller(int *sock)
++conn_spp_ctl(int *sock)
+ {
+ 	static struct sockaddr_in controller_addr;
+ 	int ret = SPP_RET_NG;
+@@ -90,7 +90,7 @@ spp_connect_to_controller(int *sock)
+ 
+ /* receive message */
+ int
+-spp_receive_message(int *sock, char **strbuf)
++recv_ctl_msg(int *sock, char **strbuf)
+ {
+ 	int ret = SPP_RET_NG;
+ 	int n_rx = 0;
+@@ -134,13 +134,13 @@ spp_receive_message(int *sock, char **strbuf)
+ 	return n_rx;
+ }
+ 
+-/* send message */
++/* Send message to spp-ctl. */
+ int
+-spp_send_message(int *sock, const char *message, size_t message_len)
++send_ctl_msg(int *sock, const char *msg, size_t msg_len)
+ {
+ 	int ret = SPP_RET_NG;
+ 
+-	ret = send(*sock, message, message_len, 0);
++	ret = send(*sock, msg, msg_len, 0);
+ 	if (unlikely(ret == -1)) {
+ 		RTE_LOG(ERR, SPP_COMMAND_PROC, "Send failure. ret=%d\n", ret);
+ 		close(*sock);
+diff --git a/src/shared/secondary/spp_worker_th/command_conn.h b/src/shared/secondary/spp_worker_th/command_conn.h
+index 9112847..0d06131 100644
+--- a/src/shared/secondary/spp_worker_th/command_conn.h
++++ b/src/shared/secondary/spp_worker_th/command_conn.h
+@@ -6,8 +6,7 @@
+ #define _COMMAND_CONN_H_
+ 
+ /**
+- * @file
+- * SPP Connection
++ * @file SPP Connection
+  *
+  * Command connection management.
+  */
+@@ -20,63 +19,52 @@
+ #define SPP_CONNERR_FATAL     -2
+ 
+ /**
+- * initialize command connection.
++ * Initialize connection to spp-ctl.
+  *
+- * @param controller_ip
+- *  The controller's ip address.
+- * @param controller_port
+- *  The controller's port number.
+- *
+- * @retval SPP_RET_OK  succeeded.
+- * @retval SPP_RET_NG failed.
++ * @param[in] ctl_ipaddr IP address of spp-ctl.
++ * @param[in] ctl_port Port num of spp-ctl.
++ * @retval SPP_RET_OK If succeeded.
++ * @retval SPP_RET_NG If failed.
+  */
+-int spp_command_conn_init(const char *controller_ip, int controller_port);
++int conn_spp_ctl_init(const char *ctl_ipaddr, int ctl_port);
+ 
+ /**
+- * connect to controller.
++ * Connect to spp-ctl.
+  *
+  * @note bocking.
+- *
+- * @param sock
+- *  Socket number for connecting to controller.
+- *
+- * @retval SPP_RET_OK		 succeeded.
+- * @retval SPP_CONNERR_TEMPORARY temporary error. please retry.
++ * @param sock Socket number for connecting to controller.
++ * @retval SPP_RET_OK If succeeded.
++ * @retval SPP_CONNERR_TEMPORARY Temporary error for retry.
+  */
+-int spp_connect_to_controller(int *sock);
++int conn_spp_ctl(int *sock);
+ 
+ /**
+- * receive message.
+- *
+- * @note non-blocking.
++ * Receive message from spp-ctl.
+  *
+- * @param sock
+- *  The socket number for the connection.
+- * @param msgbuf
+- *  The pointer to command message buffer.
++ * This function returns the num of received  msg in bytes, or SPP_RET_OK
++ * if empty message. Given socket is closed if spp-ctl has terminated the
++ * session.
+  *
+- * @retval 0 <			 succeeded. number of bytes received.
+- * @retval SPP_RET_OK		 no receive message.
+- * @retval SPP_CONNERR_TEMPORARY temporary error. please reconnect.
+- * @retval SPP_CONNERR_FATAL	fatal error occurred. should terminate process.
++ * @note non-blocking.
++ * @param[in,out] sock Socket.
++ * @param[in,out] msgbuf The pointer to command message buffer.
++ * @retval NOB_BYTES Num of bytes of received msg if succeeded.
++ * @retval SPP_RET_OK No receive message.
++ * @retval SPP_CONNERR_TEMPORARY Temporary error for retry.
++ * @retval SPP_CONNERR_FATAL Fatal error for terminating the process.
+  */
+-int spp_receive_message(int *sock, char **msgbuf);
++int recv_ctl_msg(int *sock, char **msgbuf);
+ 
+ /**
+- * send message.
++ * Send message to spp-ctl.
+  *
+  * @note non-blocking.
+- *
+- * @param sock
+- *  The socket number to be sent.
+- * @param message
+- *  The pointer to the message to be sent.
+- * @param message_len
+- *  The length of message.
+- *
+- * @retval SPP_RET_OK		 succeeded.
+- * @retval SPP_CONNERR_TEMPORARY temporary error. please reconnect.
++ * @param[in,out] sock Socket.
++ * @param[in] msg Message sent to spp-ctl.
++ * @param[in] msg_len Length of given message.
++ * @retval SPP_RET_OK If succeeded.
++ * @retval SPP_CONNERR_TEMPORARY Temporary error for retry.
+  */
+-int spp_send_message(int *sock, const char *message, size_t message_len);
++int send_ctl_msg(int *sock, const char *msg, size_t msg_len);
+ 
+ #endif /* _COMMAND_CONN_H_ */
+-- 
+2.17.1
+
+

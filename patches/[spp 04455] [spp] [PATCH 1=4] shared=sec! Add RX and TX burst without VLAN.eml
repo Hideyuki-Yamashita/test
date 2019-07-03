@@ -1,0 +1,1218 @@
+Return-path: <fw-yama-hd@pomail01.silk.ntt-tx.co.jp>
+Received: from zssg-mailmd104.ddreams.local
+ (zssg-mailmd104.ddreams.local [10.160.123.99]) by zssg-mailms320.ddreams.local
+ (NTT DoCoMo Mail System) with ESMTP id <0PTY00XLH3NK1U10@NTTDoCoMo.co.jp> for
+ yamashita.hideyuki@ntt-tx.co.jp; Mon, 01 Jul 2019 13:11:44 +0900 (JST)
+Original-recipient: rfc822;yamashita.hideyuki@ntt-tx.co.jp
+Received: from smtp_saver-daemon.zssg-mailmd104.ddreams.local by
+ zssg-mailmd104.ddreams.local (dDREAMS) id <0PTY00X0O3NKE900@dDREAMS> for
+ yamashita.hideyuki@ntt-tx.co.jp (ORCPT yamashita.hideyuki@ntt-tx.co.jp); Mon,
+ 01 Jul 2019 13:11:44 +0900 (JST)
+Received: from zssg-mailmf102.ddreams.local
+ (zssg-mailmf900.ddreams.local [10.160.172.84]) by zssg-mailmd104.ddreams.local
+ (dDREAMS) with ESMTP id <0PTY00A0K3NKM8D0@dDREAMS> for
+ yamashita.hideyuki@ntt-tx.co.jp (ORCPT yamashita.hideyuki@ntt-tx.co.jp); Mon,
+ 01 Jul 2019 13:11:44 +0900 (JST)
+Received: from zssg-mailmf102.ddreams.local (unknown [127.0.0.1])
+	by zssg-mailmf102.ddreams.local (Postfix) with ESMTP id D4E7E7E6032	for
+ <yamashita.hideyuki@ntt-tx.co.jp>; Mon,  1 Jul 2019 13:11:44 +0900 (JST)
+Received: from zssg-mailmf102.ddreams.local (unknown [127.0.0.1])
+	by IMSVA (Postfix) with ESMTP id D34358E6052	for
+ <yamashita.hideyuki@ntt-tx.co.jp>; Mon,  1 Jul 2019 13:11:44 +0900 (JST)
+Received: from localhost (unknown [127.0.0.1])	by IMSVA (Postfix)
+ with SMTP id C7CE78E6050	for <yamashita.hideyuki@ntt-tx.co.jp>; Mon,
+ 1 Jul 2019 13:11:44 +0900 (JST)
+X-IMSS-HAND-OFF-DIRECTIVE: localhost:10026
+Received: from zssg-mailmf102.ddreams.local (unknown [127.0.0.1])
+	by IMSVA (Postfix) with ESMTP id 3AC598E6050	for
+ <yamashita.hideyuki@ntt-tx.co.jp>; Mon,  1 Jul 2019 13:11:44 +0900 (JST)
+Received: from pomail01.silk.ntt-tx.co.jp (unknown [10.160.183.139])
+	by zssg-mailmf102.ddreams.local (Postfix)
+ with ESMTPS	for <yamashita.hideyuki@ntt-tx.co.jp>; Mon,
+ 1 Jul 2019 13:11:44 +0900 (JST)
+Received: from pomail01.silk.ntt-tx.co.jp (localhost [127.0.0.1])
+	by pomail01.silk.ntt-tx.co.jp (unknown) with ESMTP id x614BikF015501;	Mon,
+ 1 Jul 2019 13:11:44 +0900
+Received: (from yama-hd@localhost)	by pomail01.silk.ntt-tx.co.jp (unknown)
+ id x614Bipb015500;	Mon, 1 Jul 2019 13:11:44 +0900
+X-Authentication-warning: pomail01.silk.ntt-tx.co.jp: yama-hd set sender to
+ fw-yama-hd@pomail01.silk.ntt-tx.co.jp using -f
+Received: from imss04.silk.ntt-tx.co.jp
+ (imss04.silk.ntt-tx.co.jp [10.107.0.39])	by pomail01.silk.ntt-tx.co.jp
+ (unknown) with ESMTP id x614Bh7N015492	for unknown; Mon,
+ 1 Jul 2019 13:11:43 +0900
+Received: from imss04.silk.ntt-tx.co.jp (localhost [127.0.0.1])
+ by imss04.silk.ntt-tx.co.jp (unknown) with ESMTP id x614BhlM029676 for
+ unknown; Mon, 1 Jul 2019 13:11:43 +0900
+Received: from ml01.silk.ntt-tx.co.jp (ml01.silk.ntt-tx.co.jp [10.107.0.230])
+ by imss04.silk.ntt-tx.co.jp (unknown) with ESMTP id x614Bhl9029673; Mon,
+ 1 Jul 2019 13:11:43 +0900
+Received: from ml01.silk.ntt-tx.co.jp (localhost [127.0.0.1])
+	by ml01.silk.ntt-tx.co.jp (unknown) with ESMTP id x614BhX2019650;	Mon,
+ 1 Jul 2019 13:11:43 +0900
+Received: from imss02.silk.ntt-tx.co.jp
+ (imss02.silk.ntt-tx.co.jp [10.107.0.127])	by ml01.silk.ntt-tx.co.jp (unknown)
+ with ESMTP id x614BhnG019646	for unknown; Mon, 1 Jul 2019 13:11:43 +0900
+Received: from imss02.silk.ntt-tx.co.jp (localhost [127.0.0.1])
+ by imss02.silk.ntt-tx.co.jp (unknown) with ESMTP id x614BhrL025069 for
+ unknown; Mon, 1 Jul 2019 13:11:43 +0900
+Received: from mail01.ics.ntt-tx.co.jp (mail01.ics.ntt-tx.co.jp [10.254.2.67])
+ by imss02.silk.ntt-tx.co.jp (unknown) with ESMTP id x614Bg3R025063 for
+ unknown; Mon, 1 Jul 2019 13:11:42 +0900
+Received: from dpdk.org (dpdk.org [92.243.14.124])	by mail01.ics.ntt-tx.co.jp
+ (unknown) with SMTP id x614Ba0j006741	for unknown; Mon,
+ 1 Jul 2019 13:11:41 +0900
+Received: from [92.243.14.124] (localhost [127.0.0.1])	by dpdk.org (Postfix)
+ with ESMTP id 9416B37AF;	Mon,  1 Jul 2019 06:11:35 +0200 (CEST)
+Received: from mail-pg1-f196.google.com
+ (mail-pg1-f196.google.com [209.85.215.196]) by dpdk.org (Postfix)
+ with ESMTP id 2BA96325F for <spp@dpdk.org>; Mon,
+ 1 Jul 2019 06:11:34 +0200 (CEST)
+Received: by mail-pg1-f196.google.com with SMTP id m4so5347657pgk.0 for
+ <spp@dpdk.org>; Sun, 30 Jun 2019 21:11:34 -0700 (PDT)
+Received: from localhost.localdomain ([192.47.164.146])
+ by smtp.gmail.com with ESMTPSA id o128sm12190907pfb.42.2019.06.30.21.11.31
+ (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128); Sun,
+ 30 Jun 2019 21:11:32 -0700 (PDT)
+Date: Mon, 01 Jul 2019 13:11:23 +0900
+From: yasufum.o@gmail.com
+Subject: [spp 04455] [spp] [PATCH 1/4] shared/sec: Add RX and TX burst without
+ VLAN
+Sender: spp <spp-bounces@dpdk.org>
+To: spp@dpdk.org, ferruh.yigit@intel.com, yasufum.o@gmail.com
+Message-id: <20190701041126.33947-2-yasufum.o@gmail.com>
+In-reply-to: <20190701041126.33947-1-yasufum.o@gmail.com>
+References: <20190701041126.33947-1-yasufum.o@gmail.com>
+X-ML-Name: unknown
+X-Mail-Count: 04455
+X-MLServer: unknown
+X-ML-Info: mailing list service
+X-Mailer: git-send-email 2.17.1
+Authentication-results: mail01.ics.ntt-tx.co.jp; spf=pass
+ smtp.mailfrom=spp-bounces@dpdk.org
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
+ h=from:to:subject:date:message-id:in-reply-to:references;
+ bh=jTPUCFcr/oONhn0/usJbXNaM29M7Agz5+TKTMi8hBEc=;
+ b=dSE6SyrAZ1iPVMFBDM9YBMW242H9j/c/f36XATla3N4EtUXASfelTqq/JHSstlkGo/
+ fCYAUadljw9y579KoC4P2PMa77oiYuztFdapVBqUZCRSyhml/sdRjdA9dAofm4WAEPye
+ wS9XWVhJhRaD2WRLyShUle52B+69C0lnHq5m4ylE2lEBPLL2jEiEsMZrkP/7Ssvut6wr
+ kwn8kuyh85KHX+yOS1EEIdn1Ww67gpu6QLYH+CMrRwXWXBA3JQ6Rass6SFRSJW6ylIXW
+ 1l0jIrJpXf8WJK7/Ugo5jEvrIFuTj5ZciAI6+qqauyQYvv92xPiMrxlzka1F/+2DBzPD 1VJg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=1e100.net;
+ s=20161025; h=x-gm-message-state:from:to:subject:date:message-id:in-reply-to
+ :references; bh=jTPUCFcr/oONhn0/usJbXNaM29M7Agz5+TKTMi8hBEc=;
+ b=A5DI0jhUbkNpGqLDjQF7GmiMZUYPAQdyPt+MVZYbeduFKOpc5QaqUCvzOTMbazYBx/
+ kd3dibz6bcdBXA7X5BTMbMADzqqjKcYUJZcRJ9ENMAGDxrdm3wGxB8yZ4fmvR9MBvRM2
+ 9nmH0sayYFwqUHcPS2hw2VgMqHv6BFipB0Qebffq/2r25XGuwjJ99RbqZuRPfcL/5IoT
+ XB7mCNHWTh4u4Rvck8KsUxE3SQeYWGDkOSPDKgBtsrvrSMd6CA1TGOzoOQajD4BkEjX3
+ 2m1xcLbaByeuxBGkwdxjPP2KG2HCP1SqfmBbW630ejOsH7zbXJ7CHr5dTOuyTmspNw7E hEJQ==
+X-Gm-Message-State: APjAAAWmR87XkRaWwQgNIHDrmxIB2tXaZTyqH/rn6NXhMh8pKzWbjE6i
+ HE5hhj1l1m8wmE/7U8OhCI9ljbFq
+X-Google-Smtp-Source:
+ APXvYqzAdga2AjStcBPVhCzo7sUh4L7jyPxhkCIrXK5L2XrH97KTsWiwpVtRHYpiPaIHeibBVroAlA==
+X-Received: by 2002:a17:90a:9382:: with SMTP id
+ q2mr28712255pjo.131.1561954292837; Sun, 30 Jun 2019 21:11:32 -0700 (PDT)
+X-BeenThere: spp@dpdk.org
+X-Mailman-Version: 2.1.15
+List-Id: Soft Patch Panel <spp.dpdk.org>
+List-Unsubscribe: <https://mails.dpdk.org/options/spp>,
+ <mailto:spp-request@dpdk.org?subject=unsubscribe>
+List-Archive: <http://mails.dpdk.org/archives/spp/>
+List-Post: <mailto:spp@dpdk.org>
+List-Help: <mailto:spp-request@dpdk.org?subject=help>
+List-Subscribe: <https://mails.dpdk.org/listinfo/spp>,
+ <mailto:spp-request@dpdk.org?subject=subscribe>
+X-TM-AS-MML: No
+Precedence: bulk
+Lines: 1087
+X-TM-AS-GCONF: 00
+X-MD-STAMP: ON
+
+From: Yasufumi Ogawa <yasufum.o@gmail.com>
+
+In SPP worker, original version of RX and TX burst functions are
+implemented in which adding or deleting VLAN tag are added to
+rte_eth_rx_burst() and rte_eth_tx_burst(). However, it is also called
+from processes which does not VLAN features.
+
+This update is to add functions without VLAN features in addition to
+them for supporting both of usecases.
+
+  * sppwk_eth_rx_burst()
+  * sppwk_eth_tx_burst()
+  * sppwk_eth_vlan_rx_burst()
+  * sppwk_eth_vlan_tx_burst()
+
+Signed-off-by: Yasufumi Ogawa <yasufum.o@gmail.com>
+---
+ .../spp_worker_th/cmd_res_formatter.c         |   2 +
+ .../spp_worker_th/cmd_res_formatter.h         |   1 -
+ .../secondary/spp_worker_th/port_capability.c | 409 ++++++++++++++++++
+ .../secondary/spp_worker_th/port_capability.h |  84 ++++
+ src/shared/secondary/spp_worker_th/spp_port.c | 373 +---------------
+ src/shared/secondary/spp_worker_th/spp_port.h | 100 +----
+ 6 files changed, 526 insertions(+), 443 deletions(-)
+ create mode 100644 src/shared/secondary/spp_worker_th/port_capability.c
+ create mode 100644 src/shared/secondary/spp_worker_th/port_capability.h
+
+diff --git a/src/shared/secondary/spp_worker_th/cmd_res_formatter.c b/src/shared/secondary/spp_worker_th/cmd_res_formatter.c
+index 73ef4c2..2cc7d42 100644
+--- a/src/shared/secondary/spp_worker_th/cmd_res_formatter.c
++++ b/src/shared/secondary/spp_worker_th/cmd_res_formatter.c
+@@ -3,6 +3,8 @@
+  */
+ 
+ #include "cmd_res_formatter.h"
++#include "spp_port.h"
++#include "port_capability.h"
+ #include "cmd_utils.h"
+ #include "shared/secondary/json_helper.h"
+ 
+diff --git a/src/shared/secondary/spp_worker_th/cmd_res_formatter.h b/src/shared/secondary/spp_worker_th/cmd_res_formatter.h
+index 66eabb5..1e52c0e 100644
+--- a/src/shared/secondary/spp_worker_th/cmd_res_formatter.h
++++ b/src/shared/secondary/spp_worker_th/cmd_res_formatter.h
+@@ -6,7 +6,6 @@
+ #define _SPPWK_CMD_RES_FORMATTER_H_
+ 
+ #include "cmd_utils.h"
+-#include "spp_port.h"
+ #include "shared/common.h"
+ 
+ #define CMD_RES_LEN  32  /* Size of message including null char. */
+diff --git a/src/shared/secondary/spp_worker_th/port_capability.c b/src/shared/secondary/spp_worker_th/port_capability.c
+new file mode 100644
+index 0000000..ce498fd
+--- /dev/null
++++ b/src/shared/secondary/spp_worker_th/port_capability.c
+@@ -0,0 +1,409 @@
++/* SPDX-License-Identifier: BSD-3-Clause
++ * Copyright(c) 2019 Nippon Telegraph and Telephone Corporation
++ */
++
++#include <rte_ether.h>
++#include <rte_ip.h>
++#include <rte_udp.h>
++#include <rte_tcp.h>
++#include <rte_net_crc.h>
++
++#include "port_capability.h"
++#include "shared/secondary/return_codes.h"
++#include "ringlatencystats.h"
++
++/* Port ability management information */
++struct port_abl_info {
++	volatile int ref_index; /* Index to reference area. */
++	volatile int upd_index; /* Index to update area. */
++	struct sppwk_port_attrs port_attrs[TWO_SIDES][PORT_ABL_MAX];
++				/* Port attributes for spp_vf. */
++};
++
++/* Port ability port information */
++struct port_mng_info {
++	enum port_type iface_type;  /* Interface type (phy, vhost or so). */
++	int iface_no;  /* Interface number. */
++	struct port_abl_info rx;  /* Mng data of port ability for RX. */
++	struct port_abl_info tx;  /* Mng data of port ability for Tx. */
++};
++
++/* Information for VLAN tag management. */
++struct port_mng_info g_port_mng_info[RTE_MAX_ETHPORTS];
++
++/* TPID of VLAN. */
++static uint16_t g_vlan_tpid;
++
++/* Initialize port ability. */
++void
++spp_port_ability_init(void)
++{
++	int cnt = 0;
++	g_vlan_tpid = rte_cpu_to_be_16(ETHER_TYPE_VLAN);
++	memset(g_port_mng_info, 0x00, sizeof(g_port_mng_info));
++	for (cnt = 0; cnt < RTE_MAX_ETHPORTS; cnt++) {
++		g_port_mng_info[cnt].rx.ref_index = 0;
++		g_port_mng_info[cnt].rx.upd_index = 1;
++		g_port_mng_info[cnt].tx.ref_index = 0;
++		g_port_mng_info[cnt].tx.upd_index = 1;
++	}
++}
++
++/* Get information of port ability. */
++void
++spp_port_ability_get_info(
++		int port_id, enum sppwk_port_dir dir,
++		struct sppwk_port_attrs **info)
++{
++	struct port_abl_info *mng = NULL;
++
++	switch (dir) {
++	case SPPWK_PORT_DIR_RX:
++		mng = &g_port_mng_info[port_id].rx;
++		break;
++	case SPPWK_PORT_DIR_TX:
++		mng = &g_port_mng_info[port_id].tx;
++		break;
++	default:
++		/* Not used. */
++		break;
++	}
++	*info = mng->port_attrs[mng->ref_index];
++}
++
++/* Calculation and Setting of FCS. */
++static inline void
++set_fcs_packet(struct rte_mbuf *pkt)
++{
++	uint32_t *fcs = NULL;
++	fcs = rte_pktmbuf_mtod_offset(pkt, uint32_t *, pkt->data_len);
++	*fcs = rte_net_crc_calc(rte_pktmbuf_mtod(pkt, void *),
++			pkt->data_len, RTE_NET_CRC32_ETH);
++}
++
++/* Add VLAN tag to packet. */
++static inline int
++add_vlantag_packet(
++		struct rte_mbuf *pkt,
++		const union sppwk_port_capability *capability)
++{
++	struct ether_hdr *old_ether = NULL;
++	struct ether_hdr *new_ether = NULL;
++	struct vlan_hdr  *vlan      = NULL;
++	const struct sppwk_vlan_tag *vlantag = &capability->vlantag;
++
++	old_ether = rte_pktmbuf_mtod(pkt, struct ether_hdr *);
++	if (old_ether->ether_type == g_vlan_tpid) {
++		/* For packets with VLAN tags, only VLAN ID is updated */
++		new_ether = old_ether;
++		vlan = (struct vlan_hdr *)&new_ether[1];
++	} else {
++		/* For packets without VLAN tag, add VLAN tag. */
++		new_ether = (struct ether_hdr *)rte_pktmbuf_prepend(pkt,
++				sizeof(struct vlan_hdr));
++		if (unlikely(new_ether == NULL)) {
++			RTE_LOG(ERR, PORT, "Failed to "
++					"get additional header area.\n");
++			return SPP_RET_NG;
++		}
++
++		rte_memcpy(new_ether, old_ether, sizeof(struct ether_hdr));
++		vlan = (struct vlan_hdr *)&new_ether[1];
++		vlan->eth_proto = new_ether->ether_type;
++		new_ether->ether_type = g_vlan_tpid;
++	}
++
++	vlan->vlan_tci = vlantag->tci;
++	set_fcs_packet(pkt);
++	return SPP_RET_OK;
++}
++
++/* Add VLAN tag to all packets. */
++static inline int
++add_vlantag_all_packets(
++		struct rte_mbuf **pkts, int nb_pkts,
++		const union sppwk_port_capability *capability)
++{
++	int ret = SPP_RET_OK;
++	int cnt = 0;
++	for (cnt = 0; cnt < nb_pkts; cnt++) {
++		ret = add_vlantag_packet(pkts[cnt], capability);
++		if (unlikely(ret < 0)) {
++			RTE_LOG(ERR, PORT,
++					"Failed to add VLAN tag."
++					"(pkts %d/%d)\n", cnt, nb_pkts);
++			break;
++		}
++	}
++	return cnt;
++}
++
++/* Delete VLAN tag to packet. */
++static inline int
++del_vlantag_packet(
++		struct rte_mbuf *pkt,
++		const union sppwk_port_capability *cbl __attribute__ ((unused)))
++{
++	struct ether_hdr *old_ether = NULL;
++	struct ether_hdr *new_ether = NULL;
++	uint32_t *old, *new;
++
++	old_ether = rte_pktmbuf_mtod(pkt, struct ether_hdr *);
++	if (old_ether->ether_type == g_vlan_tpid) {
++		/* For packets without VLAN tag, delete VLAN tag. */
++		new_ether = (struct ether_hdr *)rte_pktmbuf_adj(pkt,
++				sizeof(struct vlan_hdr));
++		if (unlikely(new_ether == NULL)) {
++			RTE_LOG(ERR, PORT, "Failed to "
++					"delete unnecessary header area.\n");
++			return SPP_RET_NG;
++		}
++
++		old = (uint32_t *)old_ether;
++		new = (uint32_t *)new_ether;
++		new[2] = old[2];
++		new[1] = old[1];
++		new[0] = old[0];
++		old[0] = 0;
++		set_fcs_packet(pkt);
++	}
++	return SPP_RET_OK;
++}
++
++/* Delete VLAN tag to all packets. */
++static inline int
++del_vlantag_all_packets(
++		struct rte_mbuf **pkts, int nb_pkts,
++		const union sppwk_port_capability *capability)
++{
++	int ret = SPP_RET_OK;
++	int cnt = 0;
++	for (cnt = 0; cnt < nb_pkts; cnt++) {
++		ret = del_vlantag_packet(pkts[cnt], capability);
++		if (unlikely(ret < 0)) {
++			RTE_LOG(ERR, PORT,
++					"Failed to del VLAN tag."
++					"(pkts %d/%d)\n", cnt, nb_pkts);
++			break;
++		}
++	}
++	return cnt;
++}
++
++/* Change index of management information. */
++void
++spp_port_ability_change_index(
++		enum port_ability_chg_index_type type,
++		int port_id, enum sppwk_port_dir dir)
++{
++	int cnt;
++	static int num_rx;
++	static int rx_list[RTE_MAX_ETHPORTS];
++	static int num_tx;
++	static int tx_list[RTE_MAX_ETHPORTS];
++	struct port_abl_info *mng = NULL;
++
++	if (type == PORT_ABILITY_CHG_INDEX_UPD) {
++		switch (dir) {
++		case SPPWK_PORT_DIR_RX:
++			mng = &g_port_mng_info[port_id].rx;
++			mng->upd_index = mng->ref_index;
++			rx_list[num_rx++] = port_id;
++			break;
++		case SPPWK_PORT_DIR_TX:
++			mng = &g_port_mng_info[port_id].tx;
++			mng->upd_index = mng->ref_index;
++			tx_list[num_tx++] = port_id;
++			break;
++		default:
++			/* Not used. */
++			break;
++		}
++		return;
++	}
++
++	for (cnt = 0; cnt < num_rx; cnt++) {
++		mng = &g_port_mng_info[rx_list[cnt]].rx;
++		mng->ref_index = (mng->upd_index+1) % TWO_SIDES;
++		rx_list[cnt] = 0;
++	}
++	for (cnt = 0; cnt < num_tx; cnt++) {
++		mng = &g_port_mng_info[tx_list[cnt]].tx;
++		mng->ref_index = (mng->upd_index+1) % TWO_SIDES;
++		tx_list[cnt] = 0;
++	}
++
++	num_rx = 0;
++	num_tx = 0;
++}
++
++/* Set ability data of port ability. */
++static void
++port_ability_set_ability(struct sppwk_port_info *port,
++		enum sppwk_port_dir dir)
++{
++	int in_cnt, out_cnt = 0;
++	int port_id = port->ethdev_port_id;
++	struct port_mng_info *port_mng = &g_port_mng_info[port_id];
++	struct port_abl_info *mng = NULL;
++	struct sppwk_port_attrs *port_attrs_in = port->port_attrs;
++	struct sppwk_port_attrs *port_attrs_out = NULL;
++	struct sppwk_vlan_tag *tag = NULL;
++
++	port_mng->iface_type = port->iface_type;
++	port_mng->iface_no   = port->iface_no;
++
++	switch (dir) {
++	case SPPWK_PORT_DIR_RX:
++		mng = &port_mng->rx;
++		break;
++	case SPPWK_PORT_DIR_TX:
++		mng = &port_mng->tx;
++		break;
++	default:
++		/* Not used. */
++		break;
++	}
++
++	port_attrs_out = mng->port_attrs[mng->upd_index];
++	memset(port_attrs_out, 0x00, sizeof(struct sppwk_port_attrs)
++			* PORT_ABL_MAX);
++	for (in_cnt = 0; in_cnt < PORT_ABL_MAX; in_cnt++) {
++		if (port_attrs_in[in_cnt].dir != dir)
++			continue;
++
++		memcpy(&port_attrs_out[out_cnt], &port_attrs_in[in_cnt],
++				sizeof(struct sppwk_port_attrs));
++
++		switch (port_attrs_out[out_cnt].ops) {
++		case SPPWK_PORT_OPS_ADD_VLAN:
++			tag = &port_attrs_out[out_cnt].capability.vlantag;
++			tag->tci = rte_cpu_to_be_16(SPP_VLANTAG_CALC_TCI(
++					tag->vid, tag->pcp));
++			break;
++		case SPPWK_PORT_OPS_DEL_VLAN:
++		default:
++			/* Nothing to do. */
++			break;
++		}
++
++		out_cnt++;
++	}
++
++	spp_port_ability_change_index(PORT_ABILITY_CHG_INDEX_UPD,
++			port_id, dir);
++}
++
++/* Update port capability. */
++void
++spp_port_ability_update(const struct sppwk_comp_info *component)
++{
++	int cnt;
++	struct sppwk_port_info *port = NULL;
++	for (cnt = 0; cnt < component->nof_rx; cnt++) {
++		port = component->rx_ports[cnt];
++		port_ability_set_ability(port, SPPWK_PORT_DIR_RX);
++	}
++
++	for (cnt = 0; cnt < component->nof_tx; cnt++) {
++		port = component->tx_ports[cnt];
++		port_ability_set_ability(port, SPPWK_PORT_DIR_TX);
++	}
++}
++
++/* Definition of functions that operate port abilities. */
++typedef int (*port_ability_func)(
++		struct rte_mbuf **pkts, int nb_pkts,
++		const union sppwk_port_capability *capability);
++
++/* List of functions per port ability. */
++port_ability_func port_ability_function_list[] = {
++	NULL,                    /* None */
++	add_vlantag_all_packets, /* Add VLAN tag */
++	del_vlantag_all_packets, /* Del VLAN tag */
++	NULL                     /* Termination */
++};
++
++/* Each packet operation of port capability. */
++static inline int
++port_ability_each_operation(uint16_t port_id,
++		struct rte_mbuf **pkts, const uint16_t nb_pkts,
++		enum sppwk_port_dir dir)
++{
++	int cnt, buf;
++	int ok_pkts = nb_pkts;
++	struct sppwk_port_attrs *port_attrs = NULL;
++
++	spp_port_ability_get_info(port_id, dir, &port_attrs);
++	if (unlikely(port_attrs[0].ops == SPPWK_PORT_OPS_NONE))
++		return nb_pkts;
++
++	for (cnt = 0; cnt < PORT_ABL_MAX; cnt++) {
++		/* Do nothing if the port is assigned no VLAN feature. */
++		if (port_attrs[cnt].ops == SPPWK_PORT_OPS_NONE)
++			break;
++
++		/* Add or delete VLAN tag with operation function. */
++		ok_pkts = port_ability_function_list[port_attrs[cnt].ops](
++				pkts, ok_pkts, &port_attrs->capability);
++	}
++
++	/* Discard remained packets to release mbuf. */
++	if (unlikely(ok_pkts < nb_pkts)) {
++		for (buf = ok_pkts; buf < nb_pkts; buf++)
++			rte_pktmbuf_free(pkts[buf]);
++	}
++
++	return ok_pkts;
++}
++
++/* TODO(yasufum) move to outside of this file. */
++/* Wrapper function for rte_eth_rx_burst() with VLAN feature. */
++uint16_t
++sppwk_eth_vlan_rx_burst(uint16_t port_id,
++		uint16_t queue_id __attribute__ ((unused)),
++		struct rte_mbuf **rx_pkts, const uint16_t nb_pkts)
++{
++	uint16_t nb_rx;
++	nb_rx = rte_eth_rx_burst(port_id, 0, rx_pkts, nb_pkts);
++	if (unlikely(nb_rx == 0))
++		return SPP_RET_OK;
++
++#ifdef SPP_RINGLATENCYSTATS_ENABLE
++	if (g_port_mng_info[port_id].iface_type == RING)
++		spp_ringlatencystats_calculate_latency(
++				g_port_mng_info[port_id].iface_no,
++				rx_pkts, nb_pkts);
++#endif /* SPP_RINGLATENCYSTATS_ENABLE */
++
++	/* Add or delete VLAN tag. */
++	return port_ability_each_operation(port_id, rx_pkts, nb_rx,
++			SPPWK_PORT_DIR_RX);
++}
++
++
++/* TODO(yasufum) move to outside of this file. */
++/* Wrapper function for rte_eth_tx_burst() with VLAN feature. */
++uint16_t
++sppwk_eth_vlan_tx_burst(uint16_t port_id,
++		uint16_t queue_id __attribute__ ((unused)),
++		struct rte_mbuf **tx_pkts, uint16_t nb_pkts)
++{
++	uint16_t nb_tx;
++
++	/* Add or delete VLAN tag. */
++	nb_tx = port_ability_each_operation(port_id, tx_pkts, nb_pkts,
++			SPPWK_PORT_DIR_TX);
++
++	if (unlikely(nb_tx == 0))
++		return SPP_RET_OK;
++
++#ifdef SPP_RINGLATENCYSTATS_ENABLE
++	if (g_port_mng_info[port_id].iface_type == RING)
++		spp_ringlatencystats_add_time_stamp(
++				g_port_mng_info[port_id].iface_no,
++				tx_pkts, nb_pkts);
++#endif /* SPP_RINGLATENCYSTATS_ENABLE */
++
++	return rte_eth_tx_burst(port_id, 0, tx_pkts, nb_tx);
++}
+diff --git a/src/shared/secondary/spp_worker_th/port_capability.h b/src/shared/secondary/spp_worker_th/port_capability.h
+new file mode 100644
+index 0000000..5d2a38a
+--- /dev/null
++++ b/src/shared/secondary/spp_worker_th/port_capability.h
+@@ -0,0 +1,84 @@
++/* SPDX-License-Identifier: BSD-3-Clause
++ * Copyright(c) 2019 Nippon Telegraph and Telephone Corporation
++ */
++
++#ifndef __PORT_CAPABILITY_H__
++#define __PORT_CAPABILITY_H__
++
++/**
++ * @file
++ * SPP Port ability
++ *
++ * Provide about the ability per port.
++ */
++
++#include "cmd_utils.h"
++
++/** Calculate TCI of VLAN tag. */
++#define SPP_VLANTAG_CALC_TCI(id, pcp) (((pcp & 0x07) << 13) | (id & 0x0fff))
++
++/** Type for changing index. */
++enum port_ability_chg_index_type {
++	PORT_ABILITY_CHG_INDEX_REF,  /** To change index to reference area. */
++	PORT_ABILITY_CHG_INDEX_UPD,  /** To change index to update area. */
++};
++
++/** Initialize port ability. */
++void spp_port_ability_init(void);
++
++/**
++ * Get information of port ability.
++ *
++ * @param port_id Etherdev ID.
++ * @param rxtx RX/TX ID of port_id.
++ * @param info Port ability information.
++ */
++void spp_port_ability_get_info(
++		int port_id, enum sppwk_port_dir dir,
++		struct sppwk_port_attrs **info);
++
++/**
++ * Change index of management information.
++ *
++ * @param port_id Etherdev ID.
++ * @param rxtx RX/TX ID of port_id.
++ * @param type Type for changing index.
++ */
++void spp_port_ability_change_index(
++		enum port_ability_chg_index_type type,
++		int port_id, enum sppwk_port_dir dir);
++
++/**
++ * Update port capability.
++ *
++ * @param component_info
++ *  The pointer to struct sppwk_comp_info.@n
++ *  The data for updating the internal data of port ability.
++ */
++void spp_port_ability_update(const struct sppwk_comp_info *component);
++
++/**
++ * Wrapper function for rte_eth_rx_burst() with ring latency feature.
++ *
++ * @param[in] port_id Etherdev ID.
++ * @param[in] queue_id RX queue ID, but fixed value 0 in SPP.
++ * @param[in] rx_pkts Pointers to mbuf should be enough to store nb_pkts.
++ * @param nb_pkts Maximum number of RX packets.
++ * @return Number of RX packets as number of pointers to mbuf.
++ */
++uint16_t sppwk_eth_vlan_rx_burst(uint16_t port_id, uint16_t queue_id,
++		struct rte_mbuf **rx_pkts, const uint16_t nb_pkts);
++
++/**
++ * Wrapper function for rte_eth_tx_burst() with ring latency feature.
++ *
++ * @param port_id Etherdev ID.
++ * @param[in] queue_id TX queue ID, but fixed value 0 in SPP.
++ * @param[in] tx_pkts Pointers to mbuf should be enough to store nb_pkts.
++ * @param nb_pkts Maximum number of TX packets.
++ * @return Number of TX packets as number of pointers to mbuf.
++ */
++uint16_t sppwk_eth_vlan_tx_burst(uint16_t port_id, uint16_t queue_id,
++		struct rte_mbuf **tx_pkts, uint16_t nb_pkts);
++
++#endif /*  __PORT_CAPABILITY_H__ */
+diff --git a/src/shared/secondary/spp_worker_th/spp_port.c b/src/shared/secondary/spp_worker_th/spp_port.c
+index 6fe0dc5..0c7df2b 100644
+--- a/src/shared/secondary/spp_worker_th/spp_port.c
++++ b/src/shared/secondary/spp_worker_th/spp_port.c
+@@ -12,357 +12,17 @@
+ #include "shared/secondary/return_codes.h"
+ #include "ringlatencystats.h"
+ 
+-/* Port ability management information */
+-struct port_abl_info {
+-	volatile int ref_index; /* Index to reference area. */
+-	volatile int upd_index; /* Index to update area. */
+-	struct sppwk_port_attrs port_attrs[TWO_SIDES][PORT_ABL_MAX];
+-				/* Port attributes for spp_vf. */
+-};
+-
+-/* Port ability port information */
+-struct port_mng_info {
+-	enum port_type iface_type;  /* Interface type (phy, vhost or so). */
+-	int iface_no;  /* Interface number. */
+-	struct port_abl_info rx;  /* Mng data of port ability for RX. */
+-	struct port_abl_info tx;  /* Mng data of port ability for Tx. */
+-};
+-
+-/* Information for VLAN tag management. */
+-struct port_mng_info g_port_mng_info[RTE_MAX_ETHPORTS];
+-
+-/* TPID of VLAN. */
+-static uint16_t g_vlan_tpid;
+-
+-/* Initialize port ability. */
+-void
+-spp_port_ability_init(void)
+-{
+-	int cnt = 0;
+-	g_vlan_tpid = rte_cpu_to_be_16(ETHER_TYPE_VLAN);
+-	memset(g_port_mng_info, 0x00, sizeof(g_port_mng_info));
+-	for (cnt = 0; cnt < RTE_MAX_ETHPORTS; cnt++) {
+-		g_port_mng_info[cnt].rx.ref_index = 0;
+-		g_port_mng_info[cnt].rx.upd_index = 1;
+-		g_port_mng_info[cnt].tx.ref_index = 0;
+-		g_port_mng_info[cnt].tx.upd_index = 1;
+-	}
+-}
+-
+-/* Get information of port ability. */
+-void
+-spp_port_ability_get_info(
+-		int port_id, enum sppwk_port_dir dir,
+-		struct sppwk_port_attrs **info)
+-{
+-	struct port_abl_info *mng = NULL;
+-
+-	switch (dir) {
+-	case SPPWK_PORT_DIR_RX:
+-		mng = &g_port_mng_info[port_id].rx;
+-		break;
+-	case SPPWK_PORT_DIR_TX:
+-		mng = &g_port_mng_info[port_id].tx;
+-		break;
+-	default:
+-		/* Not used. */
+-		break;
+-	}
+-	*info = mng->port_attrs[mng->ref_index];
+-}
+-
+-/* Calculation and Setting of FCS. */
+-static inline void
+-set_fcs_packet(struct rte_mbuf *pkt)
+-{
+-	uint32_t *fcs = NULL;
+-	fcs = rte_pktmbuf_mtod_offset(pkt, uint32_t *, pkt->data_len);
+-	*fcs = rte_net_crc_calc(rte_pktmbuf_mtod(pkt, void *),
+-			pkt->data_len, RTE_NET_CRC32_ETH);
+-}
+-
+-/* Add VLAN tag to packet. */
+-static inline int
+-add_vlantag_packet(
+-		struct rte_mbuf *pkt,
+-		const union sppwk_port_capability *capability)
+-{
+-	struct ether_hdr *old_ether = NULL;
+-	struct ether_hdr *new_ether = NULL;
+-	struct vlan_hdr  *vlan      = NULL;
+-	const struct sppwk_vlan_tag *vlantag = &capability->vlantag;
+-
+-	old_ether = rte_pktmbuf_mtod(pkt, struct ether_hdr *);
+-	if (old_ether->ether_type == g_vlan_tpid) {
+-		/* For packets with VLAN tags, only VLAN ID is updated */
+-		new_ether = old_ether;
+-		vlan = (struct vlan_hdr *)&new_ether[1];
+-	} else {
+-		/* For packets without VLAN tag, add VLAN tag. */
+-		new_ether = (struct ether_hdr *)rte_pktmbuf_prepend(pkt,
+-				sizeof(struct vlan_hdr));
+-		if (unlikely(new_ether == NULL)) {
+-			RTE_LOG(ERR, PORT, "Failed to "
+-					"get additional header area.\n");
+-			return SPP_RET_NG;
+-		}
+-
+-		rte_memcpy(new_ether, old_ether, sizeof(struct ether_hdr));
+-		vlan = (struct vlan_hdr *)&new_ether[1];
+-		vlan->eth_proto = new_ether->ether_type;
+-		new_ether->ether_type = g_vlan_tpid;
+-	}
+-
+-	vlan->vlan_tci = vlantag->tci;
+-	set_fcs_packet(pkt);
+-	return SPP_RET_OK;
+-}
+-
+-/* Add VLAN tag to all packets. */
+-static inline int
+-add_vlantag_all_packets(
+-		struct rte_mbuf **pkts, int nb_pkts,
+-		const union sppwk_port_capability *capability)
+-{
+-	int ret = SPP_RET_OK;
+-	int cnt = 0;
+-	for (cnt = 0; cnt < nb_pkts; cnt++) {
+-		ret = add_vlantag_packet(pkts[cnt], capability);
+-		if (unlikely(ret < 0)) {
+-			RTE_LOG(ERR, PORT,
+-					"Failed to add VLAN tag."
+-					"(pkts %d/%d)\n", cnt, nb_pkts);
+-			break;
+-		}
+-	}
+-	return cnt;
+-}
+-
+-/* Delete VLAN tag to packet. */
+-static inline int
+-del_vlantag_packet(
+-		struct rte_mbuf *pkt,
+-		const union sppwk_port_capability *cbl __attribute__ ((unused)))
+-{
+-	struct ether_hdr *old_ether = NULL;
+-	struct ether_hdr *new_ether = NULL;
+-	uint32_t *old, *new;
+-
+-	old_ether = rte_pktmbuf_mtod(pkt, struct ether_hdr *);
+-	if (old_ether->ether_type == g_vlan_tpid) {
+-		/* For packets without VLAN tag, delete VLAN tag. */
+-		new_ether = (struct ether_hdr *)rte_pktmbuf_adj(pkt,
+-				sizeof(struct vlan_hdr));
+-		if (unlikely(new_ether == NULL)) {
+-			RTE_LOG(ERR, PORT, "Failed to "
+-					"delete unnecessary header area.\n");
+-			return SPP_RET_NG;
+-		}
+-
+-		old = (uint32_t *)old_ether;
+-		new = (uint32_t *)new_ether;
+-		new[2] = old[2];
+-		new[1] = old[1];
+-		new[0] = old[0];
+-		old[0] = 0;
+-		set_fcs_packet(pkt);
+-	}
+-	return SPP_RET_OK;
+-}
+-
+-/* Delete VLAN tag to all packets. */
+-static inline int
+-del_vlantag_all_packets(
+-		struct rte_mbuf **pkts, int nb_pkts,
+-		const union sppwk_port_capability *capability)
+-{
+-	int ret = SPP_RET_OK;
+-	int cnt = 0;
+-	for (cnt = 0; cnt < nb_pkts; cnt++) {
+-		ret = del_vlantag_packet(pkts[cnt], capability);
+-		if (unlikely(ret < 0)) {
+-			RTE_LOG(ERR, PORT,
+-					"Failed to del VLAN tag."
+-					"(pkts %d/%d)\n", cnt, nb_pkts);
+-			break;
+-		}
+-	}
+-	return cnt;
+-}
+-
+-/* Change index of management information. */
+-void
+-spp_port_ability_change_index(
+-		enum port_ability_chg_index_type type,
+-		int port_id, enum sppwk_port_dir dir)
+-{
+-	int cnt;
+-	static int num_rx;
+-	static int rx_list[RTE_MAX_ETHPORTS];
+-	static int num_tx;
+-	static int tx_list[RTE_MAX_ETHPORTS];
+-	struct port_abl_info *mng = NULL;
+-
+-	if (type == PORT_ABILITY_CHG_INDEX_UPD) {
+-		switch (dir) {
+-		case SPPWK_PORT_DIR_RX:
+-			mng = &g_port_mng_info[port_id].rx;
+-			mng->upd_index = mng->ref_index;
+-			rx_list[num_rx++] = port_id;
+-			break;
+-		case SPPWK_PORT_DIR_TX:
+-			mng = &g_port_mng_info[port_id].tx;
+-			mng->upd_index = mng->ref_index;
+-			tx_list[num_tx++] = port_id;
+-			break;
+-		default:
+-			/* Not used. */
+-			break;
+-		}
+-		return;
+-	}
+-
+-	for (cnt = 0; cnt < num_rx; cnt++) {
+-		mng = &g_port_mng_info[rx_list[cnt]].rx;
+-		mng->ref_index = (mng->upd_index+1) % TWO_SIDES;
+-		rx_list[cnt] = 0;
+-	}
+-	for (cnt = 0; cnt < num_tx; cnt++) {
+-		mng = &g_port_mng_info[tx_list[cnt]].tx;
+-		mng->ref_index = (mng->upd_index+1) % TWO_SIDES;
+-		tx_list[cnt] = 0;
+-	}
+-
+-	num_rx = 0;
+-	num_tx = 0;
+-}
+-
+-/* Set ability data of port ability. */
+-static void
+-port_ability_set_ability(struct sppwk_port_info *port,
+-		enum sppwk_port_dir dir)
+-{
+-	int in_cnt, out_cnt = 0;
+-	int port_id = port->ethdev_port_id;
+-	struct port_mng_info *port_mng = &g_port_mng_info[port_id];
+-	struct port_abl_info *mng = NULL;
+-	struct sppwk_port_attrs *port_attrs_in = port->port_attrs;
+-	struct sppwk_port_attrs *port_attrs_out = NULL;
+-	struct sppwk_vlan_tag *tag = NULL;
+-
+-	port_mng->iface_type = port->iface_type;
+-	port_mng->iface_no   = port->iface_no;
+-
+-	switch (dir) {
+-	case SPPWK_PORT_DIR_RX:
+-		mng = &port_mng->rx;
+-		break;
+-	case SPPWK_PORT_DIR_TX:
+-		mng = &port_mng->tx;
+-		break;
+-	default:
+-		/* Not used. */
+-		break;
+-	}
+-
+-	port_attrs_out = mng->port_attrs[mng->upd_index];
+-	memset(port_attrs_out, 0x00, sizeof(struct sppwk_port_attrs)
+-			* PORT_ABL_MAX);
+-	for (in_cnt = 0; in_cnt < PORT_ABL_MAX; in_cnt++) {
+-		if (port_attrs_in[in_cnt].dir != dir)
+-			continue;
+-
+-		memcpy(&port_attrs_out[out_cnt], &port_attrs_in[in_cnt],
+-				sizeof(struct sppwk_port_attrs));
+-
+-		switch (port_attrs_out[out_cnt].ops) {
+-		case SPPWK_PORT_OPS_ADD_VLAN:
+-			tag = &port_attrs_out[out_cnt].capability.vlantag;
+-			tag->tci = rte_cpu_to_be_16(SPP_VLANTAG_CALC_TCI(
+-					tag->vid, tag->pcp));
+-			break;
+-		case SPPWK_PORT_OPS_DEL_VLAN:
+-		default:
+-			/* Nothing to do. */
+-			break;
+-		}
+-
+-		out_cnt++;
+-	}
+-
+-	spp_port_ability_change_index(PORT_ABILITY_CHG_INDEX_UPD,
+-			port_id, dir);
+-}
+-
+-/* Update port capability. */
+-void
+-spp_port_ability_update(const struct sppwk_comp_info *component)
+-{
+-	int cnt;
+-	struct sppwk_port_info *port = NULL;
+-	for (cnt = 0; cnt < component->nof_rx; cnt++) {
+-		port = component->rx_ports[cnt];
+-		port_ability_set_ability(port, SPPWK_PORT_DIR_RX);
+-	}
+-
+-	for (cnt = 0; cnt < component->nof_tx; cnt++) {
+-		port = component->tx_ports[cnt];
+-		port_ability_set_ability(port, SPPWK_PORT_DIR_TX);
+-	}
+-}
+-
+-/* Definition of functions that operate port abilities. */
+-typedef int (*port_ability_func)(
+-		struct rte_mbuf **pkts, int nb_pkts,
+-		const union sppwk_port_capability *capability);
+-
+-/* List of functions per port ability. */
+-port_ability_func port_ability_function_list[] = {
+-	NULL,                    /* None */
+-	add_vlantag_all_packets, /* Add VLAN tag */
+-	del_vlantag_all_packets, /* Del VLAN tag */
+-	NULL                     /* Termination */
+-};
+-
+-/* Each packet operation of port capability. */
+-static inline int
+-port_ability_each_operation(uint16_t port_id,
+-		struct rte_mbuf **pkts, const uint16_t nb_pkts,
+-		enum sppwk_port_dir dir)
+-{
+-	int cnt, buf;
+-	int ok_pkts = nb_pkts;
+-	struct sppwk_port_attrs *port_attrs = NULL;
+-
+-	spp_port_ability_get_info(port_id, dir, &port_attrs);
+-	if (unlikely(port_attrs[0].ops == SPPWK_PORT_OPS_NONE))
+-		return nb_pkts;
+-
+-	for (cnt = 0; cnt < PORT_ABL_MAX; cnt++) {
+-		if (port_attrs[cnt].ops == SPPWK_PORT_OPS_NONE)
+-			break;
+-
+-		ok_pkts = port_ability_function_list[port_attrs[cnt].ops](
+-				pkts, ok_pkts, &port_attrs->capability);
+-	}
+-
+-	/* Discard remained packets to release mbuf. */
+-	if (unlikely(ok_pkts < nb_pkts)) {
+-		for (buf = ok_pkts; buf < nb_pkts; buf++)
+-			rte_pktmbuf_free(pkts[buf]);
+-	}
+-
+-	return ok_pkts;
+-}
+-
+-/* Wrapper function for rte_eth_rx_burst(). */
++/* Wrapper function for rte_eth_rx_burst() with ring latency feature. */
+ uint16_t
+-spp_eth_rx_burst(
+-		uint16_t port_id, uint16_t queue_id  __attribute__ ((unused)),
++sppwk_eth_rx_burst(uint16_t port_id,
++		uint16_t queue_id  __attribute__ ((unused)),
+ 		struct rte_mbuf **rx_pkts, const uint16_t nb_pkts)
+ {
+-	uint16_t nb_rx = 0;
++	uint16_t nb_rx;
++
+ 	nb_rx = rte_eth_rx_burst(port_id, 0, rx_pkts, nb_pkts);
++
++	/* TODO(yasufum) confirm why it returns SPP_RET_OK. */
+ 	if (unlikely(nb_rx == 0))
+ 		return SPP_RET_OK;
+ 
+@@ -373,21 +33,18 @@ spp_eth_rx_burst(
+ 				rx_pkts, nb_pkts);
+ #endif /* SPP_RINGLATENCYSTATS_ENABLE */
+ 
+-	return port_ability_each_operation(port_id, rx_pkts, nb_rx,
+-			SPPWK_PORT_DIR_RX);
++	return nb_rx;
+ }
+ 
+-/* Wrapper function for rte_eth_tx_burst(). */
++/* Wrapper function for rte_eth_tx_burst() with ring latency feature. */
+ uint16_t
+-spp_eth_tx_burst(
+-		uint16_t port_id, uint16_t queue_id  __attribute__ ((unused)),
++sppwk_eth_tx_burst(uint16_t port_id,
++		uint16_t queue_id __attribute__ ((unused)),
+ 		struct rte_mbuf **tx_pkts, uint16_t nb_pkts)
+ {
+-	uint16_t nb_tx = 0;
+-	nb_tx = port_ability_each_operation(port_id, tx_pkts, nb_pkts,
+-			SPPWK_PORT_DIR_TX);
+-	if (unlikely(nb_tx == 0))
+-		return SPP_RET_OK;
++	uint16_t nb_tx;
++
++	nb_tx = rte_eth_tx_burst(port_id, 0, tx_pkts, nb_pkts);
+ 
+ #ifdef SPP_RINGLATENCYSTATS_ENABLE
+ 	if (g_port_mng_info[port_id].iface_type == RING)
+@@ -396,5 +53,5 @@ spp_eth_tx_burst(
+ 				tx_pkts, nb_pkts);
+ #endif /* SPP_RINGLATENCYSTATS_ENABLE */
+ 
+-	return rte_eth_tx_burst(port_id, 0, tx_pkts, nb_tx);
++	return nb_tx;
+ }
+diff --git a/src/shared/secondary/spp_worker_th/spp_port.h b/src/shared/secondary/spp_worker_th/spp_port.h
+index 81aefa7..eaeaea5 100644
+--- a/src/shared/secondary/spp_worker_th/spp_port.h
++++ b/src/shared/secondary/spp_worker_th/spp_port.h
+@@ -2,101 +2,33 @@
+  * Copyright(c) 2017-2018 Nippon Telegraph and Telephone Corporation
+  */
+ 
+-#ifndef _SPP_PORT_H_
+-#define _SPP_PORT_H_
+-
+-/**
+- * @file
+- * SPP Port ability
+- *
+- * Provide about the ability per port.
+- */
++#ifndef __WK_SPP_PORT_H__
++#define __WK_SPP_PORT_H__
+ 
+ #include "cmd_utils.h"
+ 
+-/** Calculate TCI of VLAN tag. */
+-#define SPP_VLANTAG_CALC_TCI(id, pcp) (((pcp & 0x07) << 13) | (id & 0x0fff))
+-
+-/** Type for changing index. */
+-enum port_ability_chg_index_type {
+-	PORT_ABILITY_CHG_INDEX_REF,  /** To change index to reference area. */
+-	PORT_ABILITY_CHG_INDEX_UPD,  /** To change index to update area. */
+-};
+-
+-/** Initialize port ability. */
+-void spp_port_ability_init(void);
+-
+-/**
+- * Get information of port ability.
+- *
+- * @param port_id Etherdev ID.
+- * @param rxtx RX/TX ID of port_id.
+- * @param info Port ability information.
+- */
+-void spp_port_ability_get_info(
+-		int port_id, enum sppwk_port_dir dir,
+-		struct sppwk_port_attrs **info);
+-
+ /**
+- * Change index of management information.
++ * Wrapper function for rte_eth_rx_burst() with ring latency feature.
+  *
+- * @param port_id Etherdev ID.
+- * @param rxtx RX/TX ID of port_id.
+- * @param type Type for changing index.
+- */
+-void spp_port_ability_change_index(
+-		enum port_ability_chg_index_type type,
+-		int port_id, enum sppwk_port_dir dir);
+-
+-/**
+- * Update port capability.
+- *
+- * @param component_info
+- *  The pointer to struct sppwk_comp_info.@n
+- *  The data for updating the internal data of port ability.
+- */
+-void spp_port_ability_update(const struct sppwk_comp_info *component);
+-
+-/**
+- * Wrapper function for rte_eth_rx_burst().
+- *
+- * @param port_id Etherdev ID.
+- * @param queue_id
+- *  The index of the receive queue from which to retrieve input packets.
+- *  SPP is fixed at 0.
+- * @param rx_pkts
+- *  The address of an array of pointers to *rte_mbuf* structures that
+- *  must be large enough to store *nb_pkts* pointers in it.
+- * @param nb_pkts
+- *  The maximum number of packets to retrieve.
+- *
+- * @return
+- *  The number of packets actually retrieved, which is the number
+- *  of pointers to *rte_mbuf* structures effectively supplied to the
+- *  *rx_pkts* array.
++ * @param[in] port_id Etherdev ID.
++ * @param[in] queue_id RX queue ID, but fixed value 0 in SPP.
++ * @param[in] rx_pkts Pointers to mbuf should be enough to store nb_pkts.
++ * @param nb_pkts Maximum number of RX packets.
++ * @return Number of RX packets as number of pointers to mbuf.
+  */
+-uint16_t spp_eth_rx_burst(uint16_t port_id, uint16_t queue_id,
++uint16_t sppwk_eth_rx_burst(uint16_t port_id, uint16_t queue_id,
+ 		struct rte_mbuf **rx_pkts, const uint16_t nb_pkts);
+ 
+ /**
+- * Wrapper function for rte_eth_tx_burst().
++ * Wrapper function for rte_eth_tx_burst() with ring latency feature.
+  *
+  * @param port_id Etherdev ID.
+- * @param queue_id
+- *  The index of the transmit queue through which output packets must be sent.
+- *  SPP is fixed at 0.
+- * @param tx_pkts
+- *  The address of an array of *nb_pkts* pointers to *rte_mbuf* structures
+- *  which contain the output packets.
+- * @param nb_pkts
+- *  The maximum number of packets to transmit.
+- *
+- * @return
+- *  The number of output packets actually stored in transmit descriptors of
+- *  the transmit ring. The return value can be less than the value of the
+- *  *tx_pkts* parameter when the transmit ring is full or has been filled up.
++ * @param[in] queue_id TX queue ID, but fixed value 0 in SPP.
++ * @param[in] tx_pkts Pointers to mbuf should be enough to store nb_pkts.
++ * @param nb_pkts Maximum number of TX packets.
++ * @return Number of TX packets as number of pointers to mbuf.
+  */
+-uint16_t spp_eth_tx_burst(uint16_t port_id, uint16_t queue_id,
++uint16_t sppwk_eth_tx_burst(uint16_t port_id, uint16_t queue_id,
+ 		struct rte_mbuf **tx_pkts, uint16_t nb_pkts);
+ 
+-#endif /*  _SPP_PORT_H_ */
++#endif /*  __WK_SPP_PORT_H__ */
+-- 
+2.17.1
+
+

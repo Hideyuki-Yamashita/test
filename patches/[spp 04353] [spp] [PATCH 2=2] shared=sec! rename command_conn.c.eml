@@ -1,0 +1,236 @@
+Return-path: <fw-yama-hd@pomail01.silk.ntt-tx.co.jp>
+Received: from zssg-mailmd104.ddreams.local
+ (zssg-mailmd104.ddreams.local [10.160.123.99]) by zssg-mailms320.ddreams.local
+ (NTT DoCoMo Mail System) with ESMTP id <0PTK00U9BZX18Y30@NTTDoCoMo.co.jp> for
+ yamashita.hideyuki@ntt-tx.co.jp; Mon, 24 Jun 2019 11:22:13 +0900 (JST)
+Original-recipient: rfc822;yamashita.hideyuki@ntt-tx.co.jp
+Received: from smtp_saver-daemon.zssg-mailmd104.ddreams.local by
+ zssg-mailmd104.ddreams.local (dDREAMS) id <0PTK00C1KZX11A00@dDREAMS> for
+ yamashita.hideyuki@ntt-tx.co.jp (ORCPT yamashita.hideyuki@ntt-tx.co.jp); Mon,
+ 24 Jun 2019 11:22:13 +0900 (JST)
+Received: from zssg-mailmf106.ddreams.local
+ (zssg-mailmf900.ddreams.local [10.160.172.84]) by zssg-mailmd104.ddreams.local
+ (dDREAMS) with ESMTP id <0PTK002A5ZX1OO50@dDREAMS> for
+ yamashita.hideyuki@ntt-tx.co.jp (ORCPT yamashita.hideyuki@ntt-tx.co.jp); Mon,
+ 24 Jun 2019 11:22:13 +0900 (JST)
+Received: from zssg-mailmf106.ddreams.local (unknown [127.0.0.1])
+	by zssg-mailmf106.ddreams.local (Postfix) with ESMTP id ADACF7E6032	for
+ <yamashita.hideyuki@ntt-tx.co.jp>; Mon, 24 Jun 2019 11:22:13 +0900 (JST)
+Received: from zssg-mailmf106.ddreams.local (unknown [127.0.0.1])
+	by IMSVA (Postfix) with ESMTP id AA3278E6055	for
+ <yamashita.hideyuki@ntt-tx.co.jp>; Mon, 24 Jun 2019 11:22:13 +0900 (JST)
+Received: from localhost (unknown [127.0.0.1])	by IMSVA (Postfix)
+ with SMTP id 9B3608E606B	for <yamashita.hideyuki@ntt-tx.co.jp>; Mon,
+ 24 Jun 2019 11:22:13 +0900 (JST)
+X-IMSS-HAND-OFF-DIRECTIVE: localhost:10026
+Received: from zssg-mailmf106.ddreams.local (unknown [127.0.0.1])
+	by IMSVA (Postfix) with ESMTP id 1E3EE8E6069	for
+ <yamashita.hideyuki@ntt-tx.co.jp>; Mon, 24 Jun 2019 11:22:12 +0900 (JST)
+Received: from pomail01.silk.ntt-tx.co.jp (unknown [10.160.183.139])
+	by zssg-mailmf106.ddreams.local (Postfix)
+ with ESMTPS	for <yamashita.hideyuki@ntt-tx.co.jp>; Mon,
+ 24 Jun 2019 11:22:12 +0900 (JST)
+Received: from pomail01.silk.ntt-tx.co.jp (localhost [127.0.0.1])
+	by pomail01.silk.ntt-tx.co.jp (unknown) with ESMTP id x5O2MBNU012692;	Mon,
+ 24 Jun 2019 11:22:11 +0900
+Received: (from yama-hd@localhost)	by pomail01.silk.ntt-tx.co.jp (unknown)
+ id x5O2MBDf012691;	Mon, 24 Jun 2019 11:22:11 +0900
+X-Authentication-warning: pomail01.silk.ntt-tx.co.jp: yama-hd set sender to
+ fw-yama-hd@pomail01.silk.ntt-tx.co.jp using -f
+Received: from imss04.silk.ntt-tx.co.jp
+ (imss04.silk.ntt-tx.co.jp [10.107.0.39])	by pomail01.silk.ntt-tx.co.jp
+ (unknown) with ESMTP id x5O2MBfZ012688	for unknown; Mon,
+ 24 Jun 2019 11:22:11 +0900
+Received: from imss04.silk.ntt-tx.co.jp (localhost [127.0.0.1])
+ by imss04.silk.ntt-tx.co.jp (unknown) with ESMTP id x5O2MBX2004483 for
+ unknown; Mon, 24 Jun 2019 11:22:11 +0900
+Received: from ml01.silk.ntt-tx.co.jp (ml01.silk.ntt-tx.co.jp [10.107.0.230])
+ by imss04.silk.ntt-tx.co.jp (unknown) with ESMTP id x5O2MBIK004479; Mon,
+ 24 Jun 2019 11:22:11 +0900
+Received: from ml01.silk.ntt-tx.co.jp (localhost [127.0.0.1])
+	by ml01.silk.ntt-tx.co.jp (unknown) with ESMTP id x5O2MBNi015964;	Mon,
+ 24 Jun 2019 11:22:11 +0900
+Received: from imss02.silk.ntt-tx.co.jp
+ (imss02.silk.ntt-tx.co.jp [10.107.0.127])	by ml01.silk.ntt-tx.co.jp (unknown)
+ with ESMTP id x5O2MBxx015960	for unknown; Mon, 24 Jun 2019 11:22:11 +0900
+Received: from imss02.silk.ntt-tx.co.jp (localhost [127.0.0.1])
+ by imss02.silk.ntt-tx.co.jp (unknown) with ESMTP id x5O2MAcl005444 for
+ unknown; Mon, 24 Jun 2019 11:22:10 +0900
+Received: from mail01.ics.ntt-tx.co.jp (mail01.ics.ntt-tx.co.jp [10.254.2.67])
+ by imss02.silk.ntt-tx.co.jp (unknown) with ESMTP id x5O2MAcX005438 for
+ unknown; Mon, 24 Jun 2019 11:22:10 +0900
+Received: from dpdk.org (dpdk.org [92.243.14.124])	by mail01.ics.ntt-tx.co.jp
+ (unknown) with SMTP id x5O2M4KX003184	for unknown; Mon,
+ 24 Jun 2019 11:22:10 +0900
+Received: from [92.243.14.124] (localhost [127.0.0.1])	by dpdk.org (Postfix)
+ with ESMTP id A67F61BF70;	Mon, 24 Jun 2019 04:22:03 +0200 (CEST)
+Received: from mail-pl1-f195.google.com
+ (mail-pl1-f195.google.com [209.85.214.195]) by dpdk.org (Postfix)
+ with ESMTP id 56E4F1BF6B for <spp@dpdk.org>; Mon,
+ 24 Jun 2019 04:22:02 +0200 (CEST)
+Received: by mail-pl1-f195.google.com with SMTP id bi6so5976740plb.12 for
+ <spp@dpdk.org>; Sun, 23 Jun 2019 19:22:02 -0700 (PDT)
+Received: from localhost.localdomain ([192.47.164.146])
+ by smtp.gmail.com with ESMTPSA id e10sm5916173pfi.153.2019.06.23.19.22.00
+ (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128); Sun,
+ 23 Jun 2019 19:22:01 -0700 (PDT)
+Date: Mon, 24 Jun 2019 11:21:47 +0900
+From: yasufum.o@gmail.com
+Subject: [spp 04353] [spp] [PATCH 2/2] shared/sec: rename command_conn.c
+Sender: spp <spp-bounces@dpdk.org>
+To: spp@dpdk.org, ferruh.yigit@intel.com, yasufum.o@gmail.com
+Message-id: <20190624022147.18639-3-yasufum.o@gmail.com>
+In-reply-to: <20190624022147.18639-1-yasufum.o@gmail.com>
+References: <20190624022147.18639-1-yasufum.o@gmail.com>
+X-ML-Name: unknown
+X-Mail-Count: 04353
+X-MLServer: unknown
+X-ML-Info: mailing list service
+X-Mailer: git-send-email 2.17.1
+Authentication-results: mail01.ics.ntt-tx.co.jp; spf=pass
+ smtp.mailfrom=spp-bounces@dpdk.org
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
+ h=from:to:subject:date:message-id:in-reply-to:references;
+ bh=BimbNEd/8yMsTK/cbPjq53lk4WigsPBEPAqIeoBQ+d0=;
+ b=hcxACOJX1yw5ow2tfOuDJ90MhKAm5zu9R8EuytTWDupfxASvjKnMi1UomabzmhSgEH
+ fdfg7232kM6+EVgEOfRwl3CTntJrHMrFIa8v/aOfx6ClA12Ag2HSR8NwSaKyu8IqwVt+
+ pV1P33bAmCA5CWbgKStCMaTqfqx6i+XhzPto+GHxqcji3D7o801IcBMaq+5qZ/aEBQDM
+ /fk0laexGS+D3l+y18U73zpQNNTlf9MU6Oo165UXVOoRhw0WrVsHq5awQIhLYwk36rym
+ Ufdn6GdF+vocSNkzoRhTF5STUxyu6tV++n5Tb+xO6gKfCu21Fc5ByXg51CACS0opCwlr Q89w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=1e100.net;
+ s=20161025; h=x-gm-message-state:from:to:subject:date:message-id:in-reply-to
+ :references; bh=BimbNEd/8yMsTK/cbPjq53lk4WigsPBEPAqIeoBQ+d0=;
+ b=V5HVTjKkurEamV/hr2OSzK2rO5h7VA8cPiV92L7DRbeV1nevF3DUFbOr685C4nScx9
+ o3y8k1fheDBtIXvAvKDw/Cmh7IfoFmyTkkwaxostIvsRKoCfv3As3XhF9eUQ6VldGJzG
+ y/ZzUrKuBJoAK/VpEqHlPjWrzFjW0nskwRFWnFjieEWNT2PO5s/l6DfXqAMhL47eHE8C
+ garrZV77oT/a88IGeGGEp/FgNxwP075BL/TafNK67s/MwTQoAV/3DgG2D34NjTVIKPsT
+ omwj9hFxpIKlqzSpM1Yqf+50LKWOL6P/LNK87eCOEAyYFLFjvq0Y2L6Ap0PeUnFmAnrx x18A==
+X-Gm-Message-State: APjAAAWObOlpyn0qtZ6RSK6Qz0XgQI6MixvpNss0c3mQvQMilUCbCuOQ
+ mhsVXMnBc2sZPJHBUhup4nMie9BE
+X-Google-Smtp-Source:
+ APXvYqz/M6DsEmCOY7s2OnnveFmNwprcQN7YS0MDHIFtEQ+yADzXBxtj4nRV96tr9RKoHAqSOHOXPQ==
+X-Received: by 2002:a17:902:2aab:: with SMTP id
+ j40mr101350674plb.76.1561342921547; Sun, 23 Jun 2019 19:22:01 -0700 (PDT)
+X-BeenThere: spp@dpdk.org
+X-Mailman-Version: 2.1.15
+List-Id: Soft Patch Panel <spp.dpdk.org>
+List-Unsubscribe: <https://mails.dpdk.org/options/spp>,
+ <mailto:spp-request@dpdk.org?subject=unsubscribe>
+List-Archive: <http://mails.dpdk.org/archives/spp/>
+List-Post: <mailto:spp@dpdk.org>
+List-Help: <mailto:spp-request@dpdk.org?subject=help>
+List-Subscribe: <https://mails.dpdk.org/listinfo/spp>,
+ <mailto:spp-request@dpdk.org?subject=subscribe>
+X-TM-AS-MML: No
+Precedence: bulk
+Lines: 106
+X-TM-AS-GCONF: 00
+X-MD-STAMP: ON
+
+From: Yasufumi Ogawa <yasufum.o@gmail.com>
+
+This patch is to rename `command_conn.c` and `command_conn.h`, and
+update Makefiles.
+
+Signed-off-by: Yasufumi Ogawa <yasufum.o@gmail.com>
+---
+ src/mirror/Makefile                                             | 2 +-
+ src/pcap/Makefile                                               | 2 +-
+ src/pcap/cmd_runner.c                                           | 2 +-
+ src/shared/secondary/spp_worker_th/cmd_runner.c                 | 2 +-
+ .../secondary/spp_worker_th/{command_conn.c => conn_spp_ctl.c}  | 2 +-
+ .../secondary/spp_worker_th/{command_conn.h => conn_spp_ctl.h}  | 0
+ src/vf/Makefile                                                 | 2 +-
+ 7 files changed, 6 insertions(+), 6 deletions(-)
+ rename src/shared/secondary/spp_worker_th/{command_conn.c => conn_spp_ctl.c} (99%)
+ rename src/shared/secondary/spp_worker_th/{command_conn.h => conn_spp_ctl.h} (100%)
+
+diff --git a/src/mirror/Makefile b/src/mirror/Makefile
+index d1ae9ce..3e31cfa 100644
+--- a/src/mirror/Makefile
++++ b/src/mirror/Makefile
+@@ -19,7 +19,7 @@ SRCS-y += ../shared/common.c
+ SRCS-y += ../shared/secondary/utils.c ../shared/secondary/add_port.c
+ SRCS-y += $(SPP_WKT_DIR)/cmd_utils.c
+ SRCS-y += $(SPP_WKT_DIR)/spp_port.c
+-SRCS-y += $(SPP_WKT_DIR)/command_conn.c
++SRCS-y += $(SPP_WKT_DIR)/conn_spp_ctl.c
+ SRCS-y += $(SPP_WKT_DIR)/cmd_parser.c
+ SRCS-y += $(SPP_WKT_DIR)/cmd_runner.c
+ SRCS-y += $(SPP_WKT_DIR)/string_buffer.c
+diff --git a/src/pcap/Makefile b/src/pcap/Makefile
+index 61f6f81..c3d5ae4 100644
+--- a/src/pcap/Makefile
++++ b/src/pcap/Makefile
+@@ -18,7 +18,7 @@ SRCS-y := spp_pcap.c
+ SRCS-y += cmd_utils.c
+ SRCS-y += cmd_runner.c cmd_parser.c
+ SRCS-y += ../shared/common.c
+-SRCS-y += $(SPP_WKT_DIR)/command_conn.c
++SRCS-y += $(SPP_WKT_DIR)/conn_spp_ctl.c
+ SRCS-y += $(SPP_WKT_DIR)/spp_port.c
+ SRCS-y += $(SPP_WKT_DIR)/ringlatencystats.c
+ SRCS-y += $(SPP_WKT_DIR)/string_buffer.c
+diff --git a/src/pcap/cmd_runner.c b/src/pcap/cmd_runner.c
+index 9541cbb..8a1fb87 100644
+--- a/src/pcap/cmd_runner.c
++++ b/src/pcap/cmd_runner.c
+@@ -9,7 +9,7 @@
+ 
+ #include "shared/secondary/spp_worker_th/string_buffer.h"
+ #include "spp_pcap.h"
+-#include "shared/secondary/spp_worker_th/command_conn.h"
++#include "shared/secondary/spp_worker_th/conn_spp_ctl.h"
+ #include "cmd_parser.h"
+ #include "cmd_runner.h"
+ 
+diff --git a/src/shared/secondary/spp_worker_th/cmd_runner.c b/src/shared/secondary/spp_worker_th/cmd_runner.c
+index 92d727b..1d1ec49 100644
+--- a/src/shared/secondary/spp_worker_th/cmd_runner.c
++++ b/src/shared/secondary/spp_worker_th/cmd_runner.c
+@@ -13,7 +13,7 @@
+ #include "spp_port.h"
+ #include "string_buffer.h"
+ 
+-#include "command_conn.h"
++#include "conn_spp_ctl.h"
+ #include "cmd_parser.h"
+ #include "cmd_runner.h"
+ 
+diff --git a/src/shared/secondary/spp_worker_th/command_conn.c b/src/shared/secondary/spp_worker_th/conn_spp_ctl.c
+similarity index 99%
+rename from src/shared/secondary/spp_worker_th/command_conn.c
+rename to src/shared/secondary/spp_worker_th/conn_spp_ctl.c
+index b80c54b..030da92 100644
+--- a/src/shared/secondary/spp_worker_th/command_conn.c
++++ b/src/shared/secondary/spp_worker_th/conn_spp_ctl.c
+@@ -14,7 +14,7 @@
+ 
+ #include "shared/common.h"
+ #include "string_buffer.h"
+-#include "command_conn.h"
++#include "conn_spp_ctl.h"
+ 
+ #define RTE_LOGTYPE_SPP_COMMAND_PROC RTE_LOGTYPE_USER1
+ 
+diff --git a/src/shared/secondary/spp_worker_th/command_conn.h b/src/shared/secondary/spp_worker_th/conn_spp_ctl.h
+similarity index 100%
+rename from src/shared/secondary/spp_worker_th/command_conn.h
+rename to src/shared/secondary/spp_worker_th/conn_spp_ctl.h
+diff --git a/src/vf/Makefile b/src/vf/Makefile
+index bdeff98..faf72ee 100644
+--- a/src/vf/Makefile
++++ b/src/vf/Makefile
+@@ -18,7 +18,7 @@ SRCS-y := spp_vf.c classifier_mac.c spp_forward.c
+ SRCS-y += $(SPP_WKT_DIR)/string_buffer.c
+ SRCS-y += $(SPP_WKT_DIR)/ringlatencystats.c
+ SRCS-y += $(SPP_WKT_DIR)/spp_port.c
+-SRCS-y += $(SPP_WKT_DIR)/command_conn.c
++SRCS-y += $(SPP_WKT_DIR)/conn_spp_ctl.c
+ SRCS-y += $(SPP_WKT_DIR)/cmd_parser.c
+ SRCS-y += $(SPP_WKT_DIR)/cmd_runner.c
+ SRCS-y += $(SPP_WKT_DIR)/cmd_utils.c
+-- 
+2.17.1
+
+

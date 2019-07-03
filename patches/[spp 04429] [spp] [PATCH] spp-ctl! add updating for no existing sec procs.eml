@@ -1,0 +1,205 @@
+Return-path: <fw-yama-hd@pomail01.silk.ntt-tx.co.jp>
+Received: from zssg-mailmd101.ddreams.local
+ (zssg-mailmd101.ddreams.local [10.160.123.96]) by zssg-mailms320.ddreams.local
+ (NTT DoCoMo Mail System) with ESMTP id <0PTL001VYN82R160@NTTDoCoMo.co.jp> for
+ yamashita.hideyuki@ntt-tx.co.jp; Mon, 24 Jun 2019 19:45:38 +0900 (JST)
+Original-recipient: rfc822;yamashita.hideyuki@ntt-tx.co.jp
+Received: from smtp_saver-daemon.zssg-mailmd101.ddreams.local by
+ zssg-mailmd101.ddreams.local (dDREAMS) id <0PTL0120YN82SI00@dDREAMS> for
+ yamashita.hideyuki@ntt-tx.co.jp (ORCPT yamashita.hideyuki@ntt-tx.co.jp); Mon,
+ 24 Jun 2019 19:45:38 +0900 (JST)
+Received: from zssg-mailmf106.ddreams.local
+ (zssg-mailmf900.ddreams.local [10.160.172.84]) by zssg-mailmd101.ddreams.local
+ (dDREAMS) with ESMTP id <0PTL00J8AN82Z170@dDREAMS> for
+ yamashita.hideyuki@ntt-tx.co.jp (ORCPT yamashita.hideyuki@ntt-tx.co.jp); Mon,
+ 24 Jun 2019 19:45:38 +0900 (JST)
+Received: from zssg-mailmf106.ddreams.local (unknown [127.0.0.1])
+	by zssg-mailmf106.ddreams.local (Postfix) with ESMTP id 5A7717E6032	for
+ <yamashita.hideyuki@ntt-tx.co.jp>; Mon, 24 Jun 2019 19:45:38 +0900 (JST)
+Received: from zssg-mailmf106.ddreams.local (unknown [127.0.0.1])
+	by IMSVA (Postfix) with ESMTP id 58EB68E6042	for
+ <yamashita.hideyuki@ntt-tx.co.jp>; Mon, 24 Jun 2019 19:45:38 +0900 (JST)
+Received: from localhost (unknown [127.0.0.1])	by IMSVA (Postfix)
+ with SMTP id 4DA708E605F	for <yamashita.hideyuki@ntt-tx.co.jp>; Mon,
+ 24 Jun 2019 19:45:38 +0900 (JST)
+X-IMSS-HAND-OFF-DIRECTIVE: localhost:10026
+Received: from zssg-mailmf106.ddreams.local (unknown [127.0.0.1])
+	by IMSVA (Postfix) with ESMTP id 02EFA8E6057	for
+ <yamashita.hideyuki@ntt-tx.co.jp>; Mon, 24 Jun 2019 19:45:37 +0900 (JST)
+Received: from pomail01.silk.ntt-tx.co.jp (unknown [10.160.183.139])
+	by zssg-mailmf106.ddreams.local (Postfix)
+ with ESMTPS	for <yamashita.hideyuki@ntt-tx.co.jp>; Mon,
+ 24 Jun 2019 19:45:36 +0900 (JST)
+Received: from pomail01.silk.ntt-tx.co.jp (localhost [127.0.0.1])
+	by pomail01.silk.ntt-tx.co.jp (unknown) with ESMTP id x5OAja37032649;	Mon,
+ 24 Jun 2019 19:45:36 +0900
+Received: (from yama-hd@localhost)	by pomail01.silk.ntt-tx.co.jp (unknown)
+ id x5OAjaeK032648;	Mon, 24 Jun 2019 19:45:36 +0900
+X-Authentication-warning: pomail01.silk.ntt-tx.co.jp: yama-hd set sender to
+ fw-yama-hd@pomail01.silk.ntt-tx.co.jp using -f
+Received: from imss04.silk.ntt-tx.co.jp
+ (imss04.silk.ntt-tx.co.jp [10.107.0.39])	by pomail01.silk.ntt-tx.co.jp
+ (unknown) with ESMTP id x5OAja1n032645	for unknown; Mon,
+ 24 Jun 2019 19:45:36 +0900
+Received: from imss04.silk.ntt-tx.co.jp (localhost [127.0.0.1])
+ by imss04.silk.ntt-tx.co.jp (unknown) with ESMTP id x5OAjaTF007903 for
+ unknown; Mon, 24 Jun 2019 19:45:36 +0900
+Received: from ml01.silk.ntt-tx.co.jp (ml01.silk.ntt-tx.co.jp [10.107.0.230])
+ by imss04.silk.ntt-tx.co.jp (unknown) with ESMTP id x5OAjae0007900; Mon,
+ 24 Jun 2019 19:45:36 +0900
+Received: from ml01.silk.ntt-tx.co.jp (localhost [127.0.0.1])
+	by ml01.silk.ntt-tx.co.jp (unknown) with ESMTP id x5OAjaKA008916;	Mon,
+ 24 Jun 2019 19:45:36 +0900
+Received: from imss02.silk.ntt-tx.co.jp
+ (imss02.silk.ntt-tx.co.jp [10.107.0.127])	by ml01.silk.ntt-tx.co.jp (unknown)
+ with ESMTP id x5OAjZwr008912	for unknown; Mon, 24 Jun 2019 19:45:35 +0900
+Received: from imss02.silk.ntt-tx.co.jp (localhost [127.0.0.1])
+ by imss02.silk.ntt-tx.co.jp (unknown) with ESMTP id x5OAjZKe023363 for
+ unknown; Mon, 24 Jun 2019 19:45:35 +0900
+Received: from mail01.ics.ntt-tx.co.jp (mail01.ics.ntt-tx.co.jp [10.254.2.67])
+ by imss02.silk.ntt-tx.co.jp (unknown) with ESMTP id x5OAjZk5023356 for
+ unknown; Mon, 24 Jun 2019 19:45:35 +0900
+Received: from dpdk.org (dpdk.org [92.243.14.124])	by mail01.ics.ntt-tx.co.jp
+ (unknown) with SMTP id x5OAjTDv020855	for unknown; Mon,
+ 24 Jun 2019 19:45:34 +0900
+Received: from [92.243.14.124] (localhost [127.0.0.1])	by dpdk.org (Postfix)
+ with ESMTP id A16A01BF01;	Mon, 24 Jun 2019 12:45:28 +0200 (CEST)
+Received: from mail-pg1-f195.google.com
+ (mail-pg1-f195.google.com [209.85.215.195]) by dpdk.org (Postfix)
+ with ESMTP id 32A0D2C2B for <spp@dpdk.org>; Mon,
+ 24 Jun 2019 12:45:27 +0200 (CEST)
+Received: by mail-pg1-f195.google.com with SMTP id k13so727458pgq.9 for
+ <spp@dpdk.org>; Mon, 24 Jun 2019 03:45:27 -0700 (PDT)
+Received: from localhost.localdomain ([192.47.164.146])
+ by smtp.gmail.com with ESMTPSA id v13sm11502011pfe.105.2019.06.24.03.45.24
+ (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128); Mon,
+ 24 Jun 2019 03:45:25 -0700 (PDT)
+Date: Mon, 24 Jun 2019 19:45:22 +0900
+From: yasufum.o@gmail.com
+Subject: [spp 04429] [spp] [PATCH] spp-ctl: add updating for no existing sec
+ procs
+Sender: spp <spp-bounces@dpdk.org>
+To: spp@dpdk.org, ferruh.yigit@intel.com, yasufum.o@gmail.com
+Message-id: <20190624104522.25087-1-yasufum.o@gmail.com>
+X-ML-Name: unknown
+X-Mail-Count: 04429
+X-MLServer: unknown
+X-ML-Info: mailing list service
+X-Mailer: git-send-email 2.17.1
+Authentication-results: mail01.ics.ntt-tx.co.jp; spf=pass
+ smtp.mailfrom=spp-bounces@dpdk.org
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
+ h=from:to:subject:date:message-id;
+ bh=6wdnq931fhW0ivHmwihncEMDokUivdELfLJKdf4Tfx8=;
+ b=jEIAeflOzna/FiIBzKvzoyUkJmjxgK0yAz1ql+wA4CUi4EEywwoTjXfBvW2mhG29S3
+ zUsG8zteRzUingfqvnEa23CK4JxVM0Hdn4YWET9GvtFTwS2UYUc0TBp9qE+BXx7NhNOw
+ wPXtnDryAF5ZHiO6otr9iHdJkU7rVXEBB2qREU+yUKFQM1+ncyA32TAfz7UtF2cuNQoF
+ x8EZ4qy83nmf/YY4JcLw5ztzY2Njk+5kCfxqJdYDi8q5w4TK1yaUCyudWbNYt5qy3rQQ
+ d4AzSxMeZwFFtRH8SKf66KkBGE75pqmsD5wqchIbs45Wl6tAly6w4NA7QzygAGK3TgLT zR/A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=1e100.net;
+ s=20161025; h=x-gm-message-state:from:to:subject:date:message-id;
+ bh=6wdnq931fhW0ivHmwihncEMDokUivdELfLJKdf4Tfx8=;
+ b=dleJSfOSFtCOoJQwOcVurRukFcXBgnPFlnQlBHTNEtnU7c5O3bPDA3dtLtts3OZDZ2
+ 621LMo9ov/FxfzNh1HRpehtwukaog+yUa8vKr8UlQSwYNceEsWhjRJKwkepsho7XPVkI
+ xWJP3mn/5Tq0HjrxCDL3jzqhUjUY4gbr74VAZzaPwJfhMB9FDUNieQoLuxZm71WPSHsY
+ rYPuAMHlE84FpIkqBCKRBvfFYns1fP2pAo+rcec9zsbWe361VD4uwxwzaJy6hQP4Hs4q
+ /qLr2tD9y61Tj2QiadMhhkN5cJNchx54AB89VR8ckWZIhCwdUrHdAG6biSJDeVXvgIdd ZtcA==
+X-Gm-Message-State: APjAAAUhpyW/j9h4WiIXCnhJ+Q3t55OasJ0M2Rgrf8b2yiB8wNpkW25f
+ A6myFz0j2Et1jd0sq1jmlPuoEEf2
+X-Google-Smtp-Source:
+ APXvYqwWzy22SocJWruTb8/DpTjCC87ujeY8i8dPpkLNyYjoHkgl9svfcquORSVkhHcT9IbFFu4EzQ==
+X-Received: by 2002:a17:90a:cb87:: with SMTP id
+ a7mr24796598pju.130.1561373126193; Mon, 24 Jun 2019 03:45:26 -0700 (PDT)
+X-BeenThere: spp@dpdk.org
+X-Mailman-Version: 2.1.15
+List-Id: Soft Patch Panel <spp.dpdk.org>
+List-Unsubscribe: <https://mails.dpdk.org/options/spp>,
+ <mailto:spp-request@dpdk.org?subject=unsubscribe>
+List-Archive: <http://mails.dpdk.org/archives/spp/>
+List-Post: <mailto:spp@dpdk.org>
+List-Help: <mailto:spp-request@dpdk.org?subject=help>
+List-Subscribe: <https://mails.dpdk.org/listinfo/spp>,
+ <mailto:spp-request@dpdk.org?subject=subscribe>
+X-TM-AS-MML: No
+Precedence: bulk
+Lines: 76
+X-TM-AS-GCONF: 00
+X-MD-STAMP: ON
+
+From: Yasufumi Ogawa <yasufum.o@gmail.com>
+
+If secondary process is died, spp-ctl cannot find the event and does
+not update list of secondary processes. As the result, spp-ctl returns
+an invalid message for inquiring status.
+
+This update is to add a method _update_proc() for updating the list run
+before making the result message. In the method, spp-ctl tries to
+retrieve status of all processes and remove entries of the list if it
+is failed.
+
+Signed-off-by: Yasufumi Ogawa <yasufum.o@gmail.com>
+---
+ src/spp-ctl/spp_ctl.py | 37 +++++++++++++++++++++++++++++--------
+ 1 file changed, 29 insertions(+), 8 deletions(-)
+
+diff --git a/src/spp-ctl/spp_ctl.py b/src/spp-ctl/spp_ctl.py
+index ce1a2e2..93b87dd 100644
+--- a/src/spp-ctl/spp_ctl.py
++++ b/src/spp-ctl/spp_ctl.py
+@@ -118,13 +118,17 @@ class Controller(object):
+ 
+     @staticmethod
+     def _send_command(conn, command):
+-        conn.sendall(command.encode())
+-        data = conn.recv(MSG_SIZE)
+-        if data and len(data) == MSG_SIZE:
+-            # could not receive data at once. recieve remining data.
+-            data += self._continue_recv(conn)
+-        if data:
+-            data = data.decode()
++        data = None
++        try:
++            conn.sendall(command.encode())
++            data = conn.recv(MSG_SIZE)
++            if data and len(data) == MSG_SIZE:
++                # could not receive data at once. recieve remining data.
++                data += self._continue_recv(conn)
++            if data:
++                data = data.decode()
++        except Exception as e:
++            LOG.info("Error: {}".format(e))
+         return data
+ 
+     def _get_proc(self, conn):
+@@ -137,9 +141,26 @@ class Controller(object):
+             if sec_id is not None:
+                 return proc(sec_id, conn)
+ 
++    def _update_procs(self):
++        """Remove no existing processes from `self.procs`."""
++        removed_ids = []
++        for idx, proc in self.procs.items():
++            if proc.id != spp_proc.ID_PRIMARY:
++                try:
++                    # Check the process can be accessed. If not, go
++                    # to except block.
++                    proc.get_status()
++                except Exception as e:
++                    LOG.error(e)
++                    removed_ids.append(idx)
++        for idx in removed_ids:
++            LOG.info("Remove no existing {}:{}.".format(
++                self.procs[idx].type, self.procs[idx].id))
++            del self.procs[idx]
++
+     def get_processes(self):
+         procs = []
+-        LOG.info('get_proesses: {}'.format(self.procs.values()))
++        self._update_procs()
+         for proc in self.procs.values():
+             p = {"type": proc.type}
+             if proc.id != spp_proc.ID_PRIMARY:
+-- 
+2.17.1
+
+

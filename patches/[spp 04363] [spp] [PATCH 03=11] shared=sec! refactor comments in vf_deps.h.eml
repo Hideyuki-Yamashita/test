@@ -1,0 +1,453 @@
+Return-path: <fw-yama-hd@pomail01.silk.ntt-tx.co.jp>
+Received: from zssg-mailmd101.ddreams.local
+ (zssg-mailmd101.ddreams.local [10.160.123.96]) by zssg-mailms320.ddreams.local
+ (NTT DoCoMo Mail System) with ESMTP id <0PTL00UHT02K8Y40@NTTDoCoMo.co.jp> for
+ yamashita.hideyuki@ntt-tx.co.jp; Mon, 24 Jun 2019 11:25:32 +0900 (JST)
+Original-recipient: rfc822;yamashita.hideyuki@ntt-tx.co.jp
+Received: from smtp_saver-daemon.zssg-mailmd101.ddreams.local by
+ zssg-mailmd101.ddreams.local (dDREAMS) id <0PTL01D3602K1100@dDREAMS> for
+ yamashita.hideyuki@ntt-tx.co.jp (ORCPT yamashita.hideyuki@ntt-tx.co.jp); Mon,
+ 24 Jun 2019 11:25:32 +0900 (JST)
+Received: from zssg-mailmf105.ddreams.local
+ (zssg-mailmf900.ddreams.local [10.160.172.84]) by zssg-mailmd101.ddreams.local
+ (dDREAMS) with ESMTP id <0PTL016N002KW030@dDREAMS> for
+ yamashita.hideyuki@ntt-tx.co.jp (ORCPT yamashita.hideyuki@ntt-tx.co.jp); Mon,
+ 24 Jun 2019 11:25:32 +0900 (JST)
+Received: from zssg-mailmf105.ddreams.local (unknown [127.0.0.1])
+	by zssg-mailmf105.ddreams.local (Postfix) with ESMTP id B6E757E6036	for
+ <yamashita.hideyuki@ntt-tx.co.jp>; Mon, 24 Jun 2019 11:25:32 +0900 (JST)
+Received: from zssg-mailmf105.ddreams.local (unknown [127.0.0.1])
+	by IMSVA (Postfix) with ESMTP id B51CD8E6058	for
+ <yamashita.hideyuki@ntt-tx.co.jp>; Mon, 24 Jun 2019 11:25:32 +0900 (JST)
+Received: from localhost (unknown [127.0.0.1])	by IMSVA (Postfix)
+ with SMTP id A9C0A8E6060	for <yamashita.hideyuki@ntt-tx.co.jp>; Mon,
+ 24 Jun 2019 11:25:32 +0900 (JST)
+X-IMSS-HAND-OFF-DIRECTIVE: localhost:10026
+Received: from zssg-mailmf105.ddreams.local (unknown [127.0.0.1])
+	by IMSVA (Postfix) with ESMTP id D75638E605A	for
+ <yamashita.hideyuki@ntt-tx.co.jp>; Mon, 24 Jun 2019 11:25:31 +0900 (JST)
+Received: from pomail01.silk.ntt-tx.co.jp (unknown [10.160.183.139])
+	by zssg-mailmf105.ddreams.local (Postfix)
+ with ESMTPS	for <yamashita.hideyuki@ntt-tx.co.jp>; Mon,
+ 24 Jun 2019 11:25:31 +0900 (JST)
+Received: from pomail01.silk.ntt-tx.co.jp (localhost [127.0.0.1])
+	by pomail01.silk.ntt-tx.co.jp (unknown) with ESMTP id x5O2PVXf013519;	Mon,
+ 24 Jun 2019 11:25:31 +0900
+Received: (from yama-hd@localhost)	by pomail01.silk.ntt-tx.co.jp (unknown)
+ id x5O2PVr0013518;	Mon, 24 Jun 2019 11:25:31 +0900
+X-Authentication-warning: pomail01.silk.ntt-tx.co.jp: yama-hd set sender to
+ fw-yama-hd@pomail01.silk.ntt-tx.co.jp using -f
+Received: from imss04.silk.ntt-tx.co.jp
+ (imss04.silk.ntt-tx.co.jp [10.107.0.39])	by pomail01.silk.ntt-tx.co.jp
+ (unknown) with ESMTP id x5O2PVZO013508	for unknown; Mon,
+ 24 Jun 2019 11:25:31 +0900
+Received: from imss04.silk.ntt-tx.co.jp (localhost [127.0.0.1])
+ by imss04.silk.ntt-tx.co.jp (unknown) with ESMTP id x5O2PVEG005984 for
+ unknown; Mon, 24 Jun 2019 11:25:31 +0900
+Received: from ml01.silk.ntt-tx.co.jp (ml01.silk.ntt-tx.co.jp [10.107.0.230])
+ by imss04.silk.ntt-tx.co.jp (unknown) with ESMTP id x5O2PV2J005981; Mon,
+ 24 Jun 2019 11:25:31 +0900
+Received: from ml01.silk.ntt-tx.co.jp (localhost [127.0.0.1])
+	by ml01.silk.ntt-tx.co.jp (unknown) with ESMTP id x5O2PVS7016436;	Mon,
+ 24 Jun 2019 11:25:31 +0900
+Received: from imss02.silk.ntt-tx.co.jp
+ (imss02.silk.ntt-tx.co.jp [10.107.0.127])	by ml01.silk.ntt-tx.co.jp (unknown)
+ with ESMTP id x5O2PUtE016429	for unknown; Mon, 24 Jun 2019 11:25:30 +0900
+Received: from imss02.silk.ntt-tx.co.jp (localhost [127.0.0.1])
+ by imss02.silk.ntt-tx.co.jp (unknown) with ESMTP id x5O2PU71006524 for
+ unknown; Mon, 24 Jun 2019 11:25:30 +0900
+Received: from mail01.ics.ntt-tx.co.jp (mail01.ics.ntt-tx.co.jp [10.254.2.67])
+ by imss02.silk.ntt-tx.co.jp (unknown) with ESMTP id x5O2PUkH006518 for
+ unknown; Mon, 24 Jun 2019 11:25:30 +0900
+Received: from dpdk.org (dpdk.org [92.243.14.124])	by mail01.ics.ntt-tx.co.jp
+ (unknown) with SMTP id x5O2POMF003840	for unknown; Mon,
+ 24 Jun 2019 11:25:29 +0900
+Received: from [92.243.14.124] (localhost [127.0.0.1])	by dpdk.org (Postfix)
+ with ESMTP id A138B1BF6C;	Mon, 24 Jun 2019 04:25:23 +0200 (CEST)
+Received: from mail-pg1-f196.google.com
+ (mail-pg1-f196.google.com [209.85.215.196]) by dpdk.org (Postfix)
+ with ESMTP id E24DC1BF54 for <spp@dpdk.org>; Mon,
+ 24 Jun 2019 04:25:21 +0200 (CEST)
+Received: by mail-pg1-f196.google.com with SMTP id f25so6241689pgv.10 for
+ <spp@dpdk.org>; Sun, 23 Jun 2019 19:25:21 -0700 (PDT)
+Received: from localhost.localdomain ([192.47.164.146])
+ by smtp.gmail.com with ESMTPSA id a3sm9927461pje.3.2019.06.23.19.25.19
+ (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128); Sun,
+ 23 Jun 2019 19:25:20 -0700 (PDT)
+Date: Mon, 24 Jun 2019 11:24:56 +0900
+From: yasufum.o@gmail.com
+Subject: [spp 04363] [spp] [PATCH 03/11] shared/sec: refactor comments in
+ vf_deps.h
+Sender: spp <spp-bounces@dpdk.org>
+To: spp@dpdk.org, ferruh.yigit@intel.com, yasufum.o@gmail.com
+Message-id: <20190624022504.18752-4-yasufum.o@gmail.com>
+In-reply-to: <20190624022504.18752-1-yasufum.o@gmail.com>
+References: <20190624022504.18752-1-yasufum.o@gmail.com>
+X-ML-Name: unknown
+X-Mail-Count: 04363
+X-MLServer: unknown
+X-ML-Info: mailing list service
+X-Mailer: git-send-email 2.17.1
+Authentication-results: mail01.ics.ntt-tx.co.jp; spf=pass
+ smtp.mailfrom=spp-bounces@dpdk.org
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
+ h=from:to:subject:date:message-id:in-reply-to:references;
+ bh=f9+H2mJfWt7OwU5ZCAY4ufNlEEZAgII0QioDoAcluIc=;
+ b=sS1+UwrCt3hhuDuu4BpbfUy2Ec7a3U9kDlB9DcH5L46idSqvhCDh6wvcG1n1lq0Q9C
+ snCGRvudJ5jbiUbD3zg7o/D2Ql89bWn8pRHHY9FJlydx52uXRqYsvr7f5u4Zd7Ix7pTT
+ VicrxhwjaliMMLdwQeEWpp/ps6j6boKtO9lKvcu6yj0tvIua7NJyyiEE7HO1AKpRRFFc
+ t3GnvJNM4gTfiwgnqNaBpFFbfV0DvN0Un8WX4GIWAimuWXdMw2HMrBaVtw8rvmzhtOSz
+ ErgLnHXpXUiVJOvCTxWBM+86rWR7KNkUSx7+xcpngqpX4W+TODtoMbbiF+29iX/F/ky6 kRsg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=1e100.net;
+ s=20161025; h=x-gm-message-state:from:to:subject:date:message-id:in-reply-to
+ :references; bh=f9+H2mJfWt7OwU5ZCAY4ufNlEEZAgII0QioDoAcluIc=;
+ b=ttH1mhI73HtEFm2z5BOhfgfpBpzRYzAHFazCJa/5ozU0VHpAQEnrwFI1ZN4YHmf8ya
+ wB9/Z5QyF/hDPyGQUFu/SkNPhABeYHOXwupJMAVLi5hy1H+N8G3Gt8Kjy/0c9ZZVI7do
+ nqe/CQ4HU5P16ksYD6PHYPnDkEVtZd0s3bxfBqignhxQTCoZun7JE+VbOLZdQ0Iew+av
+ S2qM2C+7J2E+D6i0U4EiFzIMKg/P1dqu06/9mtXNKKyU7crFKralJgiVDv9oxjhicIiV
+ YLH8MkTgDFPYIp/s8qvJeNUTb6VZWbS710Q0kE6gthb6Z+0cEr3to2fmT8akCNlMbrNj g40Q==
+X-Gm-Message-State: APjAAAVvkjxL1Q7An5ZZ9Q1RG/qrh1RJr5APV8M2qI5J654D87Iy1BRc
+ q8ODmKaCClE1LJp6mLHpMM/TxRnv
+X-Google-Smtp-Source:
+ APXvYqyRRHBghlRdPWXM6OlBEruiqU2FMooJVAVvAB6+FnbzcEEhpRTtmuGNl7Rwb9/MEHxz0gzplQ==
+X-Received: by 2002:a63:3383:: with SMTP id z125mr16796947pgz.8.1561343120881;
+ Sun, 23 Jun 2019 19:25:20 -0700 (PDT)
+X-BeenThere: spp@dpdk.org
+X-Mailman-Version: 2.1.15
+List-Id: Soft Patch Panel <spp.dpdk.org>
+List-Unsubscribe: <https://mails.dpdk.org/options/spp>,
+ <mailto:spp-request@dpdk.org?subject=unsubscribe>
+List-Archive: <http://mails.dpdk.org/archives/spp/>
+List-Post: <mailto:spp@dpdk.org>
+List-Help: <mailto:spp-request@dpdk.org?subject=help>
+List-Subscribe: <https://mails.dpdk.org/listinfo/spp>,
+ <mailto:spp-request@dpdk.org?subject=subscribe>
+X-TM-AS-MML: No
+Precedence: bulk
+Lines: 322
+X-TM-AS-GCONF: 00
+X-MD-STAMP: ON
+
+From: Yasufumi Ogawa <yasufum.o@gmail.com>
+
+This update is to revise comments and format in `vf_deps.h` for
+refactoring.
+
+Signed-off-by: Yasufumi Ogawa <yasufum.o@gmail.com>
+---
+ src/shared/secondary/spp_worker_th/vf_deps.h | 81 +++++++-------------
+ src/vf/classifier_mac.c                      | 67 +++++++---------
+ 2 files changed, 53 insertions(+), 95 deletions(-)
+
+diff --git a/src/shared/secondary/spp_worker_th/vf_deps.h b/src/shared/secondary/spp_worker_th/vf_deps.h
+index c6016b8..3e8fc01 100644
+--- a/src/shared/secondary/spp_worker_th/vf_deps.h
++++ b/src/shared/secondary/spp_worker_th/vf_deps.h
+@@ -21,24 +21,15 @@ struct mac_classifier {
+ };
+ 
+ /* classified data (destination port, target packets, etc) */
++/* TODO(yasufum) rename `classified_data`. */
++/* TODO(yasufum) confirm what `iface_no_global` does mean? */
+ struct classified_data {
+-	/* interface type (see "enum port_type") */
+-	enum port_type  iface_type;
+-
+-	/* index of ports handled by classifier */
+-	int             iface_no;
+-
+-	/* id for interface generated by spp_vf */
+-	int             iface_no_global;
+-
+-	/* port id generated by DPDK */
+-	uint16_t        port;
+-
+-	/* the number of packets in pkts[] */
+-	uint16_t        num_pkt;
+-
+-	/* packet array to be classified */
+-	struct rte_mbuf *pkts[MAX_PKT_BURST];
++	enum port_type iface_type;
++	int iface_no;   /* Index of ports handled by classifier. */
++	int iface_no_global;  /* ID for interface generated by spp_vf */
++	uint16_t port;  /* Ethdev port ID. */
++	uint16_t nof_pkts;  /* Number of packets in pkts[]. */
++	struct rte_mbuf *pkts[MAX_PKT_BURST];  /* packets to be classified. */
+ };
+ 
+ /* classifier component information */
+@@ -71,24 +62,18 @@ free_mac_classification(struct mac_classifier *mac_cls)
+ /**
+  * classifier(mac address) update component info.
+  *
+- * @param component_info
+- *  The pointer to struct sppwk_comp_info.@n
+- *  The data for updating the internal data of classifier.
+- *
+- * @retval SPP_RET_OK succeeded.
+- * @retval SPP_RET_NG failed.
++ * @param comp_info Pointer to internal data of classifier.
++ * @retval SPP_RET_OK If succeeded.
++ * @retval SPP_RET_NG If failed.
+  */
+-int spp_classifier_mac_update(struct sppwk_comp_info *component_info);
++int spp_classifier_mac_update(struct sppwk_comp_info *comp_info);
+ 
+ /**
+- * Update forward info
+- *
+- * @param component
+- *  The pointer to struct sppwk_comp_info.@n
+- *  The data for updating the internal data of forwarder and merger.
++ * Update forwarder info.
+  *
+- * @retval SPP_RET_OK succeeded.
+- * @retval SPP_RET_NG failed.
++ * @param component Pointer to data of forwarder and merger.
++ * @retval SPP_RET_OK If succeeded.
++ * @retval SPP_RET_NG If failed.
+  */
+ int spp_forward_update(struct sppwk_comp_info *component);
+ 
+@@ -102,17 +87,11 @@ int spp_classifier_mac_iterate_table(
+ /**
+  * classifier get component status.
+  *
+- *
+- * @param lcore_id
+- *  The logical core ID for classifier.
+- * @param id
+- *  The unique component ID.
+- * @param params
+- *  The pointer to struct spp_iterate_core_params.@n
+- *  Detailed data of classifier status.
+- *
+- * @retval SPP_RET_OK succeeded.
+- * @retval SPP_RET_NG failed.
++ * @param[in] lcore_id Lcore ID for classifier.
++ * @param[in] id Unique component ID.
++ * @param[in,out] params Pointer to detailed data of classifier status.
++ * @retval SPP_RET_OK If succeeded.
++ * @retval SPP_RET_NG If failed.
+  */
+ int spp_classifier_get_component_status(unsigned int lcore_id, int id,
+ 		struct spp_iterate_core_params *params);
+@@ -120,19 +99,13 @@ int spp_classifier_get_component_status(unsigned int lcore_id, int id,
+ /**
+  * Merge/Forward get component status
+  *
+- * @param lcore_id
+- *  The logical core ID for forwarder and merger.
+- * @param id
+- *  The unique component ID.
+- * @param params
+- *  The pointer to struct spp_iterate_core_params.@n
+- *  Detailed data of forwarder/merger status.
+- *
+- * @retval SPP_RET_OK succeeded.
+- * @retval SPP_RET_NG failed.
++ * @param lcore_id Lcore ID for forwarder and merger.
++ * @param id Unique component ID.
++ * @param params Pointer detailed data of forwarder and merger status.
++ * @retval SPP_RET_OK If succeeded.
++ * @retval SPP_RET_NG If failed.
+  */
+-int spp_forward_get_component_status(
+-		unsigned int lcore_id, int id,
++int spp_forward_get_component_status(unsigned int lcore_id, int id,
+ 		struct spp_iterate_core_params *params);
+ 
+ #endif  /* _SPPWK_TH_VF_DEPS_H_ */
+diff --git a/src/vf/classifier_mac.c b/src/vf/classifier_mac.c
+index 5398d25..cd0c546 100644
+--- a/src/vf/classifier_mac.c
++++ b/src/vf/classifier_mac.c
+@@ -342,7 +342,7 @@ init_component_info(struct component_info *cmp_info,
+ 		clsd_data_rx->iface_no = 0;
+ 		clsd_data_rx->iface_no_global = 0;
+ 		clsd_data_rx->port = 0;
+-		clsd_data_rx->num_pkt = 0;
++		clsd_data_rx->nof_pkts = 0;
+ 	} else {
+ 		clsd_data_rx->iface_type =
+ 			component_info->rx_ports[0]->iface_type;
+@@ -351,7 +351,7 @@ init_component_info(struct component_info *cmp_info,
+ 			component_info->rx_ports[0]->iface_no;
+ 		clsd_data_rx->port =
+ 			component_info->rx_ports[0]->ethdev_port_id;
+-		clsd_data_rx->num_pkt = 0;
++		clsd_data_rx->nof_pkts = 0;
+ 	}
+ 
+ 	/* set tx */
+@@ -366,7 +366,7 @@ init_component_info(struct component_info *cmp_info,
+ 		clsd_data_tx[i].iface_no        = i;
+ 		clsd_data_tx[i].iface_no_global = tx_port->iface_no;
+ 		clsd_data_tx[i].port            = tx_port->ethdev_port_id;
+-		clsd_data_tx[i].num_pkt         = 0;
++		clsd_data_tx[i].nof_pkts = 0;
+ 
+ 		if (tx_port->cls_attrs.mac_addr == 0)
+ 			continue;
+@@ -457,19 +457,19 @@ transmit_packet(struct classified_data *clsd_data)
+ 
+ 	/* transmit packets */
+ 	n_tx = spp_eth_tx_burst(clsd_data->port, 0,
+-			clsd_data->pkts, clsd_data->num_pkt);
++			clsd_data->pkts, clsd_data->nof_pkts);
+ 
+ 	/* free cannot transmit packets */
+-	if (unlikely(n_tx != clsd_data->num_pkt)) {
+-		for (i = n_tx; i < clsd_data->num_pkt; i++)
++	if (unlikely(n_tx != clsd_data->nof_pkts)) {
++		for (i = n_tx; i < clsd_data->nof_pkts; i++)
+ 			rte_pktmbuf_free(clsd_data->pkts[i]);
+ 		RTE_LOG(DEBUG, SPP_CLASSIFIER_MAC,
+ 				"drop packets(tx). num=%hu, ethdev_port_id=%hu\n",
+-				(uint16_t)(clsd_data->num_pkt - n_tx),
++				(uint16_t)(clsd_data->nof_pkts - n_tx),
+ 				clsd_data->port);
+ 	}
+ 
+-	clsd_data->num_pkt = 0;
++	clsd_data->nof_pkts = 0;
+ }
+ 
+ /* transmit packet to one destination. */
+@@ -480,13 +480,13 @@ transmit_all_packet(struct component_info *cmp_info)
+ 	struct classified_data *clsd_data_tx = cmp_info->classified_data_tx;
+ 
+ 	for (i = 0; i < cmp_info->n_classified_data_tx; i++) {
+-		if (unlikely(clsd_data_tx[i].num_pkt != 0)) {
++		if (unlikely(clsd_data_tx[i].nof_pkts != 0)) {
+ 			RTE_LOG(INFO, SPP_CLASSIFIER_MAC,
+ 					"transmit all packets (drain). "
+ 					"index=%d, "
+-					"num_pkt=%hu\n",
++					"nof_pkts=%hu\n",
+ 					i,
+-					clsd_data_tx[i].num_pkt);
++					clsd_data_tx[i].nof_pkts);
+ 			transmit_packet(&clsd_data_tx[i]);
+ 		}
+ 	}
+@@ -496,19 +496,19 @@ transmit_all_packet(struct component_info *cmp_info)
+ static inline void
+ push_packet(struct rte_mbuf *pkt, struct classified_data *clsd_data)
+ {
+-	clsd_data->pkts[clsd_data->num_pkt++] = pkt;
++	clsd_data->pkts[clsd_data->nof_pkts++] = pkt;
+ 
+ 	/* transmit packet, if buffer is filled */
+-	if (unlikely(clsd_data->num_pkt == MAX_PKT_BURST)) {
++	if (unlikely(clsd_data->nof_pkts == MAX_PKT_BURST)) {
+ 		RTE_LOG(DEBUG, SPP_CLASSIFIER_MAC,
+ 				"transmit packets (buffer is filled). "
+ 				"iface_type=%d, iface_no={%d,%d}, "
+-				"tx_port=%hu, num_pkt=%hu\n",
++				"tx_port=%hu, nof_pkts=%hu\n",
+ 				clsd_data->iface_type,
+ 				clsd_data->iface_no_global,
+ 				clsd_data->iface_no,
+ 				clsd_data->port,
+-				clsd_data->num_pkt);
++				clsd_data->nof_pkts);
+ 		transmit_packet(clsd_data);
+ 	}
+ }
+@@ -679,14 +679,12 @@ change_classifier_index(struct management_info *mng_info, int id)
+ 									0, 0);
+ 
+ 		/* Transmit all packets for switching the using data. */
+-		transmit_all_packet(mng_info->cmp_infos +
+-				mng_info->ref_index);
++		transmit_all_packet(mng_info->cmp_infos + mng_info->ref_index);
+ 
+ 		RTE_LOG(DEBUG, SPP_CLASSIFIER_MAC,
+ 				"Core[%u] Change update index.\n", id);
+ 		mng_info->ref_index =
+-				(mng_info->upd_index + 1) %
+-				NOF_CLS_INFO;
++				(mng_info->upd_index + 1) % NOF_CLS_INFO;
+ 	}
+ }
+ 
+@@ -695,7 +693,6 @@ int
+ spp_classifier_mac_init(void)
+ {
+ 	memset(g_mng_infos, 0, sizeof(g_mng_infos));
+-
+ 	return 0;
+ }
+ 
+@@ -778,13 +775,13 @@ spp_classifier_mac_do(int id)
+ 	cur_tsc = rte_rdtsc();
+ 	if (unlikely(cur_tsc - prev_tsc > drain_tsc)) {
+ 		for (i = 0; i < cmp_info->n_classified_data_tx; i++) {
+-			if (likely(clsd_data_tx[i].num_pkt == 0))
++			if (likely(clsd_data_tx[i].nof_pkts == 0))
+ 				continue;
+ 
+ 			RTE_LOG(DEBUG, SPP_CLASSIFIER_MAC,
+ 					"transmit packets (drain). index=%d, "
+-					"num_pkt=%hu, interval=%lu\n",
+-					i, clsd_data_tx[i].num_pkt,
++					"nof_pkts=%hu, interval=%lu\n",
++					i, clsd_data_tx[i].nof_pkts,
+ 					cur_tsc - prev_tsc);
+ 				transmit_packet(&clsd_data_tx[i]);
+ 		}
+@@ -889,18 +886,13 @@ mac_classification_iterate_table(
+ 				SPP_DEFAULT_CLASSIFIED_SPEC_STR,
+ 				cmp_info, clsd_data);
+ 
+-		(*params->element_proc)(
+-				params,
+-				type,
+-				vid,
+-				SPP_DEFAULT_CLASSIFIED_SPEC_STR,
+-				&port);
++		(*params->element_proc)(params, type, vid,
++				SPP_DEFAULT_CLASSIFIED_SPEC_STR, &port);
+ 	}
+ 
+ 	next = 0;
+ 	while (1) {
+-		ret = rte_hash_iterate(mac_cls->cls_tbl,
+-				&key, &data, &next);
++		ret = rte_hash_iterate(mac_cls->cls_tbl, &key, &data, &next);
+ 
+ 		if (unlikely(ret < 0))
+ 			break;
+@@ -913,11 +905,7 @@ mac_classification_iterate_table(
+ 
+ 		LOG_ENT((long)data, vid, mac_addr_str, cmp_info, clsd_data);
+ 
+-		(*params->element_proc)(
+-				params,
+-				type,
+-				vid,
+-				mac_addr_str,
++		(*params->element_proc)(params, type, vid, mac_addr_str,
+ 				&port);
+ 	}
+ }
+@@ -947,12 +935,9 @@ spp_classifier_mac_iterate_table(
+ 			if (cmp_info->mac_classifications[n] == NULL)
+ 				continue;
+ 
+-			mac_classification_iterate_table(
+-					params,
+-					(uint16_t)n,
++			mac_classification_iterate_table(params, (uint16_t) n,
+ 					cmp_info->mac_classifications[n],
+-					cmp_info,
+-					clsd_data);
++					cmp_info, clsd_data);
+ 		}
+ 	}
+ 
+-- 
+2.17.1
+
+

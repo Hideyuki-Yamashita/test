@@ -1,0 +1,270 @@
+Return-path: <fw-yama-hd@pomail01.silk.ntt-tx.co.jp>
+Received: from zssg-mailmd106.ddreams.local
+ (zssg-mailmd106.ddreams.local [10.160.123.101])
+ by zssg-mailms320.ddreams.local (NTT DoCoMo Mail System)
+ with ESMTP id <0PTY00X363PS1U20@NTTDoCoMo.co.jp> for
+ yamashita.hideyuki@ntt-tx.co.jp; Mon, 01 Jul 2019 13:13:04 +0900 (JST)
+Original-recipient: rfc822;yamashita.hideyuki@ntt-tx.co.jp
+Received: from smtp_saver-daemon.zssg-mailmd106.ddreams.local by
+ zssg-mailmd106.ddreams.local (dDREAMS) id <0PTY00M1G3PS6B00@dDREAMS> for
+ yamashita.hideyuki@ntt-tx.co.jp (ORCPT yamashita.hideyuki@ntt-tx.co.jp); Mon,
+ 01 Jul 2019 13:13:04 +0900 (JST)
+Received: from zssg-mailmf105.ddreams.local
+ (zssg-mailmf900.ddreams.local [10.160.172.84]) by zssg-mailmd106.ddreams.local
+ (dDREAMS) with ESMTP id <0PTY001SJ3PSVYB0@dDREAMS> for
+ yamashita.hideyuki@ntt-tx.co.jp (ORCPT yamashita.hideyuki@ntt-tx.co.jp); Mon,
+ 01 Jul 2019 13:13:04 +0900 (JST)
+Received: from zssg-mailmf105.ddreams.local (unknown [127.0.0.1])
+	by zssg-mailmf105.ddreams.local (Postfix) with ESMTP id 1385E7E6034	for
+ <yamashita.hideyuki@ntt-tx.co.jp>; Mon,  1 Jul 2019 13:13:04 +0900 (JST)
+Received: from zssg-mailmf105.ddreams.local (unknown [127.0.0.1])
+	by IMSVA (Postfix) with ESMTP id 102618E6052	for
+ <yamashita.hideyuki@ntt-tx.co.jp>; Mon,  1 Jul 2019 13:13:04 +0900 (JST)
+Received: from localhost (unknown [127.0.0.1])	by IMSVA (Postfix)
+ with SMTP id 04CBB8E6058	for <yamashita.hideyuki@ntt-tx.co.jp>; Mon,
+ 1 Jul 2019 13:13:04 +0900 (JST)
+X-IMSS-HAND-OFF-DIRECTIVE: localhost:10026
+Received: from zssg-mailmf105.ddreams.local (unknown [127.0.0.1])
+	by IMSVA (Postfix) with ESMTP id 0B7628E6062	for
+ <yamashita.hideyuki@ntt-tx.co.jp>; Mon,  1 Jul 2019 13:13:03 +0900 (JST)
+Received: from pomail01.silk.ntt-tx.co.jp (unknown [10.160.183.139])
+	by zssg-mailmf105.ddreams.local (Postfix)
+ with ESMTPS	for <yamashita.hideyuki@ntt-tx.co.jp>; Mon,
+ 1 Jul 2019 13:13:03 +0900 (JST)
+Received: from pomail01.silk.ntt-tx.co.jp (localhost [127.0.0.1])
+	by pomail01.silk.ntt-tx.co.jp (unknown) with ESMTP id x614D2K3015872;	Mon,
+ 1 Jul 2019 13:13:02 +0900
+Received: (from yama-hd@localhost)	by pomail01.silk.ntt-tx.co.jp (unknown)
+ id x614D2AI015871;	Mon, 1 Jul 2019 13:13:02 +0900
+X-Authentication-warning: pomail01.silk.ntt-tx.co.jp: yama-hd set sender to
+ fw-yama-hd@pomail01.silk.ntt-tx.co.jp using -f
+Received: from imss04.silk.ntt-tx.co.jp
+ (imss04.silk.ntt-tx.co.jp [10.107.0.39])	by pomail01.silk.ntt-tx.co.jp
+ (unknown) with ESMTP id x614D2He015863	for unknown; Mon,
+ 1 Jul 2019 13:13:02 +0900
+Received: from imss04.silk.ntt-tx.co.jp (localhost [127.0.0.1])
+ by imss04.silk.ntt-tx.co.jp (unknown) with ESMTP id x614D2SK030411 for
+ unknown; Mon, 1 Jul 2019 13:13:02 +0900
+Received: from ml01.silk.ntt-tx.co.jp (ml01.silk.ntt-tx.co.jp [10.107.0.230])
+ by imss04.silk.ntt-tx.co.jp (unknown) with ESMTP id x614D2Tg030408; Mon,
+ 1 Jul 2019 13:13:02 +0900
+Received: from ml01.silk.ntt-tx.co.jp (localhost [127.0.0.1])
+	by ml01.silk.ntt-tx.co.jp (unknown) with ESMTP id x614D2J0019874;	Mon,
+ 1 Jul 2019 13:13:02 +0900
+Received: from imss02.silk.ntt-tx.co.jp
+ (imss02.silk.ntt-tx.co.jp [10.107.0.127])	by ml01.silk.ntt-tx.co.jp (unknown)
+ with ESMTP id x614D2QK019870	for unknown; Mon, 1 Jul 2019 13:13:02 +0900
+Received: from imss02.silk.ntt-tx.co.jp (localhost [127.0.0.1])
+ by imss02.silk.ntt-tx.co.jp (unknown) with ESMTP id x614D1Nb025708 for
+ unknown; Mon, 1 Jul 2019 13:13:01 +0900
+Received: from mail01.ics.ntt-tx.co.jp (mail01.ics.ntt-tx.co.jp [10.254.2.67])
+ by imss02.silk.ntt-tx.co.jp (unknown) with ESMTP id x614D1V1025701 for
+ unknown; Mon, 1 Jul 2019 13:13:01 +0900
+Received: from dpdk.org (dpdk.org [92.243.14.124])	by mail01.ics.ntt-tx.co.jp
+ (unknown) with SMTP id x614Ctkm007114	for unknown; Mon,
+ 1 Jul 2019 13:13:00 +0900
+Received: from [92.243.14.124] (localhost [127.0.0.1])	by dpdk.org (Postfix)
+ with ESMTP id BFA0B3195;	Mon,  1 Jul 2019 06:12:54 +0200 (CEST)
+Received: from mail-pl1-f194.google.com
+ (mail-pl1-f194.google.com [209.85.214.194]) by dpdk.org (Postfix)
+ with ESMTP id 8F2FC3195 for <spp@dpdk.org>; Mon,
+ 1 Jul 2019 06:12:52 +0200 (CEST)
+Received: by mail-pl1-f194.google.com with SMTP id t7so6592621plr.11 for
+ <spp@dpdk.org>; Sun, 30 Jun 2019 21:12:52 -0700 (PDT)
+Received: from localhost.localdomain ([192.47.164.146])
+ by smtp.gmail.com with ESMTPSA id cx22sm9305604pjb.25.2019.06.30.21.12.50
+ (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128); Sun,
+ 30 Jun 2019 21:12:51 -0700 (PDT)
+Date: Mon, 01 Jul 2019 13:12:43 +0900
+From: yasufum.o@gmail.com
+Subject: [spp 04467] [spp] [PATCH 1/2] recipes: update old rcps for spp_nfv
+Sender: spp <spp-bounces@dpdk.org>
+To: spp@dpdk.org, ferruh.yigit@intel.com, yasufum.o@gmail.com
+Message-id: <20190701041244.34176-2-yasufum.o@gmail.com>
+In-reply-to: <20190701041244.34176-1-yasufum.o@gmail.com>
+References: <20190701041244.34176-1-yasufum.o@gmail.com>
+X-ML-Name: unknown
+X-Mail-Count: 04467
+X-MLServer: unknown
+X-ML-Info: mailing list service
+X-Mailer: git-send-email 2.17.1
+Authentication-results: mail01.ics.ntt-tx.co.jp; spf=pass
+ smtp.mailfrom=spp-bounces@dpdk.org
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
+ h=from:to:subject:date:message-id:in-reply-to:references;
+ bh=GgwGclDqA3/5lPuzs8zOT0cku7lzQaCPW6yo2toRyaM=;
+ b=RmRHzJG27jevhfH6xkIn0GfA2clwKlzpOcwg/FqRMyhlk1QNfIVL+rBQoqHnaJcqFj
+ GfHQ8QMI//BjjfFlmUa61XXK0Hs3s80PQVyjRD45j7LIElTSqrCRgu7WrF+pxMu7qGgi
+ R7McOf90+1DIgCBYsp7/NyB1KPgh2QqFn7KhG0Iku6Wle1bMCaC76FmMdd5eCVM1KDBG
+ EomaV1tIuJfg/sweKXMYZCGq49Wd/FFw6W+f7m2o9jWuiiZwnfgxBgFi11Xvdd6/8JKG
+ GQdNUhzOj8oySJNbvpkovy5jJ87jio+W7KVxjC/5w2oW7BSktcbTfczcoCxnYpTsfuIt IHvA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=1e100.net;
+ s=20161025; h=x-gm-message-state:from:to:subject:date:message-id:in-reply-to
+ :references; bh=GgwGclDqA3/5lPuzs8zOT0cku7lzQaCPW6yo2toRyaM=;
+ b=WnTs4xI6HrEhlLkxfAub89IDrBXqCqdSWtS7w/n5vSKiQ+iNsMmvJW+h4QJ3L8eeN1
+ lS6QFPOHylt5mdARfUlqiEmVTEmGalahi3+xLuD5pdBSHJaQUTNQZ12Xqo68Sr0dZUD0
+ gmGPdlZ7iXYx2gdJRBbB3d3FM6wJ1EuB7+7fXydbK6BvIMOVZAo4/81WlcY9Nm+GWhpS
+ 09zSypoi6BXGk7Kag4mhjRZkQOc6i5lLs3emq3MMQIWc7+dhheZs+Tg/NpBoAzJxPKr7
+ ZxBrKbl3hBjCv2Mjn8to7QqVeE1U8Z8rry9J0XbXtzGmManbjxWWpv1HxdXBdbLkyNXi GimQ==
+X-Gm-Message-State: APjAAAU4eIUSXdKuHUoR9851Bect9gsYUEbzP3lq4iByGv7ZriTln4ab
+ X5BxcrAjFwrIwej2yQ3Km7NS/ows
+X-Google-Smtp-Source:
+ APXvYqxwClh6ESgLobKDwxY8jK3Xw4BHhjGeFc4p/Flv8As6nti8ubS+7d3GJZwUj2bQzlCWwSFF2A==
+X-Received: by 2002:a17:902:24a2:: with SMTP id
+ w31mr27196461pla.324.1561954371771; Sun, 30 Jun 2019 21:12:51 -0700 (PDT)
+X-BeenThere: spp@dpdk.org
+X-Mailman-Version: 2.1.15
+List-Id: Soft Patch Panel <spp.dpdk.org>
+List-Unsubscribe: <https://mails.dpdk.org/options/spp>,
+ <mailto:spp-request@dpdk.org?subject=unsubscribe>
+List-Archive: <http://mails.dpdk.org/archives/spp/>
+List-Post: <mailto:spp@dpdk.org>
+List-Help: <mailto:spp-request@dpdk.org?subject=help>
+List-Subscribe: <https://mails.dpdk.org/listinfo/spp>,
+ <mailto:spp-request@dpdk.org?subject=subscribe>
+X-TM-AS-MML: No
+Precedence: bulk
+Lines: 139
+X-TM-AS-GCONF: 00
+X-MD-STAMP: ON
+
+From: Yasufumi Ogawa <yasufum.o@gmail.com>
+
+Recipe scripts for spp_nfv are not maintained and failed to run because
+command syntax is too old. This patch is to update them to the latest
+syntax as described in documents.
+
+Signed-off-by: Yasufumi Ogawa <yasufum.o@gmail.com>
+---
+ recipes/usecases/spp_nfv/dual_bidir.rcps      | 10 ++++-----
+ recipes/usecases/spp_nfv/dual_loopback.rcps   |  9 ++++----
+ recipes/usecases/spp_nfv/ring_dual_bidir.rcps | 22 +++++++++----------
+ .../usecases/spp_nfv/ring_dual_unidir.rcps    | 16 ++++++--------
+ recipes/usecases/spp_nfv/single_bidir.rcps    |  8 +++----
+ recipes/usecases/spp_nfv/single_loopback.rcps |  4 ++++
+ recipes/usecases/spp_nfv/vhost_unidir.rcps    | 11 +++++-----
+ 7 files changed, 40 insertions(+), 40 deletions(-)
+ create mode 100644 recipes/usecases/spp_nfv/single_loopback.rcps
+
+diff --git a/recipes/usecases/spp_nfv/dual_bidir.rcps b/recipes/usecases/spp_nfv/dual_bidir.rcps
+index f3d186b..ae60beb 100644
+--- a/recipes/usecases/spp_nfv/dual_bidir.rcps
++++ b/recipes/usecases/spp_nfv/dual_bidir.rcps
+@@ -1,5 +1,5 @@
+-# Patch port 0 and 1 as bi-directioonal
+-sec 1;patch phy:0 phy:1
+-sec 2;patch phy:1 phy:0
+-sec 1;forward
+-sec 2;forward
++# Configure Two spp_nfv as L2fwd
++nfv 1; patch phy:0 phy:1
++nfv 2; patch phy:1 phy:0
++nfv 1; forward
++nfv 2; forward
+diff --git a/recipes/usecases/spp_nfv/dual_loopback.rcps b/recipes/usecases/spp_nfv/dual_loopback.rcps
+index 8d3350d..5b00de7 100644
+--- a/recipes/usecases/spp_nfv/dual_loopback.rcps
++++ b/recipes/usecases/spp_nfv/dual_loopback.rcps
+@@ -1,4 +1,5 @@
+-sec 1;patch phy:0 phy:0
+-sec 2;patch phy:1 phy:1
+-sec 1;forward
+-sec 2;forward
++#Configure two spp_nfv for Loopback
++nfv 1; patch phy:0 phy:0
++nfv 2; patch phy:1 phy:1
++nfv 1; forward
++nfv 2; forward
+diff --git a/recipes/usecases/spp_nfv/ring_dual_bidir.rcps b/recipes/usecases/spp_nfv/ring_dual_bidir.rcps
+index 167c90f..2fff7b3 100644
+--- a/recipes/usecases/spp_nfv/ring_dual_bidir.rcps
++++ b/recipes/usecases/spp_nfv/ring_dual_bidir.rcps
+@@ -1,14 +1,12 @@
+ # Bi-directional with two rings
++nfv 1; add ring:0
++nfv 1; add ring:1
++nfv 2; add ring:0
++nfv 2; add ring:1
+ 
+-sec 1;add ring 0
+-sec 1;add ring 1
+-sec 2;add ring 0
+-sec 2;add ring 1
+-
+-sec 1;patch phy:0 ring:0
+-sec 1;patch ring:1 phy:0
+-sec 2;patch phy:1 ring:1
+-sec 2;patch ring:0 phy:1
+-
+-sec 1;forward
+-sec 2;forward
++nfv 1; patch phy:0 ring:0
++nfv 1; patch ring:1 phy:0
++nfv 2; patch phy:1 ring:1
++nfv 2; patch ring:0 phy:1
++nfv 1; forward
++nfv 2; forward
+diff --git a/recipes/usecases/spp_nfv/ring_dual_unidir.rcps b/recipes/usecases/spp_nfv/ring_dual_unidir.rcps
+index eb6377e..a9fd883 100644
+--- a/recipes/usecases/spp_nfv/ring_dual_unidir.rcps
++++ b/recipes/usecases/spp_nfv/ring_dual_unidir.rcps
+@@ -1,9 +1,7 @@
+-# Uni-directional with ring
+-sec 1;add ring 0
+-sec 2;add ring 0
+-
+-sec 1;patch phy:0 ring:0
+-sec 2;patch ring:0 phy:1
+-
+-sec 1;forward
+-sec 2;forward
++# Uni-Directional L2fwd with ring
++nfv 1; add ring:0
++nfv 2; add ring:0
++nfv 1; patch phy:0 ring:0
++nfv 2; patch ring:0 phy:1
++nfv 1; forward
++nfv 2; forward
+diff --git a/recipes/usecases/spp_nfv/single_bidir.rcps b/recipes/usecases/spp_nfv/single_bidir.rcps
+index e56e29e..22905a7 100644
+--- a/recipes/usecases/spp_nfv/single_bidir.rcps
++++ b/recipes/usecases/spp_nfv/single_bidir.rcps
+@@ -1,4 +1,4 @@
+-# Patch ports as bi-directional
+-sec 1;patch phy:0 phy:1
+-sec 1;patch phy:1 phy:0
+-sec 1;forward
++# Configure spp_nfv as L2fwd
++nfv 1; patch phy:0 phy:1
++nfv 1; patch phy:1 phy:0
++nfv 1; forward
+diff --git a/recipes/usecases/spp_nfv/single_loopback.rcps b/recipes/usecases/spp_nfv/single_loopback.rcps
+new file mode 100644
+index 0000000..7c70b23
+--- /dev/null
++++ b/recipes/usecases/spp_nfv/single_loopback.rcps
+@@ -0,0 +1,4 @@
++# Configure spp_nfv for Loopback
++nfv 1; patch phy:0 phy:0
++nfv 1; patch phy:1 phy:1
++nfv 1; forward
+diff --git a/recipes/usecases/spp_nfv/vhost_unidir.rcps b/recipes/usecases/spp_nfv/vhost_unidir.rcps
+index d835719..eaca4e9 100644
+--- a/recipes/usecases/spp_nfv/vhost_unidir.rcps
++++ b/recipes/usecases/spp_nfv/vhost_unidir.rcps
+@@ -1,6 +1,5 @@
+-# Uni-directional with vhost
+-sec 1;patch phy:0 vhost:0
+-sec 1;patch vhost:0 phy:1
+-sec 2;patch phy:0 phy:0
+-sec 1;forward
+-sec 2;forward
++# Single spp_nfv with Vhost PMD
++nfv 1; add vhost:0
++nfv 1; patch phy:0 vhost:0
++nfv 1; patch vhost:1 phy:1
++nfv 1; forward
+-- 
+2.17.1
+
+

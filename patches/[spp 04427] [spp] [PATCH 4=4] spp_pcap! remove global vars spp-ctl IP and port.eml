@@ -1,0 +1,307 @@
+Return-path: <fw-yama-hd@pomail01.silk.ntt-tx.co.jp>
+Received: from zssg-mailmd105.ddreams.local
+ (zssg-mailmd105.ddreams.local [10.160.123.100])
+ by zssg-mailms320.ddreams.local (NTT DoCoMo Mail System)
+ with ESMTP id <0PTL001OGN6AR160@NTTDoCoMo.co.jp> for
+ yamashita.hideyuki@ntt-tx.co.jp; Mon, 24 Jun 2019 19:44:34 +0900 (JST)
+Original-recipient: rfc822;yamashita.hideyuki@ntt-tx.co.jp
+Received: from smtp_saver-daemon.zssg-mailmd105.ddreams.local by
+ zssg-mailmd105.ddreams.local (dDREAMS) id <0PTL00D3GN6AWO00@dDREAMS> for
+ yamashita.hideyuki@ntt-tx.co.jp (ORCPT yamashita.hideyuki@ntt-tx.co.jp); Mon,
+ 24 Jun 2019 19:44:34 +0900 (JST)
+Received: from zssg-mailmf104.ddreams.local
+ (zssg-mailmf900.ddreams.local [10.160.172.84]) by zssg-mailmd105.ddreams.local
+ (dDREAMS) with ESMTP id <0PTL01C16N6A6T60@dDREAMS> for
+ yamashita.hideyuki@ntt-tx.co.jp (ORCPT yamashita.hideyuki@ntt-tx.co.jp); Mon,
+ 24 Jun 2019 19:44:34 +0900 (JST)
+Received: from zssg-mailmf104.ddreams.local (unknown [127.0.0.1])
+	by zssg-mailmf104.ddreams.local (Postfix) with ESMTP id CA2F27E603A	for
+ <yamashita.hideyuki@ntt-tx.co.jp>; Mon, 24 Jun 2019 19:44:34 +0900 (JST)
+Received: from zssg-mailmf104.ddreams.local (unknown [127.0.0.1])
+	by IMSVA (Postfix) with ESMTP id C89E98E605A	for
+ <yamashita.hideyuki@ntt-tx.co.jp>; Mon, 24 Jun 2019 19:44:34 +0900 (JST)
+Received: from localhost (unknown [127.0.0.1])	by IMSVA (Postfix)
+ with SMTP id C73288E6062	for <yamashita.hideyuki@ntt-tx.co.jp>; Mon,
+ 24 Jun 2019 19:44:34 +0900 (JST)
+X-IMSS-HAND-OFF-DIRECTIVE: localhost:10026
+Received: from zssg-mailmf104.ddreams.local (unknown [127.0.0.1])
+	by IMSVA (Postfix) with ESMTP id D36D18E6056	for
+ <yamashita.hideyuki@ntt-tx.co.jp>; Mon, 24 Jun 2019 19:44:33 +0900 (JST)
+Received: from pomail01.silk.ntt-tx.co.jp (unknown [10.160.183.139])
+	by zssg-mailmf104.ddreams.local (Postfix)
+ with ESMTPS	for <yamashita.hideyuki@ntt-tx.co.jp>; Mon,
+ 24 Jun 2019 19:44:33 +0900 (JST)
+Received: from pomail01.silk.ntt-tx.co.jp (localhost [127.0.0.1])
+	by pomail01.silk.ntt-tx.co.jp (unknown) with ESMTP id x5OAiXld032554;	Mon,
+ 24 Jun 2019 19:44:33 +0900
+Received: (from yama-hd@localhost)	by pomail01.silk.ntt-tx.co.jp (unknown)
+ id x5OAiXoF032553;	Mon, 24 Jun 2019 19:44:33 +0900
+X-Authentication-warning: pomail01.silk.ntt-tx.co.jp: yama-hd set sender to
+ fw-yama-hd@pomail01.silk.ntt-tx.co.jp using -f
+Received: from imss04.silk.ntt-tx.co.jp
+ (imss04.silk.ntt-tx.co.jp [10.107.0.39])	by pomail01.silk.ntt-tx.co.jp
+ (unknown) with ESMTP id x5OAiXHn032550	for unknown; Mon,
+ 24 Jun 2019 19:44:33 +0900
+Received: from imss04.silk.ntt-tx.co.jp (localhost [127.0.0.1])
+ by imss04.silk.ntt-tx.co.jp (unknown) with ESMTP id x5OAiXV7007551 for
+ unknown; Mon, 24 Jun 2019 19:44:33 +0900
+Received: from ml01.silk.ntt-tx.co.jp (ml01.silk.ntt-tx.co.jp [10.107.0.230])
+ by imss04.silk.ntt-tx.co.jp (unknown) with ESMTP id x5OAiXvS007548; Mon,
+ 24 Jun 2019 19:44:33 +0900
+Received: from ml01.silk.ntt-tx.co.jp (localhost [127.0.0.1])
+	by ml01.silk.ntt-tx.co.jp (unknown) with ESMTP id x5OAiWf4008805;	Mon,
+ 24 Jun 2019 19:44:32 +0900
+Received: from imss02.silk.ntt-tx.co.jp
+ (imss02.silk.ntt-tx.co.jp [10.107.0.127])	by ml01.silk.ntt-tx.co.jp (unknown)
+ with ESMTP id x5OAiWc9008801	for unknown; Mon, 24 Jun 2019 19:44:32 +0900
+Received: from imss02.silk.ntt-tx.co.jp (localhost [127.0.0.1])
+ by imss02.silk.ntt-tx.co.jp (unknown) with ESMTP id x5OAiWAZ023041 for
+ unknown; Mon, 24 Jun 2019 19:44:32 +0900
+Received: from mail01.ics.ntt-tx.co.jp (mail01.ics.ntt-tx.co.jp [10.254.2.67])
+ by imss02.silk.ntt-tx.co.jp (unknown) with ESMTP id x5OAiWBD023035 for
+ unknown; Mon, 24 Jun 2019 19:44:32 +0900
+Received: from dpdk.org (dpdk.org [92.243.14.124])	by mail01.ics.ntt-tx.co.jp
+ (unknown) with SMTP id x5OAiP1j020700	for unknown; Mon,
+ 24 Jun 2019 19:44:31 +0900
+Received: from [92.243.14.124] (localhost [127.0.0.1])	by dpdk.org (Postfix)
+ with ESMTP id 6FFCD1B9B1;	Mon, 24 Jun 2019 12:44:25 +0200 (CEST)
+Received: from mail-pl1-f196.google.com
+ (mail-pl1-f196.google.com [209.85.214.196]) by dpdk.org (Postfix)
+ with ESMTP id 788AF1BF21 for <spp@dpdk.org>; Mon,
+ 24 Jun 2019 12:44:23 +0200 (CEST)
+Received: by mail-pl1-f196.google.com with SMTP id m7so6634933pls.8 for
+ <spp@dpdk.org>; Mon, 24 Jun 2019 03:44:23 -0700 (PDT)
+Received: from localhost.localdomain ([192.47.164.146])
+ by smtp.gmail.com with ESMTPSA id r9sm10093635pgv.24.2019.06.24.03.44.21
+ (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128); Mon,
+ 24 Jun 2019 03:44:22 -0700 (PDT)
+Date: Mon, 24 Jun 2019 19:44:11 +0900
+From: yasufum.o@gmail.com
+Subject: [spp 04427] [spp] [PATCH 4/4] spp_pcap: remove global vars spp-ctl IP
+ and port
+Sender: spp <spp-bounces@dpdk.org>
+To: spp@dpdk.org, ferruh.yigit@intel.com, yasufum.o@gmail.com
+Message-id: <20190624104411.24977-5-yasufum.o@gmail.com>
+In-reply-to: <20190624104411.24977-1-yasufum.o@gmail.com>
+References: <20190624104411.24977-1-yasufum.o@gmail.com>
+X-ML-Name: unknown
+X-Mail-Count: 04427
+X-MLServer: unknown
+X-ML-Info: mailing list service
+X-Mailer: git-send-email 2.17.1
+Authentication-results: mail01.ics.ntt-tx.co.jp; spf=pass
+ smtp.mailfrom=spp-bounces@dpdk.org
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
+ h=from:to:subject:date:message-id:in-reply-to:references;
+ bh=8uIjhu4qMVgVXKtAYriJ3zmEYvRMPpDQ+MbHk4R64CM=;
+ b=NBNJ9eh6x2Gvc/po4kUGT0hxnaAOof+FiCy/J9YNk4pYdx3Ii/9bqUjyi8OasSDw5U
+ kst+yjjHiqhNYmWTaApWf6JO8yzmcSccmgJVw1FM75fwbWp6c8F2CodxkTn62JSlD/UU
+ kR45jYxof2Zwgp6u0itgx/S+GQl5cBbBWU37g3O00aZgQQEpk1cnRFcf8JLjOcxIfeWa
+ puBkl/aJBiIIw74QxnH1EvTdQJwUa7XFI8iYP3gUHtphAX2dXX+veJGURAGPu+++9UdW
+ bNw0+wczYi0m2dqD8q3dg6RcewNzW7mzZBq3DwSC3fwi0P4TNaMiOnbeapMdIu0YT2U3 0DVQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=1e100.net;
+ s=20161025; h=x-gm-message-state:from:to:subject:date:message-id:in-reply-to
+ :references; bh=8uIjhu4qMVgVXKtAYriJ3zmEYvRMPpDQ+MbHk4R64CM=;
+ b=TiI4QK20iI5av4lBopR0xi4sosyyoBiFuJH3xRxonU69+mv3X56HGTwT3CCqM/1PJh
+ cGn2q9Y4N1ONBqw763ST4MChl4JmwtGki+88ukzzOty/ug2+tdH6kqPMkiSTmJS/hwID
+ cmypFPfUHjX51ArrHjoyXIjSTWr5XIa1aam50uj8TOQOfYm7uERyjmbI3fgTC+2nbHo5
+ SswABmEuXVLhFcksjllMdR1v1fG/VTeDs2jTmg8evykZRv6rSb4ge3Ek7B0NEZnwx6/O
+ Clc0j0i7OeFfaTME56Mqf7J4V3LKecX3W8l3UoLuUQpmw6UBBx8YWPvNH13vNmj8cmqX P3/g==
+X-Gm-Message-State: APjAAAVtIq+PL909cTNxXI78LMLz08esGG5OoHOF2HujAZcXslY2pJ3r
+ 3IewvA9KQpV8V5c1UGw2s1qLpss9
+X-Google-Smtp-Source:
+ APXvYqzJHJHajw3FQEkuhMEzQr4TBsfoBOggqMCkBMjGQl4Xf7NF1ffoVhMGYKqcyujzI5t9TDqtBw==
+X-Received: by 2002:a17:902:934a:: with SMTP id
+ g10mr138086623plp.18.1561373062653; Mon, 24 Jun 2019 03:44:22 -0700 (PDT)
+X-BeenThere: spp@dpdk.org
+X-Mailman-Version: 2.1.15
+List-Id: Soft Patch Panel <spp.dpdk.org>
+List-Unsubscribe: <https://mails.dpdk.org/options/spp>,
+ <mailto:spp-request@dpdk.org?subject=unsubscribe>
+List-Archive: <http://mails.dpdk.org/archives/spp/>
+List-Post: <mailto:spp@dpdk.org>
+List-Help: <mailto:spp-request@dpdk.org?subject=help>
+List-Subscribe: <https://mails.dpdk.org/listinfo/spp>,
+ <mailto:spp-request@dpdk.org?subject=subscribe>
+X-TM-AS-MML: No
+Precedence: bulk
+Lines: 175
+X-TM-AS-GCONF: 00
+X-MD-STAMP: ON
+
+From: Yasufumi Ogawa <yasufum.o@gmail.com>
+
+This update is to remove global `startup_params` from spp_pcap, and
+change to use getter and setter for IP addr and port of spp-ctl.
+
+Signed-off-by: Yasufumi Ogawa <yasufum.o@gmail.com>
+---
+ src/pcap/spp_pcap.c | 78 +++++++++++++++++++--------------------------
+ 1 file changed, 32 insertions(+), 46 deletions(-)
+
+diff --git a/src/pcap/spp_pcap.c b/src/pcap/spp_pcap.c
+index d4896eb..57cc0bb 100644
+--- a/src/pcap/spp_pcap.c
++++ b/src/pcap/spp_pcap.c
+@@ -17,6 +17,7 @@
+ #include "spp_pcap.h"
+ #include "cmd_runner.h"
+ #include "cmd_parser.h"
++#include "shared/secondary/utils.h"
+ #include "shared/secondary/spp_worker_th/spp_port.h"
+ 
+ /* Declare global variables */
+@@ -198,32 +199,6 @@ client_id_toi(const char *client_id_str, int *client_id)
+ 	return SPPWK_RET_OK;
+ }
+ 
+-/* Parse options for server IP and port */
+-static int
+-parse_server_ip(const char *server_str, char *server_ip, int *server_port)
+-{
+-	const char delim[2] = ":";
+-	unsigned int pos = 0;
+-	int port = 0;
+-	char *endptr = NULL;
+-
+-	pos = strcspn(server_str, delim);
+-	if (pos >= strlen(server_str))
+-		return SPPWK_RET_NG;
+-
+-	port = strtol(&server_str[pos+1], &endptr, 0);
+-	if (unlikely(&server_str[pos+1] == endptr) || unlikely(*endptr != '\0'))
+-		return SPPWK_RET_NG;
+-
+-	memcpy(server_ip, server_str, pos);
+-	server_ip[pos] = '\0';
+-	*server_port = port;
+-	RTE_LOG(DEBUG, SPP_PCAP, "Set server IP   = %s\n", server_ip);
+-	RTE_LOG(DEBUG, SPP_PCAP, "Set server port = %d\n", *server_port);
+-	return SPPWK_RET_OK;
+-}
+-
+-
+ /* Parse `--fsize` option and get the value */
+ static int
+ parse_fsize(const char *fsize_str, uint64_t *fsize)
+@@ -286,17 +261,23 @@ parse_captured_port(const char *port_str, enum port_type *iface_type,
+ 
+ /* Parse options for client app */
+ static int
+-parse_args(int argc, char *argv[])
++parse_app_args(int argc, char *argv[])
+ {
++	char *ctl_ip;  /* IP address of spp_ctl. */
++	int ctl_port;  /* Port num to connect spp_ctl. */
++	char cap_port_str[PORT_STR_SIZE];  /* Captured port. */
+ 	int cnt;
++	int ret;
++	int option_index, opt;
++
+ 	int proc_flg = 0;
+ 	int server_flg = 0;
+ 	int port_flg = 0;
+-	int option_index, opt;
++
+ 	const int argcopt = argc;
+ 	char *argvopt[argcopt];
+ 	const char *progname = argv[0];
+-	char port_str[PORT_STR_SIZE];
++
+ 	static struct option lgopts[] = {
+ 		{ "client-id", required_argument, NULL,
+ 			SPP_LONGOPT_RETVAL_CLIENT_ID },
+@@ -351,7 +332,7 @@ parse_args(int argc, char *argv[])
+ 			}
+ 			break;
+ 		case 'c':  /* captured port */
+-			strcpy(port_str, optarg);
++			strcpy(cap_port_str, optarg);
+ 			if (parse_captured_port(optarg,
+ 					&g_pcap_option.port_cap.iface_type,
+ 					&g_pcap_option.port_cap.iface_no) !=
+@@ -362,9 +343,10 @@ parse_args(int argc, char *argv[])
+ 			port_flg = 1;
+ 			break;
+ 		case 's':  /* server addr */
+-			if (parse_server_ip(optarg, g_startup_param.server_ip,
+-					&g_startup_param.server_port) !=
+-								SPPWK_RET_OK) {
++			ret = parse_server(&ctl_ip, &ctl_port, optarg);
++			set_spp_ctl_ip(ctl_ip);
++			set_spp_ctl_port(ctl_port);
++			if (ret != SPPWK_RET_OK) {
+ 				usage(progname);
+ 				return SPPWK_RET_NG;
+ 			}
+@@ -383,12 +365,10 @@ parse_args(int argc, char *argv[])
+ 	}
+ 
+ 	RTE_LOG(INFO, SPP_PCAP,
+-			"App opts: '--client-id %d', '-s %s:%d', "
+-			"'-c %s', '--out-dir %s', '--fsize %ld'\n",
+-			g_startup_param.client_id,
+-			g_startup_param.server_ip,
+-			g_startup_param.server_port,
+-			port_str,
++			"Parsed app args ('--client-id %d', '-s %s:%d', "
++			"'-c %s', '--out-dir %s', '--fsize %ld')\n",
++			g_startup_param.client_id, ctl_ip, ctl_port,
++			cap_port_str,
+ 			g_pcap_option.compress_file_path,
+ 			g_pcap_option.fsize_limit);
+ 	return SPPWK_RET_OK;
+@@ -946,6 +926,12 @@ int
+ main(int argc, char *argv[])
+ {
+ 	int ret = SPPWK_RET_NG;
++	char ctl_ip[IPADDR_LEN] = { 0 };
++	int ctl_port;
++	int ret_cmd_init;
++	unsigned int lcore_id;
++	unsigned int thread_no;
++
+ #ifdef SPP_DEMONIZE
+ 	/* Daemonize process */
+ 	int ret_daemon = daemon(0, 0);
+@@ -969,7 +955,7 @@ main(int argc, char *argv[])
+ 		argv += ret_eal;
+ 
+ 		/* Parse spp_pcap specific parameters */
+-		int ret_parse = parse_args(argc, argv);
++		int ret_parse = parse_app_args(argc, argv);
+ 		if (unlikely(ret_parse != 0))
+ 			break;
+ 
+@@ -995,10 +981,10 @@ main(int argc, char *argv[])
+ 		spp_port_ability_init();
+ 
+ 		/* Setup connection for accepting commands from controller */
+-		int ret_command_init = spp_command_proc_init(
+-				g_startup_param.server_ip,
+-				g_startup_param.server_port);
+-		if (unlikely(ret_command_init != SPPWK_RET_OK))
++		get_spp_ctl_ip(ctl_ip);
++		ctl_port = get_spp_ctl_port();
++		ret_cmd_init = spp_command_proc_init(ctl_ip, ctl_port);
++		if (unlikely(ret_cmd_init != SPPWK_RET_OK))
+ 			break;
+ 
+ 		/* capture port setup */
+@@ -1060,10 +1046,10 @@ main(int argc, char *argv[])
+ 				g_pcap_option.cap_ring->flags);
+ 
+ 		/* Start worker threads of recive or write */
+-		unsigned int lcore_id = 0;
+-		unsigned int thread_no = 0;
+ 		g_pcap_thread_info.thread_cnt = 0;
+ 		g_pcap_thread_info.start_up_cnt = 0;
++		lcore_id = 0;
++		thread_no = 0;
+ 		RTE_LCORE_FOREACH_SLAVE(lcore_id) {
+ 			g_pcap_thread_info.thread_cnt += 1;
+ 			g_pcap_info[lcore_id].thread_no = thread_no++;
+-- 
+2.17.1
+
+

@@ -1,0 +1,208 @@
+Return-path: <fw-yama-hd@pomail01.silk.ntt-tx.co.jp>
+Received: from zssg-mailmd104.ddreams.local
+ (zssg-mailmd104.ddreams.local [10.160.123.99]) by zssg-mailms320.ddreams.local
+ (NTT DoCoMo Mail System) with ESMTP id <0PTY00XM73NN1U10@NTTDoCoMo.co.jp> for
+ yamashita.hideyuki@ntt-tx.co.jp; Mon, 01 Jul 2019 13:11:47 +0900 (JST)
+Original-recipient: rfc822;yamashita.hideyuki@ntt-tx.co.jp
+Received: from smtp_saver-daemon.zssg-mailmd104.ddreams.local by
+ zssg-mailmd104.ddreams.local (dDREAMS) id <0PTY00X3W3NN3300@dDREAMS> for
+ yamashita.hideyuki@ntt-tx.co.jp (ORCPT yamashita.hideyuki@ntt-tx.co.jp); Mon,
+ 01 Jul 2019 13:11:47 +0900 (JST)
+Received: from zssg-mailmf102.ddreams.local
+ (zssg-mailmf900.ddreams.local [10.160.172.84]) by zssg-mailmd104.ddreams.local
+ (dDREAMS) with ESMTP id <0PTY00A2A3NNM8D0@dDREAMS> for
+ yamashita.hideyuki@ntt-tx.co.jp (ORCPT yamashita.hideyuki@ntt-tx.co.jp); Mon,
+ 01 Jul 2019 13:11:47 +0900 (JST)
+Received: from zssg-mailmf102.ddreams.local (unknown [127.0.0.1])
+	by zssg-mailmf102.ddreams.local (Postfix) with ESMTP id 362A97E603A	for
+ <yamashita.hideyuki@ntt-tx.co.jp>; Mon,  1 Jul 2019 13:11:47 +0900 (JST)
+Received: from zssg-mailmf102.ddreams.local (unknown [127.0.0.1])
+	by IMSVA (Postfix) with ESMTP id 34EC78E6056	for
+ <yamashita.hideyuki@ntt-tx.co.jp>; Mon,  1 Jul 2019 13:11:47 +0900 (JST)
+Received: from localhost (unknown [127.0.0.1])	by IMSVA (Postfix)
+ with SMTP id 33A0D8E6042	for <yamashita.hideyuki@ntt-tx.co.jp>; Mon,
+ 1 Jul 2019 13:11:47 +0900 (JST)
+X-IMSS-HAND-OFF-DIRECTIVE: localhost:10026
+Received: from zssg-mailmf102.ddreams.local (unknown [127.0.0.1])
+	by IMSVA (Postfix) with ESMTP id 3ED828E6052	for
+ <yamashita.hideyuki@ntt-tx.co.jp>; Mon,  1 Jul 2019 13:11:46 +0900 (JST)
+Received: from pomail01.silk.ntt-tx.co.jp (unknown [10.160.183.139])
+	by zssg-mailmf102.ddreams.local (Postfix)
+ with ESMTPS	for <yamashita.hideyuki@ntt-tx.co.jp>; Mon,
+ 1 Jul 2019 13:11:46 +0900 (JST)
+Received: from pomail01.silk.ntt-tx.co.jp (localhost [127.0.0.1])
+	by pomail01.silk.ntt-tx.co.jp (unknown) with ESMTP id x614BkoR015524;	Mon,
+ 1 Jul 2019 13:11:46 +0900
+Received: (from yama-hd@localhost)	by pomail01.silk.ntt-tx.co.jp (unknown)
+ id x614Bkti015523;	Mon, 1 Jul 2019 13:11:46 +0900
+X-Authentication-warning: pomail01.silk.ntt-tx.co.jp: yama-hd set sender to
+ fw-yama-hd@pomail01.silk.ntt-tx.co.jp using -f
+Received: from imss04.silk.ntt-tx.co.jp
+ (imss04.silk.ntt-tx.co.jp [10.107.0.39])	by pomail01.silk.ntt-tx.co.jp
+ (unknown) with ESMTP id x614Bjxn015520	for unknown; Mon,
+ 1 Jul 2019 13:11:45 +0900
+Received: from imss04.silk.ntt-tx.co.jp (localhost [127.0.0.1])
+ by imss04.silk.ntt-tx.co.jp (unknown) with ESMTP id x614Bj7r029722 for
+ unknown; Mon, 1 Jul 2019 13:11:45 +0900
+Received: from ml01.silk.ntt-tx.co.jp (ml01.silk.ntt-tx.co.jp [10.107.0.230])
+ by imss04.silk.ntt-tx.co.jp (unknown) with ESMTP id x614BjBQ029717; Mon,
+ 1 Jul 2019 13:11:45 +0900
+Received: from ml01.silk.ntt-tx.co.jp (localhost [127.0.0.1])
+	by ml01.silk.ntt-tx.co.jp (unknown) with ESMTP id x614BjVi019671;	Mon,
+ 1 Jul 2019 13:11:45 +0900
+Received: from imss02.silk.ntt-tx.co.jp
+ (imss02.silk.ntt-tx.co.jp [10.107.0.127])	by ml01.silk.ntt-tx.co.jp (unknown)
+ with ESMTP id x614Bj1e019667	for unknown; Mon, 1 Jul 2019 13:11:45 +0900
+Received: from imss02.silk.ntt-tx.co.jp (localhost [127.0.0.1])
+ by imss02.silk.ntt-tx.co.jp (unknown) with ESMTP id x614BjAf025120 for
+ unknown; Mon, 1 Jul 2019 13:11:45 +0900
+Received: from mail01.ics.ntt-tx.co.jp (mail01.ics.ntt-tx.co.jp [10.254.2.67])
+ by imss02.silk.ntt-tx.co.jp (unknown) with ESMTP id x614Bi25025117 for
+ unknown; Mon, 1 Jul 2019 13:11:44 +0900
+Received: from dpdk.org (dpdk.org [92.243.14.124])	by mail01.ics.ntt-tx.co.jp
+ (unknown) with SMTP id x614BcT8006759	for unknown; Mon,
+ 1 Jul 2019 13:11:44 +0900
+Received: from [92.243.14.124] (localhost [127.0.0.1])	by dpdk.org (Postfix)
+ with ESMTP id C7E205680;	Mon,  1 Jul 2019 06:11:37 +0200 (CEST)
+Received: from mail-pg1-f194.google.com
+ (mail-pg1-f194.google.com [209.85.215.194]) by dpdk.org (Postfix)
+ with ESMTP id C860D559A for <spp@dpdk.org>; Mon,
+ 1 Jul 2019 06:11:36 +0200 (CEST)
+Received: by mail-pg1-f194.google.com with SMTP id s27so5347032pgl.2 for
+ <spp@dpdk.org>; Sun, 30 Jun 2019 21:11:36 -0700 (PDT)
+Received: from localhost.localdomain ([192.47.164.146])
+ by smtp.gmail.com with ESMTPSA id o128sm12190907pfb.42.2019.06.30.21.11.34
+ (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128); Sun,
+ 30 Jun 2019 21:11:35 -0700 (PDT)
+Date: Mon, 01 Jul 2019 13:11:25 +0900
+From: yasufum.o@gmail.com
+Subject: [spp 04457] [spp] [PATCH 3/4] spp_mirror: change to use burst funcs
+ with VLAN
+Sender: spp <spp-bounces@dpdk.org>
+To: spp@dpdk.org, ferruh.yigit@intel.com, yasufum.o@gmail.com
+Message-id: <20190701041126.33947-4-yasufum.o@gmail.com>
+In-reply-to: <20190701041126.33947-1-yasufum.o@gmail.com>
+References: <20190701041126.33947-1-yasufum.o@gmail.com>
+X-ML-Name: unknown
+X-Mail-Count: 04457
+X-MLServer: unknown
+X-ML-Info: mailing list service
+X-Mailer: git-send-email 2.17.1
+Authentication-results: mail01.ics.ntt-tx.co.jp; spf=pass
+ smtp.mailfrom=spp-bounces@dpdk.org
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
+ h=from:to:subject:date:message-id:in-reply-to:references;
+ bh=G0bQ0cB81IQO54+z47nCzAwZSAKyYE4tyIKmUzRWk5k=;
+ b=f30baBCh0KFEbVC7AS/4ea9PvH8Kff3xJ5SofFRegyGJbitvkbgJ6+Uf9ozIM/As1l
+ GrLZyODW6NwwSwxYDE97Oh0Q8MQ1SAmayGCxvB7tKfkAw2aG7OcMs13YdaFhoERtdkxx
+ jokgndRkchDsqYvf81GpzuRyiUeV5XXq//pXxleEMtJDRYJUuS1Gsf0jbuhDW/1+TZqP
+ rt9KYeOOQwt10sPeDZN0KYy3iqEPqGh5i+hRjkYVrl5S+YtJGaU0brNhzWtiHn0pka/v
+ NaxXdeKQeM72RH4QJIJPbwxUFPFveoq/ajihlK5swwvGa7DdvG7SpGPdyKULZu+s6TtX D9aA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=1e100.net;
+ s=20161025; h=x-gm-message-state:from:to:subject:date:message-id:in-reply-to
+ :references; bh=G0bQ0cB81IQO54+z47nCzAwZSAKyYE4tyIKmUzRWk5k=;
+ b=dfz9vtSQESz+cojE+lQzlpH2Tc8Hjgs1Ep7BYU/lArcq++AkGxNAL6o0znO+txGM2v
+ DzR/xugPZF+DF+IlLXnTZB2CF0UTcblAKuQwM81ZegXJiVwo8h/SwESnlR6M5h4HYShT
+ hmJ3lc8/G40ogxh2UCHZhWuoGIWgX8kG9YCGgLdpxIGfy50QuNn43WKfvgOFa6cbhjeY
+ QKZwG2HdgzI76vjh+mHxdaxXmjp5HR3Wedj/NZVRjFs72+uSChMdr6kPbLMROYf5Ml08
+ qstckfwy9FJ1Bd/0yNpEwQbBTkvxEZkPeDgrlcSsGlb2sWZavPkCfpIfqkz0+hoA1djn 1G0Q==
+X-Gm-Message-State: APjAAAVJsSpzrAuu9Hj8+QQKZbgKkeUgHD/kaef4b1a7Y1BAz7kcoUp+
+ 1CMDXIiKa+pgZu2sCnPlRX4cVT/0
+X-Google-Smtp-Source:
+ APXvYqxWDjFDG3/de88lCS2s6MSTmDlWpfvfNhm+bmzCCEkpP8ei18rDktvSiMsQ+I5e1NbGmiw/XQ==
+X-Received: by 2002:a17:90a:37c8:: with SMTP id
+ v66mr29138918pjb.33.1561954295977; Sun, 30 Jun 2019 21:11:35 -0700 (PDT)
+X-BeenThere: spp@dpdk.org
+X-Mailman-Version: 2.1.15
+List-Id: Soft Patch Panel <spp.dpdk.org>
+List-Unsubscribe: <https://mails.dpdk.org/options/spp>,
+ <mailto:spp-request@dpdk.org?subject=unsubscribe>
+List-Archive: <http://mails.dpdk.org/archives/spp/>
+List-Post: <mailto:spp@dpdk.org>
+List-Help: <mailto:spp-request@dpdk.org?subject=help>
+List-Subscribe: <https://mails.dpdk.org/listinfo/spp>,
+ <mailto:spp-request@dpdk.org?subject=subscribe>
+X-TM-AS-MML: No
+Precedence: bulk
+Lines: 77
+X-TM-AS-GCONF: 00
+X-MD-STAMP: ON
+
+From: Yasufumi Ogawa <yasufum.o@gmail.com>
+
+This update is to change to use RX and TX burst functions which were
+added in previous patch.
+
+Signed-off-by: Yasufumi Ogawa <yasufum.o@gmail.com>
+---
+ src/mirror/Makefile         | 1 +
+ src/mirror/mir_cmd_runner.c | 1 +
+ src/mirror/spp_mirror.c     | 7 ++++---
+ 3 files changed, 6 insertions(+), 3 deletions(-)
+
+diff --git a/src/mirror/Makefile b/src/mirror/Makefile
+index f584fd1..69ff91e 100644
+--- a/src/mirror/Makefile
++++ b/src/mirror/Makefile
+@@ -22,6 +22,7 @@ SRCS-y += $(SPP_SEC_DIR)/json_helper.c
+ SRCS-y += $(SPP_SEC_DIR)/string_buffer.c
+ SRCS-y += $(SPP_WKT_DIR)/cmd_utils.c
+ SRCS-y += $(SPP_WKT_DIR)/spp_port.c
++SRCS-y += $(SPP_WKT_DIR)/port_capability.c
+ SRCS-y += $(SPP_WKT_DIR)/conn_spp_ctl.c
+ SRCS-y += $(SPP_WKT_DIR)/cmd_parser.c
+ SRCS-y += $(SPP_WKT_DIR)/cmd_runner.c
+diff --git a/src/mirror/mir_cmd_runner.c b/src/mirror/mir_cmd_runner.c
+index 2f63f77..7c9a240 100644
+--- a/src/mirror/mir_cmd_runner.c
++++ b/src/mirror/mir_cmd_runner.c
+@@ -9,6 +9,7 @@
+ #include "shared/secondary/spp_worker_th/cmd_parser.h"
+ #include "shared/secondary/spp_worker_th/cmd_runner.h"
+ #include "shared/secondary/spp_worker_th/cmd_res_formatter.h"
++#include "shared/secondary/spp_worker_th/port_capability.h"
+ #include "shared/secondary/spp_worker_th/mirror_deps.h"
+ 
+ #define RTE_LOGTYPE_MIR_CMD_RUNNER RTE_LOGTYPE_USER1
+diff --git a/src/mirror/spp_mirror.c b/src/mirror/spp_mirror.c
+index 695f3ac..4c2b90c 100644
+--- a/src/mirror/spp_mirror.c
++++ b/src/mirror/spp_mirror.c
+@@ -19,6 +19,7 @@
+ #include "shared/secondary/spp_worker_th/cmd_parser.h"
+ #include "shared/secondary/spp_worker_th/cmd_utils.h"
+ #include "shared/secondary/spp_worker_th/spp_port.h"
++#include "shared/secondary/spp_worker_th/port_capability.h"
+ 
+ /* Declare global variables */
+ #define RTE_LOGTYPE_MIRROR RTE_LOGTYPE_USER1
+@@ -323,7 +324,7 @@ mirror_proc(int id)
+ 
+ 	rx = &path->ports[0].rx;
+ 	/* Receive packets */
+-	nb_rx = spp_eth_rx_burst(rx->ethdev_port_id, 0, bufs, MAX_PKT_BURST);
++	nb_rx = sppwk_eth_rx_burst(rx->ethdev_port_id, 0, bufs, MAX_PKT_BURST);
+ 	if (unlikely(nb_rx == 0))
+ 		return SPP_RET_OK;
+ 
+@@ -378,14 +379,14 @@ mirror_proc(int id)
+ #endif /* SPP_MIRROR_SHALLOWCOPY */
+ 		}
+ 		if (cnt != 0)
+-			nb_tx2 = spp_eth_tx_burst(
++			nb_tx2 = sppwk_eth_tx_burst(
+ 					tx->ethdev_port_id, 0, copybufs, cnt);
+ 	}
+ 
+ 	/* orginal */
+ 	tx = &path->ports[0].tx;
+ 	if (tx->ethdev_port_id >= 0)
+-		nb_tx1 = spp_eth_tx_burst(tx->ethdev_port_id, 0, bufs, nb_rx);
++		nb_tx1 = sppwk_eth_tx_burst(tx->ethdev_port_id, 0, bufs, nb_rx);
+ 	nb_tx = nb_tx1;
+ 
+ 	if (nb_tx1 != nb_tx2)
+-- 
+2.17.1
+
+

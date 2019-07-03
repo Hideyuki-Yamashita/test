@@ -1,0 +1,458 @@
+Return-path: <fw-yama-hd@pomail01.silk.ntt-tx.co.jp>
+Received: from zssg-mailmd105.ddreams.local
+ (zssg-mailmd105.ddreams.local [10.160.123.100])
+ by zssg-mailms320.ddreams.local (NTT DoCoMo Mail System)
+ with ESMTP id <0PTL0019EN1RR160@NTTDoCoMo.co.jp> for
+ yamashita.hideyuki@ntt-tx.co.jp; Mon, 24 Jun 2019 19:41:51 +0900 (JST)
+Original-recipient: rfc822;yamashita.hideyuki@ntt-tx.co.jp
+Received: from smtp_saver-daemon.zssg-mailmd105.ddreams.local by
+ zssg-mailmd105.ddreams.local (dDREAMS) id <0PTL00B04N1RU200@dDREAMS> for
+ yamashita.hideyuki@ntt-tx.co.jp (ORCPT yamashita.hideyuki@ntt-tx.co.jp); Mon,
+ 24 Jun 2019 19:41:51 +0900 (JST)
+Received: from zssg-mailmf102.ddreams.local
+ (zssg-mailmf900.ddreams.local [10.160.172.84]) by zssg-mailmd105.ddreams.local
+ (dDREAMS) with ESMTP id <0PTL01C4XN1R6T50@dDREAMS> for
+ yamashita.hideyuki@ntt-tx.co.jp (ORCPT yamashita.hideyuki@ntt-tx.co.jp); Mon,
+ 24 Jun 2019 19:41:51 +0900 (JST)
+Received: from zssg-mailmf102.ddreams.local (unknown [127.0.0.1])
+	by zssg-mailmf102.ddreams.local (Postfix) with ESMTP id 255BD7E6032	for
+ <yamashita.hideyuki@ntt-tx.co.jp>; Mon, 24 Jun 2019 19:41:51 +0900 (JST)
+Received: from zssg-mailmf102.ddreams.local (unknown [127.0.0.1])
+	by IMSVA (Postfix) with ESMTP id 242738E6052	for
+ <yamashita.hideyuki@ntt-tx.co.jp>; Mon, 24 Jun 2019 19:41:51 +0900 (JST)
+Received: from localhost (unknown [127.0.0.1])	by IMSVA (Postfix)
+ with SMTP id 22FFD8E6042	for <yamashita.hideyuki@ntt-tx.co.jp>; Mon,
+ 24 Jun 2019 19:41:51 +0900 (JST)
+X-IMSS-HAND-OFF-DIRECTIVE: localhost:10026
+Received: from zssg-mailmf102.ddreams.local (unknown [127.0.0.1])
+	by IMSVA (Postfix) with ESMTP id E4B1A8E6042	for
+ <yamashita.hideyuki@ntt-tx.co.jp>; Mon, 24 Jun 2019 19:41:49 +0900 (JST)
+Received: from pomail01.silk.ntt-tx.co.jp (unknown [10.160.183.139])
+	by zssg-mailmf102.ddreams.local (Postfix)
+ with ESMTPS	for <yamashita.hideyuki@ntt-tx.co.jp>; Mon,
+ 24 Jun 2019 19:41:49 +0900 (JST)
+Received: from pomail01.silk.ntt-tx.co.jp (localhost [127.0.0.1])
+	by pomail01.silk.ntt-tx.co.jp (unknown) with ESMTP id x5OAfnHN032214;	Mon,
+ 24 Jun 2019 19:41:49 +0900
+Received: (from yama-hd@localhost)	by pomail01.silk.ntt-tx.co.jp (unknown)
+ id x5OAfnP1032213;	Mon, 24 Jun 2019 19:41:49 +0900
+X-Authentication-warning: pomail01.silk.ntt-tx.co.jp: yama-hd set sender to
+ fw-yama-hd@pomail01.silk.ntt-tx.co.jp using -f
+Received: from imss04.silk.ntt-tx.co.jp
+ (imss04.silk.ntt-tx.co.jp [10.107.0.39])	by pomail01.silk.ntt-tx.co.jp
+ (unknown) with ESMTP id x5OAfnU6032209	for unknown; Mon,
+ 24 Jun 2019 19:41:49 +0900
+Received: from imss04.silk.ntt-tx.co.jp (localhost [127.0.0.1])
+ by imss04.silk.ntt-tx.co.jp (unknown) with ESMTP id x5OAfnXF006958 for
+ unknown; Mon, 24 Jun 2019 19:41:49 +0900
+Received: from ml01.silk.ntt-tx.co.jp (ml01.silk.ntt-tx.co.jp [10.107.0.230])
+ by imss04.silk.ntt-tx.co.jp (unknown) with ESMTP id x5OAfnet006955; Mon,
+ 24 Jun 2019 19:41:49 +0900
+Received: from ml01.silk.ntt-tx.co.jp (localhost [127.0.0.1])
+	by ml01.silk.ntt-tx.co.jp (unknown) with ESMTP id x5OAfnxA008571;	Mon,
+ 24 Jun 2019 19:41:49 +0900
+Received: from imss02.silk.ntt-tx.co.jp
+ (imss02.silk.ntt-tx.co.jp [10.107.0.127])	by ml01.silk.ntt-tx.co.jp (unknown)
+ with ESMTP id x5OAfmlf008567	for unknown; Mon, 24 Jun 2019 19:41:48 +0900
+Received: from imss02.silk.ntt-tx.co.jp (localhost [127.0.0.1])
+ by imss02.silk.ntt-tx.co.jp (unknown) with ESMTP id x5OAfmn7022453 for
+ unknown; Mon, 24 Jun 2019 19:41:48 +0900
+Received: from mail01.ics.ntt-tx.co.jp (mail01.ics.ntt-tx.co.jp [10.254.2.67])
+ by imss02.silk.ntt-tx.co.jp (unknown) with ESMTP id x5OAfmgf022447 for
+ unknown; Mon, 24 Jun 2019 19:41:48 +0900
+Received: from dpdk.org (dpdk.org [92.243.14.124])	by mail01.ics.ntt-tx.co.jp
+ (unknown) with SMTP id x5OAfg2v020409	for unknown; Mon,
+ 24 Jun 2019 19:41:47 +0900
+Received: from [92.243.14.124] (localhost [127.0.0.1])	by dpdk.org (Postfix)
+ with ESMTP id A20AE1BF0C;	Mon, 24 Jun 2019 12:41:41 +0200 (CEST)
+Received: from mail-pg1-f195.google.com
+ (mail-pg1-f195.google.com [209.85.215.195]) by dpdk.org (Postfix)
+ with ESMTP id F35D51BED0 for <spp@dpdk.org>; Mon,
+ 24 Jun 2019 12:41:40 +0200 (CEST)
+Received: by mail-pg1-f195.google.com with SMTP id s27so6908132pgl.2 for
+ <spp@dpdk.org>; Mon, 24 Jun 2019 03:41:40 -0700 (PDT)
+Received: from localhost.localdomain ([192.47.164.146])
+ by smtp.gmail.com with ESMTPSA id r15sm12984713pfh.121.2019.06.24.03.41.38
+ (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128); Mon,
+ 24 Jun 2019 03:41:39 -0700 (PDT)
+Date: Mon, 24 Jun 2019 19:41:35 +0900
+From: yasufum.o@gmail.com
+Subject: [spp 04420] [spp] [PATCH] shared/sec: remove client ID from global
+ variable
+Sender: spp <spp-bounces@dpdk.org>
+To: spp@dpdk.org, ferruh.yigit@intel.com, yasufum.o@gmail.com
+Message-id: <20190624104135.24816-1-yasufum.o@gmail.com>
+X-ML-Name: unknown
+X-Mail-Count: 04420
+X-MLServer: unknown
+X-ML-Info: mailing list service
+X-Mailer: git-send-email 2.17.1
+Authentication-results: mail01.ics.ntt-tx.co.jp; spf=pass
+ smtp.mailfrom=spp-bounces@dpdk.org
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
+ h=from:to:subject:date:message-id;
+ bh=Ay8WiWjcnG2Zb6M6kFxQleW3z5wtdR3aF+0rEMybDXU=;
+ b=dxy9j37iegZaMIQzixfm5iOMppRI3W7wmRYfkaAHdhOE8GScJp+65wb51Rg9+uaSbB
+ QqzhWGbPEw/Z66qK7EXmRCZ3k9Bic9hNFLLgIJWqVzQWfm/7f00oGECTkMVDTDCpnRIT
+ mZq82YYCCeJZv2BJTlL3Bcr9/GPJS/e+1ECJ0LJpMInp/kzSP43VOT/V/S+9v2ZMWoL+
+ Ty7LJa1r6rbxF/b7Kb+lj/Remc3wICz9/T1b7z0a+o/mJVmBd/p/ncCuYPJ/RtKEWX/8
+ q2u1CtpuBgUbiOpegbUW9o/RHQql4dBn8aMr3v5yqGGbHlRh6DMg3CRsWJOTJKHHY6pS rTVw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=1e100.net;
+ s=20161025; h=x-gm-message-state:from:to:subject:date:message-id;
+ bh=Ay8WiWjcnG2Zb6M6kFxQleW3z5wtdR3aF+0rEMybDXU=;
+ b=GQZYHvnVkyx2lKR7PSupj4I5tqlVCPKPXyC2xHEDGbfBStneFWCnOsJhhzC7IoKtGD
+ 45vdfIYRObB1dd7h0N8indesuOqeI90XOSrf8Q3K/Xoq0rmId79Cr1LjpQV4sUSXIksg
+ ihOMb2s39TJgm7/oV3fksEeet1P6E3ZsShrY/65VBOf5wYyPBKTDPLsyI1zthu8yEtps
+ 7LJ24YubdrXdl0W1hRkIX8JOR7psQwy9s3m+8L5nIx7D7iOuyjDyQOYxdTDVvrJ8yL/u
+ S3wCifmZX+POnYTZVz0AafMvFS754yxHBEzlBtsl8JI7/bLoTdR2OPKUh3ECywZsPd+R uyOA==
+X-Gm-Message-State: APjAAAVqy1yzhDsBHwDi1Et3GJ4aLIkzPHMHj/nRmOm+YAA5ZO9beIiJ
+ 1gWbcF7NIzc4t2p2ONgH2VU+peRp
+X-Google-Smtp-Source:
+ APXvYqzxCDi6zKuvq/YN+IM/a2p1qv9MfEkO+m8BJzpVe5D/qfBEAN159cWmXr7JpVDTPvqIyFT87w==
+X-Received: by 2002:a63:9d43:: with SMTP id i64mr29977335pgd.404.1561372899925;
+ Mon, 24 Jun 2019 03:41:39 -0700 (PDT)
+X-BeenThere: spp@dpdk.org
+X-Mailman-Version: 2.1.15
+List-Id: Soft Patch Panel <spp.dpdk.org>
+List-Unsubscribe: <https://mails.dpdk.org/options/spp>,
+ <mailto:spp-request@dpdk.org?subject=unsubscribe>
+List-Archive: <http://mails.dpdk.org/archives/spp/>
+List-Post: <mailto:spp@dpdk.org>
+List-Help: <mailto:spp-request@dpdk.org?subject=help>
+List-Subscribe: <https://mails.dpdk.org/listinfo/spp>,
+ <mailto:spp-request@dpdk.org?subject=subscribe>
+X-TM-AS-MML: No
+Precedence: bulk
+Lines: 328
+X-TM-AS-GCONF: 00
+X-MD-STAMP: ON
+
+From: Yasufumi Ogawa <yasufum.o@gmail.com>
+
+Client ID of secondary process is defined as a member of global
+variable `g_startup_params` is defined in shared library, but no need to
+be global. This update is to remove client ID from the global var and
+add functions to get and set the client ID.
+
+Signed-off-by: Yasufumi Ogawa <yasufum.o@gmail.com>
+---
+ src/mirror/spp_mirror.c                       | 35 +++--------------
+ .../spp_worker_th/cmd_res_formatter.c         | 12 +-----
+ .../secondary/spp_worker_th/cmd_utils.h       |  1 -
+ .../secondary/spp_worker_th/mirror_deps.h     |  2 +
+ src/shared/secondary/spp_worker_th/vf_deps.h  |  2 +
+ src/shared/secondary/utils.c                  | 39 +++++++++++++++++--
+ src/shared/secondary/utils.h                  | 12 ++++++
+ src/vf/spp_vf.c                               | 36 ++++-------------
+ 8 files changed, 66 insertions(+), 73 deletions(-)
+
+diff --git a/src/mirror/spp_mirror.c b/src/mirror/spp_mirror.c
+index aad74a9..19d79ef 100644
+--- a/src/mirror/spp_mirror.c
++++ b/src/mirror/spp_mirror.c
+@@ -101,30 +101,6 @@ usage(const char *progname)
+ 			, progname);
+ }
+ 
+-/**
+- * Convert string of given client id to integer
+- *
+- * If succeeded, client id of integer is assigned to client_id and
+- * return SPP_RET_OK. Or return -SPP_RET_NG if failed.
+- */
+-static int
+-parse_app_client_id(const char *client_id_str, int *client_id)
+-{
+-	int id = 0;
+-	char *endptr = NULL;
+-
+-	id = strtol(client_id_str, &endptr, 0);
+-	if (unlikely(client_id_str == endptr) || unlikely(*endptr != '\0'))
+-		return SPP_RET_NG;
+-
+-	if (id >= RTE_MAX_LCORE)
+-		return SPP_RET_NG;
+-
+-	*client_id = id;
+-	RTE_LOG(DEBUG, MIRROR, "Set client id = %d\n", *client_id);
+-	return SPP_RET_OK;
+-}
+-
+ /* Parse options for server IP and port */
+ static int
+ parse_app_server(const char *server_str, char *server_ip, int *server_port)
+@@ -155,6 +131,7 @@ static int
+ parse_app_args(int argc, char *argv[])
+ {
+ 	int cnt;
++	int cli_id;
+ 	int proc_flg = 0;
+ 	int server_flg = 0;
+ 	int option_index, opt;
+@@ -186,12 +163,12 @@ parse_app_args(int argc, char *argv[])
+ 			&option_index)) != EOF) {
+ 		switch (opt) {
+ 		case SPP_LONGOPT_RETVAL_CLIENT_ID:
+-			if (parse_app_client_id(optarg,
+-						&g_startup_param.client_id) !=
+-						SPP_RET_OK) {
++			if (parse_client_id(&cli_id, optarg) != SPP_RET_OK) {
+ 				usage(progname);
+ 				return SPP_RET_NG;
+ 			}
++			set_client_id(cli_id);
++
+ 			proc_flg = 1;
+ 			break;
+ 		case SPP_LONGOPT_RETVAL_VHOST_CLIENT:
+@@ -221,7 +198,7 @@ parse_app_args(int argc, char *argv[])
+ 	RTE_LOG(INFO, MIRROR,
+ 			"app opts (client_id=%d,type=%d,"
+ 			"server=%s:%d,vhost_client=%d,)\n",
+-			g_startup_param.client_id,
++			cli_id,
+ 			g_startup_param.wk_proc_type,
+ 			g_startup_param.server_ip,
+ 			g_startup_param.server_port,
+@@ -555,7 +532,7 @@ main(int argc, char *argv[])
+ 		}
+ 
+ 		/* create the mbuf pool */
+-		ret = mirror_pool_create(g_startup_param.client_id);
++		ret = mirror_pool_create(get_client_id());
+ 		if (ret == SPP_RET_NG) {
+ 			RTE_LOG(ERR, MIRROR,
+ 					"mirror mnuf pool create failed.\n");
+diff --git a/src/shared/secondary/spp_worker_th/cmd_res_formatter.c b/src/shared/secondary/spp_worker_th/cmd_res_formatter.c
+index 7d7388d..291c1f5 100644
+--- a/src/shared/secondary/spp_worker_th/cmd_res_formatter.c
++++ b/src/shared/secondary/spp_worker_th/cmd_res_formatter.c
+@@ -530,16 +530,6 @@ append_info_value(const char *name, char **output)
+ 	return ret;
+ }
+ 
+-/* TODO(yasufum) move to another file for util funcs. */
+-/* Get client ID from global command params. */
+-static int
+-wk_get_client_id(void)
+-{
+-	struct startup_param *params;
+-	sppwk_get_mng_data(&params, NULL, NULL, NULL, NULL, NULL, NULL);
+-	return params->client_id;
+-}
+-
+ /**
+  * Operation functions start with prefix `add_` defined in get_status_ops()
+  * of struct `cmd_res_formatter_ops` which are for making each of parts of
+@@ -551,7 +541,7 @@ int
+ add_client_id(const char *name, char **output,
+ 		void *tmp __attribute__ ((unused)))
+ {
+-	return append_json_int_value(output, name, wk_get_client_id());
++	return append_json_int_value(output, name, get_client_id());
+ }
+ 
+ /* Add entry of port to a response in JSON such as "phy:0". */
+diff --git a/src/shared/secondary/spp_worker_th/cmd_utils.h b/src/shared/secondary/spp_worker_th/cmd_utils.h
+index f3e2303..9022589 100644
+--- a/src/shared/secondary/spp_worker_th/cmd_utils.h
++++ b/src/shared/secondary/spp_worker_th/cmd_utils.h
+@@ -201,7 +201,6 @@ struct sppwk_comp_info {
+ 
+ /* Manage cmd arg as global variable, used for spp_vf and spp_mirror. */
+ struct startup_param {
+-	int client_id;  /* Client ID */
+ 	char server_ip[INET_ADDRSTRLEN];  /* IP address of spp-ctl */
+ 	int server_port;   /* Port Number of spp-ctl */
+ 	enum sppwk_proc_type wk_proc_type;
+diff --git a/src/shared/secondary/spp_worker_th/mirror_deps.h b/src/shared/secondary/spp_worker_th/mirror_deps.h
+index 31f0b0c..1446027 100644
+--- a/src/shared/secondary/spp_worker_th/mirror_deps.h
++++ b/src/shared/secondary/spp_worker_th/mirror_deps.h
+@@ -40,4 +40,6 @@ enum sppwk_worker_type get_comp_type_from_str(const char *type_str);
+ 
+ int get_status_ops(struct cmd_res_formatter_ops *ops_list);
+ 
++int get_client_id(void);
++
+ #endif  /* __SPP_WORKER_TH_MIRROR_DEPS_H__ */
+diff --git a/src/shared/secondary/spp_worker_th/vf_deps.h b/src/shared/secondary/spp_worker_th/vf_deps.h
+index 41ea1b9..8da81a5 100644
+--- a/src/shared/secondary/spp_worker_th/vf_deps.h
++++ b/src/shared/secondary/spp_worker_th/vf_deps.h
+@@ -117,4 +117,6 @@ enum sppwk_worker_type get_comp_type_from_str(const char *type_str);
+ 
+ int get_status_ops(struct cmd_res_formatter_ops *ops_list);
+ 
++int get_client_id(void);
++
+ #endif  /* _SPPWK_TH_VF_DEPS_H_ */
+diff --git a/src/shared/secondary/utils.c b/src/shared/secondary/utils.c
+index 7c676a0..73800d3 100644
+--- a/src/shared/secondary/utils.c
++++ b/src/shared/secondary/utils.c
+@@ -8,6 +8,42 @@
+ 
+ #define RTE_LOGTYPE_SHARED RTE_LOGTYPE_USER1
+ 
++int client_id;
++
++int set_client_id(int cid)
++{
++	client_id = cid;
++	return 0;
++}
++
++int get_client_id(void)
++{
++	if (client_id < 0) {
++		RTE_LOG(ERR, SHARED, "Client ID is not initialized.\n");
++		return -1;
++	}
++	return client_id;
++}
++
++/* Parse client ID from given value of string. */
++int
++parse_client_id(int *cli_id, const char *cli_id_str)
++{
++	int id = 0;
++	char *endptr = NULL;
++
++	id = strtol(cli_id_str, &endptr, 0);
++	if (unlikely(cli_id_str == endptr) || unlikely(*endptr != '\0'))
++		return -1;
++
++	if (id >= RTE_MAX_LCORE)
++		return -1;
++
++	*cli_id = id;
++	RTE_LOG(DEBUG, SHARED, "Parse client ID %d.\n", *cli_id);
++	return 0;
++}
++
+ /**
+  * Retieve port type and ID from resource UID. For example, resource UID
+  * 'ring:0' is  parsed to retrieve port tyep 'ring' and ID '0'.
+@@ -43,14 +79,11 @@ int
+ spp_atoi(const char *str, int *val)
+ {
+ 	char *end;
+-
+ 	*val = strtol(str, &end, 10);
+-
+ 	if (*end) {
+ 		RTE_LOG(ERR, SHARED, "Bad integer value: %s\n", str);
+ 		return -1;
+ 	}
+-
+ 	return 0;
+ }
+ 
+diff --git a/src/shared/secondary/utils.h b/src/shared/secondary/utils.h
+index c905b12..74531b0 100644
+--- a/src/shared/secondary/utils.h
++++ b/src/shared/secondary/utils.h
+@@ -9,6 +9,18 @@ int parse_resource_uid(char *str, char **port_type, int *port_id);
+ 
+ int spp_atoi(const char *str, int *val);
+ 
++int set_client_id(int cid);
++int get_client_id(void);
++
++/**
++ * Parse client ID from given value of string.
++ *
++ * @params[in] cli_id_str String value of client ID.
++ * @params[in,out] cli_id client ID of int value.
++ * @return 0 if succeeded, or -1 if failed.
++ */
++int parse_client_id(int *cli_id, const char *cli_id_str);
++
+ /**
+  * Attach a new Ethernet device specified by arguments.
+  *
+diff --git a/src/vf/spp_vf.c b/src/vf/spp_vf.c
+index 4513a0c..d8b0c87 100644
+--- a/src/vf/spp_vf.c
++++ b/src/vf/spp_vf.c
+@@ -7,9 +7,10 @@
+ #include <getopt.h>
+ 
+ #include "spp_vf.h"
+-#include "shared/secondary/spp_worker_th/cmd_utils.h"
+ #include "classifier_mac.h"
+ #include "forwarder.h"
++#include "shared/secondary/utils.h"
++#include "shared/secondary/spp_worker_th/cmd_utils.h"
+ #include "shared/secondary/return_codes.h"
+ #include "shared/secondary/add_port.h"
+ #include "shared/secondary/spp_worker_th/cmd_runner.h"
+@@ -56,30 +57,6 @@ usage(const char *progname)
+ 			, progname);
+ }
+ 
+-/**
+- * Convert string of given client id to integer
+- *
+- * If succeeded, client id of integer is assigned to client_id and
+- * return SPP_RET_OK Or return SPP_RET_NG if failed.
+- */
+-static int
+-parse_app_client_id(const char *client_id_str, int *client_id)
+-{
+-	int id = 0;
+-	char *endptr = NULL;
+-
+-	id = strtol(client_id_str, &endptr, 0);
+-	if (unlikely(client_id_str == endptr) || unlikely(*endptr != '\0'))
+-		return SPP_RET_NG;
+-
+-	if (id >= RTE_MAX_LCORE)
+-		return SPP_RET_NG;
+-
+-	*client_id = id;
+-	RTE_LOG(DEBUG, APP, "Set client id = %d\n", *client_id);
+-	return SPP_RET_OK;
+-}
+-
+ /* Parse options for server IP and port */
+ static int
+ parse_app_server(const char *server_str, char *server_ip, int *server_port)
+@@ -111,6 +88,7 @@ static int
+ parse_app_args(int argc, char *argv[])
+ {
+ 	int cnt;
++	int cli_id;
+ 	int proc_flg = 0;
+ 	int server_flg = 0;
+ 	int option_index, opt;
+@@ -142,12 +120,12 @@ parse_app_args(int argc, char *argv[])
+ 			&option_index)) != EOF) {
+ 		switch (opt) {
+ 		case SPP_LONGOPT_RETVAL_CLIENT_ID:
+-			if (parse_app_client_id(optarg,
+-					&g_startup_param.client_id) !=
+-								SPP_RET_OK) {
++			if (parse_client_id(&cli_id, optarg) != SPP_RET_OK) {
+ 				usage(progname);
+ 				return SPP_RET_NG;
+ 			}
++			set_client_id(cli_id);
++
+ 			proc_flg = 1;
+ 			break;
+ 		case SPP_LONGOPT_RETVAL_VHOST_CLIENT:
+@@ -177,7 +155,7 @@ parse_app_args(int argc, char *argv[])
+ 	RTE_LOG(INFO, APP,
+ 			"app opts (client_id=%d,type=%d,server=%s:%d,"
+ 			"vhost_client=%d)\n",
+-			g_startup_param.client_id,
++			cli_id,
+ 			g_startup_param.wk_proc_type,
+ 			g_startup_param.server_ip,
+ 			g_startup_param.server_port,
+-- 
+2.17.1
+
+

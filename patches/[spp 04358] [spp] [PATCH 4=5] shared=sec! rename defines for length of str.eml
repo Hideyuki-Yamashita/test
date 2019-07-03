@@ -1,0 +1,373 @@
+Return-path: <fw-yama-hd@pomail01.silk.ntt-tx.co.jp>
+Received: from zssg-mailmd102.ddreams.local
+ (zssg-mailmd102.ddreams.local [10.160.123.97]) by zssg-mailms320.ddreams.local
+ (NTT DoCoMo Mail System) with ESMTP id <0PTK00UWKZZZ8Y30@NTTDoCoMo.co.jp> for
+ yamashita.hideyuki@ntt-tx.co.jp; Mon, 24 Jun 2019 11:23:59 +0900 (JST)
+Original-recipient: rfc822;yamashita.hideyuki@ntt-tx.co.jp
+Received: from smtp_saver-daemon.zssg-mailmd102.ddreams.local by
+ zssg-mailmd102.ddreams.local (dDREAMS) id <0PTK00W0YZZZN300@dDREAMS> for
+ yamashita.hideyuki@ntt-tx.co.jp (ORCPT yamashita.hideyuki@ntt-tx.co.jp); Mon,
+ 24 Jun 2019 11:23:59 +0900 (JST)
+Received: from zssg-mailmf105.ddreams.local
+ (zssg-mailmf900.ddreams.local [10.160.172.84]) by zssg-mailmd102.ddreams.local
+ (dDREAMS) with ESMTP id <0PTK00VILZZZYD00@dDREAMS> for
+ yamashita.hideyuki@ntt-tx.co.jp (ORCPT yamashita.hideyuki@ntt-tx.co.jp); Mon,
+ 24 Jun 2019 11:23:59 +0900 (JST)
+Received: from zssg-mailmf105.ddreams.local (unknown [127.0.0.1])
+	by zssg-mailmf105.ddreams.local (Postfix) with ESMTP id 1ACC07E6036	for
+ <yamashita.hideyuki@ntt-tx.co.jp>; Mon, 24 Jun 2019 11:23:59 +0900 (JST)
+Received: from zssg-mailmf105.ddreams.local (unknown [127.0.0.1])
+	by IMSVA (Postfix) with ESMTP id 195978E6064	for
+ <yamashita.hideyuki@ntt-tx.co.jp>; Mon, 24 Jun 2019 11:23:59 +0900 (JST)
+Received: from localhost (unknown [127.0.0.1])	by IMSVA (Postfix)
+ with SMTP id 17FC38E6066	for <yamashita.hideyuki@ntt-tx.co.jp>; Mon,
+ 24 Jun 2019 11:23:59 +0900 (JST)
+X-IMSS-HAND-OFF-DIRECTIVE: localhost:10026
+Received: from zssg-mailmf105.ddreams.local (unknown [127.0.0.1])
+	by IMSVA (Postfix) with ESMTP id 7A7688E6060	for
+ <yamashita.hideyuki@ntt-tx.co.jp>; Mon, 24 Jun 2019 11:23:58 +0900 (JST)
+Received: from pomail01.silk.ntt-tx.co.jp (unknown [10.160.183.139])
+	by zssg-mailmf105.ddreams.local (Postfix)
+ with ESMTPS	for <yamashita.hideyuki@ntt-tx.co.jp>; Mon,
+ 24 Jun 2019 11:23:58 +0900 (JST)
+Received: from pomail01.silk.ntt-tx.co.jp (localhost [127.0.0.1])
+	by pomail01.silk.ntt-tx.co.jp (unknown) with ESMTP id x5O2NwDC013221;	Mon,
+ 24 Jun 2019 11:23:58 +0900
+Received: (from yama-hd@localhost)	by pomail01.silk.ntt-tx.co.jp (unknown)
+ id x5O2Nw15013220;	Mon, 24 Jun 2019 11:23:58 +0900
+X-Authentication-warning: pomail01.silk.ntt-tx.co.jp: yama-hd set sender to
+ fw-yama-hd@pomail01.silk.ntt-tx.co.jp using -f
+Received: from imss04.silk.ntt-tx.co.jp
+ (imss04.silk.ntt-tx.co.jp [10.107.0.39])	by pomail01.silk.ntt-tx.co.jp
+ (unknown) with ESMTP id x5O2NwJN013217	for unknown; Mon,
+ 24 Jun 2019 11:23:58 +0900
+Received: from imss04.silk.ntt-tx.co.jp (localhost [127.0.0.1])
+ by imss04.silk.ntt-tx.co.jp (unknown) with ESMTP id x5O2NvC5005429 for
+ unknown; Mon, 24 Jun 2019 11:23:57 +0900
+Received: from ml01.silk.ntt-tx.co.jp (ml01.silk.ntt-tx.co.jp [10.107.0.230])
+ by imss04.silk.ntt-tx.co.jp (unknown) with ESMTP id x5O2Nvns005426; Mon,
+ 24 Jun 2019 11:23:57 +0900
+Received: from ml01.silk.ntt-tx.co.jp (localhost [127.0.0.1])
+	by ml01.silk.ntt-tx.co.jp (unknown) with ESMTP id x5O2NvQZ016204;	Mon,
+ 24 Jun 2019 11:23:57 +0900
+Received: from imss02.silk.ntt-tx.co.jp
+ (imss02.silk.ntt-tx.co.jp [10.107.0.127])	by ml01.silk.ntt-tx.co.jp (unknown)
+ with ESMTP id x5O2NvE0016200	for unknown; Mon, 24 Jun 2019 11:23:57 +0900
+Received: from imss02.silk.ntt-tx.co.jp (localhost [127.0.0.1])
+ by imss02.silk.ntt-tx.co.jp (unknown) with ESMTP id x5O2NvVe005998 for
+ unknown; Mon, 24 Jun 2019 11:23:57 +0900
+Received: from mail01.ics.ntt-tx.co.jp (mail01.ics.ntt-tx.co.jp [10.254.2.67])
+ by imss02.silk.ntt-tx.co.jp (unknown) with ESMTP id x5O2Nvhi005995 for
+ unknown; Mon, 24 Jun 2019 11:23:57 +0900
+Received: from dpdk.org (dpdk.org [92.243.14.124])	by mail01.ics.ntt-tx.co.jp
+ (unknown) with SMTP id x5O2Nosd003512	for unknown; Mon,
+ 24 Jun 2019 11:23:56 +0900
+Received: from [92.243.14.124] (localhost [127.0.0.1])	by dpdk.org (Postfix)
+ with ESMTP id 3746E1BF6F;	Mon, 24 Jun 2019 04:23:50 +0200 (CEST)
+Received: from mail-pf1-f195.google.com
+ (mail-pf1-f195.google.com [209.85.210.195]) by dpdk.org (Postfix)
+ with ESMTP id 219CD1BF54 for <spp@dpdk.org>; Mon,
+ 24 Jun 2019 04:23:49 +0200 (CEST)
+Received: by mail-pf1-f195.google.com with SMTP id 81so6573245pfy.13 for
+ <spp@dpdk.org>; Sun, 23 Jun 2019 19:23:49 -0700 (PDT)
+Received: from localhost.localdomain ([192.47.164.146])
+ by smtp.gmail.com with ESMTPSA id y5sm9127726pgv.12.2019.06.23.19.23.46
+ (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128); Sun,
+ 23 Jun 2019 19:23:47 -0700 (PDT)
+Date: Mon, 24 Jun 2019 11:23:24 +0900
+From: yasufum.o@gmail.com
+Subject: [spp 04358] [spp] [PATCH 4/5] shared/sec: rename defines for length of
+ str
+Sender: spp <spp-bounces@dpdk.org>
+To: spp@dpdk.org, ferruh.yigit@intel.com, yasufum.o@gmail.com
+Message-id: <20190624022325.18695-5-yasufum.o@gmail.com>
+In-reply-to: <20190624022325.18695-1-yasufum.o@gmail.com>
+References: <20190624022325.18695-1-yasufum.o@gmail.com>
+X-ML-Name: unknown
+X-Mail-Count: 04358
+X-MLServer: unknown
+X-ML-Info: mailing list service
+X-Mailer: git-send-email 2.17.1
+Authentication-results: mail01.ics.ntt-tx.co.jp; spf=pass
+ smtp.mailfrom=spp-bounces@dpdk.org
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
+ h=from:to:subject:date:message-id:in-reply-to:references;
+ bh=TO3Wfz3aFaD/2gsTp42+wDSdYyCAsXiICEz8G5HwYHc=;
+ b=f3MGtfLw6TQ8xBFQnOwC+GnS35AxWT34n7C6Gu+Fz1GOveybV/YU3wNVGMNd+2a7kc
+ rYk3lmagPuAO2DGvbJPHUGBhvNDxe3EU4QpWzUNyIzfKAZanka0tNGTOvzxwcBY22KMa
+ FR/xLHxvJX/gBDFzODj/OWMpr1/mhEBjartrFnlsg0NQqr76+r4ez1WzI60JSrASW60R
+ w5673wXJxmNsYh++dxIcM5YxwyCex14h8UeyEgFSAPuy/7Y6nZFV7WTu2ejOJr/4sISU
+ /cI+RF7wPuEJzGwyTp6AePiaT/ElHPUOyfan8G+B/zJM0oNFGwLx2iJiRVMWw3JEoWtg uikA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=1e100.net;
+ s=20161025; h=x-gm-message-state:from:to:subject:date:message-id:in-reply-to
+ :references; bh=TO3Wfz3aFaD/2gsTp42+wDSdYyCAsXiICEz8G5HwYHc=;
+ b=Q6jrHjEeCxh2HWCjNfX5vb3hXR9mKCGzs29zn/hwlP0tTCrkX+K93sx5/ALpzOH8Qy
+ mRk9fiDFqRQWyhag0N8HDGiLVeXAN2g6H2GrLhR/lw7TBKm5/1CcpThkHxl0ZKw7K5h/
+ GcIegrDeT8hLJYf3zOdXqBHSJhcVOG7lwCKaS0I0/l9JkDdZwkNM8K/HLIQ9agfJ5RfQ
+ qpJS7FSJCRT5Zix1U0IhbPgvv0t5BnyvsuKYS6l+Qi8wvR0kCp/FntesN6tfgvM9rF/C
+ KyZfRT+GiU+VQdmoFrhFjbwamCWxKJjVFnPnmPswq6n/+ej/5/UUZN55DQfKEFDLFVfG I6jQ==
+X-Gm-Message-State: APjAAAVlXq/CmcCpogLyjdh2mb3/qILrv4O3+WA4jrVhtH1DmJfHDNHj
+ IYe5QEW83KylSxLbPRbCv22jIY/J
+X-Google-Smtp-Source:
+ APXvYqxOJFygh9lGV8ES/U9mfw8l+DF3zTeedcCNzSpg/MpbRMHvS9+hTCpB4ZtasMTTUcKWYXGkJg==
+X-Received: by 2002:a17:90a:4803:: with SMTP id
+ a3mr22482268pjh.58.1561343028185; Sun, 23 Jun 2019 19:23:48 -0700 (PDT)
+X-BeenThere: spp@dpdk.org
+X-Mailman-Version: 2.1.15
+List-Id: Soft Patch Panel <spp.dpdk.org>
+List-Unsubscribe: <https://mails.dpdk.org/options/spp>,
+ <mailto:spp-request@dpdk.org?subject=unsubscribe>
+List-Archive: <http://mails.dpdk.org/archives/spp/>
+List-Post: <mailto:spp@dpdk.org>
+List-Help: <mailto:spp-request@dpdk.org?subject=help>
+List-Subscribe: <https://mails.dpdk.org/listinfo/spp>,
+ <mailto:spp-request@dpdk.org?subject=subscribe>
+X-TM-AS-MML: No
+Precedence: bulk
+Lines: 242
+X-TM-AS-GCONF: 00
+X-MD-STAMP: ON
+
+From: Yasufumi Ogawa <yasufum.o@gmail.com>
+
+This update is to rename `SPP_MIN_STR_LEN` to `STR_LEN_SHORT` because it
+is used not for the minimum length but for just comparably short length
+of strings. It also renames `SPP_NAME_STR_LEN` to `STR_LEN_NAME` used
+for size of names of component or interfaces.
+
+Signed-off-by: Yasufumi Ogawa <yasufum.o@gmail.com>
+---
+ src/mirror/spp_mirror.c                         |  4 ++--
+ src/shared/secondary/spp_worker_th/cmd_runner.c |  7 +++----
+ src/shared/secondary/spp_worker_th/cmd_utils.c  |  8 ++++----
+ src/shared/secondary/spp_worker_th/cmd_utils.h  | 17 ++++++-----------
+ src/shared/secondary/spp_worker_th/vf_deps.h    | 15 ++++-----------
+ src/vf/classifier_mac.c                         |  6 +++---
+ src/vf/spp_forward.c                            |  4 ++--
+ 7 files changed, 24 insertions(+), 37 deletions(-)
+
+diff --git a/src/mirror/spp_mirror.c b/src/mirror/spp_mirror.c
+index d5abf7b..b68eccc 100644
+--- a/src/mirror/spp_mirror.c
++++ b/src/mirror/spp_mirror.c
+@@ -35,7 +35,7 @@ struct mirror_rxtx {
+ 
+ /* Information on the path used for mirror. */
+ struct mirror_path {
+-	char name[SPP_NAME_STR_LEN];  /* component name */
++	char name[STR_LEN_NAME];  /* component name */
+ 	volatile enum sppwk_worker_type wk_type;
+ 	int nof_rx;  /* number of receive ports */
+ 	int nof_tx;  /* number of mirror ports */
+@@ -310,7 +310,7 @@ spp_mirror_update(struct sppwk_comp_info *component)
+ 			component->name,
+ 			component->wk_type);
+ 
+-	memcpy(&path->name, component->name, SPP_NAME_STR_LEN);
++	memcpy(&path->name, component->name, STR_LEN_NAME);
+ 	path->wk_type = component->wk_type;
+ 	path->nof_rx = component->nof_rx;
+ 	path->nof_tx = component->nof_tx;
+diff --git a/src/shared/secondary/spp_worker_th/cmd_runner.c b/src/shared/secondary/spp_worker_th/cmd_runner.c
+index 1d1ec49..9235857 100644
+--- a/src/shared/secondary/spp_worker_th/cmd_runner.c
++++ b/src/shared/secondary/spp_worker_th/cmd_runner.c
+@@ -174,8 +174,7 @@ update_cls_table(enum sppwk_action wk_action,
+ 		/* Initialize deleted attributes again. */
+ 		port_info->cls_attrs.vlantag.vid = ETH_VLAN_ID_MAX;
+ 		port_info->cls_attrs.mac_addr = 0;
+-		memset(port_info->cls_attrs.mac_addr_str, 0x00,
+-							SPP_MIN_STR_LEN);
++		memset(port_info->cls_attrs.mac_addr_str, 0x00, STR_LEN_SHORT);
+ 	} else if (wk_action == SPPWK_ACT_ADD) {
+ 		if (unlikely(port_info->cls_attrs.vlantag.vid !=
+ 				ETH_VLAN_ID_MAX)) {
+@@ -1236,7 +1235,7 @@ append_classifier_element_value(
+ 	int ret = SPP_RET_NG;
+ 	char *buff, *tmp_buff;
+ 	char port_str[CMD_TAG_APPEND_SIZE];
+-	char value_str[SPP_MIN_STR_LEN];
++	char value_str[STR_LEN_SHORT];
+ 	buff = params->output;
+ 	tmp_buff = spp_strbuf_allocate(CMD_RES_BUF_INIT_SIZE);
+ 	if (unlikely(tmp_buff == NULL)) {
+@@ -1253,7 +1252,7 @@ append_classifier_element_value(
+ 	if (unlikely(ret < SPP_RET_OK))
+ 		return ret;
+ 
+-	memset(value_str, 0x00, SPP_MIN_STR_LEN);
++	memset(value_str, 0x00, STR_LEN_SHORT);
+ 	switch (type) {
+ 	case SPP_CLASSIFIER_TYPE_MAC:
+ 		sprintf(value_str, "%s", mac);
+diff --git a/src/shared/secondary/spp_worker_th/cmd_utils.c b/src/shared/secondary/spp_worker_th/cmd_utils.c
+index c519624..ae6be1a 100644
+--- a/src/shared/secondary/spp_worker_th/cmd_utils.c
++++ b/src/shared/secondary/spp_worker_th/cmd_utils.c
+@@ -282,7 +282,7 @@ get_sppwk_port(enum port_type iface_type, int iface_no)
+ void
+ log_core_info(const struct core_mng_info *core_info)
+ {
+-	char str[SPP_NAME_STR_LEN];
++	char str[STR_LEN_NAME];
+ 	const struct core_mng_info *info = NULL;
+ 	unsigned int lcore_id = 0;
+ 	RTE_LCORE_FOREACH_SLAVE(lcore_id) {
+@@ -291,7 +291,7 @@ log_core_info(const struct core_mng_info *core_info)
+ 				lcore_id, info->status,
+ 				info->ref_index, info->upd_index);
+ 
+-		memset(str, 0x00, SPP_NAME_STR_LEN);
++		memset(str, 0x00, STR_LEN_NAME);
+ 		log_hexdumped(str, info->core[0].id,
+ 				sizeof(int)*info->core[0].num);
+ 
+@@ -305,7 +305,7 @@ log_core_info(const struct core_mng_info *core_info)
+ void
+ log_component_info(const struct sppwk_comp_info *comp_info)
+ {
+-	char str[SPP_NAME_STR_LEN];
++	char str[STR_LEN_NAME];
+ 	const struct sppwk_comp_info *tmp_ci = NULL;
+ 	int cnt = 0;
+ 	for (cnt = 0; cnt < RTE_MAX_LCORE; cnt++) {
+@@ -945,7 +945,7 @@ sppwk_convert_mac_str_to_int64(const char *macaddr)
+ 	int64_t ret_mac = 0;
+ 	int64_t token_val = 0;
+ 	int token_cnt = 0;
+-	char tmp_mac[SPP_MIN_STR_LEN];
++	char tmp_mac[STR_LEN_SHORT];
+ 	char *str = tmp_mac;
+ 	char *saveptr = NULL;
+ 	char *endptr = NULL;
+diff --git a/src/shared/secondary/spp_worker_th/cmd_utils.h b/src/shared/secondary/spp_worker_th/cmd_utils.h
+index b6c2542..ed46370 100644
+--- a/src/shared/secondary/spp_worker_th/cmd_utils.h
++++ b/src/shared/secondary/spp_worker_th/cmd_utils.h
+@@ -33,17 +33,12 @@
+ /** Update wait timer (micro sec) */
+ #define SPP_CHANGE_UPDATE_INTERVAL 10
+ 
+-/** The max number of buffer for management */
+-#define SPP_INFO_AREA_MAX 2
++#define SPP_INFO_AREA_MAX 2  /* The max number of buffer for management */
+ 
+-/** The length of shortest character string */
+-#define SPP_MIN_STR_LEN   32
++#define STR_LEN_SHORT 32  /* Size of short string. */
++#define STR_LEN_NAME 128  /* Size of string for names. */
+ 
+-/** The length of NAME string */
+-#define SPP_NAME_STR_LEN  128
+-
+-/** Maximum number of port abilities available */
+-#define SPP_PORT_ABILITY_MAX 4
++#define SPP_PORT_ABILITY_MAX 4  /* Max num of port abilities. */
+ 
+ /** Number of VLAN ID */
+ #define SPP_NUM_VLAN_VID 4096
+@@ -175,7 +170,7 @@ struct spp_port_ability {
+ /* Attributes for classifying. */
+ struct sppwk_cls_attrs {
+ 	uint64_t mac_addr;  /**< Mac address (binary) */
+-	char mac_addr_str[SPP_MIN_STR_LEN];  /**< Mac address (text) */
++	char mac_addr_str[STR_LEN_SHORT];  /**< Mac address (text) */
+ 	struct spp_vlantag_info vlantag;   /**< VLAN tag information */
+ };
+ 
+@@ -199,7 +194,7 @@ struct sppwk_port_info {
+ 
+ /* Attributes of SPP worker thread named as `component`. */
+ struct sppwk_comp_info {
+-	char name[SPP_NAME_STR_LEN];  /**< Component name */
++	char name[STR_LEN_NAME];  /**< Component name */
+ 	enum sppwk_worker_type wk_type;  /**< Type of worker thread */
+ 	unsigned int lcore_id;
+ 	int comp_id;  /**< Component ID */
+diff --git a/src/shared/secondary/spp_worker_th/vf_deps.h b/src/shared/secondary/spp_worker_th/vf_deps.h
+index 6d857d2..fe03490 100644
+--- a/src/shared/secondary/spp_worker_th/vf_deps.h
++++ b/src/shared/secondary/spp_worker_th/vf_deps.h
+@@ -50,21 +50,14 @@ struct classified_data {
+ 
+ /* classifier component information */
+ struct component_info {
+-	/* component name */
+-	char name[SPP_NAME_STR_LEN];
+-
+-	/* mac address entry flag */
+-	int mac_addr_entry;
++	char name[STR_LEN_NAME];  /* component name */
++	int mac_addr_entry;  /* mac address entry flag */
+ 
+ 	/* mac address classification per vlan-id */
+ 	struct mac_classification *mac_classifications[SPP_NUM_VLAN_VID];
+ 
+-	/* number of transmission ports */
+-	int n_classified_data_tx;
+-
+-	/* receive port handled by classifier */
+-	struct classified_data classified_data_rx;
+-
++	int n_classified_data_tx;  /* number of transmission ports */
++	struct classified_data classified_data_rx;  /* RX handled by cls */
+ 	/* transmission ports handled by classifier */
+ 	struct classified_data classified_data_tx[RTE_MAX_ETHPORTS];
+ };
+diff --git a/src/vf/classifier_mac.c b/src/vf/classifier_mac.c
+index b5260b0..8f9c0f5 100644
+--- a/src/vf/classifier_mac.c
++++ b/src/vf/classifier_mac.c
+@@ -187,7 +187,7 @@ log_classification(
+ 	struct ether_hdr *eth;
+ 	uint16_t vid;
+ 	char mac_addr_str[2][ETHER_ADDR_STR_BUF_SZ];
+-	char iface_str[SPP_NAME_STR_LEN];
++	char iface_str[STR_LEN_NAME];
+ 
+ 	eth = rte_pktmbuf_mtod(pkt, struct ether_hdr *);
+ 	vid = get_vid(pkt);
+@@ -232,7 +232,7 @@ log_entry(
+ 		const char *func_name,
+ 		int line_num)
+ {
+-	char iface_str[SPP_NAME_STR_LEN];
++	char iface_str[STR_LEN_NAME];
+ 
+ 	if (clsd_idx < 0)
+ 		snprintf(iface_str, sizeof(iface_str), "%ld", clsd_idx);
+@@ -720,7 +720,7 @@ spp_classifier_mac_update(struct sppwk_comp_info *component_info)
+ 				"Cannot update classifier mac. ret=%d\n", ret);
+ 		return ret;
+ 	}
+-	memcpy(cmp_info->name, component_info->name, SPP_NAME_STR_LEN);
++	memcpy(cmp_info->name, component_info->name, STR_LEN_NAME);
+ 
+ 	/* change index of reference side */
+ 	mng_info->upd_index = mng_info->ref_index;
+diff --git a/src/vf/spp_forward.c b/src/vf/spp_forward.c
+index 71859e6..668b31c 100644
+--- a/src/vf/spp_forward.c
++++ b/src/vf/spp_forward.c
+@@ -19,7 +19,7 @@ struct forward_rxtx {
+ 
+ /* Information on the path used for forward. */
+ struct forward_path {
+-	char name[SPP_NAME_STR_LEN];    /* component name          */
++	char name[STR_LEN_NAME];    /* component name */
+ 	volatile enum sppwk_worker_type wk_type;
+ 	int num_rx;                     /* number of receive ports */
+ 	int num_tx;                     /* number of trans ports   */
+@@ -86,7 +86,7 @@ spp_forward_update(struct sppwk_comp_info *component)
+ 			component->name,
+ 			component->wk_type);
+ 
+-	memcpy(&path->name, component->name, SPP_NAME_STR_LEN);
++	memcpy(&path->name, component->name, STR_LEN_NAME);
+ 	path->wk_type = component->wk_type;
+ 	path->num_rx = component->nof_rx;
+ 	path->num_tx = component->nof_tx;
+-- 
+2.17.1
+
+

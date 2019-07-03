@@ -1,0 +1,272 @@
+Return-path: <fw-yama-hd@pomail01.silk.ntt-tx.co.jp>
+Received: from zssg-mailmd102.ddreams.local
+ (zssg-mailmd102.ddreams.local [10.160.123.97]) by zssg-mailms320.ddreams.local
+ (NTT DoCoMo Mail System) with ESMTP id <0PTL00DV7I4XNOD0@NTTDoCoMo.co.jp> for
+ yamashita.hideyuki@ntt-tx.co.jp; Mon, 24 Jun 2019 17:55:45 +0900 (JST)
+Original-recipient: rfc822;yamashita.hideyuki@ntt-tx.co.jp
+Received: from smtp_saver-daemon.zssg-mailmd102.ddreams.local by
+ zssg-mailmd102.ddreams.local (dDREAMS) id <0PTL0062WI4XD600@dDREAMS> for
+ yamashita.hideyuki@ntt-tx.co.jp (ORCPT yamashita.hideyuki@ntt-tx.co.jp); Mon,
+ 24 Jun 2019 17:55:45 +0900 (JST)
+Received: from zssg-mailmf102.ddreams.local
+ (zssg-mailmf900.ddreams.local [10.160.172.84]) by zssg-mailmd102.ddreams.local
+ (dDREAMS) with ESMTP id <0PTL00U0OI4X65E0@dDREAMS> for
+ yamashita.hideyuki@ntt-tx.co.jp (ORCPT yamashita.hideyuki@ntt-tx.co.jp); Mon,
+ 24 Jun 2019 17:55:45 +0900 (JST)
+Received: from zssg-mailmf102.ddreams.local (unknown [127.0.0.1])
+	by zssg-mailmf102.ddreams.local (Postfix) with ESMTP id DB7897E6032	for
+ <yamashita.hideyuki@ntt-tx.co.jp>; Mon, 24 Jun 2019 17:55:45 +0900 (JST)
+Received: from zssg-mailmf102.ddreams.local (unknown [127.0.0.1])
+	by IMSVA (Postfix) with ESMTP id DA70C8E6042	for
+ <yamashita.hideyuki@ntt-tx.co.jp>; Mon, 24 Jun 2019 17:55:45 +0900 (JST)
+Received: from localhost (unknown [127.0.0.1])	by IMSVA (Postfix)
+ with SMTP id CFCDB8E6050	for <yamashita.hideyuki@ntt-tx.co.jp>; Mon,
+ 24 Jun 2019 17:55:45 +0900 (JST)
+X-IMSS-HAND-OFF-DIRECTIVE: localhost:10026
+Received: from zssg-mailmf102.ddreams.local (unknown [127.0.0.1])
+	by IMSVA (Postfix) with ESMTP id 727588E6042	for
+ <yamashita.hideyuki@ntt-tx.co.jp>; Mon, 24 Jun 2019 17:55:45 +0900 (JST)
+Received: from pomail01.silk.ntt-tx.co.jp (unknown [10.160.183.139])
+	by zssg-mailmf102.ddreams.local (Postfix)
+ with ESMTPS	for <yamashita.hideyuki@ntt-tx.co.jp>; Mon,
+ 24 Jun 2019 17:55:45 +0900 (JST)
+Received: from pomail01.silk.ntt-tx.co.jp (localhost [127.0.0.1])
+	by pomail01.silk.ntt-tx.co.jp (unknown) with ESMTP id x5O8tjl8012450;	Mon,
+ 24 Jun 2019 17:55:45 +0900
+Received: (from yama-hd@localhost)	by pomail01.silk.ntt-tx.co.jp (unknown)
+ id x5O8tjBd012449;	Mon, 24 Jun 2019 17:55:45 +0900
+X-Authentication-warning: pomail01.silk.ntt-tx.co.jp: yama-hd set sender to
+ fw-yama-hd@pomail01.silk.ntt-tx.co.jp using -f
+Received: from imss04.silk.ntt-tx.co.jp
+ (imss04.silk.ntt-tx.co.jp [10.107.0.39])	by pomail01.silk.ntt-tx.co.jp
+ (unknown) with ESMTP id x5O8tj5i012445	for unknown; Mon,
+ 24 Jun 2019 17:55:45 +0900
+Received: from imss04.silk.ntt-tx.co.jp (localhost [127.0.0.1])
+ by imss04.silk.ntt-tx.co.jp (unknown) with ESMTP id x5O8tiYX006843 for
+ unknown; Mon, 24 Jun 2019 17:55:44 +0900
+Received: from ml01.silk.ntt-tx.co.jp (ml01.silk.ntt-tx.co.jp [10.107.0.230])
+ by imss04.silk.ntt-tx.co.jp (unknown) with ESMTP id x5O8tiom006839; Mon,
+ 24 Jun 2019 17:55:44 +0900
+Received: from ml01.silk.ntt-tx.co.jp (localhost [127.0.0.1])
+	by ml01.silk.ntt-tx.co.jp (unknown) with ESMTP id x5O8tifm030566;	Mon,
+ 24 Jun 2019 17:55:44 +0900
+Received: from imss02.silk.ntt-tx.co.jp
+ (imss02.silk.ntt-tx.co.jp [10.107.0.127])	by ml01.silk.ntt-tx.co.jp (unknown)
+ with ESMTP id x5O8tiEt030562	for unknown; Mon, 24 Jun 2019 17:55:44 +0900
+Received: from imss02.silk.ntt-tx.co.jp (localhost [127.0.0.1])
+ by imss02.silk.ntt-tx.co.jp (unknown) with ESMTP id x5O8tilI029480 for
+ unknown; Mon, 24 Jun 2019 17:55:44 +0900
+Received: from mail01.ics.ntt-tx.co.jp (mail01.ics.ntt-tx.co.jp [10.254.2.67])
+ by imss02.silk.ntt-tx.co.jp (unknown) with ESMTP id x5O8tiiS029473 for
+ unknown; Mon, 24 Jun 2019 17:55:44 +0900
+Received: from dpdk.org (dpdk.org [92.243.14.124])	by mail01.ics.ntt-tx.co.jp
+ (unknown) with SMTP id x5O8tbmo007652	for unknown; Mon,
+ 24 Jun 2019 17:55:43 +0900
+Received: from [92.243.14.124] (localhost [127.0.0.1])	by dpdk.org (Postfix)
+ with ESMTP id EF8C01BF26;	Mon, 24 Jun 2019 10:55:36 +0200 (CEST)
+Received: from mail-pg1-f196.google.com
+ (mail-pg1-f196.google.com [209.85.215.196]) by dpdk.org (Postfix)
+ with ESMTP id 36C7A1BF1D for <spp@dpdk.org>; Mon,
+ 24 Jun 2019 10:55:35 +0200 (CEST)
+Received: by mail-pg1-f196.google.com with SMTP id m4so6143185pgk.0 for
+ <spp@dpdk.org>; Mon, 24 Jun 2019 01:55:35 -0700 (PDT)
+Received: from localhost.localdomain ([192.47.164.146])
+ by smtp.gmail.com with ESMTPSA id i14sm15243765pfk.0.2019.06.24.01.55.33
+ (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128); Mon,
+ 24 Jun 2019 01:55:33 -0700 (PDT)
+Date: Mon, 24 Jun 2019 17:55:30 +0900
+From: yasufum.o@gmail.com
+Subject: [spp 04416] [spp] [PATCH] shared/sec: rename define SPP_INFO_AREA_MAX
+Sender: spp <spp-bounces@dpdk.org>
+To: spp@dpdk.org, ferruh.yigit@intel.com, yasufum.o@gmail.com
+Message-id: <20190624085530.23982-1-yasufum.o@gmail.com>
+X-ML-Name: unknown
+X-Mail-Count: 04416
+X-MLServer: unknown
+X-ML-Info: mailing list service
+X-Mailer: git-send-email 2.17.1
+Authentication-results: mail01.ics.ntt-tx.co.jp; spf=pass
+ smtp.mailfrom=spp-bounces@dpdk.org
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
+ h=from:to:subject:date:message-id;
+ bh=Xb8h7g274gpfT/QoAbn1wuH72D6QNxiziSkay1VJH3g=;
+ b=rf9+LrY9tlZkzvtU9KhHTpNEYa6OnbhyRtCDQKAeevyOhB4GL+fOi26j/kW1EkCNKO
+ ernhFi+O7KGeUWz0cH7uhRwcKvXByN9Z/MzcqL9DxftxJOwBpX5Uko8GRSpHCMVvfr6h
+ RbN9MLq9u9GqK/GSywMBegtHpYYJktVpfBesCJdZ10jufHIpgYz7BP63O0/SLJ8G5wta
+ pWAaTOQMs60Z6ghwdRAHmliHTyqgURhFHxP2ybbqs9TTAgwGgQNsfvxW3E2B9nrapHdg
+ PEy5H0mUpXT0Pi1kSKNLV8GgexdsWnuMmKve0PuYs60vdSagR0xSh5WGS8n4p7BWV5XP HdBQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=1e100.net;
+ s=20161025; h=x-gm-message-state:from:to:subject:date:message-id;
+ bh=Xb8h7g274gpfT/QoAbn1wuH72D6QNxiziSkay1VJH3g=;
+ b=OuuKHqwZeD++93MGr+Whu/gYbVktyKmSiim3iL4ZfM5bhiPrezOwnug30eL0mvGXtG
+ QYET4C8N0i0Gfdnh4PapBjIPnAY3ZB3MYZOyUQAKTYPfrW4Y4TarqOWV+j95i9cTctv3
+ s2G8yFdJt5gm2slYmwJNnUJubgXcJ9yBusybTPuGN15r6tBVElIaQrQQ7V8oBtdmRISI
+ Md+/zzKScawgGA5S1+HhI3yYCXPZ1jNUAxzIFGiUIhwzty0iOA1I9anVw7MGscbhWy6t
+ +Bnw7bIuP+PM94FnNyCC6TNbvS/5B3LavllUl26StILk0RyZ++ROcEsNejX2MejnQHc5 TEpA==
+X-Gm-Message-State: APjAAAVcpMdELraJspkzECV44DudsVYp28S0q5UUReFH6TQyCU63j648
+ UYOOHqukvESDAB4++30odAeIcku4
+X-Google-Smtp-Source:
+ APXvYqyUILVJuWqTNpFaeUdvEsDSc2DCC3FiYuY7hNwaMPAL7e1jwi5sVYkFjajxAxy+bp4LU/j50Q==
+X-Received: by 2002:a17:90a:3544:: with SMTP id
+ q62mr23672677pjb.53.1561366534304; Mon, 24 Jun 2019 01:55:34 -0700 (PDT)
+X-BeenThere: spp@dpdk.org
+X-Mailman-Version: 2.1.15
+List-Id: Soft Patch Panel <spp.dpdk.org>
+List-Unsubscribe: <https://mails.dpdk.org/options/spp>,
+ <mailto:spp-request@dpdk.org?subject=unsubscribe>
+List-Archive: <http://mails.dpdk.org/archives/spp/>
+List-Post: <mailto:spp@dpdk.org>
+List-Help: <mailto:spp-request@dpdk.org?subject=help>
+List-Subscribe: <https://mails.dpdk.org/listinfo/spp>,
+ <mailto:spp-request@dpdk.org?subject=subscribe>
+X-TM-AS-MML: No
+Precedence: bulk
+Lines: 144
+X-TM-AS-GCONF: 00
+X-MD-STAMP: ON
+
+From: Yasufumi Ogawa <yasufum.o@gmail.com>
+
+Spp_vf or other worker processes has two configuration data for
+two-phase updating as described in SPP's documentation. For the purpose,
+the number of config data is defined as SPP_INFO_AREA_MAX, but the name
+is not appropriate. This update is to rename it to TWO_SIDES simply.
+
+Signed-off-by: Yasufumi Ogawa <yasufum.o@gmail.com>
+---
+ src/mirror/spp_mirror.c                        | 7 +++----
+ src/shared/secondary/spp_worker_th/cmd_utils.h | 5 +++--
+ src/shared/secondary/spp_worker_th/spp_port.c  | 7 +++----
+ src/vf/forwarder.c                             | 8 ++++----
+ src/vf/spp_vf.c                                | 3 +--
+ 5 files changed, 14 insertions(+), 16 deletions(-)
+
+diff --git a/src/mirror/spp_mirror.c b/src/mirror/spp_mirror.c
+index cb76005..892a3a8 100644
+--- a/src/mirror/spp_mirror.c
++++ b/src/mirror/spp_mirror.c
+@@ -48,7 +48,7 @@ struct mirror_path {
+ struct mirror_info {
+ 	volatile int ref_index; /* index to reference area */
+ 	volatile int upd_index; /* index to update area    */
+-	struct mirror_path path[SPP_INFO_AREA_MAX];
++	struct mirror_path path[TWO_SIDES];
+ 				/* Information of data path */
+ };
+ 
+@@ -339,7 +339,7 @@ change_mirror_index(int id)
+ 	if (info->ref_index == info->upd_index) {
+ 	/* Change reference index of port ability. */
+ 		spp_port_ability_change_index(PORT_ABILITY_CHG_INDEX_REF, 0, 0);
+-		info->ref_index = (info->upd_index+1)%SPP_INFO_AREA_MAX;
++		info->ref_index = (info->upd_index+1) % TWO_SIDES;
+ 	}
+ }
+ 
+@@ -479,8 +479,7 @@ slave_main(void *arg __attribute__ ((unused)))
+ 
+ 		if (spp_check_core_update(lcore_id) == SPP_RET_OK) {
+ 			/* Setting with the flush command trigger. */
+-			info->ref_index = (info->upd_index+1) %
+-					SPP_INFO_AREA_MAX;
++			info->ref_index = (info->upd_index+1) % TWO_SIDES;
+ 			core = get_core_info(lcore_id);
+ 		}
+ 
+diff --git a/src/shared/secondary/spp_worker_th/cmd_utils.h b/src/shared/secondary/spp_worker_th/cmd_utils.h
+index 4582a82..d90aff5 100644
+--- a/src/shared/secondary/spp_worker_th/cmd_utils.h
++++ b/src/shared/secondary/spp_worker_th/cmd_utils.h
+@@ -34,7 +34,8 @@
+ /** Update wait timer (micro sec) */
+ #define SPP_CHANGE_UPDATE_INTERVAL 10
+ 
+-#define SPP_INFO_AREA_MAX 2  /* The max number of buffer for management */
++/* Used for index of arrary of management data which has two sides. */
++#define TWO_SIDES 2
+ 
+ #define STR_LEN_SHORT 32  /* Size of short string. */
+ #define STR_LEN_NAME 128  /* Size of string for names. */
+@@ -224,7 +225,7 @@ struct core_mng_info {
+ 	volatile enum sppwk_lcore_status status;
+ 	volatile int ref_index;  /* index for reference */
+ 	volatile int upd_index;  /* index for update */
+-	struct core_info core[SPP_INFO_AREA_MAX];  /* info of each core */
++	struct core_info core[TWO_SIDES];  /* info of each core */
+ };
+ 
+ /* Manage data used for backup. */
+diff --git a/src/shared/secondary/spp_worker_th/spp_port.c b/src/shared/secondary/spp_worker_th/spp_port.c
+index b0a29f7..9f7ac5a 100644
+--- a/src/shared/secondary/spp_worker_th/spp_port.c
++++ b/src/shared/secondary/spp_worker_th/spp_port.c
+@@ -16,8 +16,7 @@
+ struct port_ability_mng_info {
+ 	volatile int ref_index; /* Index to reference area */
+ 	volatile int upd_index; /* Index to update area    */
+-	struct spp_port_ability ability[SPP_INFO_AREA_MAX]
+-				[SPP_PORT_ABILITY_MAX];
++	struct spp_port_ability ability[TWO_SIDES][SPP_PORT_ABILITY_MAX];
+ 				/* Port ability information */
+ };
+ 
+@@ -232,12 +231,12 @@ spp_port_ability_change_index(
+ 
+ 	for (cnt = 0; cnt < num_rx; cnt++) {
+ 		mng = &g_port_mng_info[rx_list[cnt]].rx;
+-		mng->ref_index = (mng->upd_index+1)%SPP_INFO_AREA_MAX;
++		mng->ref_index = (mng->upd_index+1) % TWO_SIDES;
+ 		rx_list[cnt] = 0;
+ 	}
+ 	for (cnt = 0; cnt < num_tx; cnt++) {
+ 		mng = &g_port_mng_info[tx_list[cnt]].tx;
+-		mng->ref_index = (mng->upd_index+1)%SPP_INFO_AREA_MAX;
++		mng->ref_index = (mng->upd_index+1) % TWO_SIDES;
+ 		tx_list[cnt] = 0;
+ 	}
+ 
+diff --git a/src/vf/forwarder.c b/src/vf/forwarder.c
+index 4d99bfb..e5cc963 100644
+--- a/src/vf/forwarder.c
++++ b/src/vf/forwarder.c
+@@ -31,7 +31,7 @@ struct forward_path {
+ struct forward_info {
+ 	volatile int ref_index; /* index to reference area */
+ 	volatile int upd_index; /* index to update area    */
+-	struct forward_path path[SPP_INFO_AREA_MAX];
++	struct forward_path path[TWO_SIDES];
+ 				/* Information of data path */
+ };
+ 
+@@ -169,10 +169,10 @@ change_forward_index(int id)
+ 	struct forward_info *info = &g_forward_info[id];
+ 	if (info->ref_index == info->upd_index) {
+ 		/* Change reference index of port ability. */
+-		spp_port_ability_change_index(PORT_ABILITY_CHG_INDEX_REF,
+-									0, 0);
++		spp_port_ability_change_index(
++				PORT_ABILITY_CHG_INDEX_REF, 0, 0);
+ 
+-		info->ref_index = (info->upd_index+1)%SPP_INFO_AREA_MAX;
++		info->ref_index = (info->upd_index+1) % TWO_SIDES;
+ 	}
+ }
+ /**
+diff --git a/src/vf/spp_vf.c b/src/vf/spp_vf.c
+index 5bed735..bc8db5c 100644
+--- a/src/vf/spp_vf.c
++++ b/src/vf/spp_vf.c
+@@ -205,8 +205,7 @@ slave_main(void *arg __attribute__ ((unused)))
+ 
+ 		if (spp_check_core_update(lcore_id) == SPP_RET_OK) {
+ 			/* Setting with the flush command trigger. */
+-			info->ref_index = (info->upd_index+1) %
+-					SPP_INFO_AREA_MAX;
++			info->ref_index = (info->upd_index+1) % TWO_SIDES;
+ 			core = get_core_info(lcore_id);
+ 		}
+ 
+-- 
+2.17.1
+
+

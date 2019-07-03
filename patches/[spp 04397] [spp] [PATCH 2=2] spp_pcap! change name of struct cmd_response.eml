@@ -1,0 +1,184 @@
+Return-path: <fw-yama-hd@pomail01.silk.ntt-tx.co.jp>
+Received: from zssg-mailmd103.ddreams.local
+ (zssg-mailmd103.ddreams.local [10.160.123.98]) by zssg-mailms320.ddreams.local
+ (NTT DoCoMo Mail System) with ESMTP id <0PTL00DB2DAPFR70@NTTDoCoMo.co.jp> for
+ yamashita.hideyuki@ntt-tx.co.jp; Mon, 24 Jun 2019 16:11:13 +0900 (JST)
+Original-recipient: rfc822;yamashita.hideyuki@ntt-tx.co.jp
+Received: from smtp_saver-daemon.zssg-mailmd103.ddreams.local by
+ zssg-mailmd103.ddreams.local (dDREAMS) id <0PTL0132SDAPAT00@dDREAMS> for
+ yamashita.hideyuki@ntt-tx.co.jp (ORCPT yamashita.hideyuki@ntt-tx.co.jp); Mon,
+ 24 Jun 2019 16:11:13 +0900 (JST)
+Received: from zssg-mailmf105.ddreams.local
+ (zssg-mailmf900.ddreams.local [10.160.172.84]) by zssg-mailmd103.ddreams.local
+ (dDREAMS) with ESMTP id <0PTL00CB9DAP7PF0@dDREAMS> for
+ yamashita.hideyuki@ntt-tx.co.jp (ORCPT yamashita.hideyuki@ntt-tx.co.jp); Mon,
+ 24 Jun 2019 16:11:13 +0900 (JST)
+Received: from zssg-mailmf105.ddreams.local (unknown [127.0.0.1])
+	by zssg-mailmf105.ddreams.local (Postfix) with ESMTP id 27FE07E603A	for
+ <yamashita.hideyuki@ntt-tx.co.jp>; Mon, 24 Jun 2019 16:11:13 +0900 (JST)
+Received: from zssg-mailmf105.ddreams.local (unknown [127.0.0.1])
+	by IMSVA (Postfix) with ESMTP id 26DE98E605A	for
+ <yamashita.hideyuki@ntt-tx.co.jp>; Mon, 24 Jun 2019 16:11:13 +0900 (JST)
+Received: from localhost (unknown [127.0.0.1])	by IMSVA (Postfix)
+ with SMTP id 251018E605D	for <yamashita.hideyuki@ntt-tx.co.jp>; Mon,
+ 24 Jun 2019 16:11:13 +0900 (JST)
+X-IMSS-HAND-OFF-DIRECTIVE: localhost:10026
+Received: from zssg-mailmf105.ddreams.local (unknown [127.0.0.1])
+	by IMSVA (Postfix) with ESMTP id 86C5F8E6052	for
+ <yamashita.hideyuki@ntt-tx.co.jp>; Mon, 24 Jun 2019 16:11:12 +0900 (JST)
+Received: from pomail01.silk.ntt-tx.co.jp (unknown [10.160.183.139])
+	by zssg-mailmf105.ddreams.local (Postfix)
+ with ESMTPS	for <yamashita.hideyuki@ntt-tx.co.jp>; Mon,
+ 24 Jun 2019 16:11:12 +0900 (JST)
+Received: from pomail01.silk.ntt-tx.co.jp (localhost [127.0.0.1])
+	by pomail01.silk.ntt-tx.co.jp (unknown) with ESMTP id x5O7BCUi016910;	Mon,
+ 24 Jun 2019 16:11:12 +0900
+Received: (from yama-hd@localhost)	by pomail01.silk.ntt-tx.co.jp (unknown)
+ id x5O7BC5P016909;	Mon, 24 Jun 2019 16:11:12 +0900
+X-Authentication-warning: pomail01.silk.ntt-tx.co.jp: yama-hd set sender to
+ fw-yama-hd@pomail01.silk.ntt-tx.co.jp using -f
+Received: from imss04.silk.ntt-tx.co.jp
+ (imss04.silk.ntt-tx.co.jp [10.107.0.39])	by pomail01.silk.ntt-tx.co.jp
+ (unknown) with ESMTP id x5O7BC0T016906	for unknown; Mon,
+ 24 Jun 2019 16:11:12 +0900
+Received: from imss04.silk.ntt-tx.co.jp (localhost [127.0.0.1])
+ by imss04.silk.ntt-tx.co.jp (unknown) with ESMTP id x5O7BBLC021237 for
+ unknown; Mon, 24 Jun 2019 16:11:12 +0900
+Received: from ml01.silk.ntt-tx.co.jp (ml01.silk.ntt-tx.co.jp [10.107.0.230])
+ by imss04.silk.ntt-tx.co.jp (unknown) with ESMTP id x5O7BBoA021234; Mon,
+ 24 Jun 2019 16:11:11 +0900
+Received: from ml01.silk.ntt-tx.co.jp (localhost [127.0.0.1])
+	by ml01.silk.ntt-tx.co.jp (unknown) with ESMTP id x5O7BB1j016970;	Mon,
+ 24 Jun 2019 16:11:11 +0900
+Received: from imss02.silk.ntt-tx.co.jp
+ (imss02.silk.ntt-tx.co.jp [10.107.0.127])	by ml01.silk.ntt-tx.co.jp (unknown)
+ with ESMTP id x5O7BBs3016966	for unknown; Mon, 24 Jun 2019 16:11:11 +0900
+Received: from imss02.silk.ntt-tx.co.jp (localhost [127.0.0.1])
+ by imss02.silk.ntt-tx.co.jp (unknown) with ESMTP id x5O7BBti031053 for
+ unknown; Mon, 24 Jun 2019 16:11:11 +0900
+Received: from mail01.ics.ntt-tx.co.jp (mail01.ics.ntt-tx.co.jp [10.254.2.67])
+ by imss02.silk.ntt-tx.co.jp (unknown) with ESMTP id x5O7BBaV031047 for
+ unknown; Mon, 24 Jun 2019 16:11:11 +0900
+Received: from dpdk.org (dpdk.org [92.243.14.124])	by mail01.ics.ntt-tx.co.jp
+ (unknown) with SMTP id x5O7B4c4023251	for unknown; Mon,
+ 24 Jun 2019 16:11:10 +0900
+Received: from [92.243.14.124] (localhost [127.0.0.1])	by dpdk.org (Postfix)
+ with ESMTP id 164741BF14;	Mon, 24 Jun 2019 09:11:04 +0200 (CEST)
+Received: from mail-pf1-f196.google.com
+ (mail-pf1-f196.google.com [209.85.210.196]) by dpdk.org (Postfix)
+ with ESMTP id EB4F41BCAC for <spp@dpdk.org>; Mon,
+ 24 Jun 2019 09:11:02 +0200 (CEST)
+Received: by mail-pf1-f196.google.com with SMTP id m30so6956412pff.8 for
+ <spp@dpdk.org>; Mon, 24 Jun 2019 00:11:02 -0700 (PDT)
+Received: from localhost.localdomain ([192.47.164.146])
+ by smtp.gmail.com with ESMTPSA id 3sm10703610pfp.114.2019.06.24.00.11.00
+ (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128); Mon,
+ 24 Jun 2019 00:11:01 -0700 (PDT)
+Date: Mon, 24 Jun 2019 16:10:51 +0900
+From: yasufum.o@gmail.com
+Subject: [spp 04397] [spp] [PATCH 2/2] spp_pcap: change name of struct
+ cmd_response
+Sender: spp <spp-bounces@dpdk.org>
+To: spp@dpdk.org, ferruh.yigit@intel.com, yasufum.o@gmail.com
+Message-id: <20190624071051.23342-3-yasufum.o@gmail.com>
+In-reply-to: <20190624071051.23342-1-yasufum.o@gmail.com>
+References: <20190624071051.23342-1-yasufum.o@gmail.com>
+X-ML-Name: unknown
+X-Mail-Count: 04397
+X-MLServer: unknown
+X-ML-Info: mailing list service
+X-Mailer: git-send-email 2.17.1
+Authentication-results: mail01.ics.ntt-tx.co.jp; spf=pass
+ smtp.mailfrom=spp-bounces@dpdk.org
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
+ h=from:to:subject:date:message-id:in-reply-to:references;
+ bh=pSM0NOAZIEHiNN5CfqmNRstr1e2BhneC0OQgfPd9zTA=;
+ b=BYncWu04daGA66rB43ZJGpqNY84VKlB6cnw+AGCe2ajDPZdH9n1D3TT802npc4Ujw1
+ CInEpj1MeMQps+P3nU9q3MJ8Rlr/hL+SnswHCipRqOz6NLySXhDQVZps8H+X4vUfumOE
+ oZEXFZJ71lNmXd/VRHwOjq5DZNawXwnWk2/qc6Nvo+qyR01nOE6cSucci/1IlDB4DuzU
+ bzksJB4N0HRlWDKcROSte0T8ohgmZyCJ1GEpENYo549CCBz9s0df1nLRzh+/N9EXLVWe
+ AUy3qldi+apDLYtZKolnQNFT1nR4lc+yw1NHqQrLH3lsfpqI/e+SVsCzvs8nPFT7D3w1 ZUfA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=1e100.net;
+ s=20161025; h=x-gm-message-state:from:to:subject:date:message-id:in-reply-to
+ :references; bh=pSM0NOAZIEHiNN5CfqmNRstr1e2BhneC0OQgfPd9zTA=;
+ b=hi0IxB0VwCzvcEJ84CVAae9Ipn2ZdeStYE95WGXpxa3Y1/8KlTE6HSfZH6GcQ0g24V
+ YllWTQZ084B6dWunprVcVtz1BnzlJLcoC5JHPfOb1/n4sx7ep2tVFoycH7Pw+8Pz9407
+ TnJJbvVFIh7l86xBJj70pDcAFluxuEifg2pG3v1Rjtsuwtqesns1R388qwo7Z/xZj1m9
+ jlKq9wAr9s5/WNyUgJrujpLc+T0D6FPxCsBhVzV5ldCqtAMr3gON4WV7weLRl2b2Ec2R
+ tl+aJ7u+U9tFNw7sA6XzqYt3HHkwMv16ZDkcZI4G1Tg2ui6nhB1buLVBtDGF+czFTIcU MgDQ==
+X-Gm-Message-State: APjAAAWSUlZy1hfTSNx2fHEQDQdKi6/ygSNnxIJmWjq1sEE6ToeNzBWw
+ 888RHYFjqaSCCXXhhwrFtR98xYmJ
+X-Google-Smtp-Source:
+ APXvYqyzVo80iLC6+fzumPbXlA/vghJN2ZbGHS4E0e8xg+i1ILhDDetFmzsAKKhJcHYRRBg3dN8MMQ==
+X-Received: by 2002:a63:c65:: with SMTP id 37mr9291735pgm.158.1561360262049;
+ Mon, 24 Jun 2019 00:11:02 -0700 (PDT)
+X-BeenThere: spp@dpdk.org
+X-Mailman-Version: 2.1.15
+List-Id: Soft Patch Panel <spp.dpdk.org>
+List-Unsubscribe: <https://mails.dpdk.org/options/spp>,
+ <mailto:spp-request@dpdk.org?subject=unsubscribe>
+List-Archive: <http://mails.dpdk.org/archives/spp/>
+List-Post: <mailto:spp@dpdk.org>
+List-Help: <mailto:spp-request@dpdk.org?subject=help>
+List-Subscribe: <https://mails.dpdk.org/listinfo/spp>,
+ <mailto:spp-request@dpdk.org?subject=subscribe>
+X-TM-AS-MML: No
+Precedence: bulk
+Lines: 53
+X-TM-AS-GCONF: 00
+X-MD-STAMP: ON
+
+From: Yasufumi Ogawa <yasufum.o@gmail.com>
+
+This update is to rename struct `cmd_response` to
+`cmd_res_formatter_ops` because it is a set of tag and operation
+function for parsing command.
+
+Signed-off-by: Yasufumi Ogawa <yasufum.o@gmail.com>
+---
+ src/pcap/cmd_runner.c | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
+
+diff --git a/src/pcap/cmd_runner.c b/src/pcap/cmd_runner.c
+index 55f15bf..4a74af2 100644
+--- a/src/pcap/cmd_runner.c
++++ b/src/pcap/cmd_runner.c
+@@ -47,7 +47,7 @@ struct cmd_result {
+ 
+ /* command response list control structure */
+ /* TODO(yasufum) merge it to the same definition in shared/.../cmd_runner.c */
+-struct cmd_response {
++struct cmd_res_formatter_ops {
+ 	char tag_name[SPPWK_NAME_BUFSZ];  /* JSON Tag name */
+ 	int (*func)(const char *name, char **output, void *tmp);
+ };
+@@ -548,7 +548,7 @@ append_core_value(const char *name, char **output,
+ /* append string of command response list for JSON format */
+ static int
+ append_response_list_value(char **output,
+-		struct cmd_response *list,
++		struct cmd_res_formatter_ops *list,
+ 		void *tmp)
+ {
+ 	int ret = SPPWK_RET_NG;
+@@ -607,14 +607,14 @@ append_response_list_value(char **output,
+ #define COMMAND_RESP_TAG_LIST_EMPTY { "", NULL }
+ 
+ /* command response result string list */
+-struct cmd_response response_result_list[] = {
++struct cmd_res_formatter_ops response_result_list[] = {
+ 	{ "result",        append_result_value },
+ 	{ "error_details", append_error_details_value },
+ 	COMMAND_RESP_TAG_LIST_EMPTY
+ };
+ 
+ /* command response status information string list */
+-struct cmd_response response_info_list[] = {
++struct cmd_res_formatter_ops response_info_list[] = {
+ 	{ "client-id",        append_client_id_value },
+ 	{ "status",           append_capture_status_value },
+ 	{ "master-lcore",     append_master_lcore_value },
+-- 
+2.17.1
+
+

@@ -1,0 +1,327 @@
+Return-path: <fw-yama-hd@pomail01.silk.ntt-tx.co.jp>
+Received: from zssg-mailmd105.ddreams.local
+ (zssg-mailmd105.ddreams.local [10.160.123.100])
+ by zssg-mailms320.ddreams.local (NTT DoCoMo Mail System)
+ with ESMTP id <0PTL00D37656SMD0@NTTDoCoMo.co.jp> for
+ yamashita.hideyuki@ntt-tx.co.jp; Mon, 24 Jun 2019 13:36:42 +0900 (JST)
+Original-recipient: rfc822;yamashita.hideyuki@ntt-tx.co.jp
+Received: from smtp_saver-daemon.zssg-mailmd105.ddreams.local by
+ zssg-mailmd105.ddreams.local (dDREAMS) id <0PTL00958656HR00@dDREAMS> for
+ yamashita.hideyuki@ntt-tx.co.jp (ORCPT yamashita.hideyuki@ntt-tx.co.jp); Mon,
+ 24 Jun 2019 13:36:42 +0900 (JST)
+Received: from zssg-mailmf102.ddreams.local
+ (zssg-mailmf900.ddreams.local [10.160.172.84]) by zssg-mailmd105.ddreams.local
+ (dDREAMS) with ESMTP id <0PTL01AIG655CE70@dDREAMS> for
+ yamashita.hideyuki@ntt-tx.co.jp (ORCPT yamashita.hideyuki@ntt-tx.co.jp); Mon,
+ 24 Jun 2019 13:36:41 +0900 (JST)
+Received: from zssg-mailmf102.ddreams.local (unknown [127.0.0.1])
+	by zssg-mailmf102.ddreams.local (Postfix) with ESMTP id DD61D7E6032	for
+ <yamashita.hideyuki@ntt-tx.co.jp>; Mon, 24 Jun 2019 13:36:41 +0900 (JST)
+Received: from zssg-mailmf102.ddreams.local (unknown [127.0.0.1])
+	by IMSVA (Postfix) with ESMTP id DC0898E6058	for
+ <yamashita.hideyuki@ntt-tx.co.jp>; Mon, 24 Jun 2019 13:36:41 +0900 (JST)
+Received: from localhost (unknown [127.0.0.1])	by IMSVA (Postfix)
+ with SMTP id D12AD8E6042	for <yamashita.hideyuki@ntt-tx.co.jp>; Mon,
+ 24 Jun 2019 13:36:41 +0900 (JST)
+X-IMSS-HAND-OFF-DIRECTIVE: localhost:10026
+Received: from zssg-mailmf102.ddreams.local (unknown [127.0.0.1])
+	by IMSVA (Postfix) with ESMTP id 3784E8E6042	for
+ <yamashita.hideyuki@ntt-tx.co.jp>; Mon, 24 Jun 2019 13:36:41 +0900 (JST)
+Received: from pomail01.silk.ntt-tx.co.jp (unknown [10.160.183.139])
+	by zssg-mailmf102.ddreams.local (Postfix)
+ with ESMTPS	for <yamashita.hideyuki@ntt-tx.co.jp>; Mon,
+ 24 Jun 2019 13:36:41 +0900 (JST)
+Received: from pomail01.silk.ntt-tx.co.jp (localhost [127.0.0.1])
+	by pomail01.silk.ntt-tx.co.jp (unknown) with ESMTP id x5O4afhh008132;	Mon,
+ 24 Jun 2019 13:36:41 +0900
+Received: (from yama-hd@localhost)	by pomail01.silk.ntt-tx.co.jp (unknown)
+ id x5O4afNT008131;	Mon, 24 Jun 2019 13:36:41 +0900
+X-Authentication-warning: pomail01.silk.ntt-tx.co.jp: yama-hd set sender to
+ fw-yama-hd@pomail01.silk.ntt-tx.co.jp using -f
+Received: from imss04.silk.ntt-tx.co.jp
+ (imss04.silk.ntt-tx.co.jp [10.107.0.39])	by pomail01.silk.ntt-tx.co.jp
+ (unknown) with ESMTP id x5O4aeiC008128	for unknown; Mon,
+ 24 Jun 2019 13:36:40 +0900
+Received: from imss04.silk.ntt-tx.co.jp (localhost [127.0.0.1])
+ by imss04.silk.ntt-tx.co.jp (unknown) with ESMTP id x5O4ae2e016509 for
+ unknown; Mon, 24 Jun 2019 13:36:40 +0900
+Received: from ml01.silk.ntt-tx.co.jp (ml01.silk.ntt-tx.co.jp [10.107.0.230])
+ by imss04.silk.ntt-tx.co.jp (unknown) with ESMTP id x5O4ae7Z016506; Mon,
+ 24 Jun 2019 13:36:40 +0900
+Received: from ml01.silk.ntt-tx.co.jp (localhost [127.0.0.1])
+	by ml01.silk.ntt-tx.co.jp (unknown) with ESMTP id x5O4aeo4030505;	Mon,
+ 24 Jun 2019 13:36:40 +0900
+Received: from imss02.silk.ntt-tx.co.jp
+ (imss02.silk.ntt-tx.co.jp [10.107.0.127])	by ml01.silk.ntt-tx.co.jp (unknown)
+ with ESMTP id x5O4aeSe030501	for unknown; Mon, 24 Jun 2019 13:36:40 +0900
+Received: from imss02.silk.ntt-tx.co.jp (localhost [127.0.0.1])
+ by imss02.silk.ntt-tx.co.jp (unknown) with ESMTP id x5O4aej5013343 for
+ unknown; Mon, 24 Jun 2019 13:36:40 +0900
+Received: from mail01.ics.ntt-tx.co.jp (mail01.ics.ntt-tx.co.jp [10.254.2.67])
+ by imss02.silk.ntt-tx.co.jp (unknown) with ESMTP id x5O4aerx013337 for
+ unknown; Mon, 24 Jun 2019 13:36:40 +0900
+Received: from dpdk.org (dpdk.org [92.243.14.124])	by mail01.ics.ntt-tx.co.jp
+ (unknown) with SMTP id x5O4aXD9027503	for unknown; Mon,
+ 24 Jun 2019 13:36:39 +0900
+Received: from [92.243.14.124] (localhost [127.0.0.1])	by dpdk.org (Postfix)
+ with ESMTP id E9CB81BF58;	Mon, 24 Jun 2019 06:36:32 +0200 (CEST)
+Received: from mail-pg1-f195.google.com
+ (mail-pg1-f195.google.com [209.85.215.195]) by dpdk.org (Postfix)
+ with ESMTP id 0F0B01BF56 for <spp@dpdk.org>; Mon,
+ 24 Jun 2019 06:36:31 +0200 (CEST)
+Received: by mail-pg1-f195.google.com with SMTP id s27so6415164pgl.2 for
+ <spp@dpdk.org>; Sun, 23 Jun 2019 21:36:30 -0700 (PDT)
+Received: from localhost.localdomain ([192.47.164.146])
+ by smtp.gmail.com with ESMTPSA id c10sm9005178pjq.14.2019.06.23.21.36.28
+ (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128); Sun,
+ 23 Jun 2019 21:36:29 -0700 (PDT)
+Date: Mon, 24 Jun 2019 13:36:01 +0900
+From: yasufum.o@gmail.com
+Subject: [spp 04373] [spp] [PATCH 01/13] shared/sec: rename ops for setup cmd
+ response
+Sender: spp <spp-bounces@dpdk.org>
+To: spp@dpdk.org, ferruh.yigit@intel.com, yasufum.o@gmail.com
+Message-id: <20190624043613.19271-2-yasufum.o@gmail.com>
+In-reply-to: <20190624043613.19271-1-yasufum.o@gmail.com>
+References: <20190624043613.19271-1-yasufum.o@gmail.com>
+X-ML-Name: unknown
+X-Mail-Count: 04373
+X-MLServer: unknown
+X-ML-Info: mailing list service
+X-Mailer: git-send-email 2.17.1
+Authentication-results: mail01.ics.ntt-tx.co.jp; spf=pass
+ smtp.mailfrom=spp-bounces@dpdk.org
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
+ h=from:to:subject:date:message-id:in-reply-to:references;
+ bh=3HcySy6jXpE662WBPHj/HQiQ8pv2wRqUDQhQDqQX6cM=;
+ b=IUR/17qfAKKRAL3JYuH7W+O8hyb1f/TCbl7/c4f7Emrwurhta7IF142WK7+wM/lLSp
+ idVbKvqEoXHuwqxDUO1tSeThHlh9qFwvBSvu13T+1jbD0aDTm4Gbxg1eqE0e8+89YTIN
+ 7QtNJKyhpydYOzQO2KUu5lBMtmMf+FgrxxFAcIoIrpAuSgUUEucglrNLssAIN1B43DsM
+ hTkThmgjlk7zE8S4W6is3go8uKPr9/Wsd5jXFQgscvD6TafrVTcZLPZPuQ36WLbuQSZO
+ YVKrGkJcJKhfm8wS2pEoWN+ySVHJ0j8KOewvY6ebuOHKWOZGVKO0Orl4YFT5I1ZlCIZY 0fsA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=1e100.net;
+ s=20161025; h=x-gm-message-state:from:to:subject:date:message-id:in-reply-to
+ :references; bh=3HcySy6jXpE662WBPHj/HQiQ8pv2wRqUDQhQDqQX6cM=;
+ b=g2VZ2/ietTdTTplAip3gaeOShJzF5Knm9Fzc7pJV1wHGFPPL+wLgyfOzW9PyLoyyoe
+ a9zOCG5F2BTcIoXRJoSL5jM/npJYYwHEBRwcEGtF0zOtZawnR2NidaI/5uXCMC998ZDD
+ NGIa4K5uhmErKIU7YZAA+BXp2MVJf3vtorp0Df2nbjb5HKLUOvXV/2vKoNJSLrKNn38L
+ RVEGYyWuzN14PP4NXyoveA/+fQzHh6ceMciogt+5lPHmvro/4j5IC2uj1kFuvtQSD1Bl
+ XODCHfBnhXiNzKHOdmcNpDEcn/pKuKWJEHG2VvabmJ5eroHagl7tugL1c/n1daqPwIfg ZReA==
+X-Gm-Message-State: APjAAAWFEGJlD+ocTTvevW3JOycsh8xMXr5z7t1cdRy3F/IbenEQnuUW
+ T9BUC7wO/DYYBGz5Ry+nNYrAk0oU
+X-Google-Smtp-Source:
+ APXvYqz4L+nNXe4a9S8xJD8m2BHNK96UxXcktnojyxyG1ijRmSQ54711ze8VkVAHSErVDxoWIfkWsw==
+X-Received: by 2002:a17:90a:cd03:: with SMTP id
+ d3mr21509331pju.127.1561350990146; Sun, 23 Jun 2019 21:36:30 -0700 (PDT)
+X-BeenThere: spp@dpdk.org
+X-Mailman-Version: 2.1.15
+List-Id: Soft Patch Panel <spp.dpdk.org>
+List-Unsubscribe: <https://mails.dpdk.org/options/spp>,
+ <mailto:spp-request@dpdk.org?subject=unsubscribe>
+List-Archive: <http://mails.dpdk.org/archives/spp/>
+List-Post: <mailto:spp@dpdk.org>
+List-Help: <mailto:spp-request@dpdk.org?subject=help>
+List-Subscribe: <https://mails.dpdk.org/listinfo/spp>,
+ <mailto:spp-request@dpdk.org?subject=subscribe>
+X-TM-AS-MML: No
+Precedence: bulk
+Lines: 195
+X-TM-AS-GCONF: 00
+X-MD-STAMP: ON
+
+From: Yasufumi Ogawa <yasufum.o@gmail.com>
+
+For refactoring, rename operation functions in `response_info_list`
+of struct cmd_response. It is for assembling a JSON response message
+and starts with `append_`. However, There are many functions start
+with `append_` other than these operation functions and it is so
+confusing. This update is to rename the prefix to `add_`, and revise
+comments and vars.
+
+Signed-off-by: Yasufumi Ogawa <yasufum.o@gmail.com>
+---
+ .../secondary/spp_worker_th/cmd_runner.c      | 71 ++++++++++---------
+ 1 file changed, 38 insertions(+), 33 deletions(-)
+
+diff --git a/src/shared/secondary/spp_worker_th/cmd_runner.c b/src/shared/secondary/spp_worker_th/cmd_runner.c
+index bc3ae06..f686209 100644
+--- a/src/shared/secondary/spp_worker_th/cmd_runner.c
++++ b/src/shared/secondary/spp_worker_th/cmd_runner.c
+@@ -561,7 +561,7 @@ spp_iterate_core_info(struct spp_iterate_core_params *params)
+ /* Iterate classifier_table to create response to status command */
+ #ifdef SPP_VF_MODULE
+ static int
+-add_classifier_table(
++_add_classifier_table(
+ 		struct spp_iterate_classifier_table_params *params)
+ {
+ 	int ret;
+@@ -903,9 +903,9 @@ append_error_details_value(const char *name, char **output, void *tmp)
+ 	return ret;
+ }
+ 
+-/* append a client id for JSON format */
++/* Add entry of client ID to a response in JSON. */
+ static int
+-append_client_id_value(const char *name, char **output,
++add_client_id(const char *name, char **output,
+ 		void *tmp __attribute__ ((unused)))
+ {
+ 	return append_json_int_value(name, output, sppwk_get_client_id());
+@@ -947,9 +947,9 @@ append_process_type_value(const char *name, char **output,
+ 			SPPWK_PROC_TYPE_LIST[sppwk_get_proc_type()]);
+ }
+ 
+-/* append a list of interface numbers for JSON format */
++/* Add entry of port to a response in JSON such as "phy:0". */
+ static int
+-append_interface_value(const char *name, char **output,
++add_interface(const char *name, char **output,
+ 		void *tmp __attribute__ ((unused)))
+ {
+ 	int ret = SPP_RET_NG;
+@@ -1115,7 +1115,7 @@ append_port_array(const char *name, char **output, const int num,
+ }
+ 
+ /**
+- * TODO(yasufum) add usages called from `append_core_value` or refactor
++ * TODO(yasufum) add usages called from `add_core` or refactor
+  * confusing function names.
+  */
+ /* append one element of core information for JSON format */
+@@ -1179,9 +1179,9 @@ append_core_element_value(
+ 	return ret;
+ }
+ 
+-/* append master lcore in JSON format */
++/* Add entry of master lcore to a response in JSON. */
+ static int
+-append_master_lcore_value(const char *name, char **output,
++add_master_lcore(const char *name, char **output,
+ 		void *tmp __attribute__ ((unused)))
+ {
+ 	int ret = SPP_RET_NG;
+@@ -1189,9 +1189,9 @@ append_master_lcore_value(const char *name, char **output,
+ 	return ret;
+ }
+ 
+-/* append a list of core information for JSON format */
++/* Add entry of core info of worker to a response in JSON such as "core:0". */
+ static int
+-append_core_value(const char *name, char **output,
++add_core(const char *name, char **output,
+ 		void *tmp __attribute__ ((unused)))
+ {
+ 	int ret = SPP_RET_NG;
+@@ -1280,17 +1280,16 @@ append_classifier_element_value(
+ #endif /* SPP_VF_MODULE */
+ 
+ /**
+- * Append entries of classifier table in JSON. Before iterating the entries,
++ * Add entries of classifier table in JSON. Before iterating the entries,
+  * this function calls several nested functions.
+- *   append_classifier_table()  // This function.
+- *     -> add_classifier_table()  // Wrapper and doesn't almost nothing.
++ *   add_classifier_table()  // This function.
++ *     -> _add_classifier_table()  // Wrapper and doesn't almost nothing.
+  *       -> add_classifier_table_val()  // Setup data and call iterator.
+  *         -> iterate_adding_mac_entry()
+- *
+  */
+ #ifdef SPP_VF_MODULE
+ static int
+-append_classifier_table(const char *name, char **output,
++add_classifier_table(const char *name, char **output,
+ 		void *tmp __attribute__ ((unused)))
+ {
+ 	int ret = SPP_RET_NG;
+@@ -1307,7 +1306,7 @@ append_classifier_table(const char *name, char **output,
+ 	itr_params.output = tmp_buff;
+ 	itr_params.element_proc = append_classifier_element_value;
+ 
+-	ret = add_classifier_table(&itr_params);
++	ret = _add_classifier_table(&itr_params);
+ 	if (unlikely(ret != SPP_RET_OK)) {
+ 		spp_strbuf_free(itr_params.output);
+ 		return SPP_RET_NG;
+@@ -1386,20 +1385,26 @@ struct cmd_response response_result_list[] = {
+ };
+ 
+ /**
+- * TODO(yasufum) Add desc why it is needed and how to be used. At least, func
+- * name is not appropriate because not for reponse, but name of funcs returns
+- * response.
++ * List of combination of tag and operator function. It is used to assemble
++ * a result of command in JSON like as following.
++ *
++ *     {
++ *         "client-id": 1,
++ *         "ports": ["phy:0", "phy:1", "vhost:0", "ring:0"],
++ *         "components": [
++ *             {
++ *                 "core": 2,
++ *                 ...
+  */
+-/* command response status information string list */
+ struct cmd_response response_info_list[] = {
+-	{ "client-id", append_client_id_value },
+-	{ "phy", append_interface_value },
+-	{ "vhost", append_interface_value },
+-	{ "ring", append_interface_value },
+-	{ "master-lcore", append_master_lcore_value },
+-	{ "core", append_core_value },
++	{ "client-id", add_client_id },
++	{ "phy", add_interface },
++	{ "vhost", add_interface },
++	{ "ring", add_interface },
++	{ "master-lcore", add_master_lcore},
++	{ "core", add_core},
+ #ifdef SPP_VF_MODULE
+-	{ "classifier_table", append_classifier_table},
++	{ "classifier_table", add_classifier_table},
+ #endif /* SPP_VF_MODULE */
+ 	{ "", NULL }
+ };
+@@ -1541,9 +1546,9 @@ send_decode_error_response(int *sock,
+ 	spp_strbuf_free(msg);
+ }
+ 
+-/* send response for command execution result */
++/* Send the result of command to spp-ctl. */
+ static void
+-send_command_result_response(int *sock,
++send_result_spp_ctl(int *sock,
+ 		const struct sppwk_cmd_req *request,
+ 		struct cmd_result *cmd_results)
+ {
+@@ -1569,7 +1574,7 @@ send_command_result_response(int *sock,
+ 
+ 	/* append client id information value */
+ 	if (request->is_requested_client_id) {
+-		ret = append_client_id_value("client_id", &tmp_buff, NULL);
++		ret = add_client_id("client_id", &tmp_buff, NULL);
+ 		if (unlikely(ret < SPP_RET_OK)) {
+ 			spp_strbuf_free(tmp_buff);
+ 			RTE_LOG(ERR, WK_CMD_RUNNER, "Failed to make "
+@@ -1675,14 +1680,14 @@ exec_cmds(int *sock, const char *req_str, size_t req_str_len)
+ 	/* Exec exit command. */
+ 	if (cmd_req.is_requested_exit) {
+ 		set_cmd_result(&cmd_results[0], CMD_SUCCESS, "");
+-		send_command_result_response(sock, &cmd_req, cmd_results);
++		send_result_spp_ctl(sock, &cmd_req, cmd_results);
+ 		RTE_LOG(INFO, WK_CMD_RUNNER,
+ 				"Process is terminated with exit cmd.\n");
+ 		return SPP_RET_NG;
+ 	}
+ 
+-	/* send response */
+-	send_command_result_response(sock, &cmd_req, cmd_results);
++	/* Send response to spp-ctl. */
++	send_result_spp_ctl(sock, &cmd_req, cmd_results);
+ 
+ 	RTE_LOG(DEBUG, WK_CMD_RUNNER, "End command request processing.\n");
+ 
+-- 
+2.17.1
+
+

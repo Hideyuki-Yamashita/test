@@ -1,0 +1,326 @@
+Return-path: <fw-yama-hd@pomail01.silk.ntt-tx.co.jp>
+Received: from zssg-mailmd104.ddreams.local
+ (zssg-mailmd104.ddreams.local [10.160.123.99]) by zssg-mailms320.ddreams.local
+ (NTT DoCoMo Mail System) with ESMTP id <0PTL00DD4663SMD0@NTTDoCoMo.co.jp> for
+ yamashita.hideyuki@ntt-tx.co.jp; Mon, 24 Jun 2019 13:37:15 +0900 (JST)
+Original-recipient: rfc822;yamashita.hideyuki@ntt-tx.co.jp
+Received: from smtp_saver-daemon.zssg-mailmd104.ddreams.local by
+ zssg-mailmd104.ddreams.local (dDREAMS) id <0PTL00412663RH00@dDREAMS> for
+ yamashita.hideyuki@ntt-tx.co.jp (ORCPT yamashita.hideyuki@ntt-tx.co.jp); Mon,
+ 24 Jun 2019 13:37:15 +0900 (JST)
+Received: from zssg-mailmf104.ddreams.local
+ (zssg-mailmf900.ddreams.local [10.160.172.84]) by zssg-mailmd104.ddreams.local
+ (dDREAMS) with ESMTP id <0PTL00V0D6638YD0@dDREAMS> for
+ yamashita.hideyuki@ntt-tx.co.jp (ORCPT yamashita.hideyuki@ntt-tx.co.jp); Mon,
+ 24 Jun 2019 13:37:15 +0900 (JST)
+Received: from zssg-mailmf104.ddreams.local (unknown [127.0.0.1])
+	by zssg-mailmf104.ddreams.local (Postfix) with ESMTP id 2EA577E6032	for
+ <yamashita.hideyuki@ntt-tx.co.jp>; Mon, 24 Jun 2019 13:37:15 +0900 (JST)
+Received: from zssg-mailmf104.ddreams.local (unknown [127.0.0.1])
+	by IMSVA (Postfix) with ESMTP id 2D9AC8E6056	for
+ <yamashita.hideyuki@ntt-tx.co.jp>; Mon, 24 Jun 2019 13:37:15 +0900 (JST)
+Received: from localhost (unknown [127.0.0.1])	by IMSVA (Postfix)
+ with SMTP id 213F68E6063	for <yamashita.hideyuki@ntt-tx.co.jp>; Mon,
+ 24 Jun 2019 13:37:15 +0900 (JST)
+X-IMSS-HAND-OFF-DIRECTIVE: localhost:10026
+Received: from zssg-mailmf104.ddreams.local (unknown [127.0.0.1])
+	by IMSVA (Postfix) with ESMTP id C60038E6050	for
+ <yamashita.hideyuki@ntt-tx.co.jp>; Mon, 24 Jun 2019 13:37:13 +0900 (JST)
+Received: from pomail01.silk.ntt-tx.co.jp (unknown [10.160.183.139])
+	by zssg-mailmf104.ddreams.local (Postfix)
+ with ESMTPS	for <yamashita.hideyuki@ntt-tx.co.jp>; Mon,
+ 24 Jun 2019 13:37:13 +0900 (JST)
+Received: from pomail01.silk.ntt-tx.co.jp (localhost [127.0.0.1])
+	by pomail01.silk.ntt-tx.co.jp (unknown) with ESMTP id x5O4bDrL008342;	Mon,
+ 24 Jun 2019 13:37:13 +0900
+Received: (from yama-hd@localhost)	by pomail01.silk.ntt-tx.co.jp (unknown)
+ id x5O4bDuq008341;	Mon, 24 Jun 2019 13:37:13 +0900
+X-Authentication-warning: pomail01.silk.ntt-tx.co.jp: yama-hd set sender to
+ fw-yama-hd@pomail01.silk.ntt-tx.co.jp using -f
+Received: from imss04.silk.ntt-tx.co.jp
+ (imss04.silk.ntt-tx.co.jp [10.107.0.39])	by pomail01.silk.ntt-tx.co.jp
+ (unknown) with ESMTP id x5O4bDZ3008338	for unknown; Mon,
+ 24 Jun 2019 13:37:13 +0900
+Received: from imss04.silk.ntt-tx.co.jp (localhost [127.0.0.1])
+ by imss04.silk.ntt-tx.co.jp (unknown) with ESMTP id x5O4bDhq016736 for
+ unknown; Mon, 24 Jun 2019 13:37:13 +0900
+Received: from ml01.silk.ntt-tx.co.jp (ml01.silk.ntt-tx.co.jp [10.107.0.230])
+ by imss04.silk.ntt-tx.co.jp (unknown) with ESMTP id x5O4bDRX016733; Mon,
+ 24 Jun 2019 13:37:13 +0900
+Received: from ml01.silk.ntt-tx.co.jp (localhost [127.0.0.1])
+	by ml01.silk.ntt-tx.co.jp (unknown) with ESMTP id x5O4bC8h030614;	Mon,
+ 24 Jun 2019 13:37:12 +0900
+Received: from imss02.silk.ntt-tx.co.jp
+ (imss02.silk.ntt-tx.co.jp [10.107.0.127])	by ml01.silk.ntt-tx.co.jp (unknown)
+ with ESMTP id x5O4bCr6030610	for unknown; Mon, 24 Jun 2019 13:37:12 +0900
+Received: from imss02.silk.ntt-tx.co.jp (localhost [127.0.0.1])
+ by imss02.silk.ntt-tx.co.jp (unknown) with ESMTP id x5O4bCfg013741 for
+ unknown; Mon, 24 Jun 2019 13:37:12 +0900
+Received: from mail01.ics.ntt-tx.co.jp (mail01.ics.ntt-tx.co.jp [10.254.2.67])
+ by imss02.silk.ntt-tx.co.jp (unknown) with ESMTP id x5O4bCYd013735 for
+ unknown; Mon, 24 Jun 2019 13:37:12 +0900
+Received: from dpdk.org (dpdk.org [92.243.14.124])	by mail01.ics.ntt-tx.co.jp
+ (unknown) with SMTP id x5O4b5tF027733	for unknown; Mon,
+ 24 Jun 2019 13:37:11 +0900
+Received: from [92.243.14.124] (localhost [127.0.0.1])	by dpdk.org (Postfix)
+ with ESMTP id EFC041BF57;	Mon, 24 Jun 2019 06:37:03 +0200 (CEST)
+Received: from mail-pf1-f194.google.com
+ (mail-pf1-f194.google.com [209.85.210.194]) by dpdk.org (Postfix)
+ with ESMTP id DA65B1BF2C for <spp@dpdk.org>; Mon,
+ 24 Jun 2019 06:37:02 +0200 (CEST)
+Received: by mail-pf1-f194.google.com with SMTP id 19so6761860pfa.4 for
+ <spp@dpdk.org>; Sun, 23 Jun 2019 21:37:02 -0700 (PDT)
+Received: from localhost.localdomain ([192.47.164.146])
+ by smtp.gmail.com with ESMTPSA id c10sm9005178pjq.14.2019.06.23.21.37.00
+ (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128); Sun,
+ 23 Jun 2019 21:37:01 -0700 (PDT)
+Date: Mon, 24 Jun 2019 13:36:13 +0900
+From: yasufum.o@gmail.com
+Subject: [spp 04385] [spp] [PATCH 13/13] shared/sec: refactor comments for JSON
+ formatter
+Sender: spp <spp-bounces@dpdk.org>
+To: spp@dpdk.org, ferruh.yigit@intel.com, yasufum.o@gmail.com
+Message-id: <20190624043613.19271-14-yasufum.o@gmail.com>
+In-reply-to: <20190624043613.19271-1-yasufum.o@gmail.com>
+References: <20190624043613.19271-1-yasufum.o@gmail.com>
+X-ML-Name: unknown
+X-Mail-Count: 04385
+X-MLServer: unknown
+X-ML-Info: mailing list service
+X-Mailer: git-send-email 2.17.1
+Authentication-results: mail01.ics.ntt-tx.co.jp; spf=pass
+ smtp.mailfrom=spp-bounces@dpdk.org
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
+ h=from:to:subject:date:message-id:in-reply-to:references;
+ bh=TiWgQsR7GcNmo5MJra+jDG9Y5XrcOJ0er+dtakWk4lM=;
+ b=lDfGY5n3lAXBivFueVZPQ7jhh41y6B2j3SFqFpLWlSWxDUZHEt5EIS9bKJh241Y/Or
+ s6kQZ5BW51iKVkGrN+uIs+K4qIWKRR9iJu8xJZLHe5kFyEmbK0yryyfZ/3S2wN1BvCTZ
+ 9ACkuW1SMbcoy/DrkDi7E5xAw00rHjTdYaTbTayaEPjjrTmW0ZeJcerkSPn021tJPvNI
+ WFXY37h8hOkh8TxN76IaOdRQ0S8aOTQGl67dCT4vEIk2RiYiB1lOvZS+PirASgpI49x7
+ JI02MO3Dc8nM+vfMX2SblRjlMprGiGPTAQYUEVYl5jTdRZJpu8u9t5X4o+ct+flphGNC L6gg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=1e100.net;
+ s=20161025; h=x-gm-message-state:from:to:subject:date:message-id:in-reply-to
+ :references; bh=TiWgQsR7GcNmo5MJra+jDG9Y5XrcOJ0er+dtakWk4lM=;
+ b=W60Bxp4MMfaEKd29dwmRPJ354mtdteh0UaGzYu4Q+PYL23FvjASdXc9CbbXH8WTxIw
+ utHN0K/x/kTtGG8NpWFJU1PJbVl3qCf7+guncfl0MyQBCvo9hhlERyogXvnDn22ykn/Q
+ BQUWfUi2Ik5USny9JOvohiqjrECx/+dfD/z7dri4hn+ovf09mNdXADzbBlzWvzi7hZ7x
+ 9WMc8cKvTZiQq4xyld7IGxLCnGEXgfnEeCqQ36bLTH+OzqTLiQir/fkgoAULm5PEWQsX
+ iJhPunTnvvDxKFCmAOD1kmavO4RDNDEiK2xa2+7LGnj4UVUn0QlbDJZHF+Hr1uM993rn M7vA==
+X-Gm-Message-State: APjAAAUlqnDNkJErzkO7b0YXzDgwoJLuz3JbY44U0tQ5DgrpGgELF0bt
+ ATktTlBSNo4iAEmJDBzixC6LyM3F
+X-Google-Smtp-Source:
+ APXvYqx9iiXoANyIGzFKvIj7o5/vImiRHsaUQXpm+IwO69P1FOzkr1hAAyROGeHYCo8Giswsvj74qw==
+X-Received: by 2002:a65:6102:: with SMTP id z2mr29989134pgu.194.1561351022009;
+ Sun, 23 Jun 2019 21:37:02 -0700 (PDT)
+X-BeenThere: spp@dpdk.org
+X-Mailman-Version: 2.1.15
+List-Id: Soft Patch Panel <spp.dpdk.org>
+List-Unsubscribe: <https://mails.dpdk.org/options/spp>,
+ <mailto:spp-request@dpdk.org?subject=unsubscribe>
+List-Archive: <http://mails.dpdk.org/archives/spp/>
+List-Post: <mailto:spp@dpdk.org>
+List-Help: <mailto:spp-request@dpdk.org?subject=help>
+List-Subscribe: <https://mails.dpdk.org/listinfo/spp>,
+ <mailto:spp-request@dpdk.org?subject=subscribe>
+X-TM-AS-MML: No
+Precedence: bulk
+Lines: 195
+X-TM-AS-GCONF: 00
+X-MD-STAMP: ON
+
+From: Yasufumi Ogawa <yasufum.o@gmail.com>
+
+This update is to refactor comments for JSON formatter.
+
+Signed-off-by: Yasufumi Ogawa <yasufum.o@gmail.com>
+---
+ .../spp_worker_th/cmd_res_formatter.c         | 68 ++++++++++++-------
+ 1 file changed, 43 insertions(+), 25 deletions(-)
+
+diff --git a/src/shared/secondary/spp_worker_th/cmd_res_formatter.c b/src/shared/secondary/spp_worker_th/cmd_res_formatter.c
+index 24b5608..21024b9 100644
+--- a/src/shared/secondary/spp_worker_th/cmd_res_formatter.c
++++ b/src/shared/secondary/spp_worker_th/cmd_res_formatter.c
+@@ -88,7 +88,7 @@ struct cmd_response response_info_list[] = {
+ 	{ "", NULL }
+ };
+ 
+-/* append a command result for JSON format */
++/* Append a command result in JSON format. */
+ static int
+ append_result_value(const char *name, char **output, void *tmp)
+ {
+@@ -96,7 +96,7 @@ append_result_value(const char *name, char **output, void *tmp)
+ 	return append_json_str_value(output, name, result->result);
+ }
+ 
+-/* append error details for JSON format */
++/* Append error details in JSON format. */
+ static int
+ append_error_details_value(const char *name, char **output, void *tmp)
+ {
+@@ -110,9 +110,7 @@ append_error_details_value(const char *name, char **output, void *tmp)
+ 	tmp_buff = spp_strbuf_allocate(CMD_RES_BUF_INIT_SIZE);
+ 	if (unlikely(tmp_buff == NULL)) {
+ 		RTE_LOG(ERR, WK_CMD_RES_FMT,
+-				/* TODO(yasufum) refactor no meaning err msg */
+-				"allocate error. (name = %s)\n",
+-				name);
++				"Fail to alloc buf for `%s`.\n", name);
+ 		return SPP_RET_NG;
+ 	}
+ 
+@@ -135,7 +133,7 @@ is_port_flushed(enum port_type iface_type, int iface_no)
+ 	return port->ethdev_port_id >= 0;
+ }
+ 
+-/* append a list of interface numbers */
++/* Append index number as comma separated format such as `0, 1, ...`. */
+ int
+ append_interface_array(char **output, const enum port_type type)
+ {
+@@ -151,14 +149,12 @@ append_interface_array(char **output, const enum port_type type)
+ 		*output = spp_strbuf_append(*output, tmp_str, strlen(tmp_str));
+ 		if (unlikely(*output == NULL)) {
+ 			RTE_LOG(ERR, WK_CMD_RES_FMT,
+-					"Interface number failed to add. "
+-					"(type = %d)\n", type);
++				/* TODO(yasufum) replace %d to string. */
++				"Failed to add index for type `%d`.\n", type);
+ 			return SPP_RET_NG;
+ 		}
+-
+ 		port_cnt++;
+ 	}
+-
+ 	return SPP_RET_OK;
+ }
+ 
+@@ -519,7 +515,10 @@ append_response_list_value(char **output, struct cmd_response *responses,
+ 	return SPP_RET_OK;
+ }
+ 
+-/* append a list of command results for JSON format. */
++/**
++ * Setup `results` section in JSON msg. This is an example.
++ *   "results": [ { "result": "success" } ]
++ */
+ int
+ append_command_results_value(const char *name, char **output,
+ 		int num, struct cmd_result *results)
+@@ -527,27 +526,26 @@ append_command_results_value(const char *name, char **output,
+ 	int ret = SPP_RET_NG;
+ 	int i;
+ 	char *tmp_buff1, *tmp_buff2;
++
++	/* Setup result statement step by step with two buffers. */
+ 	tmp_buff1 = spp_strbuf_allocate(CMD_RES_BUF_INIT_SIZE);
+ 	if (unlikely(tmp_buff1 == NULL)) {
+ 		RTE_LOG(ERR, WK_CMD_RES_FMT,
+-				/* TODO(yasufum) refactor no meaning err msg */
+-				"allocate error. (name = %s, buff=1)\n",
+-				name);
++				"Faield to alloc 1st buf for `%s`.\n", name);
+ 		return SPP_RET_NG;
+ 	}
+-
+ 	tmp_buff2 = spp_strbuf_allocate(CMD_RES_BUF_INIT_SIZE);
+ 	if (unlikely(tmp_buff2 == NULL)) {
+ 		spp_strbuf_free(tmp_buff1);
+ 		RTE_LOG(ERR, WK_CMD_RES_FMT,
+-				/* TODO(yasufum) refactor no meaning err msg */
+-				"allocate error. (name = %s, buff=2)\n",
+-				name);
++				"Faield to alloc 2nd buf for `%s`.\n", name);
+ 		return SPP_RET_NG;
+ 	}
+ 
+ 	for (i = 0; i < num; i++) {
+ 		tmp_buff1[0] = '\0';
++
++		/* Setup key-val pair such as `"result": "success"` */
+ 		ret = append_response_list_value(&tmp_buff1,
+ 				response_result_list, &results[i]);
+ 		if (unlikely(ret < 0)) {
+@@ -556,22 +554,41 @@ append_command_results_value(const char *name, char **output,
+ 			return SPP_RET_NG;
+ 		}
+ 
++		/* Surround key-val pair such as `{ "result": "success" }`. */
+ 		ret = append_json_block_brackets(&tmp_buff2, "", tmp_buff1);
+ 		if (unlikely(ret < 0)) {
+ 			spp_strbuf_free(tmp_buff1);
+ 			spp_strbuf_free(tmp_buff2);
+ 			return SPP_RET_NG;
+ 		}
+-
+ 	}
+ 
++	/**
++	 * Setup result statement such as
++	 * `"results": [ { "result": "success" } ]`.
++	 */
+ 	ret = append_json_array_brackets(output, name, tmp_buff2);
++
+ 	spp_strbuf_free(tmp_buff1);
+ 	spp_strbuf_free(tmp_buff2);
+ 	return ret;
+ }
+ 
+-/* append a list of status information for JSON format. */
++/**
++ * Setup response of `status` command.
++ *
++ * This is an example of the response.
++ *   "results": [ { "result": "success" } ],
++ *   "info": {
++ *       "client-id": 2,
++ *       "phy": [ 0, 1 ], "vhost": [  ], "ring": [  ],
++ *       "master-lcore": 1,
++ *       "core": [
++ *           {"core": 2, "type": "unuse"}, {"core": 3, "type": "unuse"}, ...
++ *       ],
++ *       "classifier_table": [  ]
++ *   }
++ */
+ int
+ append_info_value(const char *name, char **output)
+ {
+@@ -579,19 +596,19 @@ append_info_value(const char *name, char **output)
+ 	char *tmp_buff = spp_strbuf_allocate(CMD_RES_BUF_INIT_SIZE);
+ 	if (unlikely(tmp_buff == NULL)) {
+ 		RTE_LOG(ERR, WK_CMD_RES_FMT,
+-				/* TODO(yasufum) refactor no meaning err msg */
+-				"allocate error. (name = %s)\n",
++				"Failed to get empty buf for append `%s`.\n",
+ 				name);
+ 		return SPP_RET_NG;
+ 	}
+ 
+-	ret = append_response_list_value(&tmp_buff,
+-			response_info_list, NULL);
++	/* Setup JSON msg in value of `info` key. */
++	ret = append_response_list_value(&tmp_buff, response_info_list, NULL);
+ 	if (unlikely(ret < SPP_RET_OK)) {
+ 		spp_strbuf_free(tmp_buff);
+ 		return SPP_RET_NG;
+ 	}
+ 
++	/* Setup response of JSON msg. */
+ 	ret = append_json_block_brackets(output, name, tmp_buff);
+ 	spp_strbuf_free(tmp_buff);
+ 	return ret;
+@@ -674,7 +691,8 @@ wk_get_client_id(void)
+  * of struct `cmd_response` which are for making each of parts of command
+  * response.
+  */
+-/* Add entry of client ID to a response in JSON. */
++
++/* Add entry of client ID such as `"client-id": 1` to a response in JSON. */
+ int
+ add_client_id(const char *name, char **output,
+ 		void *tmp __attribute__ ((unused)))
+-- 
+2.17.1
+
+

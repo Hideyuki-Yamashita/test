@@ -1,0 +1,341 @@
+Return-path: <fw-yama-hd@pomail01.silk.ntt-tx.co.jp>
+Received: from zssg-mailmd105.ddreams.local
+ (zssg-mailmd105.ddreams.local [10.160.123.100])
+ by zssg-mailms320.ddreams.local (NTT DoCoMo Mail System)
+ with ESMTP id <0PTL00UOB0358Y40@NTTDoCoMo.co.jp> for
+ yamashita.hideyuki@ntt-tx.co.jp; Mon, 24 Jun 2019 11:25:53 +0900 (JST)
+Original-recipient: rfc822;yamashita.hideyuki@ntt-tx.co.jp
+Received: from smtp_saver-daemon.zssg-mailmd105.ddreams.local by
+ zssg-mailmd105.ddreams.local (dDREAMS) id <0PTL00M3W0355H00@dDREAMS> for
+ yamashita.hideyuki@ntt-tx.co.jp (ORCPT yamashita.hideyuki@ntt-tx.co.jp); Mon,
+ 24 Jun 2019 11:25:53 +0900 (JST)
+Received: from zssg-mailmf104.ddreams.local
+ (zssg-mailmf900.ddreams.local [10.160.172.84]) by zssg-mailmd105.ddreams.local
+ (dDREAMS) with ESMTP id <0PTL00HQ3035YD20@dDREAMS> for
+ yamashita.hideyuki@ntt-tx.co.jp (ORCPT yamashita.hideyuki@ntt-tx.co.jp); Mon,
+ 24 Jun 2019 11:25:53 +0900 (JST)
+Received: from zssg-mailmf104.ddreams.local (unknown [127.0.0.1])
+	by zssg-mailmf104.ddreams.local (Postfix) with ESMTP id 2ECB07E6032	for
+ <yamashita.hideyuki@ntt-tx.co.jp>; Mon, 24 Jun 2019 11:25:53 +0900 (JST)
+Received: from zssg-mailmf104.ddreams.local (unknown [127.0.0.1])
+	by IMSVA (Postfix) with ESMTP id 2CEA88E605D	for
+ <yamashita.hideyuki@ntt-tx.co.jp>; Mon, 24 Jun 2019 11:25:53 +0900 (JST)
+Received: from localhost (unknown [127.0.0.1])	by IMSVA (Postfix)
+ with SMTP id 21CE08E6050	for <yamashita.hideyuki@ntt-tx.co.jp>; Mon,
+ 24 Jun 2019 11:25:53 +0900 (JST)
+X-IMSS-HAND-OFF-DIRECTIVE: localhost:10026
+Received: from zssg-mailmf104.ddreams.local (unknown [127.0.0.1])
+	by IMSVA (Postfix) with ESMTP id 6E13D8E605A	for
+ <yamashita.hideyuki@ntt-tx.co.jp>; Mon, 24 Jun 2019 11:25:52 +0900 (JST)
+Received: from pomail01.silk.ntt-tx.co.jp (unknown [10.160.183.139])
+	by zssg-mailmf104.ddreams.local (Postfix)
+ with ESMTPS	for <yamashita.hideyuki@ntt-tx.co.jp>; Mon,
+ 24 Jun 2019 11:25:52 +0900 (JST)
+Received: from pomail01.silk.ntt-tx.co.jp (localhost [127.0.0.1])
+	by pomail01.silk.ntt-tx.co.jp (unknown) with ESMTP id x5O2Pqs6013680;	Mon,
+ 24 Jun 2019 11:25:52 +0900
+Received: (from yama-hd@localhost)	by pomail01.silk.ntt-tx.co.jp (unknown)
+ id x5O2PqiU013679;	Mon, 24 Jun 2019 11:25:52 +0900
+X-Authentication-warning: pomail01.silk.ntt-tx.co.jp: yama-hd set sender to
+ fw-yama-hd@pomail01.silk.ntt-tx.co.jp using -f
+Received: from imss04.silk.ntt-tx.co.jp
+ (imss04.silk.ntt-tx.co.jp [10.107.0.39])	by pomail01.silk.ntt-tx.co.jp
+ (unknown) with ESMTP id x5O2Pq01013676	for unknown; Mon,
+ 24 Jun 2019 11:25:52 +0900
+Received: from imss04.silk.ntt-tx.co.jp (localhost [127.0.0.1])
+ by imss04.silk.ntt-tx.co.jp (unknown) with ESMTP id x5O2PpB1006159 for
+ unknown; Mon, 24 Jun 2019 11:25:51 +0900
+Received: from ml01.silk.ntt-tx.co.jp (ml01.silk.ntt-tx.co.jp [10.107.0.230])
+ by imss04.silk.ntt-tx.co.jp (unknown) with ESMTP id x5O2PpiM006156; Mon,
+ 24 Jun 2019 11:25:51 +0900
+Received: from ml01.silk.ntt-tx.co.jp (localhost [127.0.0.1])
+	by ml01.silk.ntt-tx.co.jp (unknown) with ESMTP id x5O2PpC8016552;	Mon,
+ 24 Jun 2019 11:25:51 +0900
+Received: from imss02.silk.ntt-tx.co.jp
+ (imss02.silk.ntt-tx.co.jp [10.107.0.127])	by ml01.silk.ntt-tx.co.jp (unknown)
+ with ESMTP id x5O2PpJa016548	for unknown; Mon, 24 Jun 2019 11:25:51 +0900
+Received: from imss02.silk.ntt-tx.co.jp (localhost [127.0.0.1])
+ by imss02.silk.ntt-tx.co.jp (unknown) with ESMTP id x5O2PpoC006800 for
+ unknown; Mon, 24 Jun 2019 11:25:51 +0900
+Received: from mail01.ics.ntt-tx.co.jp (mail01.ics.ntt-tx.co.jp [10.254.2.67])
+ by imss02.silk.ntt-tx.co.jp (unknown) with ESMTP id x5O2PpAZ006794 for
+ unknown; Mon, 24 Jun 2019 11:25:51 +0900
+Received: from dpdk.org (dpdk.org [92.243.14.124])	by mail01.ics.ntt-tx.co.jp
+ (unknown) with SMTP id x5O2Pil4003992	for unknown; Mon,
+ 24 Jun 2019 11:25:50 +0900
+Received: from [92.243.14.124] (localhost [127.0.0.1])	by dpdk.org (Postfix)
+ with ESMTP id 2AB291BF6C;	Mon, 24 Jun 2019 04:25:44 +0200 (CEST)
+Received: from mail-pl1-f193.google.com
+ (mail-pl1-f193.google.com [209.85.214.193]) by dpdk.org (Postfix)
+ with ESMTP id AD5A41BF6C for <spp@dpdk.org>; Mon,
+ 24 Jun 2019 04:25:42 +0200 (CEST)
+Received: by mail-pl1-f193.google.com with SMTP id c14so5992985plo.0 for
+ <spp@dpdk.org>; Sun, 23 Jun 2019 19:25:42 -0700 (PDT)
+Received: from localhost.localdomain ([192.47.164.146])
+ by smtp.gmail.com with ESMTPSA id a3sm9927461pje.3.2019.06.23.19.25.40
+ (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128); Sun,
+ 23 Jun 2019 19:25:41 -0700 (PDT)
+Date: Mon, 24 Jun 2019 11:25:03 +0900
+From: yasufum.o@gmail.com
+Subject: [spp 04370] [spp] [PATCH 10/11] shared/sec: refactor getting
+ classifier status
+Sender: spp <spp-bounces@dpdk.org>
+To: spp@dpdk.org, ferruh.yigit@intel.com, yasufum.o@gmail.com
+Message-id: <20190624022504.18752-11-yasufum.o@gmail.com>
+In-reply-to: <20190624022504.18752-1-yasufum.o@gmail.com>
+References: <20190624022504.18752-1-yasufum.o@gmail.com>
+X-ML-Name: unknown
+X-Mail-Count: 04370
+X-MLServer: unknown
+X-ML-Info: mailing list service
+X-Mailer: git-send-email 2.17.1
+Authentication-results: mail01.ics.ntt-tx.co.jp; spf=pass
+ smtp.mailfrom=spp-bounces@dpdk.org
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
+ h=from:to:subject:date:message-id:in-reply-to:references;
+ bh=yxUDLMdHdJZYQp4XOIx9bJ43ha1C5VoVDA6xdJ5f/LY=;
+ b=FhpXWiHCNW5Coj8cD+sz4FDuRwD+LEs1k55Nwu4osj5LsFMsjU+emxoqFQxtUzFl63
+ 3md9Y4gaGj8wAUSA6hg73Znt5Yq4Mu9zSF3yuaLkOtJ9IEWf9hn3tKnCLR5eFp94s0Mk
+ DqO/TjQXcxO1d+2hoHJe1WfCSRZ73aG5OArs9jc2ScHKxTcr1eoACiKD66uu1xzCOWZB
+ bxZvfnaeiW7ZQR4NURPGin7zMb1Y7wl5Ut3oaH825Sw/Se3GaqgkFopNFwt9ei5Lh35p
+ Jd63b5of/y8nee1bhlEZqEsG1T2lH7EDLthNQQ8Ac06U75o8ilGYcJ4c0pDDJZyRQhmD WGRA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=1e100.net;
+ s=20161025; h=x-gm-message-state:from:to:subject:date:message-id:in-reply-to
+ :references; bh=yxUDLMdHdJZYQp4XOIx9bJ43ha1C5VoVDA6xdJ5f/LY=;
+ b=j+TsMpdC5mRb8RcUW6U+Av0nOjiY3Y/Ewco7MMmAj4hpkISMAp7D3uysO/DYLHX8oJ
+ lp3LwM8uA8XjwN7an54IB0riRc3A8mewOcUZpmbMNTtBOZjklf8cIDgselbvmeUthx+9
+ J6ORTMdsWRJLc/zfTwGUU++vlz7sneJQ3qQV/Mio65pEgaxWVaQJev5wKokfIRyvRUhH
+ ssb2BPFFZsGjzbb8Vs+XVnhkCXxq6/sHSfI5ZSpts6VZEK7eB+RR85ZzfbBFqtf2BGpJ
+ 7Os845WybgeX7kSRws32RE/DCB+n/O2OnhlQaAG97cOy9nVX17mUZu4bF2mNDKBPbyda qxAw==
+X-Gm-Message-State: APjAAAVacPOw7iNbrdjS12ygrrn0MID6/SAql7GkG7qAlckKyM9V3Ie3
+ 1v8r1l64G1Io5L8PNoGc8bdEEEFc
+X-Google-Smtp-Source:
+ APXvYqxdCKaGCZ/2D8ugpW0wHw3Wfl6WcldhUsjGX6Ug8ODOhZg1AUC/pPskw4jsfroLBNxebofwgw==
+X-Received: by 2002:a17:902:6902:: with SMTP id
+ j2mr73296290plk.321.1561343141672; Sun, 23 Jun 2019 19:25:41 -0700 (PDT)
+X-BeenThere: spp@dpdk.org
+X-Mailman-Version: 2.1.15
+List-Id: Soft Patch Panel <spp.dpdk.org>
+List-Unsubscribe: <https://mails.dpdk.org/options/spp>,
+ <mailto:spp-request@dpdk.org?subject=unsubscribe>
+List-Archive: <http://mails.dpdk.org/archives/spp/>
+List-Post: <mailto:spp@dpdk.org>
+List-Help: <mailto:spp-request@dpdk.org?subject=help>
+List-Subscribe: <https://mails.dpdk.org/listinfo/spp>,
+ <mailto:spp-request@dpdk.org?subject=subscribe>
+X-TM-AS-MML: No
+Precedence: bulk
+Lines: 209
+X-TM-AS-GCONF: 00
+X-MD-STAMP: ON
+
+From: Yasufumi Ogawa <yasufum.o@gmail.com>
+
+This update is to rename spp_classifier_get_component_status() to
+get_classifier_status() to simplify, and revise vars and log messages
+for refactoring.
+
+Signed-off-by: Yasufumi Ogawa <yasufum.o@gmail.com>
+---
+ .../secondary/spp_worker_th/cmd_runner.c      | 12 +++----
+ src/shared/secondary/spp_worker_th/vf_deps.h  |  8 ++---
+ src/vf/classifier_mac.c                       | 22 ++++++------
+ src/vf/spp_forward.c                          | 35 +++++++++----------
+ 4 files changed, 36 insertions(+), 41 deletions(-)
+
+diff --git a/src/shared/secondary/spp_worker_th/cmd_runner.c b/src/shared/secondary/spp_worker_th/cmd_runner.c
+index a768575..856e79e 100644
+--- a/src/shared/secondary/spp_worker_th/cmd_runner.c
++++ b/src/shared/secondary/spp_worker_th/cmd_runner.c
+@@ -532,15 +532,11 @@ spp_iterate_core_info(struct spp_iterate_core_params *params)
+ 			comp_info = (comp_info_base + core->id[cnt]);
+ #ifdef SPP_VF_MODULE
+ 			if (comp_info->wk_type == SPPWK_TYPE_CLS) {
+-				ret = spp_classifier_get_component_status(
+-						lcore_id,
+-						core->id[cnt],
+-						params);
++				ret = get_classifier_status(lcore_id,
++						core->id[cnt], params);
+ 			} else {
+-				ret = spp_forward_get_component_status(
+-						lcore_id,
+-						core->id[cnt],
+-						params);
++				ret = get_forwarder_status(lcore_id,
++						core->id[cnt], params);
+ 			}
+ #endif /* SPP_VF_MODULE */
+ #ifdef SPP_MIRROR_MODULE
+diff --git a/src/shared/secondary/spp_worker_th/vf_deps.h b/src/shared/secondary/spp_worker_th/vf_deps.h
+index 3ae4fc9..fb34215 100644
+--- a/src/shared/secondary/spp_worker_th/vf_deps.h
++++ b/src/shared/secondary/spp_worker_th/vf_deps.h
+@@ -79,7 +79,7 @@ int spp_classifier_mac_iterate_table(
+ 		struct spp_iterate_classifier_table_params *params);
+ 
+ /**
+- * classifier get component status.
++ * Get classifier status.
+  *
+  * @param[in] lcore_id Lcore ID for classifier.
+  * @param[in] id Unique component ID.
+@@ -87,11 +87,11 @@ int spp_classifier_mac_iterate_table(
+  * @retval SPP_RET_OK If succeeded.
+  * @retval SPP_RET_NG If failed.
+  */
+-int spp_classifier_get_component_status(unsigned int lcore_id, int id,
++int get_classifier_status(unsigned int lcore_id, int id,
+ 		struct spp_iterate_core_params *params);
+ 
+ /**
+- * Merge/Forward get component status
++ * Get forwarder status.
+  *
+  * @param lcore_id Lcore ID for forwarder and merger.
+  * @param id Unique component ID.
+@@ -99,7 +99,7 @@ int spp_classifier_get_component_status(unsigned int lcore_id, int id,
+  * @retval SPP_RET_OK If succeeded.
+  * @retval SPP_RET_NG If failed.
+  */
+-int spp_forward_get_component_status(unsigned int lcore_id, int id,
++int get_forwarder_status(unsigned int lcore_id, int id,
+ 		struct spp_iterate_core_params *params);
+ 
+ #endif  /* _SPPWK_TH_VF_DEPS_H_ */
+diff --git a/src/vf/classifier_mac.c b/src/vf/classifier_mac.c
+index f6074e4..9023a69 100644
+--- a/src/vf/classifier_mac.c
++++ b/src/vf/classifier_mac.c
+@@ -803,29 +803,29 @@ spp_classifier_mac_do(int id)
+ 
+ /* classifier iterate component information */
+ int
+-spp_classifier_get_component_status(
+-		unsigned int lcore_id, int id,
++get_classifier_status(unsigned int lcore_id, int id,
+ 		struct spp_iterate_core_params *params)
+ {
+ 	int ret = SPP_RET_NG;
+-	int i, nof_tx, nof_rx = 0;  /* Num of RX and TX ports. */
++	int i;
++	int nof_tx, nof_rx = 0;  /* Num of RX and TX ports. */
+ 	struct management_info *mng_info;
+ 	struct cls_comp_info *cmp_info;
+-	struct cls_port_info *clsd_data;
++	struct cls_port_info *port_info;
+ 	struct sppwk_port_idx rx_ports[RTE_MAX_ETHPORTS];
+ 	struct sppwk_port_idx tx_ports[RTE_MAX_ETHPORTS];
+ 
+ 	mng_info = g_mng_infos + id;
+ 	if (!is_used_mng_info(mng_info)) {
+ 		RTE_LOG(ERR, SPP_CLASSIFIER_MAC,
+-				"Component[%d] Not used. "
+-				"(status)(core = %d, type = %d)\n",
++				"Classifier is not used "
++				"(comp_id=%d, lcore_id=%d, type=%d).\n",
+ 				id, lcore_id, SPPWK_TYPE_CLS);
+ 		return SPP_RET_NG;
+ 	}
+ 
+ 	cmp_info = mng_info->cmp_infos + mng_info->ref_index;
+-	clsd_data = cmp_info->tx_ports_i;
++	port_info = cmp_info->tx_ports_i;
+ 
+ 	memset(rx_ports, 0x00, sizeof(rx_ports));
+ 	if (cmp_info->rx_port_i.iface_type != UNDEF) {
+@@ -837,14 +837,14 @@ spp_classifier_get_component_status(
+ 	memset(tx_ports, 0x00, sizeof(tx_ports));
+ 	nof_tx = cmp_info->nof_tx_ports;
+ 	for (i = 0; i < nof_tx; i++) {
+-		tx_ports[i].iface_type = clsd_data[i].iface_type;
+-		tx_ports[i].iface_no   = clsd_data[i].iface_no_global;
++		tx_ports[i].iface_type = port_info[i].iface_type;
++		tx_ports[i].iface_no = port_info[i].iface_no_global;
+ 	}
+ 
+ 	/* Set the information with the function specified by the command. */
++	/* TODO(yasufum) rename `element_proc` */
+ 	ret = (*params->element_proc)(
+-		params, lcore_id,
+-		cmp_info->name, SPPWK_TYPE_CLS_STR,
++		params, lcore_id, cmp_info->name, SPPWK_TYPE_CLS_STR,
+ 		nof_rx, rx_ports, nof_tx, tx_ports);
+ 	if (unlikely(ret != SPP_RET_OK))
+ 		return SPP_RET_NG;
+diff --git a/src/vf/spp_forward.c b/src/vf/spp_forward.c
+index 7746d40..3d40951 100644
+--- a/src/vf/spp_forward.c
++++ b/src/vf/spp_forward.c
+@@ -182,50 +182,49 @@ spp_forward(int id)
+ 	return SPP_RET_OK;
+ }
+ 
+-/* Merge/Forward get component status */
++/* Get forwarder status */
+ int
+-spp_forward_get_component_status(
+-		unsigned int lcore_id, int id,
++get_forwarder_status(unsigned int lcore_id, int id,
+ 		struct spp_iterate_core_params *params)
+ {
+ 	int ret = SPP_RET_NG;
+ 	int cnt;
+ 	const char *component_type = NULL;
+-	struct forward_info *info = &g_forward_info[id];
+-	struct forward_path *path = &info->path[info->ref_index];
++	struct forward_info *fwd_info = &g_forward_info[id];
++	struct forward_path *fwd_path = &fwd_info->path[fwd_info->ref_index];
+ 	struct sppwk_port_idx rx_ports[RTE_MAX_ETHPORTS];
+ 	struct sppwk_port_idx tx_ports[RTE_MAX_ETHPORTS];
+ 
+-	if (unlikely(path->wk_type == SPPWK_TYPE_NONE)) {
++	if (unlikely(fwd_path->wk_type == SPPWK_TYPE_NONE)) {
+ 		RTE_LOG(ERR, FORWARD,
+-				"Component[%d] Not used. "
+-				"(status)(core = %d, type = %d)\n",
+-				id, lcore_id, path->wk_type);
++				"Forwarder is not used. "
++				"(id=%d, lcore=%d, type=%d).\n",
++				id, lcore_id, fwd_path->wk_type);
+ 		return SPP_RET_NG;
+ 	}
+ 
+-	if (path->wk_type == SPPWK_TYPE_MRG)
++	if (fwd_path->wk_type == SPPWK_TYPE_MRG)
+ 		component_type = SPPWK_TYPE_MRG_STR;
+ 	else
+ 		component_type = SPPWK_TYPE_FWD_STR;
+ 
+ 	memset(rx_ports, 0x00, sizeof(rx_ports));
+-	for (cnt = 0; cnt < path->num_rx; cnt++) {
+-		rx_ports[cnt].iface_type = path->ports[cnt].rx.iface_type;
+-		rx_ports[cnt].iface_no   = path->ports[cnt].rx.iface_no;
++	for (cnt = 0; cnt < fwd_path->num_rx; cnt++) {
++		rx_ports[cnt].iface_type = fwd_path->ports[cnt].rx.iface_type;
++		rx_ports[cnt].iface_no = fwd_path->ports[cnt].rx.iface_no;
+ 	}
+ 
+ 	memset(tx_ports, 0x00, sizeof(tx_ports));
+-	for (cnt = 0; cnt < path->num_tx; cnt++) {
+-		tx_ports[cnt].iface_type = path->ports[cnt].tx.iface_type;
+-		tx_ports[cnt].iface_no   = path->ports[cnt].tx.iface_no;
++	for (cnt = 0; cnt < fwd_path->num_tx; cnt++) {
++		tx_ports[cnt].iface_type = fwd_path->ports[cnt].tx.iface_type;
++		tx_ports[cnt].iface_no = fwd_path->ports[cnt].tx.iface_no;
+ 	}
+ 
+ 	/* Set the information with the function specified by the command. */
+ 	ret = (*params->element_proc)(
+ 		params, lcore_id,
+-		path->name, component_type,
+-		path->num_rx, rx_ports, path->num_tx, tx_ports);
++		fwd_path->name, component_type,
++		fwd_path->num_rx, rx_ports, fwd_path->num_tx, tx_ports);
+ 	if (unlikely(ret != SPP_RET_OK))
+ 		return SPP_RET_NG;
+ 
+-- 
+2.17.1
+
+

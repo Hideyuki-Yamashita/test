@@ -1,0 +1,281 @@
+Return-path: <fw-yama-hd@pomail01.silk.ntt-tx.co.jp>
+Received: from zssg-mailmd103.ddreams.local
+ (zssg-mailmd103.ddreams.local [10.160.123.98]) by zssg-mailms320.ddreams.local
+ (NTT DoCoMo Mail System) with ESMTP id <0PTL001I9N4RR160@NTTDoCoMo.co.jp> for
+ yamashita.hideyuki@ntt-tx.co.jp; Mon, 24 Jun 2019 19:43:39 +0900 (JST)
+Original-recipient: rfc822;yamashita.hideyuki@ntt-tx.co.jp
+Received: from smtp_saver-daemon.zssg-mailmd103.ddreams.local by
+ zssg-mailmd103.ddreams.local (dDREAMS) id <0PTL00W1QN4RBV00@dDREAMS> for
+ yamashita.hideyuki@ntt-tx.co.jp (ORCPT yamashita.hideyuki@ntt-tx.co.jp); Mon,
+ 24 Jun 2019 19:43:39 +0900 (JST)
+Received: from zssg-mailmf101.ddreams.local
+ (zssg-mailmf900.ddreams.local [10.160.172.84]) by zssg-mailmd103.ddreams.local
+ (dDREAMS) with ESMTP id <0PTL007SHN4RCY90@dDREAMS> for
+ yamashita.hideyuki@ntt-tx.co.jp (ORCPT yamashita.hideyuki@ntt-tx.co.jp); Mon,
+ 24 Jun 2019 19:43:39 +0900 (JST)
+Received: from zssg-mailmf101.ddreams.local (unknown [127.0.0.1])
+	by zssg-mailmf101.ddreams.local (Postfix) with ESMTP id 983727E6034	for
+ <yamashita.hideyuki@ntt-tx.co.jp>; Mon, 24 Jun 2019 19:43:39 +0900 (JST)
+Received: from zssg-mailmf101.ddreams.local (unknown [127.0.0.1])
+	by IMSVA (Postfix) with ESMTP id 971AA8E6054	for
+ <yamashita.hideyuki@ntt-tx.co.jp>; Mon, 24 Jun 2019 19:43:39 +0900 (JST)
+Received: from localhost (unknown [127.0.0.1])	by IMSVA (Postfix)
+ with SMTP id 8C6FF8E6051	for <yamashita.hideyuki@ntt-tx.co.jp>; Mon,
+ 24 Jun 2019 19:43:39 +0900 (JST)
+X-IMSS-HAND-OFF-DIRECTIVE: localhost:10026
+Received: from zssg-mailmf101.ddreams.local (unknown [127.0.0.1])
+	by IMSVA (Postfix) with ESMTP id 33C168E6051	for
+ <yamashita.hideyuki@ntt-tx.co.jp>; Mon, 24 Jun 2019 19:43:39 +0900 (JST)
+Received: from pomail01.silk.ntt-tx.co.jp (unknown [10.160.183.139])
+	by zssg-mailmf101.ddreams.local (Postfix)
+ with ESMTPS	for <yamashita.hideyuki@ntt-tx.co.jp>; Mon,
+ 24 Jun 2019 19:43:39 +0900 (JST)
+Received: from pomail01.silk.ntt-tx.co.jp (localhost [127.0.0.1])
+	by pomail01.silk.ntt-tx.co.jp (unknown) with ESMTP id x5OAhcRG032379;	Mon,
+ 24 Jun 2019 19:43:39 +0900
+Received: (from yama-hd@localhost)	by pomail01.silk.ntt-tx.co.jp (unknown)
+ id x5OAhbTV032375;	Mon, 24 Jun 2019 19:43:37 +0900
+X-Authentication-warning: pomail01.silk.ntt-tx.co.jp: yama-hd set sender to
+ fw-yama-hd@pomail01.silk.ntt-tx.co.jp using -f
+Received: from imss04.silk.ntt-tx.co.jp
+ (imss04.silk.ntt-tx.co.jp [10.107.0.39])	by pomail01.silk.ntt-tx.co.jp
+ (unknown) with ESMTP id x5OAhb5c032361	for unknown; Mon,
+ 24 Jun 2019 19:43:37 +0900
+Received: from imss04.silk.ntt-tx.co.jp (localhost [127.0.0.1])
+ by imss04.silk.ntt-tx.co.jp (unknown) with ESMTP id x5OAhbAZ007357 for
+ unknown; Mon, 24 Jun 2019 19:43:37 +0900
+Received: from ml01.silk.ntt-tx.co.jp (ml01.silk.ntt-tx.co.jp [10.107.0.230])
+ by imss04.silk.ntt-tx.co.jp (unknown) with ESMTP id x5OAhbqE007354; Mon,
+ 24 Jun 2019 19:43:37 +0900
+Received: from ml01.silk.ntt-tx.co.jp (localhost [127.0.0.1])
+	by ml01.silk.ntt-tx.co.jp (unknown) with ESMTP id x5OAhbpg008706;	Mon,
+ 24 Jun 2019 19:43:37 +0900
+Received: from imss02.silk.ntt-tx.co.jp
+ (imss02.silk.ntt-tx.co.jp [10.107.0.127])	by ml01.silk.ntt-tx.co.jp (unknown)
+ with ESMTP id x5OAhbih008702	for unknown; Mon, 24 Jun 2019 19:43:37 +0900
+Received: from imss02.silk.ntt-tx.co.jp (localhost [127.0.0.1])
+ by imss02.silk.ntt-tx.co.jp (unknown) with ESMTP id x5OAhavt022781 for
+ unknown; Mon, 24 Jun 2019 19:43:37 +0900
+Received: from mail01.ics.ntt-tx.co.jp (mail01.ics.ntt-tx.co.jp [10.254.2.67])
+ by imss02.silk.ntt-tx.co.jp (unknown) with ESMTP id x5OAhaiH022777 for
+ unknown; Mon, 24 Jun 2019 19:43:36 +0900
+Received: from dpdk.org (dpdk.org [92.243.14.124])	by mail01.ics.ntt-tx.co.jp
+ (unknown) with SMTP id x5OAhUdF020577	for unknown; Mon,
+ 24 Jun 2019 19:43:36 +0900
+Received: from [92.243.14.124] (localhost [127.0.0.1])	by dpdk.org (Postfix)
+ with ESMTP id E83161BF00;	Mon, 24 Jun 2019 12:43:29 +0200 (CEST)
+Received: from mail-pg1-f196.google.com
+ (mail-pg1-f196.google.com [209.85.215.196]) by dpdk.org (Postfix)
+ with ESMTP id AE7AC1BED0 for <spp@dpdk.org>; Mon,
+ 24 Jun 2019 12:43:28 +0200 (CEST)
+Received: by mail-pg1-f196.google.com with SMTP id z19so3941882pgl.12 for
+ <spp@dpdk.org>; Mon, 24 Jun 2019 03:43:28 -0700 (PDT)
+Received: from localhost.localdomain ([192.47.164.146])
+ by smtp.gmail.com with ESMTPSA id w65sm1760073pfw.168.2019.06.24.03.43.26
+ (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128); Mon,
+ 24 Jun 2019 03:43:27 -0700 (PDT)
+Date: Mon, 24 Jun 2019 19:43:23 +0900
+From: yasufum.o@gmail.com
+Subject: [spp 04422] [spp] [PATCH] spp_nfv: remove global variable client_id
+Sender: spp <spp-bounces@dpdk.org>
+To: spp@dpdk.org, ferruh.yigit@intel.com, yasufum.o@gmail.com
+Message-id: <20190624104323.24923-1-yasufum.o@gmail.com>
+X-ML-Name: unknown
+X-Mail-Count: 04422
+X-MLServer: unknown
+X-ML-Info: mailing list service
+X-Mailer: git-send-email 2.17.1
+Authentication-results: mail01.ics.ntt-tx.co.jp; spf=pass
+ smtp.mailfrom=spp-bounces@dpdk.org
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
+ h=from:to:subject:date:message-id;
+ bh=3QgPA51gtKctch556U9g+kr4kDLvaroiKzqhc2PEcd8=;
+ b=j4PfGj7TExqqyjwGROzhPA2sQmAQUBKL4BN//uI0sNWixwU+8YrJTvGgmuWAHV/B4c
+ qSAHPAc6Db0yYoQUcadukjZFmE/HfyY7/j9H1019l8zZUfNy/HgY7nKvmcedCfw8nBum
+ E0lE+28oe96LX07WXezWpUrlLVtLhREUFh5nKO8Eij9byE3N0DCgCo5a92eNnpdrezk/
+ aW/ROS3uDx57DlPgSWVQt8SCIuJE2LEKyePbnTOSdS3HlR3SeWZAnzjgR1JFHItU76E4
+ wK+Z9SKQYMRDtakioIORoea/uK/ig8lWyXdQe8aA2Yupj4TonAt62mdGHP3WVELeqMww Jhsg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=1e100.net;
+ s=20161025; h=x-gm-message-state:from:to:subject:date:message-id;
+ bh=3QgPA51gtKctch556U9g+kr4kDLvaroiKzqhc2PEcd8=;
+ b=dA/TBTNdika6uUSW0so8NzbmLGd53u3LjSYXS+4L4zOlT7aSJ/s1U+2i9to+x+xXB4
+ KSpJq5in3Mw7yuPtyHXsZcl2PBYdIVYVhAjgW9JFJCrSaWpk9w6SJnt1MiVuvko5Zl7k
+ +KwCHtb8vTLEs35tmUHnuqazuXv+ykhkRVVvodCL68TluIPj+0V4bdGPpuujoC1rpoxN
+ r6uxM/ive0KQS74lCfi2tGlBUZV9KizjEaG5sKI+otGAyIAhkHdmI5k+cUcHbl+ZSMBN
+ dKtxDoxUXKfRIp8+jgIQ7vBb/8LlEsg7dvOsOpt1StYR5UfUZJvJtrqUFsIN0dybA1lU JW1Q==
+X-Gm-Message-State: APjAAAWSwlcJZVt3Pkdv2D5UvVvBSIlQMVKrn53/RDZQRPEXzTvYKoBb
+ h3Qx9bFkYRTcR8BkThl5MtRby2t9
+X-Google-Smtp-Source:
+ APXvYqyn9lxwMTvVjdfiRFKH5A2/QbGntsHNo6EITUYyCJIm28fHByfLvUmTNq0GcNLtVCXVOvo4SQ==
+X-Received: by 2002:a65:4383:: with SMTP id m3mr31510221pgp.435.1561373007801;
+ Mon, 24 Jun 2019 03:43:27 -0700 (PDT)
+X-BeenThere: spp@dpdk.org
+X-Mailman-Version: 2.1.15
+List-Id: Soft Patch Panel <spp.dpdk.org>
+List-Unsubscribe: <https://mails.dpdk.org/options/spp>,
+ <mailto:spp-request@dpdk.org?subject=unsubscribe>
+List-Archive: <http://mails.dpdk.org/archives/spp/>
+List-Post: <mailto:spp@dpdk.org>
+List-Help: <mailto:spp-request@dpdk.org?subject=help>
+List-Subscribe: <https://mails.dpdk.org/listinfo/spp>,
+ <mailto:spp-request@dpdk.org?subject=subscribe>
+X-TM-AS-MML: No
+Precedence: bulk
+Lines: 153
+X-TM-AS-GCONF: 00
+X-MD-STAMP: ON
+
+From: Yasufumi Ogawa <yasufum.o@gmail.com>
+
+`client_id` is defined as a global variable in `params.h`, but it is
+better to use get_client_id() instead. This update is to replace it.
+This update is also to make a change for formatter function
+`get_sec_stats_json()` which takes client ID as uint16_t, but
+get_client_id() returns the ID as int.
+
+Signed-off-by: Yasufumi Ogawa <yasufum.o@gmail.com>
+---
+ src/nfv/commands.h   | 13 ++++++-------
+ src/nfv/main.c       |  8 ++++++--
+ src/nfv/nfv_status.c |  4 ++--
+ src/nfv/nfv_status.h |  2 +-
+ src/nfv/params.h     |  2 --
+ 5 files changed, 15 insertions(+), 14 deletions(-)
+
+diff --git a/src/nfv/commands.h b/src/nfv/commands.h
+index c8f726f..708d084 100644
+--- a/src/nfv/commands.h
++++ b/src/nfv/commands.h
+@@ -152,6 +152,7 @@ static int
+ parse_command(char *str)
+ {
+ 	char *token_list[MAX_PARAMETER] = {NULL};
++	int cli_id;
+ 	int max_token = 0;
+ 	int ret = 0;
+ 
+@@ -174,11 +175,11 @@ parse_command(char *str)
+ 		RTE_LOG(DEBUG, SPP_NFV, "status\n");
+ 		memset(str, '\0', MSG_SIZE);
+ 		if (cmd == FORWARD)
+-			get_sec_stats_json(str, client_id, "running",
++			get_sec_stats_json(str, get_client_id(), "running",
+ 					lcore_id_used,
+ 					ports_fwd_array, port_map);
+ 		else
+-			get_sec_stats_json(str, client_id, "idling",
++			get_sec_stats_json(str, get_client_id(), "idling",
+ 					lcore_id_used,
+ 					ports_fwd_array, port_map);
+ 
+@@ -186,14 +187,12 @@ parse_command(char *str)
+ 		memset(str, '\0', MSG_SIZE);
+ 		sprintf(str, "{%s:%s,%s:%d,%s:%s}",
+ 				"\"results\"", "[{\"result\":\"success\"}]",
+-				"\"client_id\"", client_id,
++				"\"client_id\"", get_client_id(),
+ 				"\"process_type\"", "\"nfv\"");
+ 
+ 	} else if (!strcmp(token_list[0], "_set_client_id")) {
+-		int id;
+-
+-		if (spp_atoi(token_list[1], &id) >= 0)
+-			client_id = id;
++		if (spp_atoi(token_list[1], &cli_id) >= 0)
++			set_client_id(cli_id);
+ 
+ 	} else if (!strcmp(token_list[0], "exit")) {
+ 		RTE_LOG(DEBUG, SPP_NFV, "exit\n");
+diff --git a/src/nfv/main.c b/src/nfv/main.c
+index fbcef0c..ae4168c 100644
+--- a/src/nfv/main.c
++++ b/src/nfv/main.c
+@@ -12,6 +12,7 @@
+ #include <rte_log.h>
+ 
+ #include "shared/common.h"
++#include "shared/secondary/utils.h"
+ #include "shared/secondary/add_port.h"
+ 
+ #include "params.h"
+@@ -61,6 +62,7 @@ static int
+ parse_app_args(int argc, char *argv[])
+ {
+ 	int option_index, opt;
++	int cli_id;
+ 	char **argvopt = argv;
+ 	const char *progname = argv[0];
+ 	int ret;
+@@ -72,10 +74,11 @@ parse_app_args(int argc, char *argv[])
+ 			g_enable_vhost_cli = 1;
+ 			break;
+ 		case 'n':
+-			if (parse_num_clients(&client_id, optarg) != 0) {
++			if (parse_client_id(&cli_id, optarg) != 0) {
+ 				usage(progname);
+ 				return -1;
+ 			}
++			set_client_id(cli_id);
+ 			break;
+ 		case 's':
+ 			ret = parse_server(&server_ip, &server_port, optarg);
+@@ -259,7 +262,8 @@ main(int argc, char *argv[])
+ 		rte_eal_remote_launch(main_loop, NULL, lcore_id);
+ 	}
+ 
+-	RTE_LOG(INFO, SPP_NFV, "My ID %d start handling message\n", client_id);
++	RTE_LOG(INFO, SPP_NFV, "My ID %d start handling message\n",
++			get_client_id());
+ 	RTE_LOG(INFO, SPP_NFV, "[Press Ctrl-C to quit ...]\n");
+ 
+ 	/* send and receive msg loop */
+diff --git a/src/nfv/nfv_status.c b/src/nfv/nfv_status.c
+index 7e3dbd4..c40d0b4 100644
+--- a/src/nfv/nfv_status.c
++++ b/src/nfv/nfv_status.c
+@@ -26,13 +26,13 @@
+  *   }
+  */
+ void
+-get_sec_stats_json(char *str, uint16_t client_id,
++get_sec_stats_json(char *str, int cli_id,
+ 		const char *running_stat,
+ 		uint8_t lcore_id_used[RTE_MAX_LCORE],
+ 		struct port *ports_fwd_array,
+ 		struct port_map *port_map)
+ {
+-	sprintf(str, "{\"client-id\":%d,", client_id);
++	sprintf(str, "{\"client-id\":%d,", cli_id);
+ 
+ 	sprintf(str + strlen(str), "\"status\":");
+ 	sprintf(str + strlen(str), "\"%s\",", running_stat);
+diff --git a/src/nfv/nfv_status.h b/src/nfv/nfv_status.h
+index ef9cd00..14225cc 100644
+--- a/src/nfv/nfv_status.h
++++ b/src/nfv/nfv_status.h
+@@ -6,7 +6,7 @@
+ #define _NFV_STATUS_H_
+ 
+ /* Get status of spp_nfv or spp_vm as JSON format. */
+-void get_sec_stats_json(char *str, uint16_t client_id,
++void get_sec_stats_json(char *str, int client_id,
+ 		const char *running_stat,
+ 		uint8_t lcore_id_used[RTE_MAX_LCORE],
+ 		struct port *ports_fwd_array,
+diff --git a/src/nfv/params.h b/src/nfv/params.h
+index aa9c720..9ddf79d 100644
+--- a/src/nfv/params.h
++++ b/src/nfv/params.h
+@@ -23,8 +23,6 @@ struct porttype_map portmap[] = {
+ 
+ static struct port ports_fwd_array[RTE_MAX_ETHPORTS];
+ 
+-static uint16_t client_id;
+-
+ /* the port details */
+ struct port_info *ports;
+ 
+-- 
+2.17.1
+
+

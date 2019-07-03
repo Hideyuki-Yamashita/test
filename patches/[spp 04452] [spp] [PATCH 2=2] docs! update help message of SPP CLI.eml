@@ -1,0 +1,162 @@
+Return-path: <fw-yama-hd@pomail01.silk.ntt-tx.co.jp>
+Received: from zssg-mailmd105.ddreams.local
+ (zssg-mailmd105.ddreams.local [10.160.123.100])
+ by zssg-mailms320.ddreams.local (NTT DoCoMo Mail System)
+ with ESMTP id <0PTQ0182BQE2MX10@NTTDoCoMo.co.jp> for
+ yamashita.hideyuki@ntt-tx.co.jp; Thu, 27 Jun 2019 13:42:02 +0900 (JST)
+Original-recipient: rfc822;yamashita.hideyuki@ntt-tx.co.jp
+Received: from smtp_saver-daemon.zssg-mailmd105.ddreams.local by
+ zssg-mailmd105.ddreams.local (dDREAMS) id <0PTQ00N2AQE2EH00@dDREAMS> for
+ yamashita.hideyuki@ntt-tx.co.jp (ORCPT yamashita.hideyuki@ntt-tx.co.jp); Thu,
+ 27 Jun 2019 13:42:02 +0900 (JST)
+Received: from zssg-mailmf106.ddreams.local
+ (zssg-mailmf900.ddreams.local [10.160.172.84]) by zssg-mailmd105.ddreams.local
+ (dDREAMS) with ESMTP id <0PTQ00ACDQE27G70@dDREAMS> for
+ yamashita.hideyuki@ntt-tx.co.jp (ORCPT yamashita.hideyuki@ntt-tx.co.jp); Thu,
+ 27 Jun 2019 13:42:02 +0900 (JST)
+Received: from zssg-mailmf106.ddreams.local (unknown [127.0.0.1])
+	by zssg-mailmf106.ddreams.local (Postfix) with ESMTP id 559367E603B	for
+ <yamashita.hideyuki@ntt-tx.co.jp>; Thu, 27 Jun 2019 13:42:02 +0900 (JST)
+Received: from zssg-mailmf106.ddreams.local (unknown [127.0.0.1])
+	by IMSVA (Postfix) with ESMTP id 53CBB8E6042	for
+ <yamashita.hideyuki@ntt-tx.co.jp>; Thu, 27 Jun 2019 13:42:02 +0900 (JST)
+Received: from localhost (unknown [127.0.0.1])	by IMSVA (Postfix)
+ with SMTP id 51C228E6057	for <yamashita.hideyuki@ntt-tx.co.jp>; Thu,
+ 27 Jun 2019 13:42:02 +0900 (JST)
+X-IMSS-HAND-OFF-DIRECTIVE: localhost:10026
+Received: from zssg-mailmf106.ddreams.local (unknown [127.0.0.1])
+	by IMSVA (Postfix) with ESMTP id 43D548E6061	for
+ <yamashita.hideyuki@ntt-tx.co.jp>; Thu, 27 Jun 2019 13:42:01 +0900 (JST)
+Received: from pomail01.silk.ntt-tx.co.jp (unknown [10.160.183.139])
+	by zssg-mailmf106.ddreams.local (Postfix)
+ with ESMTPS	for <yamashita.hideyuki@ntt-tx.co.jp>; Thu,
+ 27 Jun 2019 13:42:01 +0900 (JST)
+Received: from pomail01.silk.ntt-tx.co.jp (localhost [127.0.0.1])
+	by pomail01.silk.ntt-tx.co.jp (unknown) with ESMTP id x5R4g1ao030708;	Thu,
+ 27 Jun 2019 13:42:01 +0900
+Received: (from yama-hd@localhost)	by pomail01.silk.ntt-tx.co.jp (unknown)
+ id x5R4g1Is030707;	Thu, 27 Jun 2019 13:42:01 +0900
+X-Authentication-warning: pomail01.silk.ntt-tx.co.jp: yama-hd set sender to
+ fw-yama-hd@pomail01.silk.ntt-tx.co.jp using -f
+Received: from imss04.silk.ntt-tx.co.jp
+ (imss04.silk.ntt-tx.co.jp [10.107.0.39])	by pomail01.silk.ntt-tx.co.jp
+ (unknown) with ESMTP id x5R4g0Yv030704	for unknown; Thu,
+ 27 Jun 2019 13:42:00 +0900
+Received: from imss04.silk.ntt-tx.co.jp (localhost [127.0.0.1])
+ by imss04.silk.ntt-tx.co.jp (unknown) with ESMTP id x5R4g07q030837 for
+ unknown; Thu, 27 Jun 2019 13:42:00 +0900
+Received: from ml01.silk.ntt-tx.co.jp (ml01.silk.ntt-tx.co.jp [10.107.0.230])
+ by imss04.silk.ntt-tx.co.jp (unknown) with ESMTP id x5R4g0GP030834; Thu,
+ 27 Jun 2019 13:42:00 +0900
+Received: from ml01.silk.ntt-tx.co.jp (localhost [127.0.0.1])
+	by ml01.silk.ntt-tx.co.jp (unknown) with ESMTP id x5R4g0mU012428;	Thu,
+ 27 Jun 2019 13:42:00 +0900
+Received: from imss02.silk.ntt-tx.co.jp
+ (imss02.silk.ntt-tx.co.jp [10.107.0.127])	by ml01.silk.ntt-tx.co.jp (unknown)
+ with ESMTP id x5R4g0oJ012424	for unknown; Thu, 27 Jun 2019 13:42:00 +0900
+Received: from imss02.silk.ntt-tx.co.jp (localhost [127.0.0.1])
+ by imss02.silk.ntt-tx.co.jp (unknown) with ESMTP id x5R4fx8t017330 for
+ unknown; Thu, 27 Jun 2019 13:42:00 +0900
+Received: from mail01.ics.ntt-tx.co.jp (mail01.ics.ntt-tx.co.jp [10.254.2.67])
+ by imss02.silk.ntt-tx.co.jp (unknown) with ESMTP id x5R4fxnC017325 for
+ unknown; Thu, 27 Jun 2019 13:41:59 +0900
+Received: from dpdk.org (dpdk.org [92.243.14.124])	by mail01.ics.ntt-tx.co.jp
+ (unknown) with SMTP id x5R4frEt010562	for unknown; Thu,
+ 27 Jun 2019 13:41:59 +0900
+Received: from [92.243.14.124] (localhost [127.0.0.1])	by dpdk.org (Postfix)
+ with ESMTP id 8D50C4C77;	Thu, 27 Jun 2019 06:41:45 +0200 (CEST)
+Received: from mail-pf1-f196.google.com
+ (mail-pf1-f196.google.com [209.85.210.196]) by dpdk.org (Postfix)
+ with ESMTP id 91372326D for <spp@dpdk.org>; Thu,
+ 27 Jun 2019 06:41:44 +0200 (CEST)
+Received: by mail-pf1-f196.google.com with SMTP id m30so551646pff.8 for
+ <spp@dpdk.org>; Wed, 26 Jun 2019 21:41:44 -0700 (PDT)
+Received: from localhost.localdomain ([192.47.164.146])
+ by smtp.gmail.com with ESMTPSA id w197sm1161728pfd.41.2019.06.26.21.41.42
+ (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128); Wed,
+ 26 Jun 2019 21:41:43 -0700 (PDT)
+Date: Thu, 27 Jun 2019 13:41:37 +0900
+From: yasufum.o@gmail.com
+Subject: [spp 04452] [spp] [PATCH 2/2] docs: update help message of SPP CLI
+Sender: spp <spp-bounces@dpdk.org>
+To: spp@dpdk.org, ferruh.yigit@intel.com, yasufum.o@gmail.com
+Message-id: <20190627044137.15165-3-yasufum.o@gmail.com>
+In-reply-to: <20190627044137.15165-1-yasufum.o@gmail.com>
+References: <20190627044137.15165-1-yasufum.o@gmail.com>
+X-ML-Name: unknown
+X-Mail-Count: 04452
+X-MLServer: unknown
+X-ML-Info: mailing list service
+X-Mailer: git-send-email 2.17.1
+Authentication-results: mail01.ics.ntt-tx.co.jp; spf=pass
+ smtp.mailfrom=spp-bounces@dpdk.org
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
+ h=from:to:subject:date:message-id:in-reply-to:references;
+ bh=C07w8VgekN2yNktF1ywfKdcFSqt7R9kpup2My6kdUFo=;
+ b=paB2fnhJpqh5BQFukvKDBht7mBRgCZyuAxUUEaXNL8E5c1PlNeliUsT/M93Tk4Lauv
+ +sfG0a3TjEbLCI/3vIvNFslO5B7puSZ12c74cCvnrEAIljzm1sJVwRxykbnL2EoxgRY0
+ fClqsyWB6y8iQBVVxa2/48ce4kRJVYFuDQJi7BVrlcDqS4ZAc8Lmq3O2fmVABh6F7U5L
+ Zl1Wv3fJaVeDRYbvqCKc81TwtJt1hMTnrKDCFadvybKjn9iK5YN6sOPgWHKTLZY9rlgW
+ jRwpTVeFIGnreElZ3logD+IAWSC6MHPiZIMt5mto4kOdSaWF4hL0DzZ+zftN19rEQNuE w+Hw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=1e100.net;
+ s=20161025; h=x-gm-message-state:from:to:subject:date:message-id:in-reply-to
+ :references; bh=C07w8VgekN2yNktF1ywfKdcFSqt7R9kpup2My6kdUFo=;
+ b=rhIQ58U4f7Rcjsv+aepdyMq/pD5Wp8XaleT7l4eljqngaCkuuRezwvnwYGalAuLkJO
+ ILqGMkijsR0zBqFxAqX5Vh+HggdsAM/0jL7h82SPijS/LAEENCq8umXRMaphY1BW+5YM
+ UkBLycNTAPRa70WiiE22VD3LziKAf3QGuJjaBSfqafRA+7EWnmOGZ2NsMzVhnkVosIBa
+ 784hVZCZfz0AZ3FTv2oKfOocO7m09OAft8NYIPX8zKOfqgxzd4Z4fy8vP7SzdT5aS+RJ
+ aJ9HgskEgvaUNFIoa0CZHDDXcD0YZNxsBgs6y5vgl0fQJ6YuYrqkFDeAG5V7XRqJAxsJ gVdA==
+X-Gm-Message-State: APjAAAV1gU2zam+SUWnUo/nDvn188Xz/ICf/mixU4S+zq1Onhxorb56f
+ 7Spy3eESYW9fqTE2XgvWTum1GMUS
+X-Google-Smtp-Source:
+ APXvYqwskpnpu3p8IshoUouPkBjuX5gyb2K89TqOWvX5ZH0Yipk3dwiId6n9OouW2rck/29rT0B7YA==
+X-Received: by 2002:a17:90a:c596:: with SMTP id
+ l22mr3585144pjt.46.1561610503772; Wed, 26 Jun 2019 21:41:43 -0700 (PDT)
+X-BeenThere: spp@dpdk.org
+X-Mailman-Version: 2.1.15
+List-Id: Soft Patch Panel <spp.dpdk.org>
+List-Unsubscribe: <https://mails.dpdk.org/options/spp>,
+ <mailto:spp-request@dpdk.org?subject=unsubscribe>
+List-Archive: <http://mails.dpdk.org/archives/spp/>
+List-Post: <mailto:spp@dpdk.org>
+List-Help: <mailto:spp-request@dpdk.org?subject=help>
+List-Subscribe: <https://mails.dpdk.org/listinfo/spp>,
+ <mailto:spp-request@dpdk.org?subject=subscribe>
+X-TM-AS-MML: No
+Precedence: bulk
+Lines: 31
+X-TM-AS-GCONF: 00
+X-MD-STAMP: ON
+
+From: Yasufumi Ogawa <yasufum.o@gmail.com>
+
+Command options of SPP CLI for getting IP address and port are updated
+from getting separately, for example `-b 127.0.0.1` and `-a 7777`, to
+get both with one option `-b 127.0.0.1:7777`. This patch is to update
+the example of options.
+
+Signed-off-by: Yasufumi Ogawa <yasufum.o@gmail.com>
+---
+ docs/guides/gsg/howto_use.rst | 5 ++---
+ 1 file changed, 2 insertions(+), 3 deletions(-)
+
+diff --git a/docs/guides/gsg/howto_use.rst b/docs/guides/gsg/howto_use.rst
+index c6023ee..3579c75 100644
+--- a/docs/guides/gsg/howto_use.rst
++++ b/docs/guides/gsg/howto_use.rst
+@@ -186,9 +186,8 @@ All of options can be referred with help option ``-h``.
+     optional arguments:
+       -h, --help            show this help message and exit
+       -b BIND_ADDR, --bind-addr BIND_ADDR
+-                            bind address, default=127.0.0.1
+-      -a API_PORT, --api-port API_PORT
+-                        bind address, default=777
++                            bind address, default=127.0.0.1:7777
++
+ 
+ All of SPP CLI commands are described in :doc:`../../commands/index`.
+ 
+-- 
+2.17.1
+
+

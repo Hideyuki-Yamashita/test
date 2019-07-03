@@ -1,0 +1,406 @@
+Return-path: <fw-yama-hd@pomail01.silk.ntt-tx.co.jp>
+Received: from zssg-mailmd105.ddreams.local
+ (zssg-mailmd105.ddreams.local [10.160.123.100])
+ by zssg-mailms320.ddreams.local (NTT DoCoMo Mail System)
+ with ESMTP id <0PTL00UGP02H8Y40@NTTDoCoMo.co.jp> for
+ yamashita.hideyuki@ntt-tx.co.jp; Mon, 24 Jun 2019 11:25:29 +0900 (JST)
+Original-recipient: rfc822;yamashita.hideyuki@ntt-tx.co.jp
+Received: from smtp_saver-daemon.zssg-mailmd105.ddreams.local by
+ zssg-mailmd105.ddreams.local (dDREAMS) id <0PTL00L4802HJ200@dDREAMS> for
+ yamashita.hideyuki@ntt-tx.co.jp (ORCPT yamashita.hideyuki@ntt-tx.co.jp); Mon,
+ 24 Jun 2019 11:25:29 +0900 (JST)
+Received: from zssg-mailmf103.ddreams.local
+ (zssg-mailmf900.ddreams.local [10.160.172.84]) by zssg-mailmd105.ddreams.local
+ (dDREAMS) with ESMTP id <0PTL00HB402HYD20@dDREAMS> for
+ yamashita.hideyuki@ntt-tx.co.jp (ORCPT yamashita.hideyuki@ntt-tx.co.jp); Mon,
+ 24 Jun 2019 11:25:29 +0900 (JST)
+Received: from zssg-mailmf103.ddreams.local (unknown [127.0.0.1])
+	by zssg-mailmf103.ddreams.local (Postfix) with ESMTP id 9A7C97E6036	for
+ <yamashita.hideyuki@ntt-tx.co.jp>; Mon, 24 Jun 2019 11:25:29 +0900 (JST)
+Received: from zssg-mailmf103.ddreams.local (unknown [127.0.0.1])
+	by IMSVA (Postfix) with ESMTP id 991C48E6061	for
+ <yamashita.hideyuki@ntt-tx.co.jp>; Mon, 24 Jun 2019 11:25:29 +0900 (JST)
+Received: from localhost (unknown [127.0.0.1])	by IMSVA (Postfix)
+ with SMTP id 8E65F8E605C	for <yamashita.hideyuki@ntt-tx.co.jp>; Mon,
+ 24 Jun 2019 11:25:29 +0900 (JST)
+X-IMSS-HAND-OFF-DIRECTIVE: localhost:10026
+Received: from zssg-mailmf103.ddreams.local (unknown [127.0.0.1])
+	by IMSVA (Postfix) with ESMTP id C48E58E605E	for
+ <yamashita.hideyuki@ntt-tx.co.jp>; Mon, 24 Jun 2019 11:25:28 +0900 (JST)
+Received: from pomail01.silk.ntt-tx.co.jp (unknown [10.160.183.139])
+	by zssg-mailmf103.ddreams.local (Postfix)
+ with ESMTPS	for <yamashita.hideyuki@ntt-tx.co.jp>; Mon,
+ 24 Jun 2019 11:25:28 +0900 (JST)
+Received: from pomail01.silk.ntt-tx.co.jp (localhost [127.0.0.1])
+	by pomail01.silk.ntt-tx.co.jp (unknown) with ESMTP id x5O2PSUR013488;	Mon,
+ 24 Jun 2019 11:25:28 +0900
+Received: (from yama-hd@localhost)	by pomail01.silk.ntt-tx.co.jp (unknown)
+ id x5O2PSfG013487;	Mon, 24 Jun 2019 11:25:28 +0900
+X-Authentication-warning: pomail01.silk.ntt-tx.co.jp: yama-hd set sender to
+ fw-yama-hd@pomail01.silk.ntt-tx.co.jp using -f
+Received: from imss04.silk.ntt-tx.co.jp
+ (imss04.silk.ntt-tx.co.jp [10.107.0.39])	by pomail01.silk.ntt-tx.co.jp
+ (unknown) with ESMTP id x5O2PSRX013479	for unknown; Mon,
+ 24 Jun 2019 11:25:28 +0900
+Received: from imss04.silk.ntt-tx.co.jp (localhost [127.0.0.1])
+ by imss04.silk.ntt-tx.co.jp (unknown) with ESMTP id x5O2PSYW005963 for
+ unknown; Mon, 24 Jun 2019 11:25:28 +0900
+Received: from ml01.silk.ntt-tx.co.jp (ml01.silk.ntt-tx.co.jp [10.107.0.230])
+ by imss04.silk.ntt-tx.co.jp (unknown) with ESMTP id x5O2PSu3005960; Mon,
+ 24 Jun 2019 11:25:28 +0900
+Received: from ml01.silk.ntt-tx.co.jp (localhost [127.0.0.1])
+	by ml01.silk.ntt-tx.co.jp (unknown) with ESMTP id x5O2PRc2016422;	Mon,
+ 24 Jun 2019 11:25:27 +0900
+Received: from imss02.silk.ntt-tx.co.jp
+ (imss02.silk.ntt-tx.co.jp [10.107.0.127])	by ml01.silk.ntt-tx.co.jp (unknown)
+ with ESMTP id x5O2PRaG016418	for unknown; Mon, 24 Jun 2019 11:25:27 +0900
+Received: from imss02.silk.ntt-tx.co.jp (localhost [127.0.0.1])
+ by imss02.silk.ntt-tx.co.jp (unknown) with ESMTP id x5O2PRUS006488 for
+ unknown; Mon, 24 Jun 2019 11:25:27 +0900
+Received: from mail01.ics.ntt-tx.co.jp (mail01.ics.ntt-tx.co.jp [10.254.2.67])
+ by imss02.silk.ntt-tx.co.jp (unknown) with ESMTP id x5O2PRHU006482 for
+ unknown; Mon, 24 Jun 2019 11:25:27 +0900
+Received: from dpdk.org (dpdk.org [92.243.14.124])	by mail01.ics.ntt-tx.co.jp
+ (unknown) with SMTP id x5O2PKuP003817	for unknown; Mon,
+ 24 Jun 2019 11:25:26 +0900
+Received: from [92.243.14.124] (localhost [127.0.0.1])	by dpdk.org (Postfix)
+ with ESMTP id 927A01BF6E;	Mon, 24 Jun 2019 04:25:20 +0200 (CEST)
+Received: from mail-pl1-f194.google.com
+ (mail-pl1-f194.google.com [209.85.214.194]) by dpdk.org (Postfix)
+ with ESMTP id 8A33B1BF6E for <spp@dpdk.org>; Mon,
+ 24 Jun 2019 04:25:18 +0200 (CEST)
+Received: by mail-pl1-f194.google.com with SMTP id cl9so5969533plb.10 for
+ <spp@dpdk.org>; Sun, 23 Jun 2019 19:25:18 -0700 (PDT)
+Received: from localhost.localdomain ([192.47.164.146])
+ by smtp.gmail.com with ESMTPSA id a3sm9927461pje.3.2019.06.23.19.25.16
+ (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128); Sun,
+ 23 Jun 2019 19:25:17 -0700 (PDT)
+Date: Mon, 24 Jun 2019 11:24:55 +0900
+From: yasufum.o@gmail.com
+Subject: [spp 04362] [spp] [PATCH 02/11] shared/sec: rename struct
+ mac_classification
+Sender: spp <spp-bounces@dpdk.org>
+To: spp@dpdk.org, ferruh.yigit@intel.com, yasufum.o@gmail.com
+Message-id: <20190624022504.18752-3-yasufum.o@gmail.com>
+In-reply-to: <20190624022504.18752-1-yasufum.o@gmail.com>
+References: <20190624022504.18752-1-yasufum.o@gmail.com>
+X-ML-Name: unknown
+X-Mail-Count: 04362
+X-MLServer: unknown
+X-ML-Info: mailing list service
+X-Mailer: git-send-email 2.17.1
+Authentication-results: mail01.ics.ntt-tx.co.jp; spf=pass
+ smtp.mailfrom=spp-bounces@dpdk.org
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
+ h=from:to:subject:date:message-id:in-reply-to:references;
+ bh=poxz8Dh0k9GMSe2pX2xvHbeRG6YzVAKEyoMiNhY+rI0=;
+ b=HsozfFgwJwZpQ0ZPaHANgfqW+k6CNbK6ejlH4XE7Zrp4Sjo7+Ba+hw7PEKKivKyMBn
+ tYN8hkSY7/nmRWL70Kq4hXg944Pa2NeC8oSZDyr8q83d4iJCCxOAcwbys8pE2Wslvm9V
+ KOGdVO7gD/lYeI60kZWcaQoU+OBfggYRkoPWme8qRWBoGiATsWqg8qDXvUQjlOS9Sy6W
+ NqzJ0slq5AQ1OeNBKiO5QSAI+4jPbhdzrWxItzKoLfnH5KTfLkRY504mMAPT1UBQzRNH
+ J5O0nUvDxOgkj7DBkBizkCEF9oIeXJl2NM90+LXmXBWgLViHE2Vg5/MK2RZCE+kP01le Dz5w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=1e100.net;
+ s=20161025; h=x-gm-message-state:from:to:subject:date:message-id:in-reply-to
+ :references; bh=poxz8Dh0k9GMSe2pX2xvHbeRG6YzVAKEyoMiNhY+rI0=;
+ b=LWAyWFHvWKWQU8QYxkt2rUnsVdsQtyL6hJua1SI4SQ06PeQalVlfUHljBMU8vgRYQT
+ 1Y4qW/u4wyjJ+qBarfJG5Uu7QPSvW5PvpWxMlB+6ubETRe4n0Q6n9evOHOrW30UKYIeX
+ KYqW7xAzcY2fHB7lXOmx48aYhC9bAVVdI5kWJExTh27wtHLVl73+4ksT+cSovVyQB3FQ
+ vdqQJBhZEGVd1FFzB9lrjW8WZ+gOdXMI3ZkQIPCEvVw7vUGeTEmGbunJyaUeMhJcv2/2
+ eWA6MwNtI4dv7Z47+VylgD8c5gP4dauysNXV2nNIQIGMp0kQ/XJlBbcdvVdry/apDqIm 2rUA==
+X-Gm-Message-State: APjAAAWFTdZTul7NCVXQeJ8K1jd9GNCYdbmpBn0FJdhUCZJyLN/f3xhM
+ 5/6MwE2uk1HrXha6Gt35+fRaoZ/Q
+X-Google-Smtp-Source:
+ APXvYqzpElZaJDFtyqgQ8zm/j/vCNLaPSuG/gAvTnWAk2E56t8BfM/3ss1J1qG9GFPhZPk9eqfu4rg==
+X-Received: by 2002:a17:902:724:: with SMTP id
+ 33mr141835629pli.49.1561343117652; Sun, 23 Jun 2019 19:25:17 -0700 (PDT)
+X-BeenThere: spp@dpdk.org
+X-Mailman-Version: 2.1.15
+List-Id: Soft Patch Panel <spp.dpdk.org>
+List-Unsubscribe: <https://mails.dpdk.org/options/spp>,
+ <mailto:spp-request@dpdk.org?subject=unsubscribe>
+List-Archive: <http://mails.dpdk.org/archives/spp/>
+List-Post: <mailto:spp@dpdk.org>
+List-Help: <mailto:spp-request@dpdk.org?subject=help>
+List-Subscribe: <https://mails.dpdk.org/listinfo/spp>,
+ <mailto:spp-request@dpdk.org?subject=subscribe>
+X-TM-AS-MML: No
+Precedence: bulk
+Lines: 274
+X-TM-AS-GCONF: 00
+X-MD-STAMP: ON
+
+From: Yasufumi Ogawa <yasufum.o@gmail.com>
+
+Struct `mac_classification` defines a set of attirbutes for
+classification. This update is to rename the struct to `mac_classifier`
+and also its members.
+
+Signed-off-by: Yasufumi Ogawa <yasufum.o@gmail.com>
+---
+ src/shared/secondary/spp_worker_th/vf_deps.h | 27 ++++-----
+ src/vf/classifier_mac.c                      | 61 ++++++++++----------
+ 2 files changed, 39 insertions(+), 49 deletions(-)
+
+diff --git a/src/shared/secondary/spp_worker_th/vf_deps.h b/src/shared/secondary/spp_worker_th/vf_deps.h
+index fd0dc5d..c6016b8 100644
+--- a/src/shared/secondary/spp_worker_th/vf_deps.h
++++ b/src/shared/secondary/spp_worker_th/vf_deps.h
+@@ -12,19 +12,12 @@
+ /** Number of VLAN ID */
+ #define NOF_VLAN 4096
+ 
+-/* mac address classification */
+-struct mac_classification {
+-	/* hash table keeps classification */
+-	struct rte_hash *classification_tab;
+-
+-	/* number of valid classification */
+-	int num_active_classified;
+-
+-	/* index of valid classification */
+-	int active_classifieds[RTE_MAX_ETHPORTS];
+-
+-	/* index of default classification */
+-	int default_classified;
++/* Classifier for MAC addresses. */
++struct mac_classifier {
++	struct rte_hash *cls_tbl;  /* Hash table for MAC classification. */
++	int nof_cls_ports;  /* Num of ports classified validly. */
++	int cls_ports[RTE_MAX_ETHPORTS];  /* Ports for classification. */
++	int default_cls_idx;  /* Default index for classification. */
+ };
+ 
+ /* classified data (destination port, target packets, etc) */
+@@ -54,7 +47,7 @@ struct component_info {
+ 	int mac_addr_entry;  /* mac address entry flag */
+ 
+ 	/* mac address classification per vlan-id */
+-	struct mac_classification *mac_classifications[NOF_VLAN];
++	struct mac_classifier *mac_classifications[NOF_VLAN];
+ 
+ 	int n_classified_data_tx;  /* number of transmission ports */
+ 	struct classified_data classified_data_rx;  /* RX handled by cls */
+@@ -64,13 +57,13 @@ struct component_info {
+ 
+ /* free mac classification instance. */
+ static inline void
+-free_mac_classification(struct mac_classification *mac_cls)
++free_mac_classification(struct mac_classifier *mac_cls)
+ {
+ 	if (mac_cls == NULL)
+ 		return;
+ 
+-	if (mac_cls->classification_tab != NULL)
+-		rte_hash_free(mac_cls->classification_tab);
++	if (mac_cls->cls_tbl != NULL)
++		rte_hash_free(mac_cls->cls_tbl);
+ 
+ 	rte_free(mac_cls);
+ }
+diff --git a/src/vf/classifier_mac.c b/src/vf/classifier_mac.c
+index 76dd9e7..5398d25 100644
+--- a/src/vf/classifier_mac.c
++++ b/src/vf/classifier_mac.c
+@@ -272,23 +272,23 @@ is_used_mng_info(const struct management_info *mng_info)
+ }
+ 
+ /* create mac classification instance. */
+-static struct mac_classification *
++static struct mac_classifier *
+ create_mac_classification(void)
+ {
+-	struct mac_classification *mac_cls;
++	struct mac_classifier *mac_cls;
+ 	char hash_tab_name[HASH_TABLE_NAME_BUF_SZ];
+ 	struct rte_hash **mac_cls_tab;
+ 
+-	mac_cls = (struct mac_classification *)rte_zmalloc(
+-			NULL, sizeof(struct mac_classification), 0);
++	mac_cls = (struct mac_classifier *)rte_zmalloc(
++			NULL, sizeof(struct mac_classifier), 0);
+ 
+ 	if (unlikely(mac_cls == NULL))
+ 		return NULL;
+ 
+-	mac_cls->num_active_classified = 0;
+-	mac_cls->default_classified = -1;
++	mac_cls->nof_cls_ports = 0;
++	mac_cls->default_cls_idx = -1;
+ 
+-	mac_cls_tab = &mac_cls->classification_tab;
++	mac_cls_tab = &mac_cls->cls_tbl;
+ 
+ 	/* make hash table name(require uniqueness between processes) */
+ 	sprintf(hash_tab_name, "cmtab_%07x%02hx",
+@@ -328,7 +328,7 @@ init_component_info(struct component_info *cmp_info,
+ {
+ 	int ret = SPP_RET_NG;
+ 	int i;
+-	struct mac_classification *mac_cls;
++	struct mac_classifier *mac_cls;
+ 	struct ether_addr eth_addr;
+ 	char mac_addr_str[ETHER_ADDR_STR_BUF_SZ];
+ 	struct classified_data *clsd_data_rx = &cmp_info->classified_data_rx;
+@@ -385,8 +385,7 @@ init_component_info(struct component_info *cmp_info,
+ 		mac_cls = cmp_info->mac_classifications[vid];
+ 
+ 		/* store active tx_port that associate with mac address */
+-		mac_cls->active_classifieds[
+-				mac_cls->num_active_classified++] = i;
++		mac_cls->cls_ports[mac_cls->nof_cls_ports++] = i;
+ 
+ 		/* mac address entry flag set */
+ 		cmp_info->mac_addr_entry = 1;
+@@ -394,7 +393,7 @@ init_component_info(struct component_info *cmp_info,
+ 		/* store default classified */
+ 		if (unlikely(tx_port->cls_attrs.mac_addr ==
+ 				SPP_DEFAULT_CLASSIFIED_DMY_ADDR)) {
+-			mac_cls->default_classified = i;
++			mac_cls->default_cls_idx = i;
+ 			RTE_LOG(INFO, SPP_CLASSIFIER_MAC,
+ 					"default classified. vid=%hu, "
+ 					"iface_type=%d, iface_no=%d, "
+@@ -412,7 +411,7 @@ init_component_info(struct component_info *cmp_info,
+ 		ether_format_addr(mac_addr_str, sizeof(mac_addr_str),
+ 				&eth_addr);
+ 
+-		ret = rte_hash_add_key_data(mac_cls->classification_tab,
++		ret = rte_hash_add_key_data(mac_cls->cls_tbl,
+ 				(void *)&eth_addr, (void *)(long)i);
+ 		if (unlikely(ret < 0)) {
+ 			RTE_LOG(ERR, SPP_CLASSIFIER_MAC,
+@@ -518,7 +517,7 @@ push_packet(struct rte_mbuf *pkt, struct classified_data *clsd_data)
+ static inline int
+ get_general_default_classified_index(struct component_info *cmp_info)
+ {
+-	struct mac_classification *mac_cls;
++	struct mac_classifier *mac_cls;
+ 
+ 	mac_cls = cmp_info->mac_classifications[VLAN_UNTAGGED_VID];
+ 	if (unlikely(mac_cls == NULL)) {
+@@ -527,7 +526,7 @@ get_general_default_classified_index(struct component_info *cmp_info)
+ 		return SPP_RET_NG;
+ 	}
+ 
+-	return mac_cls->default_classified;
++	return mac_cls->default_cls_idx;
+ }
+ 
+ /* handle L2 multicast(include broadcast) packet */
+@@ -537,7 +536,7 @@ handle_l2multicast_packet(struct rte_mbuf *pkt,
+ 		struct classified_data *clsd_data)
+ {
+ 	int i;
+-	struct mac_classification *mac_cls;
++	struct mac_classifier *mac_cls;
+ 	uint16_t vid = get_vid(pkt);
+ 	int gen_def_clsd_idx = get_general_default_classified_index(cmp_info);
+ 	int n_act_clsd;
+@@ -545,7 +544,7 @@ handle_l2multicast_packet(struct rte_mbuf *pkt,
+ 	/* select mac address classification by vid */
+ 	mac_cls = cmp_info->mac_classifications[vid];
+ 	if (unlikely(mac_cls == NULL ||
+-			mac_cls->num_active_classified == 0)) {
++			mac_cls->nof_cls_ports == 0)) {
+ 		/* specific vlan is not registered
+ 		 * use untagged's default(as general default)
+ 		 */
+@@ -564,18 +563,16 @@ handle_l2multicast_packet(struct rte_mbuf *pkt,
+ 	}
+ 
+ 	/* add to mbuf's refcnt */
+-	n_act_clsd = mac_cls->num_active_classified;
++	n_act_clsd = mac_cls->nof_cls_ports;
+ 	if (gen_def_clsd_idx >= 0 && vid != VLAN_UNTAGGED_VID)
+ 		++n_act_clsd;
+ 
+ 	rte_mbuf_refcnt_update(pkt, (int16_t)(n_act_clsd - 1));
+ 
+ 	/* transmit to specific segment & general default */
+-	for (i = 0; i < mac_cls->num_active_classified; i++) {
+-		LOG_CLS((long)mac_cls->active_classifieds[i],
+-				pkt, cmp_info, clsd_data);
+-		push_packet(pkt, clsd_data +
+-				(long)mac_cls->active_classifieds[i]);
++	for (i = 0; i < mac_cls->nof_cls_ports; i++) {
++		LOG_CLS((long)mac_cls->cls_ports[i], pkt, cmp_info, clsd_data);
++		push_packet(pkt, clsd_data + (long)mac_cls->cls_ports[i]);
+ 	}
+ 
+ 	if (gen_def_clsd_idx >= 0 && vid != VLAN_UNTAGGED_VID) {
+@@ -592,7 +589,7 @@ select_classified_index(const struct rte_mbuf *pkt,
+ 	int ret;
+ 	struct ether_hdr *eth;
+ 	void *lookup_data;
+-	struct mac_classification *mac_cls;
++	struct mac_classifier *mac_cls;
+ 	uint16_t vid;
+ 
+ 	eth = rte_pktmbuf_mtod(pkt, struct ether_hdr *);
+@@ -607,7 +604,7 @@ select_classified_index(const struct rte_mbuf *pkt,
+ 	}
+ 
+ 	/* find in table (by destination mac address) */
+-	ret = rte_hash_lookup_data(mac_cls->classification_tab,
++	ret = rte_hash_lookup_data(mac_cls->cls_tbl,
+ 			(const void *)&eth->d_addr, &lookup_data);
+ 	if (ret >= 0) {
+ 		LOG_DBG(cmp_info->name, "Mac address is registered. "
+@@ -624,7 +621,7 @@ select_classified_index(const struct rte_mbuf *pkt,
+ 		return -2;
+ 
+ 	/* if default is not set, use untagged's default */
+-	if (unlikely(mac_cls->default_classified < 0 &&
++	if (unlikely(mac_cls->default_cls_idx < 0 &&
+ 			vid != VLAN_UNTAGGED_VID)) {
+ 		LOG_DBG(cmp_info->name, "Vid's default is not set. "
+ 				"use general default. vid=%hu\n", vid);
+@@ -633,7 +630,7 @@ select_classified_index(const struct rte_mbuf *pkt,
+ 
+ 	/* use default */
+ 	LOG_DBG(cmp_info->name, "Use vid's default. vid=%hu\n", vid);
+-	return mac_cls->default_classified;
++	return mac_cls->default_cls_idx;
+ }
+ 
+ /*
+@@ -865,7 +862,7 @@ static void
+ mac_classification_iterate_table(
+ 		struct spp_iterate_classifier_table_params *params,
+ 		uint16_t vid,
+-		struct mac_classification *mac_cls,
++		struct mac_classifier *mac_cls,
+ 		__rte_unused struct component_info *cmp_info,
+ 		struct classified_data *clsd_data)
+ {
+@@ -881,13 +878,13 @@ mac_classification_iterate_table(
+ 	if (unlikely(vid == VLAN_UNTAGGED_VID))
+ 		type = SPP_CLASSIFIER_TYPE_MAC;
+ 
+-	if (mac_cls->default_classified >= 0) {
++	if (mac_cls->default_cls_idx >= 0) {
+ 		port.iface_type = (clsd_data +
+-				mac_cls->default_classified)->iface_type;
++				mac_cls->default_cls_idx)->iface_type;
+ 		port.iface_no   = (clsd_data +
+-				mac_cls->default_classified)->iface_no_global;
++				mac_cls->default_cls_idx)->iface_no_global;
+ 
+-		LOG_ENT((long)mac_cls->default_classified,
++		LOG_ENT((long)mac_cls->default_cls_idx,
+ 				vid,
+ 				SPP_DEFAULT_CLASSIFIED_SPEC_STR,
+ 				cmp_info, clsd_data);
+@@ -902,7 +899,7 @@ mac_classification_iterate_table(
+ 
+ 	next = 0;
+ 	while (1) {
+-		ret = rte_hash_iterate(mac_cls->classification_tab,
++		ret = rte_hash_iterate(mac_cls->cls_tbl,
+ 				&key, &data, &next);
+ 
+ 		if (unlikely(ret < 0))
+-- 
+2.17.1
+
+

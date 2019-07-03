@@ -1,0 +1,347 @@
+Return-path: <fw-yama-hd@pomail01.silk.ntt-tx.co.jp>
+Received: from zssg-mailmd106.ddreams.local
+ (zssg-mailmd106.ddreams.local [10.160.123.101])
+ by zssg-mailms320.ddreams.local (NTT DoCoMo Mail System)
+ with ESMTP id <0PTO00Q0GY9PV490@NTTDoCoMo.co.jp> for
+ yamashita.hideyuki@ntt-tx.co.jp; Wed, 26 Jun 2019 14:37:01 +0900 (JST)
+Original-recipient: rfc822;yamashita.hideyuki@ntt-tx.co.jp
+Received: from smtp_saver-daemon.zssg-mailmd106.ddreams.local by
+ zssg-mailmd106.ddreams.local (dDREAMS) id <0PTO00O54Y9PYT00@dDREAMS> for
+ yamashita.hideyuki@ntt-tx.co.jp (ORCPT yamashita.hideyuki@ntt-tx.co.jp); Wed,
+ 26 Jun 2019 14:37:01 +0900 (JST)
+Received: from zssg-mailmf101.ddreams.local
+ (zssg-mailmf900.ddreams.local [10.160.172.84]) by zssg-mailmd106.ddreams.local
+ (dDREAMS) with ESMTP id <0PTO00IKIY9PVX30@dDREAMS> for
+ yamashita.hideyuki@ntt-tx.co.jp (ORCPT yamashita.hideyuki@ntt-tx.co.jp); Wed,
+ 26 Jun 2019 14:37:01 +0900 (JST)
+Received: from zssg-mailmf101.ddreams.local (unknown [127.0.0.1])
+	by zssg-mailmf101.ddreams.local (Postfix) with ESMTP id 16EAD7E603A	for
+ <yamashita.hideyuki@ntt-tx.co.jp>; Wed, 26 Jun 2019 14:37:01 +0900 (JST)
+Received: from zssg-mailmf101.ddreams.local (unknown [127.0.0.1])
+	by IMSVA (Postfix) with ESMTP id 107D78E605A	for
+ <yamashita.hideyuki@ntt-tx.co.jp>; Wed, 26 Jun 2019 14:37:01 +0900 (JST)
+Received: from localhost (unknown [127.0.0.1])	by IMSVA (Postfix)
+ with SMTP id 0D7168E6058	for <yamashita.hideyuki@ntt-tx.co.jp>; Wed,
+ 26 Jun 2019 14:37:01 +0900 (JST)
+X-IMSS-HAND-OFF-DIRECTIVE: localhost:10026
+Received: from zssg-mailmf101.ddreams.local (unknown [127.0.0.1])
+	by IMSVA (Postfix) with ESMTP id 344FD8E6051	for
+ <yamashita.hideyuki@ntt-tx.co.jp>; Wed, 26 Jun 2019 14:37:00 +0900 (JST)
+Received: from pomail01.silk.ntt-tx.co.jp (unknown [10.160.183.139])
+	by zssg-mailmf101.ddreams.local (Postfix)
+ with ESMTPS	for <yamashita.hideyuki@ntt-tx.co.jp>; Wed,
+ 26 Jun 2019 14:37:00 +0900 (JST)
+Received: from pomail01.silk.ntt-tx.co.jp (localhost [127.0.0.1])
+	by pomail01.silk.ntt-tx.co.jp (unknown) with ESMTP id x5Q5b0l4019338;	Wed,
+ 26 Jun 2019 14:37:00 +0900
+Received: (from yama-hd@localhost)	by pomail01.silk.ntt-tx.co.jp (unknown)
+ id x5Q5axfq019337;	Wed, 26 Jun 2019 14:36:59 +0900
+X-Authentication-warning: pomail01.silk.ntt-tx.co.jp: yama-hd set sender to
+ fw-yama-hd@pomail01.silk.ntt-tx.co.jp using -f
+Received: from imss04.silk.ntt-tx.co.jp
+ (imss04.silk.ntt-tx.co.jp [10.107.0.39])	by pomail01.silk.ntt-tx.co.jp
+ (unknown) with ESMTP id x5Q5axNr019334	for unknown; Wed,
+ 26 Jun 2019 14:36:59 +0900
+Received: from imss04.silk.ntt-tx.co.jp (localhost [127.0.0.1])
+ by imss04.silk.ntt-tx.co.jp (unknown) with ESMTP id x5Q5axVK032237 for
+ unknown; Wed, 26 Jun 2019 14:36:59 +0900
+Received: from ml01.silk.ntt-tx.co.jp (ml01.silk.ntt-tx.co.jp [10.107.0.230])
+ by imss04.silk.ntt-tx.co.jp (unknown) with ESMTP id x5Q5axjL032234; Wed,
+ 26 Jun 2019 14:36:59 +0900
+Received: from ml01.silk.ntt-tx.co.jp (localhost [127.0.0.1])
+	by ml01.silk.ntt-tx.co.jp (unknown) with ESMTP id x5Q5axXq015925;	Wed,
+ 26 Jun 2019 14:36:59 +0900
+Received: from imss01.silk.ntt-tx.co.jp
+ (imss01.silk.ntt-tx.co.jp [10.107.0.126])	by ml01.silk.ntt-tx.co.jp (unknown)
+ with ESMTP id x5Q5axiC015921	for unknown; Wed, 26 Jun 2019 14:36:59 +0900
+Received: from imss01.silk.ntt-tx.co.jp (localhost [127.0.0.1])
+ by imss01.silk.ntt-tx.co.jp (unknown) with ESMTP id x5Q5axHm011176 for
+ unknown; Wed, 26 Jun 2019 14:36:59 +0900
+Received: from mail01.ics.ntt-tx.co.jp (mail01.ics.ntt-tx.co.jp [10.254.2.67])
+ by imss01.silk.ntt-tx.co.jp (unknown) with ESMTP id x5Q5awPL011171 for
+ unknown; Wed, 26 Jun 2019 14:36:58 +0900
+Received: from dpdk.org (dpdk.org [92.243.14.124])	by mail01.ics.ntt-tx.co.jp
+ (unknown) with SMTP id x5Q5aqYf026543	for unknown; Wed,
+ 26 Jun 2019 14:36:58 +0900
+Received: from [92.243.14.124] (localhost [127.0.0.1])	by dpdk.org (Postfix)
+ with ESMTP id F407D1B464;	Wed, 26 Jun 2019 07:36:51 +0200 (CEST)
+Received: from mail-pl1-f195.google.com
+ (mail-pl1-f195.google.com [209.85.214.195]) by dpdk.org (Postfix)
+ with ESMTP id A278F4F98 for <spp@dpdk.org>; Wed,
+ 26 Jun 2019 07:36:50 +0200 (CEST)
+Received: by mail-pl1-f195.google.com with SMTP id t7so756191plr.11 for
+ <spp@dpdk.org>; Tue, 25 Jun 2019 22:36:50 -0700 (PDT)
+Received: from localhost.localdomain ([192.47.164.146])
+ by smtp.gmail.com with ESMTPSA id p2sm24298412pfb.118.2019.06.25.22.36.48
+ (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128); Tue,
+ 25 Jun 2019 22:36:49 -0700 (PDT)
+Date: Wed, 26 Jun 2019 14:36:45 +0900
+From: yasufum.o@gmail.com
+Subject: [spp 04444] [spp] [PATCH] shared/sec: rename enum spp_classifier_type
+Sender: spp <spp-bounces@dpdk.org>
+To: spp@dpdk.org, ferruh.yigit@intel.com, yasufum.o@gmail.com
+Message-id: <20190626053645.40019-1-yasufum.o@gmail.com>
+X-ML-Name: unknown
+X-Mail-Count: 04444
+X-MLServer: unknown
+X-ML-Info: mailing list service
+X-Mailer: git-send-email 2.17.1
+Authentication-results: mail01.ics.ntt-tx.co.jp; spf=pass
+ smtp.mailfrom=spp-bounces@dpdk.org
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
+ h=from:to:subject:date:message-id;
+ bh=AyXnXLgp+WoABFg8DmlA2Ur9poHtlS364uXOPUit6n4=;
+ b=iFrFnl2wt11XBRGAQpBAo9QLCkJR6sNQMIqspFM05TyiwZnJ1DAoDBj0lkpChBLsxy
+ RuDxmDGZjq4CbxOMQrum6arJVTu9Z7qbpM5vhycl1+znslczUkwuz34eap9ykXcbCjQ1
+ Me5uPXaanAmQiHvIRiADrZhO+N2f/GsdQhx7XJ1B0auvaFLxV92DsTIFvm2baZInsi+X
+ wbqrjFwybm9ceyqYCApsF+6J6r/E05iLtVxG/Jb2fXdLzW0BC7XD/32LxSocKU0zlYRc
+ FljPOQQThsoWOeQnZgusNQgrrZ28Dm23ZXSYmwJoS7xC2AytGRjzfQb/qVMS4X3c9EBO J0UQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=1e100.net;
+ s=20161025; h=x-gm-message-state:from:to:subject:date:message-id;
+ bh=AyXnXLgp+WoABFg8DmlA2Ur9poHtlS364uXOPUit6n4=;
+ b=HMMazkwXwyxCK7RKIqxf22tnuM8uSupz96O9NId+snPjv3yXHF0HSu/QsrIOyz2DfW
+ UheA//lofUICK5Z7VBOjRw21XyE6t5vHWmuuNrv281l0n6RXz4T7hO1RJ4tVo0hJppwQ
+ acBZ72U9QRSmM+4zjcAi5/DxLr5n121+QFm+UUXV7J9KWcHiGKFDGPcL+7xjvHcL/HJs
+ +cj/XdWvX9TxwP4gk3GSlJ+/4sFZUsS8Q9d1H7EsmNR6X6N7rqYknRjyuGAEUmTsIrej
+ GMjjS5Wh4wRPBE9E7mXXkOxS4U6Ozggzjn/pwDPqVLiWoYdDBPN7+0U2EkuHgNAiL3T6 d3vw==
+X-Gm-Message-State: APjAAAVeEPTBM5hoCB2UWVfHtuLVzjls2U67nAKT8V43KL3SZlOT+Rf9
+ 4IYoqouMYQfBrVik0Tg6aLXjTbtF
+X-Google-Smtp-Source:
+ APXvYqzgvHx1aUYeIaWJSVP6Ecq4g9ei9Ifx97CoGkCcGOWlS0HTPcl2C9IQDTCMB7bBy9tvC+wgVw==
+X-Received: by 2002:a17:902:7d86:: with SMTP id
+ a6mr3126116plm.199.1561527409393; Tue, 25 Jun 2019 22:36:49 -0700 (PDT)
+X-BeenThere: spp@dpdk.org
+X-Mailman-Version: 2.1.15
+List-Id: Soft Patch Panel <spp.dpdk.org>
+List-Unsubscribe: <https://mails.dpdk.org/options/spp>,
+ <mailto:spp-request@dpdk.org?subject=unsubscribe>
+List-Archive: <http://mails.dpdk.org/archives/spp/>
+List-Post: <mailto:spp@dpdk.org>
+List-Help: <mailto:spp-request@dpdk.org?subject=help>
+List-Subscribe: <https://mails.dpdk.org/listinfo/spp>,
+ <mailto:spp-request@dpdk.org?subject=subscribe>
+X-TM-AS-MML: No
+Precedence: bulk
+Lines: 218
+X-TM-AS-GCONF: 00
+X-MD-STAMP: ON
+
+From: Yasufumi Ogawa <yasufum.o@gmail.com>
+
+This update is to refactor the name of enum `spp_classifier_type` and
+its members to be more specific and short.
+
+Signed-off-by: Yasufumi Ogawa <yasufum.o@gmail.com>
+---
+ src/shared/secondary/spp_worker_th/cmd_parser.c |  6 +++---
+ src/shared/secondary/spp_worker_th/cmd_parser.h |  2 +-
+ src/shared/secondary/spp_worker_th/cmd_utils.c  |  2 +-
+ src/shared/secondary/spp_worker_th/cmd_utils.h  | 10 +++++-----
+ src/shared/secondary/spp_worker_th/vf_deps.h    |  2 +-
+ src/vf/classifier_mac.c                         | 14 +++++++-------
+ src/vf/vf_cmd_runner.c                          | 17 ++++++++---------
+ 7 files changed, 26 insertions(+), 27 deletions(-)
+
+diff --git a/src/shared/secondary/spp_worker_th/cmd_parser.c b/src/shared/secondary/spp_worker_th/cmd_parser.c
+index cd79bdb..931c53b 100644
+--- a/src/shared/secondary/spp_worker_th/cmd_parser.c
++++ b/src/shared/secondary/spp_worker_th/cmd_parser.c
+@@ -728,7 +728,7 @@ parse_cls_port(void *cls_cmd_attr, const char *arg_val,
+ 		return SPP_RET_NG;
+ 	}
+ 
+-	if (cls_attrs->type == SPP_CLASSIFIER_TYPE_MAC)
++	if (cls_attrs->cls_type == SPPWK_CLS_TYPE_MAC)
+ 		cls_attrs->vid = ETH_VLAN_ID_MAX;
+ 
+ 	if (unlikely(cls_attrs->wk_action == SPPWK_ACT_ADD)) {
+@@ -783,7 +783,7 @@ cmd_ops_list[][SPPWK_MAX_PARAMS] = {
+ 		{
+ 			.name = "type",
+ 			.offset = offsetof(struct sppwk_cmd_attrs,
+-					spec.cls_table.type),
++					spec.cls_table.cls_type),
+ 			.func = parse_cls_type
+ 		},
+ 		{
+@@ -810,7 +810,7 @@ cmd_ops_list[][SPPWK_MAX_PARAMS] = {
+ 		{
+ 			.name = "type",
+ 			.offset = offsetof(struct sppwk_cmd_attrs,
+-					spec.cls_table.type),
++					spec.cls_table.cls_type),
+ 			.func = parse_cls_type
+ 		},
+ 		{
+diff --git a/src/shared/secondary/spp_worker_th/cmd_parser.h b/src/shared/secondary/spp_worker_th/cmd_parser.h
+index d50e3a6..b124dc1 100644
+--- a/src/shared/secondary/spp_worker_th/cmd_parser.h
++++ b/src/shared/secondary/spp_worker_th/cmd_parser.h
+@@ -80,7 +80,7 @@ const char *sppwk_cmd_type_str(enum sppwk_cmd_type ctype);
+ /* `classifier_table` command specific parameters. */
+ struct sppwk_cls_cmd_attrs {
+ 	enum sppwk_action wk_action;  /**< add or del */
+-	enum spp_classifier_type type;  /**< currently only for mac */
++	enum sppwk_cls_type cls_type;  /**< currently only for MAC. */
+ 	int vid;  /**< VLAN ID  */
+ 	char mac[SPPWK_VAL_BUFSZ];  /**< MAC address  */
+ 	struct sppwk_port_idx port;/**< Destination port type and number */
+diff --git a/src/shared/secondary/spp_worker_th/cmd_utils.c b/src/shared/secondary/spp_worker_th/cmd_utils.c
+index 6f93400..6072186 100644
+--- a/src/shared/secondary/spp_worker_th/cmd_utils.c
++++ b/src/shared/secondary/spp_worker_th/cmd_utils.c
+@@ -69,7 +69,7 @@ log_hexdumped(const char *obj_name, const void *obj_addr, const size_t size)
+ 	}
+ }
+ 
+-/* Get core status */
++/* Get status of lcore of given ID. */
+ enum sppwk_lcore_status
+ spp_get_core_status(unsigned int lcore_id)
+ {
+diff --git a/src/shared/secondary/spp_worker_th/cmd_utils.h b/src/shared/secondary/spp_worker_th/cmd_utils.h
+index 87c9b2c..a935312 100644
+--- a/src/shared/secondary/spp_worker_th/cmd_utils.h
++++ b/src/shared/secondary/spp_worker_th/cmd_utils.h
+@@ -93,10 +93,10 @@ enum sppwk_worker_type {
+ };
+ 
+ /* Classifier Type */
+-enum spp_classifier_type {
+-	SPP_CLASSIFIER_TYPE_NONE, /**< Type none */
+-	SPP_CLASSIFIER_TYPE_MAC,  /**< MAC address */
+-	SPP_CLASSIFIER_TYPE_VLAN  /**< VLAN ID */
++enum sppwk_cls_type {
++	SPPWK_CLS_TYPE_NONE,
++	SPPWK_CLS_TYPE_MAC,
++	SPPWK_CLS_TYPE_VLAN
+ };
+ 
+ /* Direction of RX or TX on a port. */
+@@ -258,7 +258,7 @@ struct spp_iterate_classifier_table_params;
+  */
+ typedef int (*spp_iterate_classifier_element_proc)(
+ 		struct spp_iterate_classifier_table_params *params,
+-		enum spp_classifier_type type,
++		enum sppwk_cls_type cls_type,
+ 		int vid, const char *mac,
+ 		const struct sppwk_port_idx *port);
+ 
+diff --git a/src/shared/secondary/spp_worker_th/vf_deps.h b/src/shared/secondary/spp_worker_th/vf_deps.h
+index fd3c201..83ddf09 100644
+--- a/src/shared/secondary/spp_worker_th/vf_deps.h
++++ b/src/shared/secondary/spp_worker_th/vf_deps.h
+@@ -108,7 +108,7 @@ int update_comp_info(struct sppwk_comp_info *p_comp_info, int *p_change_comp);
+ 
+ int append_classifier_element_value(
+ 		struct spp_iterate_classifier_table_params *params,
+-		enum spp_classifier_type type,
++		enum sppwk_cls_type cls_type,
+ 		int vid, const char *mac,
+ 		const struct sppwk_port_idx *port);
+ 
+diff --git a/src/vf/classifier_mac.c b/src/vf/classifier_mac.c
+index c7873e3..9c4bedf 100644
+--- a/src/vf/classifier_mac.c
++++ b/src/vf/classifier_mac.c
+@@ -878,11 +878,11 @@ iterate_adding_mac_entry(
+ 	uint32_t next;
+ 	struct sppwk_port_idx port;
+ 	char mac_addr_str[ETHER_ADDR_STR_BUF_SZ];
+-	enum spp_classifier_type type;
++	enum sppwk_cls_type cls_type;
+ 
+-	type = SPP_CLASSIFIER_TYPE_VLAN;
++	cls_type = SPPWK_CLS_TYPE_VLAN;
+ 	if (unlikely(vid == VLAN_UNTAGGED_VID))
+-		type = SPP_CLASSIFIER_TYPE_MAC;
++		cls_type = SPPWK_CLS_TYPE_MAC;
+ 
+ 	if (mac_cls->default_cls_idx >= 0) {
+ 		port.iface_type = (port_info +
+@@ -897,8 +897,8 @@ iterate_adding_mac_entry(
+ 		 * Append "default" entry. `element_proc` is a funciton
+ 		 * pointer to append_classifier_element_value().
+ 		 */
+-		(*params->element_proc)(params, type, vid, SPPWK_TERM_DEFAULT,
+-				&port);
++		(*params->element_proc)(params, cls_type, vid,
++				SPPWK_TERM_DEFAULT, &port);
+ 	}
+ 
+ 	next = 0;
+@@ -920,8 +920,8 @@ iterate_adding_mac_entry(
+ 		 * Append each entry of MAC address. `element_proc` is a
+ 		 * funciton pointer to append_classifier_element_value().
+ 		 */
+-		(*params->element_proc)(params, type, vid, mac_addr_str,
+-				&port);
++		(*params->element_proc)(params, cls_type, vid,
++				mac_addr_str, &port);
+ 	}
+ }
+ 
+diff --git a/src/vf/vf_cmd_runner.c b/src/vf/vf_cmd_runner.c
+index f5854b0..b28d8a6 100644
+--- a/src/vf/vf_cmd_runner.c
++++ b/src/vf/vf_cmd_runner.c
+@@ -28,7 +28,7 @@ const char *CLS_TYPE_A_LIST[] = {
+ /* Update classifier table with given action, add or del. */
+ static int
+ update_cls_table(enum sppwk_action wk_action,
+-		enum spp_classifier_type type __attribute__ ((unused)),
++		enum sppwk_cls_type cls_type __attribute__ ((unused)),
+ 		int vid, const char *mac_str,
+ 		const struct sppwk_port_idx *port)
+ {
+@@ -383,7 +383,7 @@ exec_one_cmd(const struct sppwk_cmd_attrs *cmd)
+ 	case SPPWK_CMDTYPE_CLS_MAC:
+ 	case SPPWK_CMDTYPE_CLS_VLAN:
+ 		ret = update_cls_table(cmd->spec.cls_table.wk_action,
+-				cmd->spec.cls_table.type,
++				cmd->spec.cls_table.cls_type,
+ 				cmd->spec.cls_table.vid,
+ 				cmd->spec.cls_table.mac,
+ 				&cmd->spec.cls_table.port);
+@@ -555,7 +555,7 @@ update_comp_info(struct sppwk_comp_info *p_comp_info, int *p_change_comp)
+ int
+ append_classifier_element_value(
+ 		struct spp_iterate_classifier_table_params *params,
+-		enum spp_classifier_type type,
++		enum sppwk_cls_type cls_type,
+ 		int vid, const char *mac,
+ 		const struct sppwk_port_idx *port)
+ {
+@@ -567,23 +567,22 @@ append_classifier_element_value(
+ 	tmp_buff = spp_strbuf_allocate(CMD_RES_BUF_INIT_SIZE);
+ 	if (unlikely(tmp_buff == NULL)) {
+ 		RTE_LOG(ERR, VF_CMD_RUNNER,
+-				/* TODO(yasufum) refactor no meaning err msg */
+-				"allocate error. (name = classifier_table)\n");
++				"Failed to allocate buffer.\n");
+ 		return ret;
+ 	}
+ 
+ 	spp_format_port_string(port_str, port->iface_type, port->iface_no);
+ 
+-	ret = append_json_str_value(&tmp_buff, "type", CLS_TYPE_A_LIST[type]);
++	ret = append_json_str_value(&tmp_buff, "type", CLS_TYPE_A_LIST[cls_type]);
+ 	if (unlikely(ret < SPP_RET_OK))
+ 		return ret;
+ 
+ 	memset(value_str, 0x00, STR_LEN_SHORT);
+-	switch (type) {
+-	case SPP_CLASSIFIER_TYPE_MAC:
++	switch (cls_type) {
++	case SPPWK_CLS_TYPE_MAC:
+ 		sprintf(value_str, "%s", mac);
+ 		break;
+-	case SPP_CLASSIFIER_TYPE_VLAN:
++	case SPPWK_CLS_TYPE_VLAN:
+ 		sprintf(value_str, "%d/%s", vid, mac);
+ 		break;
+ 	default:
+-- 
+2.17.1
+
+

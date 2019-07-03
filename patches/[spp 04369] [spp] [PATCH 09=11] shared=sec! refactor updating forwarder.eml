@@ -1,0 +1,291 @@
+Return-path: <fw-yama-hd@pomail01.silk.ntt-tx.co.jp>
+Received: from zssg-mailmd102.ddreams.local
+ (zssg-mailmd102.ddreams.local [10.160.123.97]) by zssg-mailms320.ddreams.local
+ (NTT DoCoMo Mail System) with ESMTP id <0PTL00UND0318Y40@NTTDoCoMo.co.jp> for
+ yamashita.hideyuki@ntt-tx.co.jp; Mon, 24 Jun 2019 11:25:49 +0900 (JST)
+Original-recipient: rfc822;yamashita.hideyuki@ntt-tx.co.jp
+Received: from smtp_saver-daemon.zssg-mailmd102.ddreams.local by
+ zssg-mailmd102.ddreams.local (dDREAMS) id <0PTL00Z3Q0315T00@dDREAMS> for
+ yamashita.hideyuki@ntt-tx.co.jp (ORCPT yamashita.hideyuki@ntt-tx.co.jp); Mon,
+ 24 Jun 2019 11:25:49 +0900 (JST)
+Received: from zssg-mailmf103.ddreams.local
+ (zssg-mailmf900.ddreams.local [10.160.172.84]) by zssg-mailmd102.ddreams.local
+ (dDREAMS) with ESMTP id <0PTL00V28031YD20@dDREAMS> for
+ yamashita.hideyuki@ntt-tx.co.jp (ORCPT yamashita.hideyuki@ntt-tx.co.jp); Mon,
+ 24 Jun 2019 11:25:49 +0900 (JST)
+Received: from zssg-mailmf103.ddreams.local (unknown [127.0.0.1])
+	by zssg-mailmf103.ddreams.local (Postfix) with ESMTP id C22B87E603C	for
+ <yamashita.hideyuki@ntt-tx.co.jp>; Mon, 24 Jun 2019 11:25:49 +0900 (JST)
+Received: from zssg-mailmf103.ddreams.local (unknown [127.0.0.1])
+	by IMSVA (Postfix) with ESMTP id C0F528E6061	for
+ <yamashita.hideyuki@ntt-tx.co.jp>; Mon, 24 Jun 2019 11:25:49 +0900 (JST)
+Received: from localhost (unknown [127.0.0.1])	by IMSVA (Postfix)
+ with SMTP id BF5858E606B	for <yamashita.hideyuki@ntt-tx.co.jp>; Mon,
+ 24 Jun 2019 11:25:49 +0900 (JST)
+X-IMSS-HAND-OFF-DIRECTIVE: localhost:10026
+Received: from zssg-mailmf103.ddreams.local (unknown [127.0.0.1])
+	by IMSVA (Postfix) with ESMTP id 470728E605C	for
+ <yamashita.hideyuki@ntt-tx.co.jp>; Mon, 24 Jun 2019 11:25:49 +0900 (JST)
+Received: from pomail01.silk.ntt-tx.co.jp (unknown [10.160.183.139])
+	by zssg-mailmf103.ddreams.local (Postfix)
+ with ESMTPS	for <yamashita.hideyuki@ntt-tx.co.jp>; Mon,
+ 24 Jun 2019 11:25:49 +0900 (JST)
+Received: from pomail01.silk.ntt-tx.co.jp (localhost [127.0.0.1])
+	by pomail01.silk.ntt-tx.co.jp (unknown) with ESMTP id x5O2PnVo013664;	Mon,
+ 24 Jun 2019 11:25:49 +0900
+Received: (from yama-hd@localhost)	by pomail01.silk.ntt-tx.co.jp (unknown)
+ id x5O2PnKF013663;	Mon, 24 Jun 2019 11:25:49 +0900
+X-Authentication-warning: pomail01.silk.ntt-tx.co.jp: yama-hd set sender to
+ fw-yama-hd@pomail01.silk.ntt-tx.co.jp using -f
+Received: from imss04.silk.ntt-tx.co.jp
+ (imss04.silk.ntt-tx.co.jp [10.107.0.39])	by pomail01.silk.ntt-tx.co.jp
+ (unknown) with ESMTP id x5O2PmMS013660	for unknown; Mon,
+ 24 Jun 2019 11:25:48 +0900
+Received: from imss04.silk.ntt-tx.co.jp (localhost [127.0.0.1])
+ by imss04.silk.ntt-tx.co.jp (unknown) with ESMTP id x5O2PmvX006127 for
+ unknown; Mon, 24 Jun 2019 11:25:48 +0900
+Received: from ml01.silk.ntt-tx.co.jp (ml01.silk.ntt-tx.co.jp [10.107.0.230])
+ by imss04.silk.ntt-tx.co.jp (unknown) with ESMTP id x5O2PmCl006120; Mon,
+ 24 Jun 2019 11:25:48 +0900
+Received: from ml01.silk.ntt-tx.co.jp (localhost [127.0.0.1])
+	by ml01.silk.ntt-tx.co.jp (unknown) with ESMTP id x5O2PmDC016531;	Mon,
+ 24 Jun 2019 11:25:48 +0900
+Received: from imss02.silk.ntt-tx.co.jp
+ (imss02.silk.ntt-tx.co.jp [10.107.0.127])	by ml01.silk.ntt-tx.co.jp (unknown)
+ with ESMTP id x5O2Pmvi016527	for unknown; Mon, 24 Jun 2019 11:25:48 +0900
+Received: from imss02.silk.ntt-tx.co.jp (localhost [127.0.0.1])
+ by imss02.silk.ntt-tx.co.jp (unknown) with ESMTP id x5O2PmWM006736 for
+ unknown; Mon, 24 Jun 2019 11:25:48 +0900
+Received: from mail01.ics.ntt-tx.co.jp (mail01.ics.ntt-tx.co.jp [10.254.2.67])
+ by imss02.silk.ntt-tx.co.jp (unknown) with ESMTP id x5O2Pmjf006730 for
+ unknown; Mon, 24 Jun 2019 11:25:48 +0900
+Received: from dpdk.org (dpdk.org [92.243.14.124])	by mail01.ics.ntt-tx.co.jp
+ (unknown) with SMTP id x5O2Pfj9003966	for unknown; Mon,
+ 24 Jun 2019 11:25:47 +0900
+Received: from [92.243.14.124] (localhost [127.0.0.1])	by dpdk.org (Postfix)
+ with ESMTP id 1B0F91BF54;	Mon, 24 Jun 2019 04:25:41 +0200 (CEST)
+Received: from mail-pl1-f194.google.com
+ (mail-pl1-f194.google.com [209.85.214.194]) by dpdk.org (Postfix)
+ with ESMTP id EF5F81BF54 for <spp@dpdk.org>; Mon,
+ 24 Jun 2019 04:25:39 +0200 (CEST)
+Received: by mail-pl1-f194.google.com with SMTP id bi6so5980798plb.12 for
+ <spp@dpdk.org>; Sun, 23 Jun 2019 19:25:39 -0700 (PDT)
+Received: from localhost.localdomain ([192.47.164.146])
+ by smtp.gmail.com with ESMTPSA id a3sm9927461pje.3.2019.06.23.19.25.37
+ (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128); Sun,
+ 23 Jun 2019 19:25:38 -0700 (PDT)
+Date: Mon, 24 Jun 2019 11:25:02 +0900
+From: yasufum.o@gmail.com
+Subject: [spp 04369] [spp] [PATCH 09/11] shared/sec: refactor updating forwarder
+Sender: spp <spp-bounces@dpdk.org>
+To: spp@dpdk.org, ferruh.yigit@intel.com, yasufum.o@gmail.com
+Message-id: <20190624022504.18752-10-yasufum.o@gmail.com>
+In-reply-to: <20190624022504.18752-1-yasufum.o@gmail.com>
+References: <20190624022504.18752-1-yasufum.o@gmail.com>
+X-ML-Name: unknown
+X-Mail-Count: 04369
+X-MLServer: unknown
+X-ML-Info: mailing list service
+X-Mailer: git-send-email 2.17.1
+Authentication-results: mail01.ics.ntt-tx.co.jp; spf=pass
+ smtp.mailfrom=spp-bounces@dpdk.org
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
+ h=from:to:subject:date:message-id:in-reply-to:references;
+ bh=LD2bq3PQO9vhFNcCmJlOiuJO4oMEGMm9R5UzRR+GZNA=;
+ b=IKj2i9yEiiWiqBRAn1Y2NgC/vfodtIEKbiyVe0sbtEWbemIHKTyF6om9Bt/up66iJC
+ 4p3zRlnH1+MlW9aWSfsmzr0aLjTVHC+wzeo7LRxZVxZGZ4PEyF6MNwlQEkFRl6UJK31O
+ +gflsT/GdZVtuZVzIj7qQdhqCuCnCl/T/Lsw6gsqaZOKvIFokX55lSLnxbwuAuE33n7N
+ 5GT/LN1ym/7UKayRN4M7iBPN/QThWbJEWrdp76xoZTWY/95muT6d3IQAJVZtfvrJ3WCU
+ 4ViFSmB/o1MBnLjNM7yzGdnLxd2VU1u82M5KYxS7hk0v4So+3BQikY8zNTvU2oJjiyWJ wiEA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=1e100.net;
+ s=20161025; h=x-gm-message-state:from:to:subject:date:message-id:in-reply-to
+ :references; bh=LD2bq3PQO9vhFNcCmJlOiuJO4oMEGMm9R5UzRR+GZNA=;
+ b=pqDOY3kvHhte87qmM0eGrsayrcDLFn6jmP5tCpmfcOTzqcGPuE/T8er21F8JNcW38c
+ 1/r496JD2t93THk+cCf1R3lPzmtDUKPk0NaLqqLCZGSRanekt6nQhEnl0ga/dE34PMcS
+ bwEjfw8bhBjbfyHWx/mm2JgLMlKiGGycxGdhneRtF/rPqXeWQ5xsPEwraLWipd/qJlxg
+ MCDqbwaVAv8bB9B8zV5RF6TrwSOBSEKsdLV5a2p6nELmHQjrw0/26v1DudkVisH+F/8p
+ pzn/s/KnHraTYw5F4j2hZQYt59YLmSO7PfKz/aUpehJ/5KOqE61w5WCN/wlBG1Y/fj5W oIPg==
+X-Gm-Message-State: APjAAAX4kKtuubO35Z2Wtix4AC2Rd4RrbDTSn1IRHP79wYr555FdUxtR
+ nsatlKjnnQM4dXdjGhOr58EZT7wJ
+X-Google-Smtp-Source:
+ APXvYqz3KPR9XIDVo4H+60pChruyGcWpet7LYTUO6SS8NujYgccSOTEX/Ns00xOiFLxFOaPXt23nHA==
+X-Received: by 2002:a17:902:2f:: with SMTP id 44mr84526209pla.5.1561343139100;
+ Sun, 23 Jun 2019 19:25:39 -0700 (PDT)
+X-BeenThere: spp@dpdk.org
+X-Mailman-Version: 2.1.15
+List-Id: Soft Patch Panel <spp.dpdk.org>
+List-Unsubscribe: <https://mails.dpdk.org/options/spp>,
+ <mailto:spp-request@dpdk.org?subject=unsubscribe>
+List-Archive: <http://mails.dpdk.org/archives/spp/>
+List-Post: <mailto:spp@dpdk.org>
+List-Help: <mailto:spp-request@dpdk.org?subject=help>
+List-Subscribe: <https://mails.dpdk.org/listinfo/spp>,
+ <mailto:spp-request@dpdk.org?subject=subscribe>
+X-TM-AS-MML: No
+Precedence: bulk
+Lines: 161
+X-TM-AS-GCONF: 00
+X-MD-STAMP: ON
+
+From: Yasufumi Ogawa <yasufum.o@gmail.com>
+
+Rename spp_forward_update() to update_forwarder(), and revise
+vars and log messages for refactoring.
+
+Signed-off-by: Yasufumi Ogawa <yasufum.o@gmail.com>
+---
+ .../secondary/spp_worker_th/cmd_utils.c       |  2 +-
+ src/shared/secondary/spp_worker_th/vf_deps.h  |  6 +-
+ src/vf/spp_forward.c                          | 70 +++++++++----------
+ 3 files changed, 39 insertions(+), 39 deletions(-)
+
+diff --git a/src/shared/secondary/spp_worker_th/cmd_utils.c b/src/shared/secondary/spp_worker_th/cmd_utils.c
+index d5faa35..709c3da 100644
+--- a/src/shared/secondary/spp_worker_th/cmd_utils.c
++++ b/src/shared/secondary/spp_worker_th/cmd_utils.c
+@@ -893,7 +893,7 @@ update_comp_info(void)
+ 		if (comp_info->wk_type == SPPWK_TYPE_CLS)
+ 			ret = update_classifier(comp_info);
+ 		else
+-			ret = spp_forward_update(comp_info);
++			ret = update_forwarder(comp_info);
+ #endif /* SPP_VF_MODULE */
+ 
+ #ifdef SPP_MIRROR_MODULE
+diff --git a/src/shared/secondary/spp_worker_th/vf_deps.h b/src/shared/secondary/spp_worker_th/vf_deps.h
+index 8d3cd81..3ae4fc9 100644
+--- a/src/shared/secondary/spp_worker_th/vf_deps.h
++++ b/src/shared/secondary/spp_worker_th/vf_deps.h
+@@ -54,13 +54,13 @@ free_mac_classifier(struct mac_classifier *mac_clf)
+ }
+ 
+ /**
+- * classifier(mac address) update component info.
++ * Update classifier info.
+  *
+  * @param comp_info Pointer to internal data of classifier.
+  * @retval SPP_RET_OK If succeeded.
+  * @retval SPP_RET_NG If failed.
+  */
+-int update_classifier(struct sppwk_comp_info *comp_info);
++int update_classifier(struct sppwk_comp_info *wk_comp_info);
+ 
+ /**
+  * Update forwarder info.
+@@ -69,7 +69,7 @@ int update_classifier(struct sppwk_comp_info *comp_info);
+  * @retval SPP_RET_OK If succeeded.
+  * @retval SPP_RET_NG If failed.
+  */
+-int spp_forward_update(struct sppwk_comp_info *component);
++int update_forwarder(struct sppwk_comp_info *wk_comp_info);
+ 
+ void init_classifier_info(int component_id);
+ 
+diff --git a/src/vf/spp_forward.c b/src/vf/spp_forward.c
+index 909f084..7746d40 100644
+--- a/src/vf/spp_forward.c
++++ b/src/vf/spp_forward.c
+@@ -51,64 +51,64 @@ spp_forward_init(void)
+ 
+ /* Update forward info */
+ int
+-spp_forward_update(struct sppwk_comp_info *component)
++update_forwarder(struct sppwk_comp_info *comp_info)
+ {
+ 	int cnt = 0;
+-	int nof_rx = component->nof_rx;
+-	int nof_tx = component->nof_tx;
++	int nof_rx = comp_info->nof_rx;
++	int nof_tx = comp_info->nof_tx;
+ 	int max = (nof_rx > nof_tx)?nof_rx*nof_tx:nof_tx;
+-	struct forward_info *info = &g_forward_info[component->comp_id];
+-	struct forward_path *path = &info->path[info->upd_index];
+-
+-	/* Forward component allows only one receiving port. */
+-	if ((component->wk_type == SPPWK_TYPE_FWD) &&
++	struct forward_info *fwd_info = &g_forward_info[comp_info->comp_id];
++	/* TODO(yasufum) rename `path` of struct forward_path. */
++	struct forward_path *fwd_path = &fwd_info->path[fwd_info->upd_index];
++
++	/**
++	 * Check num of RX and TX ports because forwarder has just a set of
++	 * RX and TX.
++	 */
++	if ((comp_info->wk_type == SPPWK_TYPE_FWD) &&
+ 			unlikely(nof_rx > 1)) {
+ 		RTE_LOG(ERR, FORWARD,
+-			"Component[%d] Setting error. (type = %d, rx = %d)\n",
+-			component->comp_id, component->wk_type, nof_rx);
++			"Invalid forwarder type or num of RX ports "
++			"(id=%d, type=%d, nof_rx=%d).\n",
++			comp_info->comp_id, comp_info->wk_type, nof_rx);
+ 		return SPP_RET_NG;
+ 	}
+-
+-	/* Component allows only one transmit port. */
+ 	if (unlikely(nof_tx != 0) && unlikely(nof_tx != 1)) {
+ 		RTE_LOG(ERR, FORWARD,
+-			"Component[%d] Setting error. (type = %d, tx = %d)\n",
+-			component->comp_id, component->wk_type, nof_tx);
++			"Invalid forwarder type or num of TX ports "
++			"(id=%d, type=%d, nof_tx=%d).\n",
++			comp_info->comp_id, comp_info->wk_type, nof_tx);
+ 		return SPP_RET_NG;
+ 	}
+ 
+-	memset(path, 0x00, sizeof(struct forward_path));
++	memset(fwd_path, 0x00, sizeof(struct forward_path));
+ 
+ 	RTE_LOG(INFO, FORWARD,
+-			"Component[%d] Start update component. "
+-			"(name = %s, type = %d)\n",
+-			component->comp_id,
+-			component->name,
+-			component->wk_type);
+-
+-	memcpy(&path->name, component->name, STR_LEN_NAME);
+-	path->wk_type = component->wk_type;
+-	path->num_rx = component->nof_rx;
+-	path->num_tx = component->nof_tx;
++			"Start updating forwarder (id=%d, name=%s, type=%d)\n",
++			comp_info->comp_id, comp_info->name,
++			comp_info->wk_type);
++
++	memcpy(&fwd_path->name, comp_info->name, STR_LEN_NAME);
++	fwd_path->wk_type = comp_info->wk_type;
++	fwd_path->num_rx = comp_info->nof_rx;
++	fwd_path->num_tx = comp_info->nof_tx;
+ 	for (cnt = 0; cnt < nof_rx; cnt++)
+-		memcpy(&path->ports[cnt].rx, component->rx_ports[cnt],
++		memcpy(&fwd_path->ports[cnt].rx, comp_info->rx_ports[cnt],
+ 				sizeof(struct sppwk_port_info));
+ 
+-	/* Transmit port is set according with larger nof_rx / nof_tx. */
++	/* TX port is set according with larger nof_rx / nof_tx. */
+ 	for (cnt = 0; cnt < max; cnt++)
+-		memcpy(&path->ports[cnt].tx, component->tx_ports[0],
++		memcpy(&fwd_path->ports[cnt].tx, comp_info->tx_ports[0],
+ 				sizeof(struct sppwk_port_info));
+ 
+-	info->upd_index = info->ref_index;
+-	while (likely(info->ref_index == info->upd_index))
++	fwd_info->upd_index = fwd_info->ref_index;
++	while (likely(fwd_info->ref_index == fwd_info->upd_index))
+ 		rte_delay_us_block(SPP_CHANGE_UPDATE_INTERVAL);
+ 
+ 	RTE_LOG(INFO, FORWARD,
+-			"Component[%d] Complete update component. "
+-			"(name = %s, type = %d)\n",
+-			component->comp_id,
+-			component->name,
+-			component->wk_type);
++			"Done update forwarder. (id=%d, name=%s, type=%d)\n",
++			comp_info->comp_id, comp_info->name,
++			comp_info->wk_type);
+ 
+ 	return SPP_RET_OK;
+ }
+-- 
+2.17.1
+
+

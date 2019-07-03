@@ -1,0 +1,356 @@
+Return-path: <fw-yama-hd@pomail01.silk.ntt-tx.co.jp>
+Received: from zssg-mailmd102.ddreams.local
+ (zssg-mailmd102.ddreams.local [10.160.123.97]) by zssg-mailms320.ddreams.local
+ (NTT DoCoMo Mail System) with ESMTP id <0PTL001WCMYKR150@NTTDoCoMo.co.jp> for
+ yamashita.hideyuki@ntt-tx.co.jp; Mon, 24 Jun 2019 19:39:56 +0900 (JST)
+Original-recipient: rfc822;yamashita.hideyuki@ntt-tx.co.jp
+Received: from smtp_saver-daemon.zssg-mailmd102.ddreams.local by
+ zssg-mailmd102.ddreams.local (dDREAMS) id <0PTL00L0IMYKS800@dDREAMS> for
+ yamashita.hideyuki@ntt-tx.co.jp (ORCPT yamashita.hideyuki@ntt-tx.co.jp); Mon,
+ 24 Jun 2019 19:39:56 +0900 (JST)
+Received: from zssg-mailmf105.ddreams.local
+ (zssg-mailmf900.ddreams.local [10.160.172.84]) by zssg-mailmd102.ddreams.local
+ (dDREAMS) with ESMTP id <0PTL009RRMYK7Y40@dDREAMS> for
+ yamashita.hideyuki@ntt-tx.co.jp (ORCPT yamashita.hideyuki@ntt-tx.co.jp); Mon,
+ 24 Jun 2019 19:39:56 +0900 (JST)
+Received: from zssg-mailmf105.ddreams.local (unknown [127.0.0.1])
+	by zssg-mailmf105.ddreams.local (Postfix) with ESMTP id D91347E6034	for
+ <yamashita.hideyuki@ntt-tx.co.jp>; Mon, 24 Jun 2019 19:39:56 +0900 (JST)
+Received: from zssg-mailmf105.ddreams.local (unknown [127.0.0.1])
+	by IMSVA (Postfix) with ESMTP id D7B4F8E6060	for
+ <yamashita.hideyuki@ntt-tx.co.jp>; Mon, 24 Jun 2019 19:39:56 +0900 (JST)
+Received: from localhost (unknown [127.0.0.1])	by IMSVA (Postfix)
+ with SMTP id D66478E605A	for <yamashita.hideyuki@ntt-tx.co.jp>; Mon,
+ 24 Jun 2019 19:39:56 +0900 (JST)
+X-IMSS-HAND-OFF-DIRECTIVE: localhost:10026
+Received: from zssg-mailmf105.ddreams.local (unknown [127.0.0.1])
+	by IMSVA (Postfix) with ESMTP id 5242D8E605D	for
+ <yamashita.hideyuki@ntt-tx.co.jp>; Mon, 24 Jun 2019 19:39:56 +0900 (JST)
+Received: from pomail01.silk.ntt-tx.co.jp (unknown [10.160.183.139])
+	by zssg-mailmf105.ddreams.local (Postfix)
+ with ESMTPS	for <yamashita.hideyuki@ntt-tx.co.jp>; Mon,
+ 24 Jun 2019 19:39:56 +0900 (JST)
+Received: from pomail01.silk.ntt-tx.co.jp (localhost [127.0.0.1])
+	by pomail01.silk.ntt-tx.co.jp (unknown) with ESMTP id x5OAduU2031889;	Mon,
+ 24 Jun 2019 19:39:56 +0900
+Received: (from yama-hd@localhost)	by pomail01.silk.ntt-tx.co.jp (unknown)
+ id x5OAduPD031888;	Mon, 24 Jun 2019 19:39:56 +0900
+X-Authentication-warning: pomail01.silk.ntt-tx.co.jp: yama-hd set sender to
+ fw-yama-hd@pomail01.silk.ntt-tx.co.jp using -f
+Received: from imss04.silk.ntt-tx.co.jp
+ (imss04.silk.ntt-tx.co.jp [10.107.0.39])	by pomail01.silk.ntt-tx.co.jp
+ (unknown) with ESMTP id x5OAdtuA031885	for unknown; Mon,
+ 24 Jun 2019 19:39:55 +0900
+Received: from imss04.silk.ntt-tx.co.jp (localhost [127.0.0.1])
+ by imss04.silk.ntt-tx.co.jp (unknown) with ESMTP id x5OAdtNa006468 for
+ unknown; Mon, 24 Jun 2019 19:39:55 +0900
+Received: from ml01.silk.ntt-tx.co.jp (ml01.silk.ntt-tx.co.jp [10.107.0.230])
+ by imss04.silk.ntt-tx.co.jp (unknown) with ESMTP id x5OAdtlP006462; Mon,
+ 24 Jun 2019 19:39:55 +0900
+Received: from ml01.silk.ntt-tx.co.jp (localhost [127.0.0.1])
+	by ml01.silk.ntt-tx.co.jp (unknown) with ESMTP id x5OAdtUq008386;	Mon,
+ 24 Jun 2019 19:39:55 +0900
+Received: from imss02.silk.ntt-tx.co.jp
+ (imss02.silk.ntt-tx.co.jp [10.107.0.127])	by ml01.silk.ntt-tx.co.jp (unknown)
+ with ESMTP id x5OAdtso008378	for unknown; Mon, 24 Jun 2019 19:39:55 +0900
+Received: from imss02.silk.ntt-tx.co.jp (localhost [127.0.0.1])
+ by imss02.silk.ntt-tx.co.jp (unknown) with ESMTP id x5OAdtmF022022 for
+ unknown; Mon, 24 Jun 2019 19:39:55 +0900
+Received: from mail01.ics.ntt-tx.co.jp (mail01.ics.ntt-tx.co.jp [10.254.2.67])
+ by imss02.silk.ntt-tx.co.jp (unknown) with ESMTP id x5OAdtlq022011 for
+ unknown; Mon, 24 Jun 2019 19:39:55 +0900
+Received: from dpdk.org (dpdk.org [92.243.14.124])	by mail01.ics.ntt-tx.co.jp
+ (unknown) with SMTP id x5OAdmO5020209	for unknown; Mon,
+ 24 Jun 2019 19:39:54 +0900
+Received: from [92.243.14.124] (localhost [127.0.0.1])	by dpdk.org (Postfix)
+ with ESMTP id 3F7811BED8;	Mon, 24 Jun 2019 12:39:47 +0200 (CEST)
+Received: from mail-pl1-f194.google.com
+ (mail-pl1-f194.google.com [209.85.214.194]) by dpdk.org (Postfix)
+ with ESMTP id CC3301BECF for <spp@dpdk.org>; Mon,
+ 24 Jun 2019 12:39:45 +0200 (CEST)
+Received: by mail-pl1-f194.google.com with SMTP id cl9so6630550plb.10 for
+ <spp@dpdk.org>; Mon, 24 Jun 2019 03:39:45 -0700 (PDT)
+Received: from localhost.localdomain ([192.47.164.146])
+ by smtp.gmail.com with ESMTPSA id r7sm15293540pfl.134.2019.06.24.03.39.43
+ (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128); Mon,
+ 24 Jun 2019 03:39:44 -0700 (PDT)
+Date: Mon, 24 Jun 2019 19:39:39 +0900
+From: yasufum.o@gmail.com
+Subject: [spp 04417] [spp] [PATCH] shared/sec: rename structs of port ability
+Sender: spp <spp-bounces@dpdk.org>
+To: spp@dpdk.org, ferruh.yigit@intel.com, yasufum.o@gmail.com
+Message-id: <20190624103939.24655-1-yasufum.o@gmail.com>
+X-ML-Name: unknown
+X-Mail-Count: 04417
+X-MLServer: unknown
+X-ML-Info: mailing list service
+X-Mailer: git-send-email 2.17.1
+Authentication-results: mail01.ics.ntt-tx.co.jp; spf=pass
+ smtp.mailfrom=spp-bounces@dpdk.org
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
+ h=from:to:subject:date:message-id;
+ bh=YYSdHLS8GKKWbG1+jmHtdGXcXicMvkdokybWvqbwT+k=;
+ b=C0MAW7AUEg7u91OyPxJ+a/QF0I4uZCskNGMUKjXRHvJZl+ejKLkHE1E22tYsSNA/qw
+ Xz+tMxEZPKm49VUIWZy5Nh1SMtC0Vq+JJvGYa2xmlK4FdhsSR+vv+rytl0B4c63JBnvn
+ RXWCYwM+UkV8fEuXNYVrknyIRtVpH6+usz0LOgtPNwC9Q8dakWSj+gqYT1zFrbgK0OXA
+ xNY3Lza8eq8vkWbuBDLC4ln2RYtqBV+eNpObvgdk/1R4qr6pI7YnsTikDECI60xhnFEM
+ 3srzhPGELsNeQppUXDhqvtCQlayvAYjGPYZyYe0jtzlBif2/2ztd4ViI2b/gD1efSLJR 2rwA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=1e100.net;
+ s=20161025; h=x-gm-message-state:from:to:subject:date:message-id;
+ bh=YYSdHLS8GKKWbG1+jmHtdGXcXicMvkdokybWvqbwT+k=;
+ b=Rg5SZBKvrA6GjL7WcBPAWtDysC58k+FGjH1H8dUoMp3A5U9wIoQldRLJIpYIs+SDzR
+ aA+H4hYjsAcj6d9+0MBrjrlNIQMbz3ovtLn7+G9FhBY9Ix6chU+/kcRYLKyokXw/xsF+
+ zLf4LCRtp3GQ3wjthBFUDziKuPcoIz7ko41KMwz+fvt6G5tanWwl6GvNQUKoslLQCysI
+ IqP88OeL6xHmCxelcMORFmuYdsuoJZe4p69r0AeI1zTCc3CHXCsYpSkfy4mDpsVwcg0x
+ 1wFILL6a0LZynW9sQdzlhjCP5HvYbM4Rro6AvG69cMbJL9OWhRQUkL+0uBs43lMLxjpX LdDg==
+X-Gm-Message-State: APjAAAU4/30j/5IUySvqEz+EDk8RSu/KcqduM7CUvC6vW1RxfqUjNv/J
+ 5TJkb2AMsA12aafxYasnu2/cqc6M
+X-Google-Smtp-Source:
+ APXvYqzNPDwqqKA3u+os4MritA/goWlkDxWwrV1DTa3GJ77yQM31/jHH6BpwKglK9aUcYQ0iQOHJKQ==
+X-Received: by 2002:a17:902:121:: with SMTP id
+ 30mr140680940plb.314.1561372784776; Mon, 24 Jun 2019 03:39:44 -0700 (PDT)
+X-BeenThere: spp@dpdk.org
+X-Mailman-Version: 2.1.15
+List-Id: Soft Patch Panel <spp.dpdk.org>
+List-Unsubscribe: <https://mails.dpdk.org/options/spp>,
+ <mailto:spp-request@dpdk.org?subject=unsubscribe>
+List-Archive: <http://mails.dpdk.org/archives/spp/>
+List-Post: <mailto:spp@dpdk.org>
+List-Help: <mailto:spp-request@dpdk.org?subject=help>
+List-Subscribe: <https://mails.dpdk.org/listinfo/spp>,
+ <mailto:spp-request@dpdk.org?subject=subscribe>
+X-TM-AS-MML: No
+Precedence: bulk
+Lines: 228
+X-TM-AS-GCONF: 00
+X-MD-STAMP: ON
+
+From: Yasufumi Ogawa <yasufum.o@gmail.com>
+
+In spp_vf, attribute of port such as direction, operation functions or
+VLAN tag info as port ability. However, names of structures are not
+appropriate, for example `spp_port_ability` is owned by
+`port_ability_mng_info` to contain a set of abilities and it is owned
+by `port_ability_port_mng_info` to contain other attributes. It is so
+confusing and not describing the features.
+
+This update is to fix the issue, to `port_abl_mng_info` has
+`port_abl_info`.
+
+Signed-off-by: Yasufumi Ogawa <yasufum.o@gmail.com>
+---
+ .../secondary/spp_worker_th/cmd_utils.h       |  7 +--
+ src/shared/secondary/spp_worker_th/spp_port.c | 47 ++++++++-----------
+ src/shared/secondary/spp_worker_th/spp_port.h | 31 ++++--------
+ 3 files changed, 33 insertions(+), 52 deletions(-)
+
+diff --git a/src/shared/secondary/spp_worker_th/cmd_utils.h b/src/shared/secondary/spp_worker_th/cmd_utils.h
+index d90aff5..d68b0d6 100644
+--- a/src/shared/secondary/spp_worker_th/cmd_utils.h
++++ b/src/shared/secondary/spp_worker_th/cmd_utils.h
+@@ -40,6 +40,7 @@
+ #define STR_LEN_SHORT 32  /* Size of short string. */
+ #define STR_LEN_NAME 128  /* Size of string for names. */
+ 
++/* TODO(yasufum) confirm usage of this value and why it is 4. */
+ #define SPP_PORT_ABILITY_MAX 4  /* Max num of port abilities. */
+ 
+ /** Maximum VLAN PCP */
+@@ -139,7 +140,7 @@ enum sppwk_proc_type {
+ };
+ 
+ /** VLAN tag information */
+-struct spp_vlantag_info {
++struct sppwk_vlan_tag {
+ 	int vid; /**< VLAN ID */
+ 	int pcp; /**< Priority Code Point */
+ 	int tci; /**< Tag Control Information */
+@@ -148,7 +149,7 @@ struct spp_vlantag_info {
+ /* Ability for vlantag for a port. */
+ union spp_ability_data {
+ 	/** VLAN tag information */
+-	struct spp_vlantag_info vlantag;
++	struct sppwk_vlan_tag vlantag;
+ };
+ 
+ /* Port ability information. */
+@@ -162,7 +163,7 @@ struct spp_port_ability {
+ struct sppwk_cls_attrs {
+ 	uint64_t mac_addr;  /**< Mac address (binary) */
+ 	char mac_addr_str[STR_LEN_SHORT];  /**< Mac address (text) */
+-	struct spp_vlantag_info vlantag;   /**< VLAN tag information */
++	struct sppwk_vlan_tag vlantag;   /**< VLAN tag information */
+ };
+ 
+ /**
+diff --git a/src/shared/secondary/spp_worker_th/spp_port.c b/src/shared/secondary/spp_worker_th/spp_port.c
+index 9f7ac5a..0b79531 100644
+--- a/src/shared/secondary/spp_worker_th/spp_port.c
++++ b/src/shared/secondary/spp_worker_th/spp_port.c
+@@ -13,30 +13,23 @@
+ #include "ringlatencystats.h"
+ 
+ /* Port ability management information */
+-struct port_ability_mng_info {
+-	volatile int ref_index; /* Index to reference area */
+-	volatile int upd_index; /* Index to update area    */
++struct port_abl_info {
++	volatile int ref_index; /* Index to reference area. */
++	volatile int upd_index; /* Index to update area. */
+ 	struct spp_port_ability ability[TWO_SIDES][SPP_PORT_ABILITY_MAX];
+-				/* Port ability information */
++				/* Port ability information. */
+ };
+ 
+ /* Port ability port information */
+-struct port_ability_port_mng_info {
+-	/* Interface type (phy/vhost/ring) */
+-	enum port_type iface_type;
+-
+-	/* Interface number */
+-	int            iface_no;
+-
+-	/* Management data of port ability for receiving */
+-	struct port_ability_mng_info rx;
+-
+-	/* Management data of port ability for sending */
+-	struct port_ability_mng_info tx;
++struct port_mng_info {
++	enum port_type iface_type;  /* Interface type (phy, vhost or so). */
++	int iface_no;  /* Interface number. */
++	struct port_abl_info rx;  /* Mng data of port ability for RX. */
++	struct port_abl_info tx;  /* Mng data of port ability for Tx. */
+ };
+ 
+ /* Information for VLAN tag management. */
+-struct port_ability_port_mng_info g_port_mng_info[RTE_MAX_ETHPORTS];
++struct port_mng_info g_port_mng_info[RTE_MAX_ETHPORTS];
+ 
+ /* TPID of VLAN. */
+ static uint16_t g_vlan_tpid;
+@@ -62,7 +55,7 @@ spp_port_ability_get_info(
+ 		int port_id, enum sppwk_port_dir dir,
+ 		struct spp_port_ability **info)
+ {
+-	struct port_ability_mng_info *mng = NULL;
++	struct port_abl_info *mng = NULL;
+ 
+ 	switch (dir) {
+ 	case SPPWK_PORT_DIR_RX:
+@@ -97,7 +90,7 @@ add_vlantag_packet(
+ 	struct ether_hdr *old_ether = NULL;
+ 	struct ether_hdr *new_ether = NULL;
+ 	struct vlan_hdr  *vlan      = NULL;
+-	const struct spp_vlantag_info *vlantag = &data->vlantag;
++	const struct sppwk_vlan_tag *vlantag = &data->vlantag;
+ 
+ 	old_ether = rte_pktmbuf_mtod(pkt, struct ether_hdr *);
+ 	if (old_ether->ether_type == g_vlan_tpid) {
+@@ -208,7 +201,7 @@ spp_port_ability_change_index(
+ 	static int rx_list[RTE_MAX_ETHPORTS];
+ 	static int num_tx;
+ 	static int tx_list[RTE_MAX_ETHPORTS];
+-	struct port_ability_mng_info *mng = NULL;
++	struct port_abl_info *mng = NULL;
+ 
+ 	if (type == PORT_ABILITY_CHG_INDEX_UPD) {
+ 		switch (dir) {
+@@ -246,18 +239,16 @@ spp_port_ability_change_index(
+ 
+ /* Set ability data of port ability. */
+ static void
+-port_ability_set_ability(
+-		struct sppwk_port_info *port,
++port_ability_set_ability(struct sppwk_port_info *port,
+ 		enum sppwk_port_dir dir)
+ {
+ 	int in_cnt, out_cnt = 0;
+ 	int port_id = port->ethdev_port_id;
+-	struct port_ability_port_mng_info *port_mng =
+-						&g_port_mng_info[port_id];
+-	struct port_ability_mng_info *mng         = NULL;
+-	struct spp_port_ability      *in_ability  = port->ability;
+-	struct spp_port_ability      *out_ability = NULL;
+-	struct spp_vlantag_info      *tag         = NULL;
++	struct port_mng_info *port_mng = &g_port_mng_info[port_id];
++	struct port_abl_info *mng = NULL;
++	struct spp_port_ability *in_ability = port->ability;
++	struct spp_port_ability *out_ability = NULL;
++	struct sppwk_vlan_tag *tag = NULL;
+ 
+ 	port_mng->iface_type = port->iface_type;
+ 	port_mng->iface_no   = port->iface_no;
+diff --git a/src/shared/secondary/spp_worker_th/spp_port.h b/src/shared/secondary/spp_worker_th/spp_port.h
+index 5cde7d2..a6fb313 100644
+--- a/src/shared/secondary/spp_worker_th/spp_port.h
++++ b/src/shared/secondary/spp_worker_th/spp_port.h
+@@ -19,11 +19,8 @@
+ 
+ /** Type for changing index. */
+ enum port_ability_chg_index_type {
+-	/** Type for changing index to reference area. */
+-	PORT_ABILITY_CHG_INDEX_REF,
+-
+-	/** Type for changing index to update area. */
+-	PORT_ABILITY_CHG_INDEX_UPD,
++	PORT_ABILITY_CHG_INDEX_REF,  /** To change index to reference area. */
++	PORT_ABILITY_CHG_INDEX_UPD,  /** To change index to update area. */
+ };
+ 
+ /** Initialize port ability. */
+@@ -32,12 +29,9 @@ void spp_port_ability_init(void);
+ /**
+  * Get information of port ability.
+  *
+- * @param port_id
+- *  The port identifier of the Ethernet device.
+- * @param rxtx
+- *  rx/tx identifier of port_id.
+- * @param info
+- *  Port ability information.
++ * @param port_id Etherdev ID.
++ * @param rxtx RX/TX ID of port_id.
++ * @param info Port ability information.
+  */
+ void spp_port_ability_get_info(
+ 		int port_id, enum sppwk_port_dir dir,
+@@ -46,12 +40,9 @@ void spp_port_ability_get_info(
+ /**
+  * Change index of management information.
+  *
+- * @param port_id
+- *  The port identifier of the Ethernet device.
+- * @param rxtx
+- *  rx/tx identifier of port_id.
+- * @param type
+- *  Type for changing index.
++ * @param port_id Etherdev ID.
++ * @param rxtx RX/TX ID of port_id.
++ * @param type Type for changing index.
+  */
+ void spp_port_ability_change_index(
+ 		enum port_ability_chg_index_type type,
+@@ -69,8 +60,7 @@ void spp_port_ability_update(const struct sppwk_comp_info *component);
+ /**
+  * Wrapper function for rte_eth_rx_burst().
+  *
+- * @param port_id
+- *  The port identifier of the Ethernet device.
++ * @param port_id Etherdev ID.
+  * @param queue_id
+  *  The index of the receive queue from which to retrieve input packets.
+  *  SPP is fixed at 0.
+@@ -91,8 +81,7 @@ uint16_t spp_eth_rx_burst(uint16_t port_id, uint16_t queue_id,
+ /**
+  * Wrapper function for rte_eth_tx_burst().
+  *
+- * @param port_id
+- *  The port identifier of the Ethernet device.
++ * @param port_id Etherdev ID.
+  * @param queue_id
+  *  The index of the transmit queue through which output packets must be sent.
+  *  SPP is fixed at 0.
+-- 
+2.17.1
+
+

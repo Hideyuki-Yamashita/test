@@ -1,0 +1,521 @@
+Return-path: <fw-yama-hd@pomail01.silk.ntt-tx.co.jp>
+Received: from zssg-mailmd103.ddreams.local
+ (zssg-mailmd103.ddreams.local [10.160.123.98]) by zssg-mailms320.ddreams.local
+ (NTT DoCoMo Mail System) with ESMTP id <0PTL00D4U65BSMD0@NTTDoCoMo.co.jp> for
+ yamashita.hideyuki@ntt-tx.co.jp; Mon, 24 Jun 2019 13:36:47 +0900 (JST)
+Original-recipient: rfc822;yamashita.hideyuki@ntt-tx.co.jp
+Received: from smtp_saver-daemon.zssg-mailmd103.ddreams.local by
+ zssg-mailmd103.ddreams.local (dDREAMS) id <0PTL00U3O65BDF00@dDREAMS> for
+ yamashita.hideyuki@ntt-tx.co.jp (ORCPT yamashita.hideyuki@ntt-tx.co.jp); Mon,
+ 24 Jun 2019 13:36:47 +0900 (JST)
+Received: from zssg-mailmf103.ddreams.local
+ (zssg-mailmf900.ddreams.local [10.160.172.84]) by zssg-mailmd103.ddreams.local
+ (dDREAMS) with ESMTP id <0PTL007I465BWVC0@dDREAMS> for
+ yamashita.hideyuki@ntt-tx.co.jp (ORCPT yamashita.hideyuki@ntt-tx.co.jp); Mon,
+ 24 Jun 2019 13:36:47 +0900 (JST)
+Received: from zssg-mailmf103.ddreams.local (unknown [127.0.0.1])
+	by zssg-mailmf103.ddreams.local (Postfix) with ESMTP id 5A0757E6038	for
+ <yamashita.hideyuki@ntt-tx.co.jp>; Mon, 24 Jun 2019 13:36:47 +0900 (JST)
+Received: from zssg-mailmf103.ddreams.local (unknown [127.0.0.1])
+	by IMSVA (Postfix) with ESMTP id 5911C8E6058	for
+ <yamashita.hideyuki@ntt-tx.co.jp>; Mon, 24 Jun 2019 13:36:47 +0900 (JST)
+Received: from localhost (unknown [127.0.0.1])	by IMSVA (Postfix)
+ with SMTP id 577938E6054	for <yamashita.hideyuki@ntt-tx.co.jp>; Mon,
+ 24 Jun 2019 13:36:47 +0900 (JST)
+X-IMSS-HAND-OFF-DIRECTIVE: localhost:10026
+Received: from zssg-mailmf103.ddreams.local (unknown [127.0.0.1])
+	by IMSVA (Postfix) with ESMTP id 9A1818E6058	for
+ <yamashita.hideyuki@ntt-tx.co.jp>; Mon, 24 Jun 2019 13:36:46 +0900 (JST)
+Received: from pomail01.silk.ntt-tx.co.jp (unknown [10.160.183.139])
+	by zssg-mailmf103.ddreams.local (Postfix)
+ with ESMTPS	for <yamashita.hideyuki@ntt-tx.co.jp>; Mon,
+ 24 Jun 2019 13:36:46 +0900 (JST)
+Received: from pomail01.silk.ntt-tx.co.jp (localhost [127.0.0.1])
+	by pomail01.silk.ntt-tx.co.jp (unknown) with ESMTP id x5O4akmh008173;	Mon,
+ 24 Jun 2019 13:36:46 +0900
+Received: (from yama-hd@localhost)	by pomail01.silk.ntt-tx.co.jp (unknown)
+ id x5O4akxY008172;	Mon, 24 Jun 2019 13:36:46 +0900
+X-Authentication-warning: pomail01.silk.ntt-tx.co.jp: yama-hd set sender to
+ fw-yama-hd@pomail01.silk.ntt-tx.co.jp using -f
+Received: from imss04.silk.ntt-tx.co.jp
+ (imss04.silk.ntt-tx.co.jp [10.107.0.39])	by pomail01.silk.ntt-tx.co.jp
+ (unknown) with ESMTP id x5O4akfL008169	for unknown; Mon,
+ 24 Jun 2019 13:36:46 +0900
+Received: from imss04.silk.ntt-tx.co.jp (localhost [127.0.0.1])
+ by imss04.silk.ntt-tx.co.jp (unknown) with ESMTP id x5O4ajdX016570 for
+ unknown; Mon, 24 Jun 2019 13:36:46 +0900
+Received: from ml01.silk.ntt-tx.co.jp (ml01.silk.ntt-tx.co.jp [10.107.0.230])
+ by imss04.silk.ntt-tx.co.jp (unknown) with ESMTP id x5O4ajEK016567; Mon,
+ 24 Jun 2019 13:36:45 +0900
+Received: from ml01.silk.ntt-tx.co.jp (localhost [127.0.0.1])
+	by ml01.silk.ntt-tx.co.jp (unknown) with ESMTP id x5O4ajRs030526;	Mon,
+ 24 Jun 2019 13:36:45 +0900
+Received: from imss02.silk.ntt-tx.co.jp
+ (imss02.silk.ntt-tx.co.jp [10.107.0.127])	by ml01.silk.ntt-tx.co.jp (unknown)
+ with ESMTP id x5O4ajR6030522	for unknown; Mon, 24 Jun 2019 13:36:45 +0900
+Received: from imss02.silk.ntt-tx.co.jp (localhost [127.0.0.1])
+ by imss02.silk.ntt-tx.co.jp (unknown) with ESMTP id x5O4aj4f013395 for
+ unknown; Mon, 24 Jun 2019 13:36:45 +0900
+Received: from mail01.ics.ntt-tx.co.jp (mail01.ics.ntt-tx.co.jp [10.254.2.67])
+ by imss02.silk.ntt-tx.co.jp (unknown) with ESMTP id x5O4ajOe013389 for
+ unknown; Mon, 24 Jun 2019 13:36:45 +0900
+Received: from dpdk.org (dpdk.org [92.243.14.124])	by mail01.ics.ntt-tx.co.jp
+ (unknown) with SMTP id x5O4acRQ027539	for unknown; Mon,
+ 24 Jun 2019 13:36:44 +0900
+Received: from [92.243.14.124] (localhost [127.0.0.1])	by dpdk.org (Postfix)
+ with ESMTP id 253331BF5C;	Mon, 24 Jun 2019 06:36:38 +0200 (CEST)
+Received: from mail-pf1-f195.google.com
+ (mail-pf1-f195.google.com [209.85.210.195]) by dpdk.org (Postfix)
+ with ESMTP id 33A281BF5A for <spp@dpdk.org>; Mon,
+ 24 Jun 2019 06:36:37 +0200 (CEST)
+Received: by mail-pf1-f195.google.com with SMTP id 81so6734862pfy.13 for
+ <spp@dpdk.org>; Sun, 23 Jun 2019 21:36:37 -0700 (PDT)
+Received: from localhost.localdomain ([192.47.164.146])
+ by smtp.gmail.com with ESMTPSA id c10sm9005178pjq.14.2019.06.23.21.36.34
+ (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128); Sun,
+ 23 Jun 2019 21:36:35 -0700 (PDT)
+Date: Mon, 24 Jun 2019 13:36:03 +0900
+From: yasufum.o@gmail.com
+Subject: [spp 04375] [spp] [PATCH 03/13] shared/sec: move principle JSON
+ formatter funcs
+Sender: spp <spp-bounces@dpdk.org>
+To: spp@dpdk.org, ferruh.yigit@intel.com, yasufum.o@gmail.com
+Message-id: <20190624043613.19271-4-yasufum.o@gmail.com>
+In-reply-to: <20190624043613.19271-1-yasufum.o@gmail.com>
+References: <20190624043613.19271-1-yasufum.o@gmail.com>
+X-ML-Name: unknown
+X-Mail-Count: 04375
+X-MLServer: unknown
+X-ML-Info: mailing list service
+X-Mailer: git-send-email 2.17.1
+Authentication-results: mail01.ics.ntt-tx.co.jp; spf=pass
+ smtp.mailfrom=spp-bounces@dpdk.org
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
+ h=from:to:subject:date:message-id:in-reply-to:references;
+ bh=IPlX4YB1lBue3M0ymqS6nbT+j2u9sjXHAZ5U9RAIoaI=;
+ b=ZcO5u1hZdhNn34hp0f5K5LDJ70YOdIKUyzcIAa62YCVyd7B09IRo941cyALPn1t89g
+ m8OXLhrVXou04WfuOznx+EzC0F7ifyDNcOIlI0KClJEqhKyEZm3UDMnrfVepoDxkew0w
+ zTUkddE2izXx8yw+Qu0KViCiShHcm9No/nqWKETYz9VUisD8DE0L2pU50FU79AZ2C36x
+ 2y3xWdXBBz5bz+9/7cH+AIBovDkU6g6jtbXWf22eIw2D511ODnJLVliF5f36m93t1g07
+ oYM7CqHQOroNsRhYq9a3eBTltrurP/QvnSGkGC2SHaz3PbqM64Ox5pKe5pxFme1S7S41 jwmQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=1e100.net;
+ s=20161025; h=x-gm-message-state:from:to:subject:date:message-id:in-reply-to
+ :references; bh=IPlX4YB1lBue3M0ymqS6nbT+j2u9sjXHAZ5U9RAIoaI=;
+ b=qOUM8FUiJ6jqGRaABYRXg2Zm9SHULKKEmki0k2a6oKqLBGLDyPpx6aFh8s9zwkte4e
+ X0Xrgh3UTqWaV277OBkwj4d2/jt/GlQg6sdYseAa0tZz6i8AqBZ/4gfUI8pXlUYEwUQ2
+ Qsg32g8gAFdFSdKuYq/BoT9sAZvdclJiJU/+ONE+oO6NUZWLr1GSyMSrHzpehQCLqSNN
+ q5zyghfybqeY4Bb0IzaLov7HuffhU6fO6RVRpCpNcJptyhL+srXhyReCA2Vp5Me07zh0
+ EvgEAPx70ZzHaOKkd6AX3+mNcUMqkUG8HSZkieJspHKwRczEjlCbnf087uMCi+UKsvnK 7EpQ==
+X-Gm-Message-State: APjAAAWzaFN9UF+exFfDwPvJHz0ha8G3ihm03YZPYuy7cR2KlfQGXujG
+ cQe93jcmGEdOHSrrDTEYjGUQy7VQ
+X-Google-Smtp-Source:
+ APXvYqw2+J0z3MpCOOHUW5rl3UdTeg7A3g9UsOzzvisKDsdlArxo5t35IEGNF9yN0xiXp7Uo5vKrvg==
+X-Received: by 2002:a63:3442:: with SMTP id b63mr7385084pga.13.1561350996093;
+ Sun, 23 Jun 2019 21:36:36 -0700 (PDT)
+X-BeenThere: spp@dpdk.org
+X-Mailman-Version: 2.1.15
+List-Id: Soft Patch Panel <spp.dpdk.org>
+List-Unsubscribe: <https://mails.dpdk.org/options/spp>,
+ <mailto:spp-request@dpdk.org?subject=unsubscribe>
+List-Archive: <http://mails.dpdk.org/archives/spp/>
+List-Post: <mailto:spp@dpdk.org>
+List-Help: <mailto:spp-request@dpdk.org?subject=help>
+List-Subscribe: <https://mails.dpdk.org/listinfo/spp>,
+ <mailto:spp-request@dpdk.org?subject=subscribe>
+X-TM-AS-MML: No
+Precedence: bulk
+Lines: 390
+X-TM-AS-GCONF: 00
+X-MD-STAMP: ON
+
+From: Yasufumi Ogawa <yasufum.o@gmail.com>
+
+This update is to move JSON formatter functions start with `append_json`
+which have principle features, such as appending int, uint or so, to
+separate other formatters have prefix `append_` but not principle
+features. Added files are `json_helper.c` and json_helper.h` for the
+moved functions.
+
+Signed-off-by: Yasufumi Ogawa <yasufum.o@gmail.com>
+---
+ src/mirror/Makefile                           |   1 +
+ .../secondary/spp_worker_th/cmd_runner.c      | 127 +-----------------
+ .../secondary/spp_worker_th/json_helper.c     | 125 +++++++++++++++++
+ .../secondary/spp_worker_th/json_helper.h     |  38 ++++++
+ .../secondary/spp_worker_th/string_buffer.h   |   2 +
+ src/vf/Makefile                               |   1 +
+ 6 files changed, 168 insertions(+), 126 deletions(-)
+ create mode 100644 src/shared/secondary/spp_worker_th/json_helper.c
+ create mode 100644 src/shared/secondary/spp_worker_th/json_helper.h
+
+diff --git a/src/mirror/Makefile b/src/mirror/Makefile
+index 3e31cfa..6b6b9b9 100644
+--- a/src/mirror/Makefile
++++ b/src/mirror/Makefile
+@@ -22,6 +22,7 @@ SRCS-y += $(SPP_WKT_DIR)/spp_port.c
+ SRCS-y += $(SPP_WKT_DIR)/conn_spp_ctl.c
+ SRCS-y += $(SPP_WKT_DIR)/cmd_parser.c
+ SRCS-y += $(SPP_WKT_DIR)/cmd_runner.c
++SRCS-y += $(SPP_WKT_DIR)/json_helper.c
+ SRCS-y += $(SPP_WKT_DIR)/string_buffer.c
+ SRCS-y += $(SPP_WKT_DIR)/ringlatencystats.c
+ 
+diff --git a/src/shared/secondary/spp_worker_th/cmd_runner.c b/src/shared/secondary/spp_worker_th/cmd_runner.c
+index 4c4abd8..423774b 100644
+--- a/src/shared/secondary/spp_worker_th/cmd_runner.c
++++ b/src/shared/secondary/spp_worker_th/cmd_runner.c
+@@ -13,6 +13,7 @@
+ #include "spp_port.h"
+ #include "string_buffer.h"
+ 
++#include "json_helper.h"
+ #include "conn_spp_ctl.h"
+ #include "cmd_parser.h"
+ #include "cmd_runner.h"
+@@ -21,17 +22,9 @@
+ 
+ /* request message initial size */
+ #define CMD_ERR_MSG_LEN 128
+-#define CMD_TAG_APPEND_SIZE 16
+ #define CMD_REQ_BUF_INIT_SIZE 2048
+ #define CMD_RES_BUF_INIT_SIZE 2048
+ 
+-/* TODO(yasufum) confirm why using "" for the alternative of comma? */
+-#define JSON_APPEND_COMMA(flg)    ((flg)?", ":"")
+-#define JSON_APPEND_VALUE(format) "%s\"%s\": "format
+-#define JSON_APPEND_ARRAY         "%s\"%s\": [ %s ]"
+-#define JSON_APPEND_BLOCK         "%s\"%s\": { %s }"
+-#define JSON_APPEND_BLOCK_NONAME  "%s%s{ %s }"
+-
+ enum cmd_res_code {
+ 	CMD_SUCCESS = 0,
+ 	CMD_FAILED,
+@@ -597,124 +590,6 @@ sppwk_get_ethdev_port_id(enum port_type iface_type, int iface_no)
+ 	}
+ }
+ 
+-/* append a comma for JSON format */
+-static int
+-append_json_comma(char **output)
+-{
+-	*output = spp_strbuf_append(*output, ", ", strlen(", "));
+-	if (unlikely(*output == NULL)) {
+-		RTE_LOG(ERR, WK_CMD_RUNNER,
+-				"JSON's comma failed to add.\n");
+-		return SPP_RET_NG;
+-	}
+-
+-	return SPP_RET_OK;
+-}
+-
+-/* append data of unsigned integral type for JSON format */
+-static int
+-append_json_uint_value(const char *name, char **output, unsigned int value)
+-{
+-	int len = strlen(*output);
+-	/* extend the buffer */
+-	*output = spp_strbuf_append(*output, "",
+-			strlen(name) + CMD_TAG_APPEND_SIZE*2);
+-	if (unlikely(*output == NULL)) {
+-		RTE_LOG(ERR, WK_CMD_RUNNER,
+-				"JSON's numeric format failed to add. "
+-				"(name = %s, uint = %u)\n", name, value);
+-		return SPP_RET_NG;
+-	}
+-
+-	sprintf(&(*output)[len], JSON_APPEND_VALUE("%u"),
+-			JSON_APPEND_COMMA(len), name, value);
+-	return SPP_RET_OK;
+-}
+-
+-/* append data of integral type for JSON format */
+-static int
+-append_json_int_value(const char *name, char **output, int value)
+-{
+-	int len = strlen(*output);
+-	/* extend the buffer */
+-	*output = spp_strbuf_append(*output, "",
+-			strlen(name) + CMD_TAG_APPEND_SIZE*2);
+-	if (unlikely(*output == NULL)) {
+-		RTE_LOG(ERR, WK_CMD_RUNNER,
+-				"JSON's numeric format failed to add. "
+-				"(name = %s, int = %d)\n", name, value);
+-		return SPP_RET_NG;
+-	}
+-
+-	sprintf(&(*output)[len], JSON_APPEND_VALUE("%d"),
+-			JSON_APPEND_COMMA(len), name, value);
+-	return SPP_RET_OK;
+-}
+-
+-/* append data of string type for JSON format */
+-static int
+-append_json_str_value(const char *name, char **output, const char *str)
+-{
+-	int len = strlen(*output);
+-	/* extend the buffer */
+-	*output = spp_strbuf_append(*output, "",
+-			strlen(name) + strlen(str) + CMD_TAG_APPEND_SIZE);
+-	if (unlikely(*output == NULL)) {
+-		RTE_LOG(ERR, WK_CMD_RUNNER,
+-				"JSON's string format failed to add. "
+-				"(name = %s, str = %s)\n", name, str);
+-		return SPP_RET_NG;
+-	}
+-
+-	sprintf(&(*output)[len], JSON_APPEND_VALUE("\"%s\""),
+-			JSON_APPEND_COMMA(len), name, str);
+-	return SPP_RET_OK;
+-}
+-
+-/* append brackets of the array for JSON format */
+-static int
+-append_json_array_brackets(const char *name, char **output, const char *str)
+-{
+-	int len = strlen(*output);
+-	/* extend the buffer */
+-	*output = spp_strbuf_append(*output, "",
+-			strlen(name) + strlen(str) + CMD_TAG_APPEND_SIZE);
+-	if (unlikely(*output == NULL)) {
+-		RTE_LOG(ERR, WK_CMD_RUNNER,
+-				"JSON's square bracket failed to add. "
+-				"(name = %s, str = %s)\n", name, str);
+-		return SPP_RET_NG;
+-	}
+-
+-	sprintf(&(*output)[len], JSON_APPEND_ARRAY,
+-			JSON_APPEND_COMMA(len), name, str);
+-	return SPP_RET_OK;
+-}
+-
+-/* append brackets of the blocks for JSON format */
+-static int
+-append_json_block_brackets(const char *name, char **output, const char *str)
+-{
+-	int len = strlen(*output);
+-	/* extend the buffer */
+-	*output = spp_strbuf_append(*output, "",
+-			strlen(name) + strlen(str) + CMD_TAG_APPEND_SIZE);
+-	if (unlikely(*output == NULL)) {
+-		RTE_LOG(ERR, WK_CMD_RUNNER,
+-				"JSON's curly bracket failed to add. "
+-				"(name = %s, str = %s)\n", name, str);
+-		return SPP_RET_NG;
+-	}
+-
+-	if (name[0] == '\0')
+-		sprintf(&(*output)[len], JSON_APPEND_BLOCK_NONAME,
+-				JSON_APPEND_COMMA(len), name, str);
+-	else
+-		sprintf(&(*output)[len], JSON_APPEND_BLOCK,
+-				JSON_APPEND_COMMA(len), name, str);
+-	return SPP_RET_OK;
+-}
+-
+ /* Execute one command. */
+ static int
+ exec_one_cmd(const struct sppwk_cmd_attrs *cmd)
+diff --git a/src/shared/secondary/spp_worker_th/json_helper.c b/src/shared/secondary/spp_worker_th/json_helper.c
+new file mode 100644
+index 0000000..4c1baa3
+--- /dev/null
++++ b/src/shared/secondary/spp_worker_th/json_helper.c
+@@ -0,0 +1,125 @@
++/* SPDX-License-Identifier: BSD-3-Clause
++ * Copyright(c) 2019 Nippon Telegraph and Telephone Corporation
++ */
++
++#include "string_buffer.h"
++#include "json_helper.h"
++
++#define RTE_LOGTYPE_WK_JSON_HELPER RTE_LOGTYPE_USER1
++
++int
++append_json_comma(char **output)
++{
++	*output = spp_strbuf_append(*output, ", ", strlen(", "));
++	if (unlikely(*output == NULL)) {
++		RTE_LOG(ERR, WK_JSON_HELPER,
++				"JSON's comma failed to add.\n");
++		return SPP_RET_NG;
++	}
++
++	return SPP_RET_OK;
++}
++
++/* append data of unsigned integral type for JSON format */
++int
++append_json_uint_value(const char *name, char **output, unsigned int value)
++{
++	int len = strlen(*output);
++	/* extend the buffer */
++	*output = spp_strbuf_append(*output, "",
++			strlen(name) + CMD_TAG_APPEND_SIZE*2);
++	if (unlikely(*output == NULL)) {
++		RTE_LOG(ERR, WK_JSON_HELPER,
++				"JSON's numeric format failed to add. "
++				"(name = %s, uint = %u)\n", name, value);
++		return SPP_RET_NG;
++	}
++
++	sprintf(&(*output)[len], JSON_APPEND_VALUE("%u"),
++			JSON_APPEND_COMMA(len), name, value);
++	return SPP_RET_OK;
++}
++
++/* append data of integral type for JSON format */
++int
++append_json_int_value(const char *name, char **output, int value)
++{
++	int len = strlen(*output);
++	/* extend the buffer */
++	*output = spp_strbuf_append(*output, "",
++			strlen(name) + CMD_TAG_APPEND_SIZE*2);
++	if (unlikely(*output == NULL)) {
++		RTE_LOG(ERR, WK_JSON_HELPER,
++				"JSON's numeric format failed to add. "
++				"(name = %s, int = %d)\n", name, value);
++		return SPP_RET_NG;
++	}
++
++	sprintf(&(*output)[len], JSON_APPEND_VALUE("%d"),
++			JSON_APPEND_COMMA(len), name, value);
++	return SPP_RET_OK;
++}
++
++/* append data of string type for JSON format */
++int
++append_json_str_value(const char *name, char **output, const char *str)
++{
++	int len = strlen(*output);
++	/* extend the buffer */
++	*output = spp_strbuf_append(*output, "",
++			strlen(name) + strlen(str) + CMD_TAG_APPEND_SIZE);
++	if (unlikely(*output == NULL)) {
++		RTE_LOG(ERR, WK_JSON_HELPER,
++				"JSON's string format failed to add. "
++				"(name = %s, str = %s)\n", name, str);
++		return SPP_RET_NG;
++	}
++
++	sprintf(&(*output)[len], JSON_APPEND_VALUE("\"%s\""),
++			JSON_APPEND_COMMA(len), name, str);
++	return SPP_RET_OK;
++}
++
++/* append brackets of the array for JSON format */
++int
++append_json_array_brackets(const char *name, char **output, const char *str)
++{
++	int len = strlen(*output);
++	/* extend the buffer */
++	*output = spp_strbuf_append(*output, "",
++			strlen(name) + strlen(str) + CMD_TAG_APPEND_SIZE);
++	if (unlikely(*output == NULL)) {
++		RTE_LOG(ERR, WK_JSON_HELPER,
++				"JSON's square bracket failed to add. "
++				"(name = %s, str = %s)\n", name, str);
++		return SPP_RET_NG;
++	}
++
++	sprintf(&(*output)[len], JSON_APPEND_ARRAY,
++			JSON_APPEND_COMMA(len), name, str);
++	return SPP_RET_OK;
++}
++
++/* append brackets of the blocks for JSON format */
++int
++append_json_block_brackets(const char *name, char **output, const char *str)
++{
++	int len = strlen(*output);
++	/* extend the buffer */
++	*output = spp_strbuf_append(*output, "",
++			strlen(name) + strlen(str) + CMD_TAG_APPEND_SIZE);
++	if (unlikely(*output == NULL)) {
++		RTE_LOG(ERR, WK_JSON_HELPER,
++				"JSON's curly bracket failed to add. "
++				"(name = %s, str = %s)\n", name, str);
++		return SPP_RET_NG;
++	}
++
++	if (name[0] == '\0')
++		sprintf(&(*output)[len], JSON_APPEND_BLOCK_NONAME,
++				JSON_APPEND_COMMA(len), name, str);
++	else
++		sprintf(&(*output)[len], JSON_APPEND_BLOCK,
++				JSON_APPEND_COMMA(len), name, str);
++	return SPP_RET_OK;
++}
+diff --git a/src/shared/secondary/spp_worker_th/json_helper.h b/src/shared/secondary/spp_worker_th/json_helper.h
+new file mode 100644
+index 0000000..f286404
+--- /dev/null
++++ b/src/shared/secondary/spp_worker_th/json_helper.h
+@@ -0,0 +1,38 @@
++/* SPDX-License-Identifier: BSD-3-Clause
++ * Copyright(c) 2019 Nippon Telegraph and Telephone Corporation
++ */
++
++#ifndef _SPPWK_JSON_HELPER_H_
++#define _SPPWK_JSON_HELPER_H_
++
++#include "cmd_utils.h"
++
++#define CMD_TAG_APPEND_SIZE 16
++
++#define JSON_APPEND_COMMA(flg)    ((flg)?", ":"")
++
++#define JSON_APPEND_VALUE(format) "%s\"%s\": "format
++
++#define JSON_APPEND_ARRAY         "%s\"%s\": [ %s ]"
++
++#define JSON_APPEND_BLOCK_NONAME  "%s%s{ %s }"
++#define JSON_APPEND_BLOCK         "%s\"%s\": { %s }"
++
++int append_json_comma(char **output);
++
++int append_json_uint_value(const char *name, char **output,
++		unsigned int value);
++
++int append_json_int_value(const char *name, char **output,
++		int value);
++
++int append_json_str_value(const char *name, char **output,
++		const char *str);
++
++int append_json_array_brackets(const char *name, char **output,
++		const char *str);
++
++int append_json_block_brackets(const char *name, char **output,
++		const char *str);
++
++#endif
+diff --git a/src/shared/secondary/spp_worker_th/string_buffer.h b/src/shared/secondary/spp_worker_th/string_buffer.h
+index 34ee6cb..951f0ae 100644
+--- a/src/shared/secondary/spp_worker_th/string_buffer.h
++++ b/src/shared/secondary/spp_worker_th/string_buffer.h
+@@ -5,6 +5,8 @@
+ #ifndef _STRING_BUFFER_H_
+ #define _STRING_BUFFER_H_
+ 
++#include <stdlib.h>
++
+ /**
+  * @file
+  * SPP String buffer management
+diff --git a/src/vf/Makefile b/src/vf/Makefile
+index faf72ee..ca8d2b3 100644
+--- a/src/vf/Makefile
++++ b/src/vf/Makefile
+@@ -22,6 +22,7 @@ SRCS-y += $(SPP_WKT_DIR)/conn_spp_ctl.c
+ SRCS-y += $(SPP_WKT_DIR)/cmd_parser.c
+ SRCS-y += $(SPP_WKT_DIR)/cmd_runner.c
+ SRCS-y += $(SPP_WKT_DIR)/cmd_utils.c
++SRCS-y += $(SPP_WKT_DIR)/json_helper.c
+ SRCS-y += ../shared/common.c
+ SRCS-y += ../shared/secondary/utils.c ../shared/secondary/add_port.c
+ 
+-- 
+2.17.1
+
+

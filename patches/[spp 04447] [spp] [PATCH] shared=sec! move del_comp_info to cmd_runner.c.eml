@@ -1,0 +1,296 @@
+Return-path: <fw-yama-hd@pomail01.silk.ntt-tx.co.jp>
+Received: from zssg-mailmd106.ddreams.local
+ (zssg-mailmd106.ddreams.local [10.160.123.101])
+ by zssg-mailms320.ddreams.local (NTT DoCoMo Mail System)
+ with ESMTP id <0PTQ018EGQBBMX00@NTTDoCoMo.co.jp> for
+ yamashita.hideyuki@ntt-tx.co.jp; Thu, 27 Jun 2019 13:40:23 +0900 (JST)
+Original-recipient: rfc822;yamashita.hideyuki@ntt-tx.co.jp
+Received: from smtp_saver-daemon.zssg-mailmd106.ddreams.local by
+ zssg-mailmd106.ddreams.local (dDREAMS) id <0PTQ01D0WQBBBZ00@dDREAMS> for
+ yamashita.hideyuki@ntt-tx.co.jp (ORCPT yamashita.hideyuki@ntt-tx.co.jp); Thu,
+ 27 Jun 2019 13:40:23 +0900 (JST)
+Received: from zssg-mailmf102.ddreams.local
+ (zssg-mailmf900.ddreams.local [10.160.172.84]) by zssg-mailmd106.ddreams.local
+ (dDREAMS) with ESMTP id <0PTQ00UNWQBB3OA0@dDREAMS> for
+ yamashita.hideyuki@ntt-tx.co.jp (ORCPT yamashita.hideyuki@ntt-tx.co.jp); Thu,
+ 27 Jun 2019 13:40:23 +0900 (JST)
+Received: from zssg-mailmf102.ddreams.local (unknown [127.0.0.1])
+	by zssg-mailmf102.ddreams.local (Postfix) with ESMTP id 9623F7E6038	for
+ <yamashita.hideyuki@ntt-tx.co.jp>; Thu, 27 Jun 2019 13:40:23 +0900 (JST)
+Received: from zssg-mailmf102.ddreams.local (unknown [127.0.0.1])
+	by IMSVA (Postfix) with ESMTP id 952768E6056	for
+ <yamashita.hideyuki@ntt-tx.co.jp>; Thu, 27 Jun 2019 13:40:23 +0900 (JST)
+Received: from localhost (unknown [127.0.0.1])	by IMSVA (Postfix)
+ with SMTP id 93EDC8E6052	for <yamashita.hideyuki@ntt-tx.co.jp>; Thu,
+ 27 Jun 2019 13:40:23 +0900 (JST)
+X-IMSS-HAND-OFF-DIRECTIVE: localhost:10026
+Received: from zssg-mailmf102.ddreams.local (unknown [127.0.0.1])
+	by IMSVA (Postfix) with ESMTP id 283F58E6052	for
+ <yamashita.hideyuki@ntt-tx.co.jp>; Thu, 27 Jun 2019 13:40:23 +0900 (JST)
+Received: from pomail01.silk.ntt-tx.co.jp (unknown [10.160.183.139])
+	by zssg-mailmf102.ddreams.local (Postfix)
+ with ESMTPS	for <yamashita.hideyuki@ntt-tx.co.jp>; Thu,
+ 27 Jun 2019 13:40:23 +0900 (JST)
+Received: from pomail01.silk.ntt-tx.co.jp (localhost [127.0.0.1])
+	by pomail01.silk.ntt-tx.co.jp (unknown) with ESMTP id x5R4eMZs030310;	Thu,
+ 27 Jun 2019 13:40:23 +0900
+Received: (from yama-hd@localhost)	by pomail01.silk.ntt-tx.co.jp (unknown)
+ id x5R4eMJG030309;	Thu, 27 Jun 2019 13:40:22 +0900
+X-Authentication-warning: pomail01.silk.ntt-tx.co.jp: yama-hd set sender to
+ fw-yama-hd@pomail01.silk.ntt-tx.co.jp using -f
+Received: from imss04.silk.ntt-tx.co.jp
+ (imss04.silk.ntt-tx.co.jp [10.107.0.39])	by pomail01.silk.ntt-tx.co.jp
+ (unknown) with ESMTP id x5R4eMHY030306	for unknown; Thu,
+ 27 Jun 2019 13:40:22 +0900
+Received: from imss04.silk.ntt-tx.co.jp (localhost [127.0.0.1])
+ by imss04.silk.ntt-tx.co.jp (unknown) with ESMTP id x5R4eMcb030081 for
+ unknown; Thu, 27 Jun 2019 13:40:22 +0900
+Received: from ml01.silk.ntt-tx.co.jp (ml01.silk.ntt-tx.co.jp [10.107.0.230])
+ by imss04.silk.ntt-tx.co.jp (unknown) with ESMTP id x5R4eMX4030078; Thu,
+ 27 Jun 2019 13:40:22 +0900
+Received: from ml01.silk.ntt-tx.co.jp (localhost [127.0.0.1])
+	by ml01.silk.ntt-tx.co.jp (unknown) with ESMTP id x5R4eMpB012277;	Thu,
+ 27 Jun 2019 13:40:22 +0900
+Received: from imss02.silk.ntt-tx.co.jp
+ (imss02.silk.ntt-tx.co.jp [10.107.0.127])	by ml01.silk.ntt-tx.co.jp (unknown)
+ with ESMTP id x5R4eMQA012273	for unknown; Thu, 27 Jun 2019 13:40:22 +0900
+Received: from imss02.silk.ntt-tx.co.jp (localhost [127.0.0.1])
+ by imss02.silk.ntt-tx.co.jp (unknown) with ESMTP id x5R4eLqQ016835 for
+ unknown; Thu, 27 Jun 2019 13:40:21 +0900
+Received: from mail01.ics.ntt-tx.co.jp (mail01.ics.ntt-tx.co.jp [10.254.2.67])
+ by imss02.silk.ntt-tx.co.jp (unknown) with ESMTP id x5R4eLNB016829 for
+ unknown; Thu, 27 Jun 2019 13:40:21 +0900
+Received: from dpdk.org (dpdk.org [92.243.14.124])	by mail01.ics.ntt-tx.co.jp
+ (unknown) with SMTP id x5R4eE0q010270	for unknown; Thu,
+ 27 Jun 2019 13:40:20 +0900
+Received: from [92.243.14.124] (localhost [127.0.0.1])	by dpdk.org (Postfix)
+ with ESMTP id 5EE3B316B;	Thu, 27 Jun 2019 06:40:13 +0200 (CEST)
+Received: from mail-pl1-f195.google.com
+ (mail-pl1-f195.google.com [209.85.214.195]) by dpdk.org (Postfix)
+ with ESMTP id 986672BA7 for <spp@dpdk.org>; Thu,
+ 27 Jun 2019 06:40:12 +0200 (CEST)
+Received: by mail-pl1-f195.google.com with SMTP id bh12so559231plb.4 for
+ <spp@dpdk.org>; Wed, 26 Jun 2019 21:40:12 -0700 (PDT)
+Received: from localhost.localdomain ([192.47.164.146])
+ by smtp.gmail.com with ESMTPSA id j14sm935835pfe.10.2019.06.26.21.40.09
+ (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128); Wed,
+ 26 Jun 2019 21:40:10 -0700 (PDT)
+Date: Thu, 27 Jun 2019 13:39:53 +0900
+From: yasufum.o@gmail.com
+Subject: [spp 04447] [spp] [PATCH] shared/sec: move del_comp_info to
+ cmd_runner.c
+Sender: spp <spp-bounces@dpdk.org>
+To: spp@dpdk.org, ferruh.yigit@intel.com, yasufum.o@gmail.com
+Message-id: <20190627043953.14876-1-yasufum.o@gmail.com>
+X-ML-Name: unknown
+X-Mail-Count: 04447
+X-MLServer: unknown
+X-ML-Info: mailing list service
+X-Mailer: git-send-email 2.17.1
+Authentication-results: mail01.ics.ntt-tx.co.jp; spf=pass
+ smtp.mailfrom=spp-bounces@dpdk.org
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
+ h=from:to:subject:date:message-id;
+ bh=tdyqkGB7rK0aC8aRhLjTkvr1D5BjXHUzcfhJUoAeEC8=;
+ b=A/Fb+/vbHCYX2h5sevztPYcVCjZq5BYJ60dRmIAqqHSuhyyjzbt9ZmciZ7ikzXyV4J
+ en53pQLxhxAX3o8BYq/iNXMkMQawRTirPY8rHlYjvWGsJBqY/1l4dJ6m0yW/S/NGJtQq
+ zVoFuUnSU4RBI72agZ80SleuwrhLKk5O9Uj82uJe7yZaf/NIT9KxrdaaXpPVN1VG8vZw
+ soOSXeLBi552eu41OX6YEI6MeukD58mfpaOCCmTJ+nel3xJ1V8QTiz9KfZmRpA1Q5+bi
+ AhCkWUAYj5KWWKXDhiZDkuKMyktJMKBY3lBmLKaA25uhn/X0xD9K1IzzGmdccDYjyhr7 As6Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=1e100.net;
+ s=20161025; h=x-gm-message-state:from:to:subject:date:message-id;
+ bh=tdyqkGB7rK0aC8aRhLjTkvr1D5BjXHUzcfhJUoAeEC8=;
+ b=eOxsi4aw/Ol3oOVJ+K+PDc86LHluSSwZgRgwnN1mPaIJk4IAk4apShYO7O8PcbygR4
+ 9LTwGLq4GM6hZbXdCxgex+WtBLBgZ7HKpRfn7PinRE9Sl0BOA4xaIYf5RSdt350GSzt8
+ GsbJMJHW3D1HovMku/FjjO6bt7wwJeOnXndAxQ8iqsq27oBV7kwZMiaCcWqJCOKS8AZu
+ 9P7trnMAhKcWllygpBahtOXUdhPlr6MGoBv45mfvPOrDUrDeHidpO9JNuoZ0ZQBsZCQi
+ q0cp6ld5xvMlaXgOE3K2sOOl89LABHJHi36iWBhlYCokIVlKHNx4jHWvpslO5mbphwW4 4LmA==
+X-Gm-Message-State: APjAAAVIJWIOq74UhtxO+F3bhx2wQD8mFSv2EKB0/QiqZRJk7cVANFBA
+ zrN1b9XQeNL8T9bZsdThLX5hSa1C
+X-Google-Smtp-Source:
+ APXvYqz5TgQuxfWAF6gVxz23cm5yTZawK5Xb2okvIiulLWM+Oj9eEJM9makQBxwajjZd4kcx/fJ27A==
+X-Received: by 2002:a17:902:8a87:: with SMTP id
+ p7mr2220138plo.124.1561610411486; Wed, 26 Jun 2019 21:40:11 -0700 (PDT)
+X-BeenThere: spp@dpdk.org
+X-Mailman-Version: 2.1.15
+List-Id: Soft Patch Panel <spp.dpdk.org>
+List-Unsubscribe: <https://mails.dpdk.org/options/spp>,
+ <mailto:spp-request@dpdk.org?subject=unsubscribe>
+List-Archive: <http://mails.dpdk.org/archives/spp/>
+List-Post: <mailto:spp@dpdk.org>
+List-Help: <mailto:spp-request@dpdk.org?subject=help>
+List-Subscribe: <https://mails.dpdk.org/listinfo/spp>,
+ <mailto:spp-request@dpdk.org?subject=subscribe>
+X-TM-AS-MML: No
+Precedence: bulk
+Lines: 166
+X-TM-AS-GCONF: 00
+X-MD-STAMP: ON
+
+From: Yasufumi Ogawa <yasufum.o@gmail.com>
+
+Function del_comp_info() is called for `stop` command by which running
+worker thread is terminated. It should be included in `cmd_runner.c` for
+considering this behavior. This update is to move this function from
+`cmd_utils.c` to `cmd_runner.c`, and also its header files.
+
+Signed-off-by: Yasufumi Ogawa <yasufum.o@gmail.com>
+---
+ .../secondary/spp_worker_th/cmd_runner.c      | 26 ++++++++++++++++
+ .../secondary/spp_worker_th/cmd_runner.h      | 13 ++++++++
+ .../secondary/spp_worker_th/cmd_utils.c       | 30 -------------------
+ .../secondary/spp_worker_th/cmd_utils.h       | 26 ++--------------
+ 4 files changed, 42 insertions(+), 53 deletions(-)
+
+diff --git a/src/shared/secondary/spp_worker_th/cmd_runner.c b/src/shared/secondary/spp_worker_th/cmd_runner.c
+index 3ab69f9..4e43fe6 100644
+--- a/src/shared/secondary/spp_worker_th/cmd_runner.c
++++ b/src/shared/secondary/spp_worker_th/cmd_runner.c
+@@ -405,3 +405,29 @@ sppwk_run_cmd(void)
+ 
+ 	return ret;
+ }
++
++/* Delete component information */
++int
++del_comp_info(int lcore_id, int nof_comps, int *comp_ary)
++{
++	int idx = 0;  /* The index of comp_ary to be deleted. */
++	int cnt;
++
++	/* Find the index. */
++	for (cnt = 0; cnt < nof_comps; cnt++) {
++		if (lcore_id == comp_ary[cnt])
++			idx = cnt;
++	}
++	if (idx < 0)
++		return SPP_RET_NG;
++
++	/* Overwrite the deleted entry, and shift the remained. */
++	nof_comps--;
++	for (cnt = idx; cnt < nof_comps; cnt++)
++		comp_ary[cnt] = comp_ary[cnt + 1];
++
++	/* Clean the unused last entry. */
++	comp_ary[cnt] = 0;
++
++	return SPP_RET_OK;
++}
+diff --git a/src/shared/secondary/spp_worker_th/cmd_runner.h b/src/shared/secondary/spp_worker_th/cmd_runner.h
+index 3a71e3e..e13e936 100644
+--- a/src/shared/secondary/spp_worker_th/cmd_runner.h
++++ b/src/shared/secondary/spp_worker_th/cmd_runner.h
+@@ -43,4 +43,17 @@ sppwk_cmd_runner_conn(const char *ctl_ipaddr, int ctl_port);
+ int
+ sppwk_run_cmd(void);
+ 
++/**
++ *  Delete component information.
++ *
++ * @param[in] lcore_id The lcore ID of deleted comp.
++ * @param[in] nof_comps The num of elements in comp_ary.
++ * @param[in] *comp_ary Set of comps from which an comp is deleted.
++ *
++ * @retval SPP_RET_OK If succeeded.
++ * @retval SPP_RET_NG If failed.
++ */
++int
++del_comp_info(int lcore_id, int nof_comps, int *comp_ary);
++
+ #endif  /* _SPPWK_CMD_RUNNER_H_ */
+diff --git a/src/shared/secondary/spp_worker_th/cmd_utils.c b/src/shared/secondary/spp_worker_th/cmd_utils.c
+index 6072186..894f559 100644
+--- a/src/shared/secondary/spp_worker_th/cmd_utils.c
++++ b/src/shared/secondary/spp_worker_th/cmd_utils.c
+@@ -628,36 +628,6 @@ sppwk_get_lcore_id(const char *comp_name)
+ 	return SPP_RET_NG;
+ }
+ 
+-/* Delete component information */
+-/**
+- * TODO(yasufum) consider to move to cmd_runner because this func is only
+- * used in.
+- */
+-int
+-del_comp_info(int lcore_id, int nof_comps, int *comp_ary)
+-{
+-	int idx = 0;  /* The index of comp_ary to be deleted. */
+-	int cnt;
+-
+-	/* Find the index. */
+-	for (cnt = 0; cnt < nof_comps; cnt++) {
+-		if (lcore_id == comp_ary[cnt])
+-			idx = cnt;
+-	}
+-	if (idx < 0)
+-		return SPP_RET_NG;
+-
+-	/* Overwrite the deleted entry, and shift the remained. */
+-	nof_comps--;
+-	for (cnt = idx; cnt < nof_comps; cnt++)
+-		comp_ary[cnt] = comp_ary[cnt + 1];
+-
+-	/* Clean the unused last entry. */
+-	comp_ary[cnt] = 0;
+-
+-	return SPP_RET_OK;
+-}
+-
+ /**
+  * Get index of given entry in given port info array. It returns the index,
+  * or NG code if the entry is not found.
+diff --git a/src/shared/secondary/spp_worker_th/cmd_utils.h b/src/shared/secondary/spp_worker_th/cmd_utils.h
+index ff363f5..7e5cda3 100644
+--- a/src/shared/secondary/spp_worker_th/cmd_utils.h
++++ b/src/shared/secondary/spp_worker_th/cmd_utils.h
+@@ -384,7 +384,7 @@ void print_ring_latency_stats(void);
+ #endif /* SPP_RINGLATENCYSTATS_ENABLE */
+ 
+ /* Remove sock file if spp is not running */
+-void  del_vhost_sockfile(struct sppwk_port_info *vhost);
++void del_vhost_sockfile(struct sppwk_port_info *vhost);
+ 
+ /**
+  * Get core ID of target component
+@@ -423,11 +423,8 @@ int spp_check_used_port(
+ /**
+  * Set component update flag for given port.
+  *
+- * @param port
+- *  sppwk_port_info address
+- * @param rxtx
+- *  enum spp_port_rxtx
+- *
++ * @param port Pointer of sppwk_port_info.
++ * @param rxtx Enum spp_port_rxtx.
+  */
+ void
+ set_component_change_port(struct sppwk_port_info *port,
+@@ -450,23 +447,6 @@ int get_free_lcore_id(void);
+  */
+ int sppwk_get_lcore_id(const char *comp_name);
+ 
+-/**
+- *  Delete component information.
+- *
+- * @param[in] lcore_id The lcore ID of deleted comp.
+- * @param[in] nof_comps The num of elements in comp_ary.
+- * @param[in] *comp_ary Set of comps from which an comp is deleted.
+- *
+- * @retval SPP_RET_OK If succeeded.
+- * @retval SPP_RET_NG If failed.
+- */
+-/**
+- * TODO(yasufum) consider to move to cmd_runner because this func is only
+- * used in.
+- */
+-int
+-del_comp_info(int lcore_id, int nof_comps, int *comp_ary);
+-
+ /**
+  * Get index of given entry in given port info array. It returns the index,
+  * or NG code if the entry is not found.
+-- 
+2.17.1
+
+

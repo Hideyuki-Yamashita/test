@@ -1,0 +1,235 @@
+Return-path: <fw-yama-hd@pomail01.silk.ntt-tx.co.jp>
+Received: from zssg-mailmd104.ddreams.local
+ (zssg-mailmd104.ddreams.local [10.160.123.99]) by zssg-mailms320.ddreams.local
+ (NTT DoCoMo Mail System) with ESMTP id <0PTL00DJQDBKFR70@NTTDoCoMo.co.jp> for
+ yamashita.hideyuki@ntt-tx.co.jp; Mon, 24 Jun 2019 16:11:44 +0900 (JST)
+Original-recipient: rfc822;yamashita.hideyuki@ntt-tx.co.jp
+Received: from smtp_saver-daemon.zssg-mailmd104.ddreams.local by
+ zssg-mailmd104.ddreams.local (dDREAMS) id <0PTL00B2KDBK2K00@dDREAMS> for
+ yamashita.hideyuki@ntt-tx.co.jp (ORCPT yamashita.hideyuki@ntt-tx.co.jp); Mon,
+ 24 Jun 2019 16:11:44 +0900 (JST)
+Received: from zssg-mailmf104.ddreams.local
+ (zssg-mailmf900.ddreams.local [10.160.172.84]) by zssg-mailmd104.ddreams.local
+ (dDREAMS) with ESMTP id <0PTL00ZK1DBKPPE0@dDREAMS> for
+ yamashita.hideyuki@ntt-tx.co.jp (ORCPT yamashita.hideyuki@ntt-tx.co.jp); Mon,
+ 24 Jun 2019 16:11:44 +0900 (JST)
+Received: from zssg-mailmf104.ddreams.local (unknown [127.0.0.1])
+	by zssg-mailmf104.ddreams.local (Postfix) with ESMTP id 3FBB37E6032	for
+ <yamashita.hideyuki@ntt-tx.co.jp>; Mon, 24 Jun 2019 16:11:44 +0900 (JST)
+Received: from zssg-mailmf104.ddreams.local (unknown [127.0.0.1])
+	by IMSVA (Postfix) with ESMTP id 3EA358E6056	for
+ <yamashita.hideyuki@ntt-tx.co.jp>; Mon, 24 Jun 2019 16:11:44 +0900 (JST)
+Received: from localhost (unknown [127.0.0.1])	by IMSVA (Postfix)
+ with SMTP id 3440B8E6060	for <yamashita.hideyuki@ntt-tx.co.jp>; Mon,
+ 24 Jun 2019 16:11:44 +0900 (JST)
+X-IMSS-HAND-OFF-DIRECTIVE: localhost:10026
+Received: from zssg-mailmf104.ddreams.local (unknown [127.0.0.1])
+	by IMSVA (Postfix) with ESMTP id BC7798E6066	for
+ <yamashita.hideyuki@ntt-tx.co.jp>; Mon, 24 Jun 2019 16:11:43 +0900 (JST)
+Received: from pomail01.silk.ntt-tx.co.jp (unknown [10.160.183.139])
+	by zssg-mailmf104.ddreams.local (Postfix)
+ with ESMTPS	for <yamashita.hideyuki@ntt-tx.co.jp>; Mon,
+ 24 Jun 2019 16:11:43 +0900 (JST)
+Received: from pomail01.silk.ntt-tx.co.jp (localhost [127.0.0.1])
+	by pomail01.silk.ntt-tx.co.jp (unknown) with ESMTP id x5O7Bh3E017073;	Mon,
+ 24 Jun 2019 16:11:43 +0900
+Received: (from yama-hd@localhost)	by pomail01.silk.ntt-tx.co.jp (unknown)
+ id x5O7Bhgh017072;	Mon, 24 Jun 2019 16:11:43 +0900
+X-Authentication-warning: pomail01.silk.ntt-tx.co.jp: yama-hd set sender to
+ fw-yama-hd@pomail01.silk.ntt-tx.co.jp using -f
+Received: from imss04.silk.ntt-tx.co.jp
+ (imss04.silk.ntt-tx.co.jp [10.107.0.39])	by pomail01.silk.ntt-tx.co.jp
+ (unknown) with ESMTP id x5O7BhDp017062	for unknown; Mon,
+ 24 Jun 2019 16:11:43 +0900
+Received: from imss04.silk.ntt-tx.co.jp (localhost [127.0.0.1])
+ by imss04.silk.ntt-tx.co.jp (unknown) with ESMTP id x5O7Bhhp021493 for
+ unknown; Mon, 24 Jun 2019 16:11:43 +0900
+Received: from ml01.silk.ntt-tx.co.jp (ml01.silk.ntt-tx.co.jp [10.107.0.230])
+ by imss04.silk.ntt-tx.co.jp (unknown) with ESMTP id x5O7BgQX021490; Mon,
+ 24 Jun 2019 16:11:42 +0900
+Received: from ml01.silk.ntt-tx.co.jp (localhost [127.0.0.1])
+	by ml01.silk.ntt-tx.co.jp (unknown) with ESMTP id x5O7BgkJ017052;	Mon,
+ 24 Jun 2019 16:11:42 +0900
+Received: from imss02.silk.ntt-tx.co.jp
+ (imss02.silk.ntt-tx.co.jp [10.107.0.127])	by ml01.silk.ntt-tx.co.jp (unknown)
+ with ESMTP id x5O7Bg1t017048	for unknown; Mon, 24 Jun 2019 16:11:42 +0900
+Received: from imss02.silk.ntt-tx.co.jp (localhost [127.0.0.1])
+ by imss02.silk.ntt-tx.co.jp (unknown) with ESMTP id x5O7BgYS031298 for
+ unknown; Mon, 24 Jun 2019 16:11:42 +0900
+Received: from mail01.ics.ntt-tx.co.jp (mail01.ics.ntt-tx.co.jp [10.254.2.67])
+ by imss02.silk.ntt-tx.co.jp (unknown) with ESMTP id x5O7Bg5k031294 for
+ unknown; Mon, 24 Jun 2019 16:11:42 +0900
+Received: from dpdk.org (dpdk.org [92.243.14.124])	by mail01.ics.ntt-tx.co.jp
+ (unknown) with SMTP id x5O7BZNS023383	for unknown; Mon,
+ 24 Jun 2019 16:11:41 +0900
+Received: from [92.243.14.124] (localhost [127.0.0.1])	by dpdk.org (Postfix)
+ with ESMTP id 741E71BF33;	Mon, 24 Jun 2019 09:11:35 +0200 (CEST)
+Received: from mail-pf1-f193.google.com
+ (mail-pf1-f193.google.com [209.85.210.193]) by dpdk.org (Postfix)
+ with ESMTP id F13931BCAC for <spp@dpdk.org>; Mon,
+ 24 Jun 2019 09:11:33 +0200 (CEST)
+Received: by mail-pf1-f193.google.com with SMTP id d126so6972180pfd.2 for
+ <spp@dpdk.org>; Mon, 24 Jun 2019 00:11:33 -0700 (PDT)
+Received: from localhost.localdomain ([192.47.164.146])
+ by smtp.gmail.com with ESMTPSA id y17sm6357948pfe.148.2019.06.24.00.11.31
+ (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128); Mon,
+ 24 Jun 2019 00:11:32 -0700 (PDT)
+Date: Mon, 24 Jun 2019 16:11:17 +0900
+From: yasufum.o@gmail.com
+Subject: [spp 04402] [spp] [PATCH 03/10] controller: move pri help msg to
+ SppPrimary
+Sender: spp <spp-bounces@dpdk.org>
+To: spp@dpdk.org, ferruh.yigit@intel.com, yasufum.o@gmail.com
+Message-id: <20190624071124.23451-4-yasufum.o@gmail.com>
+In-reply-to: <20190624071124.23451-1-yasufum.o@gmail.com>
+References: <20190624071124.23451-1-yasufum.o@gmail.com>
+X-ML-Name: unknown
+X-Mail-Count: 04402
+X-MLServer: unknown
+X-ML-Info: mailing list service
+X-Mailer: git-send-email 2.17.1
+Authentication-results: mail01.ics.ntt-tx.co.jp; spf=pass
+ smtp.mailfrom=spp-bounces@dpdk.org
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
+ h=from:to:subject:date:message-id:in-reply-to:references;
+ bh=q6DxDx2g+ZwjhnNS8szHEHX13SonNaY3ec1JOqrgQio=;
+ b=OtQob4hn6ZCpUuwQbGmwpzrpV5/Ecvjnw8H0t/nLK404m7YH/EOha2b1fAII3yLhJP
+ inmRO2wUwzIpGtSDHFUr0u2HzY2T0j3RUj0LStz0+MH232NVtFmsqiTMtDlcGOSyb5YS
+ Mni/kfdf3xKixV9iQumUn2/JhyON7+NkJjG9YaZSxxIObguZF2XdtUglElJp8Fvo1qZk
+ ettac96twoEjbx9TTptDZMmvODyVoukMxBKwn6DdoL/accgH/RZwrtTC7RbJ51G4QHKS
+ iS5wZbVS2qEdGe8WFTj6axUSYgVunTD4e4LSFnt83IGoevHxu1mLYARzNKs0FT1J+o2T vTzg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=1e100.net;
+ s=20161025; h=x-gm-message-state:from:to:subject:date:message-id:in-reply-to
+ :references; bh=q6DxDx2g+ZwjhnNS8szHEHX13SonNaY3ec1JOqrgQio=;
+ b=iH582TkwK3nQNqmEAu1vHOsfH/45HXcX1RUtq4samhlicRhLx2J6Touxpw+XG5iMMz
+ Tt4LyzDu618uC7uong+vLAo2p98HGatUSi9SB389hxo2IjdZDSG5ER1ITvYtBX4/qAof
+ IcytY9V9IQYYUr95rJ5jTeM8vM+z1f0LY+8V/4csOkvFRcKX753ZnKCGK3dfRmsNwNoD
+ dbR3OM5LvTXPqOskcZJXJUIH284OTSRUBq47DZg7bptk+kHIgRLTrkOhcKNh+qXWJXcA
+ cNtL6JTS+8cj8DfPJdWgD5DNclwR6QqH2XittRuV+RVBDIcJuhYg8jOWJfXstFppCk95 4+0A==
+X-Gm-Message-State: APjAAAWFGwNMtRBq2kgH1vGndgbBC3NCr10My/lDhoMV+n6ZIM18rnrg
+ jFXTwupoQR0S9EofquSZuo+cIJhq
+X-Google-Smtp-Source:
+ APXvYqzJUJo/B8EY7SDD8n5UAl81t27YTeQ6qWe2Ry4z5k/DoR5bF3EDWuZ50jK7A+08/4qCcRwSxA==
+X-Received: by 2002:a17:90a:8a8e:: with SMTP id
+ x14mr22385262pjn.103.1561360293161; Mon, 24 Jun 2019 00:11:33 -0700 (PDT)
+X-BeenThere: spp@dpdk.org
+X-Mailman-Version: 2.1.15
+List-Id: Soft Patch Panel <spp.dpdk.org>
+List-Unsubscribe: <https://mails.dpdk.org/options/spp>,
+ <mailto:spp-request@dpdk.org?subject=unsubscribe>
+List-Archive: <http://mails.dpdk.org/archives/spp/>
+List-Post: <mailto:spp@dpdk.org>
+List-Help: <mailto:spp-request@dpdk.org?subject=help>
+List-Subscribe: <https://mails.dpdk.org/listinfo/spp>,
+ <mailto:spp-request@dpdk.org?subject=subscribe>
+X-TM-AS-MML: No
+Precedence: bulk
+Lines: 104
+X-TM-AS-GCONF: 00
+X-MD-STAMP: ON
+
+From: Yasufumi Ogawa <yasufum.o@gmail.com>
+
+This patch is to move comment of `do_pri` to `SppPrimary.help` to
+reduce the number of lines.
+
+Signed-off-by: Yasufumi Ogawa <yasufum.o@gmail.com>
+---
+ src/controller/commands/pri.py | 17 +++++++++++++++++
+ src/controller/shell.py        | 33 +++++++--------------------------
+ 2 files changed, 24 insertions(+), 26 deletions(-)
+
+diff --git a/src/controller/commands/pri.py b/src/controller/commands/pri.py
+index 15bdb12..b119a5c 100644
+--- a/src/controller/commands/pri.py
++++ b/src/controller/commands/pri.py
+@@ -436,3 +436,20 @@ class SppPrimary(object):
+                 pass
+             else:
+                 print('Error: unknown response.')
++
++    @classmethod
++    def help(cls):
++        msg = """Send a command to primary process.
++
++        Show resources and statistics, or clear it.
++            spp > pri; status  # show status
++            spp > pri; clear   # clear statistics
++
++        Launch secondary process..
++            # Launch nfv:1
++            spp > pri; launch nfv 1 -l 1,2 -m 512 -- -n 1 -s 192.168....
++            # Launch vf:2
++            spp > pri; launch vf 2 -l 1,4-7 -m 512 -- --client-id 2 -s ...
++        """
++
++        print(msg)
+diff --git a/src/controller/shell.py b/src/controller/shell.py
+index b86ba5c..bfe963b 100644
+--- a/src/controller/shell.py
++++ b/src/controller/shell.py
+@@ -278,22 +278,7 @@ class Shell(cmd.Cmd, object):
+         self.print_status()
+ 
+     def do_pri(self, command):
+-        """Send a command to primary process.
+-
+-        Show resources and statistics, or clear it.
+-
+-            spp > pri; status  # show status
+-
+-            spp > pri; clear   # clear statistics
+-
+-        Launch secondary process..
+-
+-            # Launch nfv:1
+-            spp > pri; launch nfv 1 -l 1,2 -m 512 -- -n 1 -s 192.168....
+-
+-            # Launch vf:2
+-            spp > pri; launch vf 2 -l 1,4-7 -m 512 -- --client-id 2 -s ...
+-        """
++        """Send a command to primary process."""
+ 
+         # Remove unwanted spaces and first char ';'
+         command = self.clean_cmd(command)[1:]
+@@ -303,6 +288,10 @@ class Shell(cmd.Cmd, object):
+ 
+         self.primary.run(command, self.cli_config)
+ 
++    def help_pri(self):
++        """Print help message of pri command."""
++        pri.SppPrimary.help()
++
+     def complete_pri(self, text, line, begidx, endidx):
+         """Completion for primary process commands."""
+ 
+@@ -381,15 +370,7 @@ class Shell(cmd.Cmd, object):
+                 return res
+ 
+     def do_vf(self, cmd):
+-        """Send a command to spp_vf.
+-
+-        spp_vf is a secondary process for pseudo SR-IOV features. This
+-        command has four sub commands.
+-          * status
+-          * component
+-          * port
+-          * classifier_table
+-        """
++        """Send a command to spp_vf."""
+ 
+         # remove unwanted spaces to avoid invalid command error
+         tmparg = self.clean_cmd(cmd)
+@@ -404,7 +385,7 @@ class Shell(cmd.Cmd, object):
+             print('Invalid command: %s' % tmparg)
+ 
+     def help_vf(self):
+-        """Print help message of spp_vf."""
++        """Print help message of vf command."""
+         vf.SppVf.help()
+ 
+     def complete_vf(self, text, line, begidx, endidx):
+-- 
+2.17.1
+
+

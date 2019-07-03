@@ -1,0 +1,443 @@
+Return-path: <fw-yama-hd@pomail01.silk.ntt-tx.co.jp>
+Received: from zssg-mailmd104.ddreams.local
+ (zssg-mailmd104.ddreams.local [10.160.123.99]) by zssg-mailms320.ddreams.local
+ (NTT DoCoMo Mail System) with ESMTP id <0PTO00QRBY8IV480@NTTDoCoMo.co.jp> for
+ yamashita.hideyuki@ntt-tx.co.jp; Wed, 26 Jun 2019 14:36:18 +0900 (JST)
+Original-recipient: rfc822;yamashita.hideyuki@ntt-tx.co.jp
+Received: from smtp_saver-daemon.zssg-mailmd104.ddreams.local by
+ zssg-mailmd104.ddreams.local (dDREAMS) id <0PTO00Z1IY8I3400@dDREAMS> for
+ yamashita.hideyuki@ntt-tx.co.jp (ORCPT yamashita.hideyuki@ntt-tx.co.jp); Wed,
+ 26 Jun 2019 14:36:18 +0900 (JST)
+Received: from zssg-mailmf105.ddreams.local
+ (zssg-mailmf900.ddreams.local [10.160.172.84]) by zssg-mailmd104.ddreams.local
+ (dDREAMS) with ESMTP id <0PTO00WMVY8I6T10@dDREAMS> for
+ yamashita.hideyuki@ntt-tx.co.jp (ORCPT yamashita.hideyuki@ntt-tx.co.jp); Wed,
+ 26 Jun 2019 14:36:18 +0900 (JST)
+Received: from zssg-mailmf105.ddreams.local (unknown [127.0.0.1])
+	by zssg-mailmf105.ddreams.local (Postfix) with ESMTP id 22DBF7E6034	for
+ <yamashita.hideyuki@ntt-tx.co.jp>; Wed, 26 Jun 2019 14:36:18 +0900 (JST)
+Received: from zssg-mailmf105.ddreams.local (unknown [127.0.0.1])
+	by IMSVA (Postfix) with ESMTP id 212E68E6058	for
+ <yamashita.hideyuki@ntt-tx.co.jp>; Wed, 26 Jun 2019 14:36:18 +0900 (JST)
+Received: from localhost (unknown [127.0.0.1])	by IMSVA (Postfix)
+ with SMTP id 15A998E605A	for <yamashita.hideyuki@ntt-tx.co.jp>; Wed,
+ 26 Jun 2019 14:36:18 +0900 (JST)
+X-IMSS-HAND-OFF-DIRECTIVE: localhost:10026
+Received: from zssg-mailmf105.ddreams.local (unknown [127.0.0.1])
+	by IMSVA (Postfix) with ESMTP id C7EF08E6052	for
+ <yamashita.hideyuki@ntt-tx.co.jp>; Wed, 26 Jun 2019 14:36:16 +0900 (JST)
+Received: from pomail01.silk.ntt-tx.co.jp (unknown [10.160.183.139])
+	by zssg-mailmf105.ddreams.local (Postfix)
+ with ESMTPS	for <yamashita.hideyuki@ntt-tx.co.jp>; Wed,
+ 26 Jun 2019 14:36:16 +0900 (JST)
+Received: from pomail01.silk.ntt-tx.co.jp (localhost [127.0.0.1])
+	by pomail01.silk.ntt-tx.co.jp (unknown) with ESMTP id x5Q5aGn4019144;	Wed,
+ 26 Jun 2019 14:36:16 +0900
+Received: (from yama-hd@localhost)	by pomail01.silk.ntt-tx.co.jp (unknown)
+ id x5Q5aGFT019143;	Wed, 26 Jun 2019 14:36:16 +0900
+X-Authentication-warning: pomail01.silk.ntt-tx.co.jp: yama-hd set sender to
+ fw-yama-hd@pomail01.silk.ntt-tx.co.jp using -f
+Received: from imss04.silk.ntt-tx.co.jp
+ (imss04.silk.ntt-tx.co.jp [10.107.0.39])	by pomail01.silk.ntt-tx.co.jp
+ (unknown) with ESMTP id x5Q5aGmH019140	for unknown; Wed,
+ 26 Jun 2019 14:36:16 +0900
+Received: from imss04.silk.ntt-tx.co.jp (localhost [127.0.0.1])
+ by imss04.silk.ntt-tx.co.jp (unknown) with ESMTP id x5Q5aGwR031816 for
+ unknown; Wed, 26 Jun 2019 14:36:16 +0900
+Received: from ml01.silk.ntt-tx.co.jp (ml01.silk.ntt-tx.co.jp [10.107.0.230])
+ by imss04.silk.ntt-tx.co.jp (unknown) with ESMTP id x5Q5aGXD031813; Wed,
+ 26 Jun 2019 14:36:16 +0900
+Received: from ml01.silk.ntt-tx.co.jp (localhost [127.0.0.1])
+	by ml01.silk.ntt-tx.co.jp (unknown) with ESMTP id x5Q5aGQv015781;	Wed,
+ 26 Jun 2019 14:36:16 +0900
+Received: from imss01.silk.ntt-tx.co.jp
+ (imss01.silk.ntt-tx.co.jp [10.107.0.126])	by ml01.silk.ntt-tx.co.jp (unknown)
+ with ESMTP id x5Q5aF7b015777	for unknown; Wed, 26 Jun 2019 14:36:15 +0900
+Received: from imss01.silk.ntt-tx.co.jp (localhost [127.0.0.1])
+ by imss01.silk.ntt-tx.co.jp (unknown) with ESMTP id x5Q5aF8x010855 for
+ unknown; Wed, 26 Jun 2019 14:36:15 +0900
+Received: from mail01.ics.ntt-tx.co.jp (mail01.ics.ntt-tx.co.jp [10.254.2.67])
+ by imss01.silk.ntt-tx.co.jp (unknown) with ESMTP id x5Q5aFm2010849 for
+ unknown; Wed, 26 Jun 2019 14:36:15 +0900
+Received: from dpdk.org (dpdk.org [92.243.14.124])	by mail01.ics.ntt-tx.co.jp
+ (unknown) with SMTP id x5Q5a8bw026338	for unknown; Wed,
+ 26 Jun 2019 14:36:14 +0900
+Received: from [92.243.14.124] (localhost [127.0.0.1])	by dpdk.org (Postfix)
+ with ESMTP id 700A01B954;	Wed, 26 Jun 2019 07:36:08 +0200 (CEST)
+Received: from mail-pg1-f194.google.com
+ (mail-pg1-f194.google.com [209.85.215.194]) by dpdk.org (Postfix)
+ with ESMTP id 691D51B951 for <spp@dpdk.org>; Wed,
+ 26 Jun 2019 07:36:07 +0200 (CEST)
+Received: by mail-pg1-f194.google.com with SMTP id m4so646492pgk.0 for
+ <spp@dpdk.org>; Tue, 25 Jun 2019 22:36:07 -0700 (PDT)
+Received: from localhost.localdomain ([192.47.164.146])
+ by smtp.gmail.com with ESMTPSA id u1sm15315180pgr.94.2019.06.25.22.36.05
+ (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128); Tue,
+ 25 Jun 2019 22:36:06 -0700 (PDT)
+Date: Wed, 26 Jun 2019 14:35:57 +0900
+From: yasufum.o@gmail.com
+Subject: [spp 04436] [spp] [PATCH 1/2] shared/sec: remove global var
+ g_startup_param
+Sender: spp <spp-bounces@dpdk.org>
+To: spp@dpdk.org, ferruh.yigit@intel.com, yasufum.o@gmail.com
+Message-id: <20190626053558.39847-2-yasufum.o@gmail.com>
+In-reply-to: <20190626053558.39847-1-yasufum.o@gmail.com>
+References: <20190626053558.39847-1-yasufum.o@gmail.com>
+X-ML-Name: unknown
+X-Mail-Count: 04436
+X-MLServer: unknown
+X-ML-Info: mailing list service
+X-Mailer: git-send-email 2.17.1
+Authentication-results: mail01.ics.ntt-tx.co.jp; spf=pass
+ smtp.mailfrom=spp-bounces@dpdk.org
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
+ h=from:to:subject:date:message-id:in-reply-to:references;
+ bh=QZ+TbWRHmcbk7LDuPn2pJ7jMNedwRjXiSe8d1XL+Cfk=;
+ b=U4RUE4NGdf/e5zCX5RVGdwyDjdeSL84fE4XgKIAClFVg8/eNpjoV4/q43wWLJR33E1
+ OFUiMgIIi/OB7tpVmU5bjj2//+LvhUWGLNNT0hOvVsMuWU06Pc85a95em+UJ0e/2phoz
+ ooRMnhLqgjXpMTdheSayrb3C91f76z8IcRtFaOLZxYuXxGJcUPDnGwSUUuV8t9mviv+l
+ jQXA2EPvSTmADfB4kgXBbV3WrqCgsBm756h8F7EBhzFz0wtlH2h/VDF6Er0iSC0mfAN0
+ 5pCH2PtvUJAsJOo9pal6UnXqXK+Gzupn/3+LT/HevU9NCJppmq2hLPQLop4XrwGY150Z aK6g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=1e100.net;
+ s=20161025; h=x-gm-message-state:from:to:subject:date:message-id:in-reply-to
+ :references; bh=QZ+TbWRHmcbk7LDuPn2pJ7jMNedwRjXiSe8d1XL+Cfk=;
+ b=sREqHgDe14NQx3Rf4CtvThWS/nlqVFR3aexP9c/KcFfmlIqfONcU2LgM3tlFROpgy8
+ IGT8lzIMvebeDlcN8T9i+KPcTAy1yIgD0xYpgDh45jrzO78LC2cvur+VWddW0t/DbpfH
+ u+Vf6B4uKPS9zE2XJgAnQ1iSWA2zDgCa3FeNQy8KS1RjM7FMVCV++WJ8brIYdHuAxi3R
+ yPRxWX40RIMHIe0YtSxEFWjV3bpgV300QGi81Lmcond7zyAc2IKXq8gDvg/U2KdyyaOw
+ ZktAH1rgmR1DhETV52hHmtbE5rYuf42fqoPGZTIHWgaK9GwhrsQXHPuTyYR+TnCRs+dD 2O4A==
+X-Gm-Message-State: APjAAAVsuoyyTsSU41vQ28xmzAB2maTEAiK0d7VP2bP6taJgT9c2qPPc
+ urEpg9+3By0OYl1e16qeEz11Bwgt
+X-Google-Smtp-Source:
+ APXvYqwLUtmxgF8wXiltF7GZfP1zcKeKHBiH59kWUZY4BK3MMh7nktTir47xaQcxrNmODOWcY7Ru8w==
+X-Received: by 2002:a17:90a:8a84:: with SMTP id
+ x4mr2332420pjn.105.1561527366400; Tue, 25 Jun 2019 22:36:06 -0700 (PDT)
+X-BeenThere: spp@dpdk.org
+X-Mailman-Version: 2.1.15
+List-Id: Soft Patch Panel <spp.dpdk.org>
+List-Unsubscribe: <https://mails.dpdk.org/options/spp>,
+ <mailto:spp-request@dpdk.org?subject=unsubscribe>
+List-Archive: <http://mails.dpdk.org/archives/spp/>
+List-Post: <mailto:spp@dpdk.org>
+List-Help: <mailto:spp-request@dpdk.org?subject=help>
+List-Subscribe: <https://mails.dpdk.org/listinfo/spp>,
+ <mailto:spp-request@dpdk.org?subject=subscribe>
+X-TM-AS-MML: No
+Precedence: bulk
+Lines: 312
+X-TM-AS-GCONF: 00
+X-MD-STAMP: ON
+
+From: Yasufumi Ogawa <yasufum.o@gmail.com>
+
+In SPP worker processes, command line options, such as client ID or
+server's IP address, are contained as members of struct
+`startup_param`. Its instance is a global variable and managed with
+other global variables so that it accessible from anywhere of program.
+
+This design enables developers to retrieve any gloval variable in same
+manner with single function sppwk_get_mng_data(). However, all of this
+global variables have dependency each other. In addition, this function
+should take seven args for getting variables selectively. It makes
+codes become hard to change.
+
+This update is to remove one of such a global variable to ease this
+issue. Each of variables can already be retrieved with functions
+implemented in previous patches.
+
+Signed-off-by: Yasufumi Ogawa <yasufum.o@gmail.com>
+---
+ src/mirror/mir_cmd_runner.c                        | 12 ++++++------
+ src/mirror/spp_mirror.c                            | 14 ++++----------
+ .../secondary/spp_worker_th/cmd_res_formatter.c    |  3 +--
+ src/shared/secondary/spp_worker_th/cmd_runner.c    |  4 ++--
+ src/shared/secondary/spp_worker_th/cmd_utils.c     |  9 +--------
+ src/shared/secondary/spp_worker_th/cmd_utils.h     | 14 ++------------
+ src/vf/spp_vf.c                                    |  8 +-------
+ src/vf/vf_cmd_runner.c                             | 12 ++++++------
+ 8 files changed, 23 insertions(+), 53 deletions(-)
+
+diff --git a/src/mirror/mir_cmd_runner.c b/src/mirror/mir_cmd_runner.c
+index abbd6f6..f63a84b 100644
+--- a/src/mirror/mir_cmd_runner.c
++++ b/src/mirror/mir_cmd_runner.c
+@@ -33,8 +33,8 @@ update_comp(enum sppwk_action wk_action, const char *name,
+ 	int *change_core = NULL;
+ 	int *change_component = NULL;
+ 
+-	sppwk_get_mng_data(NULL, NULL, &comp_info_base, &core_info,
+-				&change_core, &change_component, NULL);
++	sppwk_get_mng_data(NULL, &comp_info_base, &core_info, &change_core,
++			&change_component, NULL);
+ 
+ 	switch (wk_action) {
+ 	case SPPWK_ACT_START:
+@@ -151,8 +151,8 @@ update_port(enum sppwk_action wk_action,
+ 				"(component = %s)\n", name);
+ 		return SPP_RET_NG;
+ 	}
+-	sppwk_get_mng_data(NULL, NULL,
+-			&comp_info_base, NULL, NULL, &change_component, NULL);
++	sppwk_get_mng_data(NULL, &comp_info_base, NULL, NULL,
++			&change_component, NULL);
+ 	comp_info = (comp_info_base + comp_lcore_id);
+ 	port_info = get_sppwk_port(port->iface_type, port->iface_no);
+ 	if (dir == SPPWK_PORT_DIR_RX) {
+@@ -323,8 +323,8 @@ spp_iterate_core_info(struct spp_iterate_core_params *params)
+ 		}
+ 
+ 		for (cnt = 0; cnt < core->num; cnt++) {
+-			sppwk_get_mng_data(NULL, NULL, &comp_info_base,
+-							NULL, NULL, NULL, NULL);
++			sppwk_get_mng_data(NULL, &comp_info_base, NULL, NULL,
++					NULL, NULL);
+ 			comp_info = (comp_info_base + core->id[cnt]);
+ 			ret = get_mirror_status(lcore_id, core->id[cnt],
+ 					params);
+diff --git a/src/mirror/spp_mirror.c b/src/mirror/spp_mirror.c
+index 32489ed..f040010 100644
+--- a/src/mirror/spp_mirror.c
++++ b/src/mirror/spp_mirror.c
+@@ -59,9 +59,6 @@ static uint16_t nb_txd = MIR_TX_DESC_DEFAULT;
+ /* Logical core ID for main process */
+ static unsigned int g_main_lcore_id = 0xffffffff;
+ 
+-/* Execution parameter of spp_mirror */
+-static struct startup_param g_startup_param;
+-
+ /* Interface management information */
+ static struct iface_info g_iface_info;
+ 
+@@ -134,9 +131,6 @@ parse_app_args(int argc, char *argv[])
+ 	for (cnt = 0; cnt < argcopt; cnt++)
+ 		argvopt[cnt] = argv[cnt];
+ 
+-	/* Clear startup parameters */
+-	memset(&g_startup_param, 0x00, sizeof(g_startup_param));
+-
+ 	/* vhost_cli is disabled as default. */
+ 	set_vhost_cli_mode(0);
+ 
+@@ -507,10 +501,10 @@ main(int argc, char *argv[])
+ 		/* Get lcore id of main thread to set its status after */
+ 		g_main_lcore_id = rte_lcore_id();
+ 
+-		if (sppwk_set_mng_data(&g_startup_param, &g_iface_info,
+-					g_component_info, g_core_info,
+-					g_change_core, g_change_component,
+-					&g_backup_info, g_main_lcore_id) < 0) {
++		if (sppwk_set_mng_data(&g_iface_info, g_component_info,
++					g_core_info, g_change_core,
++					g_change_component, &g_backup_info,
++					g_main_lcore_id) < 0) {
+ 			RTE_LOG(ERR, MIRROR,
+ 				"Failed to set management data.\n");
+ 			break;
+diff --git a/src/shared/secondary/spp_worker_th/cmd_res_formatter.c b/src/shared/secondary/spp_worker_th/cmd_res_formatter.c
+index f095b08..a424fce 100644
+--- a/src/shared/secondary/spp_worker_th/cmd_res_formatter.c
++++ b/src/shared/secondary/spp_worker_th/cmd_res_formatter.c
+@@ -199,8 +199,7 @@ get_ethdev_port_id(enum port_type iface_type, int iface_no)
+ {
+ 	struct iface_info *iface_info = NULL;
+ 
+-	sppwk_get_mng_data(NULL, &iface_info,
+-				NULL, NULL, NULL, NULL, NULL);
++	sppwk_get_mng_data(&iface_info, NULL, NULL, NULL, NULL, NULL);
+ 	switch (iface_type) {
+ 	case PHY:
+ 		return iface_info->nic[iface_no].ethdev_port_id;
+diff --git a/src/shared/secondary/spp_worker_th/cmd_runner.c b/src/shared/secondary/spp_worker_th/cmd_runner.c
+index 3684a2c..3ab69f9 100644
+--- a/src/shared/secondary/spp_worker_th/cmd_runner.c
++++ b/src/shared/secondary/spp_worker_th/cmd_runner.c
+@@ -44,8 +44,8 @@ flush_cmd(void)
+ 	struct sppwk_comp_info *p_comp_info;
+ 	struct cancel_backup_info *backup_info;
+ 
+-	sppwk_get_mng_data(NULL, NULL, &p_comp_info,
+-				NULL, NULL, &p_change_comp, &backup_info);
++	sppwk_get_mng_data(NULL, &p_comp_info, NULL, NULL, &p_change_comp,
++			&backup_info);
+ 
+ 	ret = update_port_info();
+ 	if (ret < SPP_RET_OK)
+diff --git a/src/shared/secondary/spp_worker_th/cmd_utils.c b/src/shared/secondary/spp_worker_th/cmd_utils.c
+index 8a40d92..4f84365 100644
+--- a/src/shared/secondary/spp_worker_th/cmd_utils.c
++++ b/src/shared/secondary/spp_worker_th/cmd_utils.c
+@@ -34,7 +34,6 @@
+ /* A set of pointers of management data */
+ /* TODO(yasufum) change names start with `p_change` because it wrong meanig. */
+ struct mng_data_info {
+-	struct startup_param *p_startup_param;
+ 	struct iface_info *p_iface_info;
+ 	struct sppwk_comp_info *p_component_info;
+ 	struct core_mng_info *p_core_info;
+@@ -839,7 +838,6 @@ sppwk_convert_mac_str_to_int64(const char *macaddr)
+ 
+ /* Set management data of global var for given non-NULL args. */
+ int sppwk_set_mng_data(
+-		struct startup_param *startup_param_p,
+ 		struct iface_info *iface_p,
+ 		struct sppwk_comp_info *component_p,
+ 		struct core_mng_info *core_mng_p,
+@@ -852,13 +850,11 @@ int sppwk_set_mng_data(
+ 	 * TODO(yasufum) confirm why the last `0xffffffff` is same as NULL,
+ 	 * although it is reserved for meaning as invalid.
+ 	 */
+-	if (startup_param_p == NULL || iface_p == NULL ||
+-			component_p == NULL || core_mng_p == NULL ||
++	if (iface_p == NULL || component_p == NULL || core_mng_p == NULL ||
+ 			change_core_p == NULL || change_component_p == NULL ||
+ 			backup_info_p == NULL || main_lcore_id == 0xffffffff)
+ 		return SPP_RET_NG;
+ 
+-	g_mng_data.p_startup_param = startup_param_p;
+ 	g_mng_data.p_iface_info = iface_p;
+ 	g_mng_data.p_component_info = component_p;
+ 	g_mng_data.p_core_info = core_mng_p;
+@@ -872,7 +868,6 @@ int sppwk_set_mng_data(
+ 
+ /* Get management data from global var for given non-NULL args. */
+ void sppwk_get_mng_data(
+-		struct startup_param **startup_param_p,
+ 		struct iface_info **iface_p,
+ 		struct sppwk_comp_info **component_p,
+ 		struct core_mng_info **core_mng_p,
+@@ -881,8 +876,6 @@ void sppwk_get_mng_data(
+ 		struct cancel_backup_info **backup_info_p)
+ {
+ 
+-	if (startup_param_p != NULL)
+-		*startup_param_p = g_mng_data.p_startup_param;
+ 	if (iface_p != NULL)
+ 		*iface_p = g_mng_data.p_iface_info;
+ 	if (component_p != NULL)
+diff --git a/src/shared/secondary/spp_worker_th/cmd_utils.h b/src/shared/secondary/spp_worker_th/cmd_utils.h
+index 425d3eb..e2b987f 100644
+--- a/src/shared/secondary/spp_worker_th/cmd_utils.h
++++ b/src/shared/secondary/spp_worker_th/cmd_utils.h
+@@ -191,12 +191,6 @@ struct sppwk_comp_info {
+ 	struct sppwk_port_info *tx_ports[RTE_MAX_ETHPORTS]; /**< tx ports */
+ };
+ 
+-/* Manage cmd arg as global variable, used for spp_vf and spp_mirror. */
+-struct startup_param {
+-	char server_ip[INET_ADDRSTRLEN];  /* IP address of spp-ctl */
+-	int server_port;   /* Port Number of spp-ctl */
+-};
+-
+ /* Manage number of interfaces  and port information as global variable. */
+ struct iface_info {
+ 	int nof_phys;    /* Number of phy ports */
+@@ -532,7 +526,6 @@ int64_t sppwk_convert_mac_str_to_int64(const char *macaddr);
+ /**
+  * Set mange data address.
+  *
+- * @param startup_param_p Pointer to g_startup_param address.
+  * @param iface_p Pointer to g_iface_info address.
+  * @param component_p Pointer to g_component_info address.
+  * @param core_mng_p Pointer to g_core_info address.
+@@ -543,8 +536,7 @@ int64_t sppwk_convert_mac_str_to_int64(const char *macaddr);
+  * @retval SPP_RET_OK If succeeded.
+  * @retval SPP_RET_NG If failed.
+  */
+-int sppwk_set_mng_data(struct startup_param *startup_param_p,
+-		struct iface_info *iface_p,
++int sppwk_set_mng_data(struct iface_info *iface_p,
+ 		struct sppwk_comp_info *component_p,
+ 		struct core_mng_info *core_mng_p,
+ 		int *change_core_p,
+@@ -555,7 +547,6 @@ int sppwk_set_mng_data(struct startup_param *startup_param_p,
+ /**
+  * Get mange data address.
+  *
+- * @param startup_param_p Pointer to startup params.
+  * @param iface_p Pointer to g_iface_info.
+  * @param component_p Pointer to g_component_info.
+  * @param core_mng_p Pointer to g_core_mng_info.
+@@ -563,8 +554,7 @@ int sppwk_set_mng_data(struct startup_param *startup_param_p,
+  * @param change_component_p Pointer to g_change_component.
+  * @param backup_info_p Pointer to g_backup_info.
+  */
+-void sppwk_get_mng_data(struct startup_param **startup_param_p,
+-		struct iface_info **iface_p,
++void sppwk_get_mng_data(struct iface_info **iface_p,
+ 		struct sppwk_comp_info **component_p,
+ 		struct core_mng_info **core_mng_p,
+ 		int **change_core_p,
+diff --git a/src/vf/spp_vf.c b/src/vf/spp_vf.c
+index 25997db..44e39fc 100644
+--- a/src/vf/spp_vf.c
++++ b/src/vf/spp_vf.c
+@@ -21,9 +21,6 @@
+ /* Logical core ID for main process */
+ static unsigned int g_main_lcore_id = 0xffffffff;
+ 
+-/* Execution parameter of spp_vf */
+-static struct startup_param g_startup_param;
+-
+ /* Interface management information */
+ static struct iface_info g_iface_info;
+ 
+@@ -90,9 +87,6 @@ parse_app_args(int argc, char *argv[])
+ 	for (cnt = 0; cnt < argcopt; cnt++)
+ 		argvopt[cnt] = argv[cnt];
+ 
+-	/* Clear startup parameters */
+-	memset(&g_startup_param, 0x00, sizeof(g_startup_param));
+-
+ 	/* vhost_cli is disabled as default. */
+ 	set_vhost_cli_mode(0);
+ 
+@@ -240,7 +234,7 @@ main(int argc, char *argv[])
+ 		/* Get lcore id of main thread to set its status after */
+ 		g_main_lcore_id = rte_lcore_id();
+ 
+-		if (sppwk_set_mng_data(&g_startup_param, &g_iface_info,
++		if (sppwk_set_mng_data(&g_iface_info,
+ 					g_component_info, g_core_info,
+ 					g_change_core, g_change_component,
+ 					&g_backup_info,
+diff --git a/src/vf/vf_cmd_runner.c b/src/vf/vf_cmd_runner.c
+index 4be3188..d9adc48 100644
+--- a/src/vf/vf_cmd_runner.c
++++ b/src/vf/vf_cmd_runner.c
+@@ -131,8 +131,8 @@ update_comp(enum sppwk_action wk_action, const char *name,
+ 	int *change_core = NULL;
+ 	int *change_component = NULL;
+ 
+-	sppwk_get_mng_data(NULL, NULL, &comp_info_base, &core_info,
+-				&change_core, &change_component, NULL);
++	sppwk_get_mng_data(NULL, &comp_info_base, &core_info, &change_core,
++			&change_component, NULL);
+ 
+ 	switch (wk_action) {
+ 	case SPPWK_ACT_START:
+@@ -272,8 +272,8 @@ update_port(enum sppwk_action wk_action,
+ 				"(component = %s)\n", name);
+ 		return SPP_RET_NG;
+ 	}
+-	sppwk_get_mng_data(NULL, NULL,
+-			&comp_info_base, NULL, NULL, &change_component, NULL);
++	sppwk_get_mng_data(NULL, &comp_info_base, NULL, NULL,
++			&change_component, NULL);
+ 	comp_info = (comp_info_base + comp_lcore_id);
+ 	port_info = get_sppwk_port(port->iface_type, port->iface_no);
+ 	if (dir == SPPWK_PORT_DIR_RX) {
+@@ -457,8 +457,8 @@ spp_iterate_core_info(struct spp_iterate_core_params *params)
+ 		}
+ 
+ 		for (cnt = 0; cnt < core->num; cnt++) {
+-			sppwk_get_mng_data(NULL, NULL, &comp_info_base,
+-							NULL, NULL, NULL, NULL);
++			sppwk_get_mng_data(NULL, &comp_info_base, NULL, NULL,
++					NULL, NULL);
+ 			comp_info = (comp_info_base + core->id[cnt]);
+ 
+ 			if (comp_info->wk_type == SPPWK_TYPE_CLS) {
+-- 
+2.17.1
+
+

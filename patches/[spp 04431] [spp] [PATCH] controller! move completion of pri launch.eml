@@ -1,0 +1,312 @@
+Return-path: <fw-yama-hd@pomail01.silk.ntt-tx.co.jp>
+Received: from zssg-mailmd103.ddreams.local
+ (zssg-mailmd103.ddreams.local [10.160.123.98]) by zssg-mailms320.ddreams.local
+ (NTT DoCoMo Mail System) with ESMTP id <0PTL001YIN8JR160@NTTDoCoMo.co.jp> for
+ yamashita.hideyuki@ntt-tx.co.jp; Mon, 24 Jun 2019 19:45:55 +0900 (JST)
+Original-recipient: rfc822;yamashita.hideyuki@ntt-tx.co.jp
+Received: from smtp_saver-daemon.zssg-mailmd103.ddreams.local by
+ zssg-mailmd103.ddreams.local (dDREAMS) id <0PTL00Y1QN8JP800@dDREAMS> for
+ yamashita.hideyuki@ntt-tx.co.jp (ORCPT yamashita.hideyuki@ntt-tx.co.jp); Mon,
+ 24 Jun 2019 19:45:55 +0900 (JST)
+Received: from zssg-mailmf105.ddreams.local
+ (zssg-mailmf900.ddreams.local [10.160.172.84]) by zssg-mailmd103.ddreams.local
+ (dDREAMS) with ESMTP id <0PTL007VEN8JCYA0@dDREAMS> for
+ yamashita.hideyuki@ntt-tx.co.jp (ORCPT yamashita.hideyuki@ntt-tx.co.jp); Mon,
+ 24 Jun 2019 19:45:55 +0900 (JST)
+Received: from zssg-mailmf105.ddreams.local (unknown [127.0.0.1])
+	by zssg-mailmf105.ddreams.local (Postfix) with ESMTP id 43FF47E6036	for
+ <yamashita.hideyuki@ntt-tx.co.jp>; Mon, 24 Jun 2019 19:45:55 +0900 (JST)
+Received: from zssg-mailmf105.ddreams.local (unknown [127.0.0.1])
+	by IMSVA (Postfix) with ESMTP id 42D7C8E605A	for
+ <yamashita.hideyuki@ntt-tx.co.jp>; Mon, 24 Jun 2019 19:45:55 +0900 (JST)
+Received: from localhost (unknown [127.0.0.1])	by IMSVA (Postfix)
+ with SMTP id 37FA88E6058	for <yamashita.hideyuki@ntt-tx.co.jp>; Mon,
+ 24 Jun 2019 19:45:55 +0900 (JST)
+X-IMSS-HAND-OFF-DIRECTIVE: localhost:10026
+Received: from zssg-mailmf105.ddreams.local (unknown [127.0.0.1])
+	by IMSVA (Postfix) with ESMTP id 148708E6052	for
+ <yamashita.hideyuki@ntt-tx.co.jp>; Mon, 24 Jun 2019 19:45:54 +0900 (JST)
+Received: from pomail01.silk.ntt-tx.co.jp (unknown [10.160.183.139])
+	by zssg-mailmf105.ddreams.local (Postfix)
+ with ESMTPS	for <yamashita.hideyuki@ntt-tx.co.jp>; Mon,
+ 24 Jun 2019 19:45:54 +0900 (JST)
+Received: from pomail01.silk.ntt-tx.co.jp (localhost [127.0.0.1])
+	by pomail01.silk.ntt-tx.co.jp (unknown) with ESMTP id x5OAjrFs000311;	Mon,
+ 24 Jun 2019 19:45:53 +0900
+Received: (from yama-hd@localhost)	by pomail01.silk.ntt-tx.co.jp (unknown)
+ id x5OAjrAr000310;	Mon, 24 Jun 2019 19:45:53 +0900
+X-Authentication-warning: pomail01.silk.ntt-tx.co.jp: yama-hd set sender to
+ fw-yama-hd@pomail01.silk.ntt-tx.co.jp using -f
+Received: from imss04.silk.ntt-tx.co.jp
+ (imss04.silk.ntt-tx.co.jp [10.107.0.39])	by pomail01.silk.ntt-tx.co.jp
+ (unknown) with ESMTP id x5OAjrpW000307	for unknown; Mon,
+ 24 Jun 2019 19:45:53 +0900
+Received: from imss04.silk.ntt-tx.co.jp (localhost [127.0.0.1])
+ by imss04.silk.ntt-tx.co.jp (unknown) with ESMTP id x5OAjrCv007978 for
+ unknown; Mon, 24 Jun 2019 19:45:53 +0900
+Received: from ml01.silk.ntt-tx.co.jp (ml01.silk.ntt-tx.co.jp [10.107.0.230])
+ by imss04.silk.ntt-tx.co.jp (unknown) with ESMTP id x5OAjrdD007975; Mon,
+ 24 Jun 2019 19:45:53 +0900
+Received: from ml01.silk.ntt-tx.co.jp (localhost [127.0.0.1])
+	by ml01.silk.ntt-tx.co.jp (unknown) with ESMTP id x5OAjrE0008953;	Mon,
+ 24 Jun 2019 19:45:53 +0900
+Received: from imss02.silk.ntt-tx.co.jp
+ (imss02.silk.ntt-tx.co.jp [10.107.0.127])	by ml01.silk.ntt-tx.co.jp (unknown)
+ with ESMTP id x5OAjrJp008949	for unknown; Mon, 24 Jun 2019 19:45:53 +0900
+Received: from imss02.silk.ntt-tx.co.jp (localhost [127.0.0.1])
+ by imss02.silk.ntt-tx.co.jp (unknown) with ESMTP id x5OAjqWn023448 for
+ unknown; Mon, 24 Jun 2019 19:45:52 +0900
+Received: from mail01.ics.ntt-tx.co.jp (mail01.ics.ntt-tx.co.jp [10.254.2.67])
+ by imss02.silk.ntt-tx.co.jp (unknown) with ESMTP id x5OAjqNC023442 for
+ unknown; Mon, 24 Jun 2019 19:45:52 +0900
+Received: from dpdk.org (dpdk.org [92.243.14.124])	by mail01.ics.ntt-tx.co.jp
+ (unknown) with SMTP id x5OAjkat020909	for unknown; Mon,
+ 24 Jun 2019 19:45:52 +0900
+Received: from [92.243.14.124] (localhost [127.0.0.1])	by dpdk.org (Postfix)
+ with ESMTP id C92D81BF01;	Mon, 24 Jun 2019 12:45:45 +0200 (CEST)
+Received: from mail-pl1-f169.google.com
+ (mail-pl1-f169.google.com [209.85.214.169]) by dpdk.org (Postfix)
+ with ESMTP id 712082C2B for <spp@dpdk.org>; Mon,
+ 24 Jun 2019 12:45:44 +0200 (CEST)
+Received: by mail-pl1-f169.google.com with SMTP id t7so6645088plr.11 for
+ <spp@dpdk.org>; Mon, 24 Jun 2019 03:45:44 -0700 (PDT)
+Received: from localhost.localdomain ([192.47.164.146])
+ by smtp.gmail.com with ESMTPSA id e6sm12150092pfn.71.2019.06.24.03.45.42
+ (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128); Mon,
+ 24 Jun 2019 03:45:42 -0700 (PDT)
+Date: Mon, 24 Jun 2019 19:45:39 +0900
+From: yasufum.o@gmail.com
+Subject: [spp 04431] [spp] [PATCH] controller: move completion of pri launch
+Sender: spp <spp-bounces@dpdk.org>
+To: spp@dpdk.org, ferruh.yigit@intel.com, yasufum.o@gmail.com
+Message-id: <20190624104539.25196-1-yasufum.o@gmail.com>
+X-ML-Name: unknown
+X-Mail-Count: 04431
+X-MLServer: unknown
+X-ML-Info: mailing list service
+X-Mailer: git-send-email 2.17.1
+Authentication-results: mail01.ics.ntt-tx.co.jp; spf=pass
+ smtp.mailfrom=spp-bounces@dpdk.org
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
+ h=from:to:subject:date:message-id;
+ bh=rvakY1MHAlV8G5tTzF4SqrqzFDmqDDDZewTD8nGWMak=;
+ b=Zhq2ModVEQYoyjb5rWjJ+ET1LZtFmn/U4Z9p7h1nc6nH1WmZGnt+/Ekv9i8nN8Nq16
+ cTE3m5g6lK8xXPA0puPK330KCLqGwx7i0yKkJoRYlEtKyiGepPrM/VdS/gJ+75B3Od+G
+ ckQ7wAMosM7flFaWk3cznvB93k/ZsgtM09z3AkLyAMLymKEJQIje1d9PfohKv+bP7KWV
+ rNKZRzNQMNvewG8Mm368WVtr4fJHvgPNQgZ7eAV/MsmjihGb5JonDBGrUPARYzBbwvpV
+ 71fNlZliJeF3w0aG6u1ljnpgEIRtnDE44jd+tdGpgzCaWIzun6GyPFYjA7Ml1DKvrsmL vkLg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=1e100.net;
+ s=20161025; h=x-gm-message-state:from:to:subject:date:message-id;
+ bh=rvakY1MHAlV8G5tTzF4SqrqzFDmqDDDZewTD8nGWMak=;
+ b=L6lu/umtbXNFIsESuUr/azVoTKNnm7AwD11v81O6ltv/OPdxXCTwgVFhOzxwKFX8nE
+ ScfN1Y8I9lA7/1AnFLXlRI2ZHGS/ZQSnV0UsJvYLO3KXC7sdHn3rFZXRyr33gAzSOavg
+ fr2sNiXyTDjBHWZdY5625yFCZj2NOaGDD8XxqDM3B3UODAi42v5TQ2KVobY3FwmH6bPM
+ gJtlf+nLJshUzL/Z6SgF4Zk9YqdR3vcU3hKHis+B//I7FkbRuVRZ90BAGfXG/rFa2OcI
+ 1PHM6+5jvMdTk4rRVjwvfwo16LvHuCgDZmelpeBhgquoBaIC8LfoFI/O250gPtcTlHaI TnKQ==
+X-Gm-Message-State: APjAAAX4RhL5yvUwJyY0Kc6G2/zSRq11Lfh7eWNQMFr0Byz3+Q+h9j6J
+ uI6DIsM4oCq0nv9iAAMIIJHddHUu
+X-Google-Smtp-Source:
+ APXvYqw0rsM0HvMSqxZzTM2eWl+E/oFf6zjnjhgdCWF4e+f0D7pViyLOs4gt+z3Nc7xdvAXw7OPZcg==
+X-Received: by 2002:a17:902:28:: with SMTP id
+ 37mr78328606pla.188.1561373143375; Mon, 24 Jun 2019 03:45:43 -0700 (PDT)
+X-BeenThere: spp@dpdk.org
+X-Mailman-Version: 2.1.15
+List-Id: Soft Patch Panel <spp.dpdk.org>
+List-Unsubscribe: <https://mails.dpdk.org/options/spp>,
+ <mailto:spp-request@dpdk.org?subject=unsubscribe>
+List-Archive: <http://mails.dpdk.org/archives/spp/>
+List-Post: <mailto:spp@dpdk.org>
+List-Help: <mailto:spp-request@dpdk.org?subject=help>
+List-Subscribe: <https://mails.dpdk.org/listinfo/spp>,
+ <mailto:spp-request@dpdk.org?subject=subscribe>
+X-TM-AS-MML: No
+Precedence: bulk
+Lines: 184
+X-TM-AS-GCONF: 00
+X-MD-STAMP: ON
+
+From: Yasufumi Ogawa <yasufum.o@gmail.com>
+
+This update is to move completion of `pri; launch` command defined in
+complete() method to out side and add new method _setup_launch_opts()
+because it is getting long.
+
+Signed-off-by: Yasufumi Ogawa <yasufum.o@gmail.com>
+---
+ src/controller/commands/pri.py | 152 +++++++++++++++++----------------
+ 1 file changed, 78 insertions(+), 74 deletions(-)
+
+diff --git a/src/controller/commands/pri.py b/src/controller/commands/pri.py
+index 6089137..97f8780 100644
+--- a/src/controller/commands/pri.py
++++ b/src/controller/commands/pri.py
+@@ -155,6 +155,83 @@ class SppPrimary(object):
+                     rid=rports['id'], rx=rports['rx'], tx=rports['tx'],
+                     rx_drop=rports['rx_drop'], tx_drop=rports['tx_drop']))
+ 
++    def _setup_launch_opts(self, tokens, cli_config):
++        """Make options for launch cmd from config params."""
++
++        if 'max_secondary' in cli_config.keys():
++            max_secondary = int(cli_config['max_secondary']['val'])
++
++            if (tokens[2] in spp_common.SEC_TYPES) and \
++                    (int(tokens[3])-1 in range(max_secondary)):
++                ptype = tokens[2]
++                sid = tokens[3]
++
++                if ptype == 'nfv':
++                    opt_sid = '-n'
++                else:
++                    opt_sid = '--client-id'
++
++                # Need to replace port from `7777` of spp-ctl to `6666`
++                # of secondary process.
++                server_addr = common.current_server_addr()
++                server_addr = server_addr.replace('7777', '6666')
++
++                # Lcore ID of worker lcore starts from sec ID in
++                # default.
++                lcore_base = int(sid)
++
++                # Define rest of worker lcores from config dynamically.
++                if ptype == 'nfv':  # one worker lcore is enough
++                    if 'sec_nfv_nof_lcores' in cli_config.keys():
++                        tmpkey = 'sec_nfv_nof_lcores'
++                        nof_workers = int(
++                                cli_config[tmpkey]['val'])
++
++                elif ptype == 'vf':
++                    if 'sec_vf_nof_lcores' in cli_config.keys():
++                        nof_workers = int(
++                                cli_config['sec_vf_nof_lcores']['val'])
++
++                elif ptype == 'mirror':  # two worker cores
++                    if 'sec_mirror_nof_lcores' in cli_config.keys():
++                        tmpkey = 'sec_mirror_nof_lcores'
++                        nof_workers = int(
++                                cli_config[tmpkey]['val'])
++
++                elif ptype == 'pcap':  # at least two worker cores
++                    if 'sec_pcap_nof_lcores' in cli_config.keys():
++                        tmpkey = 'sec_pcap_nof_lcores'
++                        nof_workers = int(
++                                cli_config[tmpkey]['val'])
++
++                    if 'sec_pcap_port' in cli_config.keys():
++                        temp = '-c {}'.format(
++                                cli_config['sec_pcap_port']['val'])
++
++                        self.launch_template = '{} {}'.format(
++                            self.launch_template, temp)
++
++                last_core = lcore_base + nof_workers - 1
++
++                # Decide lcore option based on configured number of
++                # lcores.
++                if last_core == lcore_base:
++                    rest_core = '{}'.format(last_core)
++                else:
++                    rest_core = '{}-{}'.format(lcore_base, last_core)
++
++                temp = self._setup_launch_template(
++                        cli_config, self.launch_template)
++                candidates = [temp.format(
++                    wlcores=rest_core, opt_sid=opt_sid, sid=sid,
++                    sec_addr=server_addr)]
++        else:
++            logger.error(
++                    'Error: max_secondary is not defined in config')
++            candidates = []
++
++        return candidates
++
+     # TODO(yasufum) add checking for cli_config has keys
+     def complete(self, text, line, begidx, endidx, cli_config):
+         """Completion for primary process commands.
+@@ -191,80 +268,7 @@ class SppPrimary(object):
+                     candidates = []
+ 
+             elif len(tokens) == 5 and tokens[1] == 'launch':
+-                # TODO(yasufum) move this long completion to method.
+-
+-                if 'max_secondary' in cli_config.keys():
+-                    max_secondary = int(cli_config['max_secondary']['val'])
+-
+-                    if (tokens[2] in spp_common.SEC_TYPES) and \
+-                            (int(tokens[3])-1 in range(max_secondary)):
+-                        ptype = tokens[2]
+-                        sid = tokens[3]
+-
+-                        if ptype == 'nfv':
+-                            opt_sid = '-n'
+-                        else:
+-                            opt_sid = '--client-id'
+-
+-                        # Need to replace port from `7777` of spp-ctl to `6666`
+-                        # of secondary process.
+-                        server_addr = common.current_server_addr()
+-                        server_addr = server_addr.replace('7777', '6666')
+-
+-                        # Lcore ID of worker lcore starts from sec ID in
+-                        # default.
+-                        lcore_base = int(sid)
+-
+-                        # Define rest of worker lcores from config dynamically.
+-                        if ptype == 'nfv':  # one worker lcore is enough
+-                            if 'sec_nfv_nof_lcores' in cli_config.keys():
+-                                tmpkey = 'sec_nfv_nof_lcores'
+-                                nof_workers = int(
+-                                        cli_config[tmpkey]['val'])
+-
+-                        elif ptype == 'vf':
+-                            if 'sec_vf_nof_lcores' in cli_config.keys():
+-                                nof_workers = int(
+-                                        cli_config['sec_vf_nof_lcores']['val'])
+-
+-                        elif ptype == 'mirror':  # two worker cores
+-                            if 'sec_mirror_nof_lcores' in cli_config.keys():
+-                                tmpkey = 'sec_mirror_nof_lcores'
+-                                nof_workers = int(
+-                                        cli_config[tmpkey]['val'])
+-
+-                        elif ptype == 'pcap':  # at least two worker cores
+-                            if 'sec_pcap_nof_lcores' in cli_config.keys():
+-                                tmpkey = 'sec_pcap_nof_lcores'
+-                                nof_workers = int(
+-                                        cli_config[tmpkey]['val'])
+-
+-                            if 'sec_pcap_port' in cli_config.keys():
+-                                temp = '-c {}'.format(
+-                                        cli_config['sec_pcap_port']['val'])
+-
+-                                self.launch_template = '{} {}'.format(
+-                                    self.launch_template, temp)
+-
+-                        last_core = lcore_base + nof_workers - 1
+-
+-                        # Decide lcore option based on configured number of
+-                        # lcores.
+-                        if last_core == lcore_base:
+-                            rest_core = '{}'.format(last_core)
+-                        else:
+-                            rest_core = '{}-{}'.format(lcore_base, last_core)
+-
+-                        temp = self._setup_launch_template(
+-                                cli_config, self.launch_template)
+-                        candidates = [temp.format(
+-                            wlcores=rest_core, opt_sid=opt_sid, sid=sid,
+-                            sec_addr=server_addr)]
+-
+-                else:
+-                    logger.error(
+-                            'Error: max_secondary is not defined in config')
+-                    candidates = []
++                candidates = self._setup_launch_opts(tokens, cli_config)
+ 
+         if not text:
+             completions = candidates
+-- 
+2.17.1
+
+

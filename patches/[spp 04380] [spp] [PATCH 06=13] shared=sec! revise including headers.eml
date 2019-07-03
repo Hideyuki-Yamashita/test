@@ -1,0 +1,360 @@
+Return-path: <fw-yama-hd@pomail01.silk.ntt-tx.co.jp>
+Received: from zssg-mailmd102.ddreams.local
+ (zssg-mailmd102.ddreams.local [10.160.123.97]) by zssg-mailms320.ddreams.local
+ (NTT DoCoMo Mail System) with ESMTP id <0PTL00D7U65KSMD0@NTTDoCoMo.co.jp> for
+ yamashita.hideyuki@ntt-tx.co.jp; Mon, 24 Jun 2019 13:36:56 +0900 (JST)
+Original-recipient: rfc822;yamashita.hideyuki@ntt-tx.co.jp
+Received: from smtp_saver-daemon.zssg-mailmd102.ddreams.local by
+ zssg-mailmd102.ddreams.local (dDREAMS) id <0PTL00L4Q65KXE00@dDREAMS> for
+ yamashita.hideyuki@ntt-tx.co.jp (ORCPT yamashita.hideyuki@ntt-tx.co.jp); Mon,
+ 24 Jun 2019 13:36:56 +0900 (JST)
+Received: from zssg-mailmf101.ddreams.local
+ (zssg-mailmf900.ddreams.local [10.160.172.84]) by zssg-mailmd102.ddreams.local
+ (dDREAMS) with ESMTP id <0PTL00AR365K8L60@dDREAMS> for
+ yamashita.hideyuki@ntt-tx.co.jp (ORCPT yamashita.hideyuki@ntt-tx.co.jp); Mon,
+ 24 Jun 2019 13:36:56 +0900 (JST)
+Received: from zssg-mailmf101.ddreams.local (unknown [127.0.0.1])
+	by zssg-mailmf101.ddreams.local (Postfix) with ESMTP id 17A717E6036	for
+ <yamashita.hideyuki@ntt-tx.co.jp>; Mon, 24 Jun 2019 13:36:56 +0900 (JST)
+Received: from zssg-mailmf101.ddreams.local (unknown [127.0.0.1])
+	by IMSVA (Postfix) with ESMTP id 16B6B8E605C	for
+ <yamashita.hideyuki@ntt-tx.co.jp>; Mon, 24 Jun 2019 13:36:56 +0900 (JST)
+Received: from localhost (unknown [127.0.0.1])	by IMSVA (Postfix)
+ with SMTP id 14EB58E6056	for <yamashita.hideyuki@ntt-tx.co.jp>; Mon,
+ 24 Jun 2019 13:36:56 +0900 (JST)
+X-IMSS-HAND-OFF-DIRECTIVE: localhost:10026
+Received: from zssg-mailmf101.ddreams.local (unknown [127.0.0.1])
+	by IMSVA (Postfix) with ESMTP id 982BA8E6051	for
+ <yamashita.hideyuki@ntt-tx.co.jp>; Mon, 24 Jun 2019 13:36:54 +0900 (JST)
+Received: from pomail01.silk.ntt-tx.co.jp (unknown [10.160.183.139])
+	by zssg-mailmf101.ddreams.local (Postfix)
+ with ESMTPS	for <yamashita.hideyuki@ntt-tx.co.jp>; Mon,
+ 24 Jun 2019 13:36:54 +0900 (JST)
+Received: from pomail01.silk.ntt-tx.co.jp (localhost [127.0.0.1])
+	by pomail01.silk.ntt-tx.co.jp (unknown) with ESMTP id x5O4asPh008234;	Mon,
+ 24 Jun 2019 13:36:54 +0900
+Received: (from yama-hd@localhost)	by pomail01.silk.ntt-tx.co.jp (unknown)
+ id x5O4asb8008233;	Mon, 24 Jun 2019 13:36:54 +0900
+X-Authentication-warning: pomail01.silk.ntt-tx.co.jp: yama-hd set sender to
+ fw-yama-hd@pomail01.silk.ntt-tx.co.jp using -f
+Received: from imss04.silk.ntt-tx.co.jp
+ (imss04.silk.ntt-tx.co.jp [10.107.0.39])	by pomail01.silk.ntt-tx.co.jp
+ (unknown) with ESMTP id x5O4asRk008228	for unknown; Mon,
+ 24 Jun 2019 13:36:54 +0900
+Received: from imss04.silk.ntt-tx.co.jp (localhost [127.0.0.1])
+ by imss04.silk.ntt-tx.co.jp (unknown) with ESMTP id x5O4arRA016629 for
+ unknown; Mon, 24 Jun 2019 13:36:54 +0900
+Received: from ml01.silk.ntt-tx.co.jp (ml01.silk.ntt-tx.co.jp [10.107.0.230])
+ by imss04.silk.ntt-tx.co.jp (unknown) with ESMTP id x5O4ar19016626; Mon,
+ 24 Jun 2019 13:36:53 +0900
+Received: from ml01.silk.ntt-tx.co.jp (localhost [127.0.0.1])
+	by ml01.silk.ntt-tx.co.jp (unknown) with ESMTP id x5O4arBK030561;	Mon,
+ 24 Jun 2019 13:36:53 +0900
+Received: from imss02.silk.ntt-tx.co.jp
+ (imss02.silk.ntt-tx.co.jp [10.107.0.127])	by ml01.silk.ntt-tx.co.jp (unknown)
+ with ESMTP id x5O4ar9s030554	for unknown; Mon, 24 Jun 2019 13:36:53 +0900
+Received: from imss02.silk.ntt-tx.co.jp (localhost [127.0.0.1])
+ by imss02.silk.ntt-tx.co.jp (unknown) with ESMTP id x5O4arU5013513 for
+ unknown; Mon, 24 Jun 2019 13:36:53 +0900
+Received: from mail01.ics.ntt-tx.co.jp (mail01.ics.ntt-tx.co.jp [10.254.2.67])
+ by imss02.silk.ntt-tx.co.jp (unknown) with ESMTP id x5O4arCt013504 for
+ unknown; Mon, 24 Jun 2019 13:36:53 +0900
+Received: from dpdk.org (dpdk.org [92.243.14.124])	by mail01.ics.ntt-tx.co.jp
+ (unknown) with SMTP id x5O4akwN027589	for unknown; Mon,
+ 24 Jun 2019 13:36:52 +0900
+Received: from [92.243.14.124] (localhost [127.0.0.1])	by dpdk.org (Postfix)
+ with ESMTP id 662201BF5A;	Mon, 24 Jun 2019 06:36:46 +0200 (CEST)
+Received: from mail-pg1-f195.google.com
+ (mail-pg1-f195.google.com [209.85.215.195]) by dpdk.org (Postfix)
+ with ESMTP id 436851BF59 for <spp@dpdk.org>; Mon,
+ 24 Jun 2019 06:36:45 +0200 (CEST)
+Received: by mail-pg1-f195.google.com with SMTP id y72so6394826pgd.8 for
+ <spp@dpdk.org>; Sun, 23 Jun 2019 21:36:45 -0700 (PDT)
+Received: from localhost.localdomain ([192.47.164.146])
+ by smtp.gmail.com with ESMTPSA id c10sm9005178pjq.14.2019.06.23.21.36.42
+ (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128); Sun,
+ 23 Jun 2019 21:36:43 -0700 (PDT)
+Date: Mon, 24 Jun 2019 13:36:06 +0900
+From: yasufum.o@gmail.com
+Subject: [spp 04380] [spp] [PATCH 06/13] shared/sec: revise including headers
+Sender: spp <spp-bounces@dpdk.org>
+To: spp@dpdk.org, ferruh.yigit@intel.com, yasufum.o@gmail.com
+Message-id: <20190624043613.19271-7-yasufum.o@gmail.com>
+In-reply-to: <20190624043613.19271-1-yasufum.o@gmail.com>
+References: <20190624043613.19271-1-yasufum.o@gmail.com>
+X-ML-Name: unknown
+X-Mail-Count: 04380
+X-MLServer: unknown
+X-ML-Info: mailing list service
+X-Mailer: git-send-email 2.17.1
+Authentication-results: mail01.ics.ntt-tx.co.jp; spf=pass
+ smtp.mailfrom=spp-bounces@dpdk.org
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
+ h=from:to:subject:date:message-id:in-reply-to:references;
+ bh=T9S987eIloycK5Dwz7pDRq+QloELeGBY+zuJZlIQbZk=;
+ b=D+iNVM1aMEYfAnO11afjNuQsYgEOMdEINsv4KC33bcHBX+9Seq8mmlwQgUHeqRSHB8
+ +YyktW/ynaRB3f/aVBWtiJUrue8ZHteBwnlWLncqnMihIByAKmTisI13SUiJ6RQ4r1Fa
+ cRfywT8Z7JgtDxkGvDOa9DfNz8BItnI8Np2SQY34AXy8fdRbp2g8MLJkgWxbY9KbGrXJ
+ U6DZU1iuYAAp0XqvpDAnEXudknwAphoUAWG2sRVOsrDe6zN+X21h9iNBhKgG9kLMJ4WT
+ vgSIrCP2yFktpbKVUkCt1CBgE322KtIcwk0RM+cM9Bi56YDflLeY/yFAay+dFNco3Ee5 4mcA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=1e100.net;
+ s=20161025; h=x-gm-message-state:from:to:subject:date:message-id:in-reply-to
+ :references; bh=T9S987eIloycK5Dwz7pDRq+QloELeGBY+zuJZlIQbZk=;
+ b=Dvz1xdeb2QMydkVYpfkwOge+YbYHHaJ1DRcIEGKNTdRYnZTPDHjwyGSNSQEOSSnL20
+ 7qhdB4pM5VRRT8qOm7jCfrXLfjCWtWba4XI1A8gzm2aA9PACZv2zGeKvrT7iJClajypV
+ UzH3j14cxaH2maSMKy82E4nDFtKzB9vWU8Rrc2QlDSo/xeGMATcv2LA7KB33uL1wQOg+
+ PY2rk+7D4d1pccLjkXeuGbFBYZsoOxbrisnzyuldlDXTbSeHFrdXwFBaAwm1aKwDHgaL
+ 4hmxaus3A5s26TiIaeXhbWP94Ihst/aIv3jlUou+Lipe1URvOwvN2xYfnfpocEK5jBZp I5Qw==
+X-Gm-Message-State: APjAAAWGugpeZ2r5Aiq206plkmK258f0ROwu9vVluTO1BGJp3+dhb3bu
+ b2pyUl/7o0vayk2D6quenJ8Qu+t5
+X-Google-Smtp-Source:
+ APXvYqwDWtq39PRyolsJin70pZraMUoO1uERzdx7viAUADKI1leL95hgLDqm2A5V0DEFkK837Cahyg==
+X-Received: by 2002:a63:8f09:: with SMTP id n9mr30562459pgd.249.1561351004223;
+ Sun, 23 Jun 2019 21:36:44 -0700 (PDT)
+X-BeenThere: spp@dpdk.org
+X-Mailman-Version: 2.1.15
+List-Id: Soft Patch Panel <spp.dpdk.org>
+List-Unsubscribe: <https://mails.dpdk.org/options/spp>,
+ <mailto:spp-request@dpdk.org?subject=unsubscribe>
+List-Archive: <http://mails.dpdk.org/archives/spp/>
+List-Post: <mailto:spp@dpdk.org>
+List-Help: <mailto:spp-request@dpdk.org?subject=help>
+List-Subscribe: <https://mails.dpdk.org/listinfo/spp>,
+ <mailto:spp-request@dpdk.org?subject=subscribe>
+X-TM-AS-MML: No
+Precedence: bulk
+Lines: 230
+X-TM-AS-GCONF: 00
+X-MD-STAMP: ON
+
+From: Yasufumi Ogawa <yasufum.o@gmail.com>
+
+Some of including headers in SPP secondary are roughly described in
+header files, so dependency is not obvious in each of source code. This
+update is to refactor this situation by revising where including header
+files.
+
+Signed-off-by: Yasufumi Ogawa <yasufum.o@gmail.com>
+---
+ src/mirror/Makefile                           |  4 +++
+ src/mirror/spp_mirror.c                       |  3 ++-
+ src/mirror/spp_mirror.h                       | 26 -------------------
+ .../secondary/spp_worker_th/cmd_parser.c      |  1 +
+ .../secondary/spp_worker_th/cmd_utils.c       |  4 ++-
+ .../secondary/spp_worker_th/cmd_utils.h       |  4 +--
+ .../secondary/spp_worker_th/conn_spp_ctl.c    |  1 +
+ src/shared/secondary/spp_worker_th/spp_port.c |  1 +
+ src/vf/classifier_mac.c                       |  6 +++--
+ src/vf/spp_forward.c                          |  5 ++--
+ src/vf/spp_vf.c                               |  3 ++-
+ 11 files changed, 23 insertions(+), 35 deletions(-)
+ delete mode 100644 src/mirror/spp_mirror.h
+
+diff --git a/src/mirror/Makefile b/src/mirror/Makefile
+index b31e116..fc18d1e 100644
+--- a/src/mirror/Makefile
++++ b/src/mirror/Makefile
+@@ -32,6 +32,10 @@ CFLAGS += $(WERROR_FLAGS) -O3 -MMD
+ CFLAGS += -I$(SRCDIR)/../
+ CFLAGS += -DSPP_MIRROR_MODULE
+ 
++# There are two kinds of copy mode, deep copy and shallow copy. If this
++# `DSPP_MIRROR_SHALLOWCOPY` is commented out, spp_mirror runs as in
++# deep copy mode.
++# Default mode is shallow copy.
+ CFLAGS += -DSPP_MIRROR_SHALLOWCOPY
+ 
+ # Optional Settings
+diff --git a/src/mirror/spp_mirror.c b/src/mirror/spp_mirror.c
+index c2ec09d..c00cad6 100644
+--- a/src/mirror/spp_mirror.c
++++ b/src/mirror/spp_mirror.c
+@@ -9,9 +9,10 @@
+ #include <rte_common.h>
+ #include <rte_cycles.h>
+ 
+-#include "shared/secondary/spp_worker_th/mirror_deps.h"
+ #include "shared/common.h"
++#include "shared/secondary/return_codes.h"
+ #include "shared/secondary/utils.h"
++#include "shared/secondary/spp_worker_th/mirror_deps.h"
+ #include "shared/secondary/spp_worker_th/cmd_runner.h"
+ #include "shared/secondary/spp_worker_th/cmd_parser.h"
+ #include "shared/secondary/spp_worker_th/cmd_utils.h"
+diff --git a/src/mirror/spp_mirror.h b/src/mirror/spp_mirror.h
+deleted file mode 100644
+index 17fa522..0000000
+--- a/src/mirror/spp_mirror.h
++++ /dev/null
+@@ -1,26 +0,0 @@
+-/* SPDX-License-Identifier: BSD-3-Clause
+- * Copyright(c) 2018 Nippon Telegraph and Telephone Corporation
+- */
+-
+-#ifndef __SPP_MIRROR_H__
+-#define __SPP_MIRROR_H__
+-
+-#include "shared/secondary/spp_worker_th/spp_proc.h"
+-
+-/**
+- * @file
+- * SPP_MIRROR main
+- *
+- * Main function of spp_mirror.
+- * This provides the function for initializing and starting the threads.
+- *
+- * There is two kinds of reproduction classification. I choose it by a
+- * compilation switch.
+- *  -DeepCopy
+- *  -ShallowCopy
+- *
+- * Attention
+- *  I do not do the deletion of the VLAN tag, the addition.
+- */
+-
+-#endif /* __SPP_MIRROR_H__ */
+diff --git a/src/shared/secondary/spp_worker_th/cmd_parser.c b/src/shared/secondary/spp_worker_th/cmd_parser.c
+index 13e7013..200e41b 100644
+--- a/src/shared/secondary/spp_worker_th/cmd_parser.c
++++ b/src/shared/secondary/spp_worker_th/cmd_parser.c
+@@ -10,6 +10,7 @@
+ #include <rte_branch_prediction.h>
+ 
+ #include "cmd_parser.h"
++#include "shared/secondary/return_codes.h"
+ 
+ #define RTE_LOGTYPE_WK_CMD_PARSER RTE_LOGTYPE_USER1
+ 
+diff --git a/src/shared/secondary/spp_worker_th/cmd_utils.c b/src/shared/secondary/spp_worker_th/cmd_utils.c
+index 79dd2e7..098c8c1 100644
+--- a/src/shared/secondary/spp_worker_th/cmd_utils.c
++++ b/src/shared/secondary/spp_worker_th/cmd_utils.c
+@@ -2,8 +2,8 @@
+  * Copyright(c) 2018-2019 Nippon Telegraph and Telephone Corporation
+  */
+ 
+-#include <unistd.h>
+ #include <string.h>
++#include <unistd.h>
+ 
+ #include <rte_eth_ring.h>
+ #include <rte_eth_vhost.h>
+@@ -13,12 +13,14 @@
+ 
+ #include "vf_deps.h"
+ #include "mirror_deps.h"
++#include "shared/secondary/return_codes.h"
+ #include "cmd_utils.h"
+ #include "spp_port.h"
+ 
+ #include "shared/secondary/add_port.h"
+ #include "shared/secondary/utils.h"
+ 
++
+ /* TODO(yasufum) change log label after filename is revised. */
+ #define RTE_LOGTYPE_APP RTE_LOGTYPE_USER1
+ 
+diff --git a/src/shared/secondary/spp_worker_th/cmd_utils.h b/src/shared/secondary/spp_worker_th/cmd_utils.h
+index 3ee3142..f9d7015 100644
+--- a/src/shared/secondary/spp_worker_th/cmd_utils.h
++++ b/src/shared/secondary/spp_worker_th/cmd_utils.h
+@@ -5,14 +5,14 @@
+ #ifndef _SPPWK_CMD_UTILS_H_
+ #define _SPPWK_CMD_UTILS_H_
+ 
++#include <netinet/in.h>
++
+ /**
+  * @file cmd_utils.h
+  *
+  * Command utility functions for SPP worker thread.
+  */
+ 
+-#include <netinet/in.h>
+-#include "shared/secondary/return_codes.h"
+ #include "shared/common.h"
+ 
+ /**
+diff --git a/src/shared/secondary/spp_worker_th/conn_spp_ctl.c b/src/shared/secondary/spp_worker_th/conn_spp_ctl.c
+index 70e06f9..a67cd10 100644
+--- a/src/shared/secondary/spp_worker_th/conn_spp_ctl.c
++++ b/src/shared/secondary/spp_worker_th/conn_spp_ctl.c
+@@ -15,6 +15,7 @@
+ #include "shared/common.h"
+ #include "shared/secondary/string_buffer.h"
+ #include "conn_spp_ctl.h"
++#include "shared/secondary/return_codes.h"
+ 
+ #define RTE_LOGTYPE_SPP_COMMAND_PROC RTE_LOGTYPE_USER1
+ 
+diff --git a/src/shared/secondary/spp_worker_th/spp_port.c b/src/shared/secondary/spp_worker_th/spp_port.c
+index 7a8a088..3163274 100644
+--- a/src/shared/secondary/spp_worker_th/spp_port.c
++++ b/src/shared/secondary/spp_worker_th/spp_port.c
+@@ -9,6 +9,7 @@
+ #include <rte_net_crc.h>
+ 
+ #include "spp_port.h"
++#include "shared/secondary/return_codes.h"
+ #include "ringlatencystats.h"
+ 
+ /* Port ability management information */
+diff --git a/src/vf/classifier_mac.c b/src/vf/classifier_mac.c
+index 8d677a9..6d8e664 100644
+--- a/src/vf/classifier_mac.c
++++ b/src/vf/classifier_mac.c
+@@ -19,11 +19,13 @@
+ #include <rte_per_lcore.h>
+ #include <rte_eal.h>
+ #include <rte_launch.h>
++#include <netinet/in.h>
+ 
++#include "classifier_mac.h"
++#include "spp_vf.h"
++#include "shared/secondary/return_codes.h"
+ #include "shared/secondary/spp_worker_th/vf_deps.h"
+ #include "shared/secondary/spp_worker_th/spp_port.h"
+-#include "spp_vf.h"
+-#include "classifier_mac.h"
+ 
+ #define RTE_LOGTYPE_SPP_CLASSIFIER_MAC RTE_LOGTYPE_USER1
+ 
+diff --git a/src/vf/spp_forward.c b/src/vf/spp_forward.c
+index 3d40951..d381c92 100644
+--- a/src/vf/spp_forward.c
++++ b/src/vf/spp_forward.c
+@@ -4,10 +4,11 @@
+ 
+ #include <rte_cycles.h>
+ 
++#include "spp_forward.h"
++#include "spp_vf.h"
++#include "shared/secondary/return_codes.h"
+ #include "shared/secondary/spp_worker_th/vf_deps.h"
+ #include "shared/secondary/spp_worker_th/spp_port.h"
+-#include "spp_vf.h"
+-#include "spp_forward.h"
+ 
+ #define RTE_LOGTYPE_FORWARD RTE_LOGTYPE_USER1
+ 
+diff --git a/src/vf/spp_vf.c b/src/vf/spp_vf.c
+index 94da67a..e55e3f0 100644
+--- a/src/vf/spp_vf.c
++++ b/src/vf/spp_vf.c
+@@ -6,10 +6,11 @@
+ #include <arpa/inet.h>
+ #include <getopt.h>
+ 
+-#include "shared/secondary/spp_worker_th/cmd_utils.h"
+ #include "spp_vf.h"
++#include "shared/secondary/spp_worker_th/cmd_utils.h"
+ #include "classifier_mac.h"
+ #include "spp_forward.h"
++#include "shared/secondary/return_codes.h"
+ #include "shared/secondary/spp_worker_th/cmd_runner.h"
+ #include "shared/secondary/spp_worker_th/cmd_parser.h"
+ #include "shared/secondary/spp_worker_th/spp_port.h"
+-- 
+2.17.1
+
+

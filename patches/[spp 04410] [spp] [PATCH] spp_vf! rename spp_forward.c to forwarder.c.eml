@@ -1,0 +1,363 @@
+Return-path: <fw-yama-hd@pomail01.silk.ntt-tx.co.jp>
+Received: from zssg-mailmd103.ddreams.local
+ (zssg-mailmd103.ddreams.local [10.160.123.98]) by zssg-mailms320.ddreams.local
+ (NTT DoCoMo Mail System) with ESMTP id <0PTL00DACHFWNO90@NTTDoCoMo.co.jp> for
+ yamashita.hideyuki@ntt-tx.co.jp; Mon, 24 Jun 2019 17:40:44 +0900 (JST)
+Original-recipient: rfc822;yamashita.hideyuki@ntt-tx.co.jp
+Received: from smtp_saver-daemon.zssg-mailmd103.ddreams.local by
+ zssg-mailmd103.ddreams.local (dDREAMS) id <0PTL0161MHFWPT00@dDREAMS> for
+ yamashita.hideyuki@ntt-tx.co.jp (ORCPT yamashita.hideyuki@ntt-tx.co.jp); Mon,
+ 24 Jun 2019 17:40:44 +0900 (JST)
+Received: from zssg-mailmf106.ddreams.local
+ (zssg-mailmf900.ddreams.local [10.160.172.84]) by zssg-mailmd103.ddreams.local
+ (dDREAMS) with ESMTP id <0PTL00UN7HFWT460@dDREAMS> for
+ yamashita.hideyuki@ntt-tx.co.jp (ORCPT yamashita.hideyuki@ntt-tx.co.jp); Mon,
+ 24 Jun 2019 17:40:44 +0900 (JST)
+Received: from zssg-mailmf106.ddreams.local (unknown [127.0.0.1])
+	by zssg-mailmf106.ddreams.local (Postfix) with ESMTP id D637B7E6034	for
+ <yamashita.hideyuki@ntt-tx.co.jp>; Mon, 24 Jun 2019 17:40:44 +0900 (JST)
+Received: from zssg-mailmf106.ddreams.local (unknown [127.0.0.1])
+	by IMSVA (Postfix) with ESMTP id D47888E605A	for
+ <yamashita.hideyuki@ntt-tx.co.jp>; Mon, 24 Jun 2019 17:40:44 +0900 (JST)
+Received: from localhost (unknown [127.0.0.1])	by IMSVA (Postfix)
+ with SMTP id C94168E6042	for <yamashita.hideyuki@ntt-tx.co.jp>; Mon,
+ 24 Jun 2019 17:40:44 +0900 (JST)
+X-IMSS-HAND-OFF-DIRECTIVE: localhost:10026
+Received: from zssg-mailmf106.ddreams.local (unknown [127.0.0.1])
+	by IMSVA (Postfix) with ESMTP id 001CC8E6057	for
+ <yamashita.hideyuki@ntt-tx.co.jp>; Mon, 24 Jun 2019 17:40:43 +0900 (JST)
+Received: from pomail01.silk.ntt-tx.co.jp (unknown [10.160.183.139])
+	by zssg-mailmf106.ddreams.local (Postfix)
+ with ESMTPS	for <yamashita.hideyuki@ntt-tx.co.jp>; Mon,
+ 24 Jun 2019 17:40:43 +0900 (JST)
+Received: from pomail01.silk.ntt-tx.co.jp (localhost [127.0.0.1])
+	by pomail01.silk.ntt-tx.co.jp (unknown) with ESMTP id x5O8ehA9008061;	Mon,
+ 24 Jun 2019 17:40:43 +0900
+Received: (from yama-hd@localhost)	by pomail01.silk.ntt-tx.co.jp (unknown)
+ id x5O8ehlc008060;	Mon, 24 Jun 2019 17:40:43 +0900
+X-Authentication-warning: pomail01.silk.ntt-tx.co.jp: yama-hd set sender to
+ fw-yama-hd@pomail01.silk.ntt-tx.co.jp using -f
+Received: from imss04.silk.ntt-tx.co.jp
+ (imss04.silk.ntt-tx.co.jp [10.107.0.39])	by pomail01.silk.ntt-tx.co.jp
+ (unknown) with ESMTP id x5O8ehWX008057	for unknown; Mon,
+ 24 Jun 2019 17:40:43 +0900
+Received: from imss04.silk.ntt-tx.co.jp (localhost [127.0.0.1])
+ by imss04.silk.ntt-tx.co.jp (unknown) with ESMTP id x5O8ehDs032474 for
+ unknown; Mon, 24 Jun 2019 17:40:43 +0900
+Received: from ml01.silk.ntt-tx.co.jp (ml01.silk.ntt-tx.co.jp [10.107.0.230])
+ by imss04.silk.ntt-tx.co.jp (unknown) with ESMTP id x5O8ehX1032470; Mon,
+ 24 Jun 2019 17:40:43 +0900
+Received: from ml01.silk.ntt-tx.co.jp (localhost [127.0.0.1])
+	by ml01.silk.ntt-tx.co.jp (unknown) with ESMTP id x5O8ehTu028594;	Mon,
+ 24 Jun 2019 17:40:43 +0900
+Received: from imss02.silk.ntt-tx.co.jp
+ (imss02.silk.ntt-tx.co.jp [10.107.0.127])	by ml01.silk.ntt-tx.co.jp (unknown)
+ with ESMTP id x5O8ehIc028590	for unknown; Mon, 24 Jun 2019 17:40:43 +0900
+Received: from imss02.silk.ntt-tx.co.jp (localhost [127.0.0.1])
+ by imss02.silk.ntt-tx.co.jp (unknown) with ESMTP id x5O8egM3025007 for
+ unknown; Mon, 24 Jun 2019 17:40:42 +0900
+Received: from mail01.ics.ntt-tx.co.jp (mail01.ics.ntt-tx.co.jp [10.254.2.67])
+ by imss02.silk.ntt-tx.co.jp (unknown) with ESMTP id x5O8egYH025001 for
+ unknown; Mon, 24 Jun 2019 17:40:42 +0900
+Received: from dpdk.org (dpdk.org [92.243.14.124])	by mail01.ics.ntt-tx.co.jp
+ (unknown) with SMTP id x5O8eZ5b005185	for unknown; Mon,
+ 24 Jun 2019 17:40:41 +0900
+Received: from [92.243.14.124] (localhost [127.0.0.1])	by dpdk.org (Postfix)
+ with ESMTP id 6F6C31BF2F;	Mon, 24 Jun 2019 10:40:35 +0200 (CEST)
+Received: from mail-pl1-f193.google.com
+ (mail-pl1-f193.google.com [209.85.214.193]) by dpdk.org (Postfix)
+ with ESMTP id 982841BE35 for <spp@dpdk.org>; Mon,
+ 24 Jun 2019 10:40:34 +0200 (CEST)
+Received: by mail-pl1-f193.google.com with SMTP id t7so6468428plr.11 for
+ <spp@dpdk.org>; Mon, 24 Jun 2019 01:40:34 -0700 (PDT)
+Received: from localhost.localdomain ([192.47.164.146])
+ by smtp.gmail.com with ESMTPSA id b11sm7018338pfd.18.2019.06.24.01.40.32
+ (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128); Mon,
+ 24 Jun 2019 01:40:33 -0700 (PDT)
+Date: Mon, 24 Jun 2019 17:40:24 +0900
+From: yasufum.o@gmail.com
+Subject: [spp 04410] [spp] [PATCH] spp_vf: rename spp_forward.c to forwarder.c
+Sender: spp <spp-bounces@dpdk.org>
+To: spp@dpdk.org, ferruh.yigit@intel.com, yasufum.o@gmail.com
+Message-id: <20190624084024.23664-1-yasufum.o@gmail.com>
+X-ML-Name: unknown
+X-Mail-Count: 04410
+X-MLServer: unknown
+X-ML-Info: mailing list service
+X-Mailer: git-send-email 2.17.1
+Authentication-results: mail01.ics.ntt-tx.co.jp; spf=pass
+ smtp.mailfrom=spp-bounces@dpdk.org
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
+ h=from:to:subject:date:message-id;
+ bh=UVUyGFD1LxpEqLHLUTlbaYFXm9N7h6VOYIRyBGzekzE=;
+ b=ERLfji25ZiC2zJ3qxfw6um1lOqnAX4NstQfY/GpCfUlNOPW12yogrOsvCSpjvkt/E5
+ BjRnPbGz50YJI2b0aTlilUpkZwiYIS5YewdzJCH4FCaUPBKGYY8KOC9jb2lNFXd+XTCD
+ 7NiR+Szpd6sKCi82faPEuAm7UYny3whlhJvDdZO/rKnAt8pafzg9Uq2xwsoD/nzojdWb
+ Qmp4rVvqiCs73nKtXDz+ANP/O4M0M7LSLt8vOwHQUzrxbnwCZFyGq51NPCn1iuOlKH0M
+ 79FPm7BR6GFGGg6O3WD/3kxPtdVAax5Tjcl98iYFLBUVtu4hdNHVaVRYP/efhGzJhOx9 LwEw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=1e100.net;
+ s=20161025; h=x-gm-message-state:from:to:subject:date:message-id;
+ bh=UVUyGFD1LxpEqLHLUTlbaYFXm9N7h6VOYIRyBGzekzE=;
+ b=pjTldcIl2q6Go9aCcZZ9ET8RWZ9V0nF5DP3HZccO+W6KS7wNgRB6Q1XEWdVs6og8Mj
+ 1av4xwO6vnzsASwrWT5mkxsTIy4vILMV87yWwKCgxUI7mQQajQRa0dSIc3H6U5sS7L1X
+ yLnVO/zw5bNB5AteY7YKdNkNMRogENSQgxolxiuAORyKrbsSSJnXlCx1vBx00wfsk2l9
+ Fv6gG+F4aFruey+NUYO5z0SFTOLeU5DNz1OU0F2rDYVjqOUaFfXpmAjqwAVBIcfg+2wm
+ OxS3Ri2Rm0cEa/TQ9JyLXUyn0T2afLNjOpIxUll7s1ZYmxeXSR+ZrJ1cnzu39XZIf1M7 Bk9A==
+X-Gm-Message-State: APjAAAXVu99DjgkyVL/zGzI81FAQjuMUNJei9CSR4S5rDk9cyK5w1v/v
+ mBvGEUsFqhI2xJmJaLu8DFyRlT22
+X-Google-Smtp-Source:
+ APXvYqxtGrgFDye4cXUkFQp8a2wAnhnuIbFJlmACLhfFFasfUuu1NuQIH6KLE1YFqMlbtFL57czwAQ==
+X-Received: by 2002:a17:902:4643:: with SMTP id
+ o61mr93422858pld.101.1561365633708; Mon, 24 Jun 2019 01:40:33 -0700 (PDT)
+X-BeenThere: spp@dpdk.org
+X-Mailman-Version: 2.1.15
+List-Id: Soft Patch Panel <spp.dpdk.org>
+List-Unsubscribe: <https://mails.dpdk.org/options/spp>,
+ <mailto:spp-request@dpdk.org?subject=unsubscribe>
+List-Archive: <http://mails.dpdk.org/archives/spp/>
+List-Post: <mailto:spp@dpdk.org>
+List-Help: <mailto:spp-request@dpdk.org?subject=help>
+List-Subscribe: <https://mails.dpdk.org/listinfo/spp>,
+ <mailto:spp-request@dpdk.org?subject=subscribe>
+X-TM-AS-MML: No
+Precedence: bulk
+Lines: 235
+X-TM-AS-GCONF: 00
+X-MD-STAMP: ON
+
+From: Yasufumi Ogawa <yasufum.o@gmail.com>
+
+This update is to rename files and functions defined in the files for
+refactoring.
+
+* `spp_forward.c` and `spp_forward.h` to `forwarder.c` and
+  `forwarder.h`.
+
+* spp_forward() to forward_packets().
+
+* spp_forward_init() to init_forwarder().
+
+Signed-off-by: Yasufumi Ogawa <yasufum.o@gmail.com>
+---
+ src/vf/Makefile                       |  2 +-
+ src/vf/{spp_forward.c => forwarder.c} | 35 +++++++++++++--------------
+ src/vf/{spp_forward.h => forwarder.h} | 17 +++++++------
+ src/vf/spp_vf.c                       |  6 ++---
+ src/vf/vf_cmd_runner.c                |  2 +-
+ 5 files changed, 31 insertions(+), 31 deletions(-)
+ rename src/vf/{spp_forward.c => forwarder.c} (88%)
+ rename src/vf/{spp_forward.h => forwarder.h} (78%)
+
+diff --git a/src/vf/Makefile b/src/vf/Makefile
+index 83d1f14..1d6cb7c 100644
+--- a/src/vf/Makefile
++++ b/src/vf/Makefile
+@@ -15,7 +15,7 @@ SPP_SEC_DIR = ../shared/secondary
+ SPP_WKT_DIR = ../shared/secondary/spp_worker_th
+ 
+ # all source are stored in SRCS-y
+-SRCS-y := spp_vf.c classifier_mac.c spp_forward.c
++SRCS-y := spp_vf.c classifier_mac.c forwarder.c
+ SRCS-y += $(SPP_SEC_DIR)/string_buffer.c
+ SRCS-y += $(SPP_SEC_DIR)/json_helper.c
+ SRCS-y += $(SPP_SEC_DIR)/utils.c $(SPP_SEC_DIR)/add_port.c
+diff --git a/src/vf/spp_forward.c b/src/vf/forwarder.c
+similarity index 88%
+rename from src/vf/spp_forward.c
+rename to src/vf/forwarder.c
+index 07031f7..4d99bfb 100644
+--- a/src/vf/spp_forward.c
++++ b/src/vf/forwarder.c
+@@ -4,7 +4,7 @@
+ 
+ #include <rte_cycles.h>
+ 
+-#include "spp_forward.h"
++#include "forwarder.h"
+ #include "spp_vf.h"
+ #include "shared/secondary/return_codes.h"
+ #include "shared/secondary/spp_worker_th/vf_deps.h"
+@@ -20,12 +20,11 @@ struct forward_rxtx {
+ 
+ /* Information on the path used for forward. */
+ struct forward_path {
+-	char name[STR_LEN_NAME];    /* component name */
++	char name[STR_LEN_NAME];  /* Component name */
+ 	volatile enum sppwk_worker_type wk_type;
+-	int num_rx;                     /* number of receive ports */
+-	int num_tx;                     /* number of trans ports   */
+-	struct forward_rxtx ports[RTE_MAX_ETHPORTS];
+-					/* port used for transfer  */
++	int nof_rx;  /* Number of RX ports */
++	int nof_tx;  /* Number of TX ports */
++	struct forward_rxtx ports[RTE_MAX_ETHPORTS];  /* Set of RX and TX */
+ };
+ 
+ /* Information for forward. */
+@@ -38,9 +37,9 @@ struct forward_info {
+ 
+ struct forward_info g_forward_info[RTE_MAX_LCORE];
+ 
+-/* Clear info */
++/* Clear g_forward_info, ref and update indices. */
+ void
+-spp_forward_init(void)
++init_forwarder(void)
+ {
+ 	int cnt = 0;
+ 	memset(&g_forward_info, 0x00, sizeof(g_forward_info));
+@@ -77,13 +76,13 @@ get_forwarder_status(unsigned int lcore_id, int id,
+ 		component_type = SPPWK_TYPE_FWD_STR;
+ 
+ 	memset(rx_ports, 0x00, sizeof(rx_ports));
+-	for (cnt = 0; cnt < fwd_path->num_rx; cnt++) {
++	for (cnt = 0; cnt < fwd_path->nof_rx; cnt++) {
+ 		rx_ports[cnt].iface_type = fwd_path->ports[cnt].rx.iface_type;
+ 		rx_ports[cnt].iface_no = fwd_path->ports[cnt].rx.iface_no;
+ 	}
+ 
+ 	memset(tx_ports, 0x00, sizeof(tx_ports));
+-	for (cnt = 0; cnt < fwd_path->num_tx; cnt++) {
++	for (cnt = 0; cnt < fwd_path->nof_tx; cnt++) {
+ 		tx_ports[cnt].iface_type = fwd_path->ports[cnt].tx.iface_type;
+ 		tx_ports[cnt].iface_no = fwd_path->ports[cnt].tx.iface_no;
+ 	}
+@@ -92,7 +91,7 @@ get_forwarder_status(unsigned int lcore_id, int id,
+ 	ret = (*params->element_proc)(
+ 		params, lcore_id,
+ 		fwd_path->name, component_type,
+-		fwd_path->num_rx, rx_ports, fwd_path->num_tx, tx_ports);
++		fwd_path->nof_rx, rx_ports, fwd_path->nof_tx, tx_ports);
+ 	if (unlikely(ret != SPP_RET_OK))
+ 		return SPP_RET_NG;
+ 
+@@ -140,8 +139,8 @@ update_forwarder(struct sppwk_comp_info *comp_info)
+ 
+ 	memcpy(&fwd_path->name, comp_info->name, STR_LEN_NAME);
+ 	fwd_path->wk_type = comp_info->wk_type;
+-	fwd_path->num_rx = comp_info->nof_rx;
+-	fwd_path->num_tx = comp_info->nof_tx;
++	fwd_path->nof_rx = comp_info->nof_rx;
++	fwd_path->nof_tx = comp_info->nof_tx;
+ 	for (cnt = 0; cnt < nof_rx; cnt++)
+ 		memcpy(&fwd_path->ports[cnt].rx, comp_info->rx_ports[cnt],
+ 				sizeof(struct sppwk_port_info));
+@@ -177,13 +176,13 @@ change_forward_index(int id)
+ 	}
+ }
+ /**
+- * Forwarding packets as forwarder or merger
++ * Forward packets as forwarder or merger.
+  *
+  * Behavior of forwarding is defined as core_info->type which is given
+  * as an argument of void and typecasted to spp_config_info.
+  */
+ int
+-spp_forward(int id)
++forward_packets(int id)
+ {
+ 	int cnt, buf;
+ 	int nb_rx = 0;
+@@ -200,15 +199,15 @@ spp_forward(int id)
+ 	/* Practice condition check */
+ 	if (path->wk_type == SPPWK_TYPE_MRG) {
+ 		/* merger */
+-		if (!(path->num_tx == 1 && path->num_rx >= 1))
++		if (!(path->nof_tx == 1 && path->nof_rx >= 1))
+ 			return SPP_RET_OK;
+ 	} else {
+ 		/* forwarder */
+-		if (!(path->num_tx == 1 && path->num_rx == 1))
++		if (!(path->nof_tx == 1 && path->nof_rx == 1))
+ 			return SPP_RET_OK;
+ 	}
+ 
+-	for (cnt = 0; cnt < path->num_rx; cnt++) {
++	for (cnt = 0; cnt < path->nof_rx; cnt++) {
+ 		rx = &path->ports[cnt].rx;
+ 		tx = &path->ports[cnt].tx;
+ 
+diff --git a/src/vf/spp_forward.h b/src/vf/forwarder.h
+similarity index 78%
+rename from src/vf/spp_forward.h
+rename to src/vf/forwarder.h
+index 37b1e3c..54a204b 100644
+--- a/src/vf/spp_forward.h
++++ b/src/vf/forwarder.h
+@@ -23,19 +23,20 @@
+  * is specified by port command.
+  */
+ 
+-/** Clear info */
+-void spp_forward_init(void);
++/* Clear g_forward_info, ref and update indices. */
++void init_forwarder(void);
+ 
+ /**
+- * Merge/Forward
++ * Forward packets as forwarder or merger.
+  *
+- * @param id
+- *  The unique component ID.
++ * Behavior of forwarding is defined as core_info->type which is given
++ * as an argument of void and typecasted to spp_config_info.
+  *
+- * @retval SPP_RET_OK succeeded.
+- * @retval SPP_RET_NG failed.
++ * @param[in] id Unique component ID.
++ * @retval SPP_RET_OK If succeeded.
++ * @retval SPP_RET_NG If failed.
+  */
+-int spp_forward(int id);
++int forward_packets(int id);
+ 
+ /**
+  * Get forwarder status.
+diff --git a/src/vf/spp_vf.c b/src/vf/spp_vf.c
+index e55e3f0..7ba894e 100644
+--- a/src/vf/spp_vf.c
++++ b/src/vf/spp_vf.c
+@@ -9,7 +9,7 @@
+ #include "spp_vf.h"
+ #include "shared/secondary/spp_worker_th/cmd_utils.h"
+ #include "classifier_mac.h"
+-#include "spp_forward.h"
++#include "forwarder.h"
+ #include "shared/secondary/return_codes.h"
+ #include "shared/secondary/spp_worker_th/cmd_runner.h"
+ #include "shared/secondary/spp_worker_th/cmd_parser.h"
+@@ -221,7 +221,7 @@ slave_main(void *arg __attribute__ ((unused)))
+ 					break;
+ 			} else {
+ 				/* Component type for forward or merge. */
+-				ret = spp_forward(core->id[cnt]);
++				ret = forward_packets(core->id[cnt]);
+ 				if (unlikely(ret != 0))
+ 					break;
+ 			}
+@@ -296,7 +296,7 @@ main(int argc, char *argv[])
+ 		if (unlikely(ret_classifier_mac_init != SPP_RET_OK))
+ 			break;
+ 
+-		spp_forward_init();
++		init_forwarder();
+ 		spp_port_ability_init();
+ 
+ 		/* Setup connection for accepting commands from controller */
+diff --git a/src/vf/vf_cmd_runner.c b/src/vf/vf_cmd_runner.c
+index 46d54b4..51f50a7 100644
+--- a/src/vf/vf_cmd_runner.c
++++ b/src/vf/vf_cmd_runner.c
+@@ -3,7 +3,7 @@
+  */
+ 
+ #include "classifier_mac.h"
+-#include "spp_forward.h"
++#include "forwarder.h"
+ #include "shared/secondary/return_codes.h"
+ #include "shared/secondary/json_helper.h"
+ #include "shared/secondary/spp_worker_th/cmd_parser.h"
+-- 
+2.17.1
+
+

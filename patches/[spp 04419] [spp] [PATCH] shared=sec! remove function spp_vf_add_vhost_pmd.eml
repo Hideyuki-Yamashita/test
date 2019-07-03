@@ -1,0 +1,473 @@
+Return-path: <fw-yama-hd@pomail01.silk.ntt-tx.co.jp>
+Received: from zssg-mailmd105.ddreams.local
+ (zssg-mailmd105.ddreams.local [10.160.123.100])
+ by zssg-mailms320.ddreams.local (NTT DoCoMo Mail System)
+ with ESMTP id <0PTL0017RN1HR160@NTTDoCoMo.co.jp> for
+ yamashita.hideyuki@ntt-tx.co.jp; Mon, 24 Jun 2019 19:41:41 +0900 (JST)
+Original-recipient: rfc822;yamashita.hideyuki@ntt-tx.co.jp
+Received: from smtp_saver-daemon.zssg-mailmd105.ddreams.local by
+ zssg-mailmd105.ddreams.local (dDREAMS) id <0PTL00B0EN1HP100@dDREAMS> for
+ yamashita.hideyuki@ntt-tx.co.jp (ORCPT yamashita.hideyuki@ntt-tx.co.jp); Mon,
+ 24 Jun 2019 19:41:41 +0900 (JST)
+Received: from zssg-mailmf106.ddreams.local
+ (zssg-mailmf900.ddreams.local [10.160.172.84]) by zssg-mailmd105.ddreams.local
+ (dDREAMS) with ESMTP id <0PTL01C3BN1H6T50@dDREAMS> for
+ yamashita.hideyuki@ntt-tx.co.jp (ORCPT yamashita.hideyuki@ntt-tx.co.jp); Mon,
+ 24 Jun 2019 19:41:41 +0900 (JST)
+Received: from zssg-mailmf106.ddreams.local (unknown [127.0.0.1])
+	by zssg-mailmf106.ddreams.local (Postfix) with ESMTP id B09867E6032	for
+ <yamashita.hideyuki@ntt-tx.co.jp>; Mon, 24 Jun 2019 19:41:41 +0900 (JST)
+Received: from zssg-mailmf106.ddreams.local (unknown [127.0.0.1])
+	by IMSVA (Postfix) with ESMTP id AF5BB8E6057	for
+ <yamashita.hideyuki@ntt-tx.co.jp>; Mon, 24 Jun 2019 19:41:41 +0900 (JST)
+Received: from localhost (unknown [127.0.0.1])	by IMSVA (Postfix)
+ with SMTP id AE3448E6042	for <yamashita.hideyuki@ntt-tx.co.jp>; Mon,
+ 24 Jun 2019 19:41:41 +0900 (JST)
+X-IMSS-HAND-OFF-DIRECTIVE: localhost:10026
+Received: from zssg-mailmf106.ddreams.local (unknown [127.0.0.1])
+	by IMSVA (Postfix) with ESMTP id C56438E6042	for
+ <yamashita.hideyuki@ntt-tx.co.jp>; Mon, 24 Jun 2019 19:41:40 +0900 (JST)
+Received: from pomail01.silk.ntt-tx.co.jp (unknown [10.160.183.139])
+	by zssg-mailmf106.ddreams.local (Postfix)
+ with ESMTPS	for <yamashita.hideyuki@ntt-tx.co.jp>; Mon,
+ 24 Jun 2019 19:41:40 +0900 (JST)
+Received: from pomail01.silk.ntt-tx.co.jp (localhost [127.0.0.1])
+	by pomail01.silk.ntt-tx.co.jp (unknown) with ESMTP id x5OAfeOA032113;	Mon,
+ 24 Jun 2019 19:41:40 +0900
+Received: (from yama-hd@localhost)	by pomail01.silk.ntt-tx.co.jp (unknown)
+ id x5OAfeiN032112;	Mon, 24 Jun 2019 19:41:40 +0900
+X-Authentication-warning: pomail01.silk.ntt-tx.co.jp: yama-hd set sender to
+ fw-yama-hd@pomail01.silk.ntt-tx.co.jp using -f
+Received: from imss04.silk.ntt-tx.co.jp
+ (imss04.silk.ntt-tx.co.jp [10.107.0.39])	by pomail01.silk.ntt-tx.co.jp
+ (unknown) with ESMTP id x5OAfeXI032109	for unknown; Mon,
+ 24 Jun 2019 19:41:40 +0900
+Received: from imss04.silk.ntt-tx.co.jp (localhost [127.0.0.1])
+ by imss04.silk.ntt-tx.co.jp (unknown) with ESMTP id x5OAfeKC006921 for
+ unknown; Mon, 24 Jun 2019 19:41:40 +0900
+Received: from ml01.silk.ntt-tx.co.jp (ml01.silk.ntt-tx.co.jp [10.107.0.230])
+ by imss04.silk.ntt-tx.co.jp (unknown) with ESMTP id x5OAferQ006918; Mon,
+ 24 Jun 2019 19:41:40 +0900
+Received: from ml01.silk.ntt-tx.co.jp (localhost [127.0.0.1])
+	by ml01.silk.ntt-tx.co.jp (unknown) with ESMTP id x5OAfd3j008557;	Mon,
+ 24 Jun 2019 19:41:39 +0900
+Received: from imss02.silk.ntt-tx.co.jp
+ (imss02.silk.ntt-tx.co.jp [10.107.0.127])	by ml01.silk.ntt-tx.co.jp (unknown)
+ with ESMTP id x5OAfdcd008553	for unknown; Mon, 24 Jun 2019 19:41:39 +0900
+Received: from imss02.silk.ntt-tx.co.jp (localhost [127.0.0.1])
+ by imss02.silk.ntt-tx.co.jp (unknown) with ESMTP id x5OAfdKd022430 for
+ unknown; Mon, 24 Jun 2019 19:41:39 +0900
+Received: from mail01.ics.ntt-tx.co.jp (mail01.ics.ntt-tx.co.jp [10.254.2.67])
+ by imss02.silk.ntt-tx.co.jp (unknown) with ESMTP id x5OAfdFY022424 for
+ unknown; Mon, 24 Jun 2019 19:41:39 +0900
+Received: from dpdk.org (dpdk.org [92.243.14.124])	by mail01.ics.ntt-tx.co.jp
+ (unknown) with SMTP id x5OAfWe8020395	for unknown; Mon,
+ 24 Jun 2019 19:41:38 +0900
+Received: from [92.243.14.124] (localhost [127.0.0.1])	by dpdk.org (Postfix)
+ with ESMTP id 8E4CE1BF00;	Mon, 24 Jun 2019 12:41:32 +0200 (CEST)
+Received: from mail-pg1-f195.google.com
+ (mail-pg1-f195.google.com [209.85.215.195]) by dpdk.org (Postfix)
+ with ESMTP id 3BA181BED0 for <spp@dpdk.org>; Mon,
+ 24 Jun 2019 12:41:31 +0200 (CEST)
+Received: by mail-pg1-f195.google.com with SMTP id w10so6883494pgj.7 for
+ <spp@dpdk.org>; Mon, 24 Jun 2019 03:41:31 -0700 (PDT)
+Received: from localhost.localdomain ([192.47.164.146])
+ by smtp.gmail.com with ESMTPSA id p65sm12236232pfp.58.2019.06.24.03.41.28
+ (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128); Mon,
+ 24 Jun 2019 03:41:29 -0700 (PDT)
+Date: Mon, 24 Jun 2019 19:41:26 +0900
+From: yasufum.o@gmail.com
+Subject: [spp 04419] [spp] [PATCH] shared/sec: remove function
+ spp_vf_add_vhost_pmd
+Sender: spp <spp-bounces@dpdk.org>
+To: spp@dpdk.org, ferruh.yigit@intel.com, yasufum.o@gmail.com
+Message-id: <20190624104126.24763-1-yasufum.o@gmail.com>
+X-ML-Name: unknown
+X-Mail-Count: 04419
+X-MLServer: unknown
+X-ML-Info: mailing list service
+X-Mailer: git-send-email 2.17.1
+Authentication-results: mail01.ics.ntt-tx.co.jp; spf=pass
+ smtp.mailfrom=spp-bounces@dpdk.org
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
+ h=from:to:subject:date:message-id;
+ bh=Cax01KtQ5d7RXhx4CzpRzz80n42zTsgdQGz0X7wH/tA=;
+ b=BWKB6b7TPA+Hywy44bfzvjnQjmao9BXYNrsum+TgBfOdix3WprJu+VNfrfyMFj6HWa
+ deqv/15p7QTG4BPGD5ObFMogMrgG4FQoLjeY4RtmHhq6Mgrq19Tl/oEK7ERhVL4Z72cT
+ A64oauSH6jqeXG+KJXjbefzOLLmftMWF0vhgSGP+5emTqhLE1xivCeLHruFrb2In60pf
+ JAIlmTytxo3XQPGmPkjGw7jikxazg3LbMQCIr4d7fVLbiBNcmqwhtDsHXSgKkMgBEwxm
+ XclQ7gSfy/QkIEBijKY0rm5jyjUPua77A7Itr1fGLtMcmYlW+ymhJq2MjEiEee68mzTO rpXQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=1e100.net;
+ s=20161025; h=x-gm-message-state:from:to:subject:date:message-id;
+ bh=Cax01KtQ5d7RXhx4CzpRzz80n42zTsgdQGz0X7wH/tA=;
+ b=fIb9w5Skm1lwmdIJqYi4qxlMSzKiUYpdLObCdwE15PRtnTBZcbQ3ceeDFbXZlV+U3t
+ qowAU/B7rOnw784k66usXGITXVjrc3VM62oDDsRcyvOpjH9QjHjDfsSvfiPjaaw0NbKw
+ b00zlTqbJ17Gm/AruW6km7ZOIoagcPOiJMFqoi3wS515zmilDIhO1M9r608ykMBd6zMl
+ SHyV719QWRkPPXJKqVX/ziuBGKaAUo4wxGD3KMFsg6Uvx6CItm4CPuzejAOAc49V4tED
+ 03UrkpSrngNfGnpehFGukQ8p8Lm/FySicrcrpW8amMfqHedKnVkopLG2hQ5C5W3ffWUm 8QFg==
+X-Gm-Message-State: APjAAAWYXaabHo1QoCxPcJHrsRbNyp744KZ6f+VPVwLF1LGXZ4D7mFyF
+ 6hZj9Ua40KPqjJNZscH+smTeqBQB
+X-Google-Smtp-Source:
+ APXvYqx0DAo0glSa3nRKRZd6rVD3GrH6oMh+R9MqhEQefnF/FFSbV9HIdRRlgRM+1UIMLYYiQVSnaQ==
+X-Received: by 2002:a17:90a:9382:: with SMTP id
+ q2mr24167744pjo.131.1561372890168; Mon, 24 Jun 2019 03:41:30 -0700 (PDT)
+X-BeenThere: spp@dpdk.org
+X-Mailman-Version: 2.1.15
+List-Id: Soft Patch Panel <spp.dpdk.org>
+List-Unsubscribe: <https://mails.dpdk.org/options/spp>,
+ <mailto:spp-request@dpdk.org?subject=unsubscribe>
+List-Archive: <http://mails.dpdk.org/archives/spp/>
+List-Post: <mailto:spp@dpdk.org>
+List-Help: <mailto:spp-request@dpdk.org?subject=help>
+List-Subscribe: <https://mails.dpdk.org/listinfo/spp>,
+ <mailto:spp-request@dpdk.org?subject=subscribe>
+X-TM-AS-MML: No
+Precedence: bulk
+Lines: 343
+X-TM-AS-GCONF: 00
+X-MD-STAMP: ON
+
+From: Yasufumi Ogawa <yasufum.o@gmail.com>
+
+Spp_vf and spp_mirror use spp_vf_add_vhost_pmd() for assigning vhost
+port, but this feature is the same as add_vhost_pmd(). This update is to
+remove former one. For this update, remove `vhost_client` which is a
+member of struct `startup_param` and no longer needed.
+
+Signed-off-by: Yasufumi Ogawa <yasufum.o@gmail.com>
+---
+ src/mirror/spp_mirror.c                       |   5 +-
+ src/shared/secondary/add_port.c               |  28 +++-
+ src/shared/secondary/add_port.h               |   1 +
+ .../secondary/spp_worker_th/cmd_utils.c       | 127 +-----------------
+ .../secondary/spp_worker_th/cmd_utils.h       |   9 --
+ src/vf/spp_vf.c                               |   5 +-
+ 6 files changed, 33 insertions(+), 142 deletions(-)
+
+diff --git a/src/mirror/spp_mirror.c b/src/mirror/spp_mirror.c
+index 892a3a8..aad74a9 100644
+--- a/src/mirror/spp_mirror.c
++++ b/src/mirror/spp_mirror.c
+@@ -11,6 +11,7 @@
+ 
+ #include "spp_mirror.h"
+ #include "shared/common.h"
++#include "shared/secondary/add_port.h"
+ #include "shared/secondary/return_codes.h"
+ #include "shared/secondary/utils.h"
+ #include "shared/secondary/spp_worker_th/mirror_deps.h"
+@@ -194,7 +195,7 @@ parse_app_args(int argc, char *argv[])
+ 			proc_flg = 1;
+ 			break;
+ 		case SPP_LONGOPT_RETVAL_VHOST_CLIENT:
+-			g_startup_param.vhost_client = 1;
++			g_enable_vhost_cli = 1;
+ 			break;
+ 		case 's':
+ 			if (parse_app_server(optarg, g_startup_param.server_ip,
+@@ -224,7 +225,7 @@ parse_app_args(int argc, char *argv[])
+ 			g_startup_param.wk_proc_type,
+ 			g_startup_param.server_ip,
+ 			g_startup_param.server_port,
+-			g_startup_param.vhost_client);
++			g_enable_vhost_cli);
+ 	return SPP_RET_OK;
+ }
+ 
+diff --git a/src/shared/secondary/add_port.c b/src/shared/secondary/add_port.c
+index 6924583..e0de36f 100644
+--- a/src/shared/secondary/add_port.c
++++ b/src/shared/secondary/add_port.c
+@@ -165,36 +165,52 @@ add_vhost_pmd(int index)
+ 
+ 	sprintf(devargs, "%s,iface=%s,queues=%d,client=%d",
+ 			name, iface, nr_queues, g_enable_vhost_cli);
+-	RTE_LOG(DEBUG, SHARED, "devargs for vhost: '%s'\n", devargs);
++	RTE_LOG(DEBUG, SHARED, "Devargs for vhost: '%s'.\n", devargs);
+ 	ret = dev_attach_by_devargs(devargs, &vhost_port_id);
+-	if (ret < 0)
++	if (ret < 0) {
++		RTE_LOG(ERR, SHARED, "Cannot attach: %s.\n", devargs);
+ 		return ret;
++	}
+ 
+ 	ret = rte_eth_dev_configure(vhost_port_id, nr_queues, nr_queues,
+ 		&port_conf);
+-	if (ret < 0)
++	if (ret < 0) {
++		RTE_LOG(ERR, SHARED, "Failed to dev configure.\n");
+ 		return ret;
++	}
+ 
+ 	/* Allocate and set up 1 RX queue per Ethernet port. */
+ 	for (q = 0; q < nr_queues; q++) {
+ 		ret = rte_eth_rx_queue_setup(vhost_port_id, q, NR_DESCS,
+ 			rte_eth_dev_socket_id(vhost_port_id), NULL, mp);
+-		if (ret < 0)
++		if (ret < 0) {
++			RTE_LOG(ERR, SHARED,
++				"Failed to setup RX queue, "
++				"port: %d, queue: %d.\n",
++				vhost_port_id, q);
+ 			return ret;
++		}
+ 	}
+ 
+ 	/* Allocate and set up 1 TX queue per Ethernet port. */
+ 	for (q = 0; q < nr_queues; q++) {
+ 		ret = rte_eth_tx_queue_setup(vhost_port_id, q, NR_DESCS,
+ 			rte_eth_dev_socket_id(vhost_port_id), NULL);
+-		if (ret < 0)
++		if (ret < 0) {
++			RTE_LOG(ERR, SHARED,
++				"Failed to setup TX queue, "
++				"port: %d, queue: %d.\n",
++				vhost_port_id, q);
+ 			return ret;
++		}
+ 	}
+ 
+ 	/* Start the Ethernet port. */
+ 	ret = rte_eth_dev_start(vhost_port_id);
+-	if (ret < 0)
++	if (ret < 0) {
++		RTE_LOG(ERR, SHARED, "Failed to start vhost.\n");
+ 		return ret;
++	}
+ 
+ 	RTE_LOG(DEBUG, SHARED, "vhost port id %d\n", vhost_port_id);
+ 
+diff --git a/src/shared/secondary/add_port.h b/src/shared/secondary/add_port.h
+index 7012940..943d0d6 100644
+--- a/src/shared/secondary/add_port.h
++++ b/src/shared/secondary/add_port.h
+@@ -20,6 +20,7 @@
+ 
+ #define RTE_LOGTYPE_SHARED RTE_LOGTYPE_USER1
+ 
++/* TODO(yasufum) remove it after --vhost-client is retrieved from a func. */
+ extern int g_enable_vhost_cli;
+ 
+ /**
+diff --git a/src/shared/secondary/spp_worker_th/cmd_utils.c b/src/shared/secondary/spp_worker_th/cmd_utils.c
+index d21c23a..f24d1a6 100644
+--- a/src/shared/secondary/spp_worker_th/cmd_utils.c
++++ b/src/shared/secondary/spp_worker_th/cmd_utils.c
+@@ -11,9 +11,10 @@
+ #include <rte_log.h>
+ #include <rte_branch_prediction.h>
+ 
+-#include "shared/secondary/return_codes.h"
+ #include "cmd_utils.h"
+ #include "spp_port.h"
++#include "shared/secondary/add_port.h"
++#include "shared/secondary/return_codes.h"
+ 
+ #ifdef SPP_VF_MODULE
+ #include "vf_deps.h"
+@@ -70,125 +71,6 @@ log_hexdumped(const char *obj_name, const void *obj_addr, const size_t size)
+ 	}
+ }
+ 
+-/* generation of the ring port */
+-int
+-spp_vf_add_ring_pmd(int ring_id)
+-{
+-	struct rte_ring *ring;
+-	int ring_port_id;
+-	uint16_t port_id = PORT_RESET;
+-	char dev_name[RTE_ETH_NAME_MAX_LEN];
+-
+-	/* Lookup ring of given id */
+-	ring = rte_ring_lookup(get_rx_queue_name(ring_id));
+-	if (unlikely(ring == NULL)) {
+-		RTE_LOG(ERR, APP,
+-			"Cannot get RX ring - is server process running?\n");
+-		return SPP_RET_NG;
+-	}
+-
+-	/* Create ring pmd */
+-	snprintf(dev_name, RTE_ETH_NAME_MAX_LEN - 1, "net_ring_%s", ring->name);
+-	/* check whether a port already exists. */
+-	ring_port_id = rte_eth_dev_get_port_by_name(dev_name, &port_id);
+-	if (port_id == PORT_RESET) {
+-		ring_port_id = rte_eth_from_ring(ring);
+-		if (ring_port_id < 0) {
+-			RTE_LOG(ERR, APP, "Cannot create eth dev with "
+-						"rte_eth_from_ring()\n");
+-			return SPP_RET_NG;
+-		}
+-	} else {
+-		ring_port_id = port_id;
+-		rte_eth_dev_start(ring_port_id);
+-	}
+-	RTE_LOG(INFO, APP, "ring port add. (no = %d / port = %d)\n",
+-			ring_id, ring_port_id);
+-	return ring_port_id;
+-}
+-
+-/* generation of the vhost port */
+-int
+-spp_vf_add_vhost_pmd(int index, int client)
+-{
+-	struct rte_eth_conf port_conf = {
+-		.rxmode = { .max_rx_pkt_len = ETHER_MAX_LEN }
+-	};
+-	struct rte_mempool *mp;
+-	uint16_t vhost_port_id;
+-	int nr_queues = 1;
+-	const char *name;
+-	char devargs[64];
+-	char *iface;
+-	uint16_t q;
+-	int ret;
+-#define NR_DESCS 128
+-
+-	mp = rte_mempool_lookup(PKTMBUF_POOL_NAME);
+-	if (unlikely(mp == NULL)) {
+-		RTE_LOG(ERR, APP, "Cannot get mempool for mbufs. "
+-				"(name = %s)\n", PKTMBUF_POOL_NAME);
+-		return SPP_RET_NG;
+-	}
+-
+-	/* eth_vhost0 index 0 iface /tmp/sock0 on numa 0 */
+-	name = get_vhost_backend_name(index);
+-	iface = get_vhost_iface_name(index);
+-
+-	sprintf(devargs, "%s,iface=%s,queues=%d,client=%d",
+-			name, iface, nr_queues, client);
+-	ret = dev_attach_by_devargs(devargs, &vhost_port_id);
+-	if (unlikely(ret < 0)) {
+-		RTE_LOG(ERR, APP, "spp_rte_eth_dev_attach error. "
+-				"(ret = %d)\n", ret);
+-		return ret;
+-	}
+-
+-	ret = rte_eth_dev_configure(vhost_port_id, nr_queues, nr_queues,
+-		&port_conf);
+-	if (unlikely(ret < 0)) {
+-		RTE_LOG(ERR, APP, "rte_eth_dev_configure error. "
+-				"(ret = %d)\n", ret);
+-		return ret;
+-	}
+-
+-	/* Allocate and set up 1 RX queue per Ethernet port. */
+-	for (q = 0; q < nr_queues; q++) {
+-		ret = rte_eth_rx_queue_setup(vhost_port_id, q, NR_DESCS,
+-			rte_eth_dev_socket_id(vhost_port_id), NULL, mp);
+-		if (unlikely(ret < 0)) {
+-			RTE_LOG(ERR, APP,
+-				"rte_eth_rx_queue_setup error. (ret = %d)\n",
+-				ret);
+-			return ret;
+-		}
+-	}
+-
+-	/* Allocate and set up 1 TX queue per Ethernet port. */
+-	for (q = 0; q < nr_queues; q++) {
+-		ret = rte_eth_tx_queue_setup(vhost_port_id, q, NR_DESCS,
+-			rte_eth_dev_socket_id(vhost_port_id), NULL);
+-		if (unlikely(ret < 0)) {
+-			RTE_LOG(ERR, APP,
+-				"rte_eth_tx_queue_setup error. (ret = %d)\n",
+-				ret);
+-			return ret;
+-		}
+-	}
+-
+-	/* Start the Ethernet port. */
+-	ret = rte_eth_dev_start(vhost_port_id);
+-	if (unlikely(ret < 0)) {
+-		RTE_LOG(ERR, APP, "rte_eth_dev_start error. (ret = %d)\n",
+-			ret);
+-		return ret;
+-	}
+-
+-	RTE_LOG(INFO, APP, "vhost port add. (no = %d / port = %d)\n",
+-			index, vhost_port_id);
+-	return vhost_port_id;
+-}
+-
+ /* Get core status */
+ enum sppwk_lcore_status
+ spp_get_core_status(unsigned int lcore_id)
+@@ -606,7 +488,7 @@ del_vhost_sockfile(struct sppwk_port_info *vhost)
+ 	int cnt;
+ 
+ 	/* Do not remove for if it is running in vhost-client mode. */
+-	if (g_mng_data.p_startup_param->vhost_client != 0)
++	if (g_enable_vhost_cli != 0)
+ 		return;
+ 
+ 	for (cnt = 0; cnt < RTE_MAX_ETHPORTS; cnt++) {
+@@ -830,8 +712,7 @@ update_port_info(void)
+ 	for (cnt = 0; cnt < RTE_MAX_ETHPORTS; cnt++) {
+ 		port = &p_iface_info->vhost[cnt];
+ 		if ((port->iface_type != UNDEF) && (port->ethdev_port_id < 0)) {
+-			ret = spp_vf_add_vhost_pmd(port->iface_no,
+-				g_mng_data.p_startup_param->vhost_client);
++			ret = add_vhost_pmd(port->iface_no);
+ 			if (ret < 0)
+ 				return SPP_RET_NG;
+ 			port->ethdev_port_id = ret;
+diff --git a/src/shared/secondary/spp_worker_th/cmd_utils.h b/src/shared/secondary/spp_worker_th/cmd_utils.h
+index 7139865..f3e2303 100644
+--- a/src/shared/secondary/spp_worker_th/cmd_utils.h
++++ b/src/shared/secondary/spp_worker_th/cmd_utils.h
+@@ -204,7 +204,6 @@ struct startup_param {
+ 	int client_id;  /* Client ID */
+ 	char server_ip[INET_ADDRSTRLEN];  /* IP address of spp-ctl */
+ 	int server_port;   /* Port Number of spp-ctl */
+-	int vhost_client;  /* Flag for --vhost-client option */
+ 	enum sppwk_proc_type wk_proc_type;
+ };
+ 
+@@ -300,14 +299,6 @@ struct spp_iterate_classifier_table_params {
+ void log_hexdumped(const char *obj_name, const void *obj_addr,
+ 		const size_t size);
+ 
+-/**
+- * Add ring pmd for owned proccess or thread.
+- *
+- * @param[in] ring_id added ring id.
+- * @return ring port ID, or -1 if failed.
+- */
+-int spp_vf_add_ring_pmd(int ring_id);
+-
+ /**
+  * Add ring pmd for owned proccess or thread.
+  *
+diff --git a/src/vf/spp_vf.c b/src/vf/spp_vf.c
+index bc8db5c..4513a0c 100644
+--- a/src/vf/spp_vf.c
++++ b/src/vf/spp_vf.c
+@@ -11,6 +11,7 @@
+ #include "classifier_mac.h"
+ #include "forwarder.h"
+ #include "shared/secondary/return_codes.h"
++#include "shared/secondary/add_port.h"
+ #include "shared/secondary/spp_worker_th/cmd_runner.h"
+ #include "shared/secondary/spp_worker_th/cmd_parser.h"
+ #include "shared/secondary/spp_worker_th/spp_port.h"
+@@ -150,7 +151,7 @@ parse_app_args(int argc, char *argv[])
+ 			proc_flg = 1;
+ 			break;
+ 		case SPP_LONGOPT_RETVAL_VHOST_CLIENT:
+-			g_startup_param.vhost_client = 1;
++			g_enable_vhost_cli = 1;
+ 			break;
+ 		case 's':
+ 			if (parse_app_server(optarg, g_startup_param.server_ip,
+@@ -180,7 +181,7 @@ parse_app_args(int argc, char *argv[])
+ 			g_startup_param.wk_proc_type,
+ 			g_startup_param.server_ip,
+ 			g_startup_param.server_port,
+-			g_startup_param.vhost_client);
++			g_enable_vhost_cli);
+ 	return SPP_RET_OK;
+ }
+ 
+-- 
+2.17.1
+
+

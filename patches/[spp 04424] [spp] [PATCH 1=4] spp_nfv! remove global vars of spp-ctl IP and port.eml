@@ -1,0 +1,342 @@
+Return-path: <fw-yama-hd@pomail01.silk.ntt-tx.co.jp>
+Received: from zssg-mailmd106.ddreams.local
+ (zssg-mailmd106.ddreams.local [10.160.123.101])
+ by zssg-mailms320.ddreams.local (NTT DoCoMo Mail System)
+ with ESMTP id <0PTL001NCN66R160@NTTDoCoMo.co.jp> for
+ yamashita.hideyuki@ntt-tx.co.jp; Mon, 24 Jun 2019 19:44:30 +0900 (JST)
+Original-recipient: rfc822;yamashita.hideyuki@ntt-tx.co.jp
+Received: from smtp_saver-daemon.zssg-mailmd106.ddreams.local by
+ zssg-mailmd106.ddreams.local (dDREAMS) id <0PTL0182GN66IO00@dDREAMS> for
+ yamashita.hideyuki@ntt-tx.co.jp (ORCPT yamashita.hideyuki@ntt-tx.co.jp); Mon,
+ 24 Jun 2019 19:44:30 +0900 (JST)
+Received: from zssg-mailmf102.ddreams.local
+ (zssg-mailmf900.ddreams.local [10.160.172.84]) by zssg-mailmd106.ddreams.local
+ (dDREAMS) with ESMTP id <0PTL00CZNN66B3C0@dDREAMS> for
+ yamashita.hideyuki@ntt-tx.co.jp (ORCPT yamashita.hideyuki@ntt-tx.co.jp); Mon,
+ 24 Jun 2019 19:44:30 +0900 (JST)
+Received: from zssg-mailmf102.ddreams.local (unknown [127.0.0.1])
+	by zssg-mailmf102.ddreams.local (Postfix) with ESMTP id 358707E6032	for
+ <yamashita.hideyuki@ntt-tx.co.jp>; Mon, 24 Jun 2019 19:44:30 +0900 (JST)
+Received: from zssg-mailmf102.ddreams.local (unknown [127.0.0.1])
+	by IMSVA (Postfix) with ESMTP id 32B278E6055	for
+ <yamashita.hideyuki@ntt-tx.co.jp>; Mon, 24 Jun 2019 19:44:30 +0900 (JST)
+Received: from localhost (unknown [127.0.0.1])	by IMSVA (Postfix)
+ with SMTP id 25B128E6042	for <yamashita.hideyuki@ntt-tx.co.jp>; Mon,
+ 24 Jun 2019 19:44:30 +0900 (JST)
+X-IMSS-HAND-OFF-DIRECTIVE: localhost:10026
+Received: from zssg-mailmf102.ddreams.local (unknown [127.0.0.1])
+	by IMSVA (Postfix) with ESMTP id 92A7A8E6050	for
+ <yamashita.hideyuki@ntt-tx.co.jp>; Mon, 24 Jun 2019 19:44:29 +0900 (JST)
+Received: from pomail01.silk.ntt-tx.co.jp (unknown [10.160.183.139])
+	by zssg-mailmf102.ddreams.local (Postfix)
+ with ESMTPS	for <yamashita.hideyuki@ntt-tx.co.jp>; Mon,
+ 24 Jun 2019 19:44:29 +0900 (JST)
+Received: from pomail01.silk.ntt-tx.co.jp (localhost [127.0.0.1])
+	by pomail01.silk.ntt-tx.co.jp (unknown) with ESMTP id x5OAiTkb032511;	Mon,
+ 24 Jun 2019 19:44:29 +0900
+Received: (from yama-hd@localhost)	by pomail01.silk.ntt-tx.co.jp (unknown)
+ id x5OAiTWB032508;	Mon, 24 Jun 2019 19:44:29 +0900
+X-Authentication-warning: pomail01.silk.ntt-tx.co.jp: yama-hd set sender to
+ fw-yama-hd@pomail01.silk.ntt-tx.co.jp using -f
+Received: from imss04.silk.ntt-tx.co.jp
+ (imss04.silk.ntt-tx.co.jp [10.107.0.39])	by pomail01.silk.ntt-tx.co.jp
+ (unknown) with ESMTP id x5OAiTIk032499	for unknown; Mon,
+ 24 Jun 2019 19:44:29 +0900
+Received: from imss04.silk.ntt-tx.co.jp (localhost [127.0.0.1])
+ by imss04.silk.ntt-tx.co.jp (unknown) with ESMTP id x5OAiSww007509 for
+ unknown; Mon, 24 Jun 2019 19:44:28 +0900
+Received: from ml01.silk.ntt-tx.co.jp (ml01.silk.ntt-tx.co.jp [10.107.0.230])
+ by imss04.silk.ntt-tx.co.jp (unknown) with ESMTP id x5OAiS9o007506; Mon,
+ 24 Jun 2019 19:44:28 +0900
+Received: from ml01.silk.ntt-tx.co.jp (localhost [127.0.0.1])
+	by ml01.silk.ntt-tx.co.jp (unknown) with ESMTP id x5OAiSKX008777;	Mon,
+ 24 Jun 2019 19:44:28 +0900
+Received: from imss02.silk.ntt-tx.co.jp
+ (imss02.silk.ntt-tx.co.jp [10.107.0.127])	by ml01.silk.ntt-tx.co.jp (unknown)
+ with ESMTP id x5OAiS37008773	for unknown; Mon, 24 Jun 2019 19:44:28 +0900
+Received: from imss02.silk.ntt-tx.co.jp (localhost [127.0.0.1])
+ by imss02.silk.ntt-tx.co.jp (unknown) with ESMTP id x5OAiSrb022944 for
+ unknown; Mon, 24 Jun 2019 19:44:28 +0900
+Received: from mail01.ics.ntt-tx.co.jp (mail01.ics.ntt-tx.co.jp [10.254.2.67])
+ by imss02.silk.ntt-tx.co.jp (unknown) with ESMTP id x5OAiSD9022939 for
+ unknown; Mon, 24 Jun 2019 19:44:28 +0900
+Received: from dpdk.org (dpdk.org [92.243.14.124])	by mail01.ics.ntt-tx.co.jp
+ (unknown) with SMTP id x5OAiLUA020675	for unknown; Mon,
+ 24 Jun 2019 19:44:27 +0900
+Received: from [92.243.14.124] (localhost [127.0.0.1])	by dpdk.org (Postfix)
+ with ESMTP id 3124E1BF1B;	Mon, 24 Jun 2019 12:44:21 +0200 (CEST)
+Received: from mail-pl1-f193.google.com
+ (mail-pl1-f193.google.com [209.85.214.193]) by dpdk.org (Postfix)
+ with ESMTP id 821381BF19 for <spp@dpdk.org>; Mon,
+ 24 Jun 2019 12:44:19 +0200 (CEST)
+Received: by mail-pl1-f193.google.com with SMTP id p1so6670304plo.2 for
+ <spp@dpdk.org>; Mon, 24 Jun 2019 03:44:19 -0700 (PDT)
+Received: from localhost.localdomain ([192.47.164.146])
+ by smtp.gmail.com with ESMTPSA id r9sm10093635pgv.24.2019.06.24.03.44.17
+ (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128); Mon,
+ 24 Jun 2019 03:44:18 -0700 (PDT)
+Date: Mon, 24 Jun 2019 19:44:08 +0900
+From: yasufum.o@gmail.com
+Subject: [spp 04424] [spp] [PATCH 1/4] spp_nfv: remove global vars of spp-ctl
+ IP and port
+Sender: spp <spp-bounces@dpdk.org>
+To: spp@dpdk.org, ferruh.yigit@intel.com, yasufum.o@gmail.com
+Message-id: <20190624104411.24977-2-yasufum.o@gmail.com>
+In-reply-to: <20190624104411.24977-1-yasufum.o@gmail.com>
+References: <20190624104411.24977-1-yasufum.o@gmail.com>
+X-ML-Name: unknown
+X-Mail-Count: 04424
+X-MLServer: unknown
+X-ML-Info: mailing list service
+X-Mailer: git-send-email 2.17.1
+Authentication-results: mail01.ics.ntt-tx.co.jp; spf=pass
+ smtp.mailfrom=spp-bounces@dpdk.org
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
+ h=from:to:subject:date:message-id:in-reply-to:references;
+ bh=2GwllWaHZMVbWh08H4sNJLwdSY6VfWxGSsGLBJwpdJY=;
+ b=ptT40seVSS9CpRBVjFCFcfqQBl3R7d3ZYeDwPH9ayYz19jAM10etUZNfAKIPT/eQ3Y
+ LiHyFHxt14VL5jnAvbHHP/1HIO8aJ7tg4B4+kDzgEQ/QFgdkPL2pT/8ItNDQ023qtB0a
+ JfwFTuRSPOApuoygxgUwcYEA0c1S6OE4bez2wWtZj3C0qpUVObW6TyaA3BVomnvZTfHy
+ AMMpPMF3jPFh1q6kAqwIgjvqOnjew4fvoRkwlR7gVL7Sm5gqoJF5lG5Bs61sIsJcYDh7
+ 77HbWeddkw2FomO/bDRAPSEqOpRGpQa9eReQeDoIXIB+D2f8xB1PzxBkVx7mjLssJ8a9 0Dfw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=1e100.net;
+ s=20161025; h=x-gm-message-state:from:to:subject:date:message-id:in-reply-to
+ :references; bh=2GwllWaHZMVbWh08H4sNJLwdSY6VfWxGSsGLBJwpdJY=;
+ b=qgMHztfk5MiR9wTNF1XytguyENG8po7URCiibQEs1n0shf/cw4aXkruKUFoUWqSK5S
+ lu1j+E0o1WqcPpcb8fL2ri8cnH5QMOMgrT2FSA7ppudZN7CacDcmhTKAhqOLljg+arRc
+ gaMJbFF015M3nI9YZ6ysiAIOrikrLbTMonez2+c0o4r/Re9F/AfXAp+4kIzhAytCHNOQ
+ Y1bEUmOtQLQufrfkFGyFFaJS//4JbkFTkXOvyFOAIsrpCND6wDdvuKfdqWZ3WW+qWbZ5
+ Fts59Od+54fhEFxd/7x9eeCioaH6o77yXp/emvo8txae+/x6008BmNxcnD9jP1oHWgCN kVoA==
+X-Gm-Message-State: APjAAAXThGgQBEuO+WSecy3kXKq2a0/j/zRXdM0BxaN5uvtTKEg+9yud
+ IuuLbGqMymhYH9hmc131P5ekV2q0
+X-Google-Smtp-Source:
+ APXvYqyYMnMkVkfrlsfUCJiiKJ3ipemf3949W7DgEDPJwtiBAXDQLnD9/MZO3Xt8PU9GVCKAArFOJA==
+X-Received: by 2002:a17:902:7583:: with SMTP id
+ j3mr29259768pll.196.1561373058440; Mon, 24 Jun 2019 03:44:18 -0700 (PDT)
+X-BeenThere: spp@dpdk.org
+X-Mailman-Version: 2.1.15
+List-Id: Soft Patch Panel <spp.dpdk.org>
+List-Unsubscribe: <https://mails.dpdk.org/options/spp>,
+ <mailto:spp-request@dpdk.org?subject=unsubscribe>
+List-Archive: <http://mails.dpdk.org/archives/spp/>
+List-Post: <mailto:spp@dpdk.org>
+List-Help: <mailto:spp-request@dpdk.org?subject=help>
+List-Subscribe: <https://mails.dpdk.org/listinfo/spp>,
+ <mailto:spp-request@dpdk.org?subject=subscribe>
+X-TM-AS-MML: No
+Precedence: bulk
+Lines: 210
+X-TM-AS-GCONF: 00
+X-MD-STAMP: ON
+
+From: Yasufumi Ogawa <yasufum.o@gmail.com>
+
+This update is to remove global variable of IP address and port number
+of spp-ctl, and functions for gettting and setting them instead.
+
+Signed-off-by: Yasufumi Ogawa <yasufum.o@gmail.com>
+---
+ src/nfv/commands.h  |  6 ++++--
+ src/nfv/main.c      |  6 +++++-
+ src/nfv/params.h    |  7 -------
+ src/shared/common.c | 48 +++++++++++++++++++++++++++++++++++++++++++++
+ src/shared/common.h | 42 ++++++++++++++++++++++++++++++++++++++-
+ 5 files changed, 98 insertions(+), 11 deletions(-)
+
+diff --git a/src/nfv/commands.h b/src/nfv/commands.h
+index 708d084..11e434a 100644
+--- a/src/nfv/commands.h
++++ b/src/nfv/commands.h
+@@ -116,6 +116,7 @@ do_connection(int *connected, int *sock)
+ {
+ 	static struct sockaddr_in servaddr;
+ 	int ret = 0;
++	char ctl_ip[IPADDR_LEN] = { 0 };  /* spp_ctl's IP addr. */
+ 
+ 	if (*connected == 0) {
+ 		if (*sock < 0) {
+@@ -127,8 +128,9 @@ do_connection(int *connected, int *sock)
+ 			/*Create of the tcp socket*/
+ 			memset(&servaddr, 0, sizeof(servaddr));
+ 			servaddr.sin_family = AF_INET;
+-			servaddr.sin_addr.s_addr = inet_addr(server_ip);
+-			servaddr.sin_port = htons(server_port);
++			get_spp_ctl_ip(ctl_ip);
++			servaddr.sin_addr.s_addr = inet_addr(ctl_ip);
++			servaddr.sin_port = htons(get_spp_ctl_port());
+ 		}
+ 
+ 		RTE_LOG(INFO,
+diff --git a/src/nfv/main.c b/src/nfv/main.c
+index ae4168c..9cfe49a 100644
+--- a/src/nfv/main.c
++++ b/src/nfv/main.c
+@@ -65,6 +65,8 @@ parse_app_args(int argc, char *argv[])
+ 	int cli_id;
+ 	char **argvopt = argv;
+ 	const char *progname = argv[0];
++	char *ctl_ip;  /* IP address of spp_ctl. */
++	int ctl_port;  /* Port num to connect spp_ctl. */
+ 	int ret;
+ 
+ 	while ((opt = getopt_long(argc, argvopt, "n:s:", lgopts,
+@@ -81,7 +83,9 @@ parse_app_args(int argc, char *argv[])
+ 			set_client_id(cli_id);
+ 			break;
+ 		case 's':
+-			ret = parse_server(&server_ip, &server_port, optarg);
++			ret = parse_server(&ctl_ip, &ctl_port, optarg);
++			set_spp_ctl_ip(ctl_ip);
++			set_spp_ctl_port(ctl_port);
+ 			if (ret != 0) {
+ 				usage(progname);
+ 				return -1;
+diff --git a/src/nfv/params.h b/src/nfv/params.h
+index 9ddf79d..06e6f1f 100644
+--- a/src/nfv/params.h
++++ b/src/nfv/params.h
+@@ -26,13 +26,6 @@ static struct port ports_fwd_array[RTE_MAX_ETHPORTS];
+ /* the port details */
+ struct port_info *ports;
+ 
+-/*
+- * our client id number - tells us which rx queue to read, and NIC TX
+- * queue to write to.
+- */
+-static char *server_ip;
+-static int server_port;
+-
+ static enum cmd_type cmd;
+ 
+ static struct port_map port_map[RTE_MAX_ETHPORTS];
+diff --git a/src/shared/common.c b/src/shared/common.c
+index 9c244e5..a195929 100644
+--- a/src/shared/common.c
++++ b/src/shared/common.c
+@@ -8,6 +8,9 @@
+ 
+ #define RTE_LOGTYPE_SHARED RTE_LOGTYPE_USER1
+ 
++char spp_ctl_ip[IPADDR_LEN];  /* IP address of spp_ctl. */
++int spp_ctl_port;  /* Port num to connect spp_ctl. */
++
+ /**
+  * Set log level of type RTE_LOGTYPE_USER* to given level, for instance,
+  * RTE_LOG_INFO or RTE_LOG_DEBUG.
+@@ -115,3 +118,48 @@ int get_sec_dir(char *proc_name, char *dir_name)
+ 	}
+ 	return 0;
+ }
++
++/* Get IP address of spp_ctl as string. */
++int get_spp_ctl_ip(char *s_ip)
++{
++	sprintf(s_ip, "%s", spp_ctl_ip);
++	if (spp_ctl_ip == NULL) {
++		RTE_LOG(ERR, SHARED, "Failed to get IP of spp_ctl.\n");
++		return -1;
++	}
++	return 0;
++}
++
++/* Set IP address of spp_ctl. */
++int set_spp_ctl_ip(const char *s_ip)
++{
++	memset(spp_ctl_ip, 0x00, sizeof(spp_ctl_ip));
++	sprintf(spp_ctl_ip, "%s", s_ip);
++	if (spp_ctl_ip == NULL) {
++		RTE_LOG(ERR, SHARED, "Failed to set IP of spp_ctl.\n");
++		return -1;
++	}
++	return 0;
++}
++
++/* Get port number for connecting to spp_ctl as string. */
++int get_spp_ctl_port(void)
++{
++	if (spp_ctl_port < 0) {
++		RTE_LOG(ERR, SHARED, "Server port is not initialized.\n");
++		return -1;
++	}
++	return spp_ctl_port;
++}
++
++/* Set port number for connecting to spp_ctl. */
++int set_spp_ctl_port(int s_port)
++{
++	if (s_port < 0) {
++		RTE_LOG(ERR, SHARED, "Given invalid port number '%d'.\n",
++				s_port);
++		return -1;
++	}
++	spp_ctl_port = s_port;
++	return 0;
++}
+diff --git a/src/shared/common.h b/src/shared/common.h
+index 9b8d897..78d2520 100644
+--- a/src/shared/common.h
++++ b/src/shared/common.h
+@@ -10,6 +10,8 @@
+ #include <unistd.h>
+ #include <rte_ethdev_driver.h>
+ 
++#define IPADDR_LEN 16  /* Length of IP address in string. */
++
+ #define MSG_SIZE 2048  /* socket buffer len */
+ 
+ #define SOCK_RESET  -1
+@@ -125,11 +127,49 @@ int set_user_log_level(int num_user_log, uint32_t log_level);
+ int set_user_log_debug(int num_user_log);
+ 
+ int parse_num_clients(uint16_t *num_clients, const char *clients);
++
+ int parse_server(char **server_ip, int *server_port, char *server_addr);
+ 
+-/* Get directory name of given proc_name */
++/**
++ * Get directory name of given proc_name.
++ *
++ * @param[in] proc_name Name of sec process such as spp_nfv.
++ * @param[out] dir_name Directory name.
++ * @return 0
++ */
+ int get_sec_dir(char *proc_name, char *dir_name);
+ 
+ extern uint8_t lcore_id_used[RTE_MAX_LCORE];
+ 
++/**
++ * Get IP address of spp_ctl as string.
++ *
++ * @param[in,out] s_ip IP address of spp_ctl.
++ * @return 0 if succeeded, or -1 if failed.
++ */
++int get_spp_ctl_ip(char *s_ip);
++
++/**
++ * Set IP address of spp_ctl.
++ *
++ * @param[in] s_ip IP address of spp_ctl.
++ * @return 0 if succeeded, or -1 if failed.
++ */
++int set_spp_ctl_ip(const char *s_ip);
++
++/**
++ * Get port number for connecting to spp_ctl as string.
++ *
++ * @return Port number, or -1 if failed.
++ */
++int get_spp_ctl_port(void);
++
++/**
++ * Set port number for connecting to spp_ctl.
++ *
++ * @param[in] s_port Port number for spp_ctl.
++ * @return 0 if succeeded, or -1 if failed.
++ */
++int set_spp_ctl_port(int s_port);
++
+ #endif
+-- 
+2.17.1
+
+

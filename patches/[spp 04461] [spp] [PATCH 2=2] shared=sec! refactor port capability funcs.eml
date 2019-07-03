@@ -1,0 +1,298 @@
+Return-path: <fw-yama-hd@pomail01.silk.ntt-tx.co.jp>
+Received: from zssg-mailmd102.ddreams.local
+ (zssg-mailmd102.ddreams.local [10.160.123.97]) by zssg-mailms320.ddreams.local
+ (NTT DoCoMo Mail System) with ESMTP id <0PTY00XS43OD1U10@NTTDoCoMo.co.jp> for
+ yamashita.hideyuki@ntt-tx.co.jp; Mon, 01 Jul 2019 13:12:13 +0900 (JST)
+Original-recipient: rfc822;yamashita.hideyuki@ntt-tx.co.jp
+Received: from smtp_saver-daemon.zssg-mailmd102.ddreams.local by
+ zssg-mailmd102.ddreams.local (dDREAMS) id <0PTY01A243OD7D00@dDREAMS> for
+ yamashita.hideyuki@ntt-tx.co.jp (ORCPT yamashita.hideyuki@ntt-tx.co.jp); Mon,
+ 01 Jul 2019 13:12:13 +0900 (JST)
+Received: from zssg-mailmf103.ddreams.local
+ (zssg-mailmf900.ddreams.local [10.160.172.84]) by zssg-mailmd102.ddreams.local
+ (dDREAMS) with ESMTP id <0PTY00ZJ93OD7360@dDREAMS> for
+ yamashita.hideyuki@ntt-tx.co.jp (ORCPT yamashita.hideyuki@ntt-tx.co.jp); Mon,
+ 01 Jul 2019 13:12:13 +0900 (JST)
+Received: from zssg-mailmf103.ddreams.local (unknown [127.0.0.1])
+	by zssg-mailmf103.ddreams.local (Postfix) with ESMTP id CB4FF7E6036	for
+ <yamashita.hideyuki@ntt-tx.co.jp>; Mon,  1 Jul 2019 13:12:13 +0900 (JST)
+Received: from zssg-mailmf103.ddreams.local (unknown [127.0.0.1])
+	by IMSVA (Postfix) with ESMTP id C9BF88E6058	for
+ <yamashita.hideyuki@ntt-tx.co.jp>; Mon,  1 Jul 2019 13:12:13 +0900 (JST)
+Received: from localhost (unknown [127.0.0.1])	by IMSVA (Postfix)
+ with SMTP id BF04B8E6054	for <yamashita.hideyuki@ntt-tx.co.jp>; Mon,
+ 1 Jul 2019 13:12:13 +0900 (JST)
+X-IMSS-HAND-OFF-DIRECTIVE: localhost:10026
+Received: from zssg-mailmf103.ddreams.local (unknown [127.0.0.1])
+	by IMSVA (Postfix) with ESMTP id 62D668E6058	for
+ <yamashita.hideyuki@ntt-tx.co.jp>; Mon,  1 Jul 2019 13:12:13 +0900 (JST)
+Received: from pomail01.silk.ntt-tx.co.jp (unknown [10.160.183.139])
+	by zssg-mailmf103.ddreams.local (Postfix)
+ with ESMTPS	for <yamashita.hideyuki@ntt-tx.co.jp>; Mon,
+ 1 Jul 2019 13:12:13 +0900 (JST)
+Received: from pomail01.silk.ntt-tx.co.jp (localhost [127.0.0.1])
+	by pomail01.silk.ntt-tx.co.jp (unknown) with ESMTP id x614CDWb015600;	Mon,
+ 1 Jul 2019 13:12:13 +0900
+Received: (from yama-hd@localhost)	by pomail01.silk.ntt-tx.co.jp (unknown)
+ id x614CDt0015599;	Mon, 1 Jul 2019 13:12:13 +0900
+X-Authentication-warning: pomail01.silk.ntt-tx.co.jp: yama-hd set sender to
+ fw-yama-hd@pomail01.silk.ntt-tx.co.jp using -f
+Received: from imss04.silk.ntt-tx.co.jp
+ (imss04.silk.ntt-tx.co.jp [10.107.0.39])	by pomail01.silk.ntt-tx.co.jp
+ (unknown) with ESMTP id x614CD3i015596	for unknown; Mon,
+ 1 Jul 2019 13:12:13 +0900
+Received: from imss04.silk.ntt-tx.co.jp (localhost [127.0.0.1])
+ by imss04.silk.ntt-tx.co.jp (unknown) with ESMTP id x614CChA029888 for
+ unknown; Mon, 1 Jul 2019 13:12:12 +0900
+Received: from ml01.silk.ntt-tx.co.jp (ml01.silk.ntt-tx.co.jp [10.107.0.230])
+ by imss04.silk.ntt-tx.co.jp (unknown) with ESMTP id x614CCBa029883; Mon,
+ 1 Jul 2019 13:12:12 +0900
+Received: from ml01.silk.ntt-tx.co.jp (localhost [127.0.0.1])
+	by ml01.silk.ntt-tx.co.jp (unknown) with ESMTP id x614CCOj019752;	Mon,
+ 1 Jul 2019 13:12:12 +0900
+Received: from imss02.silk.ntt-tx.co.jp
+ (imss02.silk.ntt-tx.co.jp [10.107.0.127])	by ml01.silk.ntt-tx.co.jp (unknown)
+ with ESMTP id x614CCZC019748	for unknown; Mon, 1 Jul 2019 13:12:12 +0900
+Received: from imss02.silk.ntt-tx.co.jp (localhost [127.0.0.1])
+ by imss02.silk.ntt-tx.co.jp (unknown) with ESMTP id x614CCcF025301 for
+ unknown; Mon, 1 Jul 2019 13:12:12 +0900
+Received: from mail01.ics.ntt-tx.co.jp (mail01.ics.ntt-tx.co.jp [10.254.2.67])
+ by imss02.silk.ntt-tx.co.jp (unknown) with ESMTP id x614CCLH025292 for
+ unknown; Mon, 1 Jul 2019 13:12:12 +0900
+Received: from dpdk.org (dpdk.org [92.243.14.124])	by mail01.ics.ntt-tx.co.jp
+ (unknown) with SMTP id x614C53u006873	for unknown; Mon,
+ 1 Jul 2019 13:12:11 +0900
+Received: from [92.243.14.124] (localhost [127.0.0.1])	by dpdk.org (Postfix)
+ with ESMTP id 2C8115587;	Mon,  1 Jul 2019 06:12:05 +0200 (CEST)
+Received: from mail-pl1-f196.google.com
+ (mail-pl1-f196.google.com [209.85.214.196]) by dpdk.org (Postfix)
+ with ESMTP id 14854374C for <spp@dpdk.org>; Mon,
+ 1 Jul 2019 06:12:04 +0200 (CEST)
+Received: by mail-pl1-f196.google.com with SMTP id 9so5837710ple.5 for
+ <spp@dpdk.org>; Sun, 30 Jun 2019 21:12:03 -0700 (PDT)
+Received: from localhost.localdomain ([192.47.164.146])
+ by smtp.gmail.com with ESMTPSA id 131sm19015550pfx.57.2019.06.30.21.12.02
+ (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128); Sun,
+ 30 Jun 2019 21:12:02 -0700 (PDT)
+Date: Mon, 01 Jul 2019 13:11:56 +0900
+From: yasufum.o@gmail.com
+Subject: [spp 04461] [spp] [PATCH 2/2] shared/sec: refactor port capability
+ funcs
+Sender: spp <spp-bounces@dpdk.org>
+To: spp@dpdk.org, ferruh.yigit@intel.com, yasufum.o@gmail.com
+Message-id: <20190701041156.34004-3-yasufum.o@gmail.com>
+In-reply-to: <20190701041156.34004-1-yasufum.o@gmail.com>
+References: <20190701041156.34004-1-yasufum.o@gmail.com>
+X-ML-Name: unknown
+X-Mail-Count: 04461
+X-MLServer: unknown
+X-ML-Info: mailing list service
+X-Mailer: git-send-email 2.17.1
+Authentication-results: mail01.ics.ntt-tx.co.jp; spf=pass
+ smtp.mailfrom=spp-bounces@dpdk.org
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
+ h=from:to:subject:date:message-id:in-reply-to:references;
+ bh=Rgly1nZQQ4TMJm3/D7nROwb9onqs103Ifxh6PqhI5ts=;
+ b=T6Pc999TDTxvueMcNc/eewpiHfw6aPWqHWcP3jJsSKzS3xhnsQD9Za94EkYYfBWfQg
+ 1d5Mzs1cZO5gbnooeT01SOH8Xkge/EHBb5Pts+znoUmOOfiq/xH+1MQX2DjwlUh19YhB
+ D8pgP+/C9fur58XiFVs3CuCUjwY/7mMe34EZfAK7L0+pdJHWH/2JhRD8HNh4+rpFrSQm
+ zmyn4tL81dUs6P4oc2tjxE9Rz4fgqawMsXDHNBb9UFTIGtq/aj66EDuHcIYWaz1cHSGc
+ xdcOiIf2JQ11CK5kyM3RvLAARt4CtnJybJezTUcy/fNihnnxNlBvD1zFX4kDp8Bd6N0b i1Dg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=1e100.net;
+ s=20161025; h=x-gm-message-state:from:to:subject:date:message-id:in-reply-to
+ :references; bh=Rgly1nZQQ4TMJm3/D7nROwb9onqs103Ifxh6PqhI5ts=;
+ b=Rhfu4Pi2Vb4LEGQMhHNgqqdmLl0wpM30DHRcKQOg9FXHksch4GkdMEwGPk2CFqv8wi
+ tZTu6TYVkG4xEAazIly40AHaDuF3Wx9p6r7tYTZQjpcuxCUEanUNK70Mzb3M430CczJM
+ DcXFRo12cOk49D/0WEFDSXSj6Hppq5MKH3Beov1O1YYzvhfuow4ZETZhoTkB07cReYJk
+ Q7DiCLeTx4vAGmMiwqgbQZSdDnl9Y6m98Op2mCu81LoO34tOp9oHRa44+JUEw6xK3Cm3
+ ed6Sf6VkJ90c59QOLpck/yWGjfAYP/bjuzseKFHtU+gOcJ15hhlTXHaG9P7F1TKZE1Gf lOGA==
+X-Gm-Message-State: APjAAAXfmNqZbisy7YdrRXlXvijEmY+V5emYtraMwFeVSARYE4k6x889
+ fjxv78jwyOc7S8XWLG0LEU/0nE6k
+X-Google-Smtp-Source:
+ APXvYqyeg2YA69dWJgXJGGmy+ZgCmPmjM3AoAyfbCzayiWma1IGbX4tS0swuScyeaNeAbTvDo92rEQ==
+X-Received: by 2002:a17:902:d20a:: with SMTP id
+ t10mr25847321ply.52.1561954323233; Sun, 30 Jun 2019 21:12:03 -0700 (PDT)
+X-BeenThere: spp@dpdk.org
+X-Mailman-Version: 2.1.15
+List-Id: Soft Patch Panel <spp.dpdk.org>
+List-Unsubscribe: <https://mails.dpdk.org/options/spp>,
+ <mailto:spp-request@dpdk.org?subject=unsubscribe>
+List-Archive: <http://mails.dpdk.org/archives/spp/>
+List-Post: <mailto:spp@dpdk.org>
+List-Help: <mailto:spp-request@dpdk.org?subject=help>
+List-Subscribe: <https://mails.dpdk.org/listinfo/spp>,
+ <mailto:spp-request@dpdk.org?subject=subscribe>
+X-TM-AS-MML: No
+Precedence: bulk
+Lines: 167
+X-TM-AS-GCONF: 00
+X-MD-STAMP: ON
+
+From: Yasufumi Ogawa <yasufum.o@gmail.com>
+
+This update is to refactor functions for port capability defined in
+`port_capability.c`. All of incorrect or ambiguous term usages are
+fixed.
+
+Signed-off-by: Yasufumi Ogawa <yasufum.o@gmail.com>
+---
+ .../secondary/spp_worker_th/port_capability.c | 57 +++++++++----------
+ 1 file changed, 28 insertions(+), 29 deletions(-)
+
+diff --git a/src/shared/secondary/spp_worker_th/port_capability.c b/src/shared/secondary/spp_worker_th/port_capability.c
+index 30c6e95..db12f0c 100644
+--- a/src/shared/secondary/spp_worker_th/port_capability.c
++++ b/src/shared/secondary/spp_worker_th/port_capability.c
+@@ -96,9 +96,9 @@ set_fcs_packet(struct rte_mbuf *pkt)
+ 			pkt->data_len, RTE_NET_CRC32_ETH);
+ }
+ 
+-/* Add VLAN tag to packet. */
++/* Add VLAN tag to a packet. It is called from add_vlan_tag_all(). */
+ static inline int
+-add_vlantag_packet(
++add_vlan_tag_one(
+ 		struct rte_mbuf *pkt,
+ 		const union sppwk_port_capability *capability)
+ {
+@@ -135,14 +135,14 @@ add_vlantag_packet(
+ 
+ /* Add VLAN tag to all packets. */
+ static inline int
+-add_vlantag_all_packets(
++add_vlan_tag_all(
+ 		struct rte_mbuf **pkts, int nb_pkts,
+ 		const union sppwk_port_capability *capability)
+ {
+ 	int ret = SPP_RET_OK;
+ 	int cnt = 0;
+ 	for (cnt = 0; cnt < nb_pkts; cnt++) {
+-		ret = add_vlantag_packet(pkts[cnt], capability);
++		ret = add_vlan_tag_one(pkts[cnt], capability);
+ 		if (unlikely(ret < 0)) {
+ 			RTE_LOG(ERR, PORT,
+ 					"Failed to add VLAN tag."
+@@ -153,9 +153,9 @@ add_vlantag_all_packets(
+ 	return cnt;
+ }
+ 
+-/* Delete VLAN tag to packet. */
++/* Delete VLAN tag from a packet. It is called from del_vlan_tag_all(). */
+ static inline int
+-del_vlantag_packet(
++del_vlan_tag_one(
+ 		struct rte_mbuf *pkt,
+ 		const union sppwk_port_capability *cbl __attribute__ ((unused)))
+ {
+@@ -185,16 +185,16 @@ del_vlantag_packet(
+ 	return SPP_RET_OK;
+ }
+ 
+-/* Delete VLAN tag to all packets. */
++/* Delete VLAN tag from all packets. */
+ static inline int
+-del_vlantag_all_packets(
++del_vlan_tag_all(
+ 		struct rte_mbuf **pkts, int nb_pkts,
+ 		const union sppwk_port_capability *capability)
+ {
+ 	int ret = SPP_RET_OK;
+ 	int cnt = 0;
+ 	for (cnt = 0; cnt < nb_pkts; cnt++) {
+-		ret = del_vlantag_packet(pkts[cnt], capability);
++		ret = del_vlan_tag_one(pkts[cnt], capability);
+ 		if (unlikely(ret < 0)) {
+ 			RTE_LOG(ERR, PORT,
+ 					"Failed to del VLAN tag."
+@@ -251,9 +251,9 @@ sppwk_swap_two_sides(
+ 	}
+ }
+ 
+-/* Set ability data of port ability. */
++/* Update port attributes of given direction. */
+ static void
+-port_ability_set_ability(struct sppwk_port_info *port,
++update_port_attrs(struct sppwk_port_info *port,
+ 		enum sppwk_port_dir dir)
+ {
+ 	int in_cnt, out_cnt = 0;
+@@ -316,32 +316,33 @@ sppwk_update_port_dir(const struct sppwk_comp_info *comp)
+ 
+ 	for (cnt = 0; cnt < comp->nof_rx; cnt++) {
+ 		port_info = comp->rx_ports[cnt];
+-		port_ability_set_ability(port_info, SPPWK_PORT_DIR_RX);
++		update_port_attrs(port_info, SPPWK_PORT_DIR_RX);
+ 	}
+ 
+ 	for (cnt = 0; cnt < comp->nof_tx; cnt++) {
+ 		port_info = comp->tx_ports[cnt];
+-		port_ability_set_ability(port_info, SPPWK_PORT_DIR_TX);
++		update_port_attrs(port_info, SPPWK_PORT_DIR_TX);
+ 	}
+ }
+ 
+-/* Definition of functions that operate port abilities. */
+-typedef int (*port_ability_func)(
++/**
++ * Define list of VLAN opeartion functions. It is only used in
++ * vlan_operation().
++ */
++typedef int (*vlan_f)(
+ 		struct rte_mbuf **pkts, int nb_pkts,
+ 		const union sppwk_port_capability *capability);
+ 
+-/* List of functions per port ability. */
+-port_ability_func port_ability_function_list[] = {
+-	NULL,                    /* None */
+-	add_vlantag_all_packets, /* Add VLAN tag */
+-	del_vlantag_all_packets, /* Del VLAN tag */
+-	NULL                     /* Termination */
++vlan_f vlan_ops[] = {
++	NULL,              /* None */
++	add_vlan_tag_all,  /* Add VLAN tag */
++	del_vlan_tag_all,  /* Del VLAN tag */
++	NULL               /* Termination */
+ };
+ 
+-/* Each packet operation of port capability. */
++/* Add or delete VLAN tag. */
+ static inline int
+-port_ability_each_operation(uint16_t port_id,
+-		struct rte_mbuf **pkts, const uint16_t nb_pkts,
++vlan_operation(uint16_t port_id, struct rte_mbuf **pkts, const uint16_t nb_pkts,
+ 		enum sppwk_port_dir dir)
+ {
+ 	int cnt, buf;
+@@ -358,7 +359,7 @@ port_ability_each_operation(uint16_t port_id,
+ 			break;
+ 
+ 		/* Add or delete VLAN tag with operation function. */
+-		ok_pkts = port_ability_function_list[port_attrs[cnt].ops](
++		ok_pkts = vlan_ops[port_attrs[cnt].ops](
+ 				pkts, ok_pkts, &port_attrs->capability);
+ 	}
+ 
+@@ -391,8 +392,7 @@ sppwk_eth_vlan_rx_burst(uint16_t port_id,
+ #endif /* SPP_RINGLATENCYSTATS_ENABLE */
+ 
+ 	/* Add or delete VLAN tag. */
+-	return port_ability_each_operation(port_id, rx_pkts, nb_rx,
+-			SPPWK_PORT_DIR_RX);
++	return vlan_operation(port_id, rx_pkts, nb_rx, SPPWK_PORT_DIR_RX);
+ }
+ 
+ 
+@@ -406,8 +406,7 @@ sppwk_eth_vlan_tx_burst(uint16_t port_id,
+ 	uint16_t nb_tx;
+ 
+ 	/* Add or delete VLAN tag. */
+-	nb_tx = port_ability_each_operation(port_id, tx_pkts, nb_pkts,
+-			SPPWK_PORT_DIR_TX);
++	nb_tx = vlan_operation(port_id, tx_pkts, nb_pkts, SPPWK_PORT_DIR_TX);
+ 
+ 	if (unlikely(nb_tx == 0))
+ 		return SPP_RET_OK;
+-- 
+2.17.1
+
+

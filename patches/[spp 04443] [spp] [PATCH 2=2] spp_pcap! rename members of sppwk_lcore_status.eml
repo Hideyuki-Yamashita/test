@@ -1,0 +1,307 @@
+Return-path: <fw-yama-hd@pomail01.silk.ntt-tx.co.jp>
+Received: from zssg-mailmd101.ddreams.local
+ (zssg-mailmd101.ddreams.local [10.160.123.96]) by zssg-mailms320.ddreams.local
+ (NTT DoCoMo Mail System) with ESMTP id <0PTO00QYNY9GV480@NTTDoCoMo.co.jp> for
+ yamashita.hideyuki@ntt-tx.co.jp; Wed, 26 Jun 2019 14:36:52 +0900 (JST)
+Original-recipient: rfc822;yamashita.hideyuki@ntt-tx.co.jp
+Received: from smtp_saver-daemon.zssg-mailmd101.ddreams.local by
+ zssg-mailmd101.ddreams.local (dDREAMS) id <0PTO00H2WY9G9U00@dDREAMS> for
+ yamashita.hideyuki@ntt-tx.co.jp (ORCPT yamashita.hideyuki@ntt-tx.co.jp); Wed,
+ 26 Jun 2019 14:36:52 +0900 (JST)
+Received: from zssg-mailmf102.ddreams.local
+ (zssg-mailmf900.ddreams.local [10.160.172.84]) by zssg-mailmd101.ddreams.local
+ (dDREAMS) with ESMTP id <0PTO012V5Y9GWUF0@dDREAMS> for
+ yamashita.hideyuki@ntt-tx.co.jp (ORCPT yamashita.hideyuki@ntt-tx.co.jp); Wed,
+ 26 Jun 2019 14:36:52 +0900 (JST)
+Received: from zssg-mailmf102.ddreams.local (unknown [127.0.0.1])
+	by zssg-mailmf102.ddreams.local (Postfix) with ESMTP id 72F297E6038	for
+ <yamashita.hideyuki@ntt-tx.co.jp>; Wed, 26 Jun 2019 14:36:52 +0900 (JST)
+Received: from zssg-mailmf102.ddreams.local (unknown [127.0.0.1])
+	by IMSVA (Postfix) with ESMTP id 715A88E6054	for
+ <yamashita.hideyuki@ntt-tx.co.jp>; Wed, 26 Jun 2019 14:36:52 +0900 (JST)
+Received: from localhost (unknown [127.0.0.1])	by IMSVA (Postfix)
+ with SMTP id 65E188E605E	for <yamashita.hideyuki@ntt-tx.co.jp>; Wed,
+ 26 Jun 2019 14:36:52 +0900 (JST)
+X-IMSS-HAND-OFF-DIRECTIVE: localhost:10026
+Received: from zssg-mailmf102.ddreams.local (unknown [127.0.0.1])
+	by IMSVA (Postfix) with ESMTP id 2315A8E6050	for
+ <yamashita.hideyuki@ntt-tx.co.jp>; Wed, 26 Jun 2019 14:36:51 +0900 (JST)
+Received: from pomail01.silk.ntt-tx.co.jp (unknown [10.160.183.139])
+	by zssg-mailmf102.ddreams.local (Postfix)
+ with ESMTPS	for <yamashita.hideyuki@ntt-tx.co.jp>; Wed,
+ 26 Jun 2019 14:36:51 +0900 (JST)
+Received: from pomail01.silk.ntt-tx.co.jp (localhost [127.0.0.1])
+	by pomail01.silk.ntt-tx.co.jp (unknown) with ESMTP id x5Q5aoZn019258;	Wed,
+ 26 Jun 2019 14:36:50 +0900
+Received: (from yama-hd@localhost)	by pomail01.silk.ntt-tx.co.jp (unknown)
+ id x5Q5aokP019257;	Wed, 26 Jun 2019 14:36:50 +0900
+X-Authentication-warning: pomail01.silk.ntt-tx.co.jp: yama-hd set sender to
+ fw-yama-hd@pomail01.silk.ntt-tx.co.jp using -f
+Received: from imss04.silk.ntt-tx.co.jp
+ (imss04.silk.ntt-tx.co.jp [10.107.0.39])	by pomail01.silk.ntt-tx.co.jp
+ (unknown) with ESMTP id x5Q5aoq9019254	for unknown; Wed,
+ 26 Jun 2019 14:36:50 +0900
+Received: from imss04.silk.ntt-tx.co.jp (localhost [127.0.0.1])
+ by imss04.silk.ntt-tx.co.jp (unknown) with ESMTP id x5Q5aokk032115 for
+ unknown; Wed, 26 Jun 2019 14:36:50 +0900
+Received: from ml01.silk.ntt-tx.co.jp (ml01.silk.ntt-tx.co.jp [10.107.0.230])
+ by imss04.silk.ntt-tx.co.jp (unknown) with ESMTP id x5Q5aoBo032112; Wed,
+ 26 Jun 2019 14:36:50 +0900
+Received: from ml01.silk.ntt-tx.co.jp (localhost [127.0.0.1])
+	by ml01.silk.ntt-tx.co.jp (unknown) with ESMTP id x5Q5aowj015897;	Wed,
+ 26 Jun 2019 14:36:50 +0900
+Received: from imss01.silk.ntt-tx.co.jp
+ (imss01.silk.ntt-tx.co.jp [10.107.0.126])	by ml01.silk.ntt-tx.co.jp (unknown)
+ with ESMTP id x5Q5aoCg015893	for unknown; Wed, 26 Jun 2019 14:36:50 +0900
+Received: from imss01.silk.ntt-tx.co.jp (localhost [127.0.0.1])
+ by imss01.silk.ntt-tx.co.jp (unknown) with ESMTP id x5Q5anse011134 for
+ unknown; Wed, 26 Jun 2019 14:36:50 +0900
+Received: from mail01.ics.ntt-tx.co.jp (mail01.ics.ntt-tx.co.jp [10.254.2.67])
+ by imss01.silk.ntt-tx.co.jp (unknown) with ESMTP id x5Q5anaC011130 for
+ unknown; Wed, 26 Jun 2019 14:36:49 +0900
+Received: from dpdk.org (dpdk.org [92.243.14.124])	by mail01.ics.ntt-tx.co.jp
+ (unknown) with SMTP id x5Q5ah2M026498	for unknown; Wed,
+ 26 Jun 2019 14:36:49 +0900
+Received: from [92.243.14.124] (localhost [127.0.0.1])	by dpdk.org (Postfix)
+ with ESMTP id E3C1D1B95A;	Wed, 26 Jun 2019 07:36:42 +0200 (CEST)
+Received: from mail-pl1-f194.google.com
+ (mail-pl1-f194.google.com [209.85.214.194]) by dpdk.org (Postfix)
+ with ESMTP id 6C2101B951 for <spp@dpdk.org>; Wed,
+ 26 Jun 2019 07:36:41 +0200 (CEST)
+Received: by mail-pl1-f194.google.com with SMTP id e5so749140pls.13 for
+ <spp@dpdk.org>; Tue, 25 Jun 2019 22:36:41 -0700 (PDT)
+Received: from localhost.localdomain ([192.47.164.146])
+ by smtp.gmail.com with ESMTPSA id t29sm25684292pfq.156.2019.06.25.22.36.39
+ (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128); Tue,
+ 25 Jun 2019 22:36:40 -0700 (PDT)
+Date: Wed, 26 Jun 2019 14:36:33 +0900
+From: yasufum.o@gmail.com
+Subject: [spp 04443] [spp] [PATCH 2/2] spp_pcap: rename members of
+ sppwk_lcore_status
+Sender: spp <spp-bounces@dpdk.org>
+To: spp@dpdk.org, ferruh.yigit@intel.com, yasufum.o@gmail.com
+Message-id: <20190626053633.39963-3-yasufum.o@gmail.com>
+In-reply-to: <20190626053633.39963-1-yasufum.o@gmail.com>
+References: <20190626053633.39963-1-yasufum.o@gmail.com>
+X-ML-Name: unknown
+X-Mail-Count: 04443
+X-MLServer: unknown
+X-ML-Info: mailing list service
+X-Mailer: git-send-email 2.17.1
+Authentication-results: mail01.ics.ntt-tx.co.jp; spf=pass
+ smtp.mailfrom=spp-bounces@dpdk.org
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
+ h=from:to:subject:date:message-id:in-reply-to:references;
+ bh=7SFX30sBZxeudQzG/dM0wtg84EOhPq4d7zhlv8xFo1w=;
+ b=n1Y2XZ9dFX3pg7sG6MtuTz5yKbqm+CaFzrG9PTceWpxUYyzNwNExG64IUFJDpJlbkK
+ Mzo9oTL3dCnk075cZ4KKfNnCeJ5z4rSH+CPmHYxUOLnhhdQGEDPpHDWFM2vDz259F/m3
+ B0Y8WoScuRS5MEYr7L3PXmeGNIpAza7iHea4plzvPnfE5TsCOI/hpQQiFMI0VjSWRNtJ
+ aDq6mfvueFky1LySss22gzYd6s+NTwTPstamBH4DFkH2ywdpwlXzX8WpT0fij6Lkn1RU
+ QPsIqU+4Qa0ClqXlEV9HUimNf9A8PHMXB1Vx8PGtLovFpjt3gQiUKzNe0qa56xXsAHSM EgGA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=1e100.net;
+ s=20161025; h=x-gm-message-state:from:to:subject:date:message-id:in-reply-to
+ :references; bh=7SFX30sBZxeudQzG/dM0wtg84EOhPq4d7zhlv8xFo1w=;
+ b=PnCZVl9nrc0WrkXC2rqpeiVk/Y/Sl9BmjrSj0Ba1JPdosSHCcdW7zj9+/AA2fCiFMz
+ Hl9QnPuImOq3VX803fTSRORImb9GWb6/A+nQ1yCw3NOX0Eb4LgRkxtNqe0MOkhTsKRTE
+ kneCO5ImfQPKriu7hYlgjalAkF03yF+KoYufZ9YHrXE4bIoYvt9H9l8fheM+dqP7lj0i
+ NKQfjYQjQ/QtVgWKm/AWsHfMUeuanr06V4codiejQz7lU5bOTZkMpEcIPXtESwC8Amwg
+ ypC60k7I6YpKv4EYQDnmNpZdeNlPToELtRR+mzrcNhTHzP+2ojhX6v0z6Uo+5qrnT8LT gkUQ==
+X-Gm-Message-State: APjAAAXczZ8V5SHzVemNrSlc6DNImjwtWC4pTpQfD13BgQ2DGGK4Cvaq
+ ivB/gwOSGBETniZcBEJX34iT6oaQ
+X-Google-Smtp-Source:
+ APXvYqwpQ3dP92wTKn7lk8DHMRGrH38OCU3MyfTqA8e1HzKo/vkEGIV4B5a0r7+1+XUMh9QiMK7eTg==
+X-Received: by 2002:a17:902:296a:: with SMTP id
+ g97mr3073046plb.115.1561527400589; Tue, 25 Jun 2019 22:36:40 -0700 (PDT)
+X-BeenThere: spp@dpdk.org
+X-Mailman-Version: 2.1.15
+List-Id: Soft Patch Panel <spp.dpdk.org>
+List-Unsubscribe: <https://mails.dpdk.org/options/spp>,
+ <mailto:spp-request@dpdk.org?subject=unsubscribe>
+List-Archive: <http://mails.dpdk.org/archives/spp/>
+List-Post: <mailto:spp@dpdk.org>
+List-Help: <mailto:spp-request@dpdk.org?subject=help>
+List-Subscribe: <https://mails.dpdk.org/listinfo/spp>,
+ <mailto:spp-request@dpdk.org?subject=subscribe>
+X-TM-AS-MML: No
+Precedence: bulk
+Lines: 176
+X-TM-AS-GCONF: 00
+X-MD-STAMP: ON
+
+From: Yasufumi Ogawa <yasufum.o@gmail.com>
+
+As same as previous update, this patch is to rename members of enum
+`sppwk_lcore_status` which defines each of status of worker threads,
+such as idling or running or so.
+
+Signed-off-by: Yasufumi Ogawa <yasufum.o@gmail.com>
+---
+ src/pcap/cmd_runner.c                         |  2 +-
+ src/pcap/cmd_utils.c                          |  6 +++---
+ src/pcap/cmd_utils.h                          | 18 ++++++++---------
+ src/pcap/spp_pcap.c                           | 20 +++++++++----------
+ .../secondary/spp_worker_th/cmd_utils.h       |  2 +-
+ 5 files changed, 23 insertions(+), 25 deletions(-)
+
+diff --git a/src/pcap/cmd_runner.c b/src/pcap/cmd_runner.c
+index 48e8eba..5754841 100644
+--- a/src/pcap/cmd_runner.c
++++ b/src/pcap/cmd_runner.c
+@@ -71,7 +71,7 @@ spp_iterate_core_info(struct spp_iterate_core_params *params)
+ 	int lcore_id;
+ 
+ 	RTE_LCORE_FOREACH_SLAVE(lcore_id) {
+-		if (sppwk_get_lcore_status(lcore_id) == SPP_CORE_UNUSE)
++		if (sppwk_get_lcore_status(lcore_id) == SPPWK_LCORE_UNUSED)
+ 			continue;
+ 
+ 		ret = spp_pcap_get_core_status(lcore_id, params);
+diff --git a/src/pcap/cmd_utils.c b/src/pcap/cmd_utils.c
+index 66e6d05..69f0fa0 100644
+--- a/src/pcap/cmd_utils.c
++++ b/src/pcap/cmd_utils.c
+@@ -138,8 +138,8 @@ stop_process(int signal)
+ 
+ 	master_lcore = rte_get_master_lcore();
+ 	(g_mng_data_addr.p_core_info + master_lcore)->status =
+-							SPP_CORE_STOP_REQUEST;
+-	set_all_core_status(SPP_CORE_STOP_REQUEST);
++							SPPWK_LCORE_REQ_STOP;
++	set_all_core_status(SPPWK_LCORE_REQ_STOP);
+ }
+ 
+ /**
+@@ -194,7 +194,7 @@ init_core_info(void)
+ 	struct core_mng_info *p_core_info = g_mng_data_addr.p_core_info;
+ 	memset(p_core_info, 0x00,
+ 			sizeof(struct core_mng_info)*RTE_MAX_LCORE);
+-	set_all_core_status(SPP_CORE_STOP);
++	set_all_core_status(SPPWK_LCORE_STOPPED);
+ 	*g_mng_data_addr.p_capture_request = SPP_CAPTURE_IDLE;
+ 	*g_mng_data_addr.p_capture_status = SPP_CAPTURE_IDLE;
+ }
+diff --git a/src/pcap/cmd_utils.h b/src/pcap/cmd_utils.h
+index 9b7ae52..1b757f5 100644
+--- a/src/pcap/cmd_utils.h
++++ b/src/pcap/cmd_utils.h
+@@ -12,10 +12,9 @@
+ #define _SPPWK_CMD_UTILS_H_
+ 
+ /**
+- * @file
+- * SPP process
++ * @file cmd_utils.h
+  *
+- * SPP component common function.
++ * Command utility functions for SPP worker thread.
+  */
+ 
+ #include <netinet/in.h>
+@@ -34,14 +33,13 @@
+ #define SPP_CORE_STATUS_CHECK_MAX 5
+ 
+ /* TODO(yasufum) merge it to the same definition in shared/.../cmd_utils.h */
+-/* State on core */
++/* Status of a component on lcore. */
+ enum sppwk_lcore_status {
+-	SPP_CORE_UNUSE,        /**< Not used */
+-	SPP_CORE_STOP,         /**< Stopped */
+-	SPP_CORE_IDLE,         /**< Idling */
+-	SPP_CORE_FORWARD,      /**< Forwarding  */
+-	SPP_CORE_STOP_REQUEST, /**< Request stopping */
+-	SPP_CORE_IDLE_REQUEST  /**< Request idling */
++	SPPWK_LCORE_UNUSED,
++	SPPWK_LCORE_STOPPED,
++	SPPWK_LCORE_IDLING,
++	SPPWK_LCORE_RUNNING,
++	SPPWK_LCORE_REQ_STOP  /**< Request for stopping. */
+ };
+ 
+ /* State on capture */
+diff --git a/src/pcap/spp_pcap.c b/src/pcap/spp_pcap.c
+index 6762337..80e6aad 100644
+--- a/src/pcap/spp_pcap.c
++++ b/src/pcap/spp_pcap.c
+@@ -860,10 +860,10 @@ slave_main(void *arg __attribute__ ((unused)))
+ 					pcap_info->thread_no, lcore_id);
+ 		pcap_info->type = PCAP_WRITE;
+ 	}
+-	set_core_status(lcore_id, SPP_CORE_IDLE);
++	set_core_status(lcore_id, SPPWK_LCORE_IDLING);
+ 
+ 	while (1) {
+-		if (sppwk_get_lcore_status(lcore_id) == SPP_CORE_STOP_REQUEST) {
++		if (sppwk_get_lcore_status(lcore_id) == SPPWK_LCORE_REQ_STOP) {
+ 			if (pcap_info->status == SPP_CAPTURE_IDLE)
+ 				break;
+ 			if (pcap_info->type == PCAP_RECEIVE)
+@@ -882,7 +882,7 @@ slave_main(void *arg __attribute__ ((unused)))
+ 		}
+ 	}
+ 
+-	set_core_status(lcore_id, SPP_CORE_STOP);
++	set_core_status(lcore_id, SPPWK_LCORE_STOPPED);
+ 	RTE_LOG(INFO, SPP_PCAP,
+ 			"Terminated slave on lcore %d.\n", lcore_id);
+ 	return ret;
+@@ -1024,19 +1024,19 @@ main(int argc, char *argv[])
+ 
+ 		/* Set the status of main thread to idle */
+ 		master_lcore = rte_get_master_lcore();
+-		g_core_info[master_lcore].status = SPP_CORE_IDLE;
+-		int ret_wait = check_core_status_wait(SPP_CORE_IDLE);
++		g_core_info[master_lcore].status = SPPWK_LCORE_IDLING;
++		int ret_wait = check_core_status_wait(SPPWK_LCORE_IDLING);
+ 		if (unlikely(ret_wait != 0))
+ 			break;
+ 
+ 		/* Start secondary */
+-		set_all_core_status(SPP_CORE_FORWARD);
++		set_all_core_status(SPPWK_LCORE_RUNNING);
+ 		RTE_LOG(INFO, SPP_PCAP, "[Press Ctrl-C to quit ...]\n");
+ 
+ 		/* Enter loop for accepting commands */
+ 		int ret_do = 0;
+ 		while (likely(g_core_info[master_lcore].status !=
+-				SPP_CORE_STOP_REQUEST)) {
++				SPPWK_LCORE_REQ_STOP)) {
+ 			/* Receive command */
+ 			ret_do = spp_command_proc_do();
+ 			if (unlikely(ret_do != SPPWK_RET_OK))
+@@ -1049,7 +1049,7 @@ main(int argc, char *argv[])
+ 		}
+ 
+ 		if (unlikely(ret_do != SPPWK_RET_OK)) {
+-			set_all_core_status(SPP_CORE_STOP_REQUEST);
++			set_all_core_status(SPPWK_LCORE_REQ_STOP);
+ 			break;
+ 		}
+ 
+@@ -1058,8 +1058,8 @@ main(int argc, char *argv[])
+ 	}
+ 
+ 	/* Finalize to exit */
+-	g_core_info[master_lcore].status = SPP_CORE_STOP;
+-	int ret_core_end = check_core_status_wait(SPP_CORE_STOP);
++	g_core_info[master_lcore].status = SPPWK_LCORE_STOPPED;
++	int ret_core_end = check_core_status_wait(SPPWK_LCORE_STOPPED);
+ 	if (unlikely(ret_core_end != 0))
+ 		RTE_LOG(ERR, SPP_PCAP, "Failed to terminate master thread.\n");
+ 
+diff --git a/src/shared/secondary/spp_worker_th/cmd_utils.h b/src/shared/secondary/spp_worker_th/cmd_utils.h
+index 596ba5e..87c9b2c 100644
+--- a/src/shared/secondary/spp_worker_th/cmd_utils.h
++++ b/src/shared/secondary/spp_worker_th/cmd_utils.h
+@@ -80,7 +80,7 @@ enum sppwk_lcore_status {
+ 	SPPWK_LCORE_STOPPED,
+ 	SPPWK_LCORE_IDLING,
+ 	SPPWK_LCORE_RUNNING,
+-	SPPWK_LCORE_REQ_STOP  /**< Request stopping */
++	SPPWK_LCORE_REQ_STOP  /**< Request for stopping. */
+ };
+ 
+ /* Type of SPP worker thread. */
+-- 
+2.17.1
+
+

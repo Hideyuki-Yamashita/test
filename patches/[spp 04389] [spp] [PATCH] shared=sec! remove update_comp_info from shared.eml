@@ -1,0 +1,380 @@
+Return-path: <fw-yama-hd@pomail01.silk.ntt-tx.co.jp>
+Received: from zssg-mailmd102.ddreams.local
+ (zssg-mailmd102.ddreams.local [10.160.123.97]) by zssg-mailms320.ddreams.local
+ (NTT DoCoMo Mail System) with ESMTP id <0PTL015E0B181J50@NTTDoCoMo.co.jp> for
+ yamashita.hideyuki@ntt-tx.co.jp; Mon, 24 Jun 2019 15:22:20 +0900 (JST)
+Original-recipient: rfc822;yamashita.hideyuki@ntt-tx.co.jp
+Received: from smtp_saver-daemon.zssg-mailmd102.ddreams.local by
+ zssg-mailmd102.ddreams.local (dDREAMS) id <0PTL01C4MB187Q00@dDREAMS> for
+ yamashita.hideyuki@ntt-tx.co.jp (ORCPT yamashita.hideyuki@ntt-tx.co.jp); Mon,
+ 24 Jun 2019 15:22:20 +0900 (JST)
+Received: from zssg-mailmf103.ddreams.local
+ (zssg-mailmf900.ddreams.local [10.160.172.84]) by zssg-mailmd102.ddreams.local
+ (dDREAMS) with ESMTP id <0PTL00TYVB18U7B0@dDREAMS> for
+ yamashita.hideyuki@ntt-tx.co.jp (ORCPT yamashita.hideyuki@ntt-tx.co.jp); Mon,
+ 24 Jun 2019 15:22:20 +0900 (JST)
+Received: from zssg-mailmf103.ddreams.local (unknown [127.0.0.1])
+	by zssg-mailmf103.ddreams.local (Postfix) with ESMTP id 3628A7E6036	for
+ <yamashita.hideyuki@ntt-tx.co.jp>; Mon, 24 Jun 2019 15:22:20 +0900 (JST)
+Received: from zssg-mailmf103.ddreams.local (unknown [127.0.0.1])
+	by IMSVA (Postfix) with ESMTP id 3435A8E605A	for
+ <yamashita.hideyuki@ntt-tx.co.jp>; Mon, 24 Jun 2019 15:22:20 +0900 (JST)
+Received: from localhost (unknown [127.0.0.1])	by IMSVA (Postfix)
+ with SMTP id 28E8D8E605C	for <yamashita.hideyuki@ntt-tx.co.jp>; Mon,
+ 24 Jun 2019 15:22:20 +0900 (JST)
+X-IMSS-HAND-OFF-DIRECTIVE: localhost:10026
+Received: from zssg-mailmf103.ddreams.local (unknown [127.0.0.1])
+	by IMSVA (Postfix) with ESMTP id 630D98E6056	for
+ <yamashita.hideyuki@ntt-tx.co.jp>; Mon, 24 Jun 2019 15:22:19 +0900 (JST)
+Received: from pomail01.silk.ntt-tx.co.jp (unknown [10.160.183.139])
+	by zssg-mailmf103.ddreams.local (Postfix)
+ with ESMTPS	for <yamashita.hideyuki@ntt-tx.co.jp>; Mon,
+ 24 Jun 2019 15:22:19 +0900 (JST)
+Received: from pomail01.silk.ntt-tx.co.jp (localhost [127.0.0.1])
+	by pomail01.silk.ntt-tx.co.jp (unknown) with ESMTP id x5O6MJXV004891;	Mon,
+ 24 Jun 2019 15:22:19 +0900
+Received: (from yama-hd@localhost)	by pomail01.silk.ntt-tx.co.jp (unknown)
+ id x5O6MJMq004889;	Mon, 24 Jun 2019 15:22:19 +0900
+X-Authentication-warning: pomail01.silk.ntt-tx.co.jp: yama-hd set sender to
+ fw-yama-hd@pomail01.silk.ntt-tx.co.jp using -f
+Received: from imss04.silk.ntt-tx.co.jp
+ (imss04.silk.ntt-tx.co.jp [10.107.0.39])	by pomail01.silk.ntt-tx.co.jp
+ (unknown) with ESMTP id x5O6MJtP004886	for unknown; Mon,
+ 24 Jun 2019 15:22:19 +0900
+Received: from imss04.silk.ntt-tx.co.jp (localhost [127.0.0.1])
+ by imss04.silk.ntt-tx.co.jp (unknown) with ESMTP id x5O6MIuX029865 for
+ unknown; Mon, 24 Jun 2019 15:22:18 +0900
+Received: from ml01.silk.ntt-tx.co.jp (ml01.silk.ntt-tx.co.jp [10.107.0.230])
+ by imss04.silk.ntt-tx.co.jp (unknown) with ESMTP id x5O6MIF0029860; Mon,
+ 24 Jun 2019 15:22:18 +0900
+Received: from ml01.silk.ntt-tx.co.jp (localhost [127.0.0.1])
+	by ml01.silk.ntt-tx.co.jp (unknown) with ESMTP id x5O6MIrr010735;	Mon,
+ 24 Jun 2019 15:22:18 +0900
+Received: from imss02.silk.ntt-tx.co.jp
+ (imss02.silk.ntt-tx.co.jp [10.107.0.127])	by ml01.silk.ntt-tx.co.jp (unknown)
+ with ESMTP id x5O6MIeZ010731	for unknown; Mon, 24 Jun 2019 15:22:18 +0900
+Received: from imss02.silk.ntt-tx.co.jp (localhost [127.0.0.1])
+ by imss02.silk.ntt-tx.co.jp (unknown) with ESMTP id x5O6MIDH016924 for
+ unknown; Mon, 24 Jun 2019 15:22:18 +0900
+Received: from mail01.ics.ntt-tx.co.jp (mail01.ics.ntt-tx.co.jp [10.254.2.67])
+ by imss02.silk.ntt-tx.co.jp (unknown) with ESMTP id x5O6MIY4016920 for
+ unknown; Mon, 24 Jun 2019 15:22:18 +0900
+Received: from dpdk.org (dpdk.org [92.243.14.124])	by mail01.ics.ntt-tx.co.jp
+ (unknown) with SMTP id x5O6MBXj015253	for unknown; Mon,
+ 24 Jun 2019 15:22:17 +0900
+Received: from [92.243.14.124] (localhost [127.0.0.1])	by dpdk.org (Postfix)
+ with ESMTP id 2BBE51BF4B;	Mon, 24 Jun 2019 08:22:11 +0200 (CEST)
+Received: from mail-pg1-f171.google.com
+ (mail-pg1-f171.google.com [209.85.215.171]) by dpdk.org (Postfix)
+ with ESMTP id AB4981BF48 for <spp@dpdk.org>; Mon,
+ 24 Jun 2019 08:22:09 +0200 (CEST)
+Received: by mail-pg1-f171.google.com with SMTP id m4so5928157pgk.0 for
+ <spp@dpdk.org>; Sun, 23 Jun 2019 23:22:09 -0700 (PDT)
+Received: from localhost.localdomain ([192.47.164.146])
+ by smtp.gmail.com with ESMTPSA id t29sm14724946pfq.156.2019.06.23.23.22.07
+ (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128); Sun,
+ 23 Jun 2019 23:22:08 -0700 (PDT)
+Date: Mon, 24 Jun 2019 15:22:03 +0900
+From: yasufum.o@gmail.com
+Subject: [spp 04389] [spp] [PATCH] shared/sec: remove update_comp_info from
+ shared
+Sender: spp <spp-bounces@dpdk.org>
+To: spp@dpdk.org, ferruh.yigit@intel.com, yasufum.o@gmail.com
+Message-id: <20190624062203.22560-1-yasufum.o@gmail.com>
+X-ML-Name: unknown
+X-Mail-Count: 04389
+X-MLServer: unknown
+X-ML-Info: mailing list service
+X-Mailer: git-send-email 2.17.1
+Authentication-results: mail01.ics.ntt-tx.co.jp; spf=pass
+ smtp.mailfrom=spp-bounces@dpdk.org
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
+ h=from:to:subject:date:message-id;
+ bh=GwlHVwC0mTsc9iOe1zl6zeQA58WF4nzrsqqj39iztWY=;
+ b=Ush66NJO4nNLvUYqaB1ZQS7BjWj1Mcn8DQEvu9Sonxe+JHo1eEp8Mg77afkwX9pn/C
+ P3EXuULckAxUfswPof/3vcmYaiHSLerK0wGRUOC4tCGOdVbGkt2Mf1wXapf5ku0lK9r6
+ rtMQuGU9q2xW906tiB7I7aj6R9ELTTgDBHjnNdyhjO3ZfJAq/kBzpqJkfJZBdzzmUV6o
+ PZZNmSmraiXyvYAObYtuwJf8TnHTcZ+H9x4FzxSpc08EwJ9Nipuf5VWLsLWDm7z6Cpbp
+ VMLnqCvN16kQgaU/YbO/avjx3REz3acIHpAh8/j8Z4azQDoXTtntfFabvrlL/pvNsEt5 HeGQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=1e100.net;
+ s=20161025; h=x-gm-message-state:from:to:subject:date:message-id;
+ bh=GwlHVwC0mTsc9iOe1zl6zeQA58WF4nzrsqqj39iztWY=;
+ b=PSigfKxxu5RKR10lxVLFanSAxexINUjBds6IARnCc2hQiK7QOKDjZukcqKItOZDK4F
+ yDvQdY5yB5+huE9BhWs6E1P9vOWFIcui/we6BcqA3BoAS/ZApZsu1B6KTAjygLUxOsLF
+ 8HBrIxGSfADca5STW0mkSq3+vYXuqwwGasHHTttFsfRUk7SruKeoo7Lam5Vvgd+0DqAU
+ pjlfkN+tZssVcJGmrWNgUyw4PI6quGXtGP6TTFQlgBUcCY11KC0uRs4RuvgirW3aO5Vc
+ RePQ7/Vr5iwmgzdJ8o6xc83jCDqmy1ByfMpW2CdN1aBcqqzBzmx8k9P0UJ35kJLTMs5u jyTA==
+X-Gm-Message-State: APjAAAU/QBsqYuR1K3cvO1vXN39Fj9W8xMom5mYF7GaE0ZbZ61n3elW/
+ WFmEKLIC2ZMRs7vm32ErCXWE5MUs
+X-Google-Smtp-Source:
+ APXvYqyHHbC1FUI5J14XZhUJvmOnyfqpTJF+2g8gkLlZN0LziGldznSOxIixxVBNwGWOGihAR9C8Rw==
+X-Received: by 2002:a63:b547:: with SMTP id u7mr32134017pgo.322.1561357328676;
+ Sun, 23 Jun 2019 23:22:08 -0700 (PDT)
+X-BeenThere: spp@dpdk.org
+X-Mailman-Version: 2.1.15
+List-Id: Soft Patch Panel <spp.dpdk.org>
+List-Unsubscribe: <https://mails.dpdk.org/options/spp>,
+ <mailto:spp-request@dpdk.org?subject=unsubscribe>
+List-Archive: <http://mails.dpdk.org/archives/spp/>
+List-Post: <mailto:spp@dpdk.org>
+List-Help: <mailto:spp-request@dpdk.org?subject=help>
+List-Subscribe: <https://mails.dpdk.org/listinfo/spp>,
+ <mailto:spp-request@dpdk.org?subject=subscribe>
+X-TM-AS-MML: No
+Precedence: bulk
+Lines: 251
+X-TM-AS-GCONF: 00
+X-MD-STAMP: ON
+
+From: Yasufumi Ogawa <yasufum.o@gmail.com>
+
+This update is to move update_comp_info() from shared dir to each of
+workers because it has ifdef switches to select each of worker specific
+tasks. Ifdef switches are removed by this update.
+
+Signed-off-by: Yasufumi Ogawa <yasufum.o@gmail.com>
+---
+ src/mirror/mir_cmd_runner.c                   | 29 +++++++++++++
+ .../secondary/spp_worker_th/cmd_runner.c      | 10 +++--
+ .../secondary/spp_worker_th/cmd_utils.c       | 42 +------------------
+ .../secondary/spp_worker_th/cmd_utils.h       |  8 ----
+ .../secondary/spp_worker_th/mirror_deps.h     | 10 +++++
+ src/shared/secondary/spp_worker_th/vf_deps.h  | 10 +++++
+ src/vf/vf_cmd_runner.c                        | 34 +++++++++++++++
+ 7 files changed, 91 insertions(+), 52 deletions(-)
+
+diff --git a/src/mirror/mir_cmd_runner.c b/src/mirror/mir_cmd_runner.c
+index 461e85c..0cbd79d 100644
+--- a/src/mirror/mir_cmd_runner.c
++++ b/src/mirror/mir_cmd_runner.c
+@@ -372,3 +372,32 @@ add_core(const char *name, char **output,
+ 	spp_strbuf_free(itr_params.output);
+ 	return ret;
+ }
++
++/* Activate temporarily stored component info while flushing. */
++int
++update_comp_info(struct sppwk_comp_info *p_comp_info, int *p_change_comp)
++{
++	int ret = 0;
++	int cnt = 0;
++	struct sppwk_comp_info *comp_info = NULL;
++
++	for (cnt = 0; cnt < RTE_MAX_LCORE; cnt++) {
++		if (*(p_change_comp + cnt) == 0)
++			continue;
++
++		comp_info = (p_comp_info + cnt);
++		spp_port_ability_update(comp_info);
++
++		ret = update_mirror(comp_info);
++		RTE_LOG(DEBUG, MIR_CMD_RUNNER, "Update mirror.\n");
++
++		if (unlikely(ret < 0)) {
++			RTE_LOG(ERR, MIR_CMD_RUNNER, "Flush error. "
++					"( component = %s, type = %d)\n",
++					comp_info->name,
++					comp_info->wk_type);
++			return SPP_RET_NG;
++		}
++	}
++	return SPP_RET_OK;
++}
+diff --git a/src/shared/secondary/spp_worker_th/cmd_runner.c b/src/shared/secondary/spp_worker_th/cmd_runner.c
+index 64aef19..68436f3 100644
+--- a/src/shared/secondary/spp_worker_th/cmd_runner.c
++++ b/src/shared/secondary/spp_worker_th/cmd_runner.c
+@@ -34,10 +34,12 @@ int
+ flush_cmd(void)
+ {
+ 	int ret;
+-	struct cancel_backup_info *backup_info = NULL;
++	int *p_change_comp;
++	struct sppwk_comp_info *p_comp_info;
++	struct cancel_backup_info *backup_info;
+ 
+-	sppwk_get_mng_data(NULL, NULL, NULL,
+-				NULL, NULL, NULL, &backup_info);
++	sppwk_get_mng_data(NULL, NULL, &p_comp_info,
++				NULL, NULL, &p_change_comp, &backup_info);
+ 
+ 	ret = update_port_info();
+ 	if (ret < SPP_RET_OK)
+@@ -47,7 +49,7 @@ flush_cmd(void)
+ 	update_lcore_info();
+ 
+ 	/* TODO(yasufum) confirm why no checking for returned value. */
+-	ret = update_comp_info();
++	ret = update_comp_info(p_comp_info, p_change_comp);
+ 
+ 	backup_mng_info(backup_info);
+ 	return ret;
+diff --git a/src/shared/secondary/spp_worker_th/cmd_utils.c b/src/shared/secondary/spp_worker_th/cmd_utils.c
+index 098c8c1..5a089c6 100644
+--- a/src/shared/secondary/spp_worker_th/cmd_utils.c
++++ b/src/shared/secondary/spp_worker_th/cmd_utils.c
+@@ -25,13 +25,14 @@
+ #define RTE_LOGTYPE_APP RTE_LOGTYPE_USER1
+ 
+ /* A set of pointers of management data */
++/* TODO(yasufum) change names start with `p_change` because it wrong meanig. */
+ struct mng_data_info {
+ 	struct startup_param *p_startup_param;
+ 	struct iface_info *p_iface_info;
+ 	struct sppwk_comp_info *p_component_info;
+ 	struct core_mng_info *p_core_info;
+ 	int *p_change_core;
+-	int *p_change_component;
++	int *p_change_component;  /* Set of flags for udpated components */
+ 	struct cancel_backup_info *p_backup_info;
+ 	unsigned int main_lcore_id;
+ };
+@@ -874,45 +875,6 @@ update_lcore_info(void)
+ 	}
+ }
+ 
+-/* Activate temporarily stored component info while flushing. */
+-int
+-update_comp_info(void)
+-{
+-	int ret = 0;
+-	int cnt = 0;
+-	struct sppwk_comp_info *comp_info = NULL;
+-	int *p_change_comp = g_mng_data.p_change_component;
+-	struct sppwk_comp_info *p_comp_info = g_mng_data.p_component_info;
+-
+-	for (cnt = 0; cnt < RTE_MAX_LCORE; cnt++) {
+-		if (*(p_change_comp + cnt) == 0)
+-			continue;
+-
+-		comp_info = (p_comp_info + cnt);
+-		spp_port_ability_update(comp_info);
+-
+-#ifdef SPP_VF_MODULE
+-		if (comp_info->wk_type == SPPWK_TYPE_CLS)
+-			ret = update_classifier(comp_info);
+-		else
+-			ret = update_forwarder(comp_info);
+-#endif /* SPP_VF_MODULE */
+-
+-#ifdef SPP_MIRROR_MODULE
+-		ret = update_mirror(comp_info);
+-#endif /* SPP_MIRROR_MODULE */
+-
+-		if (unlikely(ret < 0)) {
+-			RTE_LOG(ERR, APP, "Flush error. "
+-					"( component = %s, type = %d)\n",
+-					comp_info->name,
+-					comp_info->wk_type);
+-			return SPP_RET_NG;
+-		}
+-	}
+-	return SPP_RET_OK;
+-}
+-
+ /**
+  * Generate a formatted string of combination from interface type and
+  * number and assign to given 'port'
+diff --git a/src/shared/secondary/spp_worker_th/cmd_utils.h b/src/shared/secondary/spp_worker_th/cmd_utils.h
+index f9d7015..b0009c3 100644
+--- a/src/shared/secondary/spp_worker_th/cmd_utils.h
++++ b/src/shared/secondary/spp_worker_th/cmd_utils.h
+@@ -521,14 +521,6 @@ int update_port_info(void);
+ /* Activate temporarily stored lcore info while flushing. */
+ void update_lcore_info(void);
+ 
+-/**
+- * Activate temporarily stored component info while flushing.
+- *
+- * @retval SPP_RET_OK If succeeded.
+- * @retval SPP_RET_NG If failed.
+- */
+-int update_comp_info(void);
+-
+ /**
+  * Port type to string.
+  *
+diff --git a/src/shared/secondary/spp_worker_th/mirror_deps.h b/src/shared/secondary/spp_worker_th/mirror_deps.h
+index 2cf0fd9..ef32697 100644
+--- a/src/shared/secondary/spp_worker_th/mirror_deps.h
++++ b/src/shared/secondary/spp_worker_th/mirror_deps.h
+@@ -22,4 +22,14 @@ int add_core(const char *name, char **output,
+  */
+ int update_mirror(struct sppwk_comp_info *wk_comp_info);
+ 
++/**
++ * Activate temporarily stored component info while flushing.
++ *
++ * @param[in] p_comp_info Info of component.
++ * @param[in] p_change_comp Pointer to a set of Flags for udpated component.
++ * @retval SPP_RET_OK If succeeded.
++ * @retval SPP_RET_NG If failed.
++ */
++int update_comp_info(struct sppwk_comp_info *p_comp_info, int *p_change_comp);
++
+ #endif  /* __SPP_WORKER_TH_MIRROR_DEPS_H__ */
+diff --git a/src/shared/secondary/spp_worker_th/vf_deps.h b/src/shared/secondary/spp_worker_th/vf_deps.h
+index 2ec700e..ded5b1d 100644
+--- a/src/shared/secondary/spp_worker_th/vf_deps.h
++++ b/src/shared/secondary/spp_worker_th/vf_deps.h
+@@ -90,4 +90,14 @@ void uninit_component_info(struct cls_comp_info *cmp_info);
+ int add_classifier_table_val(
+ 		struct spp_iterate_classifier_table_params *params);
+ 
++/**
++ * Activate temporarily stored component info while flushing.
++ *
++ * @param[in] p_comp_info Info of component.
++ * @param[in] p_change_comp Pointer to a set of Flags for udpated component.
++ * @retval SPP_RET_OK If succeeded.
++ * @retval SPP_RET_NG If failed.
++ */
++int update_comp_info(struct sppwk_comp_info *p_comp_info, int *p_change_comp);
++
+ #endif  /* _SPPWK_TH_VF_DEPS_H_ */
+diff --git a/src/vf/vf_cmd_runner.c b/src/vf/vf_cmd_runner.c
+index 182a917..e832e18 100644
+--- a/src/vf/vf_cmd_runner.c
++++ b/src/vf/vf_cmd_runner.c
+@@ -501,3 +501,37 @@ add_core(const char *name, char **output,
+ 	spp_strbuf_free(itr_params.output);
+ 	return ret;
+ }
++
++/* Activate temporarily stored component info while flushing. */
++int
++update_comp_info(struct sppwk_comp_info *p_comp_info, int *p_change_comp)
++{
++	int ret = 0;
++	int cnt = 0;
++	struct sppwk_comp_info *comp_info = NULL;
++
++	for (cnt = 0; cnt < RTE_MAX_LCORE; cnt++) {
++		if (*(p_change_comp + cnt) == 0)
++			continue;
++
++		comp_info = (p_comp_info + cnt);
++		spp_port_ability_update(comp_info);
++
++		if (comp_info->wk_type == SPPWK_TYPE_CLS) {
++			ret = update_classifier(comp_info);
++			RTE_LOG(DEBUG, VF_CMD_RUNNER, "Update classifier.\n");
++		} else {
++			ret = update_forwarder(comp_info);
++			RTE_LOG(DEBUG, VF_CMD_RUNNER, "Update forwarder.\n");
++		}
++
++		if (unlikely(ret < 0)) {
++			RTE_LOG(ERR, VF_CMD_RUNNER, "Flush error. "
++					"( component = %s, type = %d)\n",
++					comp_info->name,
++					comp_info->wk_type);
++			return SPP_RET_NG;
++		}
++	}
++	return SPP_RET_OK;
++}
+-- 
+2.17.1
+
+

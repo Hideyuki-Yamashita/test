@@ -1,0 +1,156 @@
+Return-path: <fw-yama-hd@pomail01.silk.ntt-tx.co.jp>
+Received: from zssg-mailmd101.ddreams.local
+ (zssg-mailmd101.ddreams.local [10.160.123.96]) by zssg-mailms320.ddreams.local
+ (NTT DoCoMo Mail System) with ESMTP id <0PTQ0181HQDZMX10@NTTDoCoMo.co.jp> for
+ yamashita.hideyuki@ntt-tx.co.jp; Thu, 27 Jun 2019 13:41:59 +0900 (JST)
+Original-recipient: rfc822;yamashita.hideyuki@ntt-tx.co.jp
+Received: from smtp_saver-daemon.zssg-mailmd101.ddreams.local by
+ zssg-mailmd101.ddreams.local (dDREAMS) id <0PTQ01812QDZ9P00@dDREAMS> for
+ yamashita.hideyuki@ntt-tx.co.jp (ORCPT yamashita.hideyuki@ntt-tx.co.jp); Thu,
+ 27 Jun 2019 13:41:59 +0900 (JST)
+Received: from zssg-mailmf104.ddreams.local
+ (zssg-mailmf900.ddreams.local [10.160.172.84]) by zssg-mailmd101.ddreams.local
+ (dDREAMS) with ESMTP id <0PTQ00RBQQDZL490@dDREAMS> for
+ yamashita.hideyuki@ntt-tx.co.jp (ORCPT yamashita.hideyuki@ntt-tx.co.jp); Thu,
+ 27 Jun 2019 13:41:59 +0900 (JST)
+Received: from zssg-mailmf104.ddreams.local (unknown [127.0.0.1])
+	by zssg-mailmf104.ddreams.local (Postfix) with ESMTP id C8AD07E6038	for
+ <yamashita.hideyuki@ntt-tx.co.jp>; Thu, 27 Jun 2019 13:41:59 +0900 (JST)
+Received: from zssg-mailmf104.ddreams.local (unknown [127.0.0.1])
+	by IMSVA (Postfix) with ESMTP id C791C8E6063	for
+ <yamashita.hideyuki@ntt-tx.co.jp>; Thu, 27 Jun 2019 13:41:59 +0900 (JST)
+Received: from localhost (unknown [127.0.0.1])	by IMSVA (Postfix)
+ with SMTP id C64548E6060	for <yamashita.hideyuki@ntt-tx.co.jp>; Thu,
+ 27 Jun 2019 13:41:59 +0900 (JST)
+X-IMSS-HAND-OFF-DIRECTIVE: localhost:10026
+Received: from zssg-mailmf104.ddreams.local (unknown [127.0.0.1])
+	by IMSVA (Postfix) with ESMTP id 20C0D8E6050	for
+ <yamashita.hideyuki@ntt-tx.co.jp>; Thu, 27 Jun 2019 13:41:59 +0900 (JST)
+Received: from pomail01.silk.ntt-tx.co.jp (unknown [10.160.183.139])
+	by zssg-mailmf104.ddreams.local (Postfix)
+ with ESMTPS	for <yamashita.hideyuki@ntt-tx.co.jp>; Thu,
+ 27 Jun 2019 13:41:59 +0900 (JST)
+Received: from pomail01.silk.ntt-tx.co.jp (localhost [127.0.0.1])
+	by pomail01.silk.ntt-tx.co.jp (unknown) with ESMTP id x5R4fw70030694;	Thu,
+ 27 Jun 2019 13:41:58 +0900
+Received: (from yama-hd@localhost)	by pomail01.silk.ntt-tx.co.jp (unknown)
+ id x5R4fw8r030693;	Thu, 27 Jun 2019 13:41:58 +0900
+X-Authentication-warning: pomail01.silk.ntt-tx.co.jp: yama-hd set sender to
+ fw-yama-hd@pomail01.silk.ntt-tx.co.jp using -f
+Received: from imss04.silk.ntt-tx.co.jp
+ (imss04.silk.ntt-tx.co.jp [10.107.0.39])	by pomail01.silk.ntt-tx.co.jp
+ (unknown) with ESMTP id x5R4fwCe030690	for unknown; Thu,
+ 27 Jun 2019 13:41:58 +0900
+Received: from imss04.silk.ntt-tx.co.jp (localhost [127.0.0.1])
+ by imss04.silk.ntt-tx.co.jp (unknown) with ESMTP id x5R4fw7G030811 for
+ unknown; Thu, 27 Jun 2019 13:41:58 +0900
+Received: from ml01.silk.ntt-tx.co.jp (ml01.silk.ntt-tx.co.jp [10.107.0.230])
+ by imss04.silk.ntt-tx.co.jp (unknown) with ESMTP id x5R4fwJV030808; Thu,
+ 27 Jun 2019 13:41:58 +0900
+Received: from ml01.silk.ntt-tx.co.jp (localhost [127.0.0.1])
+	by ml01.silk.ntt-tx.co.jp (unknown) with ESMTP id x5R4fwQu012421;	Thu,
+ 27 Jun 2019 13:41:58 +0900
+Received: from imss02.silk.ntt-tx.co.jp
+ (imss02.silk.ntt-tx.co.jp [10.107.0.127])	by ml01.silk.ntt-tx.co.jp (unknown)
+ with ESMTP id x5R4fwHS012417	for unknown; Thu, 27 Jun 2019 13:41:58 +0900
+Received: from imss02.silk.ntt-tx.co.jp (localhost [127.0.0.1])
+ by imss02.silk.ntt-tx.co.jp (unknown) with ESMTP id x5R4fv6j017270 for
+ unknown; Thu, 27 Jun 2019 13:41:57 +0900
+Received: from mail01.ics.ntt-tx.co.jp (mail01.ics.ntt-tx.co.jp [10.254.2.67])
+ by imss02.silk.ntt-tx.co.jp (unknown) with ESMTP id x5R4fvdU017264 for
+ unknown; Thu, 27 Jun 2019 13:41:57 +0900
+Received: from dpdk.org (dpdk.org [92.243.14.124])	by mail01.ics.ntt-tx.co.jp
+ (unknown) with SMTP id x5R4fpQj010548	for unknown; Thu,
+ 27 Jun 2019 13:41:57 +0900
+Received: from [92.243.14.124] (localhost [127.0.0.1])	by dpdk.org (Postfix)
+ with ESMTP id 6FDCA49E0;	Thu, 27 Jun 2019 06:41:45 +0200 (CEST)
+Received: from mail-pg1-f194.google.com
+ (mail-pg1-f194.google.com [209.85.215.194]) by dpdk.org (Postfix)
+ with ESMTP id 68B09325F for <spp@dpdk.org>; Thu,
+ 27 Jun 2019 06:41:43 +0200 (CEST)
+Received: by mail-pg1-f194.google.com with SMTP id s27so410450pgl.2 for
+ <spp@dpdk.org>; Wed, 26 Jun 2019 21:41:43 -0700 (PDT)
+Received: from localhost.localdomain ([192.47.164.146])
+ by smtp.gmail.com with ESMTPSA id w197sm1161728pfd.41.2019.06.26.21.41.41
+ (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128); Wed,
+ 26 Jun 2019 21:41:42 -0700 (PDT)
+Date: Thu, 27 Jun 2019 13:41:36 +0900
+From: yasufum.o@gmail.com
+Subject: [spp 04451] [spp] [PATCH 1/2] docs: fix typo of command example of
+ spp_mirror
+Sender: spp <spp-bounces@dpdk.org>
+To: spp@dpdk.org, ferruh.yigit@intel.com, yasufum.o@gmail.com
+Message-id: <20190627044137.15165-2-yasufum.o@gmail.com>
+In-reply-to: <20190627044137.15165-1-yasufum.o@gmail.com>
+References: <20190627044137.15165-1-yasufum.o@gmail.com>
+X-ML-Name: unknown
+X-Mail-Count: 04451
+X-MLServer: unknown
+X-ML-Info: mailing list service
+X-Mailer: git-send-email 2.17.1
+Authentication-results: mail01.ics.ntt-tx.co.jp; spf=pass
+ smtp.mailfrom=spp-bounces@dpdk.org
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
+ h=from:to:subject:date:message-id:in-reply-to:references;
+ bh=9Xb5Q86jJeMXHL1rOOZc0ZX1HhJfyk6QMNuWSD8mrmQ=;
+ b=bOXg8TDT51TK8ME3dADyXMdrDiG7i0it/ytHx7bdDarOLPDucy2gMHUsgukdYHHu71
+ OJlWGMcK4RsnDrZHVg/KUulHsiP+QLglrtEzJ1vpIkpoK2aVP89HtfpEW5N1dkyqKNO+
+ ARvA68RbuwfUNJXTbRUS0naG7t/LpjJdmOFcPiD8bjkIteIMVxf/PJIxpVxQUKmBQ3j1
+ kdkVrjvqiRtq+JKSPFnIqPQmieIjqD0qF5y9dwnraWvfexoYsDWi4J/e3rBuA08TZEsG
+ xHxQd45//24SBugAdYzAYfPN1joTaEpe3h0aietHx0KcHgCKBqz5/gJHbkJ/+FebxEQe PJmw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=1e100.net;
+ s=20161025; h=x-gm-message-state:from:to:subject:date:message-id:in-reply-to
+ :references; bh=9Xb5Q86jJeMXHL1rOOZc0ZX1HhJfyk6QMNuWSD8mrmQ=;
+ b=TxsHmPT1ms3oRnHGZ1P/Wv6ZckRL73R51GxXg8taXWd4lFXEsJrsHhOmcYruqsY3RG
+ bkixUspZcm/MipHSmplzXd4q8vM3KxC224wU4SRdMR0bizgVjzKfdAb2idVQat0jzpwA
+ 0gtlFZFyEFdrICOu64CmuiyuDcDTBvbz8Hjsv0y6+BiGsSJJIUVYMv1mF62Isx5QP+yA
+ 3ooHpbbNZh81gzycUahQ5KLyyUHO7hY4SRem6SQ/ZoKsJzHZFSbB7HeMDnu7CRl6VaDH
+ aBHfDisouDLN1eTRmF9rCTLm8zCQOiqUS+r5SlzlXVlAd1Je6RljqTfhzW0Tg4yeEIdB qeUQ==
+X-Gm-Message-State: APjAAAV7b0WiPMSCT5FoDG26qZNAChEhmq/IVSlgA7CqfYBWvxd2DRMh
+ hU6zrZAcjG8Caa0fh/mS7+moTXVy
+X-Google-Smtp-Source:
+ APXvYqxEStb/pEo34qtRbKmfxbYhZ5vKZM7j/cVMUS4/knCvO+dhl3qAbKo7x+t0dWX0AIvNgqD6UQ==
+X-Received: by 2002:a63:c607:: with SMTP id w7mr1709027pgg.379.1561610502355;
+ Wed, 26 Jun 2019 21:41:42 -0700 (PDT)
+X-BeenThere: spp@dpdk.org
+X-Mailman-Version: 2.1.15
+List-Id: Soft Patch Panel <spp.dpdk.org>
+List-Unsubscribe: <https://mails.dpdk.org/options/spp>,
+ <mailto:spp-request@dpdk.org?subject=unsubscribe>
+List-Archive: <http://mails.dpdk.org/archives/spp/>
+List-Post: <mailto:spp@dpdk.org>
+List-Help: <mailto:spp-request@dpdk.org?subject=help>
+List-Subscribe: <https://mails.dpdk.org/listinfo/spp>,
+ <mailto:spp-request@dpdk.org?subject=subscribe>
+X-TM-AS-MML: No
+Precedence: bulk
+Lines: 25
+X-TM-AS-GCONF: 00
+X-MD-STAMP: ON
+
+From: Yasufumi Ogawa <yasufum.o@gmail.com>
+
+This update is to correct option for vhost client mode.
+
+Signed-off-by: Yasufumi Ogawa <yasufum.o@gmail.com>
+---
+ docs/guides/gsg/howto_use.rst | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/docs/guides/gsg/howto_use.rst b/docs/guides/gsg/howto_use.rst
+index 21633d9..c6023ee 100644
+--- a/docs/guides/gsg/howto_use.rst
++++ b/docs/guides/gsg/howto_use.rst
+@@ -409,7 +409,7 @@ and options are same as ``spp_vf``.
+       -- \
+       --client-id 1 \
+       -s 192.168.1.100:6666 \
+-      -vhost-client
++      --vhost-client
+ 
+ EAL options are the same as primary process. Here is a list of application
+ options of ``spp_mirror``.
+-- 
+2.17.1
+
+

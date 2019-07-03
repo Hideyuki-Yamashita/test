@@ -1,0 +1,327 @@
+Return-path: <fw-yama-hd@pomail01.silk.ntt-tx.co.jp>
+Received: from zssg-mailmd101.ddreams.local
+ (zssg-mailmd101.ddreams.local [10.160.123.96]) by zssg-mailms320.ddreams.local
+ (NTT DoCoMo Mail System) with ESMTP id <0PTQ018S5QCZMX00@NTTDoCoMo.co.jp> for
+ yamashita.hideyuki@ntt-tx.co.jp; Thu, 27 Jun 2019 13:41:23 +0900 (JST)
+Original-recipient: rfc822;yamashita.hideyuki@ntt-tx.co.jp
+Received: from smtp_saver-daemon.zssg-mailmd101.ddreams.local by
+ zssg-mailmd101.ddreams.local (dDREAMS) id <0PTQ0172WQCZ7M00@dDREAMS> for
+ yamashita.hideyuki@ntt-tx.co.jp (ORCPT yamashita.hideyuki@ntt-tx.co.jp); Thu,
+ 27 Jun 2019 13:41:23 +0900 (JST)
+Received: from zssg-mailmf104.ddreams.local
+ (zssg-mailmf900.ddreams.local [10.160.172.84]) by zssg-mailmd101.ddreams.local
+ (dDREAMS) with ESMTP id <0PTQ00RT8QCZL480@dDREAMS> for
+ yamashita.hideyuki@ntt-tx.co.jp (ORCPT yamashita.hideyuki@ntt-tx.co.jp); Thu,
+ 27 Jun 2019 13:41:23 +0900 (JST)
+Received: from zssg-mailmf104.ddreams.local (unknown [127.0.0.1])
+	by zssg-mailmf104.ddreams.local (Postfix) with ESMTP id 77CDC7E6032	for
+ <yamashita.hideyuki@ntt-tx.co.jp>; Thu, 27 Jun 2019 13:41:23 +0900 (JST)
+Received: from zssg-mailmf104.ddreams.local (unknown [127.0.0.1])
+	by IMSVA (Postfix) with ESMTP id 76B038E6056	for
+ <yamashita.hideyuki@ntt-tx.co.jp>; Thu, 27 Jun 2019 13:41:23 +0900 (JST)
+Received: from localhost (unknown [127.0.0.1])	by IMSVA (Postfix)
+ with SMTP id 6BFA68E605D	for <yamashita.hideyuki@ntt-tx.co.jp>; Thu,
+ 27 Jun 2019 13:41:23 +0900 (JST)
+X-IMSS-HAND-OFF-DIRECTIVE: localhost:10026
+Received: from zssg-mailmf104.ddreams.local (unknown [127.0.0.1])
+	by IMSVA (Postfix) with ESMTP id BE3CE8E6050	for
+ <yamashita.hideyuki@ntt-tx.co.jp>; Thu, 27 Jun 2019 13:41:22 +0900 (JST)
+Received: from pomail01.silk.ntt-tx.co.jp (unknown [10.160.183.139])
+	by zssg-mailmf104.ddreams.local (Postfix)
+ with ESMTPS	for <yamashita.hideyuki@ntt-tx.co.jp>; Thu,
+ 27 Jun 2019 13:41:22 +0900 (JST)
+Received: from pomail01.silk.ntt-tx.co.jp (localhost [127.0.0.1])
+	by pomail01.silk.ntt-tx.co.jp (unknown) with ESMTP id x5R4fMhb030440;	Thu,
+ 27 Jun 2019 13:41:22 +0900
+Received: (from yama-hd@localhost)	by pomail01.silk.ntt-tx.co.jp (unknown)
+ id x5R4fMU3030439;	Thu, 27 Jun 2019 13:41:22 +0900
+X-Authentication-warning: pomail01.silk.ntt-tx.co.jp: yama-hd set sender to
+ fw-yama-hd@pomail01.silk.ntt-tx.co.jp using -f
+Received: from imss04.silk.ntt-tx.co.jp
+ (imss04.silk.ntt-tx.co.jp [10.107.0.39])	by pomail01.silk.ntt-tx.co.jp
+ (unknown) with ESMTP id x5R4fMgP030436	for unknown; Thu,
+ 27 Jun 2019 13:41:22 +0900
+Received: from imss04.silk.ntt-tx.co.jp (localhost [127.0.0.1])
+ by imss04.silk.ntt-tx.co.jp (unknown) with ESMTP id x5R4fMmp030417 for
+ unknown; Thu, 27 Jun 2019 13:41:22 +0900
+Received: from ml01.silk.ntt-tx.co.jp (ml01.silk.ntt-tx.co.jp [10.107.0.230])
+ by imss04.silk.ntt-tx.co.jp (unknown) with ESMTP id x5R4fMq9030414; Thu,
+ 27 Jun 2019 13:41:22 +0900
+Received: from ml01.silk.ntt-tx.co.jp (localhost [127.0.0.1])
+	by ml01.silk.ntt-tx.co.jp (unknown) with ESMTP id x5R4fLQT012353;	Thu,
+ 27 Jun 2019 13:41:21 +0900
+Received: from imss02.silk.ntt-tx.co.jp
+ (imss02.silk.ntt-tx.co.jp [10.107.0.127])	by ml01.silk.ntt-tx.co.jp (unknown)
+ with ESMTP id x5R4fLjV012349	for unknown; Thu, 27 Jun 2019 13:41:21 +0900
+Received: from imss02.silk.ntt-tx.co.jp (localhost [127.0.0.1])
+ by imss02.silk.ntt-tx.co.jp (unknown) with ESMTP id x5R4fLVm017133 for
+ unknown; Thu, 27 Jun 2019 13:41:21 +0900
+Received: from mail01.ics.ntt-tx.co.jp (mail01.ics.ntt-tx.co.jp [10.254.2.67])
+ by imss02.silk.ntt-tx.co.jp (unknown) with ESMTP id x5R4fLMJ017127 for
+ unknown; Thu, 27 Jun 2019 13:41:21 +0900
+Received: from dpdk.org (dpdk.org [92.243.14.124])	by mail01.ics.ntt-tx.co.jp
+ (unknown) with SMTP id x5R4fE6E010451	for unknown; Thu,
+ 27 Jun 2019 13:41:20 +0900
+Received: from [92.243.14.124] (localhost [127.0.0.1])	by dpdk.org (Postfix)
+ with ESMTP id 83E27316B;	Thu, 27 Jun 2019 06:41:14 +0200 (CEST)
+Received: from mail-pf1-f195.google.com
+ (mail-pf1-f195.google.com [209.85.210.195]) by dpdk.org (Postfix)
+ with ESMTP id 489F92BF2 for <spp@dpdk.org>; Thu,
+ 27 Jun 2019 06:41:13 +0200 (CEST)
+Received: by mail-pf1-f195.google.com with SMTP id p184so554586pfp.7 for
+ <spp@dpdk.org>; Wed, 26 Jun 2019 21:41:13 -0700 (PDT)
+Received: from localhost.localdomain ([192.47.164.146])
+ by smtp.gmail.com with ESMTPSA id m6sm7518448pjl.18.2019.06.26.21.41.10
+ (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128); Wed,
+ 26 Jun 2019 21:41:11 -0700 (PDT)
+Date: Thu, 27 Jun 2019 13:41:05 +0900
+From: yasufum.o@gmail.com
+Subject: [spp 04448] [spp] [PATCH] shared/sec: rename func
+ spp_format_port_string
+Sender: spp <spp-bounces@dpdk.org>
+To: spp@dpdk.org, ferruh.yigit@intel.com, yasufum.o@gmail.com
+Message-id: <20190627044105.15058-1-yasufum.o@gmail.com>
+X-ML-Name: unknown
+X-Mail-Count: 04448
+X-MLServer: unknown
+X-ML-Info: mailing list service
+X-Mailer: git-send-email 2.17.1
+Authentication-results: mail01.ics.ntt-tx.co.jp; spf=pass
+ smtp.mailfrom=spp-bounces@dpdk.org
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
+ h=from:to:subject:date:message-id;
+ bh=fhED/0iWevz/gljqkfRt/raANl7zMNjXDuGWvfY0wNU=;
+ b=dwnnfWs8PKkfEWKGem7ol7w0OZZITl4zfu2ZMnWm9H48ht4RO1ZBa653UZEUAtA48S
+ bx9iLgUDDjYPxeYgSirRcPErKDbS6m+WZTcVnbIWZnTCS1fLnSLOfSwOthhHKNI+4bp8
+ Ys88RYukjuOmWNuz2X99Ur8oVxyaMTevrSsu7bIkUGVN96Tvq+xqAJQCjV5FS+jSj131
+ GDVfGeK3aA0bn3xExbovTnIUKB3aEjoAhZG8yDWDgH7p+Dx3KxgWY6OF1hVitbk1uc7m
+ gsWNnUsREGZGcvDV0htLismajHYyhCZRGLft/xsle7337r4ASC9W2P4ebhEetYctncK9 /xug==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=1e100.net;
+ s=20161025; h=x-gm-message-state:from:to:subject:date:message-id;
+ bh=fhED/0iWevz/gljqkfRt/raANl7zMNjXDuGWvfY0wNU=;
+ b=mMM/kgKovw+y64s1aQJcMg19EDcNQqH8f7tbsAjuiMQfMw3G+A6WoFe5mYOc2QyjYj
+ 918O578eyJQswVqE5E1JibwclkrycEOBw+GC7X+xWI4WuSw1icMoBw2/0p0RE9reO5b2
+ dqv8ysks4dZIxjEQ4KE9N1CPuWTOZUa4Tw66Hx4RUct9MCl/4APu8d9rVJ9J+jEcQdjV
+ mrKsT2ImiJL6NgJ67AQVK8ULuoEz/zk6iVGWJ2WKeOyfHtNRtfA0VEz9Gwcf8rit+rO2
+ daJGGu6RB1BvH1tEMMrtc15eEhAS/Av+exDXJ3gSBBB5CCcSOqT3cV6fdnS+1jxIzCCX 0Inw==
+X-Gm-Message-State: APjAAAXvcJVPDpPTizIcZF9+HIWNUuRuzbSgvAwaI4vuBY00EnkETEbM
+ J8JSDlHiUBPnZ4v5d91/3wDsloeI
+X-Google-Smtp-Source:
+ APXvYqxIOkaZSRQb2/m0fXjbY4cRdpa8EsNPsXHbUC77oOkffajnS/+H2WuBOls03PhRXhQEZRBd+w==
+X-Received: by 2002:a63:1243:: with SMTP id 3mr1767847pgs.235.1561610472311;
+ Wed, 26 Jun 2019 21:41:12 -0700 (PDT)
+X-BeenThere: spp@dpdk.org
+X-Mailman-Version: 2.1.15
+List-Id: Soft Patch Panel <spp.dpdk.org>
+List-Unsubscribe: <https://mails.dpdk.org/options/spp>,
+ <mailto:spp-request@dpdk.org?subject=unsubscribe>
+List-Archive: <http://mails.dpdk.org/archives/spp/>
+List-Post: <mailto:spp@dpdk.org>
+List-Help: <mailto:spp-request@dpdk.org?subject=help>
+List-Subscribe: <https://mails.dpdk.org/listinfo/spp>,
+ <mailto:spp-request@dpdk.org?subject=subscribe>
+X-TM-AS-MML: No
+Precedence: bulk
+Lines: 198
+X-TM-AS-GCONF: 00
+X-MD-STAMP: ON
+
+From: Yasufumi Ogawa <yasufum.o@gmail.com>
+
+Rename spp_format_port_string() used for making string of resource UID
+such as "ring:0" to sppwk_port_uid().
+
+Signed-off-by: Yasufumi Ogawa <yasufum.o@gmail.com>
+---
+ .../secondary/spp_worker_th/cmd_parser.c      | 18 +++++++++---------
+ .../spp_worker_th/cmd_res_formatter.c         |  8 ++++----
+ .../secondary/spp_worker_th/cmd_utils.c       | 19 ++++++++-----------
+ .../secondary/spp_worker_th/cmd_utils.h       | 19 +++++++++----------
+ src/vf/classifier_mac.c                       |  5 ++---
+ src/vf/vf_cmd_runner.c                        |  2 +-
+ 6 files changed, 33 insertions(+), 38 deletions(-)
+
+diff --git a/src/shared/secondary/spp_worker_th/cmd_parser.c b/src/shared/secondary/spp_worker_th/cmd_parser.c
+index 32903c3..7933ed2 100644
+--- a/src/shared/secondary/spp_worker_th/cmd_parser.c
++++ b/src/shared/secondary/spp_worker_th/cmd_parser.c
+@@ -152,18 +152,18 @@ parse_resource_uid(const char *res_uid,
+ 	 * TODO(yasufum) consider this checking of zero value is recommended
+ 	 * way, or should be changed.
+ 	 */
+-	if (strncmp(res_uid, SPP_IFTYPE_NIC_STR ":",
+-			strlen(SPP_IFTYPE_NIC_STR)+1) == 0) {
++	if (strncmp(res_uid, SPPWK_PHY_STR ":",
++			strlen(SPPWK_PHY_STR)+1) == 0) {
+ 		ptype = PHY;
+-		iface_no_str = &res_uid[strlen(SPP_IFTYPE_NIC_STR)+1];
+-	} else if (strncmp(res_uid, SPP_IFTYPE_VHOST_STR ":",
+-			strlen(SPP_IFTYPE_VHOST_STR)+1) == 0) {
++		iface_no_str = &res_uid[strlen(SPPWK_PHY_STR)+1];
++	} else if (strncmp(res_uid, SPPWK_VHOST_STR ":",
++			strlen(SPPWK_VHOST_STR)+1) == 0) {
+ 		ptype = VHOST;
+-		iface_no_str = &res_uid[strlen(SPP_IFTYPE_VHOST_STR)+1];
+-	} else if (strncmp(res_uid, SPP_IFTYPE_RING_STR ":",
+-			strlen(SPP_IFTYPE_RING_STR)+1) == 0) {
++		iface_no_str = &res_uid[strlen(SPPWK_VHOST_STR)+1];
++	} else if (strncmp(res_uid, SPPWK_RING_STR ":",
++			strlen(SPPWK_RING_STR)+1) == 0) {
+ 		ptype = RING;
+-		iface_no_str = &res_uid[strlen(SPP_IFTYPE_RING_STR)+1];
++		iface_no_str = &res_uid[strlen(SPPWK_RING_STR)+1];
+ 	} else {
+ 		RTE_LOG(ERR, WK_CMD_PARSER, "Unexpected port type in '%s'.\n",
+ 				res_uid);
+diff --git a/src/shared/secondary/spp_worker_th/cmd_res_formatter.c b/src/shared/secondary/spp_worker_th/cmd_res_formatter.c
+index 820df8f..c18f8e5 100644
+--- a/src/shared/secondary/spp_worker_th/cmd_res_formatter.c
++++ b/src/shared/secondary/spp_worker_th/cmd_res_formatter.c
+@@ -226,7 +226,7 @@ append_port_block(char **output, const struct sppwk_port_idx *port,
+ 		return SPP_RET_NG;
+ 	}
+ 
+-	spp_format_port_string(port_str, port->iface_type, port->iface_no);
++	sppwk_port_uid(port_str, port->iface_type, port->iface_no);
+ 	ret = append_json_str_value(&tmp_buff, "port", port_str);
+ 	if (unlikely(ret < SPP_RET_OK))
+ 		return SPP_RET_NG;
+@@ -534,13 +534,13 @@ add_interface(const char *name, char **output,
+ 		return SPP_RET_NG;
+ 	}
+ 
+-	if (strcmp(name, SPP_IFTYPE_NIC_STR) == 0)
++	if (strcmp(name, SPPWK_PHY_STR) == 0)
+ 		ret = append_interface_array(&tmp_buff, PHY);
+ 
+-	else if (strcmp(name, SPP_IFTYPE_VHOST_STR) == 0)
++	else if (strcmp(name, SPPWK_VHOST_STR) == 0)
+ 		ret = append_interface_array(&tmp_buff, VHOST);
+ 
+-	else if (strcmp(name, SPP_IFTYPE_RING_STR) == 0)
++	else if (strcmp(name, SPPWK_RING_STR) == 0)
+ 		ret = append_interface_array(&tmp_buff, RING);
+ 
+ 	if (unlikely(ret < SPP_RET_OK)) {
+diff --git a/src/shared/secondary/spp_worker_th/cmd_utils.c b/src/shared/secondary/spp_worker_th/cmd_utils.c
+index 894f559..a4d8031 100644
+--- a/src/shared/secondary/spp_worker_th/cmd_utils.c
++++ b/src/shared/secondary/spp_worker_th/cmd_utils.c
+@@ -733,29 +733,26 @@ update_lcore_info(void)
+ 	}
+ }
+ 
+-/**
+- * Generate a formatted string of combination from interface type and
+- * number and assign to given 'port'
+- */
+-int spp_format_port_string(char *port, enum port_type iface_type, int iface_no)
++/* Return port uid such as `phy:0`, `ring:1` or so. */
++int sppwk_port_uid(char *port_uid, enum port_type p_type, int iface_no)
+ {
+-	const char *iface_type_str;
++	const char *p_type_str;
+ 
+-	switch (iface_type) {
++	switch (p_type) {
+ 	case PHY:
+-		iface_type_str = SPP_IFTYPE_NIC_STR;
++		p_type_str = SPPWK_PHY_STR;
+ 		break;
+ 	case RING:
+-		iface_type_str = SPP_IFTYPE_RING_STR;
++		p_type_str = SPPWK_RING_STR;
+ 		break;
+ 	case VHOST:
+-		iface_type_str = SPP_IFTYPE_VHOST_STR;
++		p_type_str = SPPWK_VHOST_STR;
+ 		break;
+ 	default:
+ 		return SPP_RET_NG;
+ 	}
+ 
+-	sprintf(port, "%s:%d", iface_type_str, iface_no);
++	sprintf(port_uid, "%s:%d", p_type_str, iface_no);
+ 
+ 	return SPP_RET_OK;
+ }
+diff --git a/src/shared/secondary/spp_worker_th/cmd_utils.h b/src/shared/secondary/spp_worker_th/cmd_utils.h
+index 7e5cda3..69e0a69 100644
+--- a/src/shared/secondary/spp_worker_th/cmd_utils.h
++++ b/src/shared/secondary/spp_worker_th/cmd_utils.h
+@@ -27,9 +27,9 @@
+ #define SPPWK_TYPE_NONE_STR "unuse"
+ 
+ /** Identifier string for each interface */
+-#define SPP_IFTYPE_NIC_STR   "phy"
+-#define SPP_IFTYPE_VHOST_STR "vhost"
+-#define SPP_IFTYPE_RING_STR  "ring"
++#define SPPWK_PHY_STR "phy"
++#define SPPWK_VHOST_STR "vhost"
++#define SPPWK_RING_STR "ring"
+ 
+ /** Waiting time for checking update (not used for spp_pcap). */
+ #define SPP_CHANGE_UPDATE_INTERVAL 10  /* micro sec */
+@@ -484,16 +484,15 @@ int update_port_info(void);
+ void update_lcore_info(void);
+ 
+ /**
+- * Port type to string.
++ * Return port uid such as `phy:0`, `ring:1` or so.
+  *
+- * @param port String of port type to be converted.
+- * @param iface_type Interface type.
+- * @param iface_no Interface number.
+- * @retval SPP_RET_OK If succeeded.
+- * @retval SPP_RET_NG If failed.
++ * @param[in,out] port_uid String of port type to be converted.
++ * @param[in] iface_type Interface type such as PHY or so.
++ * @param[in] iface_no Interface number.
++ * @return SPP_RET_OK If succeeded, or SPP_RET_NG if failed.
+  */
+ int
+-spp_format_port_string(char *port, enum port_type iface_type, int iface_no);
++sppwk_port_uid(char *port_uid, enum port_type iface_type, int iface_no);
+ 
+ /**
+  * Change string of MAC address to int64.
+diff --git a/src/vf/classifier_mac.c b/src/vf/classifier_mac.c
+index 9c4bedf..a1d6ba4 100644
+--- a/src/vf/classifier_mac.c
++++ b/src/vf/classifier_mac.c
+@@ -211,7 +211,7 @@ log_classification(
+ 	if (clsd_idx < 0)
+ 		snprintf(iface_str, sizeof(iface_str), "%ld", clsd_idx);
+ 	else
+-		spp_format_port_string(iface_str,
++		sppwk_port_uid(iface_str,
+ 				clsd_data[clsd_idx].iface_type,
+ 				clsd_data[clsd_idx].iface_no_global);
+ 
+@@ -248,8 +248,7 @@ log_entry(
+ 	if (clsd_idx < 0)
+ 		snprintf(iface_str, sizeof(iface_str), "%ld", clsd_idx);
+ 	else
+-		spp_format_port_string(
+-				iface_str,
++		sppwk_port_uid(iface_str,
+ 				clsd_data[clsd_idx].iface_type,
+ 				clsd_data[clsd_idx].iface_no_global);
+ 
+diff --git a/src/vf/vf_cmd_runner.c b/src/vf/vf_cmd_runner.c
+index bab04ed..e9388e0 100644
+--- a/src/vf/vf_cmd_runner.c
++++ b/src/vf/vf_cmd_runner.c
+@@ -572,7 +572,7 @@ append_classifier_element_value(
+ 		return ret;
+ 	}
+ 
+-	spp_format_port_string(port_str, port->iface_type, port->iface_no);
++	sppwk_port_uid(port_str, port->iface_type, port->iface_no);
+ 
+ 	ret = append_json_str_value(&tmp_buff, "type",
+ 			CLS_TYPE_A_LIST[cls_type]);
+-- 
+2.17.1
+
+

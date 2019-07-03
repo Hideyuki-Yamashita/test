@@ -1,0 +1,219 @@
+Return-path: <fw-yama-hd@pomail01.silk.ntt-tx.co.jp>
+Received: from zssg-mailmd104.ddreams.local
+ (zssg-mailmd104.ddreams.local [10.160.123.99]) by zssg-mailms320.ddreams.local
+ (NTT DoCoMo Mail System) with ESMTP id <0PTL00DLXDBPFR70@NTTDoCoMo.co.jp> for
+ yamashita.hideyuki@ntt-tx.co.jp; Mon, 24 Jun 2019 16:11:49 +0900 (JST)
+Original-recipient: rfc822;yamashita.hideyuki@ntt-tx.co.jp
+Received: from smtp_saver-daemon.zssg-mailmd104.ddreams.local by
+ zssg-mailmd104.ddreams.local (dDREAMS) id <0PTL00B3KDBP2K00@dDREAMS> for
+ yamashita.hideyuki@ntt-tx.co.jp (ORCPT yamashita.hideyuki@ntt-tx.co.jp); Mon,
+ 24 Jun 2019 16:11:49 +0900 (JST)
+Received: from zssg-mailmf102.ddreams.local
+ (zssg-mailmf900.ddreams.local [10.160.172.84]) by zssg-mailmd104.ddreams.local
+ (dDREAMS) with ESMTP id <0PTL00ZMVDBPPPE0@dDREAMS> for
+ yamashita.hideyuki@ntt-tx.co.jp (ORCPT yamashita.hideyuki@ntt-tx.co.jp); Mon,
+ 24 Jun 2019 16:11:49 +0900 (JST)
+Received: from zssg-mailmf102.ddreams.local (unknown [127.0.0.1])
+	by zssg-mailmf102.ddreams.local (Postfix) with ESMTP id 44DFC7E6032	for
+ <yamashita.hideyuki@ntt-tx.co.jp>; Mon, 24 Jun 2019 16:11:49 +0900 (JST)
+Received: from zssg-mailmf102.ddreams.local (unknown [127.0.0.1])
+	by IMSVA (Postfix) with ESMTP id 4302A8E6055	for
+ <yamashita.hideyuki@ntt-tx.co.jp>; Mon, 24 Jun 2019 16:11:49 +0900 (JST)
+Received: from localhost (unknown [127.0.0.1])	by IMSVA (Postfix)
+ with SMTP id 37FBF8E6050	for <yamashita.hideyuki@ntt-tx.co.jp>; Mon,
+ 24 Jun 2019 16:11:49 +0900 (JST)
+X-IMSS-HAND-OFF-DIRECTIVE: localhost:10026
+Received: from zssg-mailmf102.ddreams.local (unknown [127.0.0.1])
+	by IMSVA (Postfix) with ESMTP id F143E8E6050	for
+ <yamashita.hideyuki@ntt-tx.co.jp>; Mon, 24 Jun 2019 16:11:47 +0900 (JST)
+Received: from pomail01.silk.ntt-tx.co.jp (unknown [10.160.183.139])
+	by zssg-mailmf102.ddreams.local (Postfix)
+ with ESMTPS	for <yamashita.hideyuki@ntt-tx.co.jp>; Mon,
+ 24 Jun 2019 16:11:47 +0900 (JST)
+Received: from pomail01.silk.ntt-tx.co.jp (localhost [127.0.0.1])
+	by pomail01.silk.ntt-tx.co.jp (unknown) with ESMTP id x5O7BlMM017158;	Mon,
+ 24 Jun 2019 16:11:47 +0900
+Received: (from yama-hd@localhost)	by pomail01.silk.ntt-tx.co.jp (unknown)
+ id x5O7Blxc017157;	Mon, 24 Jun 2019 16:11:47 +0900
+X-Authentication-warning: pomail01.silk.ntt-tx.co.jp: yama-hd set sender to
+ fw-yama-hd@pomail01.silk.ntt-tx.co.jp using -f
+Received: from imss04.silk.ntt-tx.co.jp
+ (imss04.silk.ntt-tx.co.jp [10.107.0.39])	by pomail01.silk.ntt-tx.co.jp
+ (unknown) with ESMTP id x5O7Bl8f017154	for unknown; Mon,
+ 24 Jun 2019 16:11:47 +0900
+Received: from imss04.silk.ntt-tx.co.jp (localhost [127.0.0.1])
+ by imss04.silk.ntt-tx.co.jp (unknown) with ESMTP id x5O7BlVe021540 for
+ unknown; Mon, 24 Jun 2019 16:11:47 +0900
+Received: from ml01.silk.ntt-tx.co.jp (ml01.silk.ntt-tx.co.jp [10.107.0.230])
+ by imss04.silk.ntt-tx.co.jp (unknown) with ESMTP id x5O7BlVZ021537; Mon,
+ 24 Jun 2019 16:11:47 +0900
+Received: from ml01.silk.ntt-tx.co.jp (localhost [127.0.0.1])
+	by ml01.silk.ntt-tx.co.jp (unknown) with ESMTP id x5O7BlmG017073;	Mon,
+ 24 Jun 2019 16:11:47 +0900
+Received: from imss02.silk.ntt-tx.co.jp
+ (imss02.silk.ntt-tx.co.jp [10.107.0.127])	by ml01.silk.ntt-tx.co.jp (unknown)
+ with ESMTP id x5O7BkJU017069	for unknown; Mon, 24 Jun 2019 16:11:46 +0900
+Received: from imss02.silk.ntt-tx.co.jp (localhost [127.0.0.1])
+ by imss02.silk.ntt-tx.co.jp (unknown) with ESMTP id x5O7BkAk031355 for
+ unknown; Mon, 24 Jun 2019 16:11:46 +0900
+Received: from mail01.ics.ntt-tx.co.jp (mail01.ics.ntt-tx.co.jp [10.254.2.67])
+ by imss02.silk.ntt-tx.co.jp (unknown) with ESMTP id x5O7BkZR031345 for
+ unknown; Mon, 24 Jun 2019 16:11:46 +0900
+Received: from dpdk.org (dpdk.org [92.243.14.124])	by mail01.ics.ntt-tx.co.jp
+ (unknown) with SMTP id x5O7Beri023417	for unknown; Mon,
+ 24 Jun 2019 16:11:45 +0900
+Received: from [92.243.14.124] (localhost [127.0.0.1])	by dpdk.org (Postfix)
+ with ESMTP id AED521BF28;	Mon, 24 Jun 2019 09:11:39 +0200 (CEST)
+Received: from mail-pg1-f177.google.com
+ (mail-pg1-f177.google.com [209.85.215.177]) by dpdk.org (Postfix)
+ with ESMTP id 2ABE61BCAC for <spp@dpdk.org>; Mon,
+ 24 Jun 2019 09:11:38 +0200 (CEST)
+Received: by mail-pg1-f177.google.com with SMTP id s27so6615094pgl.2 for
+ <spp@dpdk.org>; Mon, 24 Jun 2019 00:11:38 -0700 (PDT)
+Received: from localhost.localdomain ([192.47.164.146])
+ by smtp.gmail.com with ESMTPSA id y17sm6357948pfe.148.2019.06.24.00.11.36
+ (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128); Mon,
+ 24 Jun 2019 00:11:37 -0700 (PDT)
+Date: Mon, 24 Jun 2019 16:11:20 +0900
+From: yasufum.o@gmail.com
+Subject: [spp 04405] [spp] [PATCH 06/10] controller: move pcap help msg to
+ SppPcap
+Sender: spp <spp-bounces@dpdk.org>
+To: spp@dpdk.org, ferruh.yigit@intel.com, yasufum.o@gmail.com
+Message-id: <20190624071124.23451-7-yasufum.o@gmail.com>
+In-reply-to: <20190624071124.23451-1-yasufum.o@gmail.com>
+References: <20190624071124.23451-1-yasufum.o@gmail.com>
+X-ML-Name: unknown
+X-Mail-Count: 04405
+X-MLServer: unknown
+X-ML-Info: mailing list service
+X-Mailer: git-send-email 2.17.1
+Authentication-results: mail01.ics.ntt-tx.co.jp; spf=pass
+ smtp.mailfrom=spp-bounces@dpdk.org
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
+ h=from:to:subject:date:message-id:in-reply-to:references;
+ bh=UxvdihFYVZhC9Zde+2UdBWSrXoaiRsyVlG42DUooDHY=;
+ b=tNNF7wyuobfzD4euUQlDapXfEVGJ4wdBYDS6vCkJcdpTDfYIw1cLEewwwWnXv+atIa
+ Autr3FdaDs7qhqX8Fc3xu3BsUHHvm4h9jjbK93ptWRqDCsPawbLoa8DfNJVarzXK+6ko
+ nXfNVxOmtC9xmELykHz3p+zm46i3BAPvpaxVlkCq7ryKC/vfebmFhFG5uSIGIsHxpUZz
+ QEG/9JyReo8hlIwC9+JW+MdverMHmS4m503npWStrnyCMtsGfyR8YDBR3Ekao1ePhTFD
+ lKt/2OT4DmsDOecAuI4UF9iBhhCBGTss+P703BEZn1GT6GFVO6xUQEKF7Fstj4LFGEvE kDEA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=1e100.net;
+ s=20161025; h=x-gm-message-state:from:to:subject:date:message-id:in-reply-to
+ :references; bh=UxvdihFYVZhC9Zde+2UdBWSrXoaiRsyVlG42DUooDHY=;
+ b=sGFYyxoINzxg/T0K4QPkyGVR62z7Jg4y0yIlisn1jWHn9vwukikO8cN+Cqsc8trfQp
+ 56GB+ZxS5H9FtKRL+DJXb8sJr/Zuh/AjO2ttm7yOQwbthUOsCyDmTHBokSiaGnYxf+y/
+ vfciZHgmj5D4eg0+N8+HmHjAz7rS+9sEJlm8MW5WTW0Cssh9KWJEnZHBX+dAoKrjcAYs
+ StDWHV5qXV1uyhMbskYKEjNekLn/zuFeVuS6Rlrl67IOk+U4yE3fOWLEuLhRY8KR2ITM
+ r3bYFOpsNKgiTylian0iAGEidA3a2iT4U4nhBClxs9cxtQofZnG/46ButCfuJSzc0z3t jc8A==
+X-Gm-Message-State: APjAAAVB/l5lkW6ZWUKYiXk0Rvj0a51dMXYalMB/iuLZ8WRdeBsx8j8V
+ 8HgvoWiteTOAsbY9ADAj2C2HS1R5
+X-Google-Smtp-Source:
+ APXvYqzRBWppGTzurAAmDk88VxhKuVz37fGxnZToPHcY+tqTThefYOK+z1OmsVakM+gWbw6Je746UQ==
+X-Received: by 2002:a17:90a:8985:: with SMTP id
+ v5mr22712854pjn.136.1561360297316; Mon, 24 Jun 2019 00:11:37 -0700 (PDT)
+X-BeenThere: spp@dpdk.org
+X-Mailman-Version: 2.1.15
+List-Id: Soft Patch Panel <spp.dpdk.org>
+List-Unsubscribe: <https://mails.dpdk.org/options/spp>,
+ <mailto:spp-request@dpdk.org?subject=unsubscribe>
+List-Archive: <http://mails.dpdk.org/archives/spp/>
+List-Post: <mailto:spp@dpdk.org>
+List-Help: <mailto:spp-request@dpdk.org?subject=help>
+List-Subscribe: <https://mails.dpdk.org/listinfo/spp>,
+ <mailto:spp-request@dpdk.org?subject=subscribe>
+X-TM-AS-MML: No
+Precedence: bulk
+Lines: 88
+X-TM-AS-GCONF: 00
+X-MD-STAMP: ON
+
+From: Yasufumi Ogawa <yasufum.o@gmail.com>
+
+This patch is to move comment of `do_pcap` to `SppPcap.help` to
+reduce the number of lines.
+
+Signed-off-by: Yasufumi Ogawa <yasufum.o@gmail.com>
+---
+ src/controller/commands/pcap.py | 24 ++++++++++++++++++++++++
+ src/controller/shell.py         | 24 +++++-------------------
+ 2 files changed, 29 insertions(+), 19 deletions(-)
+
+diff --git a/src/controller/commands/pcap.py b/src/controller/commands/pcap.py
+index 88dd5c8..f2e1ffa 100644
+--- a/src/controller/commands/pcap.py
++++ b/src/controller/commands/pcap.py
+@@ -239,3 +239,27 @@ class SppPcap(object):
+                             status['core_ids'].append(wk['core'])
+ 
+         return status
++
++    @classmethod
++    def help(cls):
++        msg = """Send a command to spp_pcap.
++
++        Spp_pcap is a secondary process for capturing incoming packets.
++
++        'start' for launching a worker is replaced with 'stop' for
++        terminating. 'exit' for spp_pcap terminating.
++
++        Examples:
++
++        # (1) show status of worker threads and resources
++        spp > pcap 1; status
++
++        # (2) launch or terminate capture thread
++        spp > pcap 1; start
++        spp > pcap 1; stop
++
++        # (3) terminate spp_pcap secondaryd
++        spp > pcap 1; exit
++        """
++
++        print(msg)
+diff --git a/src/controller/shell.py b/src/controller/shell.py
+index 2682376..52fe645 100644
+--- a/src/controller/shell.py
++++ b/src/controller/shell.py
+@@ -475,25 +475,7 @@ class Shell(cmd.Cmd, object):
+                         self.get_sec_ids('mirror'), text, line, begidx, endidx)
+ 
+     def do_pcap(self, cmd):
+-        """Send a command to spp_pcap.
+-
+-        Spp_pcap is a secondary process for capturing incoming packets.
+-
+-        'start' for launching a worker is replaced with 'stop' for
+-        terminating. 'exit' for spp_pcap terminating.
+-
+-        Examples:
+-
+-        # (1) show status of worker threads and resources
+-        spp > pcap 1; status
+-
+-        # (2) launch or terminate capture thread
+-        spp > pcap 1; start
+-        spp > pcap 1; stop
+-
+-        # (3) terminate spp_pcap secondaryd
+-        spp > pcap 1; exit
+-        """
++        """Send a command to spp_pcap."""
+ 
+         # remove unwanted spaces to avoid invalid command error
+         tmparg = self.clean_cmd(cmd)
+@@ -506,6 +488,10 @@ class Shell(cmd.Cmd, object):
+         else:
+             print('Invalid command: {}'.format(tmparg))
+ 
++    def help_pcap(self):
++        """Print help message of pcap command."""
++        pcap.SppPcap.help()
++
+     def complete_pcap(self, text, line, begidx, endidx):
+         """Completion for pcap command."""
+ 
+-- 
+2.17.1
+
+

@@ -1,0 +1,1378 @@
+Return-path: <fw-yama-hd@pomail01.silk.ntt-tx.co.jp>
+Received: from zssg-mailmd106.ddreams.local
+ (zssg-mailmd106.ddreams.local [10.160.123.101])
+ by zssg-mailms320.ddreams.local (NTT DoCoMo Mail System)
+ with ESMTP id <0PTL0158QB0K1J50@NTTDoCoMo.co.jp> for
+ yamashita.hideyuki@ntt-tx.co.jp; Mon, 24 Jun 2019 15:21:56 +0900 (JST)
+Original-recipient: rfc822;yamashita.hideyuki@ntt-tx.co.jp
+Received: from smtp_saver-daemon.zssg-mailmd106.ddreams.local by
+ zssg-mailmd106.ddreams.local (dDREAMS) id <0PTL00I08B0KS500@dDREAMS> for
+ yamashita.hideyuki@ntt-tx.co.jp (ORCPT yamashita.hideyuki@ntt-tx.co.jp); Mon,
+ 24 Jun 2019 15:21:56 +0900 (JST)
+Received: from zssg-mailmf103.ddreams.local
+ (zssg-mailmf900.ddreams.local [10.160.172.84]) by zssg-mailmd106.ddreams.local
+ (dDREAMS) with ESMTP id <0PTL00C7RB0K5R40@dDREAMS> for
+ yamashita.hideyuki@ntt-tx.co.jp (ORCPT yamashita.hideyuki@ntt-tx.co.jp); Mon,
+ 24 Jun 2019 15:21:56 +0900 (JST)
+Received: from zssg-mailmf103.ddreams.local (unknown [127.0.0.1])
+	by zssg-mailmf103.ddreams.local (Postfix) with ESMTP id 180A17E6036	for
+ <yamashita.hideyuki@ntt-tx.co.jp>; Mon, 24 Jun 2019 15:21:56 +0900 (JST)
+Received: from zssg-mailmf103.ddreams.local (unknown [127.0.0.1])
+	by IMSVA (Postfix) with ESMTP id 163108E6054	for
+ <yamashita.hideyuki@ntt-tx.co.jp>; Mon, 24 Jun 2019 15:21:56 +0900 (JST)
+Received: from localhost (unknown [127.0.0.1])	by IMSVA (Postfix)
+ with SMTP id 0AAAF8E6056	for <yamashita.hideyuki@ntt-tx.co.jp>; Mon,
+ 24 Jun 2019 15:21:56 +0900 (JST)
+X-IMSS-HAND-OFF-DIRECTIVE: localhost:10026
+Received: from zssg-mailmf103.ddreams.local (unknown [127.0.0.1])
+	by IMSVA (Postfix) with ESMTP id 709FA8E6058	for
+ <yamashita.hideyuki@ntt-tx.co.jp>; Mon, 24 Jun 2019 15:21:55 +0900 (JST)
+Received: from pomail01.silk.ntt-tx.co.jp (unknown [10.160.183.139])
+	by zssg-mailmf103.ddreams.local (Postfix)
+ with ESMTPS	for <yamashita.hideyuki@ntt-tx.co.jp>; Mon,
+ 24 Jun 2019 15:21:55 +0900 (JST)
+Received: from pomail01.silk.ntt-tx.co.jp (localhost [127.0.0.1])
+	by pomail01.silk.ntt-tx.co.jp (unknown) with ESMTP id x5O6Lt4p004780;	Mon,
+ 24 Jun 2019 15:21:55 +0900
+Received: (from yama-hd@localhost)	by pomail01.silk.ntt-tx.co.jp (unknown)
+ id x5O6Lt4R004779;	Mon, 24 Jun 2019 15:21:55 +0900
+X-Authentication-warning: pomail01.silk.ntt-tx.co.jp: yama-hd set sender to
+ fw-yama-hd@pomail01.silk.ntt-tx.co.jp using -f
+Received: from imss04.silk.ntt-tx.co.jp
+ (imss04.silk.ntt-tx.co.jp [10.107.0.39])	by pomail01.silk.ntt-tx.co.jp
+ (unknown) with ESMTP id x5O6LtHt004776	for unknown; Mon,
+ 24 Jun 2019 15:21:55 +0900
+Received: from imss04.silk.ntt-tx.co.jp (localhost [127.0.0.1])
+ by imss04.silk.ntt-tx.co.jp (unknown) with ESMTP id x5O6LsXM029661 for
+ unknown; Mon, 24 Jun 2019 15:21:54 +0900
+Received: from ml01.silk.ntt-tx.co.jp (ml01.silk.ntt-tx.co.jp [10.107.0.230])
+ by imss04.silk.ntt-tx.co.jp (unknown) with ESMTP id x5O6Lsg3029658; Mon,
+ 24 Jun 2019 15:21:54 +0900
+Received: from ml01.silk.ntt-tx.co.jp (localhost [127.0.0.1])
+	by ml01.silk.ntt-tx.co.jp (unknown) with ESMTP id x5O6LseS010647;	Mon,
+ 24 Jun 2019 15:21:54 +0900
+Received: from imss02.silk.ntt-tx.co.jp
+ (imss02.silk.ntt-tx.co.jp [10.107.0.127])	by ml01.silk.ntt-tx.co.jp (unknown)
+ with ESMTP id x5O6LslX010643	for unknown; Mon, 24 Jun 2019 15:21:54 +0900
+Received: from imss02.silk.ntt-tx.co.jp (localhost [127.0.0.1])
+ by imss02.silk.ntt-tx.co.jp (unknown) with ESMTP id x5O6Ls7E016677 for
+ unknown; Mon, 24 Jun 2019 15:21:54 +0900
+Received: from mail01.ics.ntt-tx.co.jp (mail01.ics.ntt-tx.co.jp [10.254.2.67])
+ by imss02.silk.ntt-tx.co.jp (unknown) with ESMTP id x5O6Ls4i016674 for
+ unknown; Mon, 24 Jun 2019 15:21:54 +0900
+Received: from dpdk.org (dpdk.org [92.243.14.124])	by mail01.ics.ntt-tx.co.jp
+ (unknown) with SMTP id x5O6LlSW015126	for unknown; Mon,
+ 24 Jun 2019 15:21:53 +0900
+Received: from [92.243.14.124] (localhost [127.0.0.1])	by dpdk.org (Postfix)
+ with ESMTP id E8BBE1BF4E;	Mon, 24 Jun 2019 08:21:46 +0200 (CEST)
+Received: from mail-pg1-f175.google.com
+ (mail-pg1-f175.google.com [209.85.215.175]) by dpdk.org (Postfix)
+ with ESMTP id 7E0F91BF03 for <spp@dpdk.org>; Mon,
+ 24 Jun 2019 08:21:45 +0200 (CEST)
+Received: by mail-pg1-f175.google.com with SMTP id n2so6515318pgp.11 for
+ <spp@dpdk.org>; Sun, 23 Jun 2019 23:21:45 -0700 (PDT)
+Received: from localhost.localdomain ([192.47.164.146])
+ by smtp.gmail.com with ESMTPSA id o32sm2845696pje.9.2019.06.23.23.21.42
+ (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128); Sun,
+ 23 Jun 2019 23:21:43 -0700 (PDT)
+Date: Mon, 24 Jun 2019 15:21:37 +0900
+From: yasufum.o@gmail.com
+Subject: [spp 04387] [spp] [PATCH] shared/sec: move exec_one_cmd from shared dir
+Sender: spp <spp-bounces@dpdk.org>
+To: spp@dpdk.org, ferruh.yigit@intel.com, yasufum.o@gmail.com
+Message-id: <20190624062137.22452-1-yasufum.o@gmail.com>
+X-ML-Name: unknown
+X-Mail-Count: 04387
+X-MLServer: unknown
+X-ML-Info: mailing list service
+X-Mailer: git-send-email 2.17.1
+Authentication-results: mail01.ics.ntt-tx.co.jp; spf=pass
+ smtp.mailfrom=spp-bounces@dpdk.org
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
+ h=from:to:subject:date:message-id;
+ bh=RPxTa5Ng6c/I9iI6IjvMCNp0JJr5fJFHsYutXjpDvK4=;
+ b=EyZrf9d8MRsQ46ex4H47MSJs48UARJMruu1SEQ5NupxBGvqI6FKL0J0acxZ2kx9Er+
+ RqETyy2PnB2O+uvMMsKsuUoEQl+3s549OixDOyMbGdm1YZVSG2cinlycrvxXPcaB1Bwt
+ SDDDeviW7FFHfOAK9cCl0W8mO1yA//IwMtL3r66jDB4xU6FZ/30GoRPw6c7aMCrTPS82
+ 9/EJ9SvdS3HxVDIqCHzsGBzqV4f4Rl48vT+vpkjYSHcGttXoRD+DkRpajif/r7D2Wit+
+ dDZZzX4/rK6JT9qPFuUqQcW2csM5fOyzMllZh68Bix2qd5X31NBr/ZRUbNuLEBCcVfy4 xO9Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=1e100.net;
+ s=20161025; h=x-gm-message-state:from:to:subject:date:message-id;
+ bh=RPxTa5Ng6c/I9iI6IjvMCNp0JJr5fJFHsYutXjpDvK4=;
+ b=gGXTMBmTcqpOfeFIrVqJcRpky9KDuB4PUkZ4MdIJRJ59i8p9Vf1Pirwj73gfi53717
+ fAmMSbR5IeEOIlx+Ky1goM0USKbGnxt8N7Md4twwoKrfRGh2kFhvnTszX2HmLuuxFCsY
+ TBUXjqQ6kR7OyFaebT3coayGlKKqTlvrP/bh0+WeM6yt0q+Y8L2JfSgU3DL3dkMhZ0hf
+ mkw/Zku/QoRQWzTZD/MuZ4YIRiE7fBBGLAw4ctjBJ8yL15RdNevcdY2WaRDx2vzGI+Lq
+ QdmXSiuDGbaCnOQfgPQOau7QikUJhxA3pY57XB82a/tkS5oRKJXdRuevjM0wmpIvjclM FVMw==
+X-Gm-Message-State: APjAAAXdC3XaPomXO17Pu21ViQYW8I1/mI3Gc23XykadgiC0ZH/gKByt
+ BOqNqEvuja+9tC2QYdfuydgZ8CNj
+X-Google-Smtp-Source:
+ APXvYqyiZCXwelkeKo8gJ3eZwIe+F64SfOk4siY9v1rdz7omggm8Kr6MN4iDvPFFhH2tAlMtSHkzCg==
+X-Received: by 2002:a17:90a:cf0d:: with SMTP id
+ h13mr22764727pju.63.1561357304116; Sun, 23 Jun 2019 23:21:44 -0700 (PDT)
+X-BeenThere: spp@dpdk.org
+X-Mailman-Version: 2.1.15
+List-Id: Soft Patch Panel <spp.dpdk.org>
+List-Unsubscribe: <https://mails.dpdk.org/options/spp>,
+ <mailto:spp-request@dpdk.org?subject=unsubscribe>
+List-Archive: <http://mails.dpdk.org/archives/spp/>
+List-Post: <mailto:spp@dpdk.org>
+List-Help: <mailto:spp-request@dpdk.org?subject=help>
+List-Subscribe: <https://mails.dpdk.org/listinfo/spp>,
+ <mailto:spp-request@dpdk.org?subject=subscribe>
+X-TM-AS-MML: No
+Precedence: bulk
+Lines: 1249
+X-TM-AS-GCONF: 00
+X-MD-STAMP: ON
+
+From: Yasufumi Ogawa <yasufum.o@gmail.com>
+
+exec_one_cmd() and functions called in it are defined in shared
+directory, but including worker type specific code.
+
+This update is to move these functions to under each of `src/vf` and
+`src/mirror` dirs. Each exec_one_cmd() is defined under these
+dirs and called from shared function exec_cmds() in `cmd_runner.c`.
+
+Signed-off-by: Yasufumi Ogawa <yasufum.o@gmail.com>
+---
+ src/mirror/Makefile                           |   2 +-
+ src/mirror/mir_cmd_runner.c                   | 288 ++++++++++++
+ .../secondary/spp_worker_th/cmd_runner.c      | 413 +-----------------
+ .../secondary/spp_worker_th/cmd_runner.h      |   4 +
+ .../secondary/spp_worker_th/mirror_deps.h     |   3 +
+ src/shared/secondary/spp_worker_th/vf_deps.h  |   3 +
+ src/vf/Makefile                               |   3 +-
+ src/vf/vf_cmd_runner.c                        | 411 +++++++++++++++++
+ 8 files changed, 713 insertions(+), 414 deletions(-)
+ create mode 100644 src/mirror/mir_cmd_runner.c
+ create mode 100644 src/vf/vf_cmd_runner.c
+
+diff --git a/src/mirror/Makefile b/src/mirror/Makefile
+index 7e666f5..f584fd1 100644
+--- a/src/mirror/Makefile
++++ b/src/mirror/Makefile
+@@ -15,7 +15,7 @@ SPP_SEC_DIR = ../shared/secondary
+ SPP_WKT_DIR = ../shared/secondary/spp_worker_th
+ 
+ # all source are stored in SRCS-y
+-SRCS-y := spp_mirror.c
++SRCS-y := spp_mirror.c mir_cmd_runner.c
+ SRCS-y += ../shared/common.c
+ SRCS-y += $(SPP_SEC_DIR)/utils.c $(SPP_SEC_DIR)/add_port.c
+ SRCS-y += $(SPP_SEC_DIR)/json_helper.c
+diff --git a/src/mirror/mir_cmd_runner.c b/src/mirror/mir_cmd_runner.c
+new file mode 100644
+index 0000000..5731628
+--- /dev/null
++++ b/src/mirror/mir_cmd_runner.c
+@@ -0,0 +1,288 @@
++/* SPDX-License-Identifier: BSD-3-Clause
++ * Copyright(c) 2019 Nippon Telegraph and Telephone Corporation
++ */
++
++#include "shared/secondary/return_codes.h"
++#include "shared/secondary/spp_worker_th/cmd_parser.h"
++#include "shared/secondary/spp_worker_th/cmd_runner.h"
++#include "shared/secondary/spp_worker_th/mirror_deps.h"
++
++#define RTE_LOGTYPE_MIR_CMD_RUNNER RTE_LOGTYPE_USER1
++
++/* Assign worker thread or remove on specified lcore. */
++/* TODO(yasufum) revise func name for removing the term `component`. */
++static int
++update_comp(enum sppwk_action wk_action, const char *name,
++		unsigned int lcore_id, enum sppwk_worker_type wk_type)
++{
++	int ret;
++	int ret_del;
++	int comp_lcore_id = 0;
++	unsigned int tmp_lcore_id = 0;
++	struct sppwk_comp_info *comp_info = NULL;
++	/* TODO(yasufum) revise `core` to be more specific. */
++	struct core_info *core = NULL;
++	struct core_mng_info *info = NULL;
++	struct sppwk_comp_info *comp_info_base = NULL;
++	/* TODO(yasufum) revise `core_info` which is same as struct name. */
++	struct core_mng_info *core_info = NULL;
++	int *change_core = NULL;
++	int *change_component = NULL;
++
++	sppwk_get_mng_data(NULL, NULL, &comp_info_base, &core_info,
++				&change_core, &change_component, NULL);
++
++	switch (wk_action) {
++	case SPPWK_ACT_START:
++		info = (core_info + lcore_id);
++		if (info->status == SPP_CORE_UNUSE) {
++			RTE_LOG(ERR, MIR_CMD_RUNNER, "Core %d is not available because "
++				"it is in SPP_CORE_UNUSE state.\n", lcore_id);
++			return SPP_RET_NG;
++		}
++
++		comp_lcore_id = sppwk_get_lcore_id(name);
++		if (comp_lcore_id >= 0) {
++			RTE_LOG(ERR, MIR_CMD_RUNNER, "Component name '%s' is already "
++				"used.\n", name);
++			return SPP_RET_NG;
++		}
++
++		comp_lcore_id = get_free_lcore_id();
++		if (comp_lcore_id < 0) {
++			RTE_LOG(ERR, MIR_CMD_RUNNER, "Cannot assign component over the "
++				"maximum number.\n");
++			return SPP_RET_NG;
++		}
++
++		core = &info->core[info->upd_index];
++
++		comp_info = (comp_info_base + comp_lcore_id);
++		memset(comp_info, 0x00, sizeof(struct sppwk_comp_info));
++		strcpy(comp_info->name, name);
++		comp_info->wk_type = wk_type;
++		comp_info->lcore_id = lcore_id;
++		comp_info->comp_id = comp_lcore_id;
++
++		core->id[core->num] = comp_lcore_id;
++		core->num++;
++		ret = SPP_RET_OK;
++		tmp_lcore_id = lcore_id;
++		*(change_component + comp_lcore_id) = 1;
++		break;
++
++	case SPPWK_ACT_STOP:
++		comp_lcore_id = sppwk_get_lcore_id(name);
++		if (comp_lcore_id < 0)
++			return SPP_RET_OK;
++
++		comp_info = (comp_info_base + comp_lcore_id);
++		tmp_lcore_id = comp_info->lcore_id;
++		memset(comp_info, 0x00, sizeof(struct sppwk_comp_info));
++
++		info = (core_info + tmp_lcore_id);
++		core = &info->core[info->upd_index];
++
++		/* The latest lcore is released if worker thread is stopped. */
++		ret_del = del_comp_info(comp_lcore_id, core->num, core->id);
++		if (ret_del >= 0)
++			core->num--;
++
++		ret = SPP_RET_OK;
++		*(change_component + comp_lcore_id) = 0;
++		break;
++
++	default:  /* Unexpected case. */
++		ret = SPP_RET_NG;
++		break;
++	}
++
++	*(change_core + tmp_lcore_id) = 1;
++	return ret;
++}
++
++/* Check if over the maximum num of rx and tx ports of component. */
++static int
++check_mir_port_count(enum spp_port_rxtx rxtx, int num_rx, int num_tx)
++{
++	RTE_LOG(INFO, MIR_CMD_RUNNER, "port count, port_type=%d,"
++				" rx=%d, tx=%d\n", rxtx, num_rx, num_tx);
++	if (rxtx == SPP_PORT_RXTX_RX)
++		num_rx++;
++	else
++		num_tx++;
++	/* Add rx or tx port appointed in port_type. */
++	RTE_LOG(INFO, MIR_CMD_RUNNER, "Num of ports after count up,"
++				" port_type=%d, rx=%d, tx=%d\n",
++				rxtx, num_rx, num_tx);
++	if (num_rx > 1 || num_tx > 2)
++		return SPP_RET_NG;
++
++	return SPP_RET_OK;
++}
++
++/* Port add or del to execute it */
++static int
++update_port(enum sppwk_action wk_action,
++		const struct sppwk_port_idx *port,
++		enum spp_port_rxtx rxtx,
++		const char *name,
++		const struct spp_port_ability *ability)
++{
++	int ret = SPP_RET_NG;
++	int port_idx;
++	int ret_del = -1;
++	int comp_lcore_id = 0;
++	int cnt = 0;
++	struct sppwk_comp_info *comp_info = NULL;
++	struct sppwk_port_info *port_info = NULL;
++	int *nof_ports = NULL;
++	struct sppwk_port_info **ports = NULL;
++	struct sppwk_comp_info *comp_info_base = NULL;
++	int *change_component = NULL;
++
++	comp_lcore_id = sppwk_get_lcore_id(name);
++	if (comp_lcore_id < 0) {
++		RTE_LOG(ERR, MIR_CMD_RUNNER, "Unknown component by port command. "
++				"(component = %s)\n", name);
++		return SPP_RET_NG;
++	}
++	sppwk_get_mng_data(NULL, NULL,
++			&comp_info_base, NULL, NULL, &change_component, NULL);
++	comp_info = (comp_info_base + comp_lcore_id);
++	port_info = get_sppwk_port(port->iface_type, port->iface_no);
++	if (rxtx == SPP_PORT_RXTX_RX) {
++		nof_ports = &comp_info->nof_rx;
++		ports = comp_info->rx_ports;
++	} else {
++		nof_ports = &comp_info->nof_tx;
++		ports = comp_info->tx_ports;
++	}
++
++	switch (wk_action) {
++	case SPPWK_ACT_ADD:
++		/* Check if over the maximum num of ports of component. */
++		if (check_mir_port_count(rxtx, comp_info->nof_rx,
++				comp_info->nof_tx) != SPP_RET_OK)
++			return SPP_RET_NG;
++
++		/* Check if the port_info is included in array `ports`. */
++		port_idx = get_idx_port_info(port_info, *nof_ports, ports);
++		if (port_idx >= SPP_RET_OK) {
++			/* registered */
++			/* TODO(yasufum) confirm it is needed for spp_mirror. */
++			if (ability->ops == SPPWK_PORT_ABL_OPS_ADD_VLANTAG) {
++				while ((cnt < SPP_PORT_ABILITY_MAX) &&
++					    (port_info->ability[cnt].ops !=
++					    SPPWK_PORT_ABL_OPS_ADD_VLANTAG))
++					cnt++;
++				if (cnt >= SPP_PORT_ABILITY_MAX) {
++					RTE_LOG(ERR, MIR_CMD_RUNNER, "update VLAN tag "
++						"Non-registratio\n");
++					return SPP_RET_NG;
++				}
++				memcpy(&port_info->ability[cnt], ability,
++					sizeof(struct spp_port_ability));
++
++				ret = SPP_RET_OK;
++				break;
++			}
++			return SPP_RET_OK;
++		}
++
++		if (*nof_ports >= RTE_MAX_ETHPORTS) {
++			RTE_LOG(ERR, MIR_CMD_RUNNER, "Cannot assign port over the "
++				"maximum number.\n");
++			return SPP_RET_NG;
++		}
++
++		if (ability->ops != SPPWK_PORT_ABL_OPS_NONE) {
++			while ((cnt < SPP_PORT_ABILITY_MAX) &&
++					(port_info->ability[cnt].ops !=
++					SPPWK_PORT_ABL_OPS_NONE)) {
++				cnt++;
++			}
++			if (cnt >= SPP_PORT_ABILITY_MAX) {
++				RTE_LOG(ERR, MIR_CMD_RUNNER,
++						"No space of port ability.\n");
++				return SPP_RET_NG;
++			}
++			memcpy(&port_info->ability[cnt], ability,
++					sizeof(struct spp_port_ability));
++		}
++
++		port_info->iface_type = port->iface_type;
++		ports[*nof_ports] = port_info;
++		(*nof_ports)++;
++
++		ret = SPP_RET_OK;
++		break;
++
++	case SPPWK_ACT_DEL:
++		for (cnt = 0; cnt < SPP_PORT_ABILITY_MAX; cnt++) {
++			if (port_info->ability[cnt].ops ==
++					SPPWK_PORT_ABL_OPS_NONE)
++				continue;
++
++			if (port_info->ability[cnt].rxtx == rxtx)
++				memset(&port_info->ability[cnt], 0x00,
++					sizeof(struct spp_port_ability));
++		}
++
++		ret_del = delete_port_info(port_info, *nof_ports, ports);
++		if (ret_del == 0)
++			(*nof_ports)--; /* If deleted, decrement number. */
++
++		ret = SPP_RET_OK;
++		break;
++
++	default:  /* This case cannot be happend without invlid wk_action. */
++		return SPP_RET_NG;
++	}
++
++	*(change_component + comp_lcore_id) = 1;
++	return ret;
++}
++
++/* Execute one command. */
++int
++exec_one_cmd(const struct sppwk_cmd_attrs *cmd)
++{
++	int ret;
++
++	RTE_LOG(INFO, MIR_CMD_RUNNER, "Exec `%s` cmd.\n",
++			sppwk_cmd_type_str(cmd->type));
++
++	switch (cmd->type) {
++	case SPPWK_CMDTYPE_WORKER:
++		ret = update_comp(
++				cmd->spec.comp.wk_action,
++				cmd->spec.comp.name,
++				cmd->spec.comp.core,
++				cmd->spec.comp.wk_type);
++		if (ret == 0) {
++			RTE_LOG(INFO, MIR_CMD_RUNNER, "Exec flush.\n");
++			ret = flush_cmd();
++		}
++		break;
++
++	case SPPWK_CMDTYPE_PORT:
++		RTE_LOG(INFO, MIR_CMD_RUNNER, "with action `%s`.\n",
++				sppwk_action_str(cmd->spec.port.wk_action));
++		ret = update_port(cmd->spec.port.wk_action,
++				&cmd->spec.port.port, cmd->spec.port.rxtx,
++				cmd->spec.port.name, &cmd->spec.port.ability);
++		if (ret == 0) {
++			RTE_LOG(INFO, MIR_CMD_RUNNER, "Exec flush.\n");
++			ret = flush_cmd();
++		}
++		break;
++
++	default:
++		/* Do nothing. */
++		ret = SPP_RET_OK;
++		break;
++	}
++
++	return ret;
++}
+diff --git a/src/shared/secondary/spp_worker_th/cmd_runner.c b/src/shared/secondary/spp_worker_th/cmd_runner.c
+index 7c4c91c..64aef19 100644
+--- a/src/shared/secondary/spp_worker_th/cmd_runner.c
++++ b/src/shared/secondary/spp_worker_th/cmd_runner.c
+@@ -29,363 +29,8 @@ enum cmd_res_code {
+ 	CMD_INVALID,
+ };
+ 
+-/* Update classifier table with given action, add or del. */
+-static int
+-update_cls_table(enum sppwk_action wk_action,
+-		enum spp_classifier_type type __attribute__ ((unused)),
+-		int vid, const char *mac_str,
+-		const struct sppwk_port_idx *port)
+-{
+-	/**
+-	 * Use two types of mac addr in int64_t and uint64_t because first
+-	 * one is checked if converted value from string  is negative for error.
+-	 * If it is invalid, convert it to uint64_t.
+-	 */
+-	int64_t mac_int64;
+-	uint64_t mac_uint64;
+-	struct sppwk_port_info *port_info;
+-
+-	RTE_LOG(DEBUG, WK_CMD_RUNNER, "Called __func__ with "
+-			"type `mac`, mac_addr `%s`, and port `%d:%d`.\n",
+-			mac_str, port->iface_type, port->iface_no);
+-
+-	mac_int64 = sppwk_convert_mac_str_to_int64(mac_str);
+-	if (unlikely(mac_int64 == -1)) {
+-		RTE_LOG(ERR, WK_CMD_RUNNER, "Invalid MAC address `%s`.\n",
+-				mac_str);
+-		return SPP_RET_NG;
+-	}
+-	mac_uint64 = (uint64_t)mac_int64;
+-
+-	port_info = get_sppwk_port(port->iface_type, port->iface_no);
+-	if (unlikely(port_info == NULL)) {
+-		RTE_LOG(ERR, WK_CMD_RUNNER, "Failed to get port %d:%d.\n",
+-				port->iface_type, port->iface_no);
+-		return SPP_RET_NG;
+-	}
+-	if (unlikely(port_info->iface_type == UNDEF)) {
+-		RTE_LOG(ERR, WK_CMD_RUNNER, "Port %d:%d doesn't exist.\n",
+-				port->iface_type, port->iface_no);
+-		return SPP_RET_NG;
+-	}
+-
+-	if (wk_action == SPPWK_ACT_DEL) {
+-		if ((port_info->cls_attrs.vlantag.vid != 0) &&
+-				port_info->cls_attrs.vlantag.vid != vid) {
+-			RTE_LOG(ERR, WK_CMD_RUNNER,
+-					"Unexpected VLAN ID `%d`.\n", vid);
+-			return SPP_RET_NG;
+-		}
+-		if ((port_info->cls_attrs.mac_addr != 0) &&
+-				port_info->cls_attrs.mac_addr != mac_uint64) {
+-			RTE_LOG(ERR, WK_CMD_RUNNER, "Unexpected MAC %s.\n",
+-					mac_str);
+-			return SPP_RET_NG;
+-		}
+-
+-		/* Initialize deleted attributes again. */
+-		port_info->cls_attrs.vlantag.vid = ETH_VLAN_ID_MAX;
+-		port_info->cls_attrs.mac_addr = 0;
+-		memset(port_info->cls_attrs.mac_addr_str, 0x00, STR_LEN_SHORT);
+-	} else if (wk_action == SPPWK_ACT_ADD) {
+-		if (unlikely(port_info->cls_attrs.vlantag.vid !=
+-				ETH_VLAN_ID_MAX)) {
+-			/* TODO(yasufum) why two vids are required in msg ? */
+-			RTE_LOG(ERR, WK_CMD_RUNNER, "Used port %d:%d, vid %d != %d.\n",
+-					port->iface_type, port->iface_no,
+-					port_info->cls_attrs.vlantag.vid, vid);
+-			return SPP_RET_NG;
+-		}
+-		if (unlikely(port_info->cls_attrs.mac_addr != 0)) {
+-			/* TODO(yasufum) why two macs are required in msg ? */
+-			RTE_LOG(ERR, WK_CMD_RUNNER, "Used port %d:%d, mac %s != %s.\n",
+-					port->iface_type, port->iface_no,
+-					port_info->cls_attrs.mac_addr_str,
+-					mac_str);
+-			return SPP_RET_NG;
+-		}
+-
+-		/* Update attrs with validated params. */
+-		port_info->cls_attrs.vlantag.vid = vid;
+-		port_info->cls_attrs.mac_addr = mac_uint64;
+-		strcpy(port_info->cls_attrs.mac_addr_str, mac_str);
+-	}
+-
+-	set_component_change_port(port_info, SPP_PORT_RXTX_TX);
+-	return SPP_RET_OK;
+-}
+-
+-/* Assign worker thread or remove on specified lcore. */
+-/* TODO(yasufum) revise func name for removing the term `component`. */
+-static int
+-update_comp(enum sppwk_action wk_action, const char *name,
+-		unsigned int lcore_id, enum sppwk_worker_type wk_type)
+-{
+-	int ret;
+-	int ret_del;
+-	int comp_lcore_id = 0;
+-	unsigned int tmp_lcore_id = 0;
+-	struct sppwk_comp_info *comp_info = NULL;
+-	/* TODO(yasufum) revise `core` to be more specific. */
+-	struct core_info *core = NULL;
+-	struct core_mng_info *info = NULL;
+-	struct sppwk_comp_info *comp_info_base = NULL;
+-	/* TODO(yasufum) revise `core_info` which is same as struct name. */
+-	struct core_mng_info *core_info = NULL;
+-	int *change_core = NULL;
+-	int *change_component = NULL;
+-
+-	sppwk_get_mng_data(NULL, NULL, &comp_info_base, &core_info,
+-				&change_core, &change_component, NULL);
+-
+-	switch (wk_action) {
+-	case SPPWK_ACT_START:
+-		info = (core_info + lcore_id);
+-		if (info->status == SPP_CORE_UNUSE) {
+-			RTE_LOG(ERR, WK_CMD_RUNNER, "Core %d is not available because "
+-				"it is in SPP_CORE_UNUSE state.\n", lcore_id);
+-			return SPP_RET_NG;
+-		}
+-
+-		comp_lcore_id = sppwk_get_lcore_id(name);
+-		if (comp_lcore_id >= 0) {
+-			RTE_LOG(ERR, WK_CMD_RUNNER, "Component name '%s' is already "
+-				"used.\n", name);
+-			return SPP_RET_NG;
+-		}
+-
+-		comp_lcore_id = get_free_lcore_id();
+-		if (comp_lcore_id < 0) {
+-			RTE_LOG(ERR, WK_CMD_RUNNER, "Cannot assign component over the "
+-				"maximum number.\n");
+-			return SPP_RET_NG;
+-		}
+-
+-		core = &info->core[info->upd_index];
+-
+-		comp_info = (comp_info_base + comp_lcore_id);
+-		memset(comp_info, 0x00, sizeof(struct sppwk_comp_info));
+-		strcpy(comp_info->name, name);
+-		comp_info->wk_type = wk_type;
+-		comp_info->lcore_id = lcore_id;
+-		comp_info->comp_id = comp_lcore_id;
+-
+-		core->id[core->num] = comp_lcore_id;
+-		core->num++;
+-		ret = SPP_RET_OK;
+-		tmp_lcore_id = lcore_id;
+-		*(change_component + comp_lcore_id) = 1;
+-		break;
+-
+-	case SPPWK_ACT_STOP:
+-		comp_lcore_id = sppwk_get_lcore_id(name);
+-		if (comp_lcore_id < 0)
+-			return SPP_RET_OK;
+-
+-		comp_info = (comp_info_base + comp_lcore_id);
+-		tmp_lcore_id = comp_info->lcore_id;
+-		memset(comp_info, 0x00, sizeof(struct sppwk_comp_info));
+-
+-		info = (core_info + tmp_lcore_id);
+-		core = &info->core[info->upd_index];
+-
+-		/**
+-		 * TODO(yasufum) check if this ifdef is simply removed by
+-		 * running other than spp_vf.
+-		 */
+-#ifdef SPP_VF_MODULE
+-		/* initialize classifier information */
+-		if (comp_info->wk_type == SPPWK_TYPE_CLS)
+-			init_classifier_info(comp_lcore_id);
+-#endif /* SPP_VF_MODULE */
+-
+-		/* The latest lcore is released if worker thread is stopped. */
+-		ret_del = del_comp_info(comp_lcore_id, core->num, core->id);
+-		if (ret_del >= 0)
+-			core->num--;
+-
+-		ret = SPP_RET_OK;
+-		*(change_component + comp_lcore_id) = 0;
+-		break;
+-
+-	default:  /* Unexpected case. */
+-		ret = SPP_RET_NG;
+-		break;
+-	}
+-
+-	*(change_core + tmp_lcore_id) = 1;
+-	return ret;
+-}
+-
+-/* Check if over the maximum num of rx and tx ports of component. */
+-static int
+-check_port_count(int component_type, enum spp_port_rxtx rxtx, int num_rx,
+-								int num_tx)
+-{
+-	RTE_LOG(INFO, WK_CMD_RUNNER, "port count, port_type=%d,"
+-				" rx=%d, tx=%d\n", rxtx, num_rx, num_tx);
+-	if (rxtx == SPP_PORT_RXTX_RX)
+-		num_rx++;
+-	else
+-		num_tx++;
+-	/* Add rx or tx port appointed in port_type. */
+-	RTE_LOG(INFO, WK_CMD_RUNNER, "Num of ports after count up,"
+-				" port_type=%d, rx=%d, tx=%d\n",
+-				rxtx, num_rx, num_tx);
+-	switch (component_type) {
+-	case SPPWK_TYPE_FWD:
+-		if (num_rx > 1 || num_tx > 1)
+-			return SPP_RET_NG;
+-		break;
+-
+-	case SPPWK_TYPE_MRG:
+-		if (num_tx > 1)
+-			return SPP_RET_NG;
+-		break;
+-
+-	case SPPWK_TYPE_CLS:
+-		if (num_rx > 1)
+-			return SPP_RET_NG;
+-		break;
+-
+-	case SPPWK_TYPE_MIR:
+-		if (num_rx > 1 || num_tx > 2)
+-			return SPP_RET_NG;
+-		break;
+-
+-	default:
+-		/* Illegal component type. */
+-		return SPP_RET_NG;
+-	}
+-
+-	return SPP_RET_OK;
+-}
+-
+-/* Port add or del to execute it */
+-static int
+-update_port(enum sppwk_action wk_action,
+-		const struct sppwk_port_idx *port,
+-		enum spp_port_rxtx rxtx,
+-		const char *name,
+-		const struct spp_port_ability *ability)
+-{
+-	int ret = SPP_RET_NG;
+-	int port_idx;
+-	int ret_del = -1;
+-	int comp_lcore_id = 0;
+-	int cnt = 0;
+-	struct sppwk_comp_info *comp_info = NULL;
+-	struct sppwk_port_info *port_info = NULL;
+-	int *nof_ports = NULL;
+-	struct sppwk_port_info **ports = NULL;
+-	struct sppwk_comp_info *comp_info_base = NULL;
+-	int *change_component = NULL;
+-
+-	comp_lcore_id = sppwk_get_lcore_id(name);
+-	if (comp_lcore_id < 0) {
+-		RTE_LOG(ERR, WK_CMD_RUNNER, "Unknown component by port command. "
+-				"(component = %s)\n", name);
+-		return SPP_RET_NG;
+-	}
+-	sppwk_get_mng_data(NULL, NULL,
+-			&comp_info_base, NULL, NULL, &change_component, NULL);
+-	comp_info = (comp_info_base + comp_lcore_id);
+-	port_info = get_sppwk_port(port->iface_type, port->iface_no);
+-	if (rxtx == SPP_PORT_RXTX_RX) {
+-		nof_ports = &comp_info->nof_rx;
+-		ports = comp_info->rx_ports;
+-	} else {
+-		nof_ports = &comp_info->nof_tx;
+-		ports = comp_info->tx_ports;
+-	}
+-
+-	switch (wk_action) {
+-	case SPPWK_ACT_ADD:
+-		/* Check if over the maximum num of ports of component. */
+-		if (check_port_count(comp_info->wk_type, rxtx,
+-				comp_info->nof_rx,
+-				comp_info->nof_tx) != SPP_RET_OK)
+-			return SPP_RET_NG;
+-
+-		/* Check if the port_info is included in array `ports`. */
+-		port_idx = get_idx_port_info(port_info, *nof_ports, ports);
+-		if (port_idx >= SPP_RET_OK) {
+-			/* registered */
+-			if (ability->ops == SPPWK_PORT_ABL_OPS_ADD_VLANTAG) {
+-				while ((cnt < SPP_PORT_ABILITY_MAX) &&
+-					    (port_info->ability[cnt].ops !=
+-					    SPPWK_PORT_ABL_OPS_ADD_VLANTAG))
+-					cnt++;
+-				if (cnt >= SPP_PORT_ABILITY_MAX) {
+-					RTE_LOG(ERR, WK_CMD_RUNNER, "update VLAN tag "
+-						"Non-registratio\n");
+-					return SPP_RET_NG;
+-				}
+-				memcpy(&port_info->ability[cnt], ability,
+-					sizeof(struct spp_port_ability));
+-
+-				ret = SPP_RET_OK;
+-				break;
+-			}
+-			return SPP_RET_OK;
+-		}
+-
+-		if (*nof_ports >= RTE_MAX_ETHPORTS) {
+-			RTE_LOG(ERR, WK_CMD_RUNNER, "Cannot assign port over the "
+-				"maximum number.\n");
+-			return SPP_RET_NG;
+-		}
+-
+-		if (ability->ops != SPPWK_PORT_ABL_OPS_NONE) {
+-			while ((cnt < SPP_PORT_ABILITY_MAX) &&
+-					(port_info->ability[cnt].ops !=
+-					SPPWK_PORT_ABL_OPS_NONE)) {
+-				cnt++;
+-			}
+-			if (cnt >= SPP_PORT_ABILITY_MAX) {
+-				RTE_LOG(ERR, WK_CMD_RUNNER,
+-						"No space of port ability.\n");
+-				return SPP_RET_NG;
+-			}
+-			memcpy(&port_info->ability[cnt], ability,
+-					sizeof(struct spp_port_ability));
+-		}
+-
+-		port_info->iface_type = port->iface_type;
+-		ports[*nof_ports] = port_info;
+-		(*nof_ports)++;
+-
+-		ret = SPP_RET_OK;
+-		break;
+-
+-	case SPPWK_ACT_DEL:
+-		for (cnt = 0; cnt < SPP_PORT_ABILITY_MAX; cnt++) {
+-			if (port_info->ability[cnt].ops ==
+-					SPPWK_PORT_ABL_OPS_NONE)
+-				continue;
+-
+-			if (port_info->ability[cnt].rxtx == rxtx)
+-				memset(&port_info->ability[cnt], 0x00,
+-					sizeof(struct spp_port_ability));
+-		}
+-
+-		ret_del = delete_port_info(port_info, *nof_ports, ports);
+-		if (ret_del == 0)
+-			(*nof_ports)--; /* If deleted, decrement number. */
+-
+-		ret = SPP_RET_OK;
+-		break;
+-
+-	default:  /* This case cannot be happend without invlid wk_action. */
+-		return SPP_RET_NG;
+-	}
+-
+-	*(change_component + comp_lcore_id) = 1;
+-	return ret;
+-}
+-
+ /* Activate temporarily stored command. */
+-static int
++int
+ flush_cmd(void)
+ {
+ 	int ret;
+@@ -408,62 +53,6 @@ flush_cmd(void)
+ 	return ret;
+ }
+ 
+-/* Execute one command. */
+-static int
+-exec_one_cmd(const struct sppwk_cmd_attrs *cmd)
+-{
+-	int ret;
+-
+-	RTE_LOG(INFO, WK_CMD_RUNNER, "Exec `%s` cmd.\n",
+-			sppwk_cmd_type_str(cmd->type));
+-
+-	switch (cmd->type) {
+-	case SPPWK_CMDTYPE_CLS_MAC:
+-	case SPPWK_CMDTYPE_CLS_VLAN:
+-		ret = update_cls_table(cmd->spec.cls_table.wk_action,
+-				cmd->spec.cls_table.type,
+-				cmd->spec.cls_table.vid,
+-				cmd->spec.cls_table.mac,
+-				&cmd->spec.cls_table.port);
+-		if (ret == 0) {
+-			RTE_LOG(INFO, WK_CMD_RUNNER, "Exec flush.\n");
+-			ret = flush_cmd();
+-		}
+-		break;
+-
+-	case SPPWK_CMDTYPE_WORKER:
+-		ret = update_comp(
+-				cmd->spec.comp.wk_action,
+-				cmd->spec.comp.name,
+-				cmd->spec.comp.core,
+-				cmd->spec.comp.wk_type);
+-		if (ret == 0) {
+-			RTE_LOG(INFO, WK_CMD_RUNNER, "Exec flush.\n");
+-			ret = flush_cmd();
+-		}
+-		break;
+-
+-	case SPPWK_CMDTYPE_PORT:
+-		RTE_LOG(INFO, WK_CMD_RUNNER, "with action `%s`.\n",
+-				sppwk_action_str(cmd->spec.port.wk_action));
+-		ret = update_port(cmd->spec.port.wk_action,
+-				&cmd->spec.port.port, cmd->spec.port.rxtx,
+-				cmd->spec.port.name, &cmd->spec.port.ability);
+-		if (ret == 0) {
+-			RTE_LOG(INFO, WK_CMD_RUNNER, "Exec flush.\n");
+-			ret = flush_cmd();
+-		}
+-		break;
+-
+-	default:
+-		/* Do nothing. */
+-		ret = SPP_RET_OK;
+-		break;
+-	}
+-
+-	return ret;
+-}
+-
+ /* Get error message of parsing from given wk_err_msg object. */
+ static const char *
+ get_parse_err_msg(
+diff --git a/src/shared/secondary/spp_worker_th/cmd_runner.h b/src/shared/secondary/spp_worker_th/cmd_runner.h
+index 5d85733..3a71e3e 100644
+--- a/src/shared/secondary/spp_worker_th/cmd_runner.h
++++ b/src/shared/secondary/spp_worker_th/cmd_runner.h
+@@ -15,6 +15,10 @@
+ 
+ #include "cmd_utils.h"
+ 
++/**
++ */
++int flush_cmd(void);
++
+ /**
+  * Setup connection for accepting commands from spp-ctl.
+  *
+diff --git a/src/shared/secondary/spp_worker_th/mirror_deps.h b/src/shared/secondary/spp_worker_th/mirror_deps.h
+index bfa715d..55ba913 100644
+--- a/src/shared/secondary/spp_worker_th/mirror_deps.h
++++ b/src/shared/secondary/spp_worker_th/mirror_deps.h
+@@ -6,6 +6,9 @@
+ #define __SPP_WORKER_TH_MIRROR_DEPS_H__
+ 
+ #include "cmd_utils.h"
++#include "cmd_parser.h"
++
++int exec_one_cmd(const struct sppwk_cmd_attrs *cmd);
+ 
+ /**
+  * Update mirror info.
+diff --git a/src/shared/secondary/spp_worker_th/vf_deps.h b/src/shared/secondary/spp_worker_th/vf_deps.h
+index 73e0f9a..6a78ef5 100644
+--- a/src/shared/secondary/spp_worker_th/vf_deps.h
++++ b/src/shared/secondary/spp_worker_th/vf_deps.h
+@@ -8,6 +8,7 @@
+ #include <rte_malloc.h>
+ #include <rte_hash.h>
+ #include "cmd_utils.h"
++#include "cmd_parser.h"
+ 
+ /** Number of VLAN ID */
+ #define NOF_VLAN 4096
+@@ -53,6 +54,8 @@ free_mac_classifier(struct mac_classifier *mac_clf)
+ 	rte_free(mac_clf);
+ }
+ 
++int exec_one_cmd(const struct sppwk_cmd_attrs *cmd);
++
+ /**
+  * Update classifier info.
+  *
+diff --git a/src/vf/Makefile b/src/vf/Makefile
+index dd5a100..83d1f14 100644
+--- a/src/vf/Makefile
++++ b/src/vf/Makefile
+@@ -23,10 +23,11 @@ SRCS-y += $(SPP_WKT_DIR)/ringlatencystats.c
+ SRCS-y += $(SPP_WKT_DIR)/spp_port.c
+ SRCS-y += $(SPP_WKT_DIR)/conn_spp_ctl.c
+ SRCS-y += $(SPP_WKT_DIR)/cmd_parser.c
++SRCS-y += ../shared/common.c
+ SRCS-y += $(SPP_WKT_DIR)/cmd_runner.c
+ SRCS-y += $(SPP_WKT_DIR)/cmd_utils.c
+ SRCS-y += $(SPP_WKT_DIR)/cmd_res_formatter.c
+-SRCS-y += ../shared/common.c
++SRCS-y += vf_cmd_runner.c
+ 
+ CFLAGS += -DALLOW_EXPERIMENTAL_API
+ CFLAGS += $(WERROR_FLAGS) -O3 -MMD
+diff --git a/src/vf/vf_cmd_runner.c b/src/vf/vf_cmd_runner.c
+new file mode 100644
+index 0000000..2fb071e
+--- /dev/null
++++ b/src/vf/vf_cmd_runner.c
+@@ -0,0 +1,411 @@
++/* SPDX-License-Identifier: BSD-3-Clause
++ * Copyright(c) 2019 Nippon Telegraph and Telephone Corporation
++ */
++
++#include "classifier_mac.h"
++#include "shared/secondary/return_codes.h"
++#include "shared/secondary/spp_worker_th/cmd_parser.h"
++#include "shared/secondary/spp_worker_th/cmd_runner.h"
++#include "shared/secondary/spp_worker_th/vf_deps.h"
++
++#define RTE_LOGTYPE_VF_CMD_RUNNER RTE_LOGTYPE_USER1
++
++/* Update classifier table with given action, add or del. */
++static int
++update_cls_table(enum sppwk_action wk_action,
++		enum spp_classifier_type type __attribute__ ((unused)),
++		int vid, const char *mac_str,
++		const struct sppwk_port_idx *port)
++{
++	/**
++	 * Use two types of mac addr in int64_t and uint64_t because first
++	 * one is checked if converted value from string  is negative for error.
++	 * If it is invalid, convert it to uint64_t.
++	 */
++	int64_t mac_int64;
++	uint64_t mac_uint64;
++	struct sppwk_port_info *port_info;
++
++	RTE_LOG(DEBUG, VF_CMD_RUNNER, "Called __func__ with "
++			"type `mac`, mac_addr `%s`, and port `%d:%d`.\n",
++			mac_str, port->iface_type, port->iface_no);
++
++	mac_int64 = sppwk_convert_mac_str_to_int64(mac_str);
++	if (unlikely(mac_int64 == -1)) {
++		RTE_LOG(ERR, VF_CMD_RUNNER, "Invalid MAC address `%s`.\n",
++				mac_str);
++		return SPP_RET_NG;
++	}
++	mac_uint64 = (uint64_t)mac_int64;
++
++	port_info = get_sppwk_port(port->iface_type, port->iface_no);
++	if (unlikely(port_info == NULL)) {
++		RTE_LOG(ERR, VF_CMD_RUNNER, "Failed to get port %d:%d.\n",
++				port->iface_type, port->iface_no);
++		return SPP_RET_NG;
++	}
++	if (unlikely(port_info->iface_type == UNDEF)) {
++		RTE_LOG(ERR, VF_CMD_RUNNER, "Port %d:%d doesn't exist.\n",
++				port->iface_type, port->iface_no);
++		return SPP_RET_NG;
++	}
++
++	if (wk_action == SPPWK_ACT_DEL) {
++		if ((port_info->cls_attrs.vlantag.vid != 0) &&
++				port_info->cls_attrs.vlantag.vid != vid) {
++			RTE_LOG(ERR, VF_CMD_RUNNER,
++					"Unexpected VLAN ID `%d`.\n", vid);
++			return SPP_RET_NG;
++		}
++		if ((port_info->cls_attrs.mac_addr != 0) &&
++				port_info->cls_attrs.mac_addr != mac_uint64) {
++			RTE_LOG(ERR, VF_CMD_RUNNER, "Unexpected MAC %s.\n",
++					mac_str);
++			return SPP_RET_NG;
++		}
++
++		/* Initialize deleted attributes again. */
++		port_info->cls_attrs.vlantag.vid = ETH_VLAN_ID_MAX;
++		port_info->cls_attrs.mac_addr = 0;
++		memset(port_info->cls_attrs.mac_addr_str, 0x00, STR_LEN_SHORT);
++	} else if (wk_action == SPPWK_ACT_ADD) {
++		if (unlikely(port_info->cls_attrs.vlantag.vid !=
++				ETH_VLAN_ID_MAX)) {
++			/* TODO(yasufum) why two vids are required in msg ? */
++			RTE_LOG(ERR, VF_CMD_RUNNER, "Used port %d:%d, vid %d != %d.\n",
++					port->iface_type, port->iface_no,
++					port_info->cls_attrs.vlantag.vid, vid);
++			return SPP_RET_NG;
++		}
++		if (unlikely(port_info->cls_attrs.mac_addr != 0)) {
++			/* TODO(yasufum) why two macs are required in msg ? */
++			RTE_LOG(ERR, VF_CMD_RUNNER, "Used port %d:%d, mac %s != %s.\n",
++					port->iface_type, port->iface_no,
++					port_info->cls_attrs.mac_addr_str,
++					mac_str);
++			return SPP_RET_NG;
++		}
++
++		/* Update attrs with validated params. */
++		port_info->cls_attrs.vlantag.vid = vid;
++		port_info->cls_attrs.mac_addr = mac_uint64;
++		strcpy(port_info->cls_attrs.mac_addr_str, mac_str);
++	}
++
++	set_component_change_port(port_info, SPP_PORT_RXTX_TX);
++	return SPP_RET_OK;
++}
++
++/* Assign worker thread or remove on specified lcore. */
++/* TODO(yasufum) revise func name for removing term `component` or `comp`. */
++static int
++update_comp(enum sppwk_action wk_action, const char *name,
++		unsigned int lcore_id, enum sppwk_worker_type wk_type)
++{
++	int ret;
++	int ret_del;
++	int comp_lcore_id = 0;
++	unsigned int tmp_lcore_id = 0;
++	struct sppwk_comp_info *comp_info = NULL;
++	/* TODO(yasufum) revise `core` to be more specific. */
++	struct core_info *core = NULL;
++	struct core_mng_info *info = NULL;
++	struct sppwk_comp_info *comp_info_base = NULL;
++	/* TODO(yasufum) revise `core_info` which is same as struct name. */
++	struct core_mng_info *core_info = NULL;
++	int *change_core = NULL;
++	int *change_component = NULL;
++
++	sppwk_get_mng_data(NULL, NULL, &comp_info_base, &core_info,
++				&change_core, &change_component, NULL);
++
++	switch (wk_action) {
++	case SPPWK_ACT_START:
++		info = (core_info + lcore_id);
++		if (info->status == SPP_CORE_UNUSE) {
++			RTE_LOG(ERR, VF_CMD_RUNNER, "Core %d is not available because "
++				"it is in SPP_CORE_UNUSE state.\n", lcore_id);
++			return SPP_RET_NG;
++		}
++
++		comp_lcore_id = sppwk_get_lcore_id(name);
++		if (comp_lcore_id >= 0) {
++			RTE_LOG(ERR, VF_CMD_RUNNER, "Component name '%s' is already "
++				"used.\n", name);
++			return SPP_RET_NG;
++		}
++
++		comp_lcore_id = get_free_lcore_id();
++		if (comp_lcore_id < 0) {
++			RTE_LOG(ERR, VF_CMD_RUNNER, "Cannot assign component over the "
++				"maximum number.\n");
++			return SPP_RET_NG;
++		}
++
++		core = &info->core[info->upd_index];
++
++		comp_info = (comp_info_base + comp_lcore_id);
++		memset(comp_info, 0x00, sizeof(struct sppwk_comp_info));
++		strcpy(comp_info->name, name);
++		comp_info->wk_type = wk_type;
++		comp_info->lcore_id = lcore_id;
++		comp_info->comp_id = comp_lcore_id;
++
++		core->id[core->num] = comp_lcore_id;
++		core->num++;
++		ret = SPP_RET_OK;
++		tmp_lcore_id = lcore_id;
++		*(change_component + comp_lcore_id) = 1;
++		break;
++
++	case SPPWK_ACT_STOP:
++		comp_lcore_id = sppwk_get_lcore_id(name);
++		if (comp_lcore_id < 0)
++			return SPP_RET_OK;
++
++		comp_info = (comp_info_base + comp_lcore_id);
++		tmp_lcore_id = comp_info->lcore_id;
++		memset(comp_info, 0x00, sizeof(struct sppwk_comp_info));
++
++		info = (core_info + tmp_lcore_id);
++		core = &info->core[info->upd_index];
++
++		/* initialize classifier information */
++		if (comp_info->wk_type == SPPWK_TYPE_CLS)
++			init_classifier_info(comp_lcore_id);
++
++		/* The latest lcore is released if worker thread is stopped. */
++		ret_del = del_comp_info(comp_lcore_id, core->num, core->id);
++		if (ret_del >= 0)
++			core->num--;
++
++		ret = SPP_RET_OK;
++		*(change_component + comp_lcore_id) = 0;
++		break;
++
++	default:  /* Unexpected case. */
++		ret = SPP_RET_NG;
++		break;
++	}
++
++	*(change_core + tmp_lcore_id) = 1;
++	return ret;
++}
++
++/* Check if over the maximum num of rx and tx ports of component. */
++static int
++check_vf_port_count(int component_type, enum spp_port_rxtx rxtx, int num_rx,
++								int num_tx)
++{
++	RTE_LOG(INFO, VF_CMD_RUNNER, "port count, port_type=%d,"
++				" rx=%d, tx=%d\n", rxtx, num_rx, num_tx);
++	if (rxtx == SPP_PORT_RXTX_RX)
++		num_rx++;
++	else
++		num_tx++;
++	/* Add rx or tx port appointed in port_type. */
++	RTE_LOG(INFO, VF_CMD_RUNNER, "Num of ports after count up,"
++				" port_type=%d, rx=%d, tx=%d\n",
++				rxtx, num_rx, num_tx);
++	switch (component_type) {
++	case SPPWK_TYPE_FWD:
++		if (num_rx > 1 || num_tx > 1)
++			return SPP_RET_NG;
++		break;
++
++	case SPPWK_TYPE_MRG:
++		if (num_tx > 1)
++			return SPP_RET_NG;
++		break;
++
++	case SPPWK_TYPE_CLS:
++		if (num_rx > 1)
++			return SPP_RET_NG;
++		break;
++
++	default:
++		/* Illegal component type. */
++		return SPP_RET_NG;
++	}
++
++	return SPP_RET_OK;
++}
++
++/* Port add or del to execute it */
++static int
++update_port(enum sppwk_action wk_action,
++		const struct sppwk_port_idx *port,
++		enum spp_port_rxtx rxtx,
++		const char *name,
++		const struct spp_port_ability *ability)
++{
++	int ret = SPP_RET_NG;
++	int port_idx;
++	int ret_del = -1;
++	int comp_lcore_id = 0;
++	int cnt = 0;
++	struct sppwk_comp_info *comp_info = NULL;
++	struct sppwk_port_info *port_info = NULL;
++	int *nof_ports = NULL;
++	struct sppwk_port_info **ports = NULL;
++	struct sppwk_comp_info *comp_info_base = NULL;
++	int *change_component = NULL;
++
++	comp_lcore_id = sppwk_get_lcore_id(name);
++	if (comp_lcore_id < 0) {
++		RTE_LOG(ERR, VF_CMD_RUNNER, "Unknown component by port command. "
++				"(component = %s)\n", name);
++		return SPP_RET_NG;
++	}
++	sppwk_get_mng_data(NULL, NULL,
++			&comp_info_base, NULL, NULL, &change_component, NULL);
++	comp_info = (comp_info_base + comp_lcore_id);
++	port_info = get_sppwk_port(port->iface_type, port->iface_no);
++	if (rxtx == SPP_PORT_RXTX_RX) {
++		nof_ports = &comp_info->nof_rx;
++		ports = comp_info->rx_ports;
++	} else {
++		nof_ports = &comp_info->nof_tx;
++		ports = comp_info->tx_ports;
++	}
++
++	switch (wk_action) {
++	case SPPWK_ACT_ADD:
++		/* Check if over the maximum num of ports of component. */
++		if (check_vf_port_count(comp_info->wk_type, rxtx,
++				comp_info->nof_rx,
++				comp_info->nof_tx) != SPP_RET_OK)
++			return SPP_RET_NG;
++
++		/* Check if the port_info is included in array `ports`. */
++		port_idx = get_idx_port_info(port_info, *nof_ports, ports);
++		if (port_idx >= SPP_RET_OK) {
++			/* registered */
++			if (ability->ops == SPPWK_PORT_ABL_OPS_ADD_VLANTAG) {
++				while ((cnt < SPP_PORT_ABILITY_MAX) &&
++					    (port_info->ability[cnt].ops !=
++					    SPPWK_PORT_ABL_OPS_ADD_VLANTAG))
++					cnt++;
++				if (cnt >= SPP_PORT_ABILITY_MAX) {
++					RTE_LOG(ERR, VF_CMD_RUNNER, "update VLAN tag "
++						"Non-registratio\n");
++					return SPP_RET_NG;
++				}
++				memcpy(&port_info->ability[cnt], ability,
++					sizeof(struct spp_port_ability));
++
++				ret = SPP_RET_OK;
++				break;
++			}
++			return SPP_RET_OK;
++		}
++
++		if (*nof_ports >= RTE_MAX_ETHPORTS) {
++			RTE_LOG(ERR, VF_CMD_RUNNER, "Cannot assign port over the "
++				"maximum number.\n");
++			return SPP_RET_NG;
++		}
++
++		if (ability->ops != SPPWK_PORT_ABL_OPS_NONE) {
++			while ((cnt < SPP_PORT_ABILITY_MAX) &&
++					(port_info->ability[cnt].ops !=
++					SPPWK_PORT_ABL_OPS_NONE)) {
++				cnt++;
++			}
++			if (cnt >= SPP_PORT_ABILITY_MAX) {
++				RTE_LOG(ERR, VF_CMD_RUNNER,
++						"No space of port ability.\n");
++				return SPP_RET_NG;
++			}
++			memcpy(&port_info->ability[cnt], ability,
++					sizeof(struct spp_port_ability));
++		}
++
++		port_info->iface_type = port->iface_type;
++		ports[*nof_ports] = port_info;
++		(*nof_ports)++;
++
++		ret = SPP_RET_OK;
++		break;
++
++	case SPPWK_ACT_DEL:
++		for (cnt = 0; cnt < SPP_PORT_ABILITY_MAX; cnt++) {
++			if (port_info->ability[cnt].ops ==
++					SPPWK_PORT_ABL_OPS_NONE)
++				continue;
++
++			if (port_info->ability[cnt].rxtx == rxtx)
++				memset(&port_info->ability[cnt], 0x00,
++					sizeof(struct spp_port_ability));
++		}
++
++		ret_del = delete_port_info(port_info, *nof_ports, ports);
++		if (ret_del == 0)
++			(*nof_ports)--; /* If deleted, decrement number. */
++
++		ret = SPP_RET_OK;
++		break;
++
++	default:  /* This case cannot be happend without invlid wk_action. */
++		return SPP_RET_NG;
++	}
++
++	*(change_component + comp_lcore_id) = 1;
++	return ret;
++}
++
++/* Execute one command. */
++int
++exec_one_cmd(const struct sppwk_cmd_attrs *cmd)
++{
++	int ret;
++
++	RTE_LOG(INFO, VF_CMD_RUNNER, "Exec `%s` cmd.\n",
++			sppwk_cmd_type_str(cmd->type));
++
++	switch (cmd->type) {
++	case SPPWK_CMDTYPE_CLS_MAC:
++	case SPPWK_CMDTYPE_CLS_VLAN:
++		ret = update_cls_table(cmd->spec.cls_table.wk_action,
++				cmd->spec.cls_table.type,
++				cmd->spec.cls_table.vid,
++				cmd->spec.cls_table.mac,
++				&cmd->spec.cls_table.port);
++		if (ret == 0) {
++			RTE_LOG(INFO, VF_CMD_RUNNER, "Exec flush.\n");
++			ret = flush_cmd();
++		}
++		break;
++
++	case SPPWK_CMDTYPE_WORKER:
++		ret = update_comp(
++				cmd->spec.comp.wk_action,
++				cmd->spec.comp.name,
++				cmd->spec.comp.core,
++				cmd->spec.comp.wk_type);
++		if (ret == 0) {
++			RTE_LOG(INFO, VF_CMD_RUNNER, "Exec flush.\n");
++			ret = flush_cmd();
++		}
++		break;
++
++	case SPPWK_CMDTYPE_PORT:
++		RTE_LOG(INFO, VF_CMD_RUNNER, "with action `%s`.\n",
++				sppwk_action_str(cmd->spec.port.wk_action));
++		ret = update_port(cmd->spec.port.wk_action,
++				&cmd->spec.port.port, cmd->spec.port.rxtx,
++				cmd->spec.port.name, &cmd->spec.port.ability);
++		if (ret == 0) {
++			RTE_LOG(INFO, VF_CMD_RUNNER, "Exec flush.\n");
++			ret = flush_cmd();
++		}
++		break;
++
++	default:
++		/* Do nothing. */
++		ret = SPP_RET_OK;
++		break;
++	}
++
++	return ret;
++}
+-- 
+2.17.1
+
+

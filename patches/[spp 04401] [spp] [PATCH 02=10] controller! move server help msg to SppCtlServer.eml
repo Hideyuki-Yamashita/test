@@ -1,0 +1,234 @@
+Return-path: <fw-yama-hd@pomail01.silk.ntt-tx.co.jp>
+Received: from zssg-mailmd102.ddreams.local
+ (zssg-mailmd102.ddreams.local [10.160.123.97]) by zssg-mailms320.ddreams.local
+ (NTT DoCoMo Mail System) with ESMTP id <0PTL00DJ3DBJFR70@NTTDoCoMo.co.jp> for
+ yamashita.hideyuki@ntt-tx.co.jp; Mon, 24 Jun 2019 16:11:43 +0900 (JST)
+Original-recipient: rfc822;yamashita.hideyuki@ntt-tx.co.jp
+Received: from smtp_saver-daemon.zssg-mailmd102.ddreams.local by
+ zssg-mailmd102.ddreams.local (dDREAMS) id <0PTL00U0ADBJLE00@dDREAMS> for
+ yamashita.hideyuki@ntt-tx.co.jp (ORCPT yamashita.hideyuki@ntt-tx.co.jp); Mon,
+ 24 Jun 2019 16:11:43 +0900 (JST)
+Received: from zssg-mailmf101.ddreams.local
+ (zssg-mailmf900.ddreams.local [10.160.172.84]) by zssg-mailmd102.ddreams.local
+ (dDREAMS) with ESMTP id <0PTL00DPDDBJAT90@dDREAMS> for
+ yamashita.hideyuki@ntt-tx.co.jp (ORCPT yamashita.hideyuki@ntt-tx.co.jp); Mon,
+ 24 Jun 2019 16:11:43 +0900 (JST)
+Received: from zssg-mailmf101.ddreams.local (unknown [127.0.0.1])
+	by zssg-mailmf101.ddreams.local (Postfix) with ESMTP id 43B237E6034	for
+ <yamashita.hideyuki@ntt-tx.co.jp>; Mon, 24 Jun 2019 16:11:43 +0900 (JST)
+Received: from zssg-mailmf101.ddreams.local (unknown [127.0.0.1])
+	by IMSVA (Postfix) with ESMTP id 423B38E6058	for
+ <yamashita.hideyuki@ntt-tx.co.jp>; Mon, 24 Jun 2019 16:11:43 +0900 (JST)
+Received: from localhost (unknown [127.0.0.1])	by IMSVA (Postfix)
+ with SMTP id 3757A8E605A	for <yamashita.hideyuki@ntt-tx.co.jp>; Mon,
+ 24 Jun 2019 16:11:43 +0900 (JST)
+X-IMSS-HAND-OFF-DIRECTIVE: localhost:10026
+Received: from zssg-mailmf101.ddreams.local (unknown [127.0.0.1])
+	by IMSVA (Postfix) with ESMTP id CE1758E606E	for
+ <yamashita.hideyuki@ntt-tx.co.jp>; Mon, 24 Jun 2019 16:11:41 +0900 (JST)
+Received: from pomail01.silk.ntt-tx.co.jp (unknown [10.160.183.139])
+	by zssg-mailmf101.ddreams.local (Postfix)
+ with ESMTPS	for <yamashita.hideyuki@ntt-tx.co.jp>; Mon,
+ 24 Jun 2019 16:11:41 +0900 (JST)
+Received: from pomail01.silk.ntt-tx.co.jp (localhost [127.0.0.1])
+	by pomail01.silk.ntt-tx.co.jp (unknown) with ESMTP id x5O7BfJ8017010;	Mon,
+ 24 Jun 2019 16:11:41 +0900
+Received: (from yama-hd@localhost)	by pomail01.silk.ntt-tx.co.jp (unknown)
+ id x5O7BfmE017009;	Mon, 24 Jun 2019 16:11:41 +0900
+X-Authentication-warning: pomail01.silk.ntt-tx.co.jp: yama-hd set sender to
+ fw-yama-hd@pomail01.silk.ntt-tx.co.jp using -f
+Received: from imss04.silk.ntt-tx.co.jp
+ (imss04.silk.ntt-tx.co.jp [10.107.0.39])	by pomail01.silk.ntt-tx.co.jp
+ (unknown) with ESMTP id x5O7BfTF017006	for unknown; Mon,
+ 24 Jun 2019 16:11:41 +0900
+Received: from imss04.silk.ntt-tx.co.jp (localhost [127.0.0.1])
+ by imss04.silk.ntt-tx.co.jp (unknown) with ESMTP id x5O7BfdL021468 for
+ unknown; Mon, 24 Jun 2019 16:11:41 +0900
+Received: from ml01.silk.ntt-tx.co.jp (ml01.silk.ntt-tx.co.jp [10.107.0.230])
+ by imss04.silk.ntt-tx.co.jp (unknown) with ESMTP id x5O7Bfbj021464; Mon,
+ 24 Jun 2019 16:11:41 +0900
+Received: from ml01.silk.ntt-tx.co.jp (localhost [127.0.0.1])
+	by ml01.silk.ntt-tx.co.jp (unknown) with ESMTP id x5O7Berd017038;	Mon,
+ 24 Jun 2019 16:11:40 +0900
+Received: from imss02.silk.ntt-tx.co.jp
+ (imss02.silk.ntt-tx.co.jp [10.107.0.127])	by ml01.silk.ntt-tx.co.jp (unknown)
+ with ESMTP id x5O7Behv017034	for unknown; Mon, 24 Jun 2019 16:11:40 +0900
+Received: from imss02.silk.ntt-tx.co.jp (localhost [127.0.0.1])
+ by imss02.silk.ntt-tx.co.jp (unknown) with ESMTP id x5O7BedY031282 for
+ unknown; Mon, 24 Jun 2019 16:11:40 +0900
+Received: from mail01.ics.ntt-tx.co.jp (mail01.ics.ntt-tx.co.jp [10.254.2.67])
+ by imss02.silk.ntt-tx.co.jp (unknown) with ESMTP id x5O7BeIk031279 for
+ unknown; Mon, 24 Jun 2019 16:11:40 +0900
+Received: from dpdk.org (dpdk.org [92.243.14.124])	by mail01.ics.ntt-tx.co.jp
+ (unknown) with SMTP id x5O7BXrd023379	for unknown; Mon,
+ 24 Jun 2019 16:11:39 +0900
+Received: from [92.243.14.124] (localhost [127.0.0.1])	by dpdk.org (Postfix)
+ with ESMTP id 645141BF2A;	Mon, 24 Jun 2019 09:11:33 +0200 (CEST)
+Received: from mail-pg1-f173.google.com
+ (mail-pg1-f173.google.com [209.85.215.173]) by dpdk.org (Postfix)
+ with ESMTP id 9A7B51BF28 for <spp@dpdk.org>; Mon,
+ 24 Jun 2019 09:11:32 +0200 (CEST)
+Received: by mail-pg1-f173.google.com with SMTP id s27so6614940pgl.2 for
+ <spp@dpdk.org>; Mon, 24 Jun 2019 00:11:32 -0700 (PDT)
+Received: from localhost.localdomain ([192.47.164.146])
+ by smtp.gmail.com with ESMTPSA id y17sm6357948pfe.148.2019.06.24.00.11.30
+ (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128); Mon,
+ 24 Jun 2019 00:11:31 -0700 (PDT)
+Date: Mon, 24 Jun 2019 16:11:16 +0900
+From: yasufum.o@gmail.com
+Subject: [spp 04401] [spp] [PATCH 02/10] controller: move server help msg to
+ SppCtlServer
+Sender: spp <spp-bounces@dpdk.org>
+To: spp@dpdk.org, ferruh.yigit@intel.com, yasufum.o@gmail.com
+Message-id: <20190624071124.23451-3-yasufum.o@gmail.com>
+In-reply-to: <20190624071124.23451-1-yasufum.o@gmail.com>
+References: <20190624071124.23451-1-yasufum.o@gmail.com>
+X-ML-Name: unknown
+X-Mail-Count: 04401
+X-MLServer: unknown
+X-ML-Info: mailing list service
+X-Mailer: git-send-email 2.17.1
+Authentication-results: mail01.ics.ntt-tx.co.jp; spf=pass
+ smtp.mailfrom=spp-bounces@dpdk.org
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
+ h=from:to:subject:date:message-id:in-reply-to:references;
+ bh=qElY0imwBoK7UdkXybRDe82CuJw93Db9U74nwiug3Ok=;
+ b=CmAK3enRRdntg9xujUSK5VSpIFlQ1ZGYBIXJ2uSbranHEwyAZhAFVzwVzEdMy4A+Nv
+ LaLH+6kDkCCFgWCpy+T82o4UOJ1y3iEutHz6S9ADcb38l8klDvTVdqooAeS5xRpY/aHv
+ f0t0FAZ3d5Nk5SZgpV3TS/pSTjKzsLQbmc291kOKws3RUPmBbu6QKjfvEbfk2tfiLJ9d
+ 698ze3yTM0hMSQrGt0IOhDXGJ/RD+O4vpACiSjn37kd/dY9IGkKbizCro379OjExxZmL
+ 4vh16UmGlop+xscq5dZCzp8PB3B6eDcMjMTFzcL/JaKdkV6TMuFUP67uQd9X61ar2E+I EIsA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=1e100.net;
+ s=20161025; h=x-gm-message-state:from:to:subject:date:message-id:in-reply-to
+ :references; bh=qElY0imwBoK7UdkXybRDe82CuJw93Db9U74nwiug3Ok=;
+ b=I/bRiWxBcpoJiLtaaFWm7Ch20RTqKJ50vo0ckDxPO/XEnXg5GDiEqrkdbR1wDhBvo+
+ uEJw/fUcHRc0s8Iz1BO3RKft4I8NwGvPY1RW+0LsY9tKhsaA4SBA4ot/T/Lr/57z0pIS
+ GACcf5k96jihnQ+y/defIa1/VHHDvY0vUu1R1RUT3VJ7nUiobwiz/eDDkUtBwp5H542/
+ UgkpXMT+bH7MxPvzIAc2TdACjtmgJ5FN9X+9EISBXRx094BqwmVxNfCQA1CG3BtzyowL
+ bcHtkF7CPmhPfxsGA8tD74b3so2BbqfKyRfmjfQFFxpKAkyp78DTsNuhwkyt9MtxVoDR e16A==
+X-Gm-Message-State: APjAAAUWJF+hRr2aLAExADsVYa8gIPyV/AafY67JKifjGWuTx9llNTOt
+ +Frm57PkfPQ84X9QkLnWp8OZYWig
+X-Google-Smtp-Source:
+ APXvYqxQJ9Xpm/EvVF8rjPc2fG+U1IWMtBXJz9EY1axF0UVQOekmwRa4QKuW7jAO1rfja+T0L9Izig==
+X-Received: by 2002:a63:78c3:: with SMTP id
+ t186mr32416992pgc.340.1561360291665; Mon, 24 Jun 2019 00:11:31 -0700 (PDT)
+X-BeenThere: spp@dpdk.org
+X-Mailman-Version: 2.1.15
+List-Id: Soft Patch Panel <spp.dpdk.org>
+List-Unsubscribe: <https://mails.dpdk.org/options/spp>,
+ <mailto:spp-request@dpdk.org?subject=unsubscribe>
+List-Archive: <http://mails.dpdk.org/archives/spp/>
+List-Post: <mailto:spp@dpdk.org>
+List-Help: <mailto:spp-request@dpdk.org?subject=help>
+List-Subscribe: <https://mails.dpdk.org/listinfo/spp>,
+ <mailto:spp-request@dpdk.org?subject=subscribe>
+X-TM-AS-MML: No
+Precedence: bulk
+Lines: 103
+X-TM-AS-GCONF: 00
+X-MD-STAMP: ON
+
+From: Yasufumi Ogawa <yasufum.o@gmail.com>
+
+This patch is to move comment of `do_server` to `SppCtlServer.help` to
+reduce the number of lines.
+
+Signed-off-by: Yasufumi Ogawa <yasufum.o@gmail.com>
+---
+ src/controller/commands/server.py | 33 +++++++++++++++++++++++++++++++
+ src/controller/shell.py           | 33 +++++--------------------------
+ 2 files changed, 38 insertions(+), 28 deletions(-)
+
+diff --git a/src/controller/commands/server.py b/src/controller/commands/server.py
+index c2bda9d..2b5913a 100644
+--- a/src/controller/commands/server.py
++++ b/src/controller/commands/server.py
+@@ -258,3 +258,36 @@ class SppCtlServer(object):
+                 removed.ip_addr, removed.port))
+ 
+         return True
++
++    @classmethod
++    def help(cls):
++        msg = """Switch SPP REST API server.
++
++        Show a list of servers. '*' means that it is under the control.
++
++            spp > server  # or 'server list'
++              1: 192.168.1.101:7777 *
++              2: 192.168.1.102:7777
++
++        Switch to the second node with index or address.
++
++            spp > server 2
++            Switch spp-ctl to "2: 192.168.1.102:7777".
++
++            # It is the same
++            spp > server 192.168.1.101  # no need port if default
++            Switch spp-ctl to "1: 192.168.1.101:7777".
++
++        Register or unregister a node by using 'add' or 'del' command.
++        For unregistering, node is also specified with index.
++
++            # Register third node
++            spp > server add 192.168.122.177
++            Registered spp-ctl "192.168.122.177:7777".
++
++            # Unregister second one
++            spp > server del 2  # or 192.168.1.102
++            Unregistered spp-ctl "192.168.1.102:7777".
++        """
++
++        print(msg)
+diff --git a/src/controller/shell.py b/src/controller/shell.py
+index 75dabaa..b86ba5c 100644
+--- a/src/controller/shell.py
++++ b/src/controller/shell.py
+@@ -253,38 +253,15 @@ class Shell(cmd.Cmd, object):
+             self.recorded_file = None
+ 
+     def do_server(self, commands):
+-        """Switch SPP REST API server.
+-
+-        Show a list of servers. '*' means that it is under the control.
+-
+-            spp > server  # or 'server list'
+-              1: 192.168.1.101:7777 *
+-              2: 192.168.1.102:7777
+-
+-        Switch to the second node with index or address.
+-
+-            spp > server 2
+-            Switch spp-ctl to "2: 192.168.1.102:7777".
+-
+-            # It is the same
+-            spp > server 192.168.1.101  # no need port if default
+-            Switch spp-ctl to "1: 192.168.1.101:7777".
+-
+-        Register or unregister a node by using 'add' or 'del' command.
+-        For unregistering, node is also specified with index.
+-
+-            # Register third node
+-            spp > server add 192.168.122.177
+-            Registered spp-ctl "192.168.122.177:7777".
+-
+-            # Unregister second one
+-            spp > server del 2  # or 192.168.1.102
+-            Unregistered spp-ctl "192.168.1.102:7777".
+-        """
++        """Switch SPP REST API server."""
+ 
+         self.spp_ctl_server.run(commands)
+         self.spp_ctl_cli = self.spp_ctl_server.get_current_server()
+ 
++    def help_server(self):
++        """Print help message of server command."""
++        server.SppCtlServer.help()
++
+     def complete_server(self, text, line, begidx, endidx):
+         """Completion for server command."""
+ 
+-- 
+2.17.1
+
+

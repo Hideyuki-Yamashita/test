@@ -1,0 +1,415 @@
+Return-path: <fw-yama-hd@pomail01.silk.ntt-tx.co.jp>
+Received: from zssg-mailmd102.ddreams.local
+ (zssg-mailmd102.ddreams.local [10.160.123.97]) by zssg-mailms320.ddreams.local
+ (NTT DoCoMo Mail System) with ESMTP id <0PTL001UQN7UR160@NTTDoCoMo.co.jp> for
+ yamashita.hideyuki@ntt-tx.co.jp; Mon, 24 Jun 2019 19:45:30 +0900 (JST)
+Original-recipient: rfc822;yamashita.hideyuki@ntt-tx.co.jp
+Received: from smtp_saver-daemon.zssg-mailmd102.ddreams.local by
+ zssg-mailmd102.ddreams.local (dDREAMS) id <0PTL00Q20N7ULE00@dDREAMS> for
+ yamashita.hideyuki@ntt-tx.co.jp (ORCPT yamashita.hideyuki@ntt-tx.co.jp); Mon,
+ 24 Jun 2019 19:45:30 +0900 (JST)
+Received: from zssg-mailmf103.ddreams.local
+ (zssg-mailmf900.ddreams.local [10.160.172.84]) by zssg-mailmd102.ddreams.local
+ (dDREAMS) with ESMTP id <0PTL009R8N7U7Y60@dDREAMS> for
+ yamashita.hideyuki@ntt-tx.co.jp (ORCPT yamashita.hideyuki@ntt-tx.co.jp); Mon,
+ 24 Jun 2019 19:45:30 +0900 (JST)
+Received: from zssg-mailmf103.ddreams.local (unknown [127.0.0.1])
+	by zssg-mailmf103.ddreams.local (Postfix) with ESMTP id 09C747E6036	for
+ <yamashita.hideyuki@ntt-tx.co.jp>; Mon, 24 Jun 2019 19:45:30 +0900 (JST)
+Received: from zssg-mailmf103.ddreams.local (unknown [127.0.0.1])
+	by IMSVA (Postfix) with ESMTP id 08CE38E6056	for
+ <yamashita.hideyuki@ntt-tx.co.jp>; Mon, 24 Jun 2019 19:45:30 +0900 (JST)
+Received: from localhost (unknown [127.0.0.1])	by IMSVA (Postfix)
+ with SMTP id F1CCF8E6054	for <yamashita.hideyuki@ntt-tx.co.jp>; Mon,
+ 24 Jun 2019 19:45:29 +0900 (JST)
+X-IMSS-HAND-OFF-DIRECTIVE: localhost:10026
+Received: from zssg-mailmf103.ddreams.local (unknown [127.0.0.1])
+	by IMSVA (Postfix) with ESMTP id 52C428E6054	for
+ <yamashita.hideyuki@ntt-tx.co.jp>; Mon, 24 Jun 2019 19:45:29 +0900 (JST)
+Received: from pomail01.silk.ntt-tx.co.jp (unknown [10.160.183.139])
+	by zssg-mailmf103.ddreams.local (Postfix)
+ with ESMTPS	for <yamashita.hideyuki@ntt-tx.co.jp>; Mon,
+ 24 Jun 2019 19:45:29 +0900 (JST)
+Received: from pomail01.silk.ntt-tx.co.jp (localhost [127.0.0.1])
+	by pomail01.silk.ntt-tx.co.jp (unknown) with ESMTP id x5OAjTED032642;	Mon,
+ 24 Jun 2019 19:45:29 +0900
+Received: (from yama-hd@localhost)	by pomail01.silk.ntt-tx.co.jp (unknown)
+ id x5OAjTvw032641;	Mon, 24 Jun 2019 19:45:29 +0900
+X-Authentication-warning: pomail01.silk.ntt-tx.co.jp: yama-hd set sender to
+ fw-yama-hd@pomail01.silk.ntt-tx.co.jp using -f
+Received: from imss04.silk.ntt-tx.co.jp
+ (imss04.silk.ntt-tx.co.jp [10.107.0.39])	by pomail01.silk.ntt-tx.co.jp
+ (unknown) with ESMTP id x5OAjS6v032638	for unknown; Mon,
+ 24 Jun 2019 19:45:28 +0900
+Received: from imss04.silk.ntt-tx.co.jp (localhost [127.0.0.1])
+ by imss04.silk.ntt-tx.co.jp (unknown) with ESMTP id x5OAjSWI007848 for
+ unknown; Mon, 24 Jun 2019 19:45:28 +0900
+Received: from ml01.silk.ntt-tx.co.jp (ml01.silk.ntt-tx.co.jp [10.107.0.230])
+ by imss04.silk.ntt-tx.co.jp (unknown) with ESMTP id x5OAjSuG007845; Mon,
+ 24 Jun 2019 19:45:28 +0900
+Received: from ml01.silk.ntt-tx.co.jp (localhost [127.0.0.1])
+	by ml01.silk.ntt-tx.co.jp (unknown) with ESMTP id x5OAjSZR008900;	Mon,
+ 24 Jun 2019 19:45:28 +0900
+Received: from imss02.silk.ntt-tx.co.jp
+ (imss02.silk.ntt-tx.co.jp [10.107.0.127])	by ml01.silk.ntt-tx.co.jp (unknown)
+ with ESMTP id x5OAjSeQ008896	for unknown; Mon, 24 Jun 2019 19:45:28 +0900
+Received: from imss02.silk.ntt-tx.co.jp (localhost [127.0.0.1])
+ by imss02.silk.ntt-tx.co.jp (unknown) with ESMTP id x5OAjSUs023283 for
+ unknown; Mon, 24 Jun 2019 19:45:28 +0900
+Received: from mail01.ics.ntt-tx.co.jp (mail01.ics.ntt-tx.co.jp [10.254.2.67])
+ by imss02.silk.ntt-tx.co.jp (unknown) with ESMTP id x5OAjSbQ023279 for
+ unknown; Mon, 24 Jun 2019 19:45:28 +0900
+Received: from dpdk.org (dpdk.org [92.243.14.124])	by mail01.ics.ntt-tx.co.jp
+ (unknown) with SMTP id x5OAjLle020820	for unknown; Mon,
+ 24 Jun 2019 19:45:27 +0900
+Received: from [92.243.14.124] (localhost [127.0.0.1])	by dpdk.org (Postfix)
+ with ESMTP id 8FA7A1B9B1;	Mon, 24 Jun 2019 12:45:20 +0200 (CEST)
+Received: from mail-pl1-f195.google.com
+ (mail-pl1-f195.google.com [209.85.214.195]) by dpdk.org (Postfix)
+ with ESMTP id 46A892C2B for <spp@dpdk.org>; Mon,
+ 24 Jun 2019 12:45:19 +0200 (CEST)
+Received: by mail-pl1-f195.google.com with SMTP id b7so6667630pls.6 for
+ <spp@dpdk.org>; Mon, 24 Jun 2019 03:45:19 -0700 (PDT)
+Received: from localhost.localdomain ([192.47.164.146])
+ by smtp.gmail.com with ESMTPSA id z11sm9863448pjn.2.2019.06.24.03.45.17
+ (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128); Mon,
+ 24 Jun 2019 03:45:17 -0700 (PDT)
+Date: Mon, 24 Jun 2019 19:45:14 +0900
+From: yasufum.o@gmail.com
+Subject: [spp 04428] [spp] [PATCH] spp_pcap: remove global variable client_id
+Sender: spp <spp-bounces@dpdk.org>
+To: spp@dpdk.org, ferruh.yigit@intel.com, yasufum.o@gmail.com
+Message-id: <20190624104514.25034-1-yasufum.o@gmail.com>
+X-ML-Name: unknown
+X-Mail-Count: 04428
+X-MLServer: unknown
+X-ML-Info: mailing list service
+X-Mailer: git-send-email 2.17.1
+Authentication-results: mail01.ics.ntt-tx.co.jp; spf=pass
+ smtp.mailfrom=spp-bounces@dpdk.org
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
+ h=from:to:subject:date:message-id;
+ bh=7xTxGGSkRwlSqpPnPTnyx3Jk/K0xsG3WpAf13m0faKA=;
+ b=JJZJ2nsuaRf5HB3jc4lipqIF6YiBXuam/bOEQO1A+RcYQ6vqrojQK8599ouJcU9Xke
+ JRHP3bjdp4T4V0PqzONqwqL7un6nzcoAF5wiHT06CCQj++p8U7i3jys+I2QFCUa3TWyp
+ nACaWs3AcvGM3L1HYvN4YWD4vPV7M/KeZM2CbVlT+WV/nGb00wgo1hWMj5p9+38fG9hZ
+ 9b74JmEu/SYXNU6naoDvkoz6lYIAPrIUFp5ElpXboMpINe3t8sN7WeJIrk8dvrRx5qqw
+ q4NCqP6s38HecowDsL6bxAIZeQoO3iqUVC0B7Q8X/X4MGSd++yqlM4mwEh70LuBCwl9H TkpQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=1e100.net;
+ s=20161025; h=x-gm-message-state:from:to:subject:date:message-id;
+ bh=7xTxGGSkRwlSqpPnPTnyx3Jk/K0xsG3WpAf13m0faKA=;
+ b=UFaaljQhQjebsEV22kOCj1wuvw3yGJEuhQtbXDlt+ioM+Q6fxLc/jOyBXlGqjT4vwu
+ HKBCwUJVKH86MA7jL+2/rxkd1ese/Em8lMijyYHUY2atWejzWxycYoxZRwnKskQ5jsWx
+ qcHD40BelIe+TTX/mT8PLSItTUtPtK7N8MOCXHAEo58FBjrObJ9SlpUlOZV+nuSBLJ6Z
+ cI+6dDez4/ZVSEbouLoWngQm2CCt+tz47kft6DUiXyx7Sb74ldX0MghecUPqrE0py6Qu
+ eITLKJMmZ3busTcBQCuyTj21xQb60a3bZSLJF96voppzt+2F45TPq+2Nt70gMfdpRAbI XbHA==
+X-Gm-Message-State: APjAAAVsHX3if40r0o7+7aynw3Rc9D/F6WoC+uAoWX0tXiIGxoINA2L3
+ RTPvDzohouHGK8S0gBoCptJMiu2e
+X-Google-Smtp-Source:
+ APXvYqy4TzMYllaa0fbuyHpTpLqDLqHT4I9YNyRmSCy/wXMq2Eg/iFxJlB0yn5QmoIh6GPKPX9BiLw==
+X-Received: by 2002:a17:902:54d:: with SMTP id
+ 71mr35188055plf.140.1561373118268; Mon, 24 Jun 2019 03:45:18 -0700 (PDT)
+X-BeenThere: spp@dpdk.org
+X-Mailman-Version: 2.1.15
+List-Id: Soft Patch Panel <spp.dpdk.org>
+List-Unsubscribe: <https://mails.dpdk.org/options/spp>,
+ <mailto:spp-request@dpdk.org?subject=unsubscribe>
+List-Archive: <http://mails.dpdk.org/archives/spp/>
+List-Post: <mailto:spp@dpdk.org>
+List-Help: <mailto:spp-request@dpdk.org?subject=help>
+List-Subscribe: <https://mails.dpdk.org/listinfo/spp>,
+ <mailto:spp-request@dpdk.org?subject=subscribe>
+X-TM-AS-MML: No
+Precedence: bulk
+Lines: 287
+X-TM-AS-GCONF: 00
+X-MD-STAMP: ON
+
+From: Yasufumi Ogawa <yasufum.o@gmail.com>
+
+`client_id` is defined as a global variable, but it is better to use
+get_client_id() instead. This update is to replace it.
+
+This update is also try block in SPP controller to avoid CLI is
+terminated if entry `client-id` is not found in status message.
+
+Signed-off-by: Yasufumi Ogawa <yasufum.o@gmail.com>
+---
+ src/controller/commands/pri.py |  9 +++--
+ src/controller/shell.py        | 66 ++++++++++++++++++----------------
+ src/pcap/Makefile              |  1 +
+ src/pcap/cmd_runner.c          | 19 +++-------
+ src/pcap/cmd_utils.h           |  2 +-
+ src/pcap/spp_pcap.c            | 35 ++++--------------
+ src/spp-ctl/spp_ctl.py         |  1 +
+ 7 files changed, 56 insertions(+), 77 deletions(-)
+
+diff --git a/src/controller/commands/pri.py b/src/controller/commands/pri.py
+index b119a5c..6089137 100644
+--- a/src/controller/commands/pri.py
++++ b/src/controller/commands/pri.py
+@@ -301,9 +301,12 @@ class SppPrimary(object):
+         res = self.spp_ctl_cli.get('processes')
+         if res is not None:
+             if res.status_code == 200:
+-                for proc in res.json():
+-                    if proc['type'] != 'primary':
+-                        sec_ids.append(proc['client-id'])
++                try:
++                    for proc in res.json():
++                        if proc['type'] != 'primary':
++                            sec_ids.append(proc['client-id'])
++                except KeyError as e:
++                    print('Error: {} is not defined!'.format(e))
+             elif res.status_code in self.spp_ctl_cli.rest_common_error_codes:
+                 # Print default error message
+                 pass
+diff --git a/src/controller/shell.py b/src/controller/shell.py
+index 3f4d95b..2288e1d 100644
+--- a/src/controller/shell.py
++++ b/src/controller/shell.py
+@@ -142,9 +142,12 @@ class Shell(cmd.Cmd, object):
+         res = self.spp_ctl_cli.get('processes')
+         if res is not None:
+             if res.status_code == 200:
+-                for ent in res.json():
+-                    if ent['type'] == ptype:
+-                        ids.append(ent['client-id'])
++                try:
++                    for ent in res.json():
++                        if ent['type'] == ptype:
++                            ids.append(ent['client-id'])
++                except KeyError as e:
++                    print('Error: {} is not defined!'.format(e))
+         return ids
+ 
+     def print_status(self):
+@@ -156,34 +159,37 @@ class Shell(cmd.Cmd, object):
+         res = self.spp_ctl_cli.get('processes')
+         if res is not None:
+             if res.status_code == 200:
+-                proc_objs = res.json()
+-                pri_obj = None
+-                sec_obj = {}
+-                sec_obj['nfv'] = []
+-                sec_obj['vf'] = []
+-                sec_obj['mirror'] = []
+-                sec_obj['pcap'] = []
+-
+-                for proc_obj in proc_objs:
+-                    if proc_obj['type'] == 'primary':
+-                        pri_obj = proc_obj
++                try:
++                    proc_objs = res.json()
++                    pri_obj = None
++                    sec_obj = {}
++                    sec_obj['nfv'] = []
++                    sec_obj['vf'] = []
++                    sec_obj['mirror'] = []
++                    sec_obj['pcap'] = []
++
++                    for proc_obj in proc_objs:
++                        if proc_obj['type'] == 'primary':
++                            pri_obj = proc_obj
++                        else:
++                            sec_obj[proc_obj['type']].append(proc_obj)
++
++                    print('- primary:')
++                    if pri_obj is not None:
++                        print('  - status: running')
+                     else:
+-                        sec_obj[proc_obj['type']].append(proc_obj)
+-
+-                print('- primary:')
+-                if pri_obj is not None:
+-                    print('  - status: running')
+-                else:
+-                    print('  - status: not running')
+-
+-                print('- secondary:')
+-                print('  - processes:')
+-                cnt = 1
+-                for pt in ['nfv', 'vf', 'mirror', 'pcap']:
+-                    for obj in sec_obj[pt]:
+-                        print('    %d: %s:%s' %
+-                              (cnt, obj['type'], obj['client-id']))
+-                        cnt += 1
++                        print('  - status: not running')
++
++                    print('- secondary:')
++                    print('  - processes:')
++                    cnt = 1
++                    for pt in ['nfv', 'vf', 'mirror', 'pcap']:
++                        for obj in sec_obj[pt]:
++                            print('    %d: %s:%s' %
++                                  (cnt, obj['type'], obj['client-id']))
++                            cnt += 1
++                except KeyError as e:
++                    print('Error: {} is not defined!'.format(e))
+             elif res.status_code in self.spp_ctl_cli.rest_common_error_codes:
+                 pass
+             else:
+diff --git a/src/pcap/Makefile b/src/pcap/Makefile
+index 852d036..784ee1b 100644
+--- a/src/pcap/Makefile
++++ b/src/pcap/Makefile
+@@ -19,6 +19,7 @@ SRCS-y := spp_pcap.c
+ SRCS-y += cmd_utils.c
+ SRCS-y += cmd_runner.c cmd_parser.c
+ SRCS-y += ../shared/common.c
++SRCS-y += $(SPP_SEC_DIR)/utils.c
+ SRCS-y += $(SPP_SEC_DIR)/string_buffer.c
+ SRCS-y += $(SPP_WKT_DIR)/conn_spp_ctl.c
+ SRCS-y += $(SPP_WKT_DIR)/spp_port.c
+diff --git a/src/pcap/cmd_runner.c b/src/pcap/cmd_runner.c
+index 7f17d40..4c1891e 100644
+--- a/src/pcap/cmd_runner.c
++++ b/src/pcap/cmd_runner.c
+@@ -7,11 +7,12 @@
+ 
+ #include <rte_log.h>
+ 
+-#include "shared/secondary/string_buffer.h"
+-#include "spp_pcap.h"
+-#include "shared/secondary/spp_worker_th/conn_spp_ctl.h"
+ #include "cmd_parser.h"
+ #include "cmd_runner.h"
++#include "spp_pcap.h"
++#include "shared/secondary/utils.h"
++#include "shared/secondary/string_buffer.h"
++#include "shared/secondary/spp_worker_th/conn_spp_ctl.h"
+ 
+ #define RTE_LOGTYPE_PCAP_RUNNER RTE_LOGTYPE_USER2
+ 
+@@ -59,16 +60,6 @@ const char *CAPTURE_STATUS_STRINGS[] = {
+ 	"", /* termination */
+ };
+ 
+-/* get client id */
+-static int
+-spp_get_client_id(void)
+-{
+-	struct startup_param *startup_param;
+-
+-	spp_get_mng_data_addr(&startup_param, NULL, NULL, NULL, NULL);
+-	return startup_param->client_id;
+-}
+-
+ /**
+  * Iterate core information for number of available cores to
+  * append response for status command.
+@@ -393,7 +384,7 @@ static int
+ append_client_id_value(const char *name, char **output,
+ 		void *tmp __attribute__ ((unused)))
+ {
+-	return append_json_int_value(name, output, spp_get_client_id());
++	return append_json_int_value(name, output, get_client_id());
+ }
+ 
+ /* append a block of port entry for JSON format */
+diff --git a/src/pcap/cmd_utils.h b/src/pcap/cmd_utils.h
+index 46747e9..8281a3b 100644
+--- a/src/pcap/cmd_utils.h
++++ b/src/pcap/cmd_utils.h
+@@ -157,7 +157,7 @@ struct sppwk_comp_info {
+ 
+ /* Manage given options as global variable */
+ struct startup_param {
+-	int client_id;  /* Client ID */
++	//int client_id;  /* Client ID */
+ 	char server_ip[INET_ADDRSTRLEN];  /* IP address of spp-ctl */
+ 	int server_port;  /* Port Number of spp-ctl */
+ };
+diff --git a/src/pcap/spp_pcap.c b/src/pcap/spp_pcap.c
+index 57cc0bb..b69ffdd 100644
+--- a/src/pcap/spp_pcap.c
++++ b/src/pcap/spp_pcap.c
+@@ -177,28 +177,6 @@ usage(const char *progname)
+ 		, progname);
+ }
+ 
+-/**
+- * Convert string type of client ID to integer and return SPPWK_RET_OK, or
+- * SPPWK_RET_NG if failed.
+- */
+-static int
+-client_id_toi(const char *client_id_str, int *client_id)
+-{
+-	int id = 0;
+-	char *endptr = NULL;
+-
+-	id = strtol(client_id_str, &endptr, 0);
+-	if (unlikely(client_id_str == endptr) || unlikely(*endptr != '\0'))
+-		return SPPWK_RET_NG;
+-
+-	if (id >= RTE_MAX_LCORE)
+-		return SPPWK_RET_NG;
+-
+-	*client_id = id;
+-	RTE_LOG(DEBUG, SPP_PCAP, "Set client id = %d\n", *client_id);
+-	return SPPWK_RET_OK;
+-}
+-
+ /* Parse `--fsize` option and get the value */
+ static int
+ parse_fsize(const char *fsize_str, uint64_t *fsize)
+@@ -263,6 +241,7 @@ parse_captured_port(const char *port_str, enum port_type *iface_type,
+ static int
+ parse_app_args(int argc, char *argv[])
+ {
++	int cli_id;  /* Client ID. */
+ 	char *ctl_ip;  /* IP address of spp_ctl. */
+ 	int ctl_port;  /* Port num to connect spp_ctl. */
+ 	char cap_port_str[PORT_STR_SIZE];  /* Captured port. */
+@@ -307,12 +286,11 @@ parse_app_args(int argc, char *argv[])
+ 			&option_index)) != EOF) {
+ 		switch (opt) {
+ 		case SPP_LONGOPT_RETVAL_CLIENT_ID:
+-			if (client_id_toi(optarg,
+-					&g_startup_param.client_id) !=
+-								SPPWK_RET_OK) {
++			if (parse_client_id(&cli_id, optarg) != SPPWK_RET_OK) {
+ 				usage(progname);
+ 				return SPPWK_RET_NG;
+ 			}
++			set_client_id(cli_id);
+ 			proc_flg = 1;
+ 			break;
+ 		case SPP_LONGOPT_RETVAL_OUT_DIR:
+@@ -367,8 +345,7 @@ parse_app_args(int argc, char *argv[])
+ 	RTE_LOG(INFO, SPP_PCAP,
+ 			"Parsed app args ('--client-id %d', '-s %s:%d', "
+ 			"'-c %s', '--out-dir %s', '--fsize %ld')\n",
+-			g_startup_param.client_id, ctl_ip, ctl_port,
+-			cap_port_str,
++			cli_id, ctl_ip, ctl_port, cap_port_str,
+ 			g_pcap_option.compress_file_path,
+ 			g_pcap_option.fsize_limit);
+ 	return SPPWK_RET_OK;
+@@ -1031,8 +1008,8 @@ main(int argc, char *argv[])
+ 		/* create ring */
+ 		char ring_name[PORT_STR_SIZE];
+ 		memset(ring_name, 0x00, PORT_STR_SIZE);
+-		snprintf(ring_name, PORT_STR_SIZE,  "cap_ring_%d",
+-						g_startup_param.client_id);
++		snprintf(ring_name, PORT_STR_SIZE, "cap_ring_%d",
++				get_client_id());
+ 		g_pcap_option.cap_ring = rte_ring_create(ring_name,
+ 					rte_align32pow2(RING_SIZE),
+ 					rte_socket_id(), 0);
+diff --git a/src/spp-ctl/spp_ctl.py b/src/spp-ctl/spp_ctl.py
+index f276442..ce1a2e2 100644
+--- a/src/spp-ctl/spp_ctl.py
++++ b/src/spp-ctl/spp_ctl.py
+@@ -139,6 +139,7 @@ class Controller(object):
+ 
+     def get_processes(self):
+         procs = []
++        LOG.info('get_proesses: {}'.format(self.procs.values()))
+         for proc in self.procs.values():
+             p = {"type": proc.type}
+             if proc.id != spp_proc.ID_PRIMARY:
+-- 
+2.17.1
+
+

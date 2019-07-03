@@ -1,0 +1,311 @@
+Return-path: <fw-yama-hd@pomail01.silk.ntt-tx.co.jp>
+Received: from zssg-mailmd106.ddreams.local
+ (zssg-mailmd106.ddreams.local [10.160.123.101])
+ by zssg-mailms320.ddreams.local (NTT DoCoMo Mail System)
+ with ESMTP id <0PTQ018WKQDEMX00@NTTDoCoMo.co.jp> for
+ yamashita.hideyuki@ntt-tx.co.jp; Thu, 27 Jun 2019 13:41:38 +0900 (JST)
+Original-recipient: rfc822;yamashita.hideyuki@ntt-tx.co.jp
+Received: from smtp_saver-daemon.zssg-mailmd106.ddreams.local by
+ zssg-mailmd106.ddreams.local (dDREAMS) id <0PTQ00042QDEKJ00@dDREAMS> for
+ yamashita.hideyuki@ntt-tx.co.jp (ORCPT yamashita.hideyuki@ntt-tx.co.jp); Thu,
+ 27 Jun 2019 13:41:38 +0900 (JST)
+Received: from zssg-mailmf106.ddreams.local
+ (zssg-mailmf900.ddreams.local [10.160.172.84]) by zssg-mailmd106.ddreams.local
+ (dDREAMS) with ESMTP id <0PTQ00UPTQDE3OB0@dDREAMS> for
+ yamashita.hideyuki@ntt-tx.co.jp (ORCPT yamashita.hideyuki@ntt-tx.co.jp); Thu,
+ 27 Jun 2019 13:41:38 +0900 (JST)
+Received: from zssg-mailmf106.ddreams.local (unknown [127.0.0.1])
+	by zssg-mailmf106.ddreams.local (Postfix) with ESMTP id 85E487E6034	for
+ <yamashita.hideyuki@ntt-tx.co.jp>; Thu, 27 Jun 2019 13:41:38 +0900 (JST)
+Received: from zssg-mailmf106.ddreams.local (unknown [127.0.0.1])
+	by IMSVA (Postfix) with ESMTP id 83EAB8E6057	for
+ <yamashita.hideyuki@ntt-tx.co.jp>; Thu, 27 Jun 2019 13:41:38 +0900 (JST)
+Received: from localhost (unknown [127.0.0.1])	by IMSVA (Postfix)
+ with SMTP id 743D48E6055	for <yamashita.hideyuki@ntt-tx.co.jp>; Thu,
+ 27 Jun 2019 13:41:38 +0900 (JST)
+X-IMSS-HAND-OFF-DIRECTIVE: localhost:10026
+Received: from zssg-mailmf106.ddreams.local (unknown [127.0.0.1])
+	by IMSVA (Postfix) with ESMTP id CABD58E6066	for
+ <yamashita.hideyuki@ntt-tx.co.jp>; Thu, 27 Jun 2019 13:41:37 +0900 (JST)
+Received: from pomail01.silk.ntt-tx.co.jp (unknown [10.160.183.139])
+	by zssg-mailmf106.ddreams.local (Postfix)
+ with ESMTPS	for <yamashita.hideyuki@ntt-tx.co.jp>; Thu,
+ 27 Jun 2019 13:41:37 +0900 (JST)
+Received: from pomail01.silk.ntt-tx.co.jp (localhost [127.0.0.1])
+	by pomail01.silk.ntt-tx.co.jp (unknown) with ESMTP id x5R4fbiD030636;	Thu,
+ 27 Jun 2019 13:41:37 +0900
+Received: (from yama-hd@localhost)	by pomail01.silk.ntt-tx.co.jp (unknown)
+ id x5R4fb2a030635;	Thu, 27 Jun 2019 13:41:37 +0900
+X-Authentication-warning: pomail01.silk.ntt-tx.co.jp: yama-hd set sender to
+ fw-yama-hd@pomail01.silk.ntt-tx.co.jp using -f
+Received: from imss04.silk.ntt-tx.co.jp
+ (imss04.silk.ntt-tx.co.jp [10.107.0.39])	by pomail01.silk.ntt-tx.co.jp
+ (unknown) with ESMTP id x5R4fbav030632	for unknown; Thu,
+ 27 Jun 2019 13:41:37 +0900
+Received: from imss04.silk.ntt-tx.co.jp (localhost [127.0.0.1])
+ by imss04.silk.ntt-tx.co.jp (unknown) with ESMTP id x5R4fbcS030690 for
+ unknown; Thu, 27 Jun 2019 13:41:37 +0900
+Received: from ml01.silk.ntt-tx.co.jp (ml01.silk.ntt-tx.co.jp [10.107.0.230])
+ by imss04.silk.ntt-tx.co.jp (unknown) with ESMTP id x5R4fbYO030687; Thu,
+ 27 Jun 2019 13:41:37 +0900
+Received: from ml01.silk.ntt-tx.co.jp (localhost [127.0.0.1])
+	by ml01.silk.ntt-tx.co.jp (unknown) with ESMTP id x5R4far8012391;	Thu,
+ 27 Jun 2019 13:41:37 +0900
+Received: from imss02.silk.ntt-tx.co.jp
+ (imss02.silk.ntt-tx.co.jp [10.107.0.127])	by ml01.silk.ntt-tx.co.jp (unknown)
+ with ESMTP id x5R4faW5012386	for unknown; Thu, 27 Jun 2019 13:41:36 +0900
+Received: from imss02.silk.ntt-tx.co.jp (localhost [127.0.0.1])
+ by imss02.silk.ntt-tx.co.jp (unknown) with ESMTP id x5R4fauH017188 for
+ unknown; Thu, 27 Jun 2019 13:41:36 +0900
+Received: from mail01.ics.ntt-tx.co.jp (mail01.ics.ntt-tx.co.jp [10.254.2.67])
+ by imss02.silk.ntt-tx.co.jp (unknown) with ESMTP id x5R4fa1r017182 for
+ unknown; Thu, 27 Jun 2019 13:41:36 +0900
+Received: from dpdk.org (dpdk.org [92.243.14.124])	by mail01.ics.ntt-tx.co.jp
+ (unknown) with SMTP id x5R4fT58010505	for unknown; Thu,
+ 27 Jun 2019 13:41:35 +0900
+Received: from [92.243.14.124] (localhost [127.0.0.1])	by dpdk.org (Postfix)
+ with ESMTP id 96D7B316B;	Thu, 27 Jun 2019 06:41:29 +0200 (CEST)
+Received: from mail-pl1-f175.google.com
+ (mail-pl1-f175.google.com [209.85.214.175]) by dpdk.org (Postfix)
+ with ESMTP id E9F702BA7 for <spp@dpdk.org>; Thu,
+ 27 Jun 2019 06:41:27 +0200 (CEST)
+Received: by mail-pl1-f175.google.com with SMTP id t7so548755plr.11 for
+ <spp@dpdk.org>; Wed, 26 Jun 2019 21:41:27 -0700 (PDT)
+Received: from localhost.localdomain ([192.47.164.146])
+ by smtp.gmail.com with ESMTPSA id a21sm1062591pfi.27.2019.06.26.21.41.25
+ (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128); Wed,
+ 26 Jun 2019 21:41:26 -0700 (PDT)
+Date: Thu, 27 Jun 2019 13:41:22 +0900
+From: yasufum.o@gmail.com
+Subject: [spp 04449] [spp] [PATCH] recipes: reorganize direcories
+Sender: spp <spp-bounces@dpdk.org>
+To: spp@dpdk.org, ferruh.yigit@intel.com, yasufum.o@gmail.com
+Message-id: <20190627044122.15112-1-yasufum.o@gmail.com>
+X-ML-Name: unknown
+X-Mail-Count: 04449
+X-MLServer: unknown
+X-ML-Info: mailing list service
+X-Mailer: git-send-email 2.17.1
+Authentication-results: mail01.ics.ntt-tx.co.jp; spf=pass
+ smtp.mailfrom=spp-bounces@dpdk.org
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
+ h=from:to:subject:date:message-id;
+ bh=bQj2LIp+FshF48WpCq58BNpYcOEBhtQsQ8smH507JWo=;
+ b=r09Aw2KxIWzbA8AOZl6KBEZnv/dt3Y8FhDHsZyYlO0Oc8tCri13kW225VsdHNIksJT
+ mo1Hgrng2uzID8zrn24UFfLtcRPOdapI6h00GFQuYuUv9QS5dRIdvjVGudGRKs2xybBZ
+ y21wPlwOuG0izvnaiZJEmEnzKPQAU+2NPFF3VJS+vxuSWlkYUT2t9487ALGHiT8h8BTX
+ 6cSURfd1t9VRlkVSuNTI2w/NMwFL2bYhnxCWMq1y5tAR/MPGPy74NcPc4z9ztVTRArmf
+ d1y7jApltPXlYZIR5tR8gkknlbNWnSL/sKwi/TXk7HvpCqSACbezpcMtaaT7/X46nnkh veKw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=1e100.net;
+ s=20161025; h=x-gm-message-state:from:to:subject:date:message-id;
+ bh=bQj2LIp+FshF48WpCq58BNpYcOEBhtQsQ8smH507JWo=;
+ b=FhGz9MUnhYhuChmkgc+pHSJKQ+R8zgrcsJvcvhOyfrKX6UOXdk+o1wF00tczvHjsWZ
+ ZszUDjG2w3dC3NumqUvKTdKKIhF+awMuFubSOqmgPHlOO8scCkAXZs3as0QluosG/aso
+ PKHrFhIVhZ/cJdCkHCXiCFDxn3L6xEih47xEFUAwQ1mi4M1AVVb74TvVAe2ciOyOSF4D
+ j211/SQXGzAaMBHoPQUWHGfr/R4sNeSeTHi/XKXITWXp5HnjlHWRZB2/Zp/l3/pTm+oy
+ EAQsf/m5zCPIhkOePKKSaz+KA0ZMUg9cMkof3dpmvxDsy3fKPxsO7+/j9lKSr3fnip9i VaCQ==
+X-Gm-Message-State: APjAAAUtKp9eAsF6EOtML72PNJ2ynJ33OxODCyRIWh2KHaB2HnhxSaKS
+ djac+Lgy7oB+5+oMSrtK9Sax1OSm
+X-Google-Smtp-Source:
+ APXvYqzLl1/fKjbGhCIsWS+B6nQ+3+IAZqR2P7BbGF7ty5TrGqr1WG+9icLqxHgmvNF1VZMiIQUFxA==
+X-Received: by 2002:a17:902:e287:: with SMTP id
+ cf7mr2218412plb.32.1561610486710; Wed, 26 Jun 2019 21:41:26 -0700 (PDT)
+X-BeenThere: spp@dpdk.org
+X-Mailman-Version: 2.1.15
+List-Id: Soft Patch Panel <spp.dpdk.org>
+List-Unsubscribe: <https://mails.dpdk.org/options/spp>,
+ <mailto:spp-request@dpdk.org?subject=unsubscribe>
+List-Archive: <http://mails.dpdk.org/archives/spp/>
+List-Post: <mailto:spp@dpdk.org>
+List-Help: <mailto:spp-request@dpdk.org?subject=help>
+List-Subscribe: <https://mails.dpdk.org/listinfo/spp>,
+ <mailto:spp-request@dpdk.org?subject=subscribe>
+X-TM-AS-MML: No
+Precedence: bulk
+Lines: 182
+X-TM-AS-GCONF: 00
+X-MD-STAMP: ON
+
+From: Yasufumi Ogawa <yasufum.o@gmail.com>
+
+Recipe scripts are provided for some usecases in SPP documents, but
+directory structure is messed up. This update is to reorganize them as
+following in order to be easy to find each of recipes.
+
+  recipes/
+     |-- usecases/
+             |-- spp_nfv/
+             |       |-- dual_bidir.rcps
+             |       |-- dual_loopback.rcps
+             |       |-- ...
+             |-- spp_vf/
+             |       |-- ssh_login/
+             |       |        |-- setup/
+             |       |        |      |-- 1-start_components.rcps
+             |       |        |      |-- 2-add_ports_path1.rcps
+             |       |        |      |-- ...
+
+Signed-off-by: Yasufumi Ogawa <yasufum.o@gmail.com>
+---
+ .../{sppc/samples/l2fwd.rcp => usecases/spp_container/l2fwd.rcps} | 0
+ .../{sppc/samples/lb_pg.rcp => usecases/spp_container/lb_pg.rcps} | 0
+ .../spp_container/load_balancer.rcps}                             | 0
+ .../samples/pg_l2fwd.rcp => usecases/spp_container/pg_l2fwd.rcps} | 0
+ .../spp_container/pg_l2fwd_less.rcps}                             | 0
+ .../test_ring.rcp => usecases/spp_container/test_ring.rcps}       | 0
+ recipes/{spp/usecases => usecases/spp_nfv}/dual_bidir.rcps        | 0
+ recipes/{spp/usecases => usecases/spp_nfv}/dual_loopback.rcps     | 0
+ recipes/{spp/usecases => usecases/spp_nfv}/ring_dual_bidir.rcps   | 0
+ recipes/{spp/usecases => usecases/spp_nfv}/ring_dual_unidir.rcps  | 0
+ recipes/{spp/usecases => usecases/spp_nfv}/single_bidir.rcps      | 0
+ recipes/{spp/usecases => usecases/spp_nfv}/vhost_unidir.rcps      | 0
+ .../spp_vf/ssh_login}/setup/1-start_components.rcps               | 0
+ .../spp_vf/ssh_login}/setup/2-add_ports_path1.rcps                | 0
+ .../spp_vf/ssh_login}/setup/3-reg_mac_path1.rcps                  | 0
+ .../spp_vf/ssh_login}/setup/4-start_components.rcps               | 0
+ .../spp_vf/ssh_login}/setup/5-add_ports_path2.rcps                | 0
+ .../spp_vf/ssh_login}/setup/6-reg_mac_path2.rcps                  | 0
+ .../usecase1 => usecases/spp_vf/ssh_login}/setup/7-flush.rcps     | 0
+ .../spp_vf/ssh_login}/shutdown/1-del_mac_path1.rcps               | 0
+ .../spp_vf/ssh_login}/shutdown/2-del_ports_path1.rcps             | 0
+ .../spp_vf/ssh_login}/shutdown/3-stop_components.rcps             | 0
+ .../spp_vf/ssh_login}/shutdown/4-del_mac_path2.rcps               | 0
+ .../spp_vf/ssh_login}/shutdown/5-del_ports_path2.rcps             | 0
+ .../spp_vf/ssh_login}/shutdown/6-stop_components.rcps             | 0
+ .../usecase1 => usecases/spp_vf/ssh_login}/shutdown/7-flush.rcps  | 0
+ 26 files changed, 0 insertions(+), 0 deletions(-)
+ rename recipes/{sppc/samples/l2fwd.rcp => usecases/spp_container/l2fwd.rcps} (100%)
+ rename recipes/{sppc/samples/lb_pg.rcp => usecases/spp_container/lb_pg.rcps} (100%)
+ rename recipes/{sppc/samples/load_balancer.rcp => usecases/spp_container/load_balancer.rcps} (100%)
+ rename recipes/{sppc/samples/pg_l2fwd.rcp => usecases/spp_container/pg_l2fwd.rcps} (100%)
+ rename recipes/{sppc/samples/pg_l2fwd_less.rcp => usecases/spp_container/pg_l2fwd_less.rcps} (100%)
+ rename recipes/{sppc/samples/test_ring.rcp => usecases/spp_container/test_ring.rcps} (100%)
+ rename recipes/{spp/usecases => usecases/spp_nfv}/dual_bidir.rcps (100%)
+ rename recipes/{spp/usecases => usecases/spp_nfv}/dual_loopback.rcps (100%)
+ rename recipes/{spp/usecases => usecases/spp_nfv}/ring_dual_bidir.rcps (100%)
+ rename recipes/{spp/usecases => usecases/spp_nfv}/ring_dual_unidir.rcps (100%)
+ rename recipes/{spp/usecases => usecases/spp_nfv}/single_bidir.rcps (100%)
+ rename recipes/{spp/usecases => usecases/spp_nfv}/vhost_unidir.rcps (100%)
+ rename recipes/{spp_vf/usecase1 => usecases/spp_vf/ssh_login}/setup/1-start_components.rcps (100%)
+ rename recipes/{spp_vf/usecase1 => usecases/spp_vf/ssh_login}/setup/2-add_ports_path1.rcps (100%)
+ rename recipes/{spp_vf/usecase1 => usecases/spp_vf/ssh_login}/setup/3-reg_mac_path1.rcps (100%)
+ rename recipes/{spp_vf/usecase1 => usecases/spp_vf/ssh_login}/setup/4-start_components.rcps (100%)
+ rename recipes/{spp_vf/usecase1 => usecases/spp_vf/ssh_login}/setup/5-add_ports_path2.rcps (100%)
+ rename recipes/{spp_vf/usecase1 => usecases/spp_vf/ssh_login}/setup/6-reg_mac_path2.rcps (100%)
+ rename recipes/{spp_vf/usecase1 => usecases/spp_vf/ssh_login}/setup/7-flush.rcps (100%)
+ rename recipes/{spp_vf/usecase1 => usecases/spp_vf/ssh_login}/shutdown/1-del_mac_path1.rcps (100%)
+ rename recipes/{spp_vf/usecase1 => usecases/spp_vf/ssh_login}/shutdown/2-del_ports_path1.rcps (100%)
+ rename recipes/{spp_vf/usecase1 => usecases/spp_vf/ssh_login}/shutdown/3-stop_components.rcps (100%)
+ rename recipes/{spp_vf/usecase1 => usecases/spp_vf/ssh_login}/shutdown/4-del_mac_path2.rcps (100%)
+ rename recipes/{spp_vf/usecase1 => usecases/spp_vf/ssh_login}/shutdown/5-del_ports_path2.rcps (100%)
+ rename recipes/{spp_vf/usecase1 => usecases/spp_vf/ssh_login}/shutdown/6-stop_components.rcps (100%)
+ rename recipes/{spp_vf/usecase1 => usecases/spp_vf/ssh_login}/shutdown/7-flush.rcps (100%)
+
+diff --git a/recipes/sppc/samples/l2fwd.rcp b/recipes/usecases/spp_container/l2fwd.rcps
+similarity index 100%
+rename from recipes/sppc/samples/l2fwd.rcp
+rename to recipes/usecases/spp_container/l2fwd.rcps
+diff --git a/recipes/sppc/samples/lb_pg.rcp b/recipes/usecases/spp_container/lb_pg.rcps
+similarity index 100%
+rename from recipes/sppc/samples/lb_pg.rcp
+rename to recipes/usecases/spp_container/lb_pg.rcps
+diff --git a/recipes/sppc/samples/load_balancer.rcp b/recipes/usecases/spp_container/load_balancer.rcps
+similarity index 100%
+rename from recipes/sppc/samples/load_balancer.rcp
+rename to recipes/usecases/spp_container/load_balancer.rcps
+diff --git a/recipes/sppc/samples/pg_l2fwd.rcp b/recipes/usecases/spp_container/pg_l2fwd.rcps
+similarity index 100%
+rename from recipes/sppc/samples/pg_l2fwd.rcp
+rename to recipes/usecases/spp_container/pg_l2fwd.rcps
+diff --git a/recipes/sppc/samples/pg_l2fwd_less.rcp b/recipes/usecases/spp_container/pg_l2fwd_less.rcps
+similarity index 100%
+rename from recipes/sppc/samples/pg_l2fwd_less.rcp
+rename to recipes/usecases/spp_container/pg_l2fwd_less.rcps
+diff --git a/recipes/sppc/samples/test_ring.rcp b/recipes/usecases/spp_container/test_ring.rcps
+similarity index 100%
+rename from recipes/sppc/samples/test_ring.rcp
+rename to recipes/usecases/spp_container/test_ring.rcps
+diff --git a/recipes/spp/usecases/dual_bidir.rcps b/recipes/usecases/spp_nfv/dual_bidir.rcps
+similarity index 100%
+rename from recipes/spp/usecases/dual_bidir.rcps
+rename to recipes/usecases/spp_nfv/dual_bidir.rcps
+diff --git a/recipes/spp/usecases/dual_loopback.rcps b/recipes/usecases/spp_nfv/dual_loopback.rcps
+similarity index 100%
+rename from recipes/spp/usecases/dual_loopback.rcps
+rename to recipes/usecases/spp_nfv/dual_loopback.rcps
+diff --git a/recipes/spp/usecases/ring_dual_bidir.rcps b/recipes/usecases/spp_nfv/ring_dual_bidir.rcps
+similarity index 100%
+rename from recipes/spp/usecases/ring_dual_bidir.rcps
+rename to recipes/usecases/spp_nfv/ring_dual_bidir.rcps
+diff --git a/recipes/spp/usecases/ring_dual_unidir.rcps b/recipes/usecases/spp_nfv/ring_dual_unidir.rcps
+similarity index 100%
+rename from recipes/spp/usecases/ring_dual_unidir.rcps
+rename to recipes/usecases/spp_nfv/ring_dual_unidir.rcps
+diff --git a/recipes/spp/usecases/single_bidir.rcps b/recipes/usecases/spp_nfv/single_bidir.rcps
+similarity index 100%
+rename from recipes/spp/usecases/single_bidir.rcps
+rename to recipes/usecases/spp_nfv/single_bidir.rcps
+diff --git a/recipes/spp/usecases/vhost_unidir.rcps b/recipes/usecases/spp_nfv/vhost_unidir.rcps
+similarity index 100%
+rename from recipes/spp/usecases/vhost_unidir.rcps
+rename to recipes/usecases/spp_nfv/vhost_unidir.rcps
+diff --git a/recipes/spp_vf/usecase1/setup/1-start_components.rcps b/recipes/usecases/spp_vf/ssh_login/setup/1-start_components.rcps
+similarity index 100%
+rename from recipes/spp_vf/usecase1/setup/1-start_components.rcps
+rename to recipes/usecases/spp_vf/ssh_login/setup/1-start_components.rcps
+diff --git a/recipes/spp_vf/usecase1/setup/2-add_ports_path1.rcps b/recipes/usecases/spp_vf/ssh_login/setup/2-add_ports_path1.rcps
+similarity index 100%
+rename from recipes/spp_vf/usecase1/setup/2-add_ports_path1.rcps
+rename to recipes/usecases/spp_vf/ssh_login/setup/2-add_ports_path1.rcps
+diff --git a/recipes/spp_vf/usecase1/setup/3-reg_mac_path1.rcps b/recipes/usecases/spp_vf/ssh_login/setup/3-reg_mac_path1.rcps
+similarity index 100%
+rename from recipes/spp_vf/usecase1/setup/3-reg_mac_path1.rcps
+rename to recipes/usecases/spp_vf/ssh_login/setup/3-reg_mac_path1.rcps
+diff --git a/recipes/spp_vf/usecase1/setup/4-start_components.rcps b/recipes/usecases/spp_vf/ssh_login/setup/4-start_components.rcps
+similarity index 100%
+rename from recipes/spp_vf/usecase1/setup/4-start_components.rcps
+rename to recipes/usecases/spp_vf/ssh_login/setup/4-start_components.rcps
+diff --git a/recipes/spp_vf/usecase1/setup/5-add_ports_path2.rcps b/recipes/usecases/spp_vf/ssh_login/setup/5-add_ports_path2.rcps
+similarity index 100%
+rename from recipes/spp_vf/usecase1/setup/5-add_ports_path2.rcps
+rename to recipes/usecases/spp_vf/ssh_login/setup/5-add_ports_path2.rcps
+diff --git a/recipes/spp_vf/usecase1/setup/6-reg_mac_path2.rcps b/recipes/usecases/spp_vf/ssh_login/setup/6-reg_mac_path2.rcps
+similarity index 100%
+rename from recipes/spp_vf/usecase1/setup/6-reg_mac_path2.rcps
+rename to recipes/usecases/spp_vf/ssh_login/setup/6-reg_mac_path2.rcps
+diff --git a/recipes/spp_vf/usecase1/setup/7-flush.rcps b/recipes/usecases/spp_vf/ssh_login/setup/7-flush.rcps
+similarity index 100%
+rename from recipes/spp_vf/usecase1/setup/7-flush.rcps
+rename to recipes/usecases/spp_vf/ssh_login/setup/7-flush.rcps
+diff --git a/recipes/spp_vf/usecase1/shutdown/1-del_mac_path1.rcps b/recipes/usecases/spp_vf/ssh_login/shutdown/1-del_mac_path1.rcps
+similarity index 100%
+rename from recipes/spp_vf/usecase1/shutdown/1-del_mac_path1.rcps
+rename to recipes/usecases/spp_vf/ssh_login/shutdown/1-del_mac_path1.rcps
+diff --git a/recipes/spp_vf/usecase1/shutdown/2-del_ports_path1.rcps b/recipes/usecases/spp_vf/ssh_login/shutdown/2-del_ports_path1.rcps
+similarity index 100%
+rename from recipes/spp_vf/usecase1/shutdown/2-del_ports_path1.rcps
+rename to recipes/usecases/spp_vf/ssh_login/shutdown/2-del_ports_path1.rcps
+diff --git a/recipes/spp_vf/usecase1/shutdown/3-stop_components.rcps b/recipes/usecases/spp_vf/ssh_login/shutdown/3-stop_components.rcps
+similarity index 100%
+rename from recipes/spp_vf/usecase1/shutdown/3-stop_components.rcps
+rename to recipes/usecases/spp_vf/ssh_login/shutdown/3-stop_components.rcps
+diff --git a/recipes/spp_vf/usecase1/shutdown/4-del_mac_path2.rcps b/recipes/usecases/spp_vf/ssh_login/shutdown/4-del_mac_path2.rcps
+similarity index 100%
+rename from recipes/spp_vf/usecase1/shutdown/4-del_mac_path2.rcps
+rename to recipes/usecases/spp_vf/ssh_login/shutdown/4-del_mac_path2.rcps
+diff --git a/recipes/spp_vf/usecase1/shutdown/5-del_ports_path2.rcps b/recipes/usecases/spp_vf/ssh_login/shutdown/5-del_ports_path2.rcps
+similarity index 100%
+rename from recipes/spp_vf/usecase1/shutdown/5-del_ports_path2.rcps
+rename to recipes/usecases/spp_vf/ssh_login/shutdown/5-del_ports_path2.rcps
+diff --git a/recipes/spp_vf/usecase1/shutdown/6-stop_components.rcps b/recipes/usecases/spp_vf/ssh_login/shutdown/6-stop_components.rcps
+similarity index 100%
+rename from recipes/spp_vf/usecase1/shutdown/6-stop_components.rcps
+rename to recipes/usecases/spp_vf/ssh_login/shutdown/6-stop_components.rcps
+diff --git a/recipes/spp_vf/usecase1/shutdown/7-flush.rcps b/recipes/usecases/spp_vf/ssh_login/shutdown/7-flush.rcps
+similarity index 100%
+rename from recipes/spp_vf/usecase1/shutdown/7-flush.rcps
+rename to recipes/usecases/spp_vf/ssh_login/shutdown/7-flush.rcps
+-- 
+2.17.1
+
+

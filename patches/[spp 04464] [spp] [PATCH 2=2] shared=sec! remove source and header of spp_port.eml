@@ -1,0 +1,326 @@
+Return-path: <fw-yama-hd@pomail01.silk.ntt-tx.co.jp>
+Received: from zssg-mailmd106.ddreams.local
+ (zssg-mailmd106.ddreams.local [10.160.123.101])
+ by zssg-mailms320.ddreams.local (NTT DoCoMo Mail System)
+ with ESMTP id <0PTY00XXY3OV1U10@NTTDoCoMo.co.jp> for
+ yamashita.hideyuki@ntt-tx.co.jp; Mon, 01 Jul 2019 13:12:31 +0900 (JST)
+Original-recipient: rfc822;yamashita.hideyuki@ntt-tx.co.jp
+Received: from smtp_saver-daemon.zssg-mailmd106.ddreams.local by
+ zssg-mailmd106.ddreams.local (dDREAMS) id <0PTY00L0I3OVJD00@dDREAMS> for
+ yamashita.hideyuki@ntt-tx.co.jp (ORCPT yamashita.hideyuki@ntt-tx.co.jp); Mon,
+ 01 Jul 2019 13:12:31 +0900 (JST)
+Received: from zssg-mailmf105.ddreams.local
+ (zssg-mailmf900.ddreams.local [10.160.172.84]) by zssg-mailmd106.ddreams.local
+ (dDREAMS) with ESMTP id <0PTY001AZ3OVVYB0@dDREAMS> for
+ yamashita.hideyuki@ntt-tx.co.jp (ORCPT yamashita.hideyuki@ntt-tx.co.jp); Mon,
+ 01 Jul 2019 13:12:31 +0900 (JST)
+Received: from zssg-mailmf105.ddreams.local (unknown [127.0.0.1])
+	by zssg-mailmf105.ddreams.local (Postfix) with ESMTP id 1293E7E6034	for
+ <yamashita.hideyuki@ntt-tx.co.jp>; Mon,  1 Jul 2019 13:12:31 +0900 (JST)
+Received: from zssg-mailmf105.ddreams.local (unknown [127.0.0.1])
+	by IMSVA (Postfix) with ESMTP id 10FD48E605D	for
+ <yamashita.hideyuki@ntt-tx.co.jp>; Mon,  1 Jul 2019 13:12:31 +0900 (JST)
+Received: from localhost (unknown [127.0.0.1])	by IMSVA (Postfix)
+ with SMTP id 05C518E6052	for <yamashita.hideyuki@ntt-tx.co.jp>; Mon,
+ 1 Jul 2019 13:12:31 +0900 (JST)
+X-IMSS-HAND-OFF-DIRECTIVE: localhost:10026
+Received: from zssg-mailmf105.ddreams.local (unknown [127.0.0.1])
+	by IMSVA (Postfix) with ESMTP id A297C8E6062	for
+ <yamashita.hideyuki@ntt-tx.co.jp>; Mon,  1 Jul 2019 13:12:29 +0900 (JST)
+Received: from pomail01.silk.ntt-tx.co.jp (unknown [10.160.183.139])
+	by zssg-mailmf105.ddreams.local (Postfix)
+ with ESMTPS	for <yamashita.hideyuki@ntt-tx.co.jp>; Mon,
+ 1 Jul 2019 13:12:29 +0900 (JST)
+Received: from pomail01.silk.ntt-tx.co.jp (localhost [127.0.0.1])
+	by pomail01.silk.ntt-tx.co.jp (unknown) with ESMTP id x614CTCI015774;	Mon,
+ 1 Jul 2019 13:12:29 +0900
+Received: (from yama-hd@localhost)	by pomail01.silk.ntt-tx.co.jp (unknown)
+ id x614CTok015773;	Mon, 1 Jul 2019 13:12:29 +0900
+X-Authentication-warning: pomail01.silk.ntt-tx.co.jp: yama-hd set sender to
+ fw-yama-hd@pomail01.silk.ntt-tx.co.jp using -f
+Received: from imss04.silk.ntt-tx.co.jp
+ (imss04.silk.ntt-tx.co.jp [10.107.0.39])	by pomail01.silk.ntt-tx.co.jp
+ (unknown) with ESMTP id x614CTTK015770	for unknown; Mon,
+ 1 Jul 2019 13:12:29 +0900
+Received: from imss04.silk.ntt-tx.co.jp (localhost [127.0.0.1])
+ by imss04.silk.ntt-tx.co.jp (unknown) with ESMTP id x614CSlR030206 for
+ unknown; Mon, 1 Jul 2019 13:12:29 +0900
+Received: from ml01.silk.ntt-tx.co.jp (ml01.silk.ntt-tx.co.jp [10.107.0.230])
+ by imss04.silk.ntt-tx.co.jp (unknown) with ESMTP id x614CSQk030203; Mon,
+ 1 Jul 2019 13:12:28 +0900
+Received: from ml01.silk.ntt-tx.co.jp (localhost [127.0.0.1])
+	by ml01.silk.ntt-tx.co.jp (unknown) with ESMTP id x614CSQG019819;	Mon,
+ 1 Jul 2019 13:12:28 +0900
+Received: from imss02.silk.ntt-tx.co.jp
+ (imss02.silk.ntt-tx.co.jp [10.107.0.127])	by ml01.silk.ntt-tx.co.jp (unknown)
+ with ESMTP id x614CS9p019815	for unknown; Mon, 1 Jul 2019 13:12:28 +0900
+Received: from imss02.silk.ntt-tx.co.jp (localhost [127.0.0.1])
+ by imss02.silk.ntt-tx.co.jp (unknown) with ESMTP id x614CSaw025470 for
+ unknown; Mon, 1 Jul 2019 13:12:28 +0900
+Received: from mail01.ics.ntt-tx.co.jp (mail01.ics.ntt-tx.co.jp [10.254.2.67])
+ by imss02.silk.ntt-tx.co.jp (unknown) with ESMTP id x614CShm025463 for
+ unknown; Mon, 1 Jul 2019 13:12:28 +0900
+Received: from dpdk.org (dpdk.org [92.243.14.124])	by mail01.ics.ntt-tx.co.jp
+ (unknown) with SMTP id x614CLWe006954	for unknown; Mon,
+ 1 Jul 2019 13:12:27 +0900
+Received: from [92.243.14.124] (localhost [127.0.0.1])	by dpdk.org (Postfix)
+ with ESMTP id 726F65587;	Mon,  1 Jul 2019 06:12:21 +0200 (CEST)
+Received: from mail-pl1-f193.google.com
+ (mail-pl1-f193.google.com [209.85.214.193]) by dpdk.org (Postfix)
+ with ESMTP id ABCE2325F for <spp@dpdk.org>; Mon,
+ 1 Jul 2019 06:12:19 +0200 (CEST)
+Received: by mail-pl1-f193.google.com with SMTP id 9so5838026ple.5 for
+ <spp@dpdk.org>; Sun, 30 Jun 2019 21:12:19 -0700 (PDT)
+Received: from localhost.localdomain ([192.47.164.146])
+ by smtp.gmail.com with ESMTPSA id j21sm9531126pfh.86.2019.06.30.21.12.17
+ (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128); Sun,
+ 30 Jun 2019 21:12:18 -0700 (PDT)
+Date: Mon, 01 Jul 2019 13:12:11 +0900
+From: yasufum.o@gmail.com
+Subject: [spp 04464] [spp] [PATCH 2/2] shared/sec: remove source and header of
+ spp_port
+Sender: spp <spp-bounces@dpdk.org>
+To: spp@dpdk.org, ferruh.yigit@intel.com, yasufum.o@gmail.com
+Message-id: <20190701041211.34060-3-yasufum.o@gmail.com>
+In-reply-to: <20190701041211.34060-1-yasufum.o@gmail.com>
+References: <20190701041211.34060-1-yasufum.o@gmail.com>
+X-ML-Name: unknown
+X-Mail-Count: 04464
+X-MLServer: unknown
+X-ML-Info: mailing list service
+X-Mailer: git-send-email 2.17.1
+Authentication-results: mail01.ics.ntt-tx.co.jp; spf=pass
+ smtp.mailfrom=spp-bounces@dpdk.org
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
+ h=from:to:subject:date:message-id:in-reply-to:references;
+ bh=PkXauMAsgRqeKuNz9trvADSzEXmcZ6G4LyY0BPJrEg4=;
+ b=YPPQxenz+Cd97SDCUa0KHWi3bC+vu31cQmEjvmDiJAc/RfURtrlqvqkEAtcOn7VBW9
+ 9HasdKUfJ8s5a76Nkf9sP2Y+67j0fcCz1Aky164Ov0yhF5GHopCS6ZLFjTF5JWHfwZjj
+ hrPKdCtcggINpLMMZm2RdqTKNhBV1LavrsycHbo6dllMj5jefxgC71bAFzqe1E0upzRC
+ unl3V8eDUO/b1pxD1Nh7CWl1th1AkTkJ9T1SCJxHa6UGjSp7ZXHLvgdskVcIpqv3w9gN
+ QsIWX7QtI9EDhlP05geKNP8d4XAhtYtC/3TRFkOVq0SWBY4u4NzJBp8k3XNRl2rgvb1o G6fw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=1e100.net;
+ s=20161025; h=x-gm-message-state:from:to:subject:date:message-id:in-reply-to
+ :references; bh=PkXauMAsgRqeKuNz9trvADSzEXmcZ6G4LyY0BPJrEg4=;
+ b=kvySjZV2ZT8+bZjrWwQjuu40D9cKaKByPGbOP4MQ3FxzKyD3xnjnVlE0Yp/0iMhVXf
+ HvQwjK4SfCRVxkgWTwl5i4zE4iZqOWVAWMCXqz5ZKDaOhJyN4TAvqEiGDSnt0f1T0M2y
+ kM1DTKv+MlJlXxTRSJjlX84F+XrZqFP1e64mEZV4KIg+0zK0vTxMD3vhaVtkjTCqEnXf
+ dvCiPEiDycp+wKOCDw99kPyjbRUQb/h8Qb+KI0ez5NJPIssftsmIsTy9zLEyTggC+2Ev
+ cwJy3CeSYg8OnPUrS0hCWiuQHrjwdePxQdshojZfzRT8oxextIXDEuCaeVNIbdUl2WvT V/7g==
+X-Gm-Message-State: APjAAAUxZ9mKqrDzEdYxFjBUAAf9BgZlKyO1Yhuzk3i52MQeg6Kz4Dqt
+ Yqt0zG/yhw6AT3Ch7wDCOsA2/EFM
+X-Google-Smtp-Source:
+ APXvYqx+v9lE8qfl/TkOvuWMHVojTVxuYmH41y7guhNXWckny0pDBnvfzE/DD4dk2lCSzLTzlCeDxw==
+X-Received: by 2002:a17:902:3fa5:: with SMTP id
+ a34mr25608626pld.317.1561954338863; Sun, 30 Jun 2019 21:12:18 -0700 (PDT)
+X-BeenThere: spp@dpdk.org
+X-Mailman-Version: 2.1.15
+List-Id: Soft Patch Panel <spp.dpdk.org>
+List-Unsubscribe: <https://mails.dpdk.org/options/spp>,
+ <mailto:spp-request@dpdk.org?subject=unsubscribe>
+List-Archive: <http://mails.dpdk.org/archives/spp/>
+List-Post: <mailto:spp@dpdk.org>
+List-Help: <mailto:spp-request@dpdk.org?subject=help>
+List-Subscribe: <https://mails.dpdk.org/listinfo/spp>,
+ <mailto:spp-request@dpdk.org?subject=subscribe>
+X-TM-AS-MML: No
+Precedence: bulk
+Lines: 194
+X-TM-AS-GCONF: 00
+X-MD-STAMP: ON
+
+From: Yasufumi Ogawa <yasufum.o@gmail.com>
+
+This update is to remove `spp_port.c` and `spp_port.h` because burst
+functions define in these files are moved to others and no needed
+anymore.
+
+Signed-off-by: Yasufumi Ogawa <yasufum.o@gmail.com>
+---
+ src/mirror/Makefile                                  |  1 -
+ src/mirror/spp_mirror.c                              |  1 -
+ src/pcap/Makefile                                    |  1 -
+ src/pcap/spp_pcap.c                                  |  1 -
+ .../secondary/spp_worker_th/cmd_res_formatter.c      |  1 -
+ src/shared/secondary/spp_worker_th/cmd_runner.c      |  1 -
+ src/shared/secondary/spp_worker_th/cmd_utils.c       |  1 -
+ src/shared/secondary/spp_worker_th/spp_port.c        | 12 ------------
+ src/shared/secondary/spp_worker_th/spp_port.h        | 10 ----------
+ src/vf/Makefile                                      |  1 -
+ src/vf/classifier_mac.c                              |  1 -
+ src/vf/forwarder.c                                   |  1 -
+ src/vf/spp_vf.c                                      |  1 -
+ 13 files changed, 33 deletions(-)
+ delete mode 100644 src/shared/secondary/spp_worker_th/spp_port.c
+ delete mode 100644 src/shared/secondary/spp_worker_th/spp_port.h
+
+diff --git a/src/mirror/Makefile b/src/mirror/Makefile
+index 69ff91e..af9667e 100644
+--- a/src/mirror/Makefile
++++ b/src/mirror/Makefile
+@@ -21,7 +21,6 @@ SRCS-y += $(SPP_SEC_DIR)/utils.c $(SPP_SEC_DIR)/add_port.c
+ SRCS-y += $(SPP_SEC_DIR)/json_helper.c
+ SRCS-y += $(SPP_SEC_DIR)/string_buffer.c
+ SRCS-y += $(SPP_WKT_DIR)/cmd_utils.c
+-SRCS-y += $(SPP_WKT_DIR)/spp_port.c
+ SRCS-y += $(SPP_WKT_DIR)/port_capability.c
+ SRCS-y += $(SPP_WKT_DIR)/conn_spp_ctl.c
+ SRCS-y += $(SPP_WKT_DIR)/cmd_parser.c
+diff --git a/src/mirror/spp_mirror.c b/src/mirror/spp_mirror.c
+index aefb4f5..e6352cf 100644
+--- a/src/mirror/spp_mirror.c
++++ b/src/mirror/spp_mirror.c
+@@ -18,7 +18,6 @@
+ #include "shared/secondary/spp_worker_th/cmd_runner.h"
+ #include "shared/secondary/spp_worker_th/cmd_parser.h"
+ #include "shared/secondary/spp_worker_th/cmd_utils.h"
+-#include "shared/secondary/spp_worker_th/spp_port.h"
+ #include "shared/secondary/spp_worker_th/port_capability.h"
+ 
+ #ifdef SPP_RINGLATENCYSTATS_ENABLE
+diff --git a/src/pcap/Makefile b/src/pcap/Makefile
+index 640c0d3..6273b41 100644
+--- a/src/pcap/Makefile
++++ b/src/pcap/Makefile
+@@ -22,7 +22,6 @@ SRCS-y += ../shared/common.c
+ SRCS-y += $(SPP_SEC_DIR)/utils.c
+ SRCS-y += $(SPP_SEC_DIR)/string_buffer.c
+ SRCS-y += $(SPP_WKT_DIR)/conn_spp_ctl.c
+-SRCS-y += $(SPP_WKT_DIR)/spp_port.c
+ SRCS-y += $(SPP_WKT_DIR)/port_capability.c
+ SRCS-y += $(SPP_WKT_DIR)/ringlatencystats.c
+ 
+diff --git a/src/pcap/spp_pcap.c b/src/pcap/spp_pcap.c
+index 909787d..79d155c 100644
+--- a/src/pcap/spp_pcap.c
++++ b/src/pcap/spp_pcap.c
+@@ -18,7 +18,6 @@
+ #include "cmd_runner.h"
+ #include "cmd_parser.h"
+ #include "shared/secondary/utils.h"
+-#include "shared/secondary/spp_worker_th/spp_port.h"
+ #include "shared/secondary/spp_worker_th/port_capability.h"
+ 
+ #ifdef SPP_RINGLATENCYSTATS_ENABLE
+diff --git a/src/shared/secondary/spp_worker_th/cmd_res_formatter.c b/src/shared/secondary/spp_worker_th/cmd_res_formatter.c
+index 1485533..00d9466 100644
+--- a/src/shared/secondary/spp_worker_th/cmd_res_formatter.c
++++ b/src/shared/secondary/spp_worker_th/cmd_res_formatter.c
+@@ -3,7 +3,6 @@
+  */
+ 
+ #include "cmd_res_formatter.h"
+-#include "spp_port.h"
+ #include "port_capability.h"
+ #include "cmd_utils.h"
+ #include "shared/secondary/json_helper.h"
+diff --git a/src/shared/secondary/spp_worker_th/cmd_runner.c b/src/shared/secondary/spp_worker_th/cmd_runner.c
+index 4e43fe6..d11dfc9 100644
+--- a/src/shared/secondary/spp_worker_th/cmd_runner.c
++++ b/src/shared/secondary/spp_worker_th/cmd_runner.c
+@@ -9,7 +9,6 @@
+ #include <rte_branch_prediction.h>
+ 
+ #include "cmd_runner.h"
+-#include "spp_port.h"
+ #include "cmd_res_formatter.h"
+ #include "conn_spp_ctl.h"
+ #include "cmd_parser.h"
+diff --git a/src/shared/secondary/spp_worker_th/cmd_utils.c b/src/shared/secondary/spp_worker_th/cmd_utils.c
+index 338054f..e77dbe7 100644
+--- a/src/shared/secondary/spp_worker_th/cmd_utils.c
++++ b/src/shared/secondary/spp_worker_th/cmd_utils.c
+@@ -12,7 +12,6 @@
+ #include <rte_branch_prediction.h>
+ 
+ #include "cmd_utils.h"
+-#include "spp_port.h"
+ #include "shared/secondary/add_port.h"
+ #include "shared/secondary/return_codes.h"
+ 
+diff --git a/src/shared/secondary/spp_worker_th/spp_port.c b/src/shared/secondary/spp_worker_th/spp_port.c
+deleted file mode 100644
+index 66f73df..0000000
+--- a/src/shared/secondary/spp_worker_th/spp_port.c
++++ /dev/null
+@@ -1,12 +0,0 @@
+-/* SPDX-License-Identifier: BSD-3-Clause
+- * Copyright(c) 2017-2018 Nippon Telegraph and Telephone Corporation
+- */
+-
+-#include <rte_ether.h>
+-#include <rte_ip.h>
+-#include <rte_udp.h>
+-#include <rte_tcp.h>
+-#include <rte_net_crc.h>
+-
+-#include "spp_port.h"
+-#include "shared/secondary/return_codes.h"
+diff --git a/src/shared/secondary/spp_worker_th/spp_port.h b/src/shared/secondary/spp_worker_th/spp_port.h
+deleted file mode 100644
+index 9b6132b..0000000
+--- a/src/shared/secondary/spp_worker_th/spp_port.h
++++ /dev/null
+@@ -1,10 +0,0 @@
+-/* SPDX-License-Identifier: BSD-3-Clause
+- * Copyright(c) 2017-2018 Nippon Telegraph and Telephone Corporation
+- */
+-
+-#ifndef __WK_SPP_PORT_H__
+-#define __WK_SPP_PORT_H__
+-
+-#include "cmd_utils.h"
+-
+-#endif /*  __WK_SPP_PORT_H__ */
+diff --git a/src/vf/Makefile b/src/vf/Makefile
+index 07870ac..92d2854 100644
+--- a/src/vf/Makefile
++++ b/src/vf/Makefile
+@@ -19,7 +19,6 @@ SRCS-y := spp_vf.c classifier_mac.c forwarder.c
+ SRCS-y += $(SPP_SEC_DIR)/string_buffer.c
+ SRCS-y += $(SPP_SEC_DIR)/json_helper.c
+ SRCS-y += $(SPP_SEC_DIR)/utils.c $(SPP_SEC_DIR)/add_port.c
+-SRCS-y += $(SPP_WKT_DIR)/spp_port.c
+ SRCS-y += $(SPP_WKT_DIR)/ringlatencystats.c
+ SRCS-y += $(SPP_WKT_DIR)/port_capability.c
+ SRCS-y += $(SPP_WKT_DIR)/conn_spp_ctl.c
+diff --git a/src/vf/classifier_mac.c b/src/vf/classifier_mac.c
+index 893f01d..8273726 100644
+--- a/src/vf/classifier_mac.c
++++ b/src/vf/classifier_mac.c
+@@ -28,7 +28,6 @@
+ #include "shared/secondary/json_helper.h"
+ #include "shared/secondary/spp_worker_th/cmd_res_formatter.h"
+ #include "shared/secondary/spp_worker_th/vf_deps.h"
+-#include "shared/secondary/spp_worker_th/spp_port.h"
+ #include "shared/secondary/spp_worker_th/port_capability.h"
+ 
+ #ifdef SPP_RINGLATENCYSTATS_ENABLE
+diff --git a/src/vf/forwarder.c b/src/vf/forwarder.c
+index 5a061ad..ba93df5 100644
+--- a/src/vf/forwarder.c
++++ b/src/vf/forwarder.c
+@@ -8,7 +8,6 @@
+ #include "spp_vf.h"
+ #include "shared/secondary/return_codes.h"
+ #include "shared/secondary/spp_worker_th/vf_deps.h"
+-#include "shared/secondary/spp_worker_th/spp_port.h"
+ #include "shared/secondary/spp_worker_th/port_capability.h"
+ 
+ #ifdef SPP_RINGLATENCYSTATS_ENABLE
+diff --git a/src/vf/spp_vf.c b/src/vf/spp_vf.c
+index 1ef8e4f..d7dd5d0 100644
+--- a/src/vf/spp_vf.c
++++ b/src/vf/spp_vf.c
+@@ -15,7 +15,6 @@
+ #include "shared/secondary/add_port.h"
+ #include "shared/secondary/spp_worker_th/cmd_runner.h"
+ #include "shared/secondary/spp_worker_th/cmd_parser.h"
+-#include "shared/secondary/spp_worker_th/spp_port.h"
+ #include "shared/secondary/spp_worker_th/port_capability.h"
+ 
+ #ifdef SPP_RINGLATENCYSTATS_ENABLE
+-- 
+2.17.1
+
+
