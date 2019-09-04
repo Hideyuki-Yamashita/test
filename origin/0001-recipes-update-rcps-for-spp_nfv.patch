@@ -1,0 +1,371 @@
+From 0fd19952aaa554e0d11bfd9321f4490ed21805f9 Mon Sep 17 00:00:00 2001
+From: Hideyuki Yamashita <yamashita.hideyuki@po.ntt-tx.co.jp>
+Date: Wed, 10 Jul 2019 15:51:10 +0900
+Subject: [PATCH] recipes: update rcps for spp_nfv
+
+This patch is to update rcps for the following usecases of spp_nfv.
+- Single spp_nfv
+- Dual spp_nfv
+- Dual spp_nfv with Ring PMD
+- Single spp_nfv with PCAP PMD
+
+Note that diretory structrure is also changed to match with
+the document structure of "Use cases"
+chapter of the latest SPP document.
+
+Signed-off-by: Hideyuki Yamashita <yamashita.hideyuki@po.ntt-tx.co.jp>
+Signed-off-by: Naoki Takada <ntakada14@gmail.com>
+Change-Id: I8319f2d61caa44eaf0dcfc60ab26e492baf51365
+---
+ .../l2fwd/1_dual_bidir.rcps}                        |  6 +++++-
+ recipes/usecases/spp_nfv/dual/l2fwd/2_clean.rcps    |  7 +++++++
+ .../loopback/1_dual_loopback.rcps}                  |  6 +++++-
+ recipes/usecases/spp_nfv/dual/loopback/2_clean.rcps |  7 +++++++
+ .../bi_directional_l2fwd/1_ring_dual_bidir.rcps}    |  9 ++++++++-
+ .../bi_directional_l2fwd/2_clean.rcps               | 13 +++++++++++++
+ .../spp_nfv/dual_with_ring/ring_pmd/1_add_ring.rcps |  3 +++
+ .../spp_nfv/dual_with_ring/ring_pmd/2_del_ring.rcps |  3 +++
+ .../uni_directional_l2fwd/1_ring_dual_unidir.rcps}  |  8 +++++++-
+ .../uni_directional_l2fwd/2_clean.rcps              | 11 +++++++++++
+ .../l2fwd/1_single_bidir.rcps}                      |  5 ++++-
+ recipes/usecases/spp_nfv/single/l2fwd/2_clean.rcps  |  5 +++++
+ .../loopback/1_single_loopback.rcps}                |  5 ++++-
+ .../usecases/spp_nfv/single/loopback/2_clean.rcps   |  5 +++++
+ .../single_with_pcap/incoming/1_add_pcap.rcps       |  5 +++++
+ .../incoming/2_capture_incoming.rcps                |  6 ++++++
+ .../spp_nfv/single_with_pcap/incoming/3_clean.rcps  |  8 ++++++++
+ .../single_with_pcap/outgoing/1_add_pcap.rcps       |  5 +++++
+ .../single_with_pcap/outgoing/2_restore_dumped.rcps |  6 ++++++
+ .../spp_nfv/single_with_pcap/outgoing/3_clean.rcps  |  8 ++++++++
+ recipes/usecases/spp_nfv/vhost_unidir.rcps          |  5 -----
+ 21 files changed, 125 insertions(+), 11 deletions(-)
+ rename recipes/usecases/spp_nfv/{dual_bidir.rcps => dual/l2fwd/1_dual_bidir.rcps} (53%)
+ create mode 100644 recipes/usecases/spp_nfv/dual/l2fwd/2_clean.rcps
+ rename recipes/usecases/spp_nfv/{dual_loopback.rcps => dual/loopback/1_dual_loopback.rcps} (52%)
+ create mode 100644 recipes/usecases/spp_nfv/dual/loopback/2_clean.rcps
+ rename recipes/usecases/spp_nfv/{ring_dual_bidir.rcps => dual_with_ring/bi_directional_l2fwd/1_ring_dual_bidir.rcps} (61%)
+ create mode 100644 recipes/usecases/spp_nfv/dual_with_ring/bi_directional_l2fwd/2_clean.rcps
+ create mode 100644 recipes/usecases/spp_nfv/dual_with_ring/ring_pmd/1_add_ring.rcps
+ create mode 100644 recipes/usecases/spp_nfv/dual_with_ring/ring_pmd/2_del_ring.rcps
+ rename recipes/usecases/spp_nfv/{ring_dual_unidir.rcps => dual_with_ring/uni_directional_l2fwd/1_ring_dual_unidir.rcps} (54%)
+ create mode 100644 recipes/usecases/spp_nfv/dual_with_ring/uni_directional_l2fwd/2_clean.rcps
+ rename recipes/usecases/spp_nfv/{single_bidir.rcps => single/l2fwd/1_single_bidir.rcps} (54%)
+ create mode 100644 recipes/usecases/spp_nfv/single/l2fwd/2_clean.rcps
+ rename recipes/usecases/spp_nfv/{single_loopback.rcps => single/loopback/1_single_loopback.rcps} (52%)
+ create mode 100644 recipes/usecases/spp_nfv/single/loopback/2_clean.rcps
+ create mode 100644 recipes/usecases/spp_nfv/single_with_pcap/incoming/1_add_pcap.rcps
+ create mode 100644 recipes/usecases/spp_nfv/single_with_pcap/incoming/2_capture_incoming.rcps
+ create mode 100644 recipes/usecases/spp_nfv/single_with_pcap/incoming/3_clean.rcps
+ create mode 100644 recipes/usecases/spp_nfv/single_with_pcap/outgoing/1_add_pcap.rcps
+ create mode 100644 recipes/usecases/spp_nfv/single_with_pcap/outgoing/2_restore_dumped.rcps
+ create mode 100644 recipes/usecases/spp_nfv/single_with_pcap/outgoing/3_clean.rcps
+ delete mode 100644 recipes/usecases/spp_nfv/vhost_unidir.rcps
+
+diff --git a/recipes/usecases/spp_nfv/dual_bidir.rcps b/recipes/usecases/spp_nfv/dual/l2fwd/1_dual_bidir.rcps
+similarity index 53%
+rename from recipes/usecases/spp_nfv/dual_bidir.rcps
+rename to recipes/usecases/spp_nfv/dual/l2fwd/1_dual_bidir.rcps
+index ae60beb..cf8827e 100644
+--- a/recipes/usecases/spp_nfv/dual_bidir.rcps
++++ b/recipes/usecases/spp_nfv/dual/l2fwd/1_dual_bidir.rcps
+@@ -1,5 +1,9 @@
+-# Configure Two spp_nfv as L2fwd
++# Configure as L2fwd
+ nfv 1; patch phy:0 phy:1
+ nfv 2; patch phy:1 phy:0
++
++# Start forwarding
+ nfv 1; forward
+ nfv 2; forward
++nfv 1; status
++nfv 2; status
+diff --git a/recipes/usecases/spp_nfv/dual/l2fwd/2_clean.rcps b/recipes/usecases/spp_nfv/dual/l2fwd/2_clean.rcps
+new file mode 100644
+index 0000000..29fbe7b
+--- /dev/null
++++ b/recipes/usecases/spp_nfv/dual/l2fwd/2_clean.rcps
+@@ -0,0 +1,7 @@
++# Stop forwarding
++nfv 1; stop
++nfv 2; stop
++
++# Clear all of patches
++nfv 1; patch reset
++nfv 2; patch reset
+diff --git a/recipes/usecases/spp_nfv/dual_loopback.rcps b/recipes/usecases/spp_nfv/dual/loopback/1_dual_loopback.rcps
+similarity index 52%
+rename from recipes/usecases/spp_nfv/dual_loopback.rcps
+rename to recipes/usecases/spp_nfv/dual/loopback/1_dual_loopback.rcps
+index 5b00de7..b365d1c 100644
+--- a/recipes/usecases/spp_nfv/dual_loopback.rcps
++++ b/recipes/usecases/spp_nfv/dual/loopback/1_dual_loopback.rcps
+@@ -1,5 +1,9 @@
+-#Configure two spp_nfv for Loopback
++# Configure as Loopback
+ nfv 1; patch phy:0 phy:0
+ nfv 2; patch phy:1 phy:1
++
++# Start forwarding
+ nfv 1; forward
+ nfv 2; forward
++nfv 1; status
++nfv 2; status
+diff --git a/recipes/usecases/spp_nfv/dual/loopback/2_clean.rcps b/recipes/usecases/spp_nfv/dual/loopback/2_clean.rcps
+new file mode 100644
+index 0000000..29fbe7b
+--- /dev/null
++++ b/recipes/usecases/spp_nfv/dual/loopback/2_clean.rcps
+@@ -0,0 +1,7 @@
++# Stop forwarding
++nfv 1; stop
++nfv 2; stop
++
++# Clear all of patches
++nfv 1; patch reset
++nfv 2; patch reset
+diff --git a/recipes/usecases/spp_nfv/ring_dual_bidir.rcps b/recipes/usecases/spp_nfv/dual_with_ring/bi_directional_l2fwd/1_ring_dual_bidir.rcps
+similarity index 61%
+rename from recipes/usecases/spp_nfv/ring_dual_bidir.rcps
+rename to recipes/usecases/spp_nfv/dual_with_ring/bi_directional_l2fwd/1_ring_dual_bidir.rcps
+index 2fff7b3..6843d60 100644
+--- a/recipes/usecases/spp_nfv/ring_dual_bidir.rcps
++++ b/recipes/usecases/spp_nfv/dual_with_ring/bi_directional_l2fwd/1_ring_dual_bidir.rcps
+@@ -1,12 +1,19 @@
+-# Bi-directional with two rings
++# Add rings to nfv 1
+ nfv 1; add ring:0
+ nfv 1; add ring:1
++
++# Add rings to nfv 2
+ nfv 2; add ring:0
+ nfv 2; add ring:1
+ 
++# Configure as Bi-Directional L2fwd
+ nfv 1; patch phy:0 ring:0
+ nfv 1; patch ring:1 phy:0
+ nfv 2; patch phy:1 ring:1
+ nfv 2; patch ring:0 phy:1
++
++# Start forwarding
+ nfv 1; forward
+ nfv 2; forward
++nfv 1; status
++nfv 2; status
+diff --git a/recipes/usecases/spp_nfv/dual_with_ring/bi_directional_l2fwd/2_clean.rcps b/recipes/usecases/spp_nfv/dual_with_ring/bi_directional_l2fwd/2_clean.rcps
+new file mode 100644
+index 0000000..7f58e32
+--- /dev/null
++++ b/recipes/usecases/spp_nfv/dual_with_ring/bi_directional_l2fwd/2_clean.rcps
+@@ -0,0 +1,13 @@
++# Stop forwarding
++nfv 1; stop
++nfv 2; stop
++
++# Clear all of patches
++nfv 1; patch reset
++nfv 2; patch reset
++
++# Delete all rings
++nfv 1; del ring:0
++nfv 1; del ring:1
++nfv 2; del ring:0
++nfv 2; del ring:1
+diff --git a/recipes/usecases/spp_nfv/dual_with_ring/ring_pmd/1_add_ring.rcps b/recipes/usecases/spp_nfv/dual_with_ring/ring_pmd/1_add_ring.rcps
+new file mode 100644
+index 0000000..bc31726
+--- /dev/null
++++ b/recipes/usecases/spp_nfv/dual_with_ring/ring_pmd/1_add_ring.rcps
+@@ -0,0 +1,3 @@
++# Add ring
++nfv 1; add ring:0
++nfv 1; status
+diff --git a/recipes/usecases/spp_nfv/dual_with_ring/ring_pmd/2_del_ring.rcps b/recipes/usecases/spp_nfv/dual_with_ring/ring_pmd/2_del_ring.rcps
+new file mode 100644
+index 0000000..cc5b479
+--- /dev/null
++++ b/recipes/usecases/spp_nfv/dual_with_ring/ring_pmd/2_del_ring.rcps
+@@ -0,0 +1,3 @@
++# Delete ring
++nfv 1; del ring:0
++nfv 1; status
+diff --git a/recipes/usecases/spp_nfv/ring_dual_unidir.rcps b/recipes/usecases/spp_nfv/dual_with_ring/uni_directional_l2fwd/1_ring_dual_unidir.rcps
+similarity index 54%
+rename from recipes/usecases/spp_nfv/ring_dual_unidir.rcps
+rename to recipes/usecases/spp_nfv/dual_with_ring/uni_directional_l2fwd/1_ring_dual_unidir.rcps
+index a9fd883..e7d1b83 100644
+--- a/recipes/usecases/spp_nfv/ring_dual_unidir.rcps
++++ b/recipes/usecases/spp_nfv/dual_with_ring/uni_directional_l2fwd/1_ring_dual_unidir.rcps
+@@ -1,7 +1,13 @@
+-# Uni-Directional L2fwd with ring
++# Add rings
+ nfv 1; add ring:0
+ nfv 2; add ring:0
++
++# Configure as Uni-Directional L2fwd
+ nfv 1; patch phy:0 ring:0
+ nfv 2; patch ring:0 phy:1
++
++# Start forwarding
+ nfv 1; forward
+ nfv 2; forward
++nfv 1; status
++nfv 2; status
+diff --git a/recipes/usecases/spp_nfv/dual_with_ring/uni_directional_l2fwd/2_clean.rcps b/recipes/usecases/spp_nfv/dual_with_ring/uni_directional_l2fwd/2_clean.rcps
+new file mode 100644
+index 0000000..551eacb
+--- /dev/null
++++ b/recipes/usecases/spp_nfv/dual_with_ring/uni_directional_l2fwd/2_clean.rcps
+@@ -0,0 +1,11 @@
++# Stop forwarding
++nfv 1; stop
++nfv 2; stop
++
++# Clear all of patches
++nfv 1; patch reset
++nfv 2; patch reset
++
++# Delete rings
++nfv 1; del ring:0
++nfv 2; del ring:0
+diff --git a/recipes/usecases/spp_nfv/single_bidir.rcps b/recipes/usecases/spp_nfv/single/l2fwd/1_single_bidir.rcps
+similarity index 54%
+rename from recipes/usecases/spp_nfv/single_bidir.rcps
+rename to recipes/usecases/spp_nfv/single/l2fwd/1_single_bidir.rcps
+index 22905a7..c35da98 100644
+--- a/recipes/usecases/spp_nfv/single_bidir.rcps
++++ b/recipes/usecases/spp_nfv/single/l2fwd/1_single_bidir.rcps
+@@ -1,4 +1,7 @@
+-# Configure spp_nfv as L2fwd
++# Configure as L2fwd
+ nfv 1; patch phy:0 phy:1
+ nfv 1; patch phy:1 phy:0
++
++# Start forwarding
+ nfv 1; forward
++nfv 1; status
+diff --git a/recipes/usecases/spp_nfv/single/l2fwd/2_clean.rcps b/recipes/usecases/spp_nfv/single/l2fwd/2_clean.rcps
+new file mode 100644
+index 0000000..674d5bf
+--- /dev/null
++++ b/recipes/usecases/spp_nfv/single/l2fwd/2_clean.rcps
+@@ -0,0 +1,5 @@
++# Stop forwarding
++nfv 1; stop
++
++# Clear patch
++nfv 1; patch reset
+diff --git a/recipes/usecases/spp_nfv/single_loopback.rcps b/recipes/usecases/spp_nfv/single/loopback/1_single_loopback.rcps
+similarity index 52%
+rename from recipes/usecases/spp_nfv/single_loopback.rcps
+rename to recipes/usecases/spp_nfv/single/loopback/1_single_loopback.rcps
+index 7c70b23..3750f4d 100644
+--- a/recipes/usecases/spp_nfv/single_loopback.rcps
++++ b/recipes/usecases/spp_nfv/single/loopback/1_single_loopback.rcps
+@@ -1,4 +1,7 @@
+-# Configure spp_nfv for Loopback
++# Configure as Loopback
+ nfv 1; patch phy:0 phy:0
+ nfv 1; patch phy:1 phy:1
++
++# Start forwarding
+ nfv 1; forward
++nfv 1; status
+diff --git a/recipes/usecases/spp_nfv/single/loopback/2_clean.rcps b/recipes/usecases/spp_nfv/single/loopback/2_clean.rcps
+new file mode 100644
+index 0000000..674d5bf
+--- /dev/null
++++ b/recipes/usecases/spp_nfv/single/loopback/2_clean.rcps
+@@ -0,0 +1,5 @@
++# Stop forwarding
++nfv 1; stop
++
++# Clear patch
++nfv 1; patch reset
+diff --git a/recipes/usecases/spp_nfv/single_with_pcap/incoming/1_add_pcap.rcps b/recipes/usecases/spp_nfv/single_with_pcap/incoming/1_add_pcap.rcps
+new file mode 100644
+index 0000000..1975313
+--- /dev/null
++++ b/recipes/usecases/spp_nfv/single_with_pcap/incoming/1_add_pcap.rcps
+@@ -0,0 +1,5 @@
++# Add pcap
++nfv 1; add pcap:1
++
++# check pcap file
++ls /tmp
+diff --git a/recipes/usecases/spp_nfv/single_with_pcap/incoming/2_capture_incoming.rcps b/recipes/usecases/spp_nfv/single_with_pcap/incoming/2_capture_incoming.rcps
+new file mode 100644
+index 0000000..0bf8f24
+--- /dev/null
++++ b/recipes/usecases/spp_nfv/single_with_pcap/incoming/2_capture_incoming.rcps
+@@ -0,0 +1,6 @@
++# Capture incoming packets from phy:0
++nfv 1; patch phy:0 pcap:1
++
++# Start forwarding
++nfv 1; forward
++nfv 1; status
+diff --git a/recipes/usecases/spp_nfv/single_with_pcap/incoming/3_clean.rcps b/recipes/usecases/spp_nfv/single_with_pcap/incoming/3_clean.rcps
+new file mode 100644
+index 0000000..f39c904
+--- /dev/null
++++ b/recipes/usecases/spp_nfv/single_with_pcap/incoming/3_clean.rcps
+@@ -0,0 +1,8 @@
++# Stop forwarding
++nfv 1; stop
++
++# Clear patch
++nfv 1; patch reset
++
++# Delete pcap
++nfv 1; del pcap:1
+diff --git a/recipes/usecases/spp_nfv/single_with_pcap/outgoing/1_add_pcap.rcps b/recipes/usecases/spp_nfv/single_with_pcap/outgoing/1_add_pcap.rcps
+new file mode 100644
+index 0000000..0aea0f8
+--- /dev/null
++++ b/recipes/usecases/spp_nfv/single_with_pcap/outgoing/1_add_pcap.rcps
+@@ -0,0 +1,5 @@
++# Add pcap
++nfv 2; add pcap:2
++
++# check pcap file
++ls /tmp
+diff --git a/recipes/usecases/spp_nfv/single_with_pcap/outgoing/2_restore_dumped.rcps b/recipes/usecases/spp_nfv/single_with_pcap/outgoing/2_restore_dumped.rcps
+new file mode 100644
+index 0000000..d5eb775
+--- /dev/null
++++ b/recipes/usecases/spp_nfv/single_with_pcap/outgoing/2_restore_dumped.rcps
+@@ -0,0 +1,6 @@
++# Restore packets
++nfv 2; patch pcap:2 phy:1
++
++# Start forwarding
++nfv 2; forward
++nfv 2; status
+diff --git a/recipes/usecases/spp_nfv/single_with_pcap/outgoing/3_clean.rcps b/recipes/usecases/spp_nfv/single_with_pcap/outgoing/3_clean.rcps
+new file mode 100644
+index 0000000..abecf9f
+--- /dev/null
++++ b/recipes/usecases/spp_nfv/single_with_pcap/outgoing/3_clean.rcps
+@@ -0,0 +1,8 @@
++# Stop forwarding
++nfv 2; stop
++
++# Clear patch
++nfv 2; patch reset
++
++# Delete pcap
++nfv 2; del pcap:2
+diff --git a/recipes/usecases/spp_nfv/vhost_unidir.rcps b/recipes/usecases/spp_nfv/vhost_unidir.rcps
+deleted file mode 100644
+index eaca4e9..0000000
+--- a/recipes/usecases/spp_nfv/vhost_unidir.rcps
++++ /dev/null
+@@ -1,5 +0,0 @@
+-# Single spp_nfv with Vhost PMD
+-nfv 1; add vhost:0
+-nfv 1; patch phy:0 vhost:0
+-nfv 1; patch vhost:1 phy:1
+-nfv 1; forward
+-- 
+2.17.1
+

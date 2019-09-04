@@ -1,0 +1,42 @@
+From b9d58428bf28c83a439a28364ecd6360dfc05182 Mon Sep 17 00:00:00 2001
+From: Hideyuki Yamashita <yamashita.hideyuki@po.ntt-tx.co.jp>
+Date: Wed, 10 Jul 2019 16:19:23 +0900
+Subject: [PATCH] recipes: add rcps for spp_pcap
+
+This patch is to provide rcps for usecase of spp_pcap.
+
+Signed-off-by: Hideyuki Yamashita <yamashita.hideyuki@po.ntt-tx.co.jp>
+Signed-off-by: Naoki Takada <ntakada14@gmail.com>
+Change-Id: Ic8dd76ea918bbb555895ed1a949519b04d5770e0
+---
+ recipes/usecases/spp_pcap/capture/1_start_capture.rcps | 5 +++++
+ recipes/usecases/spp_pcap/capture/2_stop_capture.rcps  | 5 +++++
+ 2 files changed, 10 insertions(+)
+ create mode 100644 recipes/usecases/spp_pcap/capture/1_start_capture.rcps
+ create mode 100644 recipes/usecases/spp_pcap/capture/2_stop_capture.rcps
+
+diff --git a/recipes/usecases/spp_pcap/capture/1_start_capture.rcps b/recipes/usecases/spp_pcap/capture/1_start_capture.rcps
+new file mode 100644
+index 0000000..1ebea35
+--- /dev/null
++++ b/recipes/usecases/spp_pcap/capture/1_start_capture.rcps
+@@ -0,0 +1,5 @@
++# Pre status check
++pcap 1; status
++
++# Start capture
++pcap 1; start
+diff --git a/recipes/usecases/spp_pcap/capture/2_stop_capture.rcps b/recipes/usecases/spp_pcap/capture/2_stop_capture.rcps
+new file mode 100644
+index 0000000..285b1df
+--- /dev/null
++++ b/recipes/usecases/spp_pcap/capture/2_stop_capture.rcps
+@@ -0,0 +1,5 @@
++# Stop capture
++pcap 1; stop
++
++# Exit spp_pcap
++pcap 1; exit
+-- 
+2.17.1
+
