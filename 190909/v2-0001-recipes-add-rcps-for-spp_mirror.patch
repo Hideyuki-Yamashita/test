@@ -1,0 +1,49 @@
+From 787c4a5b5ab5e4d79871de6f939f015876a3bdc9 Mon Sep 17 00:00:00 2001
+From: Hideyuki Yamashita <yamashita.hideyuki@po.ntt-tx.co.jp>
+Date: Wed, 10 Jul 2019 16:08:53 +0900
+Subject: [PATCH v2] recipes: add rcps for spp_mirror
+
+This patch is to provide rcps for specific usecase "Duplicate Packets"
+of spp_mirror.
+
+Signed-off-by: Hideyuki Yamashita <yamashita.hideyuki@po.ntt-tx.co.jp>
+Signed-off-by: Naoki Takada <ntakada14@gmail.com>
+---
+ recipes/usecases/spp_mirror/duplicate/1_start_dup.rcps |  7 +++++++
+ recipes/usecases/spp_mirror/duplicate/2_stop_dup.rcps  | 10 ++++++++++
+ 2 files changed, 17 insertions(+)
+ create mode 100644 recipes/usecases/spp_mirror/duplicate/1_start_dup.rcps
+ create mode 100644 recipes/usecases/spp_mirror/duplicate/2_stop_dup.rcps
+
+diff --git a/recipes/usecases/spp_mirror/duplicate/1_start_dup.rcps b/recipes/usecases/spp_mirror/duplicate/1_start_dup.rcps
+new file mode 100644
+index 0000000..5549dd3
+--- /dev/null
++++ b/recipes/usecases/spp_mirror/duplicate/1_start_dup.rcps
+@@ -0,0 +1,7 @@
++# Start component
++mirror 1; component start mir 2 mirror
++
++# Add ports
++mirror 1; port add phy:0 rx mir
++mirror 1; port add phy:1 tx mir
++mirror 1; port add phy:2 tx mir
+diff --git a/recipes/usecases/spp_mirror/duplicate/2_stop_dup.rcps b/recipes/usecases/spp_mirror/duplicate/2_stop_dup.rcps
+new file mode 100644
+index 0000000..d13085c
+--- /dev/null
++++ b/recipes/usecases/spp_mirror/duplicate/2_stop_dup.rcps
+@@ -0,0 +1,10 @@
++# Delete ports
++mirror 1; port del phy:0 rx mir
++mirror 1; port del phy:1 tx mir
++mirror 1; port del phy:2 tx mir
++
++# Stop component
++mirror 1; component stop mir
++
++# Exit spp_mirror
++mirror 1; exit
+-- 
+2.17.1
+

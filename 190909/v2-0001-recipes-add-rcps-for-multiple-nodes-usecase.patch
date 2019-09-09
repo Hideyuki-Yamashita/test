@@ -1,0 +1,37 @@
+From 864460185c7035b2c106445d1b4bf097c1b6dc2f Mon Sep 17 00:00:00 2001
+From: Hideyuki Yamashita <yamashita.hideyuki@po.ntt-tx.co.jp>
+Date: Wed, 10 Jul 2019 16:25:11 +0900
+Subject: [PATCH v2] recipes: add rcps for multiple nodes usecase
+
+This patch is to provide rcps for usecase of Multiple Nodes.
+
+Signed-off-by: Hideyuki Yamashita <yamashita.hideyuki@po.ntt-tx.co.jp>
+Signed-off-by: Naoki Takada <ntakada14@gmail.com>
+---
+ recipes/usecases/multiple_nodes/1_add_server.rcps   | 4 ++++
+ recipes/usecases/multiple_nodes/2_switch_check.rcps | 2 ++
+ 2 files changed, 6 insertions(+)
+ create mode 100644 recipes/usecases/multiple_nodes/1_add_server.rcps
+ create mode 100644 recipes/usecases/multiple_nodes/2_switch_check.rcps
+
+diff --git a/recipes/usecases/multiple_nodes/1_add_server.rcps b/recipes/usecases/multiple_nodes/1_add_server.rcps
+new file mode 100644
+index 0000000..fee7324
+--- /dev/null
++++ b/recipes/usecases/multiple_nodes/1_add_server.rcps
+@@ -0,0 +1,4 @@
++# Add server
++server add 192.168.11.102
++server add 192.168.11.103
++server add 192.168.11.104
+diff --git a/recipes/usecases/multiple_nodes/2_switch_check.rcps b/recipes/usecases/multiple_nodes/2_switch_check.rcps
+new file mode 100644
+index 0000000..80480af
+--- /dev/null
++++ b/recipes/usecases/multiple_nodes/2_switch_check.rcps
+@@ -0,0 +1,2 @@
++# Switch to server 3
++server 3
+-- 
+2.17.1
+
