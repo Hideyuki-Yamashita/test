@@ -9,7 +9,7 @@ This patch is to update rcps for the following usecases of spp_nfv.
 - Dual spp_nfv with Ring PMD
 - Single spp_nfv with PCAP PMD
 
-Note that diretory structrure is also changed to match with
+Note that directory structrure is also changed to match with
 the document structure of "Use cases"
 chapter of the latest SPP document.
 
