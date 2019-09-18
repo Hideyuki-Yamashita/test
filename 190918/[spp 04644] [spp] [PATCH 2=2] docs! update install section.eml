@@ -1,0 +1,263 @@
+Return-path: <fw-yama-hd@pomail01.silk.ntt-tx.co.jp>
+Received: from zssg-mailmd102.ddreams.local
+ (zssg-mailmd102.ddreams.local [10.160.123.97]) by zssg-mailms320.ddreams.local
+ (NTT DoCoMo Mail System) with ESMTP id <0PXZ00QA76FE4J90@NTTDoCoMo.co.jp> for
+ yamashita.hideyuki@ntt-tx.co.jp; Tue, 17 Sep 2019 21:23:38 +0900 (JST)
+Original-recipient: rfc822;yamashita.hideyuki@ntt-tx.co.jp
+Received: from smtp_saver-daemon.zssg-mailmd102.ddreams.local by
+ zssg-mailmd102.ddreams.local (dDREAMS) id <0PXZ00M0U6FEC400@dDREAMS> for
+ yamashita.hideyuki@ntt-tx.co.jp (ORCPT yamashita.hideyuki@ntt-tx.co.jp); Tue,
+ 17 Sep 2019 21:23:38 +0900 (JST)
+Received: from zssg-mailmf102.ddreams.local
+ (zssg-mailmf900.ddreams.local [10.160.172.84]) by zssg-mailmd102.ddreams.local
+ (dDREAMS) with ESMTP id <0PXZ00FUL6FETP10@dDREAMS> for
+ yamashita.hideyuki@ntt-tx.co.jp (ORCPT yamashita.hideyuki@ntt-tx.co.jp); Tue,
+ 17 Sep 2019 21:23:38 +0900 (JST)
+Received: from zssg-mailmf102.ddreams.local (unknown [127.0.0.1])
+	by zssg-mailmf102.ddreams.local (Postfix) with ESMTP id 5F29C7E6032	for
+ <yamashita.hideyuki@ntt-tx.co.jp>; Tue, 17 Sep 2019 21:23:38 +0900 (JST)
+Received: from zssg-mailmf102.ddreams.local (unknown [127.0.0.1])
+	by IMSVA (Postfix) with ESMTP id 5E1658E6052	for
+ <yamashita.hideyuki@ntt-tx.co.jp>; Tue, 17 Sep 2019 21:23:38 +0900 (JST)
+Received: from localhost (unknown [127.0.0.1])	by IMSVA (Postfix)
+ with SMTP id 537F18E6042	for <yamashita.hideyuki@ntt-tx.co.jp>; Tue,
+ 17 Sep 2019 21:23:38 +0900 (JST)
+X-IMSS-HAND-OFF-DIRECTIVE: localhost:10026
+Received: from zssg-mailmf102.ddreams.local (unknown [127.0.0.1])
+	by IMSVA (Postfix) with ESMTP id B67808E6042	for
+ <yamashita.hideyuki@ntt-tx.co.jp>; Tue, 17 Sep 2019 21:23:37 +0900 (JST)
+Received: from pomail01.silk.ntt-tx.co.jp (unknown [10.160.183.139])
+	by zssg-mailmf102.ddreams.local (Postfix)
+ with ESMTPS	for <yamashita.hideyuki@ntt-tx.co.jp>; Tue,
+ 17 Sep 2019 21:23:37 +0900 (JST)
+Received: from pomail01.silk.ntt-tx.co.jp (localhost [127.0.0.1])
+	by pomail01.silk.ntt-tx.co.jp (unknown) with ESMTP id x8HCNbEh029926;	Tue,
+ 17 Sep 2019 21:23:37 +0900
+Received: (from yama-hd@localhost)	by pomail01.silk.ntt-tx.co.jp (unknown)
+ id x8HCNbux029925;	Tue, 17 Sep 2019 21:23:37 +0900
+X-Authentication-warning: pomail01.silk.ntt-tx.co.jp: yama-hd set sender to
+ fw-yama-hd@pomail01.silk.ntt-tx.co.jp using -f
+Received: from imss01.silk.ntt-tx.co.jp
+ (imss04.silk.ntt-tx.co.jp [10.107.0.39])	by pomail01.silk.ntt-tx.co.jp
+ (unknown) with ESMTP id x8HCNb7e029922	for unknown; Tue,
+ 17 Sep 2019 21:23:37 +0900
+Received: from imss04.silk.ntt-tx.co.jp (localhost [127.0.0.1])
+ by imss01.silk.ntt-tx.co.jp (unknown) with ESMTP id x8HCNZgP005953 for
+ unknown; Tue, 17 Sep 2019 21:23:35 +0900
+Received: from ml01.silk.ntt-tx.co.jp (ml01.silk.ntt-tx.co.jp [10.107.0.230])
+ by imss04.silk.ntt-tx.co.jp (unknown) with ESMTP id x8HCNZxl005950; Tue,
+ 17 Sep 2019 21:23:35 +0900
+Received: from ml01.silk.ntt-tx.co.jp (localhost [127.0.0.1])
+	by ml01.silk.ntt-tx.co.jp (unknown) with ESMTP id x8HCNa39017939;	Tue,
+ 17 Sep 2019 21:23:36 +0900
+Received: from imss02.silk.ntt-tx.co.jp
+ (imss02.silk.ntt-tx.co.jp [10.107.0.127])	by ml01.silk.ntt-tx.co.jp (unknown)
+ with ESMTP id x8HCNakQ017935	for unknown; Tue, 17 Sep 2019 21:23:36 +0900
+Received: from imss02.silk.ntt-tx.co.jp (localhost [127.0.0.1])
+ by imss02.silk.ntt-tx.co.jp (unknown) with ESMTP id x8HCNaZR022604 for
+ unknown; Tue, 17 Sep 2019 21:23:36 +0900
+Received: from mail01.ics.ntt-tx.co.jp (mail01.ics.ntt-tx.co.jp [10.254.2.67])
+ by imss02.silk.ntt-tx.co.jp (unknown) with ESMTP id x8HCNa6N022601 for
+ unknown; Tue, 17 Sep 2019 21:23:36 +0900
+Received: from dpdk.org (dpdk.org [92.243.14.124])	by mail01.ics.ntt-tx.co.jp
+ (unknown) with SMTP id x8HCNTe3010394	for unknown; Tue,
+ 17 Sep 2019 21:23:35 +0900
+Received: from [92.243.14.124] (localhost [127.0.0.1])	by dpdk.org (Postfix)
+ with ESMTP id 54A651BF6C;	Tue, 17 Sep 2019 14:23:29 +0200 (CEST)
+Received: from mail-pg1-f196.google.com
+ (mail-pg1-f196.google.com [209.85.215.196]) by dpdk.org (Postfix)
+ with ESMTP id 6AB8C1BF62 for <spp@dpdk.org>; Tue,
+ 17 Sep 2019 14:23:28 +0200 (CEST)
+Received: by mail-pg1-f196.google.com with SMTP id w10so1939749pgj.7 for
+ <spp@dpdk.org>; Tue, 17 Sep 2019 05:23:28 -0700 (PDT)
+Received: from localhost.localdomain ([192.47.164.146])
+ by smtp.gmail.com with ESMTPSA id n66sm4742726pfn.90.2019.09.17.05.23.26
+ (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128); Tue,
+ 17 Sep 2019 05:23:27 -0700 (PDT)
+Date: Tue, 17 Sep 2019 21:23:19 +0900
+From: yasufum.o@gmail.com
+Subject: [spp 04644] [spp] [PATCH 2/2] docs: update install section
+Sender: spp <spp-bounces@dpdk.org>
+To: spp@dpdk.org, ferruh.yigit@intel.com, yasufum.o@gmail.com
+Message-id: <20190917122319.16129-3-yasufum.o@gmail.com>
+In-reply-to: <20190917122319.16129-1-yasufum.o@gmail.com>
+References: <20190917122319.16129-1-yasufum.o@gmail.com>
+X-ML-Name: unknown
+X-Mail-Count: 04644
+X-MLServer: unknown
+X-ML-Info: mailing list service
+X-Mailer: git-send-email 2.17.1
+Authentication-results: mail01.ics.ntt-tx.co.jp; spf=pass
+ smtp.mailfrom=spp-bounces@dpdk.org
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
+ h=from:to:subject:date:message-id:in-reply-to:references;
+ bh=zAF7BSk9lqSLfoy3cAaTWQ+NREXIEg4MwtJCagB8R9Y=;
+ b=I3WQOmxSnnMrVhW3lB44XaVsf4WA1BBInyDIJk43v9Zd30I1Rnfoy1Adm4fSFX0Xz4
+ 9Mzhn9PvTfSOv6i9IYfmtzRJIhuphkC1ZYeuko4Ebg4CZUlFieFyNIu+kj5aBnAQ21NY
+ aq01lqPdtspb053vg3y/YDPp+ylPY2G7ao+v9PEyDZN8BPVgvjeRlk1QxTxnbMk3BIaH
+ 1bW0dYYSkyl8o1dA6OB7o49/R15ARZ5Ac4cqpZ+iTZnGDtn4rSOxvQ4BCelWVXnTxHmV
+ EHDLUUwX7hWn/XnqHbGLVTTfaD9sHphHiN80AeYO8YnPFd6+2S33b70WsNWVxYWzgoxN 7AVA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=1e100.net;
+ s=20161025; h=x-gm-message-state:from:to:subject:date:message-id:in-reply-to
+ :references; bh=zAF7BSk9lqSLfoy3cAaTWQ+NREXIEg4MwtJCagB8R9Y=;
+ b=e8LowjhFIYOHvFw57rqRp5nI7l+6X+h9qTMYd5KKE3ICkp7iK9A9c4CFhbkn0AXHZF
+ SuKWuGjeJRNDVdT4EOuGCVpCAHuurbUMfo495lje/LsARfVyMzlllTlsaxwtwPkr4Vz/
+ L/9YBTZ3N1QupE7+RNqSlnStqGhFQaF6Tdw/nVusEvXA6UqhUT1bdqD6qQKxukc9I1jx
+ yfy5X9i1czUFSSfvNBx3ZeExlF00Ww7Dunl8s2SZEbV+kVnX2RObRdrVazSJdFngm7NL
+ GC1se1f9GC8GkcYIBpTH3JOf3yWNOr7w623S98cUgYQvZsT4sh83+p1ZZ5LXlx1s9n5U LUMg==
+X-Gm-Message-State: APjAAAW7pSgbBezeBPSNNpyjXedBROQ3UNTYZieqta4EBOpSjJs2ZEAT
+ H6ZLCL+aCtWhU5ogxprY4W28sUyb
+X-Google-Smtp-Source:
+ APXvYqyBKEsXGgzlraVHjqOLWAyv3ncUAn2NhaWaR4AzFDECzxIwnegAckjNIKhivAeifmrq+Tb1rw==
+X-Received: by 2002:aa7:8118:: with SMTP id b24mr3951777pfi.148.1568723007557;
+ Tue, 17 Sep 2019 05:23:27 -0700 (PDT)
+X-BeenThere: spp@dpdk.org
+X-Mailman-Version: 2.1.15
+List-Id: Soft Patch Panel <spp.dpdk.org>
+List-Unsubscribe: <https://mails.dpdk.org/options/spp>,
+ <mailto:spp-request@dpdk.org?subject=unsubscribe>
+List-Archive: <http://mails.dpdk.org/archives/spp/>
+List-Post: <mailto:spp@dpdk.org>
+List-Help: <mailto:spp-request@dpdk.org?subject=help>
+List-Subscribe: <https://mails.dpdk.org/listinfo/spp>,
+ <mailto:spp-request@dpdk.org?subject=subscribe>
+X-TM-AS-GCONF: 00
+Precedence: bulk
+Lines: 134
+X-MD-STAMP: ON
+
+From: Yasufumi Ogawa <yasufum.o@gmail.com>
+
+This update is to revise how to install Python packages with
+`requirements.txt` to be more clear meaning.
+
+Signed-off-by: Yasufumi Ogawa <yasufum.o@gmail.com>
+---
+ docs/guides/gsg/install.rst | 38 ++++++++++++++++++++-----------------
+ 1 file changed, 21 insertions(+), 17 deletions(-)
+
+diff --git a/docs/guides/gsg/install.rst b/docs/guides/gsg/install.rst
+index c2763ad..335a151 100644
+--- a/docs/guides/gsg/install.rst
++++ b/docs/guides/gsg/install.rst
+@@ -7,13 +7,14 @@
+ Install DPDK and SPP
+ ====================
+ 
+-Before using SPP, you need to install DPDK.
++Before setting up SPP, you need to install DPDK.
+ In this document, briefly described how to install and setup DPDK.
+ Refer to `DPDK documentation
+ <https://dpdk.org/doc/guides/>`_ for more details.
+ For Linux, see `Getting Started Guide for Linux
+ <http://www.dpdk.org/doc/guides/linux_gsg/index.html>`_ .
+ 
++
+ .. _setup_install_packages:
+ 
+ Required Packages
+@@ -22,10 +23,11 @@ Required Packages
+ Installing packages for DPDK and SPP is almost the on Ubunu and CentOS,
+ but names are different for some packages.
+ 
++
+ Ubuntu
+ ~~~~~~
+ 
+-To compile DPDK, required to install following packages.
++To compile DPDK, it is required to install following packages.
+ 
+ .. code-block:: console
+ 
+@@ -39,8 +41,8 @@ You also need to install linux-headers of your kernel version.
+ 
+     $ sudo apt install linux-headers-$(uname -r)
+ 
+-Some of secondary processes depend on external libraries and you failed to
+-compile SPP without them.
++Some of SPP secondary processes depend on other libraries and you fail to
++compile SPP without installing them.
+ 
+ SPP provides libpcap-based PMD for dumping packet to a file or retrieve
+ it from the file.
+@@ -82,9 +84,7 @@ To compile DPDK, required to install following packages.
+       kernel-headers \
+       kernel-devel
+ 
+-Some of secondary processes depend on external libraries and you failed to
+-compile SPP without them.
+-
++As same as Ubuntu, you should install additional packages because
+ SPP provides libpcap-based PMD for dumping packet to a file or retrieve
+ it from the file.
+ ``spp_nfv`` and ``spp_pcap`` use ``libpcap-dev`` for packet capture.
+@@ -115,8 +115,8 @@ Clone repository and compile DPDK in any directory.
+     $ cd /path/to/any
+     $ git clone http://dpdk.org/git/dpdk
+ 
+-Installing on Ubuntu and CentOS are almost the same, but packages are
+-different.
++Installing on Ubuntu and CentOS are almost the same, but required packages
++are just bit different.
+ 
+ PCAP is disabled by default in DPDK configuration.
+ ``CONFIG_RTE_LIBRTE_PMD_PCAP`` and ``CONFIG_RTE_PORT_PCAP`` defined in
+@@ -139,7 +139,8 @@ Compile DPDK with target environment.
+     $ make install T=$RTE_TARGET
+ 
+ 
+-PCAP is disabled by default in DPDK configuration.
++PCAP is disabled by default in DPDK configuration, so should be changed
++if you use this feature.
+ ``CONFIG_RTE_LIBRTE_PMD_PCAP`` and ``CONFIG_RTE_PORT_PCAP`` defined in
+ config file ``common_base`` should be changed to ``y`` to enable PCAP.
+ 
+@@ -150,7 +151,7 @@ config file ``common_base`` should be changed to ``y`` to enable PCAP.
+     ...
+     CONFIG_RTE_PORT_PCAP=y
+ 
+-Compile DPDK with target environment.
++Compile DPDK with options for target environment.
+ 
+ .. code-block:: console
+ 
+@@ -163,7 +164,8 @@ Compile DPDK with target environment.
+ Pyhton
+ ------
+ 
+-Python3 and pip3 are also required if not installed.
++Python3 and pip3 are also required because SPP controller is implemented
++in Pyhton3. Required packages can be installed from ``requirements.txt``.
+ 
+ .. code-block:: console
+ 
+@@ -206,8 +208,10 @@ Clone SPP repository and compile it in any directory.
+     $ cd spp
+     $ make  # Confirm that $RTE_SDK and $RTE_TARGET are set
+ 
+-If you use ``spp_mirror`` in deep copy mode, you should comment out
+-the definition of copy mode in Makefile of ``spp_mirror`` before.
++If you use ``spp_mirror`` in deep copy mode,
++which is used for cloning whole of packet data for modification,
++you should change configuration of copy mode in Makefile of ``spp_mirror``
++before.
+ It is for copying full payload into a new mbuf.
+ Default mode is shallow copy.
+ 
+@@ -324,9 +328,9 @@ cannot find it by using ``ifconfig`` or ``ip``.
+ Confirm DPDK is setup properly
+ ------------------------------
+ 
+-You can confirm if you are ready to use DPDK by running DPDK's sample
+-application. ``l2fwd`` is good choice to confirm it before SPP because
+-it is very similar to SPP's worker process for forwarding.
++For testing, you can confirm if you are ready to use DPDK by running
++DPDK's sample application. ``l2fwd`` is good example to confirm it
++before SPP because it is very similar to SPP's worker process for forwarding.
+ 
+ .. code-block:: console
+ 
+-- 
+2.17.1
+
+

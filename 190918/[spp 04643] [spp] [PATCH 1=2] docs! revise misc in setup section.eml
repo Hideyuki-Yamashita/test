@@ -1,0 +1,292 @@
+Return-path: <fw-yama-hd@pomail01.silk.ntt-tx.co.jp>
+Received: from zssg-mailmd104.ddreams.local
+ (zssg-mailmd104.ddreams.local [10.160.123.99]) by zssg-mailms320.ddreams.local
+ (NTT DoCoMo Mail System) with ESMTP id <0PXZ00Q9V6FD4J90@NTTDoCoMo.co.jp> for
+ yamashita.hideyuki@ntt-tx.co.jp; Tue, 17 Sep 2019 21:23:37 +0900 (JST)
+Original-recipient: rfc822;yamashita.hideyuki@ntt-tx.co.jp
+Received: from smtp_saver-daemon.zssg-mailmd104.ddreams.local by
+ zssg-mailmd104.ddreams.local (dDREAMS) id <0PXZ00C1Q6FDK800@dDREAMS> for
+ yamashita.hideyuki@ntt-tx.co.jp (ORCPT yamashita.hideyuki@ntt-tx.co.jp); Tue,
+ 17 Sep 2019 21:23:37 +0900 (JST)
+Received: from zssg-mailmf102.ddreams.local
+ (zssg-mailmf900.ddreams.local [10.160.172.84]) by zssg-mailmd104.ddreams.local
+ (dDREAMS) with ESMTP id <0PXZ014VM6FD1S60@dDREAMS> for
+ yamashita.hideyuki@ntt-tx.co.jp (ORCPT yamashita.hideyuki@ntt-tx.co.jp); Tue,
+ 17 Sep 2019 21:23:37 +0900 (JST)
+Received: from zssg-mailmf102.ddreams.local (unknown [127.0.0.1])
+	by zssg-mailmf102.ddreams.local (Postfix) with ESMTP id 48C9C7E6038	for
+ <yamashita.hideyuki@ntt-tx.co.jp>; Tue, 17 Sep 2019 21:23:37 +0900 (JST)
+Received: from zssg-mailmf102.ddreams.local (unknown [127.0.0.1])
+	by IMSVA (Postfix) with ESMTP id 47D168E6052	for
+ <yamashita.hideyuki@ntt-tx.co.jp>; Tue, 17 Sep 2019 21:23:37 +0900 (JST)
+Received: from localhost (unknown [127.0.0.1])	by IMSVA (Postfix)
+ with SMTP id 3D25C8E6050	for <yamashita.hideyuki@ntt-tx.co.jp>; Tue,
+ 17 Sep 2019 21:23:37 +0900 (JST)
+X-IMSS-HAND-OFF-DIRECTIVE: localhost:10026
+Received: from zssg-mailmf102.ddreams.local (unknown [127.0.0.1])
+	by IMSVA (Postfix) with ESMTP id 9D5BB8E6042	for
+ <yamashita.hideyuki@ntt-tx.co.jp>; Tue, 17 Sep 2019 21:23:36 +0900 (JST)
+Received: from pomail01.silk.ntt-tx.co.jp (unknown [10.160.183.139])
+	by zssg-mailmf102.ddreams.local (Postfix)
+ with ESMTPS	for <yamashita.hideyuki@ntt-tx.co.jp>; Tue,
+ 17 Sep 2019 21:23:36 +0900 (JST)
+Received: from pomail01.silk.ntt-tx.co.jp (localhost [127.0.0.1])
+	by pomail01.silk.ntt-tx.co.jp (unknown) with ESMTP id x8HCNaW9029919;	Tue,
+ 17 Sep 2019 21:23:36 +0900
+Received: (from yama-hd@localhost)	by pomail01.silk.ntt-tx.co.jp (unknown)
+ id x8HCNamb029918;	Tue, 17 Sep 2019 21:23:36 +0900
+X-Authentication-warning: pomail01.silk.ntt-tx.co.jp: yama-hd set sender to
+ fw-yama-hd@pomail01.silk.ntt-tx.co.jp using -f
+Received: from imss01.silk.ntt-tx.co.jp
+ (imss04.silk.ntt-tx.co.jp [10.107.0.39])	by pomail01.silk.ntt-tx.co.jp
+ (unknown) with ESMTP id x8HCNa7Z029915	for unknown; Tue,
+ 17 Sep 2019 21:23:36 +0900
+Received: from imss04.silk.ntt-tx.co.jp (localhost [127.0.0.1])
+ by imss01.silk.ntt-tx.co.jp (unknown) with ESMTP id x8HCNYPd005929 for
+ unknown; Tue, 17 Sep 2019 21:23:34 +0900
+Received: from ml01.silk.ntt-tx.co.jp (ml01.silk.ntt-tx.co.jp [10.107.0.230])
+ by imss04.silk.ntt-tx.co.jp (unknown) with ESMTP id x8HCNY2R005926; Tue,
+ 17 Sep 2019 21:23:34 +0900
+Received: from ml01.silk.ntt-tx.co.jp (localhost [127.0.0.1])
+	by ml01.silk.ntt-tx.co.jp (unknown) with ESMTP id x8HCNZ2N017932;	Tue,
+ 17 Sep 2019 21:23:35 +0900
+Received: from imss02.silk.ntt-tx.co.jp
+ (imss02.silk.ntt-tx.co.jp [10.107.0.127])	by ml01.silk.ntt-tx.co.jp (unknown)
+ with ESMTP id x8HCNZwq017928	for unknown; Tue, 17 Sep 2019 21:23:35 +0900
+Received: from imss02.silk.ntt-tx.co.jp (localhost [127.0.0.1])
+ by imss02.silk.ntt-tx.co.jp (unknown) with ESMTP id x8HCNZYR022586 for
+ unknown; Tue, 17 Sep 2019 21:23:35 +0900
+Received: from mail01.ics.ntt-tx.co.jp (mail01.ics.ntt-tx.co.jp [10.254.2.67])
+ by imss02.silk.ntt-tx.co.jp (unknown) with ESMTP id x8HCNYDS022583 for
+ unknown; Tue, 17 Sep 2019 21:23:35 +0900
+Received: from dpdk.org (dpdk.org [92.243.14.124])	by mail01.ics.ntt-tx.co.jp
+ (unknown) with SMTP id x8HCNSdS010388	for unknown; Tue,
+ 17 Sep 2019 21:23:34 +0900
+Received: from [92.243.14.124] (localhost [127.0.0.1])	by dpdk.org (Postfix)
+ with ESMTP id 3F89B1BF60;	Tue, 17 Sep 2019 14:23:28 +0200 (CEST)
+Received: from mail-pg1-f195.google.com
+ (mail-pg1-f195.google.com [209.85.215.195]) by dpdk.org (Postfix)
+ with ESMTP id E4A741BF42 for <spp@dpdk.org>; Tue,
+ 17 Sep 2019 14:23:26 +0200 (CEST)
+Received: by mail-pg1-f195.google.com with SMTP id a24so1957239pgj.2 for
+ <spp@dpdk.org>; Tue, 17 Sep 2019 05:23:26 -0700 (PDT)
+Received: from localhost.localdomain ([192.47.164.146])
+ by smtp.gmail.com with ESMTPSA id n66sm4742726pfn.90.2019.09.17.05.23.24
+ (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128); Tue,
+ 17 Sep 2019 05:23:25 -0700 (PDT)
+Date: Tue, 17 Sep 2019 21:23:18 +0900
+From: yasufum.o@gmail.com
+Subject: [spp 04643] [spp] [PATCH 1/2] docs: revise misc in setup section
+Sender: spp <spp-bounces@dpdk.org>
+To: spp@dpdk.org, ferruh.yigit@intel.com, yasufum.o@gmail.com
+Message-id: <20190917122319.16129-2-yasufum.o@gmail.com>
+In-reply-to: <20190917122319.16129-1-yasufum.o@gmail.com>
+References: <20190917122319.16129-1-yasufum.o@gmail.com>
+X-ML-Name: unknown
+X-Mail-Count: 04643
+X-MLServer: unknown
+X-ML-Info: mailing list service
+X-Mailer: git-send-email 2.17.1
+Authentication-results: mail01.ics.ntt-tx.co.jp; spf=pass
+ smtp.mailfrom=spp-bounces@dpdk.org
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
+ h=from:to:subject:date:message-id:in-reply-to:references;
+ bh=guEr/ZEzJ14JCFNBdF6fKpk33W0i/qPQqh/FEd/0SV0=;
+ b=q6oeNpfIXgy+2v2u1VscNiHYYAgkaQa5f/3PFQnYarvD9od48myQ5Ygn4Kpuaxqu4g
+ FqnHM3lb8d9FGkY7sDu6JChUAgeOR48AkdZueoXPhlTzppB6WahCMLdMGum8q5lBtJSv
+ LqdtTPBPfaUuwz/mhFURGIj56Y7q0wQ4c/SNQ9Fc+rLaSRHvUilCjVYBHHxRD9VOYMfQ
+ yfQ9UlkZd3sQyOpn1Hnh/ERhZ/erHF1lj+Zn3NCbE+uRopM08gleveR6VPsz/JXgleb+
+ KKW7O6yEX0cQCuNMd1hbKKuTUOv4xvwPtfMMsrnrrhFThjUPVdZoAaKZO3gjAE1Md/xI sBVw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=1e100.net;
+ s=20161025; h=x-gm-message-state:from:to:subject:date:message-id:in-reply-to
+ :references; bh=guEr/ZEzJ14JCFNBdF6fKpk33W0i/qPQqh/FEd/0SV0=;
+ b=ThJTp7ywAXUQJeGTOr7wgYDAqk2oTZZ3/57PX9H4/Nqh0pODxeceFXUV45rOpMnDP3
+ bMBBSVaLNzSx/AEAVxFdRzQrSgyFbsBNYq9BT4WlTCXqblFJuX4HNDXjSjPNeIetHAOp
+ 6VGCnc62pGM5ZoA9Y5UsK0iMbtfRIr1g1EI7oPUNnyCeu0WVkoLeEfxK0PZCp2UHlU0E
+ NYhlcgPfh+tMASp6ZptQnIEN8KaQjUR2zskV9FwSUt+su3Sfj16d2QWZciW0FKtvkmzu
+ BhahHumiD0G6gr5gPUfYsZHTfGi/sLB6vygRP+Snq7LqWRLHygt60sEuynYLDC93OEhT AEng==
+X-Gm-Message-State: APjAAAV2LPvXooW6ULW0GVJFnyS0XSRzj7Bi83GBfYfWaTQTgn62gSRU
+ 3yZMiI96EujQjHoaV6IKO38t8FB6
+X-Google-Smtp-Source:
+ APXvYqwgsuM+xkvLUaMMD75QP0hPknrHI0zC73A4axwgYa9SBsVqqrHzPqVL6kIMUvLswS1jS7NSOg==
+X-Received: by 2002:a63:6947:: with SMTP id e68mr3087329pgc.60.1568723005925;
+ Tue, 17 Sep 2019 05:23:25 -0700 (PDT)
+X-BeenThere: spp@dpdk.org
+X-Mailman-Version: 2.1.15
+List-Id: Soft Patch Panel <spp.dpdk.org>
+List-Unsubscribe: <https://mails.dpdk.org/options/spp>,
+ <mailto:spp-request@dpdk.org?subject=unsubscribe>
+List-Archive: <http://mails.dpdk.org/archives/spp/>
+List-Post: <mailto:spp@dpdk.org>
+List-Help: <mailto:spp-request@dpdk.org?subject=help>
+List-Subscribe: <https://mails.dpdk.org/listinfo/spp>,
+ <mailto:spp-request@dpdk.org?subject=subscribe>
+X-TM-AS-GCONF: 00
+Precedence: bulk
+Lines: 163
+X-MD-STAMP: ON
+
+From: Yasufumi Ogawa <yasufum.o@gmail.com>
+
+There are still ambiguous descriptions in setup guide, such as "Ubuntu
+or CentOS?", "1GB or 2MB hugepages?" or so. This update is to revise the
+descriptions.
+
+Signed-off-by: Yasufumi Ogawa <yasufum.o@gmail.com>
+---
+ docs/guides/gsg/setup.rst | 42 +++++++++++++++++++++++----------------
+ 1 file changed, 25 insertions(+), 17 deletions(-)
+
+diff --git a/docs/guides/gsg/setup.rst b/docs/guides/gsg/setup.rst
+index c0ccfd4..9bd30ef 100644
+--- a/docs/guides/gsg/setup.rst
++++ b/docs/guides/gsg/setup.rst
+@@ -11,7 +11,8 @@ Setup
+ This documentation is described for following distributions.
+ 
+ - Ubuntu 16.04 and 18.04
+-- CentOS 7.6
++- CentOS 7.6 (not fully supported)
++
+ 
+ .. _gsg_reserve_hugep:
+ 
+@@ -29,18 +30,20 @@ How to configure reserving hugepages is different between 2MB or 1GB.
+ In general, 1GB is better for getting high performance,
+ but 2MB is easier for configuration than 1GB.
+ 
++
+ 1GB Hugepage
+ ~~~~~~~~~~~~
+ 
+-For 1GB page, hugepage setting is activated while booting system.
++For using 1GB page, hugepage setting is activated while booting system.
+ It must be defined in boot loader configuration, usually it is
+ ``/etc/default/grub``.
+ Add an entry of configuration of the size and the number of pages.
+ 
+-Here is an example for Ubuntu, but almost the same as CentOS. The point is
++Here is an example for Ubuntu, and almost the same as CentOS. The points are
+ that ``hugepagesz`` is for the size and ``hugepages`` is for the number of
+ pages.
+-You can also configure isolcpus for performance tuning as described in
++You can also configure ``isolcpus`` in grub setting for improving performance
++as described in
+ :ref:`Performance Optimizing<gsg_performance_opt>`.
+ 
+ .. code-block:: none
+@@ -54,21 +57,23 @@ config file, or this configuration is not activated.
+ 
+ .. code-block:: console
+ 
++    # Ubuntu
+     $ sudo update-grub
+     Generating grub configuration file ...
+ 
+-For CentOS7, you use ``grub2-mkconfig`` instead of ``update-grub``.
++Or for CentOS7, you use ``grub2-mkconfig`` instead of ``update-grub``.
+ In this case, you should give the output file with ``-o`` option.
+ The output path might be different, so you should find your correct
+ ``grub.cfg`` by yourself.
+ 
+ .. code-block:: console
+ 
++    # CentOS
+     $ sudo grub2-mkconfig -o /boot/efi/EFI/centos/grub.cfg
+ 
+ .. note::
+ 
+-    1GB hugepages might possibly not be supported on your hardware.
++    1GB hugepages might not be supported on your hardware.
+     It depends on that CPUs support 1GB pages or not. You can check it
+     by referring ``/proc/cpuinfo``. If it is supported, you can find
+     ``pdpe1gb`` in the ``flags`` attribute.
+@@ -78,10 +83,11 @@ The output path might be different, so you should find your correct
+         $ cat /proc/cpuinfo | grep pdpe1gb
+         flags           : fpu vme ... pdpe1gb ...
+ 
++
+ 2MB Hugepage
+ ~~~~~~~~~~~~
+ 
+-For 2MB page, you can activate hugepages while booting or at anytime
++For using 2MB page, you can activate hugepages while booting or at anytime
+ after system is booted.
+ Define hugepages setting in ``/etc/default/grub`` to activate it while
+ booting, or overwrite the number of 2MB hugepages as following.
+@@ -90,7 +96,7 @@ booting, or overwrite the number of 2MB hugepages as following.
+ 
+     $ echo 1024 > /sys/kernel/mm/hugepages/hugepages-2048kB/nr_hugepages
+ 
+-In this case, 1024 pages of 2MB (totally 2048 MB) are reserved.
++In this case, 1024 pages of 2MB, totally 2048 MB, are reserved.
+ 
+ 
+ Mount hugepages
+@@ -104,9 +110,8 @@ Make the memory available for using hugepages from DPDK.
+     $ mount -t hugetlbfs nodev /mnt/huge
+ 
+ It is also available while booting by adding a configuration of mount
+-point in ``/etc/fstab``, or after booted.
+-
+-The mount point for 2MB or 1GB can be made permanent accross reboot.
++point in ``/etc/fstab``.
++The mount point for 2MB or 1GB can be made permanently accross reboot.
+ For 2MB, it is no need to declare the size of hugepages explicity.
+ 
+ .. code-block:: none
+@@ -114,7 +119,7 @@ For 2MB, it is no need to declare the size of hugepages explicity.
+     # /etc/fstab
+     nodev /mnt/huge hugetlbfs defaults 0 0
+ 
+-For 1GB, the size of hugepage must be specified.
++For 1GB, the size of hugepage ``pagesize`` must be specified.
+ 
+ .. code-block:: none
+ 
+@@ -159,8 +164,9 @@ Using Virtual Machine
+ ---------------------
+ 
+ SPP provides vhost interface for inter VM communication.
+-You can use any of hypervisors, but this document describes usecases of
+-qemu and libvirt.
++You can use any of DPDK supported hypervisors, but this document describes
++usecases of qemu and libvirt.
++
+ 
+ Server mode v.s. Client mode
+ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+@@ -174,6 +180,7 @@ For using this mode, launch secondary process with ``--vhost-client``.
+ Qemu creates socket file instead of secondary process.
+ It means that you can launch a VM before secondary process create vhost port.
+ 
++
+ Libvirt
+ ~~~~~~~
+ 
+@@ -255,9 +262,9 @@ Or, you can also avoid by simply removing AppArmor itself.
+ 
+     $ sudo apt-get remove apparmor
+ 
+-If you use CentOS, not Ubuntu, confirm that SELinux doesn't prevent
++If you use CentOS, confirm that SELinux doesn't prevent
+ for permission.
+-SELinux should be disabled in this case.
++SELinux is disabled simply by changing the configuration to ``disabled``.
+ 
+ .. code-block:: console
+ 
+@@ -275,7 +282,8 @@ Check your SELinux configuration.
+ Python 2 or 3 ?
+ ---------------
+ 
+-Python2 is not supported anymore for SPP.
++Without SPP container tools, Python2 is not supported anymore.
++SPP container will also be updated to Python3.
+ 
+ 
+ Reference
+-- 
+2.17.1
+
+
