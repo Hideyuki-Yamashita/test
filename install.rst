@@ -440,7 +440,7 @@ SPP.
 .. _rpm_build_requirements:
 
 Build Environment
-~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~
 The following is common command for creating build environment for DPDK and
 SPP.
 
@@ -453,7 +453,7 @@ SPP.
 
 
 Build, install and uninstall DPDK
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 .. _rpm_build_dpdk:
 
@@ -585,19 +585,17 @@ is replaced by the following.
 
 .. code-block:: none
 
-        %build
-        make O=%{target} T=%{config} config
-        sed -ri 's,(RTE_MACHINE=).*,\1%{machine},' %{target}/.config
-        sed -ri 's,(RTE_APP_TEST=).*,\1n,'         %{target}/.config
-        sed -ri 's,(RTE_BUILD_SHARED_LIB=).*,\1y,' %{target}/.config
-        sed -ri 's,(RTE_NEXT_ABI=).*,\1n,'         %{target}/.config
-        sed -ri 's,(LIBRTE_VHOST=).*,\1y,'         %{target}/.config
-        sed -ri 's,(LIBRTE_PMD_PCAP=).*,\1y,'      %{target}/.config
-
-        sed -ri 's,(CONFIG_RTE_LIBRTE_PMD_PCAP=).*,\1y,' %{target}/.config
-        sed -ri 's,(CONFIG_RTE_PORT_PCAP=).*,\1y,'       %{target}/.config
-        sed -ri 's,(CONFIG_RTE_EAL_PMD_PATH=).*,\1\"%{_libdir}/dpdk\",'
-	%{target}/.config
+ %build
+ make O=%{target} T=%{config} config
+ sed -ri 's,(RTE_MACHINE=).*,\1%{machine},' %{target}/.config
+ sed -ri 's,(RTE_APP_TEST=).*,\1n,'         %{target}/.config
+ sed -ri 's,(RTE_BUILD_SHARED_LIB=).*,\1y,' %{target}/.config
+ sed -ri 's,(RTE_NEXT_ABI=).*,\1n,'         %{target}/.config
+ sed -ri 's,(LIBRTE_VHOST=).*,\1y,'         %{target}/.config
+ sed -ri 's,(LIBRTE_PMD_PCAP=).*,\1y,'      %{target}/.config
+ sed -ri 's,(CONFIG_RTE_LIBRTE_PMD_PCAP=).*,\1y,' %{target}/.config
+ sed -ri 's,(CONFIG_RTE_PORT_PCAP=).*,\1y,'       %{target}/.config
+ sed -ri 's,(CONFIG_RTE_EAL_PMD_PATH=).*,\1\"%{_libdir}/dpdk\",'%{target}/.config
 
 Add 4 lines to move PMD driver files to specific directory.
 
@@ -614,17 +612,16 @@ is replaced by the following.
 
 .. code-block:: none
 
-        %install
-        rm -rf %{buildroot}
-        make install O=%{target} DESTDIR=%{buildroot} \
-        prefix=%{_prefix} bindir=%{_bindir} sbindir=%{_sbindir} \
-        includedir=%{_includedir}/dpdk libdir=%{_libdir} \
-        datadir=%{_datadir}/dpdk docdir=%{_docdir}/dpdk
-        mkdir %{buildroot}%{_libdir}/dpdk
-        mv %{buildroot}%{_libdir}/librte_pmd_* %{buildroot}%{_libdir}/dpdk
-        mv %{buildroot}%{_libdir}/dpdk/librte_pmd_ring* %{buildroot}%{_libdir}/
-        mv %{buildroot}%{_libdir}/dpdk/librte_pmd_vhost* %{buildroot} \
-	%{_libdir}/
+    %install
+    rm -rf %{buildroot}
+    make install O=%{target} DESTDIR=%{buildroot} \
+    prefix=%{_prefix} bindir=%{_bindir} sbindir=%{_sbindir} \
+    includedir=%{_includedir}/dpdk libdir=%{_libdir} \
+    datadir=%{_datadir}/dpdk docdir=%{_docdir}/dpdk
+    mkdir %{buildroot}%{_libdir}/dpdk
+    mv %{buildroot}%{_libdir}/librte_pmd_* %{buildroot}%{_libdir}/dpdk
+    mv %{buildroot}%{_libdir}/dpdk/librte_pmd_ring* %{buildroot}%{_libdir}/
+    mv %{buildroot}%{_libdir}/dpdk/librte_pmd_vhost* %{buildroot} %{_libdir}/
 
 
 Install epel repository.
@@ -701,7 +698,7 @@ You can uninstall DPDK using `yum erase` command.
 .. _rpm_build_install_uninstall_spp:
 
 Build, install and uninstall SPP
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 .. note::
         Because the version of python and sphinx used for build of DPDK and SPP
         is different, environment for building DPDK and SPP should be
