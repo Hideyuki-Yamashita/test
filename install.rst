@@ -566,7 +566,7 @@ is replaced by the following.
         BuildRequires: doxygen, python-sphinx, inkscape
         # BuildRequires: texlive-collection-latexextra
         BuildRequires: numactl-devel wireshark texlive texlive-latex
-        BuildRequires: texlive-xetex texlive-collection-xetex latexmki
+        BuildRequires: texlive-xetex texlive-collection-xetex latexmk
 
 Add last 3 lines to specify PMD driver directory.
 
@@ -595,7 +595,7 @@ is replaced by the following.
  sed -ri 's,(LIBRTE_PMD_PCAP=).*,\1y,'      %{target}/.config
  sed -ri 's,(CONFIG_RTE_LIBRTE_PMD_PCAP=).*,\1y,' %{target}/.config
  sed -ri 's,(CONFIG_RTE_PORT_PCAP=).*,\1y,'       %{target}/.config
- sed -ri 's,(CONFIG_RTE_EAL_PMD_PATH=).*,\1\"%{_libdir}/dpdk\",'%{target}/.config
+ sed -ri 's,(CONFIG_RTE_EAL_PMD_PATH=).*,\1\"%{_libdir}/dpdk\",' %{target}/.config
 
 Add 4 lines to move PMD driver files to specific directory.
 
@@ -621,7 +621,7 @@ is replaced by the following.
     mkdir %{buildroot}%{_libdir}/dpdk
     mv %{buildroot}%{_libdir}/librte_pmd_* %{buildroot}%{_libdir}/dpdk
     mv %{buildroot}%{_libdir}/dpdk/librte_pmd_ring* %{buildroot}%{_libdir}/
-    mv %{buildroot}%{_libdir}/dpdk/librte_pmd_vhost* %{buildroot} %{_libdir}/
+    mv %{buildroot}%{_libdir}/dpdk/librte_pmd_vhost* %{buildroot}%{_libdir}/
 
 
 Install epel repository.
