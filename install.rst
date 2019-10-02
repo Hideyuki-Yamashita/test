@@ -1,8 +1,8 @@
-..  SPDX-License-Identifier: BSD-3-Clause
+..  SPDX-License-Ident   ifier: BSD-3-Clause
     Copyright(c) 2017-2019 Nippon Telegraph and Telephone Corporation
 
 
-.. _setup_install_dpdk_spp:
+.. _setup_install_rpm_dpdk_spp:
 
 Install DPDK and SPP
 ====================
@@ -13,9 +13,6 @@ Refer to `DPDK documentation
 <https://dpdk.org/doc/guides/>`_ for more details.
 For Linux, see `Getting Started Guide for Linux
 <http://www.dpdk.org/doc/guides/linux_gsg/index.html>`_ .
-When installing SPP and DPDK using RPM package,
-please follow the instruction described in
-:ref:`Install using RPM<rpm_install_dpdk_spp>`.
 
 .. _setup_install_packages:
 
@@ -24,6 +21,10 @@ Required Packages
 
 Installing packages for DPDK and SPP is almost the on Ubunu and CentOS,
 but names are different for some packages.
+
+When installing SPP and DPDK using RPM package,
+please follow the instruction described in
+:ref:`Install using RPM<rpm_install_dpdk_spp>`.
 
 
 Ubuntu
@@ -74,7 +75,7 @@ Before installing packages for DPDK, you should add
 with yum command.
 
 .. code-block:: console
-
+  
     $ sudo yum install https://centos7.iuscommunity.org/ius-release.rpm
 
 To compile DPDK, required to install following packages.
@@ -427,39 +428,39 @@ You can also compile both of HTML and PDF documentations with ``doc`` or
 
     For CentOS, compilation PDF document is not supported.
 
-.. _rpm_install_dpdk_spp:
+.. _setup_install ();
 
-Install using RPM
------------------
 
-RPM(Redhat Package Manager) makes users easy about install/uninstall
-software via yum command.
+Build RPM Packeages
+-------------------
+
 This section describes how to build/install/uninstall rpms of both DPDK and
 SPP.
 
-.. _rpm_build_requirements:
+.. _setup_install_rpm_build_requirements:
 
 Build Environment
 ~~~~~~~~~~~~~~~~~
-The following is common command for creating build environment for DPDK and
-SPP.
+The following step is for installing tools for building RPM package.
 
 .. code-block:: console
 
         $ sudo yum groupinstall "Development Tools"
         $ sudo yum install rpm-build rpmdevtools
 
-.. _rpm_build_install_uninstall_dpdk:
+.. _setup_install_rpm_dpdk:
 
+DPDK
+~~~~
 
-Build, install and uninstall DPDK
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-.. _rpm_build_dpdk:
+.. _setup_install_rpm_dpdk_build:
 
 Build RPM
 ^^^^^^^^^
+
 Create base directory for building DPDK RPM.
+This manual assumes the user uses home directory as base directory.
+It is allowed for user to choose arbitary directory as base directory.
 
 .. code-block:: console
 
@@ -470,21 +471,20 @@ Download spec file of DPDK.
 
 .. code-block:: console
 
-        $ mkdir SPECS
-        $ cd SPECS
-        $ wget http://git.dpdk.org/dpdk-stable/plain/pkg/dpdk.spec
+        $ mkdir -p rpmbuild/SPECS
+        $ wget -P rpmbuild/SPECS \n
+	http://git.dpdk.org/dpdk-stable/plain/pkg/dpdk.spec
         $ cd ~/rpmbuild
 
 Download source file of DPDK.
 
 .. code-block:: console
 
-        $ mkdir SOURCES
-        $ cd SOURCES
-        $ wget https://fast.dpdk.org/rel/dpdk-18.08.1.tar.xz
+        $ mkdir -p rpmbuild/SOURCES
+        $ wget -P rpmbuild/SOURCES https://fast.dpdk.org/rel/dpdk-18.08.1.tar.xz
         $ cd ~/rpmbuild
 
-Modify the content of spec file.
+Further down, modify the content of SPECS/dpdk.spec.
 
 .. code-block:: console
 
@@ -497,6 +497,9 @@ Change the version number of the source code.
         Version: 17.11
 
 is replaced by the following.
+
+.. note::
+        The version number corresponds to that of downloaded DPDK
 
 .. code-block:: none
 
@@ -663,10 +666,11 @@ When build is completed, the following 3 files will be generated.
         dpdk-debuginfo-18.08.1-1.x86_64.rpm
         dpdk-devel-18.08.1-1.x86_64.rpm
 
-.. _rpm_install_dpdk:
+.. _setup_install_rpm_dpdk:
 
 Install
 ^^^^^^^
+
 Use RPM which is built by the previous step.
 
 .. code-block:: console
@@ -695,7 +699,7 @@ You can uninstall DPDK using `yum erase` command.
 
         $ sudo yum erase dpdk
 
-.. _rpm_build_install_uninstall_spp:
+.. _spp_uninstall__dpdk:
 
 Build, install and uninstall SPP
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
