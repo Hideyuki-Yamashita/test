@@ -428,7 +428,7 @@ You can also compile both of HTML and PDF documentations with ``doc`` or
 
     For CentOS, compilation PDF document is not supported.
 
-.. _rpm_install_dpdk_spp:
+.. _setup_install_rpm_dpdk_spp:
 
 
 Build RPM Packeages
@@ -465,30 +465,27 @@ It is allowed for user to choose arbitary directory as base directory.
 .. code-block:: console
 
         $ mkdir ~/rpmbuild
-        $ cd ~/rpmbuild
+        $ cd ~
 
 Download spec file of DPDK.
 
 .. code-block:: console
 
         $ mkdir -p rpmbuild/SPECS
-        $ wget -P rpmbuild/SPECS \n
+        $ wget -P rpmbuild/SPECS \
 	http://git.dpdk.org/dpdk-stable/plain/pkg/dpdk.spec
-        $ cd ~/rpmbuild
+        $ cd ~
 
 Download source file of DPDK.
 
 .. code-block:: console
 
         $ mkdir -p rpmbuild/SOURCES
-        $ wget -P rpmbuild/SOURCES https://fast.dpdk.org/rel/dpdk-18.08.1.tar.xz
+        $ wget -P rpmbuild/SOURCES \
+	https://fast.dpdk.org/rel/dpdk-18.08.1.tar.xz
         $ cd ~/rpmbuild
 
 Further down, modify the content of SPECS/dpdk.spec.
-
-.. code-block:: console
-
-        $ vi SPECS/dpdk.spec
 
 Change the version number of the source code.
 
@@ -666,7 +663,7 @@ When build is completed, the following 3 files will be generated.
         dpdk-debuginfo-18.08.1-1.x86_64.rpm
         dpdk-devel-18.08.1-1.x86_64.rpm
 
-.. _setup_install_rpm_dpdk:
+.. _setup_install_rpm_dpdk_install:
 
 Install
 ^^^^^^^
@@ -689,29 +686,32 @@ Install DPDK including its dependency files via `yum localinstall` command.
         previous steps.
         You can change the name of RPM by modifying DPDK spec file.
 
-.. _rpm_uninstall_dpdk:
+.. _setup_install_rpm_dpdk_uninstall:
 
 Uninstall
 ^^^^^^^^^
+
 You can uninstall DPDK using `yum erase` command.
 
 .. code-block:: console
 
         $ sudo yum erase dpdk
 
-.. _spp_uninstall__dpdk:
+.. _setup_install_rpm_spp:
 
-Build, install and uninstall SPP
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+SPP
+~~~
+
 .. note::
         Because the version of python and sphinx used for build of DPDK and SPP
         is different, environment for building DPDK and SPP should be
         different.
 
-.. _rpm_build_spp:
+.. _setup_install_rpm_spp_build:
 
 Build RPM
 ^^^^^^^^^
+
 Create base directory for building SPP RPM.
 
 .. code-block:: console
@@ -826,10 +826,11 @@ When build is completed, the following 2 files will be generated.
         spp-18.08.3-1.x86_64.rpm
         spp-debuginfo-18.08.3-1.x86_64.rpm
 
-.. _rpm_install_spp:
+.. _setup_install_rpm_spp_install:
 
 Install
 ^^^^^^^
+
 Install epel reposiitory to resolve dependency of SPP RPM.
 
 .. code-block:: console
@@ -861,10 +862,11 @@ Install SPP including its dependency files via `yum localinstall` command.
         If SPP is installed via RPM, process can be started without
         specifying path.
 
-.. _rpm_uninstall_spp:
+.. _setup_install_rpm_spp_uninstall:
 
 Uninstall
 ^^^^^^^^^
+
 You can uninstall SPP using `yum erase` command.
 
 .. code-block:: console
