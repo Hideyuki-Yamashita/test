@@ -24,7 +24,7 @@ but names are different for some packages.
 
 When installing SPP and DPDK using RPM package,
 please follow the instruction described in
-:ref:`Install using RPM<rpm_install_dpdk_spp>`.
+:ref:`Build RPM Packeages<setup_install_rpm_dpdk_spp>`.
 
 
 Ubuntu
@@ -428,7 +428,7 @@ You can also compile both of HTML and PDF documentations with ``doc`` or
 
     For CentOS, compilation PDF document is not supported.
 
-.. _setup_install ();
+.. _rpm_install_dpdk_spp:
 
 
 Build RPM Packeages
