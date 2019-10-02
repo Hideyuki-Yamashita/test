@@ -2,7 +2,7 @@
     Copyright(c) 2017-2019 Nippon Telegraph and Telephone Corporation
 
 
-.. _setup_install_rpm_dpdk_spp:
+.. _setup_install_dpdk_spp:
 
 Install DPDK and SPP
 ====================
@@ -429,7 +429,6 @@ You can also compile both of HTML and PDF documentations with ``doc`` or
     For CentOS, compilation PDF document is not supported.
 
 .. _setup_install_rpm_dpdk_spp:
-
 
 Build RPM Packeages
 -------------------
