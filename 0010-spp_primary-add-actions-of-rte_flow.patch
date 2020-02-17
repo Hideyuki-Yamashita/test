@@ -1,0 +1,383 @@
+From: Hideyuki Yamashita <yamashita.hideyuki@ntt-tx.co.jp>
+Date: Mon, 11 Nov 2019 17:17:10 +0900
+Subject: [PATCH 10/17] spp_primary: add actions of rte_flow
+
+To support rte_flow in SPP, this patch adds the following
+actions of rte_flow.
+   - queue
+   - jump
+   - pop_vlan
+   - push_vlan
+   - set_vlan_vid
+   - set_vlan_pcp
+Additional files should be added when new actions should be
+newly supported by SPP.
+
+Signed-off-by: Hideyuki Yamashita <yamashita.hideyuki@ntt-tx.co.jp>
+Signed-off-by: Yasufumi Ogawa <yasufum.o@gmail.com>
+---
+ src/primary/flow/action/jump.c            | 42 ++++++++++++++++++++++
+ src/primary/flow/action/jump.h            | 12 +++++++
+ src/primary/flow/action/of_push_vlan.c    | 44 +++++++++++++++++++++++
+ src/primary/flow/action/of_push_vlan.h    | 13 +++++++
+ src/primary/flow/action/of_set_vlan_pcp.c | 44 +++++++++++++++++++++++
+ src/primary/flow/action/of_set_vlan_pcp.h | 13 +++++++
+ src/primary/flow/action/of_set_vlan_vid.c | 44 +++++++++++++++++++++++
+ src/primary/flow/action/of_set_vlan_vid.h | 13 +++++++
+ src/primary/flow/action/queue.c           | 42 ++++++++++++++++++++++
+ src/primary/flow/action/queue.h           | 13 +++++++
+ 10 files changed, 280 insertions(+)
+ create mode 100644 src/primary/flow/action/jump.c
+ create mode 100644 src/primary/flow/action/jump.h
+ create mode 100644 src/primary/flow/action/of_push_vlan.c
+ create mode 100644 src/primary/flow/action/of_push_vlan.h
+ create mode 100644 src/primary/flow/action/of_set_vlan_pcp.c
+ create mode 100644 src/primary/flow/action/of_set_vlan_pcp.h
+ create mode 100644 src/primary/flow/action/of_set_vlan_vid.c
+ create mode 100644 src/primary/flow/action/of_set_vlan_vid.h
+ create mode 100644 src/primary/flow/action/queue.c
+ create mode 100644 src/primary/flow/action/queue.h
+
+diff --git a/src/primary/flow/action/jump.c b/src/primary/flow/action/jump.c
+new file mode 100644
+index 0000000..b643015
+--- /dev/null
++++ b/src/primary/flow/action/jump.c
+@@ -0,0 +1,42 @@
++/* SPDX-License-Identifier: BSD-3-Clause
++ * Copyright(c) 2019 Nippon Telegraph and Telephone Corporation
++ */
++
++#include <rte_flow.h>
++
++#include "primary/flow/flow.h"
++#include "primary/flow/common.h"
++#include "jump.h"
++
++/* Define action "jump" operations */
++struct flow_detail_ops jump_ops_list[] = {
++	{
++		.token = "group",
++		.offset = offsetof(struct rte_flow_action_jump, group),
++		.size = sizeof(uint32_t),
++		.flg_value = 1,
++		.parse_detail = str_to_uint32_t,
++	},
++	{
++		.token = NULL,
++	},
++};
++
++int
++append_action_jump_json(const void *conf, int buf_size, char *action_str)
++{
++	const struct rte_flow_action_jump *jump = conf;
++	char tmp_str[64] = { 0 };
++
++	snprintf(tmp_str, 64,
++		"{\"group\":%d}",
++		jump->group);
++
++	if ((int)strlen(action_str) + (int)strlen(tmp_str)
++		> buf_size)
++		return -1;
++
++	strncat(action_str, tmp_str, strlen(tmp_str));
++
++	return 0;
++}
+diff --git a/src/primary/flow/action/jump.h b/src/primary/flow/action/jump.h
+new file mode 100644
+index 0000000..f8c6a60
+--- /dev/null
++++ b/src/primary/flow/action/jump.h
+@@ -0,0 +1,12 @@
++/* SPDX-License-Identifier: BSD-3-Clause
++ * Copyright(c) 2019 Nippon Telegraph and Telephone Corporation
++ */
++
++#ifndef _PRIMARY_FLOW_ACTION_JUMP_H_
++#define _PRIMARY_FLOW_ACTION_JUMP_H_
++
++extern struct flow_detail_ops jump_ops_list[];
++
++int append_action_jump_json(const void *conf, int buf_size, char *action_str);
++
++#endif
+diff --git a/src/primary/flow/action/of_push_vlan.c b/src/primary/flow/action/of_push_vlan.c
+new file mode 100644
+index 0000000..749490e
+--- /dev/null
++++ b/src/primary/flow/action/of_push_vlan.c
+@@ -0,0 +1,44 @@
++/* SPDX-License-Identifier: BSD-3-Claus1
++ * Copyright(c) 2019 Nippon Telegraph and Telephone Corporation
++ */
++
++#include <rte_flow.h>
++
++#include "primary/flow/flow.h"
++#include "primary/flow/common.h"
++#include "of_push_vlan.h"
++
++/* Define action "of_push_vlan" operations */
++struct flow_detail_ops of_push_vlan_ops_list[] = {
++	{
++		.token = "ethertype",
++		.offset = offsetof(struct rte_flow_action_of_push_vlan,
++			ethertype),
++		.size = sizeof(rte_be16_t),
++		.flg_value = 1,
++		.parse_detail = str_to_rte_be16_t,
++	},
++	{
++		.token = NULL,
++	},
++};
++
++int
++append_action_of_push_vlan_json(const void *conf, int buf_size,
++	char *action_str)
++{
++	const struct rte_flow_action_of_push_vlan *of_push_vlan = conf;
++	char tmp_str[64] = { 0 };
++
++	snprintf(tmp_str, 64,
++		"{\"ethertype\":\"0x%04x\"}",
++		of_push_vlan->ethertype);
++
++	if ((int)strlen(action_str) + (int)strlen(tmp_str)
++		> buf_size)
++		return -1;
++
++	strncat(action_str, tmp_str, strlen(tmp_str));
++
++	return 0;
++}
+diff --git a/src/primary/flow/action/of_push_vlan.h b/src/primary/flow/action/of_push_vlan.h
+new file mode 100644
+index 0000000..7c37ab1
+--- /dev/null
++++ b/src/primary/flow/action/of_push_vlan.h
+@@ -0,0 +1,13 @@
++/* SPDX-License-Identifier: BSD-3-Clause
++ * Copyright(c) 2019 Nippon Telegraph and Telephone Corporation
++ */
++
++#ifndef _PRIMARY_FLOW_ACTION_OF_PUSH_VLAN_H_
++#define _PRIMARY_FLOW_ACTION_OF_PUSH_VLAN_H_
++
++extern struct flow_detail_ops of_push_vlan_ops_list[];
++
++int append_action_of_push_vlan_json(const void *conf, int buf_size,
++	char *action_str);
++
++#endif
+diff --git a/src/primary/flow/action/of_set_vlan_pcp.c b/src/primary/flow/action/of_set_vlan_pcp.c
+new file mode 100644
+index 0000000..33e23d5
+--- /dev/null
++++ b/src/primary/flow/action/of_set_vlan_pcp.c
+@@ -0,0 +1,44 @@
++/* SPDX-License-Identifier: BSD-3-Clause
++ * Copyright(c) 2019 Nippon Telegraph and Telephone Corporation
++ */
++
++#include <rte_flow.h>
++
++#include "primary/flow/flow.h"
++#include "primary/flow/common.h"
++#include "of_set_vlan_pcp.h"
++
++/* Define action "of_set_vlan_pcp" operations */
++struct flow_detail_ops of_set_vlan_pcp_ops_list[] = {
++	{
++		.token = "vlan_pcp",
++		.offset = offsetof(struct rte_flow_action_of_set_vlan_pcp,
++			vlan_pcp),
++		.size = sizeof(uint8_t),
++		.flg_value = 1,
++		.parse_detail = str_to_pcp,
++	},
++	{
++		.token = NULL,
++	},
++};
++
++int
++append_action_of_set_vlan_pcp_json(const void *conf, int buf_size,
++	char *action_str)
++{
++	const struct rte_flow_action_of_set_vlan_pcp *pcp = conf;
++	char tmp_str[64] = { 0 };
++
++	snprintf(tmp_str, 64,
++		"{\"vlan_pcp\":\"0x%01x\"}",
++		pcp->vlan_pcp);
++
++	if ((int)strlen(action_str) + (int)strlen(tmp_str)
++		> buf_size)
++		return -1;
++
++	strncat(action_str, tmp_str, strlen(tmp_str));
++
++	return 0;
++}
+diff --git a/src/primary/flow/action/of_set_vlan_pcp.h b/src/primary/flow/action/of_set_vlan_pcp.h
+new file mode 100644
+index 0000000..3f8a4b3
+--- /dev/null
++++ b/src/primary/flow/action/of_set_vlan_pcp.h
+@@ -0,0 +1,13 @@
++/* SPDX-License-Identifier: BSD-3-Clause
++ * Copyright(c) 2019 Nippon Telegraph and Telephone Corporation
++ */
++
++#ifndef _PRIMARY_FLOW_ACTION_OF_SET_VLAN_PCP_H_
++#define _PRIMARY_FLOW_ACTION_OF_SET_VLAN_PCP_H_
++
++extern struct flow_detail_ops of_set_vlan_pcp_ops_list[];
++
++int append_action_of_set_vlan_pcp_json(const void *conf, int buf_size,
++	char *action_str);
++
++#endif
+diff --git a/src/primary/flow/action/of_set_vlan_vid.c b/src/primary/flow/action/of_set_vlan_vid.c
+new file mode 100644
+index 0000000..930cef5
+--- /dev/null
++++ b/src/primary/flow/action/of_set_vlan_vid.c
+@@ -0,0 +1,44 @@
++/* SPDX-License-Identifier: BSD-3-Clause
++ * Copyright(c) 2019 Nippon Telegraph and Telephone Corporation
++ */
++
++#include <rte_flow.h>
++
++#include "primary/flow/flow.h"
++#include "primary/flow/common.h"
++#include "of_set_vlan_vid.h"
++
++/* Define action "of_set_vlan_vid" operations */
++struct flow_detail_ops of_set_vlan_vid_ops_list[] = {
++	{
++		.token = "vlan_vid",
++		.offset = offsetof(struct rte_flow_action_of_set_vlan_vid,
++			vlan_vid),
++		.size = sizeof(rte_be16_t),
++		.flg_value = 1,
++		.parse_detail = str_to_rte_be16_t,
++	},
++	{
++		.token = NULL,
++	},
++};
++
++int
++append_action_of_set_vlan_vid_json(const void *conf, int buf_size,
++	char *action_str)
++{
++	const struct rte_flow_action_of_set_vlan_vid *vid = conf;
++	char tmp_str[64] = { 0 };
++
++	snprintf(tmp_str, 64,
++		"{\"vlan_vid\":\"0x%04x\"}",
++		vid->vlan_vid);
++
++	if ((int)strlen(action_str) + (int)strlen(tmp_str)
++		> buf_size)
++		return -1;
++
++	strncat(action_str, tmp_str, strlen(tmp_str));
++
++	return 0;
++}
+diff --git a/src/primary/flow/action/of_set_vlan_vid.h b/src/primary/flow/action/of_set_vlan_vid.h
+new file mode 100644
+index 0000000..a0abe85
+--- /dev/null
++++ b/src/primary/flow/action/of_set_vlan_vid.h
+@@ -0,0 +1,13 @@
++/* SPDX-License-Identifier: BSD-3-Clause
++ * Copyright(c) 2019 Nippon Telegraph and Telephone Corporation
++ */
++
++#ifndef _PRIMARY_FLOW_ACTION_OF_SET_VLAN_VID_H_
++#define _PRIMARY_FLOW_ACTION_OF_SET_VLAN_VID_H_
++
++extern struct flow_detail_ops of_set_vlan_vid_ops_list[];
++
++int append_action_of_set_vlan_vid_json(const void *conf, int buf_size,
++	char *action_str);
++
++#endif
+diff --git a/src/primary/flow/action/queue.c b/src/primary/flow/action/queue.c
+new file mode 100644
+index 0000000..f7bcdce
+--- /dev/null
++++ b/src/primary/flow/action/queue.c
+@@ -0,0 +1,42 @@
++/* SPDX-License-Identifier: BSD-3-Clause
++ * Copyright(c) 2019 Nippon Telegraph and Telephone Corporation
++ */
++
++#include <rte_flow.h>
++
++#include "primary/flow/flow.h"
++#include "primary/flow/common.h"
++#include "queue.h"
++
++/* Define action "queue" operations */
++struct flow_detail_ops queue_ops_list[] = {
++	{
++		.token = "index",
++		.offset = offsetof(struct rte_flow_action_queue, index),
++		.size = sizeof(uint16_t),
++		.flg_value = 1,
++		.parse_detail = str_to_uint16_t,
++	},
++	{
++		.token = NULL,
++	},
++};
++
++int
++append_action_queue_json(const void *conf, int buf_size, char *action_str)
++{
++	const struct rte_flow_action_queue *queue = conf;
++	char tmp_str[64] = { 0 };
++
++	snprintf(tmp_str, 64,
++		"{\"index\":%d}",
++		queue->index);
++
++	if ((int)strlen(action_str) + (int)strlen(tmp_str)
++		> buf_size)
++		return -1;
++
++	strncat(action_str, tmp_str, strlen(tmp_str));
++
++	return 0;
++}
+diff --git a/src/primary/flow/action/queue.h b/src/primary/flow/action/queue.h
+new file mode 100644
+index 0000000..22816c7
+--- /dev/null
++++ b/src/primary/flow/action/queue.h
+@@ -0,0 +1,13 @@
++/* SPDX-License-Identifier: BSD-3-Clause
++ * Copyright(c) 2019 Nippon Telegraph and Telephone Corporation
++ */
++
++#ifndef _PRIMARY_FLOW_ACTION_QUEUE_H_
++#define _PRIMARY_FLOW_ACTION_QUEUE_H_
++
++extern struct flow_detail_ops queue_ops_list[];
++
++int append_action_queue_json(const void *conf, int buf_size,
++	char *action_str);
++
++#endif
+-- 
+2.17.1
+
