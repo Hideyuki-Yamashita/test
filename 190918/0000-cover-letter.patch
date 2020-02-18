@@ -1,0 +1,36 @@
+From: Hideyuki Yamashita <yamashita.hideyuki@ntt-tx.co.jp>
+Date: Tue, 18 Feb 2020 18:31:49 +0900
+Subject: [PATCH 0/9] 
+
+This patch set updates spp documents from hardware offload 
+capability perspective.
+
+Hideyuki Yamashita (9):
+  docs: add usecase for hardware offload
+  docs: add svg for vm case of hardware offload
+  docs: change primary process startup parameter
+  docs: support multi-queue in spp_vf command
+  docs: add description of REST-APIs for flow rules
+  docs: support flow syntax in primary command
+  docs: add install drivers for Mellanox NIC
+  docs: add svg for vlan case of hardware offload
+  docs: add support of MLX5 PMD support in DPDK
+
+ docs/guides/api_ref/spp_primary.rst           |  208 ++++
+ docs/guides/commands/primary.rst              |   99 +-
+ docs/guides/commands/secondary/spp_vf.rst     |   54 +-
+ docs/guides/gsg/howto_use.rst                 |   20 +
+ docs/guides/gsg/install.rst                   |   25 +-
+ docs/guides/gsg/setup.rst                     |   12 +
+ .../use_cases/spp_hardware_offload_vlan.svg   |  805 +++++++++++++
+ .../use_cases/spp_hardware_offload_vm.svg     | 1063 +++++++++++++++++
+ docs/guides/usecases/hardware-offload.rst     |  326 +++++
+ docs/guides/usecases/index.rst                |    1 +
+ 10 files changed, 2570 insertions(+), 43 deletions(-)
+ create mode 100644 docs/guides/images/setup/use_cases/spp_hardware_offload_vlan.svg
+ create mode 100644 docs/guides/images/setup/use_cases/spp_hardware_offload_vm.svg
+ create mode 100644 docs/guides/usecases/hardware-offload.rst
+
+-- 
+2.18.0
+
