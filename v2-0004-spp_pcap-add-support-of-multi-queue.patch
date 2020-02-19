@@ -1,0 +1,411 @@
+From: Hideyuki Yamashita <yamashita.hideyuki@ntt-tx.co.jp>
+Date: Mon, 11 Nov 2019 17:08:23 +0900
+Subject: [PATCH v2 04/17] spp_pcap: add support of multi-queue
+
+By changing common code under shared directory to achieve multi-queue,
+existing code of spp_pcap should be changed also for successful compile.
+
+Signed-off-by: Hideyuki Yamashita <yamashita.hideyuki@ntt-tx.co.jp>
+Signed-off-by: Yasufumi Ogawa <yasufum.o@gmail.com>
+---
+ src/pcap/cmd_runner.c |   3 +-
+ src/pcap/cmd_utils.c  |  73 +++++++++++++++++++++++++-----
+ src/pcap/cmd_utils.h  |  19 +++++++-
+ src/pcap/spp_pcap.c   | 102 +++++++++++++++++++++++++++++++++++++-----
+ 4 files changed, 171 insertions(+), 26 deletions(-)
+
+diff --git a/src/pcap/cmd_runner.c b/src/pcap/cmd_runner.c
+index 85c02cd..ea6ec4d 100644
+--- a/src/pcap/cmd_runner.c
++++ b/src/pcap/cmd_runner.c
+@@ -398,7 +398,8 @@ append_port_entry(char **output, const struct sppwk_port_idx *port,
+ 		return SPPWK_RET_NG;
+ 	}
+ 
+-	sppwk_port_uid(port_str, port->iface_type, port->iface_no);
++	sppwk_port_uid(port_str, port->iface_type, port->iface_no,
++			port->queue_no);
+ 	ret = append_json_str_value("port", &tmp_buff, port_str);
+ 	if (unlikely(ret < SPPWK_RET_OK))
+ 		return SPPWK_RET_NG;
+diff --git a/src/pcap/cmd_utils.c b/src/pcap/cmd_utils.c
+index 5aa131b..383f783 100644
+--- a/src/pcap/cmd_utils.c
++++ b/src/pcap/cmd_utils.c
+@@ -10,6 +10,7 @@
+ 
+ #include "cmd_utils.h"
+ #include "shared/secondary/return_codes.h"
++#include "shared/common.h"
+ 
+ #define RTE_LOGTYPE_PCAP_UTILS RTE_LOGTYPE_USER2
+ 
+@@ -149,13 +150,13 @@ stop_process(int signal)
+  * It returns NULL value if given type is invalid.
+  */
+ struct sppwk_port_info *
+-get_iface_info(enum port_type iface_type, int iface_no)
++get_iface_info(enum port_type iface_type, int iface_no, int queue_no)
+ {
+ 	struct iface_info *iface_info = g_mng_data_addr.p_iface_info;
+ 
+ 	switch (iface_type) {
+ 	case PHY:
+-		return &iface_info->phy[iface_no];
++		return &iface_info->phy[iface_no][queue_no];
+ 	case RING:
+ 		return &iface_info->ring[iface_no];
+ 	default:
+@@ -172,16 +173,27 @@ static void
+ init_iface_info(void)
+ {
+ 	int port_cnt;  /* increment ether ports */
++	int queue_cnt;  /* increment queues per port */
+ 	struct iface_info *p_iface_info = g_mng_data_addr.p_iface_info;
+ 	memset(p_iface_info, 0x00, sizeof(struct iface_info));
+ 	for (port_cnt = 0; port_cnt < RTE_MAX_ETHPORTS; port_cnt++) {
+-		p_iface_info->phy[port_cnt].iface_type = UNDEF;
+-		p_iface_info->phy[port_cnt].iface_no   = port_cnt;
+-		p_iface_info->phy[port_cnt].ethdev_port_id  = -1;
+-		p_iface_info->phy[port_cnt].cls_attrs.vlantag.vid =
+-				ETH_VLAN_ID_MAX;
++		for (queue_cnt = 0; queue_cnt < RTE_MAX_QUEUES_PER_PORT;
++				queue_cnt++) {
++			p_iface_info->phy[port_cnt][queue_cnt].iface_type =
++					UNDEF;
++			p_iface_info->phy[port_cnt][queue_cnt].iface_no =
++					port_cnt;
++			p_iface_info->phy[port_cnt][queue_cnt].queue_no =
++					queue_cnt;
++			p_iface_info->phy[port_cnt][queue_cnt]
++					.ethdev_port_id = -1;
++			p_iface_info->phy[port_cnt][queue_cnt]
++					.cls_attrs.vlantag.vid =
++					ETH_VLAN_ID_MAX;
++		}
+ 		p_iface_info->ring[port_cnt].iface_type = UNDEF;
+ 		p_iface_info->ring[port_cnt].iface_no   = port_cnt;
++		p_iface_info->ring[port_cnt].queue_no   = DEFAULT_QUEUE_ID;
+ 		p_iface_info->ring[port_cnt].ethdev_port_id  = -1;
+ 		p_iface_info->ring[port_cnt].cls_attrs.vlantag.vid =
+ 				ETH_VLAN_ID_MAX;
+@@ -206,7 +218,7 @@ static int
+ init_host_port_info(void)
+ {
+ 	int port_type, port_id;
+-	int i, ret;
++	int i, ret, queue_id;
+ 	int nof_phys = 0;
+ 	char dev_name[RTE_DEV_NAME_MAX_LEN] = { 0 };
+ 	struct iface_info *p_iface_info = g_mng_data_addr.p_iface_info;
+@@ -227,8 +239,13 @@ init_host_port_info(void)
+ 
+ 		switch (port_type) {
+ 		case PHY:
+-			p_iface_info->phy[port_id].iface_type = port_type;
+-			p_iface_info->phy[port_id].ethdev_port_id = port_id;
++			for (queue_id = 0; queue_id < RTE_MAX_QUEUES_PER_PORT;
++					queue_id++) {
++				p_iface_info->phy[port_id][queue_id]
++						.iface_type = port_type;
++				p_iface_info->phy[port_id][queue_id]
++						.ethdev_port_id = port_id;
++			}
+ 			break;
+ 		case RING:
+ 			p_iface_info->ring[port_id].iface_type = port_type;
+@@ -263,9 +280,11 @@ init_mng_data(void)
+  * Generate a formatted string of combination from interface type and
+  * number and assign to given 'port'
+  */
+-int sppwk_port_uid(char *port, enum port_type iface_type, int iface_no)
++int sppwk_port_uid(char *port, enum port_type iface_type, int iface_no,
++		int queue_no)
+ {
+ 	const char *iface_type_str;
++	int max_queue;
+ 
+ 	switch (iface_type) {
+ 	case PHY:
+@@ -278,7 +297,15 @@ int sppwk_port_uid(char *port, enum port_type iface_type, int iface_no)
+ 		return SPPWK_RET_NG;
+ 	}
+ 
+-	sprintf(port, "%s:%d", iface_type_str, iface_no);
++	max_queue = get_port_max_queues(iface_type, iface_no);
++	if (unlikely(max_queue == SPPWK_RET_NG))
++		return SPPWK_RET_NG;
++
++	if (max_queue <= 1)
++		sprintf(port, "%s:%d", iface_type_str, iface_no);
++	else
++		sprintf(port, "%s:%d nq %d",
++			iface_type_str, iface_no, queue_no);
+ 
+ 	return SPPWK_RET_OK;
+ }
+@@ -319,3 +346,25 @@ void spp_get_mng_data_addr(struct iface_info **iface_p,
+ 		*capture_status_p = g_mng_data_addr.p_capture_status;
+ 
+ }
++
++/* Returns a larger number of queues of RX or TX port as the maximum number */
++int
++get_port_max_queues(const enum port_type iface_type, int iface_no)
++{
++	if (unlikely(iface_no > RTE_MAX_ETHPORTS) || unlikely(iface_no < 0))
++		return SPPWK_RET_NG;
++
++	if (iface_type != PHY)
++		return 1;
++
++	const struct port_info *ports = NULL;
++	const struct rte_memzone *mz;
++	mz = rte_memzone_lookup(MZ_PORT_INFO);
++	ports = mz->addr;
++	int max_q_rx = ports->queue_info[iface_no].rxq;
++	int max_q_tx = ports->queue_info[iface_no].txq;
++	if (max_q_rx > max_q_tx)
++		return max_q_rx;
++	else
++		return max_q_tx;
++}
+diff --git a/src/pcap/cmd_utils.h b/src/pcap/cmd_utils.h
+index 95b8a8a..94e7087 100644
+--- a/src/pcap/cmd_utils.h
++++ b/src/pcap/cmd_utils.h
+@@ -87,12 +87,14 @@ void stop_process(int signal);
+  *  Interface type to be validated.
+  * @param iface_no
+  *  Interface number to be validated.
++ * @param queue_no
++ *  Interface queue number to be validated.
+  *
+  * @retval !NULL  sppwk_port_info.
+  * @retval NULL   failed.
+  */
+ struct sppwk_port_info *
+-get_iface_info(enum port_type iface_type, int iface_no);
++get_iface_info(enum port_type iface_type, int iface_no, int queue_no);
+ 
+ /**
+  * Setup management info for spp_vf
+@@ -105,15 +107,19 @@ struct core_info *get_core_info(unsigned int lcore_id);
+ /**
+  * Port type to string
+  *
++ * TODO(smurakami) Change spp_pcap to use queue_no for supporting multi-queue
++ *
+  * @param port String of port type to be converted.
+  * @param iface_type Interface type.
+  * @param iface_no Interface number.
++ * @param queue_no Queue number of interface.
+  * @retval SPPWK_RET_OK If succeeded.
+  * @retval SPPWK_RET_NG If failed.
+  */
+ /* TODO(yasufum) consider to merge to shared. */
+ int
+-sppwk_port_uid(char *port, enum port_type iface_type, int iface_no);
++sppwk_port_uid(char *port, enum port_type iface_type, int iface_no,
++		int queue_no);
+ 
+ /**
+  * Set mange data address
+@@ -143,4 +149,13 @@ void spp_get_mng_data_addr(struct iface_info **iface_p,
+ 			   int **capture_request_p,
+ 			   int **capture_status_p);
+ 
++/**
++ * Returns max queue number of the target port.
++ *
++ * @param[in] iface_type Interface type such as PHY or so.
++ * @param[in] iface_no Interface number.
++ * @return Max queue number if succeeded, or SPPWK_RET_NG if failed.
++ */
++int get_port_max_queues(const enum port_type iface_type, int iface_no);
++
+ #endif
+diff --git a/src/pcap/spp_pcap.c b/src/pcap/spp_pcap.c
+index ab4d796..1f20e1e 100644
+--- a/src/pcap/spp_pcap.c
++++ b/src/pcap/spp_pcap.c
+@@ -185,7 +185,7 @@ usage(const char *progname)
+ 		" [--fsize MAX_FILE_SIZE]\n"
+ 		" --client-id CLIENT_ID: My client ID\n"
+ 		" -s IPADDR:PORT: IP addr and sec port for spp-ctl\n"
+-		" -c: Captured port (e.g. 'phy:0' or 'ring:1')\n"
++		" -c: Captured port (e.g. 'phy:0', 'phy:0 nq 1' or 'ring:1')\n"
+ 		" --out-dir: Output dir (Default is /tmp)\n"
+ 		" --fsize: Maximum captured file size (Default is 1GiB)\n"
+ 		, progname);
+@@ -209,12 +209,15 @@ parse_fsize(const char *fsize_str, uint64_t *fsize)
+ 
+ /* Parse `-c` option for captured port and get the port type and ID */
+ static int
+-parse_captured_port(const char *port_str, enum port_type *iface_type,
+-			int *iface_no)
++parse_captured_port(const char *port_str, int option_index,
++			const int argcopt, char *argvopt[],
++			enum port_type *iface_type, int *iface_no,
++			int *queue_no)
+ {
+ 	enum port_type type = UNDEF;
+ 	const char *no_str = NULL;
+ 	char *endptr = NULL;
++	int q_no = 0; /* Init value is default queue_no */
+ 
+ 	/* Find out which type of interface from resource UID */
+ 	if (strncmp(port_str, SPPWK_PHY_STR ":",
+@@ -243,11 +246,45 @@ parse_captured_port(const char *port_str, enum port_type *iface_type,
+ 		return SPPWK_RET_NG;
+ 	}
+ 
++	/* Convert to numeric if queue_no */
++	if (type == PHY && option_index + 1 <= argcopt &&
++		!strcmp(argvopt[option_index], DELIM_PHY_MQ)) {
++
++		no_str = argvopt[option_index + 1];
++
++		q_no = strtol(no_str, &endptr, 0);
++		if (unlikely(no_str == endptr) || unlikely(*endptr != '\0')) {
++			/* No Queue number */
++			RTE_LOG(ERR, SPP_PCAP,
++				"No queue number. (port = %s)\n", port_str);
++			return SPPWK_RET_NG;
++		}
++
++		/* Check max num of queue_no */
++		if (q_no >= get_port_max_queues(type, ret_no)) {
++			RTE_LOG(ERR, SPP_PCAP,
++				"queue_no exceeds the definition of primary.\n"
++				);
++			return SPPWK_RET_NG;
++		}
++
++	} else {
++		if (get_port_max_queues(type, ret_no) > 1) {
++			RTE_LOG(ERR, SPP_PCAP,
++				"Queue_no is required for the specified "
++				"physical port because of multi-queue.\n"
++				);
++			return SPPWK_RET_NG;
++		}
++	}
++
+ 	*iface_type = type;
+ 	*iface_no = ret_no;
++	*queue_no = q_no;
+ 
+-	RTE_LOG(DEBUG, SPP_PCAP, "Port = %s => Type = %d No = %d\n",
+-					port_str, *iface_type, *iface_no);
++	RTE_LOG(DEBUG, SPP_PCAP,
++		"Port = %s => Type = %d No = %d\n Queue = %d",
++		port_str, *iface_type, *iface_no, *queue_no);
+ 	return SPPWK_RET_OK;
+ }
+ 
+@@ -322,13 +359,23 @@ parse_app_args(int argc, char *argv[])
+ 			break;
+ 		case 'c':  /* captured port */
+ 			strcpy(cap_port_str, optarg);
+-			if (parse_captured_port(optarg,
++			if (parse_captured_port(optarg, optind,
++					argcopt, argvopt,
+ 					&g_pcap_option.port_cap.iface_type,
+-					&g_pcap_option.port_cap.iface_no) !=
++					&g_pcap_option.port_cap.iface_no,
++					&g_pcap_option.port_cap.queue_no) !=
+ 					SPPWK_RET_OK) {
+ 				usage(progname);
+ 				return SPPWK_RET_NG;
+ 			}
++			if (get_port_max_queues(
++				g_pcap_option.port_cap.iface_type,
++				g_pcap_option.port_cap.iface_no) > 1) {
++				snprintf(cap_port_str, PORT_STR_SIZE,
++					"%s nq %d",
++					optarg,
++					g_pcap_option.port_cap.queue_no);
++			}
+ 			port_flg = 1;
+ 			break;
+ 		case 's':  /* server addr */
+@@ -384,6 +431,7 @@ spp_pcap_get_core_status(
+ 		memset(rx_ports, 0x00, sizeof(rx_ports));
+ 		rx_ports[0].iface_type = g_pcap_option.port_cap.iface_type;
+ 		rx_ports[0].iface_no   = g_pcap_option.port_cap.iface_no;
++		rx_ports[0].queue_no   = g_pcap_option.port_cap.queue_no;
+ 		rx_num = 1;
+ 		strcpy(role_type, "receive");
+ 	}
+@@ -472,7 +520,22 @@ static int file_compression_operation(struct pcap_mng_info *info,
+ 			iface_type_str = SPPWK_PHY_STR;
+ 		else
+ 			iface_type_str = SPPWK_RING_STR;
+-		snprintf(info->compress_file_name,
++
++		if (get_port_max_queues(
++			g_pcap_option.port_cap.iface_type,
++			g_pcap_option.port_cap.iface_no) > 1)
++			/* If multi-queue, add queue_no */
++			snprintf(info->compress_file_name,
++					PCAP_FNAME_STRLEN - 1,
++					"spp_pcap.%s.%s%dnq%d.%u.%u.pcap.lz4",
++					g_pcap_option.compress_file_date,
++					iface_type_str,
++					g_pcap_option.port_cap.iface_no,
++					g_pcap_option.port_cap.queue_no,
++					info->thread_no,
++					info->file_no);
++		else
++			snprintf(info->compress_file_name,
+ 					PCAP_FNAME_STRLEN - 1,
+ 					"spp_pcap.%s.%s%d.%u.%u.pcap.lz4",
+ 					g_pcap_option.compress_file_date,
+@@ -527,7 +590,22 @@ static int file_compression_operation(struct pcap_mng_info *info,
+ 			iface_type_str = SPPWK_PHY_STR;
+ 		else
+ 			iface_type_str = SPPWK_RING_STR;
+-		snprintf(info->compress_file_name,
++
++		if (get_port_max_queues(
++			g_pcap_option.port_cap.iface_type,
++			g_pcap_option.port_cap.iface_no) > 1)
++			/* If multi-queue, add queue_no */
++			snprintf(info->compress_file_name,
++					PCAP_FNAME_STRLEN - 1,
++					"spp_pcap.%s.%s%dnq%d.%u.%u.pcap.lz4",
++					g_pcap_option.compress_file_date,
++					iface_type_str,
++					g_pcap_option.port_cap.iface_no,
++					g_pcap_option.port_cap.queue_no,
++					info->thread_no,
++					info->file_no);
++		else
++			snprintf(info->compress_file_name,
+ 					PCAP_FNAME_STRLEN - 1,
+ 					"spp_pcap.%s.%s%d.%u.%u.pcap.lz4",
+ 					g_pcap_option.compress_file_date,
+@@ -773,7 +851,8 @@ static int pcap_proc_receive(int lcore_id)
+ 	nb_rx = sppwk_eth_ring_stats_rx_burst(rx->ethdev_port_id,
+ 			rx->iface_type, rx->iface_no, 0, bufs, MAX_PCAP_BURST);
+ #else
+-	nb_rx = rte_eth_rx_burst(rx->ethdev_port_id, 0, bufs, MAX_PCAP_BURST);
++	nb_rx = rte_eth_rx_burst(rx->ethdev_port_id, rx->queue_no, bufs,
++			MAX_PCAP_BURST);
+ #endif
+ 	if (unlikely(nb_rx == 0))
+ 		return SPPWK_RET_OK;
+@@ -992,7 +1071,8 @@ main(int argc, char *argv[])
+ 		struct sppwk_port_info *port_cap = &g_pcap_option.port_cap;
+ 		struct sppwk_port_info *port_info = get_iface_info(
+ 						port_cap->iface_type,
+-						port_cap->iface_no);
++						port_cap->iface_no,
++						port_cap->queue_no);
+ 		if (port_info == NULL) {
+ 			RTE_LOG(ERR, SPP_PCAP, "caputre port undefined.\n");
+ 			break;
+-- 
+2.17.1
+

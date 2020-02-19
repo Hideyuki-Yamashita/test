@@ -1,0 +1,121 @@
+From: Hideyuki Yamashita <yamashita.hideyuki@ntt-tx.co.jp>
+Date: Wed, 19 Feb 2020 15:45:22 +0900
+Subject: [PATCH v2 00/17] Adding Hardware offload capability
+
+This patch set provides hardware offload capability
+for spp.
+Note that related documents will be provided soon.
+
+Hideyuki Yamashita (17):
+  shared: add support of multi-queue
+  spp_vf: add support of multi-queue
+  spp_mirror: add support of multi-queue
+  spp_pcap: add support of multi-queue
+  spp_primary: add support of multi-queue
+  spp_primary: add support of rte_flow
+  spp_primary: add common function of rte_flow
+  spp_primary: add attribute of rte_flow
+  spp_primary: add patterns of rte_flow
+  spp_primary: add actions of rte_flow
+  bin: add parameter for hardrare offload
+  cli: add support of hardware offload
+  cli: add support of rte_flow in vf
+  cli: add support of rte_flow in mirror
+  cli: add support of rte_flow in nfv
+  spp-ctl: add APIs for flow rules
+  spp_nfv: add support of multi-queue
+
+ bin/sample/config.sh                          |   15 +
+ bin/spp_pri.sh                                |   26 +-
+ bin/start.sh                                  |    2 +
+ src/cli/commands/mirror.py                    |  175 ++-
+ src/cli/commands/nfv.py                       |  245 ++--
+ src/cli/commands/pri.py                       |   52 +-
+ src/cli/commands/pri_flow.py                  |  936 +++++++++++++++
+ src/cli/commands/pri_flow_compl_action.py     |  115 ++
+ src/cli/commands/pri_flow_compl_pattern.py    |   84 ++
+ src/cli/commands/vf.py                        |  460 +++++---
+ src/mirror/mir_cmd_runner.c                   |    3 +-
+ src/mirror/spp_mirror.c                       |   12 +-
+ src/nfv/commands.h                            |   71 +-
+ src/nfv/main.c                                |   18 +-
+ src/nfv/nfv_status.c                          |  315 +++--
+ src/nfv/nfv_status.h                          |   12 +-
+ src/pcap/cmd_runner.c                         |    3 +-
+ src/pcap/cmd_utils.c                          |   73 +-
+ src/pcap/cmd_utils.h                          |   19 +-
+ src/pcap/spp_pcap.c                           |  102 +-
+ src/primary/Makefile                          |   10 +
+ src/primary/args.c                            |  138 ++-
+ src/primary/args.h                            |    3 +
+ src/primary/flow/action/jump.c                |   42 +
+ src/primary/flow/action/jump.h                |   12 +
+ src/primary/flow/action/of_push_vlan.c        |   44 +
+ src/primary/flow/action/of_push_vlan.h        |   13 +
+ src/primary/flow/action/of_set_vlan_pcp.c     |   44 +
+ src/primary/flow/action/of_set_vlan_pcp.h     |   13 +
+ src/primary/flow/action/of_set_vlan_vid.c     |   44 +
+ src/primary/flow/action/of_set_vlan_vid.h     |   13 +
+ src/primary/flow/action/queue.c               |   42 +
+ src/primary/flow/action/queue.h               |   13 +
+ src/primary/flow/attr.c                       |  105 ++
+ src/primary/flow/attr.h                       |   13 +
+ src/primary/flow/common.c                     |  646 ++++++++++
+ src/primary/flow/common.h                     |   53 +
+ src/primary/flow/flow.c                       | 1045 +++++++++++++++++
+ src/primary/flow/flow.h                       |   94 ++
+ src/primary/flow/pattern/eth.c                |   63 +
+ src/primary/flow/pattern/eth.h                |   13 +
+ src/primary/flow/pattern/vlan.c               |   71 ++
+ src/primary/flow/pattern/vlan.h               |   13 +
+ src/primary/init.c                            |    8 +-
+ src/primary/init.h                            |    3 +-
+ src/primary/main.c                            |   88 +-
+ src/shared/basic_forwarder.c                  |   62 +-
+ src/shared/basic_forwarder.h                  |    2 +-
+ src/shared/common.h                           |   30 +-
+ src/shared/port_manager.c                     |  180 ++-
+ src/shared/port_manager.h                     |   13 +-
+ .../secondary/spp_worker_th/cmd_parser.c      |  137 ++-
+ .../spp_worker_th/cmd_res_formatter.c         |   63 +-
+ .../secondary/spp_worker_th/cmd_utils.c       |  111 +-
+ .../secondary/spp_worker_th/cmd_utils.h       |   19 +-
+ .../secondary/spp_worker_th/data_types.h      |   18 +-
+ .../secondary/spp_worker_th/port_capability.c |    8 +-
+ .../secondary/spp_worker_th/port_capability.h |    4 +-
+ src/shared/secondary/spp_worker_th/vf_deps.h  |   15 +-
+ src/shared/secondary/utils.c                  |   28 +-
+ src/shared/secondary/utils.h                  |    3 +-
+ src/spp-ctl/spp_proc.py                       |    4 +
+ src/spp-ctl/spp_webapi.py                     |  200 +++-
+ src/vf/classifier.c                           |   40 +-
+ src/vf/forwarder.c                            |   12 +-
+ src/vf/vf_cmd_runner.c                        |   32 +-
+ 66 files changed, 5621 insertions(+), 744 deletions(-)
+ create mode 100644 src/cli/commands/pri_flow.py
+ create mode 100644 src/cli/commands/pri_flow_compl_action.py
+ create mode 100644 src/cli/commands/pri_flow_compl_pattern.py
+ create mode 100644 src/primary/flow/action/jump.c
+ create mode 100644 src/primary/flow/action/jump.h
+ create mode 100644 src/primary/flow/action/of_push_vlan.c
+ create mode 100644 src/primary/flow/action/of_push_vlan.h
+ create mode 100644 src/primary/flow/action/of_set_vlan_pcp.c
+ create mode 100644 src/primary/flow/action/of_set_vlan_pcp.h
+ create mode 100644 src/primary/flow/action/of_set_vlan_vid.c
+ create mode 100644 src/primary/flow/action/of_set_vlan_vid.h
+ create mode 100644 src/primary/flow/action/queue.c
+ create mode 100644 src/primary/flow/action/queue.h
+ create mode 100644 src/primary/flow/attr.c
+ create mode 100644 src/primary/flow/attr.h
+ create mode 100644 src/primary/flow/common.c
+ create mode 100644 src/primary/flow/common.h
+ create mode 100644 src/primary/flow/flow.c
+ create mode 100644 src/primary/flow/flow.h
+ create mode 100644 src/primary/flow/pattern/eth.c
+ create mode 100644 src/primary/flow/pattern/eth.h
+ create mode 100644 src/primary/flow/pattern/vlan.c
+ create mode 100644 src/primary/flow/pattern/vlan.h
+
+-- 
+2.17.1
+
