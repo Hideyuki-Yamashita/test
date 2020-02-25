@@ -1,0 +1,109 @@
+From: Hideyuki Yamashita <yamashita.hideyuki@ntt-tx.co.jp>
+Date: Wed, 15 Jan 2020 15:49:29 +0900
+Subject: [PATCH v3 11/17] bin: add parameter for hardrare offload
+
+This patch adds config for the following to support hardware offload:
+  - multi-queue setting
+  - whitelist
+
+Signed-off-by: Hideyuki Yamashita <yamashita.hideyuki@ntt-tx.co.jp>
+Signed-off-by: Naoki Takada <ntakada14@gmail.com>
+---
+ bin/sample/config.sh | 15 +++++++++++++++
+ bin/spp_pri.sh       | 26 +++++++++++++++++++++++++-
+ bin/start.sh         |  2 ++
+ 3 files changed, 42 insertions(+), 1 deletion(-)
+
+diff --git a/bin/sample/config.sh b/bin/sample/config.sh
+index ec4d4b8..214757e 100644
+--- a/bin/sample/config.sh
++++ b/bin/sample/config.sh
+@@ -29,3 +29,18 @@ PRI_PORTMASK=0x03  # total num of ports of spp_primary.
+ # Log files are created in 'spp/log/'.
+ SPP_CTL_LOG=spp_ctl.log
+ PRI_LOG=spp_primary.log
++
++# number of ports for multi-queue setting.
++#PRI_PORT_QUEUE=(
++#    "0 rxq 16 txq 16"
++#)
++
++# Add a PCI device in white list.
++# `dv_flow_en=1` is required for HW offload with Mellanox NIC.
++# Set a nonzero value to enables the DV flow steering assuming it is
++# supported by the driver.
++# https://doc.dpdk.org/guides/nics/mlx5.html
++#PRI_WHITE_LIST=(
++#    "0000:04:00.0,dv_flow_en=1"
++#    "0000:05:00.0"
++#)
+diff --git a/bin/spp_pri.sh b/bin/spp_pri.sh
+index c0b0e1e..6238ee1 100644
+--- a/bin/spp_pri.sh
++++ b/bin/spp_pri.sh
+@@ -9,6 +9,8 @@ SPP_PRI_RING=""
+ SPP_PRI_TAP=""
+ SPP_PRI_MEMIF=""
+ SPP_PRI_VDEVS=""
++SPP_PRI_PORT_QUEUE=""
++SPP_PRI_WHITE_LIST=""
+ 
+ SOCK_VHOST="/tmp/sock"
+ SOCK_MEMIF="/tmp/spp-memif.sock"
+@@ -64,6 +66,26 @@ function setup_vdevs() {
+     fi
+ }
+ 
++# Add queue number to port
++function setup_queue_number() {
++    if [ ${#PRI_PORT_QUEUE[@]} ]; then
++        for (( i=0; i < ${#PRI_PORT_QUEUE[@]}; i++)); do
++            SPP_PRI_PORT_QUEUE="
++                ${SPP_PRI_PORT_QUEUE} --port-num ${PRI_PORT_QUEUE[${i}]}"
++        done
++    fi
++}
++
++# Add whitelist
++function setup_whitelist() {
++    if [ ${#PRI_WHITE_LIST[@]} ]; then
++        for (( i=0; i < ${#PRI_WHITE_LIST[@]}; i++)); do
++            SPP_PRI_WHITE_LIST="
++                ${SPP_PRI_WHITE_LIST} -w ${PRI_WHITE_LIST[${i}]}"
++        done
++    fi
++}
++
+ # Launch spp_primary.
+ function spp_pri() {
+     SPP_PRI_BIN=${SPP_DIR}/src/primary/${RTE_TARGET}/spp_primary
+@@ -86,10 +108,12 @@ function spp_pri() {
+         ${SPP_PRI_TAP} \
+         ${SPP_PRI_MEMIF} \
+         ${SPP_PRI_VDEVS} \
++        ${SPP_PRI_WHITE_LIST} \
+         -- \
+         -p ${PRI_PORTMASK} \
+         -n ${NUM_RINGS} \
+-        -s ${SPP_CTL_IP}:5555"
++        -s ${SPP_CTL_IP}:5555 \
++        ${SPP_PRI_PORT_QUEUE}"
+ 
+     if [ ${DRY_RUN} ]; then
+         echo ${cmd}
+diff --git a/bin/start.sh b/bin/start.sh
+index eecb2ed..28dc3d9 100755
+--- a/bin/start.sh
++++ b/bin/start.sh
+@@ -45,6 +45,8 @@ function start_spp_pri() {
+     setup_tap_vdevs  # setup vdevs of net_tap
+     setup_memif_vdevs  # setup vdevs of net_memif
+     setup_vdevs  # setup any of vdevs
++    setup_queue_number  # setup port number
++    setup_whitelist  # setup whitelist
+     spp_pri  # launch spp_primary
+ }
+ 
+-- 
+2.17.1
+

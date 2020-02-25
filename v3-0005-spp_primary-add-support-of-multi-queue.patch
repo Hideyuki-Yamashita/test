@@ -1,0 +1,395 @@
+From: Hideyuki Yamashita <yamashita.hideyuki@ntt-tx.co.jp>
+Date: Mon, 11 Nov 2019 17:08:30 +0900
+Subject: [PATCH v3 05/17] spp_primary: add support of multi-queue
+
+Multi-queue support is provided for both tx and rx of physical NIC.
+To initialize physical NIC with multi-queue mode, startup parameters of
+the primary process should be newly introduced.
+
+Signed-off-by: Hideyuki Yamashita <yamashita.hideyuki@ntt-tx.co.jp>
+Signed-off-by: Naoki Takada <ntakada14@gmail.com>
+---
+ src/primary/Makefile |  10 ++++
+ src/primary/args.c   | 138 ++++++++++++++++++++++++++++++++++++++++++-
+ src/primary/args.h   |   3 +
+ src/primary/init.c   |   8 ++-
+ src/primary/init.h   |   3 +-
+ src/primary/main.c   |  40 ++++++++++---
+ 6 files changed, 189 insertions(+), 13 deletions(-)
+
+diff --git a/src/primary/Makefile b/src/primary/Makefile
+index ace6228..35ae788 100644
+--- a/src/primary/Makefile
++++ b/src/primary/Makefile
+@@ -20,12 +20,22 @@ APP = spp_primary
+ 
+ # TODO: revise to not use functions in secondary's.
+ SPP_SEC_DIR = ../shared/secondary
++SPP_FLOW_DIR = ./flow
++SPP_FLOW_SRC = flow.c attr.c common.c
++SPP_FLOW_PTN_DIR = $(SPP_FLOW_DIR)/pattern
++SPP_FLOW_PTN_SRC = eth.c vlan.c
++SPP_FLOW_ACT_DIR = $(SPP_FLOW_DIR)/action
++SPP_FLOW_ACT_SRC = jump.c queue.c of_push_vlan.c of_set_vlan_vid.c
++SPP_FLOW_ACT_SRC += of_set_vlan_pcp.c
+ 
+ # all source are stored in SRCS-y
+ SRCS-y := main.c init.c args.c
+ SRCS-y += ../shared/common.c ../shared/basic_forwarder.c ../shared/port_manager.c
+ SRCS-y += $(SPP_SEC_DIR)/add_port.c
+ SRCS-y += $(SPP_SEC_DIR)/utils.c
++SRCS-y += $(addprefix $(SPP_FLOW_DIR)/,$(SPP_FLOW_SRC))
++SRCS-y += $(addprefix $(SPP_FLOW_PTN_DIR)/,$(SPP_FLOW_PTN_SRC))
++SRCS-y += $(addprefix $(SPP_FLOW_ACT_DIR)/,$(SPP_FLOW_ACT_SRC))
+ 
+ INC := $(wildcard *.h)
+ 
+diff --git a/src/primary/args.c b/src/primary/args.c
+index 346bcbf..e9d1c58 100644
+--- a/src/primary/args.c
++++ b/src/primary/args.c
+@@ -29,10 +29,12 @@ int do_forwarding;
+ enum {
+ 	CMD_LINE_OPT_MIN_NUM = 256,
+ 	CMD_OPT_DISP_STATS,
++	CMD_OPT_PORT_NUM, /* For `--port-num` */
+ };
+ 
+ struct option lgopts[] = {
+ 	{"disp-stats", no_argument, NULL, CMD_OPT_DISP_STATS},
++	{"port-num", required_argument, NULL, CMD_OPT_PORT_NUM},
+ 	{0}
+ };
+ 
+@@ -45,9 +47,14 @@ static void
+ usage(void)
+ {
+ 	RTE_LOG(INFO, PRIMARY,
+-	    "%s [EAL options] -- -p PORTMASK -n NUM_CLIENTS [-s NUM_SOCKETS]\n"
++	    "%s [EAL options] -- -p PORTMASK -n NUM_CLIENTS [-s NUM_SOCKETS]"
++		" [--port-num NUM_PORT"
++		" rxq NUM_RX_QUEUE txq NUM_TX_QUEUE]...\n"
+ 	    " -p PORTMASK: hexadecimal bitmask of ports to use\n"
+ 	    " -n NUM_RINGS: number of ring ports used from secondaries\n"
++		" --port-num NUM_PORT: number of ports for multi-queue setting\n"
++		" rxq NUM_RX_QUEUE: number of receive queues\n"
++		" txq NUM_TX_QUEUE number of transmit queues\n"
+ 	    , progname);
+ }
+ 
+@@ -131,6 +138,120 @@ parse_nof_rings(uint16_t *num_clients, const char *clients)
+ 	return 0;
+ }
+ 
++/* Extract the number of queues from startup option. */
++static int
++parse_nof_queues(struct port_queue *arg_queues, const char *str_port_num,
++		int option_index, uint16_t max_ports, int argc, char *argv[])
++{
++	char *end = NULL;
++	unsigned long temp;
++	uint16_t port_num, rxq, txq;
++
++
++	if (str_port_num == NULL || *str_port_num == '\0') {
++		RTE_LOG(ERR, PRIMARY,
++			"PORT_NUM is not specified(%s:%d)\n",
++			__func__, __LINE__);
++		return -1;
++	}
++
++	/* Parameter check of port_num */
++	temp = strtoul(str_port_num, &end, 10);
++	if (end == NULL || *end != '\0') {
++		RTE_LOG(ERR, PRIMARY,
++			"PORT_NUM is not a number(%s:%d)\n",
++			__func__, __LINE__);
++		return -1;
++	}
++	port_num = (uint16_t)temp;
++
++	if (port_num > max_ports) {
++		RTE_LOG(ERR, PRIMARY,
++			"PORT_NUM exceeds the number of available ports"
++			"(%s:%d)\n",
++			__func__, __LINE__);
++		return 1;
++	}
++
++	/* Check if both 'rxq' and 'txq' are inclued in parameter string. */
++	if (option_index + 3 > argc) {
++		RTE_LOG(ERR, PRIMARY,
++			"rxq NUM_RX_QUEUE txq NUM_TX_QUEUE is not specified"
++			"(%s:%d)\n",
++			__func__, __LINE__);
++		return -1;
++	}
++
++	if (strcmp(argv[option_index], "rxq")) {
++		RTE_LOG(ERR, PRIMARY,
++			"rxq is not specified in the --port_num option"
++			"(%s:%d)\n",
++			__func__, __LINE__);
++		return -1;
++	}
++
++	/* Parameter check of rxq */
++	temp = strtoul(argv[option_index + 1], &end, 10);
++	if (end == NULL || *end != '\0' || temp == 0) {
++		RTE_LOG(ERR, PRIMARY,
++			"NUM_RX_QUEUE is not a number(%s:%d)\n",
++			__func__, __LINE__);
++		return -1;
++	}
++	rxq = (uint16_t)temp;
++
++	if (strcmp(argv[option_index + 2], "txq")) {
++		RTE_LOG(ERR, PRIMARY,
++			"txq is not specified in the --port_num option"
++			"(%s:%d)\n",
++			__func__, __LINE__);
++		return -1;
++	}
++
++	/* Parameter check of txq */
++	temp = strtoul(argv[option_index + 3], &end, 10);
++	if (end == NULL || *end != '\0' || temp == 0) {
++		RTE_LOG(ERR, PRIMARY,
++			"NUM_TX_QUEUE is not a number(%s:%d)\n",
++			__func__, __LINE__);
++		return -1;
++	}
++	txq = (uint16_t)temp;
++
++	arg_queues[port_num].rxq = rxq;
++	arg_queues[port_num].txq = txq;
++
++	return 0;
++}
++
++/**
++ * Set the number of queues for port_id.
++ * If not specified number of queue is set as 1.
++ */
++static int
++set_nof_queues(struct port_info *ports, struct port_queue *arg_queues)
++{
++	int index;
++	uint16_t port_id, rxq, txq;
++
++	for (index = 0; index < ports->num_ports; index++) {
++		port_id = ports->id[index];
++
++		if (arg_queues[port_id].rxq == 0 ||
++			arg_queues[port_id].txq == 0) {
++			rxq = 1;
++			txq = 1;
++		} else {
++			rxq = arg_queues[port_id].rxq;
++			txq = arg_queues[port_id].txq;
++		}
++
++		ports->queue_info[index].rxq = rxq;
++		ports->queue_info[index].txq = txq;
++	}
++	return 0;
++}
++
+ /**
+  * The application specific arguments follow the DPDK-specific
+  * arguments which are stripped by the DPDK init. This function
+@@ -143,6 +264,7 @@ parse_app_args(uint16_t max_ports, int argc, char *argv[])
+ 	int option_index, opt;
+ 	char **argvopt = argv;
+ 	int ret;
++	struct port_queue arg_queues[RTE_MAX_ETHPORTS] = { 0 };
+ 
+ 	progname = argv[0];
+ 
+@@ -171,6 +293,14 @@ parse_app_args(uint16_t max_ports, int argc, char *argv[])
+ 				return -1;
+ 			}
+ 			break;
++		case CMD_OPT_PORT_NUM:
++			ret = parse_nof_queues(arg_queues, optarg, optind,
++					max_ports, argc, argv);
++			if (ret != 0) {
++				usage();
++				return -1;
++			}
++			break;
+ 		default:
+ 			RTE_LOG(ERR,
+ 				PRIMARY, "ERROR: Unknown option '%c'\n", opt);
+@@ -184,5 +314,11 @@ parse_app_args(uint16_t max_ports, int argc, char *argv[])
+ 		return -1;
+ 	}
+ 
++	ret = set_nof_queues(ports, arg_queues);
++	if (ret != 0) {
++		usage();
++		return -1;
++	}
++
+ 	return 0;
+ }
+diff --git a/src/primary/args.h b/src/primary/args.h
+index 644cd56..f73772c 100644
+--- a/src/primary/args.h
++++ b/src/primary/args.h
+@@ -13,6 +13,9 @@ extern uint16_t num_rings;
+ extern char *server_ip;
+ extern int server_port;
+ 
++/* Return value definition for getopt_long(). Only for long option. */
++#define SPP_LONGOPT_RETVAL_PORT_NUM 1 /* For `--port-num` */
++
+ /**
+  * Set flg from given argument.
+  *
+diff --git a/src/primary/init.c b/src/primary/init.c
+index 9e47fcf..e9c12f1 100644
+--- a/src/primary/init.c
++++ b/src/primary/init.c
+@@ -160,7 +160,9 @@ init(int argc, char *argv[])
+ 	/* now initialise the ports we will use */
+ 	if (rte_eal_process_type() == RTE_PROC_PRIMARY) {
+ 		for (count = 0; count < ports->num_ports; count++) {
+-			retval = init_port(ports->id[count], pktmbuf_pool);
++			retval = init_port(ports->id[count], pktmbuf_pool,
++				ports->queue_info[count].rxq,
++				ports->queue_info[count].txq);
+ 			if (retval != 0)
+ 				rte_exit(EXIT_FAILURE,
+ 					"Cannot initialise port %d\n", count);
+@@ -254,7 +256,8 @@ check_all_ports_link_status(struct port_info *ports, uint16_t port_num,
+  * - start the port and report its status to stdout
+  */
+ int
+-init_port(uint16_t port_num, struct rte_mempool *pktmbuf_pool)
++init_port(uint16_t port_num, struct rte_mempool *pktmbuf_pool,
++	uint16_t rx_rings, uint16_t tx_rings)
+ {
+ 	/* for port configuration all features are off by default */
+ 	const struct rte_eth_conf port_conf = {
+@@ -262,7 +265,6 @@ init_port(uint16_t port_num, struct rte_mempool *pktmbuf_pool)
+ 			.mq_mode = ETH_MQ_RX_RSS,
+ 		},
+ 	};
+-	const uint16_t rx_rings = 1, tx_rings = 1;
+ 	const uint16_t rx_ring_size = RTE_MP_RX_DESC_DEFAULT;
+ 	const uint16_t tx_ring_size = RTE_MP_TX_DESC_DEFAULT;
+ 	uint16_t q;
+diff --git a/src/primary/init.h b/src/primary/init.h
+index 6344377..5384154 100644
+--- a/src/primary/init.h
++++ b/src/primary/init.h
+@@ -50,6 +50,7 @@ int init(int argc, char *argv[]);
+ void check_all_ports_link_status(struct port_info *ports, uint16_t port_num,
+ 		uint32_t port_mask);
+ 
+-int init_port(uint16_t port_num, struct rte_mempool *pktmbuf_pool);
++int init_port(uint16_t port_num, struct rte_mempool *pktmbuf_pool,
++		uint16_t rx_rings, uint16_t tx_rings);
+ 
+ #endif /* ifndef _PRIMARY_INIT_H_ */
+diff --git a/src/primary/main.c b/src/primary/main.c
+index d3828e8..ca81636 100644
+--- a/src/primary/main.c
++++ b/src/primary/main.c
+@@ -16,6 +16,7 @@
+ #include "args.h"
+ #include "init.h"
+ #include "primary.h"
++#include "primary/flow/flow.h"
+ 
+ #include "shared/port_manager.h"
+ #include "shared/secondary/add_port.h"
+@@ -23,10 +24,10 @@
+ 
+ /*
+  * Buffer sizes of status message of primary. Total number of size
+- * must be equal to MSG_SIZE 2048 defined in `shared/common.h`.
++ * must be equal to MSG_SIZE 32768 defined in `shared/common.h`.
+  */
+ #define PRI_BUF_SIZE_LCORE 128
+-#define PRI_BUF_SIZE_PHY 512
++#define PRI_BUF_SIZE_PHY 30720
+ #define PRI_BUF_SIZE_RING (MSG_SIZE - PRI_BUF_SIZE_LCORE - PRI_BUF_SIZE_PHY)
+ 
+ #define SPP_PATH_LEN 1024  /* seems enough for path of spp procs */
+@@ -639,9 +640,10 @@ forwarder_status_json(char *str)
+ static int
+ phy_port_stats_json(char *str)
+ {
+-	int i;
+-	int buf_size = 256;  /* size of temp buffer */
+-	char phy_port[buf_size];
++	int i, ret;
++	int buf_size = PRI_BUF_SIZE_PHY - 512;  /* size of temp buffer */
++	char phy_port[PRI_BUF_SIZE_PHY];
++	char flow[buf_size];
+ 	char buf_phy_ports[PRI_BUF_SIZE_PHY];
+ 	memset(phy_port, '\0', sizeof(phy_port));
+ 	memset(buf_phy_ports, '\0', sizeof(buf_phy_ports));
+@@ -651,16 +653,29 @@ phy_port_stats_json(char *str)
+ 		RTE_LOG(DEBUG, PRIMARY, "Size of buf_phy_ports str: %d\n",
+ 				(int)strlen(buf_phy_ports));
+ 
+-		memset(phy_port, '\0', buf_size);
++		memset(phy_port, '\0', PRI_BUF_SIZE_PHY);
++		memset(flow, '\0', buf_size);
++
++		ret = append_flow_json(i, buf_size, flow);
++		if (ret != 0) {
++			sprintf(buf_phy_ports + strlen(buf_phy_ports) - 1,
++					"%s", "");
++			break;
++		}
+ 
+ 		sprintf(phy_port, "{\"id\":%u,\"eth\":\"%s\","
+ 				"\"rx\":%"PRIu64",\"tx\":%"PRIu64","
+-				"\"tx_drop\":%"PRIu64"}",
++				"\"tx_drop\":%"PRIu64","
++				"\"nof_queues\":{\"rx\":%d,\"tx\":%d},"
++				"\"flow\":%s}",
+ 				ports->id[i],
+ 				get_printable_mac_addr(ports->id[i]),
+ 				ports->port_stats[i].rx,
+ 				ports->port_stats[i].tx,
+-				ports->port_stats[i].tx_drop);
++				ports->port_stats[i].tx_drop,
++				ports->queue_info[i].rxq,
++				ports->queue_info[i].txq,
++				flow);
+ 
+ 		int cur_buf_size = (int)strlen(buf_phy_ports) +
+ 			(int)strlen(phy_port);
+@@ -948,8 +963,10 @@ parse_command(char *str)
+ 	char patch_set[64] = { 0 };  /* "{\"src\":\"%s:%d\",\"dst\":...}" */
+ 	char *p_type;
+ 	int p_id;
++	char tmp_response[MSG_SIZE];
+ 
+ 	memset(sec_name, '\0', 16);
++	memset(tmp_response, '\0', MSG_SIZE);
+ 
+ 	/* tokenize the user commands from controller */
+ 	token_list[max_token] = strtok(str, " ");
+@@ -1150,6 +1167,13 @@ parse_command(char *str)
+ 		sprintf(str, "{%s:%s,%s:%s}",
+ 				"\"result\"", "\"succeeded\"",
+ 				"\"command\"", "\"clear\"");
++
++	} else if (!strcmp(token_list[0], "flow")) {
++		RTE_LOG(DEBUG, PRIMARY, "'%s' command received.\n",
++				token_list[0]);
++		ret = parse_flow(token_list, tmp_response);
++		memset(str, '\0', MSG_SIZE);
++		strncpy(str, tmp_response, MSG_SIZE-1);
+ 	}
+ 
+ 	return ret;
+-- 
+2.17.1
+
