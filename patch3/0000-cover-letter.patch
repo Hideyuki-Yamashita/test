@@ -1,9 +1,9 @@
-From 0251836c13a961a6de38cd189c3b99be5907293e Mon Sep 17 00:00:00 2001
-From: Hideyuki Yamashita <yamashita.hideyuki@po.ntt-tx.co.jp>
+From: Hideyuki Yamashita <yamashita.hideyuki@ntt-tx.co.jp>
 Date: Tue, 25 Feb 2020 20:19:39 +0900
-Subject: [PATCH 00/11] *** SUBJECT HERE ***
+Subject: [PATCH 00/11] Add Hardware offload document
 
-*** BLURB HERE ***
+This patch set provides doccuments of hardware offload
+capability for spp.
 
 tx-spp (11):
   docs: add support for rte_flow

@@ -1,5 +1,4 @@
-From 2c4bd9fa876c26f5e694df62dc7c14d9643f53c5 Mon Sep 17 00:00:00 2001
-From: tx-spp <yamashita.hideyuki@po.ntt-tx.co.jp>
+From: Hideyuki Yamashita <yamashita.hideyuki@ntt-tx.co.jp>
 Date: Mon, 6 Jan 2020 10:43:15 +0900
 Subject: [PATCH 03/11] docs: change primary process startup parameter
 

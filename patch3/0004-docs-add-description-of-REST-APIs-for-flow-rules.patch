@@ -1,5 +1,4 @@
-From 02842243c582b98d2a34f7159a9bcf524f3184cf Mon Sep 17 00:00:00 2001
-From: tx-spp <yamashita.hideyuki@po.ntt-tx.co.jp>
+From: Hideyuki Yamashita <yamashita.hideyuki@ntt-tx.co.jp>
 Date: Mon, 6 Jan 2020 10:45:24 +0900
 Subject: [PATCH 04/11] docs: add description of REST-APIs for flow rules
 

@@ -1,5 +1,4 @@
-From 9a613f05e9b0ac4116f4ef4b5d8988c6688fc8e1 Mon Sep 17 00:00:00 2001
-From: tx-spp <yamashita.hideyuki@po.ntt-tx.co.jp>
+From: Hideyuki Yamashita <yamashita.hideyuki@ntt-tx.co.jp>
 Date: Mon, 6 Jan 2020 10:47:35 +0900
 Subject: [PATCH 05/11] docs: support flow syntax in primary command
 

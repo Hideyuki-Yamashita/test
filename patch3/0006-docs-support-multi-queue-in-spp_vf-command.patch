@@ -1,5 +1,4 @@
-From 1bd6f12ddc86c69039f5c244d0f11ffc82ad48db Mon Sep 17 00:00:00 2001
-From: tx-spp <yamashita.hideyuki@po.ntt-tx.co.jp>
+From: Hideyuki Yamashita <yamashita.hideyuki@ntt-tx.co.jp>
 Date: Mon, 6 Jan 2020 10:48:22 +0900
 Subject: [PATCH 06/11] docs: support multi-queue in spp_vf command
 

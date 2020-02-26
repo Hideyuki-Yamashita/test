@@ -1,5 +1,4 @@
-From 2a08b35291423600cf4857583997c14c4846607e Mon Sep 17 00:00:00 2001
-From: tx-spp <yamashita.hideyuki@po.ntt-tx.co.jp>
+From: Hideyuki Yamashita <yamashita.hideyuki@ntt-tx.co.jp>
 Date: Mon, 6 Jan 2020 10:55:58 +0900
 Subject: [PATCH 10/11] docs: add usecase for hardware offload
 

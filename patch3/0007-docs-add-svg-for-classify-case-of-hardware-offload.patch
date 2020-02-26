@@ -1,5 +1,4 @@
-From aff1add3fe704af028dd029c556a9c69152c9f5e Mon Sep 17 00:00:00 2001
-From: tx-spp <yamashita.hideyuki@po.ntt-tx.co.jp>
+From: Hideyuki Yamashita <yamashita.hideyuki@ntt-tx.co.jp>
 Date: Mon, 6 Jan 2020 10:53:01 +0900
 Subject: [PATCH 07/11] docs: add svg for classify case of hardware offload
 

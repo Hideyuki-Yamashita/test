@@ -1,5 +1,4 @@
-From 25605d43c198108e8aa96cb0380b16710c6a2c54 Mon Sep 17 00:00:00 2001
-From: tx-spp <yamashita.hideyuki@po.ntt-tx.co.jp>
+From: Hideyuki Yamashita<yamashita.hideyuki@ntt-tx.co.jp>
 Date: Wed, 13 Nov 2019 11:36:41 +0900
 Subject: [PATCH 01/11] docs: add support for rte_flow
 

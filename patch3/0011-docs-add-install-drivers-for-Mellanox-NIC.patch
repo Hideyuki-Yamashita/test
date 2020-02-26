@@ -1,5 +1,4 @@
-From 0251836c13a961a6de38cd189c3b99be5907293e Mon Sep 17 00:00:00 2001
-From: tx-spp <yamashita.hideyuki@po.ntt-tx.co.jp>
+From: Hideyuki Yamashita <yamashita.hideyuki@ntt-tx.co.jp>
 Date: Mon, 6 Jan 2020 11:04:35 +0900
 Subject: [PATCH 11/11] docs: add install drivers for Mellanox NIC
 

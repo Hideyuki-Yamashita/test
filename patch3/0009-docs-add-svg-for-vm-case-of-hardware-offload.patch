@@ -1,5 +1,4 @@
-From a8f5a02877a002dc142af5f1a4c7836d36f17bcf Mon Sep 17 00:00:00 2001
-From: tx-spp <yamashita.hideyuki@po.ntt-tx.co.jp>
+From: Hideyuki Yamashita<yamashita.hideyuki@ntt-tx.co.jp>
 Date: Mon, 6 Jan 2020 10:54:23 +0900
 Subject: [PATCH 09/11] docs: add svg for vm case of hardware offload
 

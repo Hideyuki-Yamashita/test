@@ -1,5 +1,4 @@
-From d71028baedecff0e148b5f17cd74864307ce5f65 Mon Sep 17 00:00:00 2001
-From: tx-spp <yamashita.hideyuki@po.ntt-tx.co.jp>
+From: Hideyuki Yamashita <yamashita.hideyuki@ntt-tx.co.jp>
 Date: Mon, 6 Jan 2020 10:53:39 +0900
 Subject: [PATCH 08/11] docs: add svg for vlan case of hardware offload
 
