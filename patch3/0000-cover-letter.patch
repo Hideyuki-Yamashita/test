@@ -1,0 +1,41 @@
+From 0251836c13a961a6de38cd189c3b99be5907293e Mon Sep 17 00:00:00 2001
+From: Hideyuki Yamashita <yamashita.hideyuki@po.ntt-tx.co.jp>
+Date: Tue, 25 Feb 2020 20:19:39 +0900
+Subject: [PATCH 00/11] *** SUBJECT HERE ***
+
+*** BLURB HERE ***
+
+tx-spp (11):
+  docs: add support for rte_flow
+  docs: add support of MLX5 PMD support in DPDK
+  docs: change primary process startup parameter
+  docs: add description of REST-APIs for flow rules
+  docs: support flow syntax in primary command
+  docs: support multi-queue in spp_vf command
+  docs: add svg for classify case of hardware offload
+  docs: add svg for vlan case of hardware offload
+  docs: add svg for vm case of hardware offload
+  docs: add usecase for hardware offload
+  docs: add install drivers for Mellanox NIC
+
+ docs/guides/api_ref/spp_primary.rst           |  208 ++++
+ docs/guides/commands/primary.rst              |   99 +-
+ docs/guides/commands/secondary/spp_vf.rst     |   54 +-
+ docs/guides/design/spp_primary.rst            |    3 +
+ docs/guides/gsg/howto_use.rst                 |   20 +
+ docs/guides/gsg/install.rst                   |   25 +-
+ docs/guides/gsg/setup.rst                     |   12 +
+ .../spp_hardware_offload_classify.svg         |  680 +++++++++++
+ .../use_cases/spp_hardware_offload_vlan.svg   |  805 +++++++++++++
+ .../use_cases/spp_hardware_offload_vm.svg     | 1063 +++++++++++++++++
+ docs/guides/usecases/hardware-offload.rst     |  327 +++++
+ docs/guides/usecases/index.rst                |    1 +
+ 12 files changed, 3254 insertions(+), 43 deletions(-)
+ create mode 100644 docs/guides/images/setup/use_cases/spp_hardware_offload_classify.svg
+ create mode 100644 docs/guides/images/setup/use_cases/spp_hardware_offload_vlan.svg
+ create mode 100644 docs/guides/images/setup/use_cases/spp_hardware_offload_vm.svg
+ create mode 100644 docs/guides/usecases/hardware-offload.rst
+
+-- 
+2.17.1
+
