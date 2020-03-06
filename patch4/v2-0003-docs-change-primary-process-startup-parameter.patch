@@ -1,0 +1,48 @@
+From fc7415ccb5fb5bafd6958e57e6a8cb484d66f271 Mon Sep 17 00:00:00 2001
+From: Hideyuki Yamashita <yamashita.hideyuki@ntt-tx.co.jp>
+Date: Mon, 6 Jan 2020 10:43:15 +0900
+Subject: [PATCH v2 03/11] docs: change primary process startup parameter
+
+This patch adds change on primary process startup command
+when using offload with MLX5 supported NIC.
+
+Signed-off-by: Hideyuki Yamashita <yamashita.hideyuki@ntt-tx.co.jp>
+Signed-off-by: Naoki Takada <ntakada14@gmail.com>
+---
+ docs/guides/gsg/howto_use.rst | 20 ++++++++++++++++++++
+ 1 file changed, 20 insertions(+)
+
+diff --git a/docs/guides/gsg/howto_use.rst b/docs/guides/gsg/howto_use.rst
+index f4f1f08..41527ce 100644
+--- a/docs/guides/gsg/howto_use.rst
++++ b/docs/guides/gsg/howto_use.rst
+@@ -464,6 +464,26 @@ secondary processes.
+         -n 10 \
+         -s 192.168.1.100:5555
+ 
++In case of using MLX5 supported NIC, you must add ``dv_flow_en=1``
++with white list option.
++
++.. code-block:: console
++
++    # terminal 3
++    $ sudo ./src/primary/x86_64-native-linuxapp-gcc/spp_primary \
++        -l 0 -n 4 \
++        -w 0000:03:00.0,dv_flow_en=1 \
++        -w 0000:04:00.0,dv_flow_en=1 \
++        -w 0000:05:00.0 \
++        --socket-mem 512,512 \
++        --huge-dir /dev/hugepages \
++        --proc-type primary \
++        --base-virtaddr 0x100000000
++        -- \
++        -p 0x03 \
++        -n 10 \
++        -s 192.168.1.100:5555
++
+ - EAL options:
+ 
+   - ``-l``: core list
+-- 
+2.17.1
+

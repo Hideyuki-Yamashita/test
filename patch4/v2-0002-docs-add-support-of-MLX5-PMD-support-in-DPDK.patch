@@ -1,0 +1,64 @@
+From 4bfb34a1d3c1683761e59c3ef5f64a8777c8f457 Mon Sep 17 00:00:00 2001
+From: Hideyuki Yamashita <yamashita.hideyuki@ntt-tx.co.jp>
+Date: Mon, 6 Jan 2020 10:33:43 +0900
+Subject: [PATCH v2 02/11] docs: add support of MLX5 PMD support in DPDK
+
+This patch adds configuration change of DPDK
+to support MLX5 PMD in DPDK compilation.
+
+Signed-off-by: Hideyuki Yamashita <yamashita.hideyuki@ntt-tx.co.jp>
+Signed-off-by: Naoki Takada <ntakada14@gmail.com>
+---
+ docs/guides/gsg/install.rst | 25 +++++--------------------
+ 1 file changed, 5 insertions(+), 20 deletions(-)
+
+diff --git a/docs/guides/gsg/install.rst b/docs/guides/gsg/install.rst
+index 335a151..2abf330 100644
+--- a/docs/guides/gsg/install.rst
++++ b/docs/guides/gsg/install.rst
+@@ -129,29 +129,15 @@ config file ``common_base`` should be changed to ``y`` to enable PCAP.
+     ...
+     CONFIG_RTE_PORT_PCAP=y
+ 
+-Compile DPDK with target environment.
+-
+-.. code-block:: console
+-
+-    $ cd dpdk
+-    $ export RTE_SDK=$(pwd)
+-    $ export RTE_TARGET=x86_64-native-linuxapp-gcc  # depends on your env
+-    $ make install T=$RTE_TARGET
+-
++If you use MLX5 NIC, ``CONFIG_RTE_LIBRTE_MLX5_PMD`` defined in
++config file ``common_base`` should be changed to ``y``.
+ 
+-PCAP is disabled by default in DPDK configuration, so should be changed
+-if you use this feature.
+-``CONFIG_RTE_LIBRTE_PMD_PCAP`` and ``CONFIG_RTE_PORT_PCAP`` defined in
+-config file ``common_base`` should be changed to ``y`` to enable PCAP.
+-
+-.. code-block:: console
++.. code-block:: none
+ 
+     # dpdk/config/common_base
+-    CONFIG_RTE_LIBRTE_PMD_PCAP=y
+-    ...
+-    CONFIG_RTE_PORT_PCAP=y
++    CONFIG_RTE_LIBRTE_MLX5_PMD=y
+ 
+-Compile DPDK with options for target environment.
++Compile DPDK with target environment.
+ 
+ .. code-block:: console
+ 
+@@ -160,7 +146,6 @@ Compile DPDK with options for target environment.
+     $ export RTE_TARGET=x86_64-native-linuxapp-gcc  # depends on your env
+     $ make install T=$RTE_TARGET
+ 
+-
+ Pyhton
+ ------
+ 
+-- 
+2.17.1
+

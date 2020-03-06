@@ -1,0 +1,40 @@
+From b46531ede8a886076a2a239190a188315d5d3718 Mon Sep 17 00:00:00 2001
+From: Hideyuki Yamashita <yamashita.hideyuki@ntt-tx.co.jp>
+Date: Mon, 6 Jan 2020 11:04:35 +0900
+Subject: [PATCH v2 11/11] docs: add install drivers for Mellanox NIC
+
+This patch is to add description of installing drivers of Mellanox NIC.
+
+Signed-off-by: Hideyuki Yamashita <yamashita.hideyuki@ntt-tx.co.jp>
+Signed-off-by: Naoki Takada <ntakada14@gmail.com>
+---
+ docs/guides/gsg/setup.rst | 13 +++++++++++++
+ 1 file changed, 13 insertions(+)
+
+diff --git a/docs/guides/gsg/setup.rst b/docs/guides/gsg/setup.rst
+index 9bd30ef..6c962c3 100644
+--- a/docs/guides/gsg/setup.rst
++++ b/docs/guides/gsg/setup.rst
+@@ -285,6 +285,19 @@ Python 2 or 3 ?
+ Without SPP container tools, Python2 is not supported anymore.
+ SPP container will also be updated to Python3.
+ 
++Driver for Mellanox NIC
++-----------------------
++
++In case of using MLX5 NIC, you have to install driver.
++You can download driver from Mellanox's `SW/Drivers
++<https://www.mellanox.com/page/mlnx_ofed_matrix?mtag=linux_sw_drivers>`.
++The following example assumes that
++MLNX_OFED_LINUX-4.7-1.0.0.1-ubuntu18.04-x86_64.tgz is downloaded.
++
++.. code-block:: console
++
++   $cd MLNX_OFED_LINUX-4.7-1.0.0.1-ubuntu18.04-x86_64/
++   $sudo ./mlnxofedinstall --upstream-libs --dpdk --force
+ 
+ Reference
+ ---------
+-- 
+2.17.1
+

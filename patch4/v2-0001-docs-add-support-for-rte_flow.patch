@@ -1,0 +1,35 @@
+From c30db59f22a3e66aec2debd864e72e5b2c5c5444 Mon Sep 17 00:00:00 2001
+From: Hideyuki Yamashita <yamashita.hideyuki@ntt-tx.co.jp>
+Date: Wed, 13 Nov 2019 11:36:41 +0900
+Subject: [PATCH v2 01/11] docs: add support for rte_flow
+
+Packet classification and distribution based on destination MAC address
+can be done using NIC capability. By doing so, resource consumption of
+host can be reduced. VLAN tag manipulation(entag/detag) can be done
+using NIC capability in some NICs.
+Primary process is enhanced to invoke such hardware capability using
+DPDK rte_flow APIs and description is added in design section.
+
+Signed-off-by: Hideyuki Yamashita <yamashita.hideyuki@ntt-tx.co.jp>
+Signed-off-by: Naoki Takada <ntakada14@gmail.com>
+---
+ docs/guides/design/spp_primary.rst | 3 +++
+ 1 file changed, 3 insertions(+)
+
+diff --git a/docs/guides/design/spp_primary.rst b/docs/guides/design/spp_primary.rst
+index 35e4bbb..9ad3cc8 100644
+--- a/docs/guides/design/spp_primary.rst
++++ b/docs/guides/design/spp_primary.rst
+@@ -25,6 +25,9 @@ the server process of the sample application.
+ It does not work for packet forwaring without in some usecases, but just
+ provide rings and memory pools for secondary processes.
+ 
++Primary process supports ``rte_flow`` of DPDK for hardware offloading.
++Packet distribution based on dst MAC address and/or VLAN ID
++is supported. Entag/detag of VLAN is also supported.
+ 
+ Master and Worker Threads
+ -------------------------
+-- 
+2.17.1
+
