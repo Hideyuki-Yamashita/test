@@ -1,0 +1,320 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>2.1. CPU Layout &mdash; Soft Patch Panel 19.08 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="../../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../../_static/jquery.js"></script>
+        <script type="text/javascript" src="../../_static/underscore.js"></script>
+        <script type="text/javascript" src="../../_static/doctools.js"></script>
+        <script type="text/javascript" src="../../_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="../../_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="API Reference" href="../../api_ref/index.html" />
+    <link rel="prev" title="2. Helper tools" href="index.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../index.html" class="icon icon-home"> Soft Patch Panel
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                19.08
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../overview.html">Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../design/index.html">Design</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../gsg/index.html">Getting Started Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../usecases/index.html">Use Cases</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../commands/index.html">SPP Commands</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../index.html">Tools</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../sppc/index.html">1. SPP Container</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="index.html">2. Helper tools</a><ul class="current">
+<li class="toctree-l3 current"><a class="current reference internal" href="#">2.1. CPU Layout</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#secondary-process-launcher">2.2. Secondary Process Launcher</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../api_ref/index.html">API Reference</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">Soft Patch Panel</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="../index.html">Tools</a> &raquo;</li>
+        
+          <li><a href="index.html">2. Helper tools</a> &raquo;</li>
+        
+      <li>2.1. CPU Layout</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../../_sources/tools/helpers/tools.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="cpu-layout">
+<span id="spp-tools-helpers-tools"></span><h1>2.1. CPU Layout<a class="headerlink" href="#cpu-layout" title="Permalink to this headline">¶</a></h1>
+<p>This tool is a customized script of DPDK’s user tool <code class="docutils literal notranslate"><span class="pre">cpu_layout.py</span></code>. It is
+used from <code class="docutils literal notranslate"><span class="pre">spp-ctl</span></code> to get CPU layout. The behaviour of this script is same
+as original one if you just run on terminal.</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$</span> python3 tools/helpers/cpu_layout.py
+<span class="go">======================================================================</span>
+<span class="go">Core and Socket Information (as reported by &#39;/sys/devices/system/cpu&#39;)</span>
+<span class="go">======================================================================</span>
+
+<span class="go">cores =  [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15]</span>
+<span class="go">sockets =  [0]</span>
+
+<span class="go">        Socket 0</span>
+<span class="go">        --------</span>
+<span class="go">Core 0  [0]</span>
+<span class="go">Core 1  [1]</span>
+<span class="go">...</span>
+</pre></div>
+</div>
+<p>Customized version of <code class="docutils literal notranslate"><span class="pre">cpu_layout.py</span></code> accepts an additional option
+<code class="docutils literal notranslate"><span class="pre">--json</span></code> to output the result in JSON format.</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">#</span> Output in JSON format
+<span class="gp">$</span> python3 tools/helpers/cpu_layout.py --json <span class="p">|</span> jq
+<span class="go">[</span>
+<span class="go">  {</span>
+<span class="go">    &quot;socket_id&quot;: 0,</span>
+<span class="go">    &quot;cores&quot;: [</span>
+<span class="go">      {</span>
+<span class="go">        &quot;core_id&quot;: 1,</span>
+<span class="go">        &quot;cpus&quot;: [</span>
+<span class="go">          1</span>
+<span class="go">        ]</span>
+<span class="go">      },</span>
+<span class="go">      {</span>
+<span class="go">        &quot;core_id&quot;: 0,</span>
+<span class="go">        &quot;cpus&quot;: [</span>
+<span class="go">          0</span>
+<span class="go">        ]</span>
+<span class="go">      },</span>
+<span class="go">      ...</span>
+<span class="go">  }</span>
+<span class="go">]</span>
+</pre></div>
+</div>
+<p>You can almost the same result from <code class="docutils literal notranslate"><span class="pre">spp-ctl</span></code>, but the order of params are
+just different.</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">#</span> Retrieve CPU layout via REST API
+<span class="gp">$</span> curl -X GET http://192.168.1.100:7777/v1/cpus <span class="p">|</span> jq
+<span class="gp">  %</span> Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+<span class="go">                                 Dload  Upload   Total   Spent    Left  Speed</span>
+<span class="go">100   505  100   505    0     0  18091      0 --:--:-- --:--:-- --:--:-- 18703</span>
+<span class="go">[</span>
+<span class="go">  {</span>
+<span class="go">    &quot;cores&quot;: [</span>
+<span class="go">      {</span>
+<span class="go">        &quot;cpus&quot;: [</span>
+<span class="go">          1</span>
+<span class="go">        ],</span>
+<span class="go">        &quot;core_id&quot;: 1</span>
+<span class="go">      },</span>
+<span class="go">      {</span>
+<span class="go">        &quot;cpus&quot;: [</span>
+<span class="go">          0</span>
+<span class="go">        ],</span>
+<span class="go">        &quot;core_id&quot;: 0</span>
+<span class="go">      },</span>
+<span class="go">      ...</span>
+<span class="go">    ],</span>
+<span class="go">    &quot;socket_id&quot;: 0</span>
+<span class="go">  }</span>
+<span class="go">]</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="secondary-process-launcher">
+<h1>2.2. Secondary Process Launcher<a class="headerlink" href="#secondary-process-launcher" title="Permalink to this headline">¶</a></h1>
+<p>It is very simple python script used to lauch a secondary process from other
+program. It is intended to be used from spp_primary for launching. Here is
+whole lines of the script.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="ch">#!/usr/bin/env python</span>
+<span class="c1"># coding: utf-8</span>
+<span class="sd">&quot;&quot;&quot;SPP secondary launcher.&quot;&quot;&quot;</span>
+
+<span class="kn">import</span> <span class="nn">sys</span>
+<span class="kn">import</span> <span class="nn">subprocess</span>
+
+<span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">:</span>
+    <span class="n">cmd</span> <span class="o">=</span> <span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">[</span><span class="mi">1</span><span class="p">:]</span>
+    <span class="n">subprocess</span><span class="o">.</span><span class="n">call</span><span class="p">(</span><span class="n">cmd</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>As you may notice, it just runs given name or path of command with options,
+so you can any of command other than SPP secondary processes. However, it
+might be nouse for almost of users.</p>
+<p>The reason of why this script is required is to launch secondary process from
+<code class="docutils literal notranslate"><span class="pre">spp_primary</span></code> indirectly to avoid launched secondaries to be zombies finally.
+In addtion, secondary processes other than <code class="docutils literal notranslate"><span class="pre">spp_nfv</span></code> do not work correctly
+after launched with execv() or other siblings directly from <code class="docutils literal notranslate"><span class="pre">spp_primary</span></code>.</p>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="../../api_ref/index.html" class="btn btn-neutral float-right" title="API Reference" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="index.html" class="btn btn-neutral float-left" title="2. Helper tools" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

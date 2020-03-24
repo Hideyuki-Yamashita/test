@@ -1,0 +1,414 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>1. Primary Commands &mdash; Soft Patch Panel 19.08 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../_static/jquery.js"></script>
+        <script type="text/javascript" src="../_static/underscore.js"></script>
+        <script type="text/javascript" src="../_static/doctools.js"></script>
+        <script type="text/javascript" src="../_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="2. Secondary Commands" href="secondary/index.html" />
+    <link rel="prev" title="SPP Commands" href="index.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> Soft Patch Panel
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                19.08
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../overview.html">Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../design/index.html">Design</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../gsg/index.html">Getting Started Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../usecases/index.html">Use Cases</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">SPP Commands</a><ul class="current">
+<li class="toctree-l2 current"><a class="current reference internal" href="#">1. Primary Commands</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#status">1.1. status</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#clear">1.2. clear</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#add">1.3. add</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#patch">1.4. patch</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#forward">1.5. forward</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#stop">1.6. stop</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#del">1.7. del</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#launch">1.8. launch</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="secondary/index.html">2. Secondary Commands</a></li>
+<li class="toctree-l2"><a class="reference internal" href="common.html">3. Common Commands</a></li>
+<li class="toctree-l2"><a class="reference internal" href="experimental.html">4. Experimental Commands</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../tools/index.html">Tools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../api_ref/index.html">API Reference</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">Soft Patch Panel</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="index.html">SPP Commands</a> &raquo;</li>
+        
+      <li>1. Primary Commands</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../_sources/commands/primary.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="primary-commands">
+<span id="commands-primary"></span><h1>1. Primary Commands<a class="headerlink" href="#primary-commands" title="Permalink to this headline">¶</a></h1>
+<p>Primary process is managed with <code class="docutils literal notranslate"><span class="pre">pri</span></code> command.</p>
+<p><code class="docutils literal notranslate"><span class="pre">pri</span></code> command takes a sub command. They must be separated with delimiter
+<code class="docutils literal notranslate"><span class="pre">;</span></code>. Some of sub commands take additional arguments.</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">spp &gt; pri; SUB_CMD</span>
+</pre></div>
+</div>
+<p>All of Sub commands are referred with <code class="docutils literal notranslate"><span class="pre">help</span></code> command.</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">spp &gt; help pri</span>
+<span class="go">Send a command to primary process.</span>
+
+<span class="go">    Show resources and statistics, or clear it.</span>
+
+<span class="go">        spp &gt; pri; status  # show status</span>
+
+<span class="go">        spp &gt; pri; clear   # clear statistics</span>
+
+<span class="go">    Launch secondary process..</span>
+
+<span class="gp">        #</span> Launch nfv:1
+<span class="go">        spp &gt; pri; launch nfv 1 -l 1,2 -m 512 -- -n 1 -s 192.168....</span>
+
+<span class="gp">        #</span> Launch vf:2
+<span class="go">        spp &gt; pri; launch vf 2 -l 1,4-7 -m 512 -- --client-id 2 -s ...</span>
+</pre></div>
+</div>
+<div class="section" id="status">
+<span id="commands-primary-status"></span><h2>1.1. status<a class="headerlink" href="#status" title="Permalink to this headline">¶</a></h2>
+<p>Show status fo <code class="docutils literal notranslate"><span class="pre">spp_primary</span></code> and forwarding statistics of each of ports.</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">spp &gt; pri; status</span>
+<span class="go">- lcore_ids:</span>
+<span class="go">  - master: 0</span>
+<span class="go">- stats</span>
+<span class="go">  - physical ports:</span>
+<span class="go">      ID          rx          tx    tx_drop  mac_addr</span>
+<span class="go">       0           0           0           0  56:48:4f:53:54:00</span>
+<span class="go">       1           0           0           0  56:48:4f:53:54:01</span>
+<span class="go">  - ring ports:</span>
+<span class="go">      ID          rx          tx     rx_drop     tx_drop</span>
+<span class="go">       0           0           0           0           0</span>
+<span class="go">       1           0           0           0           0</span>
+<span class="go">       2           0           0           0           0</span>
+<span class="go">       ...</span>
+</pre></div>
+</div>
+<p>If you run <code class="docutils literal notranslate"><span class="pre">spp_primary</span></code> with forwarder thread, status of the forwarder is
+also displayed.</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">spp &gt; pri; status</span>
+<span class="go">- lcore_ids:</span>
+<span class="go">  - master: 0</span>
+<span class="go">  - slave: 1</span>
+<span class="go">- forwarder:</span>
+<span class="go">  - status: idling</span>
+<span class="go">  - ports:</span>
+<span class="go">    - phy:0</span>
+<span class="go">    - phy:1</span>
+<span class="go">- stats</span>
+<span class="go">  - physical ports:</span>
+<span class="go">      ID          rx          tx    tx_drop  mac_addr</span>
+<span class="go">       0           0           0           0  56:48:4f:53:54:00</span>
+<span class="go">       1           0           0           0  56:48:4f:53:54:01</span>
+<span class="go">  - ring ports:</span>
+<span class="go">      ID          rx          tx     rx_drop     tx_drop</span>
+<span class="go">       0           0           0           0           0</span>
+<span class="go">       1           0           0           0           0</span>
+<span class="go">       ...</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="clear">
+<span id="commands-primary-clear"></span><h2>1.2. clear<a class="headerlink" href="#clear" title="Permalink to this headline">¶</a></h2>
+<p>Clear statistics.</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">spp &gt; pri; clear</span>
+<span class="go">Clear port statistics.</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="add">
+<span id="commands-primary-add"></span><h2>1.3. add<a class="headerlink" href="#add" title="Permalink to this headline">¶</a></h2>
+<p>Add a port with resource ID.</p>
+<p>For example, adding <code class="docutils literal notranslate"><span class="pre">ring:0</span></code> by</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">spp &gt; pri; add ring:0</span>
+<span class="go">Add ring:0.</span>
+</pre></div>
+</div>
+<p>Or adding <code class="docutils literal notranslate"><span class="pre">vhost:0</span></code> by</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">spp &gt; pri; add vhost:0</span>
+<span class="go">Add vhost:0.</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="patch">
+<span id="commands-primary-patch"></span><h2>1.4. patch<a class="headerlink" href="#patch" title="Permalink to this headline">¶</a></h2>
+<p>Create a path between two ports, source and destination ports.
+This command just creates a path and does not start forwarding.</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">spp &gt; pri; patch phy:0 ring:0</span>
+<span class="go">Patch ports (phy:0 -&gt; ring:0).</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="forward">
+<span id="commands-primary-forward"></span><h2>1.5. forward<a class="headerlink" href="#forward" title="Permalink to this headline">¶</a></h2>
+<p>Start forwarding.</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">spp &gt; pri; forward</span>
+<span class="go">Start forwarding.</span>
+</pre></div>
+</div>
+<p>Running status is changed from <code class="docutils literal notranslate"><span class="pre">idling</span></code> to <code class="docutils literal notranslate"><span class="pre">running</span></code> by
+executing it.</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">spp &gt; pri; status</span>
+<span class="go">- lcore_ids:</span>
+<span class="go">  - master: 0</span>
+<span class="go">  - slave: 1</span>
+<span class="go">- forwarder:</span>
+<span class="go">  - status: running</span>
+<span class="go">  - ports:</span>
+<span class="go">    - phy:0</span>
+<span class="go">    - phy:1</span>
+<span class="go">...</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="stop">
+<span id="commands-primary-stop"></span><h2>1.6. stop<a class="headerlink" href="#stop" title="Permalink to this headline">¶</a></h2>
+<p>Stop forwarding.</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">spp &gt; pri; stop</span>
+<span class="go">Stop forwarding.</span>
+</pre></div>
+</div>
+<p>Running status is changed from <code class="docutils literal notranslate"><span class="pre">running</span></code> to <code class="docutils literal notranslate"><span class="pre">idling</span></code> by
+executing it.</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">spp &gt; pri; status</span>
+<span class="go">- lcore_ids:</span>
+<span class="go">  - master: 0</span>
+<span class="go">  - slave: 1</span>
+<span class="go">- forwarder:</span>
+<span class="go">  - status: idling</span>
+<span class="go">  - ports:</span>
+<span class="go">    - phy:0</span>
+<span class="go">    - phy:1</span>
+<span class="go">...</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="del">
+<span id="commands-primary-del"></span><h2>1.7. del<a class="headerlink" href="#del" title="Permalink to this headline">¶</a></h2>
+<p>Delete a port of given resource UID.</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">spp &gt; pri; del ring:0</span>
+<span class="go">Delete ring:0.</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="launch">
+<span id="commands-primary-launch"></span><h2>1.8. launch<a class="headerlink" href="#launch" title="Permalink to this headline">¶</a></h2>
+<p>Launch a secondary process.</p>
+<p>Spp_primary is able to launch a secondary process with given type, secondary
+ID and options of EAL and application itself. This is a list of supported type
+of secondary processes.</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>nfv</p></li>
+<li><p>vf</p></li>
+<li><p>mirror</p></li>
+<li><p>pcap</p></li>
+</ul>
+</div></blockquote>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">#</span> spp_nfv with sec ID <span class="m">1</span>
+<span class="go">spp &gt; pri; launch nfv 1 -l 1,2 -m 512 -- -n -s 192.168.1.100:6666</span>
+
+<span class="gp">#</span> spp_vf with sec ID <span class="m">2</span>
+<span class="go">spp &gt; pri; launch vf 2 -l 1,3-5 -m 512 -- --client-id -s 192.168.1.100:6666</span>
+</pre></div>
+</div>
+<p>You notice that <code class="docutils literal notranslate"><span class="pre">--proc-type</span> <span class="pre">secondary</span></code> is not given for launching secondary
+processes. <code class="docutils literal notranslate"><span class="pre">launch</span></code> command adds this option before requesting to launch
+the process so that you do not need to input this option by yourself.</p>
+<p><code class="docutils literal notranslate"><span class="pre">launch</span></code> command supports TAB completion for type, secondary ID and the rest
+of options. Some of EAL and application options are just a template, so you
+should edit them before launching. Some of default params of options,
+for instance, the number of lcores or the amount of memory, are changed from
+<code class="docutils literal notranslate"><span class="pre">config</span></code> command of <a class="reference internal" href="common.html#commands-common-config"><span class="std std-ref">Common Commands</span></a>.</p>
+<p>In terms of log, each of secondary processes are output its log messages to
+files under <code class="docutils literal notranslate"><span class="pre">log</span></code> directory of project root. The name of log file is defined
+with type of process and secondary ID. For instance, <code class="docutils literal notranslate"><span class="pre">nfv</span> <span class="pre">2</span></code>, the path of log
+file is <code class="docutils literal notranslate"><span class="pre">log/spp_nfv-2.log</span></code>.</p>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="secondary/index.html" class="btn btn-neutral float-right" title="2. Secondary Commands" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="index.html" class="btn btn-neutral float-left" title="SPP Commands" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

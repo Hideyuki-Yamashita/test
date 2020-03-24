@@ -1,0 +1,423 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>4. spp_pcap &mdash; Soft Patch Panel 19.08 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../_static/jquery.js"></script>
+        <script type="text/javascript" src="../_static/underscore.js"></script>
+        <script type="text/javascript" src="../_static/doctools.js"></script>
+        <script type="text/javascript" src="../_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="5. Multiple Nodes" href="multi_nodes.html" />
+    <link rel="prev" title="3. spp_mirror" href="spp_mirror.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> Soft Patch Panel
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                19.08
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../overview.html">Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../design/index.html">Design</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../gsg/index.html">Getting Started Guide</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">Use Cases</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="spp_nfv.html">1. spp_nfv</a></li>
+<li class="toctree-l2"><a class="reference internal" href="spp_vf.html">2. spp_vf</a></li>
+<li class="toctree-l2"><a class="reference internal" href="spp_mirror.html">3. spp_mirror</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">4. spp_pcap</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#packet-capture">4.1. Packet Capture</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#launch-spp-pcap">4.1.1. Launch spp_pcap</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#start-capture">4.1.2. Start Capture</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#stop-capture">4.1.3. Stop Capture</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#shutdown-spp-pcap">4.1.4. Shutdown spp_pcap</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#inspect-pcap-files">4.1.5. Inspect PCAP Files</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="multi_nodes.html">5. Multiple Nodes</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../commands/index.html">SPP Commands</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../tools/index.html">Tools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../api_ref/index.html">API Reference</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">Soft Patch Panel</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="index.html">Use Cases</a> &raquo;</li>
+        
+      <li>4. spp_pcap</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../_sources/usecases/spp_pcap.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="spp-pcap">
+<span id="spp-usecases-pcap"></span><h1>4. spp_pcap<a class="headerlink" href="#spp-pcap" title="Permalink to this headline">¶</a></h1>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p><code class="docutils literal notranslate"><span class="pre">--file-prefix</span></code> option is not required in this section because there is
+not DPDK application other than SPP.</p>
+</div>
+<div class="section" id="packet-capture">
+<h2>4.1. Packet Capture<a class="headerlink" href="#packet-capture" title="Permalink to this headline">¶</a></h2>
+<p>This section describes a usecase for capturing packets with <code class="docutils literal notranslate"><span class="pre">spp_pcap</span></code>.
+See inside of the captured file with <code class="docutils literal notranslate"><span class="pre">tcpdump</span></code> command.
+<a class="reference internal" href="#figure-simple-capture"><span class="std std-numref">Fig. 4.7</span></a> shows the overview of scenario in which
+incoming packets via <code class="docutils literal notranslate"><span class="pre">phy:0</span></code> are dumped as compressed pcap files by using
+<code class="docutils literal notranslate"><span class="pre">spp_pcap</span></code>.</p>
+<div class="figure align-default" id="id1">
+<span id="figure-simple-capture"></span><a class="reference internal image-reference" href="../_images/spp_pcap_overview.svg"><img alt="../_images/spp_pcap_overview.svg" src="../_images/spp_pcap_overview.svg" width="50%" /></a>
+<p class="caption"><span class="caption-number">Fig. 4.7 </span><span class="caption-text">Packet capture with spp_pcap</span><a class="headerlink" href="#id1" title="Permalink to this image">¶</a></p>
+</div>
+<div class="section" id="launch-spp-pcap">
+<span id="spp-pcap-use-case-launch-pcap"></span><h3>4.1.1. Launch spp_pcap<a class="headerlink" href="#launch-spp-pcap" title="Permalink to this headline">¶</a></h3>
+<p>Change directory if you are not in SPP’s directory,
+and compile if not done yet.</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$</span> <span class="nb">cd</span> /path/to/spp
+</pre></div>
+</div>
+<p>Launch spp-ctl and SPP CLI in different terminals.</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">#</span> terminal <span class="m">1</span>
+<span class="gp">$</span> python3 ./src/spp-ctl/spp-ctl -b <span class="m">192</span>.168.1.100
+</pre></div>
+</div>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">#</span> terminal <span class="m">2</span>
+<span class="gp">$</span> python3 ./src/spp.py -b <span class="m">192</span>.168.1.100
+</pre></div>
+</div>
+<p>Then, run <code class="docutils literal notranslate"><span class="pre">spp_primary</span></code> with one physical port.</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">#</span> terminal <span class="m">3</span>
+<span class="gp">$</span> sudo ./src/primary/x86_64-native-linuxapp-gcc/spp_primary <span class="se">\</span>
+    -l <span class="m">0</span> -n <span class="m">4</span> <span class="se">\</span>
+    --socket-mem <span class="m">512</span>,512 <span class="se">\</span>
+    --huge-dir /run/hugepages/kvm <span class="se">\</span>
+    --proc-type primary <span class="se">\</span>
+    -- <span class="se">\</span>
+    -p 0x01 <span class="se">\</span>
+    -n <span class="m">8</span> -s <span class="m">192</span>.168.1.100:5555
+</pre></div>
+</div>
+<p>After <code class="docutils literal notranslate"><span class="pre">spp_primary</span></code> is launched successfully, run <code class="docutils literal notranslate"><span class="pre">spp_pcap</span></code> in other
+terminal. In this usecase, you use default values for optional arguments.
+Output directory of captured file is <code class="docutils literal notranslate"><span class="pre">/tmp</span></code> and the size of file is
+<code class="docutils literal notranslate"><span class="pre">1GiB</span></code>.
+You notice that six lcores are assigned with <code class="docutils literal notranslate"><span class="pre">-l</span> <span class="pre">1-6</span></code>.
+It means that you use one locre for master, one for receiver, and four for
+writer threads.</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">#</span> terminal <span class="m">4</span>
+<span class="gp">$</span> sudo ./src/pcap/x86_64-native-linuxapp-gcc/spp_pcap <span class="se">\</span>
+   -l <span class="m">1</span>-6 -n <span class="m">4</span> --proc-type<span class="o">=</span>secondary <span class="se">\</span>
+   -- <span class="se">\</span>
+   --client-id <span class="m">1</span> -s <span class="m">192</span>.168.1.100:6666 <span class="se">\</span>
+   -c phy:0
+</pre></div>
+</div>
+<p>You can confirm lcores and worker threads running on from <code class="docutils literal notranslate"><span class="pre">status</span></code> command.</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span># terminal 2
+spp &gt; pcap 1; status
+Basic Information:
+  - client-id: 1
+  - status: idle
+  - lcore_ids:
+    - master: 1
+    - slaves: [2, 3, 4, 5, 6]
+Components:
+  - core:2 receive
+    - rx: phy:0
+  - core:3 write
+    - filename:
+  - core:4 write
+    - filename:
+  - core:5 write
+    - filename:
+  - core:6 write
+    - filename:
+</pre></div>
+</div>
+</div>
+<div class="section" id="start-capture">
+<span id="spp-pcap-use-case-start-capture"></span><h3>4.1.2. Start Capture<a class="headerlink" href="#start-capture" title="Permalink to this headline">¶</a></h3>
+<p>If you already started to send packets to <code class="docutils literal notranslate"><span class="pre">phy:0</span></code> from outside,
+you are ready to start capturing packets.</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span># terminal 2
+spp &gt; pcap 1; start
+Start packet capture.
+</pre></div>
+</div>
+<p>As you run <code class="docutils literal notranslate"><span class="pre">start</span></code> command, PCAP files are generated for each of
+<code class="docutils literal notranslate"><span class="pre">writer</span></code> threads for capturing.</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span># terminal 2
+spp &gt; pcap 1; status
+Basic Information:
+  - client-id: 1
+  - status: running
+  - lcore_ids:
+    - master: 1
+    - slaves: [2, 3, 4, 5, 6]
+Components:
+  - core:2 receive
+    - rx: phy:0
+  - core:3 write
+    - filename: /tmp/spp_pcap.20190214161550.phy0.1.1.pcap.lz4
+  - core:4 write
+    - filename: /tmp/spp_pcap.20190214161550.phy0.2.1.pcap.lz4
+  - core:5 write
+    - filename: /tmp/spp_pcap.20190214161550.phy0.3.1.pcap.lz4
+  - core:6 write
+    - filename: /tmp/spp_pcap.20190214161550.phy0.4.1.pcap.lz4
+</pre></div>
+</div>
+</div>
+<div class="section" id="stop-capture">
+<span id="spp-pcap-use-case-stop-capture"></span><h3>4.1.3. Stop Capture<a class="headerlink" href="#stop-capture" title="Permalink to this headline">¶</a></h3>
+<p>Stop capturing and confirm that compressed PCAP files are generated.</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span># terminal 2
+spp &gt; pcap 1; stop
+spp &gt; ls /tmp
+....
+spp_pcap.20190214175446.phy0.1.1.pcap.lz4
+spp_pcap.20190214175446.phy0.1.2.pcap.lz4
+spp_pcap.20190214175446.phy0.1.3.pcap.lz4
+spp_pcap.20190214175446.phy0.2.1.pcap.lz4
+spp_pcap.20190214175446.phy0.2.2.pcap.lz4
+spp_pcap.20190214175446.phy0.2.3.pcap.lz4
+....
+</pre></div>
+</div>
+<p>Index in the filename, such as <code class="docutils literal notranslate"><span class="pre">1.1</span></code> or <code class="docutils literal notranslate"><span class="pre">1.2</span></code>, is a combination of
+<code class="docutils literal notranslate"><span class="pre">writer</span></code> thread ID and sequenceal number.
+In this case, it means each of four threads generate three files.</p>
+</div>
+<div class="section" id="shutdown-spp-pcap">
+<span id="spp-pcap-use-case-shutdown"></span><h3>4.1.4. Shutdown spp_pcap<a class="headerlink" href="#shutdown-spp-pcap" title="Permalink to this headline">¶</a></h3>
+<p>Run <code class="docutils literal notranslate"><span class="pre">exit</span></code> or <code class="docutils literal notranslate"><span class="pre">bye</span> <span class="pre">sec</span></code> command to terminate <code class="docutils literal notranslate"><span class="pre">spp_pcap</span></code>.</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span># terminal 2
+spp &gt; pcap 1; exit
+</pre></div>
+</div>
+</div>
+<div class="section" id="inspect-pcap-files">
+<span id="spp-pcap-use-case-inspect-file"></span><h3>4.1.5. Inspect PCAP Files<a class="headerlink" href="#inspect-pcap-files" title="Permalink to this headline">¶</a></h3>
+<p>You can inspect captured PCAP files by using utilities.</p>
+<div class="section" id="merge-pcap-files">
+<h4>4.1.5.1. Merge PCAP Files<a class="headerlink" href="#merge-pcap-files" title="Permalink to this headline">¶</a></h4>
+<p>Extract and merge compressed PCAP files.</p>
+<p>For extract several LZ4 files at once, use <code class="docutils literal notranslate"><span class="pre">-d</span></code> and <code class="docutils literal notranslate"><span class="pre">-m</span></code> options.
+<code class="docutils literal notranslate"><span class="pre">-d</span></code> is for decompression and <code class="docutils literal notranslate"><span class="pre">-m</span></code> is for multiple files.</p>
+<p>You had better not to merge divided files into single file, but still
+several files because the size of merged file might be huge.
+Each of extracted PCAP file is 1GiB in default, so total size of extracted
+files is 12GiB in this case. To avoid the situation, merge files for each of
+threads and generate four PCAP files of 3GiB.</p>
+<p>First, extract LZ4 files of writer thread ID 1.</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">#</span> terminal <span class="m">4</span>
+<span class="gp">$</span> lz4 -d -m /tmp/spp_pcap.20190214175446.phy0.1.*
+</pre></div>
+</div>
+<p>And confirm that the files are extracted.</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">#</span> terminal <span class="m">4</span>
+<span class="gp">$</span> ls /tmp <span class="p">|</span> grep pcap$
+<span class="go">spp_pcap.20190214175446.phy0.1.1.pcap</span>
+<span class="go">spp_pcap.20190214175446.phy0.1.2.pcap</span>
+<span class="go">spp_pcap.20190214175446.phy0.1.3.pcap</span>
+</pre></div>
+</div>
+<p>Run <code class="docutils literal notranslate"><span class="pre">mergecap</span></code> command to merge extracted files to current directory
+as <code class="docutils literal notranslate"><span class="pre">spp_pcap1.pcap</span></code>.</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">#</span> terminal <span class="m">4</span>
+<span class="gp">$</span> mergecap /tmp/spp_pcap.20190214175446.phy0.1.*.pcap -w spp_pcap1.pcap
+</pre></div>
+</div>
+</div>
+<div class="section" id="inspect-pcap-file">
+<h4>4.1.5.2. Inspect PCAP file<a class="headerlink" href="#inspect-pcap-file" title="Permalink to this headline">¶</a></h4>
+<p>You can use any of applications, for instance <code class="docutils literal notranslate"><span class="pre">wireshark</span></code> or <code class="docutils literal notranslate"><span class="pre">tcpdump</span></code>,
+for inspecting PCAP file.
+To inspect the merged PCAP file, read packet data from <code class="docutils literal notranslate"><span class="pre">tcpdump</span></code> command
+in this usecase. <code class="docutils literal notranslate"><span class="pre">-r</span></code> option is to dump packet data in human readable format.</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">#</span> terminal <span class="m">4</span>
+<span class="gp">$</span> tcpdump -r spp_pcap1.pcap <span class="p">|</span> less
+<span class="go">17:54:52.559783 IP 192.168.0.100.1234 &gt; 192.168.1.1.5678: Flags [.], ...</span>
+<span class="go">17:54:52.559784 IP 192.168.0.100.1234 &gt; 192.168.1.1.5678: Flags [.], ...</span>
+<span class="go">17:54:52.559785 IP 192.168.0.100.1234 &gt; 192.168.1.1.5678: Flags [.], ...</span>
+<span class="go">17:54:52.559785 IP 192.168.0.100.1234 &gt; 192.168.1.1.5678: Flags [.], ...</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="multi_nodes.html" class="btn btn-neutral float-right" title="5. Multiple Nodes" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="spp_mirror.html" class="btn btn-neutral float-left" title="3. spp_mirror" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

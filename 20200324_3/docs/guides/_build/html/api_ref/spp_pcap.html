@@ -1,0 +1,525 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>7. spp_pcap &mdash; Soft Patch Panel 19.08 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../_static/jquery.js"></script>
+        <script type="text/javascript" src="../_static/underscore.js"></script>
+        <script type="text/javascript" src="../_static/doctools.js"></script>
+        <script type="text/javascript" src="../_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="prev" title="6. spp_mirror" href="spp_mirror.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> Soft Patch Panel
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                19.08
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../overview.html">Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../design/index.html">Design</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../gsg/index.html">Getting Started Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../usecases/index.html">Use Cases</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../commands/index.html">SPP Commands</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../tools/index.html">Tools</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">API Reference</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="overview.html">1. spp-ctl REST API</a></li>
+<li class="toctree-l2"><a class="reference internal" href="proc_independ.html">2. Independent of Process Type</a></li>
+<li class="toctree-l2"><a class="reference internal" href="spp_primary.html">3. spp_primary</a></li>
+<li class="toctree-l2"><a class="reference internal" href="spp_nfv.html">4. spp_nfv</a></li>
+<li class="toctree-l2"><a class="reference internal" href="spp_vf.html">5. spp_vf</a></li>
+<li class="toctree-l2"><a class="reference internal" href="spp_mirror.html">6. spp_mirror</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">7. spp_pcap</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#get-v1-pcaps-client-id">7.1. GET /v1/pcaps/{client_id}</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#request-path">7.1.1. Request (path)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#request-example">7.1.2. Request example</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#response">7.1.3. Response</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#response-example">7.1.4. Response example</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#equivalent-cli-command">7.1.5. Equivalent CLI command</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#put-v1-pcaps-client-id-capture">7.2. PUT /v1/pcaps/{client_id}/capture</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#id1">7.2.1. Request (path)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#request-body">7.2.2. Request (body)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id2">7.2.3. Request example</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id3">7.2.4. Response</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id4">7.2.5. Equivalent CLI command</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#delete-v1-pcaps-client-id">7.3. DELETE /v1/pcaps/{client_id}</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#id5">7.3.1. Request (path)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id6">7.3.2. Request example</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id7">7.3.3. Response example</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id8">7.3.4. Equivalent CLI command</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">Soft Patch Panel</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="index.html">API Reference</a> &raquo;</li>
+        
+      <li>7. spp_pcap</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../_sources/api_ref/spp_pcap.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="spp-pcap">
+<span id="spp-ctl-rest-api-spp-pcap"></span><h1>7. spp_pcap<a class="headerlink" href="#spp-pcap" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="get-v1-pcaps-client-id">
+<h2>7.1. GET /v1/pcaps/{client_id}<a class="headerlink" href="#get-v1-pcaps-client-id" title="Permalink to this headline">¶</a></h2>
+<p>Get the information of the <code class="docutils literal notranslate"><span class="pre">spp_pcap</span></code> process.</p>
+<ul class="simple">
+<li><p>Normal response codes: 200</p></li>
+<li><p>Error response codes: 400, 404</p></li>
+</ul>
+<div class="section" id="request-path">
+<h3>7.1.1. Request (path)<a class="headerlink" href="#request-path" title="Permalink to this headline">¶</a></h3>
+<span id="table-spp-ctl-pcap-get"></span><table class="docutils align-default" id="id9">
+<caption><span class="caption-number">Table 7.1 </span><span class="caption-text">Request parameter for getting spp_pcap info.</span><a class="headerlink" href="#id9" title="Permalink to this table">¶</a></caption>
+<colgroup>
+<col style="width: 19%" />
+<col style="width: 16%" />
+<col style="width: 65%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Name</p></th>
+<th class="head"><p>Type</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>client_id</p></td>
+<td><p>integer</p></td>
+<td><p>client id.</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="request-example">
+<h3>7.1.2. Request example<a class="headerlink" href="#request-example" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$</span> curl -X GET -H <span class="s1">&#39;application/json&#39;</span> <span class="se">\</span>
+  http://127.0.0.1:7777/v1/pcaps/1
+</pre></div>
+</div>
+</div>
+<div class="section" id="response">
+<h3>7.1.3. Response<a class="headerlink" href="#response" title="Permalink to this headline">¶</a></h3>
+<span id="table-spp-ctl-spp-pcap-res"></span><table class="docutils align-default" id="id10">
+<caption><span class="caption-number">Table 7.2 </span><span class="caption-text">Response params of getting spp_pcap.</span><a class="headerlink" href="#id10" title="Permalink to this table">¶</a></caption>
+<colgroup>
+<col style="width: 24%" />
+<col style="width: 12%" />
+<col style="width: 64%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Name</p></th>
+<th class="head"><p>Type</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>client-id</p></td>
+<td><p>integer</p></td>
+<td><p>client id.</p></td>
+</tr>
+<tr class="row-odd"><td><p>status</p></td>
+<td><p>string</p></td>
+<td><p>status of the process. “running” or “idle”.</p></td>
+</tr>
+<tr class="row-even"><td><p>core</p></td>
+<td><p>array</p></td>
+<td><p>an array of core objects in the process.</p></td>
+</tr>
+</tbody>
+</table>
+<p>Core objects:</p>
+<span id="table-spp-ctl-spp-pcap-res-core"></span><table class="docutils align-default" id="id11">
+<caption><span class="caption-number">Table 7.3 </span><span class="caption-text">Core objects of getting spp_pcap.</span><a class="headerlink" href="#id11" title="Permalink to this table">¶</a></caption>
+<colgroup>
+<col style="width: 11%" />
+<col style="width: 10%" />
+<col style="width: 79%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Name</p></th>
+<th class="head"><p>Type</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>core</p></td>
+<td><p>integer</p></td>
+<td><p>core id</p></td>
+</tr>
+<tr class="row-odd"><td><p>role</p></td>
+<td><p>string</p></td>
+<td><p>role of the task running on the core. “receive” or “write”.</p></td>
+</tr>
+<tr class="row-even"><td><p>rx_port</p></td>
+<td><p>array</p></td>
+<td><p>an array of port object for caputure. This member exists if role is
+“recieve”. Note that there is only a port object in the array.</p></td>
+</tr>
+<tr class="row-odd"><td><p>filename</p></td>
+<td><p>string</p></td>
+<td><p>a path name of output file. This member exists if role is “write”.</p></td>
+</tr>
+</tbody>
+</table>
+<p>There is only a port object in the array.</p>
+<p>Port object:</p>
+<span id="table-spp-ctl-spp-pcap-res-port"></span><table class="docutils align-default" id="id12">
+<caption><span class="caption-number">Table 7.4 </span><span class="caption-text">Port objects of getting spp_pcap.</span><a class="headerlink" href="#id12" title="Permalink to this table">¶</a></caption>
+<colgroup>
+<col style="width: 11%" />
+<col style="width: 11%" />
+<col style="width: 78%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Name</p></th>
+<th class="head"><p>Type</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>port</p></td>
+<td><p>string</p></td>
+<td><p>port id. port id is the form {interface_type}:{interface_id}.</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="response-example">
+<h3>7.1.4. Response example<a class="headerlink" href="#response-example" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+  <span class="nt">&quot;client-id&quot;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
+  <span class="nt">&quot;status&quot;</span><span class="p">:</span> <span class="s2">&quot;running&quot;</span><span class="p">,</span>
+  <span class="nt">&quot;core&quot;</span><span class="p">:</span> <span class="p">[</span>
+    <span class="p">{</span>
+      <span class="nt">&quot;core&quot;</span><span class="p">:</span> <span class="mi">2</span><span class="p">,</span>
+      <span class="nt">&quot;role&quot;</span><span class="p">:</span> <span class="s2">&quot;receive&quot;</span><span class="p">,</span>
+      <span class="nt">&quot;rx_port&quot;</span><span class="p">:</span> <span class="p">[</span>
+        <span class="p">{</span>
+        <span class="nt">&quot;port&quot;</span><span class="p">:</span> <span class="s2">&quot;phy:0&quot;</span>
+        <span class="p">}</span>
+      <span class="p">]</span>
+    <span class="p">},</span>
+    <span class="p">{</span>
+      <span class="nt">&quot;core&quot;</span><span class="p">:</span> <span class="mi">3</span><span class="p">,</span>
+      <span class="nt">&quot;role&quot;</span><span class="p">:</span> <span class="s2">&quot;write&quot;</span><span class="p">,</span>
+      <span class="nt">&quot;filename&quot;</span><span class="p">:</span> <span class="s2">&quot;/tmp/spp_pcap.20181108110600.ring0.1.2.pcap&quot;</span>
+    <span class="p">}</span>
+  <span class="p">]</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="equivalent-cli-command">
+<h3>7.1.5. Equivalent CLI command<a class="headerlink" href="#equivalent-cli-command" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>spp &gt; pcap {client_id}; status
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="put-v1-pcaps-client-id-capture">
+<h2>7.2. PUT /v1/pcaps/{client_id}/capture<a class="headerlink" href="#put-v1-pcaps-client-id-capture" title="Permalink to this headline">¶</a></h2>
+<p>Start or Stop capturing.</p>
+<ul class="simple">
+<li><p>Normal response codes: 204</p></li>
+<li><p>Error response codes: 400, 404</p></li>
+</ul>
+<div class="section" id="id1">
+<h3>7.2.1. Request (path)<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h3>
+<span id="table-spp-ctl-spp-pcap-capture"></span><table class="docutils align-default" id="id13">
+<caption><span class="caption-number">Table 7.5 </span><span class="caption-text">Request params of capture of spp_pcap.</span><a class="headerlink" href="#id13" title="Permalink to this table">¶</a></caption>
+<colgroup>
+<col style="width: 21%" />
+<col style="width: 17%" />
+<col style="width: 62%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Name</p></th>
+<th class="head"><p>Type</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>client_id</p></td>
+<td><p>integer</p></td>
+<td><p>client id.</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="request-body">
+<h3>7.2.2. Request (body)<a class="headerlink" href="#request-body" title="Permalink to this headline">¶</a></h3>
+<span id="table-spp-ctl-spp-pcap-capture-body"></span><table class="docutils align-default" id="id14">
+<caption><span class="caption-number">Table 7.6 </span><span class="caption-text">Request body params of capture of spp_pcap.</span><a class="headerlink" href="#id14" title="Permalink to this table">¶</a></caption>
+<colgroup>
+<col style="width: 15%" />
+<col style="width: 15%" />
+<col style="width: 70%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Name</p></th>
+<th class="head"><p>Type</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>action</p></td>
+<td><p>string</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">start</span></code> or <code class="docutils literal notranslate"><span class="pre">stop</span></code>.</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="id2">
+<h3>7.2.3. Request example<a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$</span> curl -X PUT -H <span class="s1">&#39;application/json&#39;</span> <span class="se">\</span>
+  -d <span class="s1">&#39;{&quot;action&quot;: &quot;start&quot;}&#39;</span> <span class="se">\</span>
+  http://127.0.0.1:7777/v1/pcaps/1/capture
+</pre></div>
+</div>
+</div>
+<div class="section" id="id3">
+<h3>7.2.4. Response<a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h3>
+<p>There is no body content for the response of a successful <code class="docutils literal notranslate"><span class="pre">PUT</span></code> request.</p>
+</div>
+<div class="section" id="id4">
+<h3>7.2.5. Equivalent CLI command<a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h3>
+<p>Action is <code class="docutils literal notranslate"><span class="pre">start</span></code>.</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>spp &gt; pcap {client_id}; start
+</pre></div>
+</div>
+<p>Action is <code class="docutils literal notranslate"><span class="pre">stop</span></code>.</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>spp &gt; pcap {client_id}; stop
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="delete-v1-pcaps-client-id">
+<h2>7.3. DELETE /v1/pcaps/{client_id}<a class="headerlink" href="#delete-v1-pcaps-client-id" title="Permalink to this headline">¶</a></h2>
+<p>Terminate <code class="docutils literal notranslate"><span class="pre">spp_pcap</span></code> process.</p>
+<ul class="simple">
+<li><p>Normal response codes: 204</p></li>
+<li><p>Error response codes: 400, 404</p></li>
+</ul>
+<div class="section" id="id5">
+<h3>7.3.1. Request (path)<a class="headerlink" href="#id5" title="Permalink to this headline">¶</a></h3>
+<span id="table-spp-ctl-pcap-delete"></span><table class="docutils align-default" id="id15">
+<caption><span class="caption-number">Table 7.7 </span><span class="caption-text">Request parameter for terminating spp_pcap.</span><a class="headerlink" href="#id15" title="Permalink to this table">¶</a></caption>
+<colgroup>
+<col style="width: 19%" />
+<col style="width: 16%" />
+<col style="width: 65%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Name</p></th>
+<th class="head"><p>Type</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>client_id</p></td>
+<td><p>integer</p></td>
+<td><p>client id.</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="id6">
+<h3>7.3.2. Request example<a class="headerlink" href="#id6" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$</span> curl -X DELETE -H <span class="s1">&#39;application/json&#39;</span> <span class="se">\</span>
+  http://127.0.0.1:7777/v1/pcaps/1
+</pre></div>
+</div>
+</div>
+<div class="section" id="id7">
+<h3>7.3.3. Response example<a class="headerlink" href="#id7" title="Permalink to this headline">¶</a></h3>
+<p>There is no body content for the response of a successful <code class="docutils literal notranslate"><span class="pre">DELETE</span></code> request.</p>
+</div>
+<div class="section" id="id8">
+<h3>7.3.4. Equivalent CLI command<a class="headerlink" href="#id8" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>spp &gt; pcap {client_id}; exit
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+      
+        <a href="spp_mirror.html" class="btn btn-neutral float-left" title="6. spp_mirror" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

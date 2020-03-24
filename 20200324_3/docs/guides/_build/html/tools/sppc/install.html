@@ -1,0 +1,296 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>1.3. Install &mdash; Soft Patch Panel 19.08 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="../../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../../_static/jquery.js"></script>
+        <script type="text/javascript" src="../../_static/underscore.js"></script>
+        <script type="text/javascript" src="../../_static/doctools.js"></script>
+        <script type="text/javascript" src="../../_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="../../_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="1.4. Build Images" href="build_img.html" />
+    <link rel="prev" title="1.2. Getting Started" href="getting_started.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../index.html" class="icon icon-home"> Soft Patch Panel
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                19.08
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../overview.html">Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../design/index.html">Design</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../gsg/index.html">Getting Started Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../usecases/index.html">Use Cases</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../commands/index.html">SPP Commands</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../index.html">Tools</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="index.html">1. SPP Container</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="overview.html">1.1. Overview</a></li>
+<li class="toctree-l3"><a class="reference internal" href="getting_started.html">1.2. Getting Started</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">1.3. Install</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#required-packages">1.3.1. Required Packages</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#configurations">1.3.2. Configurations</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="build_img.html">1.4. Build Images</a></li>
+<li class="toctree-l3"><a class="reference internal" href="app_launcher.html">1.5. App Container Launchers</a></li>
+<li class="toctree-l3"><a class="reference internal" href="usecases.html">1.6. Use Cases</a></li>
+<li class="toctree-l3"><a class="reference internal" href="howto_launcher.html">1.7. How to Define Your App Launcher</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../helpers/index.html">2. Helper tools</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../api_ref/index.html">API Reference</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">Soft Patch Panel</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="../index.html">Tools</a> &raquo;</li>
+        
+          <li><a href="index.html">1. SPP Container</a> &raquo;</li>
+        
+      <li>1.3. Install</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../../_sources/tools/sppc/install.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="install">
+<span id="spp-container-install"></span><h1>1.3. Install<a class="headerlink" href="#install" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="required-packages">
+<span id="sppc-install-required"></span><h2>1.3.1. Required Packages<a class="headerlink" href="#required-packages" title="Permalink to this headline">¶</a></h2>
+<p>You need to install packages required for DPDK, and docker.</p>
+<ul class="simple">
+<li><p>DPDK 17.11 or later (supporting container)</p></li>
+<li><p>docker</p></li>
+</ul>
+</div>
+<div class="section" id="configurations">
+<span id="sppc-install-config"></span><h2>1.3.2. Configurations<a class="headerlink" href="#configurations" title="Permalink to this headline">¶</a></h2>
+<p>You might need some additional non-mandatory configurations.</p>
+<div class="section" id="run-docker-without-sudo">
+<h3>1.3.2.1. Run docker without sudo<a class="headerlink" href="#run-docker-without-sudo" title="Permalink to this headline">¶</a></h3>
+<p>You should run docker as sudo in most of scripts provided in
+SPP container because for running DPDK applications.</p>
+<p>However, you can run docker without sudo if you do not run DPDK
+applications.
+It is useful if you run <code class="docutils literal notranslate"><span class="pre">docker</span> <span class="pre">kill</span></code> for terminating containerized
+process, <code class="docutils literal notranslate"><span class="pre">docker</span> <span class="pre">rm</span></code> or <code class="docutils literal notranslate"><span class="pre">docker</span> <span class="pre">rmi</span></code> for cleaning resources.</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">#</span> Terminate container from docker <span class="nb">command</span>
+<span class="gp">$</span> docker <span class="nb">kill</span> xxxxxx_yyyyyyy
+
+<span class="gp">#</span> Remove all of containers
+<span class="gp">$</span> docker rm <span class="sb">`</span>docker ps -aq<span class="sb">`</span>
+
+<span class="gp">#</span> Remove all of images
+<span class="gp">$</span> docker rmi <span class="sb">`</span>docker images -aq<span class="sb">`</span>
+</pre></div>
+</div>
+<p>The reason for running docker requires sudo is docker daemon
+binds to a unix socket instead of a TCP port.
+Unix socket is owned by root and other users can only access it using
+sudo.
+However, you can run if you add your account to docker group.</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$</span> sudo groupadd docker
+<span class="gp">$</span> sudo usermod -aG docker <span class="nv">$USER</span>
+</pre></div>
+</div>
+<p>To activate it, you have to logout and re-login at once.</p>
+</div>
+<div class="section" id="network-proxy">
+<h3>1.3.2.2. Network Proxy<a class="headerlink" href="#network-proxy" title="Permalink to this headline">¶</a></h3>
+<p>If you are behind a proxy, you should configure proxy to build an image
+or running container.
+SPP container is supportng proxy configuration for getting
+it from shell environments.
+You confirm that <code class="docutils literal notranslate"><span class="pre">http_proxy</span></code>, <code class="docutils literal notranslate"><span class="pre">https_proxy</span></code>
+and <code class="docutils literal notranslate"><span class="pre">no_proxy</span></code> of environmental variables are defined.</p>
+<p>It also required to add proxy configurations for docker daemon.
+Proxy for docker daemon is defined as <code class="docutils literal notranslate"><span class="pre">[Service]</span></code> entry in
+<code class="docutils literal notranslate"><span class="pre">/etc/systemd/system/docker.service.d/http-proxy.conf</span></code>.</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">[Service]</span>
+<span class="go">Environment=&quot;HTTP_PROXY=http:...&quot; &quot;HTTPS_PROXY=https...&quot; &quot;NO_PROXY=...&quot;</span>
+</pre></div>
+</div>
+<p>To activate it, you should restart docker daemon.</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$</span> systemctl daemon-reload
+<span class="gp">$</span> systemctl restart docker
+</pre></div>
+</div>
+<p>You can confirm that environments are updated by running
+<code class="docutils literal notranslate"><span class="pre">docker</span> <span class="pre">info</span></code>.</p>
+</div>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="build_img.html" class="btn btn-neutral float-right" title="1.4. Build Images" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="getting_started.html" class="btn btn-neutral float-left" title="1.2. Getting Started" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

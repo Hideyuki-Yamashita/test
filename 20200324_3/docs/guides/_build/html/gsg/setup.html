@@ -1,0 +1,458 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>1. Setup &mdash; Soft Patch Panel 19.08 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../_static/jquery.js"></script>
+        <script type="text/javascript" src="../_static/underscore.js"></script>
+        <script type="text/javascript" src="../_static/doctools.js"></script>
+        <script type="text/javascript" src="../_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="2. Install DPDK and SPP" href="install.html" />
+    <link rel="prev" title="Getting Started Guide" href="index.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> Soft Patch Panel
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                19.08
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../overview.html">Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../design/index.html">Design</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">Getting Started Guide</a><ul class="current">
+<li class="toctree-l2 current"><a class="current reference internal" href="#">1. Setup</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#reserving-hugepages">1.1. Reserving Hugepages</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#gb-hugepage">1.1.1. 1GB Hugepage</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#mb-hugepage">1.1.2. 2MB Hugepage</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#mount-hugepages">1.2. Mount hugepages</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#disable-aslr">1.3. Disable ASLR</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#using-virtual-machine">1.4. Using Virtual Machine</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#server-mode-v-s-client-mode">1.4.1. Server mode v.s. Client mode</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#libvirt">1.4.2. Libvirt</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#trouble-shooting">1.4.3. Trouble Shooting</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#python-2-or-3">1.5. Python 2 or 3 ?</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#reference">1.6. Reference</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="install.html">2. Install DPDK and SPP</a></li>
+<li class="toctree-l2"><a class="reference internal" href="howto_use.html">3. How to Use</a></li>
+<li class="toctree-l2"><a class="reference internal" href="performance_opt.html">4. Performance Optimization</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../usecases/index.html">Use Cases</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../commands/index.html">SPP Commands</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../tools/index.html">Tools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../api_ref/index.html">API Reference</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">Soft Patch Panel</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="index.html">Getting Started Guide</a> &raquo;</li>
+        
+      <li>1. Setup</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../_sources/gsg/setup.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="setup">
+<span id="gsg-setup"></span><h1>1. Setup<a class="headerlink" href="#setup" title="Permalink to this headline">¶</a></h1>
+<p>This documentation is described for following distributions.</p>
+<ul class="simple">
+<li><p>Ubuntu 16.04 and 18.04</p></li>
+<li><p>CentOS 7.6 (not fully supported)</p></li>
+</ul>
+<div class="section" id="reserving-hugepages">
+<span id="gsg-reserve-hugep"></span><h2>1.1. Reserving Hugepages<a class="headerlink" href="#reserving-hugepages" title="Permalink to this headline">¶</a></h2>
+<p>Hugepages should be enabled for running DPDK application.
+Hugepage support is to reserve large amount size of pages,
+2MB or 1GB per page, to less TLB (Translation Lookaside Buffers) and
+to reduce cache miss.
+Less TLB means that it reduce the time for translating virtual address
+to physical.</p>
+<p>How to configure reserving hugepages is different between 2MB or 1GB.
+In general, 1GB is better for getting high performance,
+but 2MB is easier for configuration than 1GB.</p>
+<div class="section" id="gb-hugepage">
+<h3>1.1.1. 1GB Hugepage<a class="headerlink" href="#gb-hugepage" title="Permalink to this headline">¶</a></h3>
+<p>For using 1GB page, hugepage setting is activated while booting system.
+It must be defined in boot loader configuration, usually it is
+<code class="docutils literal notranslate"><span class="pre">/etc/default/grub</span></code>.
+Add an entry of configuration of the size and the number of pages.</p>
+<p>Here is an example for Ubuntu, and almost the same as CentOS. The points are
+that <code class="docutils literal notranslate"><span class="pre">hugepagesz</span></code> is for the size and <code class="docutils literal notranslate"><span class="pre">hugepages</span></code> is for the number of
+pages.
+You can also configure <code class="docutils literal notranslate"><span class="pre">isolcpus</span></code> in grub setting for improving performance
+as described in
+<a class="reference internal" href="performance_opt.html#gsg-performance-opt"><span class="std std-ref">Performance Optimizing</span></a>.</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span># /etc/default/grub
+GRUB_CMDLINE_LINUX=&quot;default_hugepagesz=1G hugepagesz=1G hugepages=8&quot;
+</pre></div>
+</div>
+<p>For Ubuntu, you should run <code class="docutils literal notranslate"><span class="pre">update-grub</span></code> for updating
+<code class="docutils literal notranslate"><span class="pre">/boot/grub/grub.cfg</span></code> after editing to update grub’s
+config file, or this configuration is not activated.</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">#</span> Ubuntu
+<span class="gp">$</span> sudo update-grub
+<span class="go">Generating grub configuration file ...</span>
+</pre></div>
+</div>
+<p>Or for CentOS7, you use <code class="docutils literal notranslate"><span class="pre">grub2-mkconfig</span></code> instead of <code class="docutils literal notranslate"><span class="pre">update-grub</span></code>.
+In this case, you should give the output file with <code class="docutils literal notranslate"><span class="pre">-o</span></code> option.
+The output path might be different, so you should find your correct
+<code class="docutils literal notranslate"><span class="pre">grub.cfg</span></code> by yourself.</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">#</span> CentOS
+<span class="gp">$</span> sudo grub2-mkconfig -o /boot/efi/EFI/centos/grub.cfg
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>1GB hugepages might not be supported on your hardware.
+It depends on that CPUs support 1GB pages or not. You can check it
+by referring <code class="docutils literal notranslate"><span class="pre">/proc/cpuinfo</span></code>. If it is supported, you can find
+<code class="docutils literal notranslate"><span class="pre">pdpe1gb</span></code> in the <code class="docutils literal notranslate"><span class="pre">flags</span></code> attribute.</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$</span> cat /proc/cpuinfo <span class="p">|</span> grep pdpe1gb
+<span class="go">flags           : fpu vme ... pdpe1gb ...</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="mb-hugepage">
+<h3>1.1.2. 2MB Hugepage<a class="headerlink" href="#mb-hugepage" title="Permalink to this headline">¶</a></h3>
+<p>For using 2MB page, you can activate hugepages while booting or at anytime
+after system is booted.
+Define hugepages setting in <code class="docutils literal notranslate"><span class="pre">/etc/default/grub</span></code> to activate it while
+booting, or overwrite the number of 2MB hugepages as following.</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$</span> <span class="nb">echo</span> <span class="m">1024</span> &gt; /sys/kernel/mm/hugepages/hugepages-2048kB/nr_hugepages
+</pre></div>
+</div>
+<p>In this case, 1024 pages of 2MB, totally 2048 MB, are reserved.</p>
+</div>
+</div>
+<div class="section" id="mount-hugepages">
+<h2>1.2. Mount hugepages<a class="headerlink" href="#mount-hugepages" title="Permalink to this headline">¶</a></h2>
+<p>Make the memory available for using hugepages from DPDK.</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$</span> mkdir /mnt/huge
+<span class="gp">$</span> mount -t hugetlbfs nodev /mnt/huge
+</pre></div>
+</div>
+<p>It is also available while booting by adding a configuration of mount
+point in <code class="docutils literal notranslate"><span class="pre">/etc/fstab</span></code>.
+The mount point for 2MB or 1GB can be made permanently accross reboot.
+For 2MB, it is no need to declare the size of hugepages explicity.</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span># /etc/fstab
+nodev /mnt/huge hugetlbfs defaults 0 0
+</pre></div>
+</div>
+<p>For 1GB, the size of hugepage <code class="docutils literal notranslate"><span class="pre">pagesize</span></code> must be specified.</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span># /etc/fstab
+nodev /mnt/huge_1GB hugetlbfs pagesize=1GB 0 0
+</pre></div>
+</div>
+</div>
+<div class="section" id="disable-aslr">
+<h2>1.3. Disable ASLR<a class="headerlink" href="#disable-aslr" title="Permalink to this headline">¶</a></h2>
+<p>SPP is a DPDK multi-process application and there are a number of
+<a class="reference external" href="https://dpdk.org/doc/guides/prog_guide/multi_proc_support.html#multi-process-limitations">limitations</a>
+.</p>
+<p>Address-Space Layout Randomization (ASLR) is a security feature for
+memory protection, but may cause a failure of memory
+mapping while starting multi-process application as discussed in
+<a class="reference external" href="http://dpdk.org/ml/archives/dev/2014-September/005236.html">dpdk-dev</a>
+.</p>
+<p>ASLR can be disabled by assigning <code class="docutils literal notranslate"><span class="pre">kernel.randomize_va_space</span></code> to
+<code class="docutils literal notranslate"><span class="pre">0</span></code>, or be enabled by assigning it to <code class="docutils literal notranslate"><span class="pre">2</span></code>.</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">#</span> disable ASLR
+<span class="gp">$</span> sudo sysctl -w kernel.randomize_va_space<span class="o">=</span><span class="m">0</span>
+
+<span class="gp">#</span> <span class="nb">enable</span> ASLR
+<span class="gp">$</span> sudo sysctl -w kernel.randomize_va_space<span class="o">=</span><span class="m">2</span>
+</pre></div>
+</div>
+<p>You can check the value as following.</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$</span> sysctl -n kernel.randomize_va_space
+</pre></div>
+</div>
+</div>
+<div class="section" id="using-virtual-machine">
+<h2>1.4. Using Virtual Machine<a class="headerlink" href="#using-virtual-machine" title="Permalink to this headline">¶</a></h2>
+<p>SPP provides vhost interface for inter VM communication.
+You can use any of DPDK supported hypervisors, but this document describes
+usecases of qemu and libvirt.</p>
+<div class="section" id="server-mode-v-s-client-mode">
+<h3>1.4.1. Server mode v.s. Client mode<a class="headerlink" href="#server-mode-v-s-client-mode" title="Permalink to this headline">¶</a></h3>
+<p>For using vhost, vhost port should be created before VM is launched in
+server mode, or SPP is launched in client mode to be able to create
+vhost port after VM is launched.</p>
+<p>Client mode is optional and supported in qemu 2.7 or later.
+For using this mode, launch secondary process with <code class="docutils literal notranslate"><span class="pre">--vhost-client</span></code>.
+Qemu creates socket file instead of secondary process.
+It means that you can launch a VM before secondary process create vhost port.</p>
+</div>
+<div class="section" id="libvirt">
+<h3>1.4.2. Libvirt<a class="headerlink" href="#libvirt" title="Permalink to this headline">¶</a></h3>
+<p>If you use libvirt for managing virtual machines, you might need some
+additional configurations.</p>
+<p>To have access to resources with your account, update and
+activate user and group parameters in <code class="docutils literal notranslate"><span class="pre">/etc/libvirt/qemu.conf</span></code>.
+Here is an example.</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span># /etc/libvirt/qemu.conf
+
+user = &quot;root&quot;
+group = &quot;root&quot;
+</pre></div>
+</div>
+<p>For using hugepages with libvirt, change <code class="docutils literal notranslate"><span class="pre">KVM_HUGEPAGES</span></code> from 0 to 1
+in <code class="docutils literal notranslate"><span class="pre">/etc/default/qemu-kvm</span></code>.</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span># /etc/default/qemu-kvm
+
+KVM_HUGEPAGES=1
+</pre></div>
+</div>
+<p>Change grub config as similar to
+<a class="reference internal" href="#gsg-reserve-hugep"><span class="std std-ref">Reserving Hugepages</span></a>.
+You can check hugepage settings as following.</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$</span> cat /proc/meminfo <span class="p">|</span> grep -i huge
+<span class="go">AnonHugePages:      2048 kB</span>
+<span class="go">HugePages_Total:      36            #       /etc/default/grub</span>
+<span class="go">HugePages_Free:       36</span>
+<span class="go">HugePages_Rsvd:        0</span>
+<span class="go">HugePages_Surp:        0</span>
+<span class="go">Hugepagesize:    1048576 kB         #       /etc/default/grub</span>
+
+<span class="gp">$</span> mount <span class="p">|</span> grep -i huge
+<span class="go">cgroup on /sys/fs/cgroup/hugetlb type cgroup (rw,...,nsroot=/)</span>
+<span class="go">hugetlbfs on /dev/hugepages type hugetlbfs (rw,relatime)</span>
+<span class="go">hugetlbfs-kvm on /run/hugepages/kvm type hugetlbfs (rw,...,gid=117)</span>
+<span class="go">hugetlb on /run/lxcfs/controllers/hugetlb type cgroup (rw,...,nsroot=/)</span>
+</pre></div>
+</div>
+<p>Finally, you umount default hugepages.</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$</span> sudo umount /dev/hugepages
+</pre></div>
+</div>
+</div>
+<div class="section" id="trouble-shooting">
+<h3>1.4.3. Trouble Shooting<a class="headerlink" href="#trouble-shooting" title="Permalink to this headline">¶</a></h3>
+<p>You might encounter a permission error while creating a resource,
+such as a socket file under <code class="docutils literal notranslate"><span class="pre">tmp/</span></code>, because of AppArmor.</p>
+<p>You can avoid this error by editing <code class="docutils literal notranslate"><span class="pre">/etc/libvirt/qemu.conf</span></code>.</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">#</span> Set security_driver to <span class="s2">&quot;none&quot;</span>
+<span class="gp">$</span>sudo vi /etc/libvirt/qemu.conf
+<span class="go">...</span>
+<span class="go">security_driver = &quot;none&quot;</span>
+<span class="go">...</span>
+</pre></div>
+</div>
+<p>Restart libvirtd to activate this configuration.</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$</span>sudo systemctl restart libvirtd.service
+</pre></div>
+</div>
+<p>Or, you can also avoid by simply removing AppArmor itself.</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$</span> sudo apt-get remove apparmor
+</pre></div>
+</div>
+<p>If you use CentOS, confirm that SELinux doesn’t prevent
+for permission.
+SELinux is disabled simply by changing the configuration to <code class="docutils literal notranslate"><span class="pre">disabled</span></code>.</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">#</span> /etc/selinux/config
+<span class="go">SELINUX=disabled</span>
+</pre></div>
+</div>
+<p>Check your SELinux configuration.</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$</span> getenforce
+<span class="go">Disabled</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="python-2-or-3">
+<h2>1.5. Python 2 or 3 ?<a class="headerlink" href="#python-2-or-3" title="Permalink to this headline">¶</a></h2>
+<p>Without SPP container tools, Python2 is not supported anymore.
+SPP container will also be updated to Python3.</p>
+</div>
+<div class="section" id="reference">
+<h2>1.6. Reference<a class="headerlink" href="#reference" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><p>[1] <a class="reference external" href="http://dpdk.org/doc/guides/linux_gsg/sys_reqs.html#running-dpdk-applications">Use of Hugepages in the Linux Environment</a></p></li>
+<li><p>[2] <a class="reference external" href="http://dpdk.org/doc/guides/linux_gsg/enable_func.html#using-linux-core-isolation-to-reduce-context-switches">Using Linux Core Isolation to Reduce Context Switches</a></p></li>
+<li><p>[3] <a class="reference external" href="http://dpdk.org/doc/guides/linux_gsg/nic_perf_intel_platform.html#linux-boot-command-line">Linux boot command line</a></p></li>
+</ul>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="install.html" class="btn btn-neutral float-right" title="2. Install DPDK and SPP" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="index.html" class="btn btn-neutral float-left" title="Getting Started Guide" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

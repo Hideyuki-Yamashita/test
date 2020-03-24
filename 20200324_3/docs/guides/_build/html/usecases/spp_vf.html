@@ -1,0 +1,737 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>2. spp_vf &mdash; Soft Patch Panel 19.08 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../_static/jquery.js"></script>
+        <script type="text/javascript" src="../_static/underscore.js"></script>
+        <script type="text/javascript" src="../_static/doctools.js"></script>
+        <script type="text/javascript" src="../_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="3. spp_mirror" href="spp_mirror.html" />
+    <link rel="prev" title="1. spp_nfv" href="spp_nfv.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> Soft Patch Panel
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                19.08
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../overview.html">Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../design/index.html">Design</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../gsg/index.html">Getting Started Guide</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">Use Cases</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="spp_nfv.html">1. spp_nfv</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">2. spp_vf</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#classify-icmp-packets">2.1. Classify ICMP Packets</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#setup">2.1.1. Setup</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#network-configuration">2.1.2. Network Configuration</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#send-packet-from-remote-host">2.1.3. Send Packet from Remote Host</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#shutdown-spp-vf-components">2.1.4. Shutdown spp_vf Components</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#ssh-login-to-vms">2.2. SSH Login to VMs</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#id1">2.2.1. Setup</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id2">2.2.2. Network Configuration</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#setup-vms">2.2.3. Setup VMs</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#login-to-vms">2.2.4. Login to VMs</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#spp-usecases-vf-ssh-shutdown">2.2.5. Shutdown spp_vf Components</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#exit-spp-vf">2.2.6. Exit spp_vf</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="spp_mirror.html">3. spp_mirror</a></li>
+<li class="toctree-l2"><a class="reference internal" href="spp_pcap.html">4. spp_pcap</a></li>
+<li class="toctree-l2"><a class="reference internal" href="multi_nodes.html">5. Multiple Nodes</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../commands/index.html">SPP Commands</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../tools/index.html">Tools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../api_ref/index.html">API Reference</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">Soft Patch Panel</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="index.html">Use Cases</a> &raquo;</li>
+        
+      <li>2. spp_vf</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../_sources/usecases/spp_vf.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="spp-vf">
+<span id="spp-usecases-vf"></span><h1>2. spp_vf<a class="headerlink" href="#spp-vf" title="Permalink to this headline">¶</a></h1>
+<p><code class="docutils literal notranslate"><span class="pre">spp_vf</span></code> is a secondary process for providing L2 classification as a simple
+pusedo SR-IOV features.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p><code class="docutils literal notranslate"><span class="pre">--file-prefix</span></code> option is not required in this section because there is
+not DPDK application other than SPP.</p>
+</div>
+<div class="section" id="classify-icmp-packets">
+<span id="spp-usecases-vf-cls-icmp"></span><h2>2.1. Classify ICMP Packets<a class="headerlink" href="#classify-icmp-packets" title="Permalink to this headline">¶</a></h2>
+<p>To confirm classifying packets, sends ICMP packet from remote node by using
+ping and watch the response.
+Incoming packets through <code class="docutils literal notranslate"><span class="pre">NIC0</span></code> are classified based on destination address.</p>
+<div class="figure align-default" id="id4">
+<span id="figure-spp-vf-use-cases-nw-config"></span><a class="reference internal image-reference" href="../_images/vf_cls_icmp_nwconf.svg"><img alt="../_images/vf_cls_icmp_nwconf.svg" src="../_images/vf_cls_icmp_nwconf.svg" width="80%" /></a>
+<p class="caption"><span class="caption-number">Fig. 2.2 </span><span class="caption-text">Network Configuration</span><a class="headerlink" href="#id4" title="Permalink to this image">¶</a></p>
+</div>
+<div class="section" id="setup">
+<h3>2.1.1. Setup<a class="headerlink" href="#setup" title="Permalink to this headline">¶</a></h3>
+<p>Launch <code class="docutils literal notranslate"><span class="pre">spp-ctl</span></code> and SPP CLI before primary and secondary processes.</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">#</span> terminal <span class="m">1</span>
+<span class="gp">$</span> python3 ./src/spp-ctl/spp-ctl -b <span class="m">192</span>.168.1.100
+</pre></div>
+</div>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">#</span> terminal <span class="m">2</span>
+<span class="gp">$</span> python3 ./src/spp.py -b <span class="m">192</span>.168.1.100
+</pre></div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">spp_primary</span></code> on the second lcore with <code class="docutils literal notranslate"><span class="pre">-l</span> <span class="pre">0</span></code> and two ports <code class="docutils literal notranslate"><span class="pre">-p</span> <span class="pre">0x03</span></code>.</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">#</span> terminal <span class="m">3</span>
+<span class="gp">$</span> sudo ./src/primary/x86_64-native-linuxapp-gcc/spp_primary <span class="se">\</span>
+    -l <span class="m">1</span> -n <span class="m">4</span> <span class="se">\</span>
+    --socket-mem <span class="m">512</span>,512 <span class="se">\</span>
+    --huge-dir<span class="o">=</span>/run/hugepages/kvm <span class="se">\</span>
+    --proc-type<span class="o">=</span>primary <span class="se">\</span>
+    -- <span class="se">\</span>
+    -p 0x03 <span class="se">\</span>
+    -n <span class="m">10</span> -s <span class="m">192</span>.168.1.100:5555
+</pre></div>
+</div>
+<p>After <code class="docutils literal notranslate"><span class="pre">spp_primary</span></code> is launched, run secondary process <code class="docutils literal notranslate"><span class="pre">spp_vf</span></code>.
+In this case, lcore options is <code class="docutils literal notranslate"><span class="pre">-l</span> <span class="pre">2-6</span></code> for one master thread and four
+worker threads.</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">#</span> terminal <span class="m">4</span>
+<span class="gp">$</span> sudo ./src/vf/x86_64-native-linuxapp-gcc/spp_vf <span class="se">\</span>
+   -l <span class="m">2</span>-6 <span class="se">\</span>
+   -n <span class="m">4</span> --proc-type<span class="o">=</span>secondary <span class="se">\</span>
+   -- <span class="se">\</span>
+   --client-id <span class="m">1</span> <span class="se">\</span>
+   -s <span class="m">192</span>.168.1.100:6666 <span class="se">\</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="network-configuration">
+<h3>2.1.2. Network Configuration<a class="headerlink" href="#network-configuration" title="Permalink to this headline">¶</a></h3>
+<p>Configure network as described in <a class="reference internal" href="#figure-spp-vf-use-cases-nw-config"><span class="std std-numref">Fig. 2.2</span></a>
+step by step.</p>
+<p>First of all, setup worker threads from <code class="docutils literal notranslate"><span class="pre">component</span></code> command with lcore ID
+and other options on local host <code class="docutils literal notranslate"><span class="pre">host2</span></code>.</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span># terminal 2
+spp &gt; vf 1; component start cls 3 classifier
+spp &gt; vf 1; component start fwd1 4 forwarder
+spp &gt; vf 1; component start fwd2 5 forwarder
+spp &gt; vf 1; component start mgr 6 merger
+</pre></div>
+</div>
+<p>Add ports for each of components as following.
+The number of rx and tx ports are different for each of component’s role.</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span># terminal 2
+
+# classifier
+spp &gt; vf 1; port add phy:0 rx cls
+spp &gt; vf 1; port add ring:0 tx cls
+spp &gt; vf 1; port add ring:1 tx cls
+
+# forwarders
+spp &gt; vf 1; port add ring:0 rx fwd1
+spp &gt; vf 1; port add ring:2 tx fwd1
+spp &gt; vf 1; port add ring:1 rx fwd2
+spp &gt; vf 1; port add ring:3 tx fwd2
+
+# merger
+spp &gt; vf 1; port add ring:2 rx mgr
+spp &gt; vf 1; port add ring:3 rx mgr
+spp &gt; vf 1; port add phy:1 tx mgr
+</pre></div>
+</div>
+<p>You also need to configure MAC address table for classifier. In this case,
+you need to register two MAC addresses. Although any MAC can be used,
+you use <code class="docutils literal notranslate"><span class="pre">52:54:00:12:34:56</span></code> and <code class="docutils literal notranslate"><span class="pre">52:54:00:12:34:58</span></code>.</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span># terminal 2
+spp &gt; vf 1; classifier_table add mac 52:54:00:12:34:56 ring:0
+spp &gt; vf 1; classifier_table add mac 52:54:00:12:34:58 ring:1
+</pre></div>
+</div>
+</div>
+<div class="section" id="send-packet-from-remote-host">
+<h3>2.1.3. Send Packet from Remote Host<a class="headerlink" href="#send-packet-from-remote-host" title="Permalink to this headline">¶</a></h3>
+<p>Ensure NICs, <code class="docutils literal notranslate"><span class="pre">ens0</span></code> and <code class="docutils literal notranslate"><span class="pre">ens1</span></code> in this case, are upped on remote host
+<code class="docutils literal notranslate"><span class="pre">host1</span></code>. You can up by using ifconfig if the status is down.</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">#</span> terminal <span class="m">1</span> on remote host
+<span class="gp">#</span> Configure ip address of ens0
+<span class="gp">$</span> sudo ifconfig ens0 <span class="m">192</span>.168.140.1 netmask <span class="m">255</span>.255.255.0 up
+</pre></div>
+</div>
+<p>Add arp entries of MAC addresses statically to be resolved.</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">#</span> terminal <span class="m">1</span> on remote host
+<span class="gp">#</span> <span class="nb">set</span> MAC address
+<span class="gp">$</span> sudo arp -i ens0 -s <span class="m">192</span>.168.140.2 <span class="m">52</span>:54:00:12:34:56
+<span class="gp">$</span> sudo arp -i ens0 -s <span class="m">192</span>.168.140.3 <span class="m">52</span>:54:00:12:34:58
+</pre></div>
+</div>
+<p>Start tcpdump command for capturing <code class="docutils literal notranslate"><span class="pre">ens1</span></code>.</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">#</span> terminal <span class="m">2</span> on remote host
+<span class="gp">$</span> sudo tcpdump -i ens1
+</pre></div>
+</div>
+<p>Then, start ping in other terminals.</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">#</span> terminal <span class="m">3</span> on remote host
+<span class="gp">#</span> ping via NIC0
+<span class="gp">$</span> ping <span class="m">192</span>.168.140.2
+</pre></div>
+</div>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">#</span> terminal <span class="m">4</span> on remote host
+<span class="gp">#</span> ping via NIC0
+<span class="gp">$</span> ping <span class="m">192</span>.168.140.3
+</pre></div>
+</div>
+<p>You can see ICMP Echo requests are received from ping on terminal 2.</p>
+</div>
+<div class="section" id="shutdown-spp-vf-components">
+<span id="spp-vf-use-cases-shutdown-comps"></span><h3>2.1.4. Shutdown spp_vf Components<a class="headerlink" href="#shutdown-spp-vf-components" title="Permalink to this headline">¶</a></h3>
+<p>Basically, you can shutdown all of SPP processes with <code class="docutils literal notranslate"><span class="pre">bye</span> <span class="pre">all</span></code>
+command.
+This section describes graceful shutting down.
+First, delete entries of <code class="docutils literal notranslate"><span class="pre">classifier_table</span></code> and ports of components.</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span># terminal 2
+# Delete MAC address from Classifier
+spp &gt; vf 1; classifier_table del mac 52:54:00:12:34:56 ring:0
+spp &gt; vf 1; classifier_table del mac 52:54:00:12:34:58 ring:1
+</pre></div>
+</div>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span># terminal 2
+# classifier
+spp &gt; vf 1; port del phy:0 rx cls
+spp &gt; vf 1; port del ring:0 tx cls
+spp &gt; vf 1; port del ring:1 tx cls
+
+# forwarders
+spp &gt; vf 1; port del ring:0 rx fwd1
+spp &gt; vf 1; port del vhost:0 tx fwd1
+spp &gt; vf 1; port del ring:1 rx fwd2
+spp &gt; vf 1; port del vhost:2 tx fwd2
+
+# mergers
+spp &gt; vf 1; port del ring:2 rx mgr
+spp &gt; vf 1; port del ring:3 rx mgr
+spp &gt; vf 1; port del phy:0 tx mgr
+</pre></div>
+</div>
+<p>Then, stop components.</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span># terminal 2
+spp &gt; vf 1; component stop cls
+spp &gt; vf 1; component stop fwd1
+spp &gt; vf 1; component stop fwd2
+spp &gt; vf 1; component stop mgr
+</pre></div>
+</div>
+<p>You can confirm that worker threads are cleaned from <code class="docutils literal notranslate"><span class="pre">status</span></code>.</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>spp &gt; vf 1; status
+Basic Information:
+  - client-id: 1
+  - ports: [phy:0, phy:1]
+  - lcore_ids:
+    - master: 2
+    - slaves: [3, 4, 5, 6]
+Classifier Table:
+  No entries.
+Components:
+  - core:3 &#39;&#39; (type: unuse)
+  - core:4 &#39;&#39; (type: unuse)
+  - core:5 &#39;&#39; (type: unuse)
+  - core:6 &#39;&#39; (type: unuse)
+</pre></div>
+</div>
+<p>Finally, terminate <code class="docutils literal notranslate"><span class="pre">spp_vf</span></code> by using <code class="docutils literal notranslate"><span class="pre">exit</span></code> or <code class="docutils literal notranslate"><span class="pre">bye</span> <span class="pre">sec</span></code>.</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">spp &gt; vf 1; exit</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="ssh-login-to-vms">
+<span id="spp-usecases-vf-ssh"></span><h2>2.2. SSH Login to VMs<a class="headerlink" href="#ssh-login-to-vms" title="Permalink to this headline">¶</a></h2>
+<p>This usecase is to classify packets for ssh connections as another example.
+Incoming packets are classified based on destination addresses and reterned
+packets are aggregated before going out.</p>
+<div class="figure align-default" id="id5">
+<span id="figure-spp-usecase-vf-ssh-overview"></span><a class="reference internal image-reference" href="../_images/vf_ssh_overview.svg"><img alt="../_images/vf_ssh_overview.svg" src="../_images/vf_ssh_overview.svg" width="58%" /></a>
+<p class="caption"><span class="caption-number">Fig. 2.3 </span><span class="caption-text">Simple SSH Login</span><a class="headerlink" href="#id5" title="Permalink to this image">¶</a></p>
+</div>
+<div class="section" id="id1">
+<h3>2.2.1. Setup<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h3>
+<p>Launch <code class="docutils literal notranslate"><span class="pre">spp-ctl</span></code> and SPP CLI before primary and secondary processes.</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">#</span> terminal <span class="m">1</span>
+<span class="gp">$</span> python3 ./src/spp-ctl/spp-ctl -b <span class="m">192</span>.168.1.100
+</pre></div>
+</div>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">#</span> terminal <span class="m">2</span>
+<span class="gp">$</span> python3 ./src/spp.py -b <span class="m">192</span>.168.1.100
+</pre></div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">spp_primary</span></code> on the second lcore with <code class="docutils literal notranslate"><span class="pre">-l</span> <span class="pre">1</span></code> and two ports <code class="docutils literal notranslate"><span class="pre">-p</span> <span class="pre">0x03</span></code>.</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">#</span> terminal <span class="m">3</span>
+<span class="gp">$</span> sudo ./src/primary/x86_64-native-linuxapp-gcc/spp_primary <span class="se">\</span>
+    -l <span class="m">1</span> -n <span class="m">4</span> <span class="se">\</span>
+    --socket-mem <span class="m">512</span>,512 <span class="se">\</span>
+    --huge-dir<span class="o">=</span>/run/hugepages/kvm <span class="se">\</span>
+    --proc-type<span class="o">=</span>primary <span class="se">\</span>
+    -- <span class="se">\</span>
+    -p 0x03 -n <span class="m">10</span> -s <span class="m">192</span>.168.1.100:5555
+</pre></div>
+</div>
+<p>Then, run secondary process <code class="docutils literal notranslate"><span class="pre">spp_vf</span></code> with <code class="docutils literal notranslate"><span class="pre">-l</span> <span class="pre">0,2-13</span></code> which indicates
+to use twelve lcores.</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">#</span> terminal <span class="m">4</span>
+<span class="gp">$</span> sudo ./src/vf/x86_64-native-linuxapp-gcc/spp_vf <span class="se">\</span>
+    -l <span class="m">0</span>,2-13 <span class="se">\</span>
+    -n <span class="m">4</span> --proc-type<span class="o">=</span>secondary <span class="se">\</span>
+    -- <span class="se">\</span>
+    --client-id <span class="m">1</span> <span class="se">\</span>
+    -s <span class="m">192</span>.168.1.100:6666 --vhost-client
+</pre></div>
+</div>
+</div>
+<div class="section" id="id2">
+<h3>2.2.2. Network Configuration<a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h3>
+<p>Detailed netowrk configuration of <a class="reference internal" href="#figure-spp-usecase-vf-ssh-overview"><span class="std std-numref">Fig. 2.3</span></a>
+is described below.
+In this usecase, use two NICs on each of host1 and host2 for redundancy.</p>
+<p>Incoming packets through NIC0 or NIC1 are classified based on destionation
+address.</p>
+<div class="figure align-default" id="id6">
+<span id="figure-network-config"></span><a class="reference internal image-reference" href="../_images/vf_ssh_nwconfig.svg"><img alt="../_images/vf_ssh_nwconfig.svg" src="../_images/vf_ssh_nwconfig.svg" width="100%" /></a>
+<p class="caption"><span class="caption-number">Fig. 2.4 </span><span class="caption-text">Network Configuration SSH with spp_vhost</span><a class="headerlink" href="#id6" title="Permalink to this image">¶</a></p>
+</div>
+<p>You need to input a little bit large amount of commands for the
+configuration, or use <code class="docutils literal notranslate"><span class="pre">playback</span></code> command to load from config files.
+You can load network configuration  from recipes in <code class="docutils literal notranslate"><span class="pre">recipes/usecases/</span></code>
+as following.</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span># terminal 2
+# Load config from recipe
+spp &gt; playback recipes/usecases/spp_vf/ssh/1-start_components.rcp
+spp &gt; playback recipes/usecases/spp_vf/ssh/2-add_port_path1.rcp
+....
+</pre></div>
+</div>
+<p>First of all, start components with names such as <code class="docutils literal notranslate"><span class="pre">cls1</span></code>, <code class="docutils literal notranslate"><span class="pre">fwd1</span></code> or so.</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span># terminal 2
+spp &gt; vf 1; component start cls1 2 classifier
+spp &gt; vf 1; component start fwd1 3 forwarder
+spp &gt; vf 1; component start fwd2 4 forwarder
+spp &gt; vf 1; component start fwd3 5 forwarder
+spp &gt; vf 1; component start fwd4 6 forwarder
+spp &gt; vf 1; component start mgr1 7 merger
+</pre></div>
+</div>
+<p>Each of components must have rx and tx ports for forwarding.
+Add ports for each of components as following.
+You notice that classifier has two tx ports and merger has two rx ports.</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">#</span> terminal <span class="m">2</span>
+<span class="gp">#</span> classifier
+<span class="go">spp &gt; vf 1; port add phy:0 rx cls1</span>
+<span class="go">spp &gt; vf 1; port add ring:0 tx cls1</span>
+<span class="go">spp &gt; vf 1; port add ring:1 tx cls1</span>
+
+<span class="gp">#</span> forwarders
+<span class="go">spp &gt; vf 1; port add ring:0 rx fwd1</span>
+<span class="go">spp &gt; vf 1; port add vhost:0 tx fwd1</span>
+<span class="go">spp &gt; vf 1; port add ring:1 rx fwd2</span>
+<span class="go">spp &gt; vf 1; port add vhost:2 tx fwd2</span>
+<span class="go">spp &gt; vf 1; port add vhost:0 rx fwd3</span>
+<span class="go">spp &gt; vf 1; port add ring:2 tx fwd3</span>
+<span class="go">spp &gt; vf 1; port add vhost:2 rx fwd4</span>
+<span class="go">spp &gt; vf 1; port add ring:3 tx fwd4</span>
+
+<span class="gp">#</span> merger
+<span class="go">spp &gt; vf 1; port add ring:2 rx mgr1</span>
+<span class="go">spp &gt; vf 1; port add ring:3 rx mgr1</span>
+<span class="go">spp &gt; vf 1; port add phy:0 tx mgr1</span>
+</pre></div>
+</div>
+<p>Classifier component decides the destination with MAC address by referring
+<code class="docutils literal notranslate"><span class="pre">classifier_table</span></code>. MAC address and corresponging port is registered to the
+table. In this usecase, you need to register two MAC addresses of targetting
+VM for mgr1, and also mgr2 later.</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span># terminal 2
+# Register MAC addresses for mgr1
+spp &gt; vf 1; classifier_table add mac 52:54:00:12:34:56 ring:0
+spp &gt; vf 1; classifier_table add mac 52:54:00:12:34:58 ring:1
+</pre></div>
+</div>
+<p>Configuration for the second login path is almost the same as the first path.</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span># terminal 2
+spp &gt; vf 1; component start cls2 8 classifier
+spp &gt; vf 1; component start fwd5 9 forwarder
+spp &gt; vf 1; component start fwd6 10 forwarder
+spp &gt; vf 1; component start fwd7 11 forwarder
+spp &gt; vf 1; component start fwd8 12 forwarder
+spp &gt; vf 1; component start mgr2 13 merger
+</pre></div>
+</div>
+<p>Add ports to each of components.</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span># terminal 2
+# classifier
+spp &gt; vf 1; port add phy:1 rx cls2
+spp &gt; vf 1; port add ring:4 tx cls2
+spp &gt; vf 1; port add ring:5 tx cls2
+
+# forwarders
+spp &gt; vf 1; port add ring:4 rx fwd5
+spp &gt; vf 1; port add vhost:1 tx fwd5
+spp &gt; vf 1; port add ring:5 rx fwd6
+spp &gt; vf 1; port add vhost:3 tx fwd6
+spp &gt; vf 1; port add vhost:1 rx fwd7
+spp &gt; vf 1; port add ring:6 tx fwd7
+spp &gt; vf 1; port add vhost:3 rx fwd8
+spp &gt; vf 1; port add ring:7 tx fwd8
+
+# merger
+spp &gt; vf 1; port add ring:6 rx mgr2
+spp &gt; vf 1; port add ring:7 rx mgr2
+spp &gt; vf 1; port add phy:1 tx mgr2
+</pre></div>
+</div>
+<p>Register MAC address entries to <code class="docutils literal notranslate"><span class="pre">classifier_table</span></code> for <code class="docutils literal notranslate"><span class="pre">cls2</span></code>.</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">#</span> terminal <span class="m">2</span>
+<span class="gp">#</span> Register MAC address to classifier
+<span class="go">spp &gt; vf 1; classifier_table add mac 52:54:00:12:34:57 ring:4</span>
+<span class="go">spp &gt; vf 1; classifier_table add mac 52:54:00:12:34:59 ring:5</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="setup-vms">
+<span id="spp-usecases-vf-ssh-setup-vms"></span><h3>2.2.3. Setup VMs<a class="headerlink" href="#setup-vms" title="Permalink to this headline">¶</a></h3>
+<p>Launch two VMs with virsh command.
+Setup for virsh is described in <a class="reference internal" href="../gsg/howto_use.html#spp-gsg-howto-virsh"><span class="std std-ref">Using virsh</span></a>.
+In this case, VMs are named as <code class="docutils literal notranslate"><span class="pre">spp-vm1</span></code> and <code class="docutils literal notranslate"><span class="pre">spp-vm2</span></code>.</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">#</span> terminal <span class="m">5</span>
+<span class="gp">$</span> virsh start spp-vm1  <span class="c1"># VM1</span>
+<span class="gp">$</span> virsh start spp-vm2  <span class="c1"># VM2</span>
+</pre></div>
+</div>
+<p>After VMs are launched, login to <code class="docutils literal notranslate"><span class="pre">spp-vm1</span></code> first to configure.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>To avoid asked for unknown keys while login VMs, use
+<code class="docutils literal notranslate"><span class="pre">-o</span> <span class="pre">StrictHostKeyChecking=no</span></code> option for ssh.</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$</span> ssh -o <span class="nv">StrictHostKeyChecking</span><span class="o">=</span>no sppuser at <span class="m">192</span>.168.122.31
+</pre></div>
+</div>
+</div>
+<p>Up interfaces and disable TCP offload to avoid ssh login is failed.</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">#</span> terminal <span class="m">5</span>
+<span class="gp">#</span> up interfaces
+<span class="gp">$</span> sudo ifconfig ens4 inet <span class="m">192</span>.168.140.21 netmask <span class="m">255</span>.255.255.0 up
+<span class="gp">$</span> sudo ifconfig ens5 inet <span class="m">192</span>.168.150.22 netmask <span class="m">255</span>.255.255.0 up
+
+<span class="gp">#</span> disable TCP offload
+<span class="gp">$</span> sudo ethtool -K ens4 tx off
+<span class="gp">$</span> sudo ethtool -K ens5 tx off
+</pre></div>
+</div>
+<p>Configuration of <code class="docutils literal notranslate"><span class="pre">spp-vm2</span></code> is almost similar to <code class="docutils literal notranslate"><span class="pre">spp-vm1</span></code>.</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">#</span> terminal <span class="m">5</span>
+<span class="gp">#</span> up interfaces
+<span class="gp">$</span> sudo ifconfig ens4 inet <span class="m">192</span>.168.140.31 netmask <span class="m">255</span>.255.255.0 up
+<span class="gp">$</span> sudo ifconfig ens5 inet <span class="m">192</span>.168.150.32 netmask <span class="m">255</span>.255.255.0 up
+
+<span class="gp">#</span> disable TCP offload
+<span class="gp">$</span> sudo ethtool -K ens4 tx off
+<span class="gp">$</span> sudo ethtool -K ens5 tx off
+</pre></div>
+</div>
+</div>
+<div class="section" id="login-to-vms">
+<h3>2.2.4. Login to VMs<a class="headerlink" href="#login-to-vms" title="Permalink to this headline">¶</a></h3>
+<p>Now, you can login to VMs from the remote host1.</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">#</span> terminal <span class="m">5</span>
+<span class="gp">#</span> spp-vm1 via NIC0
+<span class="gp">$</span> ssh sppuser@192.168.140.21
+
+<span class="gp">#</span> spp-vm1 via NIC1
+<span class="gp">$</span> ssh sppuser@192.168.150.22
+
+<span class="gp">#</span> spp-vm2 via NIC0
+<span class="gp">$</span> ssh sppuser@192.168.140.31
+
+<span class="gp">#</span> spp-vm2 via NIC1
+<span class="gp">$</span> ssh sppuser@192.168.150.32
+</pre></div>
+</div>
+</div>
+<div class="section" id="spp-usecases-vf-ssh-shutdown">
+<span id="id3"></span><h3>2.2.5. Shutdown spp_vf Components<a class="headerlink" href="#spp-usecases-vf-ssh-shutdown" title="Permalink to this headline">¶</a></h3>
+<p>Basically, you can shutdown all of SPP processes with <code class="docutils literal notranslate"><span class="pre">bye</span> <span class="pre">all</span></code>
+command.
+This section describes graceful shutting down.</p>
+<p>First, delete entries of <code class="docutils literal notranslate"><span class="pre">classifier_table</span></code> and ports of components
+for the first SSH login path.</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span># terminal 2
+# Delete MAC address from table
+spp &gt; vf 1; classifier_table del mac 52:54:00:12:34:56 ring:0
+spp &gt; vf 1; classifier_table del mac 52:54:00:12:34:58 ring:1
+</pre></div>
+</div>
+<p>Delete ports.</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span># terminal 2
+# classifier
+spp &gt; vf 1; port del phy:0 rx cls1
+spp &gt; vf 1; port del ring:0 tx cls1
+spp &gt; vf 1; port del ring:1 tx cls1
+
+# forwarders
+spp &gt; vf 1; port del ring:0 rx fwd1
+spp &gt; vf 1; port del vhost:0 tx fwd1
+spp &gt; vf 1; port del ring:1 rx fwd2
+spp &gt; vf 1; port del vhost:2 tx fwd2
+spp &gt; vf 1; port del vhost:0 rx fwd3
+spp &gt; vf 1; port del ring:2 tx fwd3
+spp &gt; vf 1; port del vhost:2 rx fwd4
+spp &gt; vf 1; port del ring:3 tx fwd4
+
+# merger
+spp &gt; vf 1; port del ring:2 rx mgr1
+spp &gt; vf 1; port del ring:3 rx mgr1
+spp &gt; vf 1; port del phy:0 tx mgr1
+</pre></div>
+</div>
+<p>Then, stop components.</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span># terminal 2
+# Stop component to spp_vf
+spp &gt; vf 1; component stop cls1
+spp &gt; vf 1; component stop fwd1
+spp &gt; vf 1; component stop fwd2
+spp &gt; vf 1; component stop fwd3
+spp &gt; vf 1; component stop fwd4
+spp &gt; vf 1; component stop mgr1
+</pre></div>
+</div>
+<p>Second, do termination for the second path.
+Delete entries from the table and ports from each of components.</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span># terminal 2
+# Delete MAC address from Classifier
+spp &gt; vf 1; classifier_table del mac 52:54:00:12:34:57 ring:4
+spp &gt; vf 1; classifier_table del mac 52:54:00:12:34:59 ring:5
+</pre></div>
+</div>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span># terminal 2
+# classifier2
+spp &gt; vf 1; port del phy:1 rx cls2
+spp &gt; vf 1; port del ring:4 tx cls2
+spp &gt; vf 1; port del ring:5 tx cls2
+
+# forwarder
+spp &gt; vf 1; port del ring:4 rx fwd5
+spp &gt; vf 1; port del vhost:1 tx fwd5
+spp &gt; vf 1; port del ring:5 rx fwd6
+spp &gt; vf 1; port del vhost:3 tx fwd6
+spp &gt; vf 1; port del vhost:1 rx fwd7
+spp &gt; vf 1; port del ring:6 tx fwd7
+spp &gt; vf 1; port del vhost:3 tx fwd8
+spp &gt; vf 1; port del ring:7 rx fwd8
+
+# merger
+spp &gt; vf 1; port del ring:6 rx mgr2
+spp &gt; vf 1; port del ring:7 rx mgr2
+spp &gt; vf 1; port del phy:1 tx mgr2
+</pre></div>
+</div>
+<p>Then, stop components.</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span># terminal 2
+# Stop component to spp_vf
+spp &gt; vf 1; component stop cls2
+spp &gt; vf 1; component stop fwd5
+spp &gt; vf 1; component stop fwd6
+spp &gt; vf 1; component stop fwd7
+spp &gt; vf 1; component stop fwd8
+spp &gt; vf 1; component stop mgr2
+</pre></div>
+</div>
+</div>
+<div class="section" id="exit-spp-vf">
+<h3>2.2.6. Exit spp_vf<a class="headerlink" href="#exit-spp-vf" title="Permalink to this headline">¶</a></h3>
+<p>Terminate spp_vf.</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span># terminal 2
+spp &gt; vf 1; exit
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="spp_mirror.html" class="btn btn-neutral float-right" title="3. spp_mirror" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="spp_nfv.html" class="btn btn-neutral float-left" title="1. spp_nfv" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

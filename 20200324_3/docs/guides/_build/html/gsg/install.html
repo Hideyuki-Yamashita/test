@@ -1,0 +1,566 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>2. Install DPDK and SPP &mdash; Soft Patch Panel 19.08 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../_static/jquery.js"></script>
+        <script type="text/javascript" src="../_static/underscore.js"></script>
+        <script type="text/javascript" src="../_static/doctools.js"></script>
+        <script type="text/javascript" src="../_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="3. How to Use" href="howto_use.html" />
+    <link rel="prev" title="1. Setup" href="setup.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> Soft Patch Panel
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                19.08
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../overview.html">Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../design/index.html">Design</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">Getting Started Guide</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="setup.html">1. Setup</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">2. Install DPDK and SPP</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#required-packages">2.1. Required Packages</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#ubuntu">2.1.1. Ubuntu</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#centos">2.1.2. CentOS</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#dpdk">2.2. DPDK</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#pyhton">2.3. Pyhton</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#spp">2.4. SPP</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#binding-network-ports-to-dpdk">2.5. Binding Network Ports to DPDK</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#uio-drivers">2.5.1. UIO Drivers</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#binding-network-ports">2.5.2. Binding Network Ports</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#confirm-dpdk-is-setup-properly">2.6. Confirm DPDK is setup properly</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#build-documentation">2.7. Build Documentation</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="howto_use.html">3. How to Use</a></li>
+<li class="toctree-l2"><a class="reference internal" href="performance_opt.html">4. Performance Optimization</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../usecases/index.html">Use Cases</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../commands/index.html">SPP Commands</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../tools/index.html">Tools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../api_ref/index.html">API Reference</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">Soft Patch Panel</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="index.html">Getting Started Guide</a> &raquo;</li>
+        
+      <li>2. Install DPDK and SPP</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../_sources/gsg/install.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="install-dpdk-and-spp">
+<span id="setup-install-dpdk-spp"></span><h1>2. Install DPDK and SPP<a class="headerlink" href="#install-dpdk-and-spp" title="Permalink to this headline">¶</a></h1>
+<p>Before setting up SPP, you need to install DPDK.
+In this document, briefly described how to install and setup DPDK.
+Refer to <a class="reference external" href="https://dpdk.org/doc/guides/">DPDK documentation</a> for more details.
+For Linux, see <a class="reference external" href="http://www.dpdk.org/doc/guides/linux_gsg/index.html">Getting Started Guide for Linux</a> .</p>
+<div class="section" id="required-packages">
+<span id="setup-install-packages"></span><h2>2.1. Required Packages<a class="headerlink" href="#required-packages" title="Permalink to this headline">¶</a></h2>
+<p>Installing packages for DPDK and SPP is almost the on Ubunu and CentOS,
+but names are different for some packages.</p>
+<div class="section" id="ubuntu">
+<h3>2.1.1. Ubuntu<a class="headerlink" href="#ubuntu" title="Permalink to this headline">¶</a></h3>
+<p>To compile DPDK, it is required to install following packages.</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$</span> sudo apt install libnuma-dev <span class="se">\</span>
+  libarchive-dev <span class="se">\</span>
+  build-essential
+</pre></div>
+</div>
+<p>You also need to install linux-headers of your kernel version.</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$</span> sudo apt install linux-headers-<span class="k">$(</span>uname -r<span class="k">)</span>
+</pre></div>
+</div>
+<p>Some of SPP secondary processes depend on other libraries and you fail to
+compile SPP without installing them.</p>
+<p>SPP provides libpcap-based PMD for dumping packet to a file or retrieve
+it from the file.
+<code class="docutils literal notranslate"><span class="pre">spp_nfv</span></code> and <code class="docutils literal notranslate"><span class="pre">spp_pcap</span></code> use <code class="docutils literal notranslate"><span class="pre">libpcap-dev</span></code> for packet capture.
+<code class="docutils literal notranslate"><span class="pre">spp_pcap</span></code> uses <code class="docutils literal notranslate"><span class="pre">liblz4-dev</span></code> and <code class="docutils literal notranslate"><span class="pre">liblz4-tool</span></code> to compress PCAP file.</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$</span> sudo apt install libpcap-dev <span class="se">\</span>
+  liblz4-dev <span class="se">\</span>
+  liblz4-tool
+</pre></div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">text2pcap</span></code> is also required for creating pcap file which
+is included in <code class="docutils literal notranslate"><span class="pre">wireshark</span></code>.</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$</span> sudo apt install wireshark
+</pre></div>
+</div>
+</div>
+<div class="section" id="centos">
+<h3>2.1.2. CentOS<a class="headerlink" href="#centos" title="Permalink to this headline">¶</a></h3>
+<p>Before installing packages for DPDK, you should add
+<a class="reference external" href="https://ius.io/GettingStarted/">IUS Community repositories</a>
+with yum command.</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$</span> sudo yum install https://centos7.iuscommunity.org/ius-release.rpm
+</pre></div>
+</div>
+<p>To compile DPDK, required to install following packages.</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$</span> sudo yum install numactl-devel <span class="se">\</span>
+  libarchive-devel <span class="se">\</span>
+  kernel-headers <span class="se">\</span>
+  kernel-devel
+</pre></div>
+</div>
+<p>As same as Ubuntu, you should install additional packages because
+SPP provides libpcap-based PMD for dumping packet to a file or retrieve
+it from the file.
+<code class="docutils literal notranslate"><span class="pre">spp_nfv</span></code> and <code class="docutils literal notranslate"><span class="pre">spp_pcap</span></code> use <code class="docutils literal notranslate"><span class="pre">libpcap-dev</span></code> for packet capture.
+<code class="docutils literal notranslate"><span class="pre">spp_pcap</span></code> uses <code class="docutils literal notranslate"><span class="pre">liblz4-dev</span></code> and <code class="docutils literal notranslate"><span class="pre">liblz4-tool</span></code> to compress PCAP file.
+<code class="docutils literal notranslate"><span class="pre">text2pcap</span></code> is also required for creating pcap file which is included in <code class="docutils literal notranslate"><span class="pre">wireshark</span></code>.</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$</span> sudo apt install libpcap-dev <span class="se">\</span>
+  libpcap <span class="se">\</span>
+  libpcap-devel <span class="se">\</span>
+  lz4 <span class="se">\</span>
+  lz4-devel <span class="se">\</span>
+  wireshark <span class="se">\</span>
+  wireshark-devel <span class="se">\</span>
+  libX11-devel
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="dpdk">
+<span id="setup-install-dpdk"></span><h2>2.2. DPDK<a class="headerlink" href="#dpdk" title="Permalink to this headline">¶</a></h2>
+<p>Clone repository and compile DPDK in any directory.</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$</span> <span class="nb">cd</span> /path/to/any
+<span class="gp">$</span> git clone http://dpdk.org/git/dpdk
+</pre></div>
+</div>
+<p>Installing on Ubuntu and CentOS are almost the same, but required packages
+are just bit different.</p>
+<p>PCAP is disabled by default in DPDK configuration.
+<code class="docutils literal notranslate"><span class="pre">CONFIG_RTE_LIBRTE_PMD_PCAP</span></code> and <code class="docutils literal notranslate"><span class="pre">CONFIG_RTE_PORT_PCAP</span></code> defined in
+config file <code class="docutils literal notranslate"><span class="pre">common_base</span></code> should be changed to <code class="docutils literal notranslate"><span class="pre">y</span></code> to enable PCAP.</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">#</span> dpdk/config/common_base
+<span class="go">CONFIG_RTE_LIBRTE_PMD_PCAP=y</span>
+<span class="go">...</span>
+<span class="go">CONFIG_RTE_PORT_PCAP=y</span>
+</pre></div>
+</div>
+<p>Compile DPDK with target environment.</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$</span> <span class="nb">cd</span> dpdk
+<span class="gp">$</span> <span class="nb">export</span> <span class="nv">RTE_SDK</span><span class="o">=</span><span class="k">$(</span><span class="nb">pwd</span><span class="k">)</span>
+<span class="gp">$</span> <span class="nb">export</span> <span class="nv">RTE_TARGET</span><span class="o">=</span>x86_64-native-linuxapp-gcc  <span class="c1"># depends on your env</span>
+<span class="gp">$</span> make install <span class="nv">T</span><span class="o">=</span><span class="nv">$RTE_TARGET</span>
+</pre></div>
+</div>
+<p>PCAP is disabled by default in DPDK configuration, so should be changed
+if you use this feature.
+<code class="docutils literal notranslate"><span class="pre">CONFIG_RTE_LIBRTE_PMD_PCAP</span></code> and <code class="docutils literal notranslate"><span class="pre">CONFIG_RTE_PORT_PCAP</span></code> defined in
+config file <code class="docutils literal notranslate"><span class="pre">common_base</span></code> should be changed to <code class="docutils literal notranslate"><span class="pre">y</span></code> to enable PCAP.</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">#</span> dpdk/config/common_base
+<span class="go">CONFIG_RTE_LIBRTE_PMD_PCAP=y</span>
+<span class="go">...</span>
+<span class="go">CONFIG_RTE_PORT_PCAP=y</span>
+</pre></div>
+</div>
+<p>Compile DPDK with options for target environment.</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$</span> <span class="nb">cd</span> dpdk
+<span class="gp">$</span> <span class="nb">export</span> <span class="nv">RTE_SDK</span><span class="o">=</span><span class="k">$(</span><span class="nb">pwd</span><span class="k">)</span>
+<span class="gp">$</span> <span class="nb">export</span> <span class="nv">RTE_TARGET</span><span class="o">=</span>x86_64-native-linuxapp-gcc  <span class="c1"># depends on your env</span>
+<span class="gp">$</span> make install <span class="nv">T</span><span class="o">=</span><span class="nv">$RTE_TARGET</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="pyhton">
+<h2>2.3. Pyhton<a class="headerlink" href="#pyhton" title="Permalink to this headline">¶</a></h2>
+<p>Python3 and pip3 are also required because SPP controller is implemented
+in Pyhton3. Required packages can be installed from <code class="docutils literal notranslate"><span class="pre">requirements.txt</span></code>.</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">#</span> Ubuntu
+<span class="gp">$</span> sudo apt install python3 <span class="se">\</span>
+  python3-pip
+</pre></div>
+</div>
+<p>For CentOS, you need to specify minor version of python3.
+Here is an example of installing python3.6.</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">#</span> CentOS
+<span class="gp">$</span> sudo yum install python36 <span class="se">\</span>
+  python36-pip
+</pre></div>
+</div>
+<p>SPP provides <code class="docutils literal notranslate"><span class="pre">requirements.txt</span></code> for installing required packages of Python3.
+You might fail to run <code class="docutils literal notranslate"><span class="pre">pip3</span></code> without sudo on some environments.</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$</span> pip3 install -r requirements.txt
+</pre></div>
+</div>
+<p>For some environments, <code class="docutils literal notranslate"><span class="pre">pip3</span></code> might install packages under your home
+directory <code class="docutils literal notranslate"><span class="pre">$HOME/.local/bin</span></code> and you should add it to <code class="docutils literal notranslate"><span class="pre">$PATH</span></code> environment
+variable.</p>
+</div>
+<div class="section" id="spp">
+<span id="setup-install-spp"></span><h2>2.4. SPP<a class="headerlink" href="#spp" title="Permalink to this headline">¶</a></h2>
+<p>Clone SPP repository and compile it in any directory.</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$</span> <span class="nb">cd</span> /path/to/any
+<span class="gp">$</span> git clone http://dpdk.org/git/apps/spp
+<span class="gp">$</span> <span class="nb">cd</span> spp
+<span class="gp">$</span> make  <span class="c1"># Confirm that $RTE_SDK and $RTE_TARGET are set</span>
+</pre></div>
+</div>
+<p>If you use <code class="docutils literal notranslate"><span class="pre">spp_mirror</span></code> in deep copy mode,
+which is used for cloning whole of packet data for modification,
+you should change configuration of copy mode in Makefile of <code class="docutils literal notranslate"><span class="pre">spp_mirror</span></code>
+before.
+It is for copying full payload into a new mbuf.
+Default mode is shallow copy.</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">#</span> src/mirror/Makefile
+<span class="gp">#</span><span class="nv">CFLAGS</span> <span class="o">+=</span> -Dspp_mirror_SHALLOWCOPY
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Before run make command, you might need to consider if using deep copy
+for cloning packets in <code class="docutils literal notranslate"><span class="pre">spp_mirror</span></code>. Comparing with shallow copy, it
+clones entire packet payload into a new mbuf and it is modifiable,
+but lower performance. Which of copy mode should be chosen depends on
+your usage.</p>
+</div>
+</div>
+<div class="section" id="binding-network-ports-to-dpdk">
+<h2>2.5. Binding Network Ports to DPDK<a class="headerlink" href="#binding-network-ports-to-dpdk" title="Permalink to this headline">¶</a></h2>
+<p>Network ports must be bound to DPDK with a UIO (Userspace IO) driver.
+UIO driver is for mapping device memory to userspace and registering
+interrupts.</p>
+<div class="section" id="uio-drivers">
+<h3>2.5.1. UIO Drivers<a class="headerlink" href="#uio-drivers" title="Permalink to this headline">¶</a></h3>
+<p>You usually use the standard <code class="docutils literal notranslate"><span class="pre">uio_pci_generic</span></code> for many use cases
+or <code class="docutils literal notranslate"><span class="pre">vfio-pci</span></code> for more robust and secure cases.
+Both of drivers are included by default in modern Linux kernel.</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">#</span> Activate uio_pci_generic
+<span class="gp">$</span> sudo modprobe uio_pci_generic
+
+<span class="gp">#</span> or vfio-pci
+<span class="gp">$</span> sudo modprobe vfio-pci
+</pre></div>
+</div>
+<p>You can also use kmod included in DPDK instead of <code class="docutils literal notranslate"><span class="pre">uio_pci_generic</span></code>
+or <code class="docutils literal notranslate"><span class="pre">vfio-pci</span></code>.</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$</span> sudo modprobe uio
+<span class="gp">$</span> sudo insmod kmod/igb_uio.ko
+</pre></div>
+</div>
+</div>
+<div class="section" id="binding-network-ports">
+<h3>2.5.2. Binding Network Ports<a class="headerlink" href="#binding-network-ports" title="Permalink to this headline">¶</a></h3>
+<p>Once UIO driver is activated, bind network ports with the driver.
+DPDK provides <code class="docutils literal notranslate"><span class="pre">usertools/dpdk-devbind.py</span></code> for managing devices.</p>
+<p>Find ports for binding to DPDK by running the tool with <code class="docutils literal notranslate"><span class="pre">-s</span></code> option.</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$</span> <span class="nv">$RTE_SDK</span>/usertools/dpdk-devbind.py --status
+
+<span class="go">Network devices using DPDK-compatible driver</span>
+<span class="go">============================================</span>
+<span class="go">&lt;none&gt;</span>
+
+<span class="go">Network devices using kernel driver</span>
+<span class="go">===================================</span>
+<span class="go">0000:29:00.0 &#39;82571EB ... 10bc&#39; if=enp41s0f0 drv=e1000e unused=</span>
+<span class="go">0000:29:00.1 &#39;82571EB ... 10bc&#39; if=enp41s0f1 drv=e1000e unused=</span>
+<span class="go">0000:2a:00.0 &#39;82571EB ... 10bc&#39; if=enp42s0f0 drv=e1000e unused=</span>
+<span class="go">0000:2a:00.1 &#39;82571EB ... 10bc&#39; if=enp42s0f1 drv=e1000e unused=</span>
+
+<span class="go">Other Network devices</span>
+<span class="go">=====================</span>
+<span class="go">&lt;none&gt;</span>
+<span class="go">....</span>
+</pre></div>
+</div>
+<p>You can find network ports are bound to kernel driver and not to DPDK.
+To bind a port to DPDK, run <code class="docutils literal notranslate"><span class="pre">dpdk-devbind.py</span></code> with specifying a driver
+and a device ID.
+Device ID is a PCI address of the device or more friendly style like
+<code class="docutils literal notranslate"><span class="pre">eth0</span></code> found by <code class="docutils literal notranslate"><span class="pre">ifconfig</span></code> or <code class="docutils literal notranslate"><span class="pre">ip</span></code> command..</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">#</span> Bind a port with 2a:00.0 <span class="o">(</span>PCI address<span class="o">)</span>
+<span class="go">./usertools/dpdk-devbind.py --bind=uio_pci_generic 2a:00.0</span>
+
+<span class="gp">#</span> or eth0
+<span class="go">./usertools/dpdk-devbind.py --bind=uio_pci_generic eth0</span>
+</pre></div>
+</div>
+<p>After binding two ports, you can find it is under the DPDK driver and
+cannot find it by using <code class="docutils literal notranslate"><span class="pre">ifconfig</span></code> or <code class="docutils literal notranslate"><span class="pre">ip</span></code>.</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$</span> <span class="nv">$RTE_SDK</span>/usertools/dpdk-devbind.py -s
+
+<span class="go">Network devices using DPDK-compatible driver</span>
+<span class="go">============================================</span>
+<span class="go">0000:2a:00.0 &#39;82571EB ... 10bc&#39; drv=uio_pci_generic unused=vfio-pci</span>
+<span class="go">0000:2a:00.1 &#39;82571EB ... 10bc&#39; drv=uio_pci_generic unused=vfio-pci</span>
+
+<span class="go">Network devices using kernel driver</span>
+<span class="go">===================================</span>
+<span class="go">0000:29:00.0 &#39;...&#39; if=enp41s0f0 drv=e1000e unused=vfio-pci,uio_pci_generic</span>
+<span class="go">0000:29:00.1 &#39;...&#39; if=enp41s0f1 drv=e1000e unused=vfio-pci,uio_pci_generic</span>
+
+<span class="go">Other Network devices</span>
+<span class="go">=====================</span>
+<span class="go">&lt;none&gt;</span>
+<span class="go">....</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="confirm-dpdk-is-setup-properly">
+<h2>2.6. Confirm DPDK is setup properly<a class="headerlink" href="#confirm-dpdk-is-setup-properly" title="Permalink to this headline">¶</a></h2>
+<p>For testing, you can confirm if you are ready to use DPDK by running
+DPDK’s sample application. <code class="docutils literal notranslate"><span class="pre">l2fwd</span></code> is good example to confirm it
+before SPP because it is very similar to SPP’s worker process for forwarding.</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$</span> <span class="nb">cd</span> <span class="nv">$RTE_SDK</span>/examples/l2fwd
+<span class="gp">$</span> make
+<span class="go">  CC main.o</span>
+<span class="go">  LD l2fwd</span>
+<span class="go">  INSTALL-APP l2fwd</span>
+<span class="go">  INSTALL-MAP l2fwd.map</span>
+</pre></div>
+</div>
+<p>In this case, run this application simply with just two options
+while DPDK has many kinds of options.</p>
+<blockquote>
+<div><ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">-l</span></code>: core list</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">-p</span></code>: port mask</p></li>
+</ul>
+</div></blockquote>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$</span> sudo ./build/app/l2fwd <span class="se">\</span>
+  -l <span class="m">1</span>-2 <span class="se">\</span>
+  -- -p 0x3
+</pre></div>
+</div>
+<p>It must be separated with <code class="docutils literal notranslate"><span class="pre">--</span></code> to specify which option is
+for EAL or application.
+Refer to <a class="reference external" href="https://dpdk.org/doc/guides/sample_app_ug/l2_forward_real_virtual.html">L2 Forwarding Sample Application</a>
+for more details.</p>
+</div>
+<div class="section" id="build-documentation">
+<h2>2.7. Build Documentation<a class="headerlink" href="#build-documentation" title="Permalink to this headline">¶</a></h2>
+<p>This documentation is able to be built as HTML and PDF formats from make
+command. Before compiling the documentation, you need to install some of
+packages required to compile.</p>
+<p>For HTML documentation, install sphinx and additional theme.</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$</span> pip3 install sphinx <span class="se">\</span>
+  sphinx-rtd-theme
+</pre></div>
+</div>
+<p>For PDF, inkscape and latex packages are required.</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">#</span> Ubuntu
+<span class="gp">$</span> sudo apt install inkscape <span class="se">\</span>
+  texlive-latex-extra <span class="se">\</span>
+  texlive-latex-recommended
+</pre></div>
+</div>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">#</span> CentOS
+<span class="gp">$</span> sudo yum install inkscape <span class="se">\</span>
+  texlive-latex
+</pre></div>
+</div>
+<p>You might also need to install <code class="docutils literal notranslate"><span class="pre">latexmk</span></code> in addition to if you use
+Ubuntu 18.04 LTS.</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$</span> sudo apt install latexmk
+</pre></div>
+</div>
+<p>HTML documentation is compiled by running make with <code class="docutils literal notranslate"><span class="pre">doc-html</span></code>. This
+command launch sphinx for compiling HTML documents.
+Compiled HTML files are created in <code class="docutils literal notranslate"><span class="pre">docs/guides/_build/html/</span></code> and
+You can find the top page <code class="docutils literal notranslate"><span class="pre">index.html</span></code> in the directory.</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$</span> make doc-html
+</pre></div>
+</div>
+<p>PDF documentation is compiled with <code class="docutils literal notranslate"><span class="pre">doc-pdf</span></code> which runs latex for.
+Compiled PDF file is created as <code class="docutils literal notranslate"><span class="pre">docs/guides/_build/html/SoftPatchPanel.pdf</span></code>.</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$</span> make doc-pdf
+</pre></div>
+</div>
+<p>You can also compile both of HTML and PDF documentations with <code class="docutils literal notranslate"><span class="pre">doc</span></code> or
+<code class="docutils literal notranslate"><span class="pre">doc-all</span></code>.</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$</span> make doc
+<span class="gp">#</span> or
+<span class="gp">$</span> make doc-all
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>For CentOS, compilation PDF document is not supported.</p>
+</div>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="howto_use.html" class="btn btn-neutral float-right" title="3. How to Use" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="setup.html" class="btn btn-neutral float-left" title="1. Setup" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

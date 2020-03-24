@@ -1,0 +1,286 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>2. SPP Controller &mdash; Soft Patch Panel 19.08 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../_static/jquery.js"></script>
+        <script type="text/javascript" src="../_static/underscore.js"></script>
+        <script type="text/javascript" src="../_static/doctools.js"></script>
+        <script type="text/javascript" src="../_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="3. SPP Primary" href="spp_primary.html" />
+    <link rel="prev" title="1. Soft Patch Panel" href="spp.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> Soft Patch Panel
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                19.08
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../overview.html">Overview</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">Design</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="spp.html">1. Soft Patch Panel</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">2. SPP Controller</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#spp-ctl">2.1. spp-ctl</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#spp-cli">2.2. SPP CLI</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#reference">2.3. Reference</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="spp_primary.html">3. SPP Primary</a></li>
+<li class="toctree-l2"><a class="reference internal" href="spp_secondary.html">4. SPP Secondary</a></li>
+<li class="toctree-l2"><a class="reference internal" href="impl/index.html">5. Implementation</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../gsg/index.html">Getting Started Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../usecases/index.html">Use Cases</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../commands/index.html">SPP Commands</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../tools/index.html">Tools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../api_ref/index.html">API Reference</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">Soft Patch Panel</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="index.html">Design</a> &raquo;</li>
+        
+      <li>2. SPP Controller</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../_sources/design/spp_controller.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="spp-controller">
+<span id="spp-overview-spp-controller"></span><h1>2. SPP Controller<a class="headerlink" href="#spp-controller" title="Permalink to this headline">¶</a></h1>
+<p>SPP is controlled from python based management framework. It consists of
+front-end CLI and back-end server process.
+SPP’s front-end CLI provides a patch panel like interface for users.
+This CLI process parses user input and sends request to the back-end via REST
+APIs. It means that the back-end server process accepts requests from other
+than CLI. It enables developers to implement control interface such as GUI, or
+plugin for other framework.
+<a class="reference external" href="https://github.com/openstack/networking-spp">networking-spp</a>
+is a Neutron ML2 plugin for using SPP with OpenStack.
+By using networking-spp and doing some of extra tunings for optimization, you
+can deploy high-performance NFV services on OpenStack
+<a class="reference external" href="https://www.openstack.org/summit/vancouver-2018/summit-schedule/events/20826">[1]</a>.</p>
+<div class="section" id="spp-ctl">
+<h2>2.1. spp-ctl<a class="headerlink" href="#spp-ctl" title="Permalink to this headline">¶</a></h2>
+<p><code class="docutils literal notranslate"><span class="pre">spp-ctl</span></code> is designed for managing SPP from several controllers
+via REST-like APIs for users or other applications.
+It is implemented to be simple and it is stateless.
+Basically, it only converts a request into a command of SPP process and
+forward it to the process without any of syntax or lexical checking.</p>
+<p>There are several usecases where SPP is managed from other process without
+user inputs. For example, you need a intermediate process if you think of
+using SPP from a framework, such as OpenStack.
+<a class="reference external" href="https://github.com/openstack/networking-spp">networking-spp</a>
+is a Neutron ML2 plugin for SPP and <cite>spp-agent</cite> works as a SPP controller.</p>
+<p>As shown in <a class="reference internal" href="#figure-spp-overview-design-spp-ctl"><span class="std std-numref">Fig. 2.1</span></a>,
+<code class="docutils literal notranslate"><span class="pre">spp-ctl</span></code> behaves as a TCP server for SPP primary and secondary processes,
+and REST API server for client applications.
+It should be launched in advance to setup connections with other processes.
+<code class="docutils literal notranslate"><span class="pre">spp-ctl</span></code>  uses three TCP ports for primary, secondaries and clients.
+The default port numbers are <code class="docutils literal notranslate"><span class="pre">5555</span></code>, <code class="docutils literal notranslate"><span class="pre">6666</span></code> and <code class="docutils literal notranslate"><span class="pre">7777</span></code>.</p>
+<div class="figure align-default" id="id3">
+<span id="figure-spp-overview-design-spp-ctl"></span><a class="reference internal image-reference" href="../_images/spp_overview_design_spp-ctl.svg"><img alt="../_images/spp_overview_design_spp-ctl.svg" src="../_images/spp_overview_design_spp-ctl.svg" width="48%" /></a>
+<p class="caption"><span class="caption-number">Fig. 2.1 </span><span class="caption-text">Spp-ctl as a REST API server</span><a class="headerlink" href="#id3" title="Permalink to this image">¶</a></p>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">spp-ctl</span></code> accepts multiple requests at the same time and serializes them
+by using
+<a class="reference external" href="https://bottlepy.org/docs/dev/">bottle</a>
+which is simple and well known as a web framework and
+<a class="reference external" href="http://eventlet.net/">eventlet</a>
+for parallel processing.</p>
+</div>
+<div class="section" id="spp-cli">
+<h2>2.2. SPP CLI<a class="headerlink" href="#spp-cli" title="Permalink to this headline">¶</a></h2>
+<p>SPP CLI is a user interface for managing SPP and implemented as a client of
+<code class="docutils literal notranslate"><span class="pre">spp-ctl</span></code>. It provides several kinds of command for inspecting SPP
+processes, changing path configuration or showing statistics of packets.
+However, you do not need to use SPP CLI if you use <code class="docutils literal notranslate"><span class="pre">netowrking-spp</span></code> or
+other client applications of <code class="docutils literal notranslate"><span class="pre">spp-ctl</span></code>. SPP CLI is one of them.</p>
+<p>From SPP CLI, user is able to configure paths as similar as
+patch panel like manner by sending commands to each of SPP secondary processes.
+<code class="docutils literal notranslate"><span class="pre">patch</span> <span class="pre">phy:0</span> <span class="pre">ring:0</span></code> is to connect two ports, <code class="docutils literal notranslate"><span class="pre">phy:0</span></code> and <code class="docutils literal notranslate"><span class="pre">ring:0</span></code>.</p>
+<p>As described in <a class="reference internal" href="../gsg/howto_use.html#spp-setup-howto-use-spp-cli"><span class="std std-ref">Getting Started</span></a> guide,
+SPP CLI is able to communicate several <code class="docutils literal notranslate"><span class="pre">spp-ctl</span></code> to support multiple nodes
+configuration.</p>
+</div>
+<div class="section" id="reference">
+<h2>2.3. Reference<a class="headerlink" href="#reference" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><p>[1] <a class="reference external" href="https://www.openstack.org/summit/vancouver-2018/summit-schedule/events/20826">Integrating OpenStack with DPDK for High Performance Applications</a></p></li>
+</ul>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="spp_primary.html" class="btn btn-neutral float-right" title="3. SPP Primary" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="spp.html" class="btn btn-neutral float-left" title="1. Soft Patch Panel" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

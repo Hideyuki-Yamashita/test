@@ -1,0 +1,422 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>2.3. spp_mirror &mdash; Soft Patch Panel 19.08 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="../../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../../_static/jquery.js"></script>
+        <script type="text/javascript" src="../../_static/underscore.js"></script>
+        <script type="text/javascript" src="../../_static/doctools.js"></script>
+        <script type="text/javascript" src="../../_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="../../_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="2.4. spp_pcap" href="spp_pcap.html" />
+    <link rel="prev" title="2.2. spp_vf" href="spp_vf.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../index.html" class="icon icon-home"> Soft Patch Panel
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                19.08
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../overview.html">Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../design/index.html">Design</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../gsg/index.html">Getting Started Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../usecases/index.html">Use Cases</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../index.html">SPP Commands</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../primary.html">1. Primary Commands</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="index.html">2. Secondary Commands</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="spp_nfv.html">2.1. spp_nfv</a></li>
+<li class="toctree-l3"><a class="reference internal" href="spp_vf.html">2.2. spp_vf</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">2.3. spp_mirror</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#status">2.3.1. status</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#component">2.3.2. component</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#port">2.3.3. port</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#exit">2.3.4. exit</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="spp_pcap.html">2.4. spp_pcap</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../common.html">3. Common Commands</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../experimental.html">4. Experimental Commands</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../tools/index.html">Tools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../api_ref/index.html">API Reference</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">Soft Patch Panel</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="../index.html">SPP Commands</a> &raquo;</li>
+        
+          <li><a href="index.html">2. Secondary Commands</a> &raquo;</li>
+        
+      <li>2.3. spp_mirror</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../../_sources/commands/secondary/spp_mirror.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="spp-mirror">
+<span id="commands-spp-mirror"></span><h1>2.3. spp_mirror<a class="headerlink" href="#spp-mirror" title="Permalink to this headline">¶</a></h1>
+<p><code class="docutils literal notranslate"><span class="pre">spp_mirror</span></code> is an implementation of TaaS feature as a SPP secondary process
+for port mirroring.</p>
+<p>Each of <code class="docutils literal notranslate"><span class="pre">spp_mirror</span></code> processes is managed with <code class="docutils literal notranslate"><span class="pre">mirror</span></code> command. Because
+basic design of <code class="docutils literal notranslate"><span class="pre">spp_mirror</span></code> is derived from <code class="docutils literal notranslate"><span class="pre">spp_vf</span></code>, its commands are
+almost similar to <code class="docutils literal notranslate"><span class="pre">spp_vf</span></code>.</p>
+<p>Secondary ID is referred as <code class="docutils literal notranslate"><span class="pre">--client-id</span></code> which is given as an argument
+while launching <code class="docutils literal notranslate"><span class="pre">spp_mirror</span></code>. It should be unique among all of secondary
+processes including <code class="docutils literal notranslate"><span class="pre">spp_nfv</span></code> and others.</p>
+<p><code class="docutils literal notranslate"><span class="pre">mirror</span></code> command takes an secondary ID and one of sub commands. Secondary ID
+and sub command should be separated with delimiter <code class="docutils literal notranslate"><span class="pre">;</span></code>, or failed to a
+command error. Some of sub commands take additional arguments for
+configuration of the process or its resource management.</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">spp &gt; mirror SEC_ID; SUB_CMD</span>
+</pre></div>
+</div>
+<p>In this example, <code class="docutils literal notranslate"><span class="pre">SEC_ID</span></code> is a secondary ID and <code class="docutils literal notranslate"><span class="pre">SUB_CMD</span></code> is one of the
+following sub commands. Details of each of sub commands are described in the
+next sections.</p>
+<ul class="simple">
+<li><p>status</p></li>
+<li><p>component</p></li>
+<li><p>port</p></li>
+</ul>
+<p><code class="docutils literal notranslate"><span class="pre">spp_mirror</span></code> supports TAB completion. You can complete all of the name
+of commands and its arguments. For instance, you find all of sub commands
+by pressing TAB after <code class="docutils literal notranslate"><span class="pre">mirror</span> <span class="pre">SEC_ID;</span></code>.</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">spp &gt; mirror 1;  # press TAB key</span>
+<span class="go">component      port        status</span>
+</pre></div>
+</div>
+<p>It tries to complete all of possible arguments. However, <code class="docutils literal notranslate"><span class="pre">spp_mirror</span></code> takes
+also an arbitrary parameter which cannot be predicted, for example, name of
+component. In this cases, <code class="docutils literal notranslate"><span class="pre">spp_mirror</span></code> shows capitalized keyword for
+indicating it is an arbitrary parameter. Here is an exmaple of <code class="docutils literal notranslate"><span class="pre">component</span></code>
+command to initialize a worker thread. Keyword <code class="docutils literal notranslate"><span class="pre">NAME</span></code> should be replaced with
+your favorite name for the worker of the role.</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">spp &gt; mirror 1; component st  # press TAB key to show args starting &#39;st&#39;</span>
+<span class="go">start  stop</span>
+<span class="go">spp &gt; mirror 1; component start NAME  # &#39;NAME&#39; is shown with TAB after start</span>
+<span class="go">spp &gt; mirror 1; component start mr1   # replace &#39;NAME&#39; with favorite name</span>
+<span class="go">spp &gt; mirror 1; component start mr1   # then, press TAB to show core IDs</span>
+<span class="go">5  6  7</span>
+</pre></div>
+</div>
+<p>It is another example of replacing keyword. <code class="docutils literal notranslate"><span class="pre">port</span></code> is a sub command for
+assigning a resource to a worker thread. <code class="docutils literal notranslate"><span class="pre">RES_UID</span></code> is replaced with
+resource UID which is a combination of port type and its ID such as
+<code class="docutils literal notranslate"><span class="pre">ring:0</span></code> or <code class="docutils literal notranslate"><span class="pre">vhost:1</span></code> to assign it as RX port of forwarder <code class="docutils literal notranslate"><span class="pre">mr1</span></code>.</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">spp &gt; mirror 1; port add RES_UID</span>
+<span class="go">spp &gt; mirror 1; port add ring:0 rx mr1</span>
+</pre></div>
+</div>
+<p>If you are reached to the end of arguments, no candidate keyword is displayed.
+It is a completed statement of <code class="docutils literal notranslate"><span class="pre">component</span></code> command, and TAB
+completion does not work after <code class="docutils literal notranslate"><span class="pre">mirror</span></code> because it is ready to run.</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">spp &gt; mirror 1; component start mr1 5 mirror</span>
+<span class="go">Succeeded to start component &#39;mr1&#39; on core:5</span>
+</pre></div>
+</div>
+<p>It is also completed secondary IDs of <code class="docutils literal notranslate"><span class="pre">spp_mirror</span></code> and it is helpful if you run
+several <code class="docutils literal notranslate"><span class="pre">spp_mirror</span></code> processes.</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">spp &gt; mirror  # press TAB after space following &#39;mirror&#39;</span>
+<span class="go">1;  3;    # you find two spp_mirror processes of sec ID 1, 3</span>
+</pre></div>
+</div>
+<p>By the way, it is also a case of no candidate keyword is displayed if your
+command statement is wrong. You might be encountered an error if you run the
+wrong command. Please take care.</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">spp &gt; mirror 1; compa  # no candidate shown for wrong command</span>
+<span class="go">Invalid command &quot;compa&quot;.</span>
+</pre></div>
+</div>
+<div class="section" id="status">
+<span id="commands-spp-mirror-status"></span><h2>2.3.1. status<a class="headerlink" href="#status" title="Permalink to this headline">¶</a></h2>
+<p>Show the information of worker threads and its resources. Status information
+consists of three parts.</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">spp &gt; mirror 1; status</span>
+<span class="go">Basic Information:</span>
+<span class="go">  - client-id: 3</span>
+<span class="go">  - ports: [phy:0, phy:1, ring:0, ring:1, ring:2, ring:3, ring:4]</span>
+<span class="go"> - lcore_ids:</span>
+<span class="go">   - master: 1</span>
+<span class="go">   - slaves: [2, 3, 4]</span>
+<span class="go">Components:</span>
+<span class="go">  - core:5 &#39;mr1&#39; (type: mirror)</span>
+<span class="go">    - rx: ring:0</span>
+<span class="go">    - tx: [ring:1, ring:2]</span>
+<span class="go">  - core:6 &#39;mr2&#39; (type: mirror)</span>
+<span class="go">    - rx: ring:3</span>
+<span class="go">    - tx: [ring:4, ring:5]</span>
+<span class="go">  - core:7 &#39;&#39; (type: unuse)</span>
+</pre></div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">Basic</span> <span class="pre">Information</span></code> is for describing attributes of <code class="docutils literal notranslate"><span class="pre">spp_mirror</span></code> itself.
+<code class="docutils literal notranslate"><span class="pre">client-id</span></code> is a secondary ID of the process and <code class="docutils literal notranslate"><span class="pre">ports</span></code> is a list of
+all of ports owned the process.</p>
+<p><code class="docutils literal notranslate"><span class="pre">Components</span></code> is a list of all of worker threads. Each of workers has a
+core ID running on, type of the worker and a list of resources.
+Entry of no name with <code class="docutils literal notranslate"><span class="pre">unuse</span></code> type means that no worker thread assigned to
+the core. In other words, it is ready to be assinged.</p>
+</div>
+<div class="section" id="component">
+<span id="commands-spp-mirror-component"></span><h2>2.3.2. component<a class="headerlink" href="#component" title="Permalink to this headline">¶</a></h2>
+<p>Assing or release a role of forwarding to worker threads running on each of
+cores which are reserved with <code class="docutils literal notranslate"><span class="pre">-c</span></code> or <code class="docutils literal notranslate"><span class="pre">-l</span></code> option while launching
+<code class="docutils literal notranslate"><span class="pre">spp_mirror</span></code>. Unlike <code class="docutils literal notranslate"><span class="pre">spp_vf</span></code>, <code class="docutils literal notranslate"><span class="pre">spp_mirror</span></code> only has one role, <code class="docutils literal notranslate"><span class="pre">mirror</span></code>.</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">#</span> assign <span class="s1">&#39;ROLE&#39;</span> to worker on <span class="s1">&#39;CORE_ID&#39;</span> with a <span class="s1">&#39;NAME&#39;</span>
+<span class="go">spp &gt; mirror SEC_ID; component start NAME CORE_ID ROLE</span>
+
+<span class="gp">#</span> release worker <span class="s1">&#39;NAME&#39;</span> from the role
+<span class="go">spp &gt; mirror SEC_ID; component stop NAME</span>
+</pre></div>
+</div>
+<p>Here is an example of assigning role with <code class="docutils literal notranslate"><span class="pre">component</span></code> command.</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">#</span> assign <span class="s1">&#39;mirror&#39;</span> role with name <span class="s1">&#39;mr1&#39;</span> on core <span class="m">2</span>
+<span class="go">spp &gt; mirror 2; component start mr1 2 mirror</span>
+</pre></div>
+</div>
+<p>And an examples of releasing role.</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">#</span> release mirror role
+<span class="go">spp &gt; mirror 2; component stop mr1</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="port">
+<span id="commands-spp-mirror-port"></span><h2>2.3.3. port<a class="headerlink" href="#port" title="Permalink to this headline">¶</a></h2>
+<p>Add or delete a port to a worker.</p>
+<div class="section" id="adding-port">
+<h3>2.3.3.1. Adding port<a class="headerlink" href="#adding-port" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">spp &gt; mirror SEC_ID; port add RES_UID DIR NAME</span>
+</pre></div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">RES_UID</span></code> is with replaced with resource UID such as <code class="docutils literal notranslate"><span class="pre">ring:0</span></code> or
+<code class="docutils literal notranslate"><span class="pre">vhost:1</span></code>. <code class="docutils literal notranslate"><span class="pre">spp_mirror</span></code> supports three types of port.</p>
+<blockquote>
+<div><ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">phy</span></code> : Physical NIC</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">ring</span></code> : Ring PMD</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">vhost</span></code> : Vhost PMD</p></li>
+</ul>
+</div></blockquote>
+<p><code class="docutils literal notranslate"><span class="pre">DIR</span></code> means the direction of forwarding and it should be <code class="docutils literal notranslate"><span class="pre">rx</span></code> or <code class="docutils literal notranslate"><span class="pre">tx</span></code>.
+<code class="docutils literal notranslate"><span class="pre">NAME</span></code> is the same as for <code class="docutils literal notranslate"><span class="pre">component</span></code> command.</p>
+<p>This is an example for adding ports to <code class="docutils literal notranslate"><span class="pre">mr1</span></code>. In this case, it is configured
+to receive packets from <code class="docutils literal notranslate"><span class="pre">ring:0</span></code> and send it to <code class="docutils literal notranslate"><span class="pre">vhost:0</span></code> and <code class="docutils literal notranslate"><span class="pre">vhost:1</span></code>
+by duplicating the packets.</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">#</span> recieve from <span class="s1">&#39;phy:0&#39;</span>
+<span class="go">spp &gt; mirror 2; port add ring:0 rx mr1</span>
+
+<span class="gp">#</span> send to <span class="s1">&#39;ring:0&#39;</span> and <span class="s1">&#39;ring:1&#39;</span>
+<span class="go">spp &gt; mirror 2; port add vhost:0 tx mr1</span>
+<span class="go">spp &gt; mirror 2; port add vhost:1 tx mr1</span>
+</pre></div>
+</div>
+<p>Adding port may cause component to start packet forwarding. Please see
+details in
+<a class="reference internal" href="../../design/spp_secondary.html#spp-design-spp-sec-mirror"><span class="std std-ref">design spp_mirror</span></a>.</p>
+<p>Until one rx and two tx ports are registered, <code class="docutils literal notranslate"><span class="pre">spp_mirror</span></code> does not start
+forwarding. If it is requested to add more than one rx and two tx ports, it
+replies an error message.</p>
+</div>
+<div class="section" id="deleting-port">
+<h3>2.3.3.2. Deleting port<a class="headerlink" href="#deleting-port" title="Permalink to this headline">¶</a></h3>
+<p>Delete a port which is not be used anymore. It is almost same as adding port.</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">spp &gt; mirror SEC_ID; port del RES_UID DIR NAME</span>
+</pre></div>
+</div>
+<p>Here is some examples.</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">#</span> delete rx port <span class="s1">&#39;ring:0&#39;</span> from <span class="s1">&#39;mr1&#39;</span>
+<span class="go">spp &gt; mirror 2; port del ring:0 rx mr1</span>
+
+<span class="gp">#</span> delete tx port <span class="s1">&#39;vhost:1&#39;</span> from <span class="s1">&#39;mr1&#39;</span>
+<span class="go">spp &gt; mirror 2; port del vhost:1 tx mr1</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Deleting port may cause component to stop packet forwarding.
+Please see detail in <a class="reference internal" href="../../design/spp_secondary.html#spp-design-spp-sec-mirror"><span class="std std-ref">design spp_mirror</span></a>.</p>
+</div>
+</div>
+</div>
+<div class="section" id="exit">
+<h2>2.3.4. exit<a class="headerlink" href="#exit" title="Permalink to this headline">¶</a></h2>
+<p>Terminate <code class="docutils literal notranslate"><span class="pre">spp_mirror</span></code> process.</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">spp &gt; mirror 2; exit</span>
+</pre></div>
+</div>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="spp_pcap.html" class="btn btn-neutral float-right" title="2.4. spp_pcap" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="spp_vf.html" class="btn btn-neutral float-left" title="2.2. spp_vf" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

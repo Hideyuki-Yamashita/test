@@ -1,0 +1,507 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>1.2. Getting Started &mdash; Soft Patch Panel 19.08 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="../../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../../_static/jquery.js"></script>
+        <script type="text/javascript" src="../../_static/underscore.js"></script>
+        <script type="text/javascript" src="../../_static/doctools.js"></script>
+        <script type="text/javascript" src="../../_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="../../_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="1.3. Install" href="install.html" />
+    <link rel="prev" title="1.1. Overview" href="overview.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../index.html" class="icon icon-home"> Soft Patch Panel
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                19.08
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../overview.html">Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../design/index.html">Design</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../gsg/index.html">Getting Started Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../usecases/index.html">Use Cases</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../commands/index.html">SPP Commands</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../index.html">Tools</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="index.html">1. SPP Container</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="overview.html">1.1. Overview</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">1.2. Getting Started</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#setup-dpdk-and-spp">1.2.1. Setup DPDK and SPP</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#build-docker-images">1.2.2. Build Docker Images</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#launch-spp-and-app-containers">1.2.3. Launch SPP and App Containers</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#run-applications">1.2.4. Run Applications</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="install.html">1.3. Install</a></li>
+<li class="toctree-l3"><a class="reference internal" href="build_img.html">1.4. Build Images</a></li>
+<li class="toctree-l3"><a class="reference internal" href="app_launcher.html">1.5. App Container Launchers</a></li>
+<li class="toctree-l3"><a class="reference internal" href="usecases.html">1.6. Use Cases</a></li>
+<li class="toctree-l3"><a class="reference internal" href="howto_launcher.html">1.7. How to Define Your App Launcher</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../helpers/index.html">2. Helper tools</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../api_ref/index.html">API Reference</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">Soft Patch Panel</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="../index.html">Tools</a> &raquo;</li>
+        
+          <li><a href="index.html">1. SPP Container</a> &raquo;</li>
+        
+      <li>1.2. Getting Started</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../../_sources/tools/sppc/getting_started.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="getting-started">
+<span id="spp-container-gs"></span><h1>1.2. Getting Started<a class="headerlink" href="#getting-started" title="Permalink to this headline">¶</a></h1>
+<p>In this section, learn how to use SPP container with a simple
+usecase.
+You use four of terminals for running SPP processes and applications.</p>
+<div class="section" id="setup-dpdk-and-spp">
+<span id="sppc-gs-setup"></span><h2>1.2.1. Setup DPDK and SPP<a class="headerlink" href="#setup-dpdk-and-spp" title="Permalink to this headline">¶</a></h2>
+<p>First of all, you need to clone DPDK and setup hugepages for running
+DPDK application as described in
+<a class="reference internal" href="../../gsg/setup.html"><span class="doc">Setup</span></a>
+or DPDK’s
+<a class="reference external" href="https://dpdk.org/doc/guides/linux_gsg/sys_reqs.html">Gettting Started Guide</a>.
+You also need to load kernel modules and bind network ports as in
+<a class="reference external" href="https://dpdk.org/doc/guides/linux_gsg/linux_drivers.html">Linux Drivers</a>.</p>
+<p>Then, as described in
+<a class="reference internal" href="../../gsg/install.html"><span class="doc">Install DPDK and SPP</span></a>
+, clone and compile SPP in any directory.</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">#</span> Terminal <span class="m">1</span>
+<span class="gp">$</span> git clone http://dpdk.org/git/apps/spp
+<span class="gp">$</span> <span class="nb">cd</span> spp
+</pre></div>
+</div>
+</div>
+<div class="section" id="build-docker-images">
+<span id="sppc-gs-build-docker-imgs"></span><h2>1.2.2. Build Docker Images<a class="headerlink" href="#build-docker-images" title="Permalink to this headline">¶</a></h2>
+<p>Build tool is a python script for creating a docker image and
+currently supporting three types of images for
+DPDK sample applications, pktgen-dpdk, or SPP.</p>
+<p>Run build tool for creating three type of docker images.
+It starts to download the latest Ubuntu docker image and installation
+for the latest DPDK, pktgen or SPP.</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">#</span> Terminal <span class="m">1</span>
+<span class="gp">$</span> <span class="nb">cd</span> /path/to/spp/tools/sppc
+<span class="gp">$</span> python3 build/main.py -t dpdk
+<span class="gp">$</span> python3 build/main.py -t pktgen
+<span class="gp">$</span> python3 build/main.py -t spp
+</pre></div>
+</div>
+<p>Of course DPDK is required from pktgen and SPP, and it causes a
+problem of compatibility between them sometimes.
+In this case, you should build SPP with <code class="docutils literal notranslate"><span class="pre">--dpdk-branch</span></code> option to tell
+the version of DPDK explicitly.</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">#</span> Terminal <span class="m">1</span>
+<span class="gp">$</span> python3 build/main.py -t spp --dpdk-branch v19.11
+</pre></div>
+</div>
+<p>You can find all of options by <code class="docutils literal notranslate"><span class="pre">build/main.py</span> <span class="pre">-h</span></code>.</p>
+<p>Waiting for a minutes, then you are ready to launch app containers.
+All of images are referred from <code class="docutils literal notranslate"><span class="pre">docker</span> <span class="pre">images</span></code> command.</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$</span> docker images
+<span class="go">REPOSITORY           TAG       IMAGE ID         CREATED         SIZE</span>
+<span class="go">sppc/spp-ubuntu      latest    3ec39adb460f     2 days ago      862MB</span>
+<span class="go">sppc/pktgen-ubuntu   latest    ffe65cc70e65     2 days ago      845MB</span>
+<span class="go">sppc/dpdk-ubuntu     latest    0d5910d10e3f     2 days ago      1.66GB</span>
+<span class="go">&lt;none&gt;               &lt;none&gt;    d52d2f86a3c0     2 days ago      551MB</span>
+<span class="go">ubuntu               latest    452a96d81c30     5 weeks ago     79.6MB</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>The Name of container image is defined as a set of target, name and
+version of Linux distoribution.
+For example, container image targetting dpdk apps on Ubuntu 18.04
+is named as <code class="docutils literal notranslate"><span class="pre">sppc/dpdk-ubuntu:18.04</span></code>.</p>
+<p>There are several Dockerfiles for supporting several applications and
+distro versions under <code class="docutils literal notranslate"><span class="pre">build/ubuntu/</span></code>.
+Build script understands which of Dockerfiles should be used based
+on the given options.
+If you run build script with options for dpdk and Ubuntu 18.04 as
+below, it finds <code class="docutils literal notranslate"><span class="pre">build/ubuntu/dpdk/Dockerfile.18.04</span></code> and runs
+<code class="docutils literal notranslate"><span class="pre">docker</span> <span class="pre">build</span></code>.
+Options for Linux distribution have default value, <code class="docutils literal notranslate"><span class="pre">ubuntu</span></code> and
+<code class="docutils literal notranslate"><span class="pre">latest</span></code>. So, you do not need to specify them if you use default.</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">#</span> latest DPDK on latest Ubuntu
+<span class="gp">$</span> python3 build/main.py -t dpdk --dist-name ubuntu --dist-ver latest
+
+<span class="gp">#</span> it is also the same
+<span class="gp">$</span> python3 build/main.py -t dpdk
+
+<span class="gp">#</span> or use Ubuntu <span class="m">18</span>.04
+<span class="gp">$</span> python3 build/main.py -t dpdk --dist-ver <span class="m">18</span>.04
+</pre></div>
+</div>
+<p>Version of other than distro is also configurable by specifying a branch
+number via command line options.</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$</span> python3 build/main.py -t dpdk --dist-ver <span class="m">18</span>.04 --dpdk-branch v19.11
+<span class="gp">$</span> python3 build/main.py -t pktgen --dist-ver <span class="m">18</span>.04 <span class="se">\</span>
+  --dpdk-branch v18.02 --pktgen-branch pktgen-3.4.9
+<span class="gp">$</span> python3 build/main.py -t spp --dist-ver <span class="m">18</span>.04 --dpdk-branch v19.11
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="launch-spp-and-app-containers">
+<span id="sppc-gs-launch-containers"></span><h2>1.2.3. Launch SPP and App Containers<a class="headerlink" href="#launch-spp-and-app-containers" title="Permalink to this headline">¶</a></h2>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>In usecase described in this chapter, SPP processes other than
+<code class="docutils literal notranslate"><span class="pre">spp-ctl</span></code> and CLI are containerized, but it is available to run as on
+host for communicating with other container applications.</p>
+</div>
+<p>Before launch containers, you should set IP address of host machine as
+<code class="docutils literal notranslate"><span class="pre">SPP_CTL_IP</span></code> environment variable for controller to be accessed from
+inside containers.</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">#</span> Set your host IP address
+<span class="gp">$</span> <span class="nb">export</span> <span class="nv">SPP_CTL_IP</span><span class="o">=</span>YOUR_HOST_IPADDR
+</pre></div>
+</div>
+<div class="section" id="spp-controller">
+<h3>1.2.3.1. SPP Controller<a class="headerlink" href="#spp-controller" title="Permalink to this headline">¶</a></h3>
+<p>Launch <code class="docutils literal notranslate"><span class="pre">spp-ctl</span></code> and <code class="docutils literal notranslate"><span class="pre">spp.py</span></code> to be ready before primary and secondary
+processes.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>SPP controller also provides <code class="docutils literal notranslate"><span class="pre">topo</span> <span class="pre">term</span></code> command for containers which
+shows network topology in a terminal.</p>
+<p>However, there are a few terminals supporing this feature.
+<code class="docutils literal notranslate"><span class="pre">mlterm</span></code> is the most useful and easy to customize.
+Refer <a class="reference internal" href="../../commands/experimental.html"><span class="doc">Experimental Commands</span></a> for <code class="docutils literal notranslate"><span class="pre">topo</span></code> command.</p>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">spp-ctl</span></code> is launched in the terminal 1.</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">#</span> Terminal <span class="m">1</span>
+<span class="gp">$</span> <span class="nb">cd</span> /path/to/spp
+<span class="gp">$</span> python3 src/spp-ctl/spp-ctl
+</pre></div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">spp.py</span></code> is launched in the terminal 2.</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">#</span> Terminal <span class="m">2</span>
+<span class="gp">$</span> <span class="nb">cd</span> /path/to/spp
+<span class="gp">$</span> python3 src/spp.py
+</pre></div>
+</div>
+</div>
+<div class="section" id="spp-primary-container">
+<h3>1.2.3.2. SPP Primary Container<a class="headerlink" href="#spp-primary-container" title="Permalink to this headline">¶</a></h3>
+<p>As <code class="docutils literal notranslate"><span class="pre">SPP_CTL_IP</span></code> is activated, it is able to run <code class="docutils literal notranslate"><span class="pre">app/spp-primary.py</span></code>
+with options. In this case, launch <code class="docutils literal notranslate"><span class="pre">spp_primary</span></code> in background mode using
+one core and two physical ports in terminal 3.</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">#</span> Terminal <span class="m">3</span>
+<span class="gp">$</span> <span class="nb">cd</span> /path/to/spp/tools/sppc
+<span class="gp">$</span> python3 app/spp-primary.py -l <span class="m">0</span> -p 0x03
+</pre></div>
+</div>
+</div>
+<div class="section" id="spp-secondary-container">
+<h3>1.2.3.3. SPP Secondary Container<a class="headerlink" href="#spp-secondary-container" title="Permalink to this headline">¶</a></h3>
+<p><code class="docutils literal notranslate"><span class="pre">spp_nfv</span></code> is only supported for running on container currently.</p>
+<p>Launch <code class="docutils literal notranslate"><span class="pre">spp_nfv</span></code> in terminal 3 with options for secondary ID is
+<code class="docutils literal notranslate"><span class="pre">1</span></code> and core list is <code class="docutils literal notranslate"><span class="pre">1-2</span></code> for using 2nd and 3rd cores.
+It is also run in background mode.</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">#</span> Terminal <span class="m">3</span>
+<span class="gp">$</span> python3 app/spp-nfv.py -i <span class="m">1</span> -l <span class="m">1</span>-2
+</pre></div>
+</div>
+<p>If it is succeeded, container is running in background.
+You can find it with <code class="docutils literal notranslate"><span class="pre">docker</span> <span class="pre">ps</span></code> command.</p>
+</div>
+<div class="section" id="app-container">
+<h3>1.2.3.4. App Container<a class="headerlink" href="#app-container" title="Permalink to this headline">¶</a></h3>
+<p>Launch DPDK’s <code class="docutils literal notranslate"><span class="pre">testpmd</span></code> as an example of app container.</p>
+<p>Currently, most of app containers do not support ring PMD.
+It means that you should create vhost PMDs from SPP controller
+before launching the app container.</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">#</span> Terminal <span class="m">2</span>
+<span class="go">spp &gt; nfv 1; add vhost:1</span>
+<span class="go">spp &gt; nfv 1; add vhost:2</span>
+</pre></div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">spp_nfv</span></code> of ID 1 running inside container creates <code class="docutils literal notranslate"><span class="pre">vhost:1</span></code> and
+<code class="docutils literal notranslate"><span class="pre">vhost:2</span></code>. So assign them to <code class="docutils literal notranslate"><span class="pre">testpmd</span></code> with <code class="docutils literal notranslate"><span class="pre">-d</span></code> option which is for
+attaching vdevs as a comma separated list of resource UIDs in SPP.
+<code class="docutils literal notranslate"><span class="pre">testpmd</span></code> is launched in foreground mode with <code class="docutils literal notranslate"><span class="pre">-fg</span></code> option in this case.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>DPDK app container tries to own ports on host which are shared with host
+and containers by default. It causes a confliction between SPP running on
+host and containers and unexpected behavior.</p>
+<p>To avoid this situation, it is required to use <code class="docutils literal notranslate"><span class="pre">-b</span></code> or
+<code class="docutils literal notranslate"><span class="pre">--pci-blacklist</span></code> EAL option to exclude ports on host. PCI address of
+port can be inspected by using <code class="docutils literal notranslate"><span class="pre">dpdk-devbind.py</span> <span class="pre">-s</span></code>.</p>
+</div>
+<p>To exclude <code class="docutils literal notranslate"><span class="pre">testpmd</span></code> container tries to own physical ports, you should
+specify PCI addresses of the ports with <code class="docutils literal notranslate"><span class="pre">-b</span></code> or <code class="docutils literal notranslate"><span class="pre">--pci-blacklist</span></code>.
+You can find PCI addresses from <code class="docutils literal notranslate"><span class="pre">dpdk-devbind.py</span> <span class="pre">-s</span></code>.</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">#</span> Check the status of the available devices.
+<span class="go">dpdk-devbind --status</span>
+<span class="go">Network devices using DPDK-compatible driver</span>
+<span class="go">============================================</span>
+<span class="go">0000:0a:00.0 &#39;82599ES 10-Gigabit&#39; drv=igb_uio unused=ixgbe</span>
+<span class="go">0000:0a:00.1 &#39;82599ES 10-Gigabit&#39; drv=igb_uio unused=ixgbe</span>
+
+<span class="go">Network devices using kernel driver</span>
+<span class="go">===================================</span>
+<span class="go">...</span>
+</pre></div>
+</div>
+<p>In this case, you should exclude <code class="docutils literal notranslate"><span class="pre">0000:0a:00.0</span></code> and <code class="docutils literal notranslate"><span class="pre">0000:0a:00.1</span></code>
+with <code class="docutils literal notranslate"><span class="pre">-b</span></code> option.</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">#</span> Terminal <span class="m">3</span>
+<span class="gp">$</span> <span class="nb">cd</span> /path/to/spp/tools/sppc
+<span class="gp">$</span> python3 app/testpmd.py -l <span class="m">3</span>-4 <span class="se">\</span>
+  -d vhost:1,vhost:2 <span class="se">\</span>
+  -fg <span class="se">\</span>
+  -b <span class="m">0000</span>:0a:00.0 <span class="m">0000</span>:0a:00.1
+<span class="go"> sudo docker run -it \</span>
+<span class="go"> ...</span>
+<span class="go"> -b 0000:0a:00.0 \</span>
+<span class="go"> -b 0000:0a:00.1 \</span>
+<span class="go"> ...</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="run-applications">
+<span id="sppc-gs-run-apps"></span><h2>1.2.4. Run Applications<a class="headerlink" href="#run-applications" title="Permalink to this headline">¶</a></h2>
+<p>At the end of this getting started guide, configure network paths
+as described in
+<a class="reference internal" href="#figure-sppc-gsg-testpmd"><span class="std std-numref">Fig. 1.11</span></a>
+and start forwarding from testpmd.</p>
+<div class="figure align-default" id="id1">
+<span id="figure-sppc-gsg-testpmd"></span><a class="reference internal image-reference" href="../../_images/sppc_gsg_testpmd.svg"><img alt="../../_images/sppc_gsg_testpmd.svg" src="../../_images/sppc_gsg_testpmd.svg" width="58%" /></a>
+<p class="caption"><span class="caption-number">Fig. 1.11 </span><span class="caption-text">SPP and testpmd on containers</span><a class="headerlink" href="#id1" title="Permalink to this image">¶</a></p>
+</div>
+<p>In terminal 2, add <code class="docutils literal notranslate"><span class="pre">ring:0</span></code>, connect <code class="docutils literal notranslate"><span class="pre">vhost:1</span></code> and <code class="docutils literal notranslate"><span class="pre">vhost:2</span></code>
+with it.</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">#</span> Terminal <span class="m">2</span>
+<span class="go">spp &gt; nfv 1; add ring:0</span>
+<span class="go">spp &gt; nfv 1; patch vhost:1 ring:0</span>
+<span class="go">spp &gt; nfv 1; patch ring:0 vhost:2</span>
+<span class="go">spp &gt; nfv 1; forward</span>
+<span class="go">spp &gt; nfv 1; status</span>
+<span class="go">- status: running</span>
+<span class="go">- lcore_ids:</span>
+<span class="go">  - master: 1</span>
+<span class="go">  - slave: 2</span>
+<span class="go">- ports:</span>
+<span class="go">  - ring:0 -&gt; vhost:2</span>
+<span class="go">  - vhost:1 -&gt; ring:0</span>
+<span class="go">  - vhost:2</span>
+</pre></div>
+</div>
+<p>Start forwarding on port 0 by <code class="docutils literal notranslate"><span class="pre">start</span> <span class="pre">tx_first</span></code>.</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">#</span> Terminal <span class="m">3</span>
+<span class="go">testpmd&gt; start tx_first</span>
+<span class="go">io packet forwarding - ports=2 - cores=1 - streams=2 - NUMA support...</span>
+<span class="go">Logical Core 4 (socket 0) forwards packets on 2 streams:</span>
+<span class="go">  RX P=0/Q=0 (socket 0) -&gt; TX P=1/Q=0 (socket 0) peer=02:00:00:00:00:01</span>
+<span class="go">  RX P=1/Q=0 (socket 0) -&gt; TX P=0/Q=0 (socket 0) peer=02:00:00:00:00:00</span>
+<span class="go">...</span>
+</pre></div>
+</div>
+<p>Finally, stop forwarding to show statistics as the result.
+In this case, about 35 million packets are forwarded.</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">#</span> Terminal <span class="m">3</span>
+<span class="go">testpmd&gt; stop</span>
+<span class="go">Telling cores to stop...</span>
+<span class="go">Waiting for lcores to finish...</span>
+
+<span class="go">  ---------------------- Forward statistics for port 0  ------------------</span>
+<span class="go">  RX-packets: 0              RX-dropped: 0             RX-total: 0</span>
+<span class="go">  TX-packets: 35077664       TX-dropped: 0             TX-total: 35077664</span>
+<span class="go">  ------------------------------------------------------------------------</span>
+
+<span class="go">  ---------------------- Forward statistics for port 1  ------------------</span>
+<span class="go">  RX-packets: 35077632       RX-dropped: 0             RX-total: 35077632</span>
+<span class="go">  TX-packets: 32             TX-dropped: 0             TX-total: 32</span>
+<span class="go">  ------------------------------------------------------------------------</span>
+
+<span class="go">  +++++++++++++++ Accumulated forward statistics for all ports++++++++++++</span>
+<span class="go">  RX-packets: 35077632       RX-dropped: 0             RX-total: 35077632</span>
+<span class="go">  TX-packets: 35077696       TX-dropped: 0             TX-total: 35077696</span>
+<span class="go">  ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++</span>
+</pre></div>
+</div>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="install.html" class="btn btn-neutral float-right" title="1.3. Install" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="overview.html" class="btn btn-neutral float-left" title="1.1. Overview" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

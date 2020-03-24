@@ -1,0 +1,1132 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>3. How to Use &mdash; Soft Patch Panel 19.08 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../_static/jquery.js"></script>
+        <script type="text/javascript" src="../_static/underscore.js"></script>
+        <script type="text/javascript" src="../_static/doctools.js"></script>
+        <script type="text/javascript" src="../_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="4. Performance Optimization" href="performance_opt.html" />
+    <link rel="prev" title="2. Install DPDK and SPP" href="install.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> Soft Patch Panel
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                19.08
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../overview.html">Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../design/index.html">Design</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">Getting Started Guide</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="setup.html">1. Setup</a></li>
+<li class="toctree-l2"><a class="reference internal" href="install.html">2. Install DPDK and SPP</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">3. How to Use</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#quick-start">3.1. Quick Start</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#spp-controller">3.2. SPP Controller</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#spp-ctl">3.2.1. spp-ctl</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#spp-cli">3.2.2. SPP CLI</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#spp-primary">3.3. SPP Primary</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#spp-secondary">3.4. SPP Secondary</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#spp-nfv">3.4.1. spp_nfv</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#spp-vf">3.4.2. spp_vf</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#spp-mirror">3.4.3. spp_mirror</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#spp-pcap">3.4.4. spp_pcap</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#launch-from-spp-cli">3.4.5. Launch from SPP CLI</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#launch-spp-on-vm">3.4.6. Launch SPP on VM</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#using-virsh">3.4.7. Using virsh</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="performance_opt.html">4. Performance Optimization</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../usecases/index.html">Use Cases</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../commands/index.html">SPP Commands</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../tools/index.html">Tools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../api_ref/index.html">API Reference</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">Soft Patch Panel</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="index.html">Getting Started Guide</a> &raquo;</li>
+        
+      <li>3. How to Use</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../_sources/gsg/howto_use.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="how-to-use">
+<span id="spp-gsg-howto-use"></span><h1>3. How to Use<a class="headerlink" href="#how-to-use" title="Permalink to this headline">¶</a></h1>
+<p>As described in <a class="reference internal" href="../design/spp.html#spp-overview-design"><span class="std std-ref">Design</span></a>, SPP consists of
+primary process for managing resources, secondary processes for
+forwarding packet, and SPP controller to accept user commands and
+send it to SPP processes.</p>
+<p>You should keep in mind the order of launching processes if you do it
+manually, or you can use startup script. This start script is for launching
+<code class="docutils literal notranslate"><span class="pre">spp-ctl</span></code>, <code class="docutils literal notranslate"><span class="pre">spp_primary</span></code> and SPP CLI.</p>
+<p>Before starting, you should define environmental variable <code class="docutils literal notranslate"><span class="pre">SPP_FILE_PREFIX</span></code>
+for using the same prefix among SPP processes. <code class="docutils literal notranslate"><span class="pre">--file-prefix</span></code> is an EAL
+option for using a different shared data file prefix for a DPDK process.</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$</span> <span class="nb">export</span> <span class="nv">SPP_FILE_PREFIX</span><span class="o">=</span>spp
+</pre></div>
+</div>
+<p>This option is used for running several DPDK processes because it is not
+allowed different processes to have the same name of share data file, although
+each process of multi-process application should have the same prefix on the
+contrary.
+Even if you do not run several DPDK applications, you do not need to define
+actually. However, it is a good practice because SPP is used for connecting
+DPDK applications in actual usecases.</p>
+<div class="section" id="quick-start">
+<span id="spp-gsg-howto-quick-start"></span><h2>3.1. Quick Start<a class="headerlink" href="#quick-start" title="Permalink to this headline">¶</a></h2>
+<p>Run <code class="docutils literal notranslate"><span class="pre">bin/start.sh</span></code> with configuration file <code class="docutils literal notranslate"><span class="pre">bin/config.sh</span></code>. However,
+at the first time you run the script, it is failed because this configration
+file does not exist. It create the config from template
+<code class="docutils literal notranslate"><span class="pre">bin/sample/config.sh</span></code> and asks you to edit this file.
+All of options for launching the processes are defined in the configuration
+file.</p>
+<p>Edit the config file before run <code class="docutils literal notranslate"><span class="pre">bin/start.sh</span></code> again. It is expected you
+have two physical ports on your server, but it is configurable.
+You can use virtual ports instead of physical.
+The number of ports is defined as <code class="docutils literal notranslate"><span class="pre">PRI_PORTMASK=0x03</span></code> as default.
+If you do not have physical ports and use two memif ports instead of physical,
+uncomment <code class="docutils literal notranslate"><span class="pre">PRI_MEMIF_VDEVS=(0</span> <span class="pre">1)</span></code>.
+You can also use several types of port at once.</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span># spp_primary options
+...
+PRI_PORTMASK=0x03  # total num of ports of spp_primary.
+
+# Vdevs of spp_primary
+#PRI_MEMIF_VDEVS=(0 1)  # IDs of `net_memif`
+#PRI_VHOST_VDEVS=(11 12)  # IDs of `eth_vhost`
+...
+</pre></div>
+</div>
+<p>After that, you can run the startup script again for launching processes.</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">#</span> launch with default URL http://127.0.0.1:7777
+<span class="gp">$</span> bin/start.sh
+<span class="go">Start spp-ctl</span>
+<span class="go">Start spp_primary</span>
+<span class="go">Waiting for spp_primary is ready .................... OK! (8.5[sec])</span>
+<span class="go">Welcome to the SPP CLI. Type `help` or `?` to list commands.</span>
+
+<span class="go">spp &gt;</span>
+</pre></div>
+</div>
+<p>Check status of <code class="docutils literal notranslate"><span class="pre">spp_primary</span></code> because it takes several seconds to be ready.
+Confirm that the status is <code class="docutils literal notranslate"><span class="pre">running</span></code>.</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>spp &gt; status
+- spp-ctl:
+  - address: 127.0.0.1:7777
+- primary:
+  - status: running
+- secondary:
+  - processes:
+</pre></div>
+</div>
+<p>Now you are ready to launch secondary processes from <code class="docutils literal notranslate"><span class="pre">pri;</span> <span class="pre">launch</span></code>
+command, or another terminal. Here is an example for launching <code class="docutils literal notranslate"><span class="pre">spp_nfv</span></code>
+with options from <code class="docutils literal notranslate"><span class="pre">pri;</span> <span class="pre">launch</span></code>.
+Log file of this process is created as <code class="docutils literal notranslate"><span class="pre">log/spp_nfv1.log</span></code>.</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>spp &gt; pri; launch nfv 1 -l 1,2 -m 512 --file-prefix spp -- -n 1 -s ...
+</pre></div>
+</div>
+<p>This <code class="docutils literal notranslate"><span class="pre">launch</span></code> command supports TAB completion. Parameters for <code class="docutils literal notranslate"><span class="pre">spp_nfv</span></code>
+are completed after secondary ID <code class="docutils literal notranslate"><span class="pre">1</span></code>.</p>
+<p>You might notice <code class="docutils literal notranslate"><span class="pre">--file-prefix</span> <span class="pre">spp</span></code> which should be the same value among
+primary and secondary processes. SPP CLI expects that this value can be
+referred as environmental variable <code class="docutils literal notranslate"><span class="pre">SPP_FILE_PREFIX</span></code>, and spp_primary is
+launched with the same <code class="docutils literal notranslate"><span class="pre">--file-prefix</span> <span class="pre">spp</span></code>.
+If you run SPP from <code class="docutils literal notranslate"><span class="pre">bin/start.sh</span></code>, you do no need to define the variable
+by yourself because it is defined in <code class="docutils literal notranslate"><span class="pre">bin/config.sh</span></code> so that spp_primary is
+launched with the prefix.</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>spp &gt; pri; launch nfv 1
+
+# Press TAB
+spp &gt; pri; launch nfv 1 -l 1,2 -m 512 --file-prefix spp -- -n 1 -s ...
+</pre></div>
+</div>
+<p>It is same as following options launching from terminal.</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$</span> sudo ./src/nfv/x86_64-native-linuxapp-gcc/spp_nfv <span class="se">\</span>
+    -l <span class="m">1</span>,2 -n <span class="m">4</span> -m <span class="m">512</span> <span class="se">\</span>
+    --proc-type secondary <span class="se">\</span>
+    --file-prefix spp <span class="se">\</span>
+    -- <span class="se">\</span>
+    -n <span class="m">1</span> <span class="se">\</span>
+    -s <span class="m">127</span>.0.0.1:6666
+</pre></div>
+</div>
+<p>Parameters for completion are defined in SPP CLI, and you can find
+parameters with <code class="docutils literal notranslate"><span class="pre">config</span></code> command.</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>spp &gt; config
+- max_secondary: &quot;16&quot;   # The maximum number of secondary processes
+- prompt: &quot;spp &gt; &quot;  # Command prompt
+- topo_size: &quot;60%&quot;  # Percentage or ratio of topo
+- sec_mem: &quot;-m 512&quot; # Mem size
+...
+</pre></div>
+</div>
+<p>You can launch consequence secondary processes from CLI for your usage.
+If you just patch two DPDK applications on host, it is enough to use one
+<code class="docutils literal notranslate"><span class="pre">spp_nfv</span></code>, or use <code class="docutils literal notranslate"><span class="pre">spp_vf</span></code> if you need to classify packets.</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>spp &gt; pri; launch nfv 2 -l 1,3 -m 512 --file-prefix spp -- -n 2 -s ...
+spp &gt; pri; launch vf 3 -l 1,4,5,6 -m 512 --file-prefix spp -- -n 3 -s ...
+...
+</pre></div>
+</div>
+<p>If you launch processes by yourself, <code class="docutils literal notranslate"><span class="pre">spp_primary</span></code> must be launched
+before secondary processes.
+<code class="docutils literal notranslate"><span class="pre">spp-ctl</span></code> need to be launched before SPP CLI, but no need to be launched
+before other processes. SPP CLI is launched from <code class="docutils literal notranslate"><span class="pre">spp.py</span></code>.
+If <code class="docutils literal notranslate"><span class="pre">spp-ctl</span></code> is not running after primary and
+secondary processes are launched, processes wait <code class="docutils literal notranslate"><span class="pre">spp-ctl</span></code> is launched.</p>
+<p>In general, <code class="docutils literal notranslate"><span class="pre">spp-ctl</span></code> should be launched first, then SPP CLI and
+<code class="docutils literal notranslate"><span class="pre">spp_primary</span></code> in each of terminals without running as background process.
+After <code class="docutils literal notranslate"><span class="pre">spp_primary</span></code>, you launch secondary processes for your usage.</p>
+<p>In the rest of this chapter is for explaining how to launch each of processes
+options and usages for the all of processes.
+How to connect to VMs is also described in this chapter.</p>
+<p>How to use of these secondary processes is described as usecases
+in the next chapter.</p>
+</div>
+<div class="section" id="spp-controller">
+<span id="spp-gsg-howto-controller"></span><h2>3.2. SPP Controller<a class="headerlink" href="#spp-controller" title="Permalink to this headline">¶</a></h2>
+<p>SPP Controller consists of <code class="docutils literal notranslate"><span class="pre">spp-ctl</span></code> and SPP CLI.</p>
+<div class="section" id="spp-ctl">
+<h3>3.2.1. spp-ctl<a class="headerlink" href="#spp-ctl" title="Permalink to this headline">¶</a></h3>
+<p><code class="docutils literal notranslate"><span class="pre">spp-ctl</span></code> is a HTTP server for REST APIs for managing SPP
+processes. In default, it is accessed with URL <code class="docutils literal notranslate"><span class="pre">http://127.0.0.1:7777</span></code>
+or <code class="docutils literal notranslate"><span class="pre">http://localhost:7777</span></code>.
+<code class="docutils literal notranslate"><span class="pre">spp-ctl</span></code> shows no messages at first after launched, but shows
+log messages for events such as receiving a request or terminating
+a process.</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">#</span> terminal <span class="m">1</span>
+<span class="gp">$</span> <span class="nb">cd</span> /path/to/spp
+<span class="gp">$</span> python3 src/spp-ctl/spp-ctl
+</pre></div>
+</div>
+<p>It has a option <code class="docutils literal notranslate"><span class="pre">-b</span></code> for binding address explicitly to be accessed
+from other than default, <code class="docutils literal notranslate"><span class="pre">127.0.0.1</span></code> or <code class="docutils literal notranslate"><span class="pre">localhost</span></code>.
+If you deploy SPP on multiple nodes, you might need to use <code class="docutils literal notranslate"><span class="pre">-b</span></code> option
+it to be accessed from other processes running on other than local node.</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">#</span> launch with URL http://192.168.1.100:7777
+<span class="gp">$</span> python3 src/spp-ctl/spp-ctl -b <span class="m">192</span>.168.1.100
+</pre></div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">spp-ctl</span></code> is the most important process in SPP. For some usecases,
+you might better to manage this process with <code class="docutils literal notranslate"><span class="pre">systemd</span></code>.
+Here is a simple example of service file for systemd.</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>[Unit]
+Description = SPP Controller
+
+[Service]
+ExecStart = /usr/bin/python3 /path/to/spp/src/spp-ctl/spp-ctl
+User = root
+</pre></div>
+</div>
+<p>All of options can be referred with help option <code class="docutils literal notranslate"><span class="pre">-h</span></code>.</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">python3 ./src/spp-ctl/spp-ctl -h</span>
+<span class="go">usage: spp-ctl [-h] [-b BIND_ADDR] [-p PRI_PORT] [-s SEC_PORT] [-a API_PORT]</span>
+
+<span class="go">SPP Controller</span>
+
+<span class="go">optional arguments:</span>
+<span class="go">  -h, --help            show this help message and exit</span>
+<span class="go">  -b BIND_ADDR, --bind-addr BIND_ADDR</span>
+<span class="go">                        bind address, default=localhost</span>
+<span class="go">  -p PRI_PORT           primary port, default=5555</span>
+<span class="go">  -s SEC_PORT           secondary port, default=6666</span>
+<span class="go">  -a API_PORT           web api port, default=7777</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="spp-cli">
+<span id="spp-setup-howto-use-spp-cli"></span><h3>3.2.2. SPP CLI<a class="headerlink" href="#spp-cli" title="Permalink to this headline">¶</a></h3>
+<p>If <code class="docutils literal notranslate"><span class="pre">spp-ctl</span></code> is launched, go to the next terminal and launch SPP CLI.</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">#</span> terminal <span class="m">2</span>
+<span class="gp">$</span> <span class="nb">cd</span> /path/to/spp
+<span class="gp">$</span> python3 src/spp.py
+<span class="go">Welcome to the spp.   Type help or ? to list commands.</span>
+
+<span class="go">spp &gt;</span>
+</pre></div>
+</div>
+<p>If you launched <code class="docutils literal notranslate"><span class="pre">spp-ctl</span></code> with <code class="docutils literal notranslate"><span class="pre">-b</span></code> option, you also need to use the same
+option for <code class="docutils literal notranslate"><span class="pre">spp.py</span></code>, or failed to connect and to launch.</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">#</span> terminal <span class="m">2</span>
+<span class="gp">#</span> <span class="nb">bind</span> to spp-ctl on http://192.168.1.100:7777
+<span class="gp">$</span> python3 src/spp.py -b <span class="m">192</span>.168.1.100
+<span class="go">Welcome to the spp.   Type help or ? to list commands.</span>
+
+<span class="go">spp &gt;</span>
+</pre></div>
+</div>
+<p>One of the typical usecase of this option is to deploy multiple SPP nodes.
+<a class="reference internal" href="#figure-spp-howto-multi-spp"><span class="std std-numref">Fig. 3.1</span></a> is an exmaple of multiple nodes case.
+There are three nodes on each of which <code class="docutils literal notranslate"><span class="pre">spp-ctl</span></code> is running for accepting
+requests for SPP. These <code class="docutils literal notranslate"><span class="pre">spp-ctl</span></code> processes are controlled from
+<code class="docutils literal notranslate"><span class="pre">spp.py</span></code> on host1 and all of paths are configured across the nodes.
+It is also able to be configured between hosts by changing
+soure or destination of phy ports.</p>
+<div class="figure align-default" id="id1">
+<span id="figure-spp-howto-multi-spp"></span><a class="reference internal image-reference" href="../_images/spp_howto_multi_spp.svg"><img alt="../_images/spp_howto_multi_spp.svg" src="../_images/spp_howto_multi_spp.svg" width="80%" /></a>
+<p class="caption"><span class="caption-number">Fig. 3.1 </span><span class="caption-text">Multiple SPP nodes</span><a class="headerlink" href="#id1" title="Permalink to this image">¶</a></p>
+</div>
+<p>Launch SPP CLI with three entries of binding addresses with <code class="docutils literal notranslate"><span class="pre">-b</span></code> option
+for specifying <code class="docutils literal notranslate"><span class="pre">spp-ctl</span></code>.</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">#</span> Launch SPP CLI with three nodes
+<span class="gp">$</span> python3 src/spp.py -b <span class="m">192</span>.168.11.101 <span class="se">\</span>
+    -b <span class="m">192</span>.168.11.102 <span class="se">\</span>
+    -b <span class="m">192</span>.168.11.103 <span class="se">\</span>
+</pre></div>
+</div>
+<p>You can also add nodes after SPP CLI is launched.</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">#</span> Launch SPP CLI with one node
+<span class="gp">$</span> python3 src/spp.py -b <span class="m">192</span>.168.11.101
+<span class="go">Welcome to the SPP CLI. Type `help` or `?` to list commands.</span>
+
+<span class="gp">#</span> Add the rest of nodes after
+<span class="go">spp &gt; server add 192.168.11.102</span>
+<span class="go">Registered spp-ctl &quot;192.168.11.102:7777&quot;.</span>
+<span class="go">spp &gt; server add 192.168.11.103</span>
+<span class="go">Registered spp-ctl &quot;192.168.11.103:7777&quot;.</span>
+</pre></div>
+</div>
+<p>You find the host under the management of SPP CLI and switch with
+<code class="docutils literal notranslate"><span class="pre">server</span></code> command.</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>spp &gt; server list
+  1: 192.168.1.101:7777 *
+  2: 192.168.1.102:7777
+  3: 192.168.1.103:7777
+</pre></div>
+</div>
+<p>To change the server, add an index number after <code class="docutils literal notranslate"><span class="pre">server</span></code>.</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span># Launch SPP CLI
+spp &gt; server 3
+Switch spp-ctl to &quot;3: 192.168.1.103:7777&quot;.
+</pre></div>
+</div>
+<p>All of options can be referred with help option <code class="docutils literal notranslate"><span class="pre">-h</span></code>.</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$</span> python3 src/spp.py -h
+<span class="go">usage: spp.py [-h] [-b BIND_ADDR] [-a API_PORT]</span>
+
+<span class="go">SPP Controller</span>
+
+<span class="go">optional arguments:</span>
+<span class="go">  -h, --help            show this help message and exit</span>
+<span class="go">  -b BIND_ADDR, --bind-addr BIND_ADDR</span>
+<span class="go">                        bind address, default=127.0.0.1:7777</span>
+</pre></div>
+</div>
+<p>All of SPP CLI commands are described in <a class="reference internal" href="../commands/index.html"><span class="doc">SPP Commands</span></a>.</p>
+<div class="section" id="default-configuration">
+<h4>3.2.2.1. Default Configuration<a class="headerlink" href="#default-configuration" title="Permalink to this headline">¶</a></h4>
+<p>SPP CLI imports several params from configuration file while launching.
+Some of behaviours of SPP CLI depends on the params.
+The default configuration is defined in
+<code class="docutils literal notranslate"><span class="pre">src/controller/config/default.yml</span></code>.
+You can change this params by editing the config file, or from <code class="docutils literal notranslate"><span class="pre">config</span></code>
+command after SPP CLI is launched.</p>
+<p>All of config params are referred by <code class="docutils literal notranslate"><span class="pre">config</span></code> command.</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span># show list of config
+spp &gt; config
+- max_secondary: &quot;16&quot;       # The maximum number of secondary processes
+- sec_nfv_nof_lcores: &quot;1&quot;   # Default num of lcores for workers of spp_nfv
+....
+</pre></div>
+</div>
+<p>To change the config, set a value for the param.
+Here is an example for changing command prompt.</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span># set prompt to &quot;$ spp &quot;
+spp &gt; config prompt &quot;$ spp &quot;
+Set prompt: &quot;$ spp &quot;
+$ spp
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="spp-primary">
+<span id="spp-gsg-howto-pri"></span><h2>3.3. SPP Primary<a class="headerlink" href="#spp-primary" title="Permalink to this headline">¶</a></h2>
+<p>SPP primary is a resource manager and has a responsibility for
+initializing EAL for secondary processes. It should be launched before
+secondary.</p>
+<p>To launch SPP primary, run <code class="docutils literal notranslate"><span class="pre">spp_primary</span></code> with specific options.</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">#</span> terminal <span class="m">3</span>
+<span class="gp">$</span> sudo ./src/primary/x86_64-native-linuxapp-gcc/spp_primary <span class="se">\</span>
+    -l <span class="m">0</span> -n <span class="m">4</span> <span class="se">\</span>
+    --socket-mem <span class="m">512</span>,512 <span class="se">\</span>
+    --huge-dir /dev/hugepages <span class="se">\</span>
+    --proc-type primary <span class="se">\</span>
+    --file-prefix <span class="nv">$SPP_FILE_PREFIX</span> <span class="se">\</span>
+    --base-virtaddr 0x100000000
+<span class="go">    -- \</span>
+<span class="go">    -p 0x03 \</span>
+<span class="go">    -n 10 \</span>
+<span class="go">    -s 192.168.1.100:5555</span>
+</pre></div>
+</div>
+<p>SPP primary takes EAL options and application specific options.</p>
+<p>Core list option <code class="docutils literal notranslate"><span class="pre">-l</span></code> is for assigining cores and SPP primary requires just
+one core. You can use core mask option <code class="docutils literal notranslate"><span class="pre">-c</span></code> instead of <code class="docutils literal notranslate"><span class="pre">-l</span></code>.
+For memory, this example is for reserving 512 MB on each of two NUMA nodes
+hardware, so you use <code class="docutils literal notranslate"><span class="pre">-m</span> <span class="pre">1024</span></code> simply, or <code class="docutils literal notranslate"><span class="pre">--socket-mem</span> <span class="pre">1024,0</span></code>
+if you run the process on single NUMA node.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>If you use DPDK v18.08 or before,
+you should consider give <code class="docutils literal notranslate"><span class="pre">--base-virtaddr</span></code> with 4 GiB or higher value
+because a secondary process is accidentally failed to mmap while init
+memory. The reason of the failure is secondary process tries to reserve
+the region which is already used by some of thread of primary.</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">#</span> Failed to secondary
+<span class="go">EAL: Could not mmap 17179869184 ... - please use &#39;--base-virtaddr&#39; option</span>
+</pre></div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">--base-virtaddr</span></code> is to decide base address explicitly to avoid this
+overlapping. 4 GiB <code class="docutils literal notranslate"><span class="pre">0x100000000</span></code> is enough for the purpose.</p>
+<p>If you use DPDK v18.11 or later, <code class="docutils literal notranslate"><span class="pre">--base-virtaddr</span> <span class="pre">0x100000000</span></code> is enabled
+in default. You need to use this option only for changing the default value.</p>
+</div>
+<p>If <code class="docutils literal notranslate"><span class="pre">spp_primary</span></code> is launched with two or more lcores, forwarder or monitor
+is activated. The default is forwarder and monitor is optional in this case.
+If you use monitor thread, additional option <code class="docutils literal notranslate"><span class="pre">--disp-stat</span></code> is required.
+Here is an example for launching <code class="docutils literal notranslate"><span class="pre">spp_primary</span></code> with monitor thread.</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">#</span> terminal <span class="m">3</span>
+<span class="gp">$</span> sudo ./src/primary/x86_64-native-linuxapp-gcc/spp_primary <span class="se">\</span>
+    -l <span class="m">0</span>-1 -n <span class="m">4</span> <span class="se">\ </span>  <span class="c1"># two lcores</span>
+<span class="go">    --socket-mem 512,512 \</span>
+<span class="go">    --huge-dir /dev/hugepages \</span>
+<span class="go">    --proc-type primary \</span>
+<span class="go">    --file-prefix $SPP_FILE_PREFIX \</span>
+<span class="go">    --base-virtaddr 0x100000000</span>
+<span class="go">    -- \</span>
+<span class="go">    -p 0x03 \</span>
+<span class="go">    -n 10 \</span>
+<span class="go">    -s 192.168.1.100:5555</span>
+<span class="go">    --disp-stats</span>
+</pre></div>
+</div>
+<p>Primary process sets up physical ports of given port mask with <code class="docutils literal notranslate"><span class="pre">-p</span></code> option
+and ring ports of the number of <code class="docutils literal notranslate"><span class="pre">-n</span></code> option. Ports of  <code class="docutils literal notranslate"><span class="pre">-p</span></code> option is for
+accepting incomming packets and <code class="docutils literal notranslate"><span class="pre">-n</span></code> option is for inter-process packet
+forwarding. You can also add ports initialized with <code class="docutils literal notranslate"><span class="pre">--vdev</span></code> option to
+physical ports. However, ports added with <code class="docutils literal notranslate"><span class="pre">--vdev</span></code> cannot referred from
+secondary processes.</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">#</span> terminal <span class="m">3</span>
+<span class="gp">$</span> sudo ./src/primary/x86_64-native-linuxapp-gcc/spp_primary <span class="se">\</span>
+    -l <span class="m">0</span> -n <span class="m">4</span> <span class="se">\</span>
+    --socket-mem <span class="m">512</span>,512 <span class="se">\</span>
+    --huge-dir<span class="o">=</span>/dev/hugepages <span class="se">\</span>
+    --vdev eth_vhost1,iface<span class="o">=</span>/tmp/sock1  <span class="c1"># used as 1st phy port</span>
+<span class="go">    --vdev eth_vhost2,iface=/tmp/sock2  # used as 2nd phy port</span>
+<span class="go">    --proc-type=primary \</span>
+<span class="go">    --file-prefix $SPP_FILE_PREFIX \</span>
+<span class="go">    --base-virtaddr 0x100000000</span>
+<span class="go">    -- \</span>
+<span class="go">    -p 0x03 \</span>
+<span class="go">    -n 10 \</span>
+<span class="go">    -s 192.168.1.100:5555</span>
+</pre></div>
+</div>
+<ul class="simple">
+<li><p>EAL options:</p>
+<ul>
+<li><p><code class="docutils literal notranslate"><span class="pre">-l</span></code>: core list</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">--socket-mem</span></code>: Memory size on each of NUMA nodes.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">--huge-dir</span></code>: Path of hugepage dir.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">--proc-type</span></code>: Process type.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">--base-virtaddr</span></code>: Specify base virtual address.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">--disp-stats</span></code>: Show statistics periodically.</p></li>
+</ul>
+</li>
+<li><p>Application options:</p>
+<ul>
+<li><p><code class="docutils literal notranslate"><span class="pre">-p</span></code>: Port mask.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">-n</span></code>: Number of ring PMD.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">-s</span></code>: IP address of controller and port prepared for primary.</p></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="section" id="spp-secondary">
+<span id="spp-gsg-howto-sec"></span><h2>3.4. SPP Secondary<a class="headerlink" href="#spp-secondary" title="Permalink to this headline">¶</a></h2>
+<p>Secondary process behaves as a client of primary process and a worker
+for doing tasks for packet processing. There are several kinds of secondary
+process, for example, simply forwarding between ports, classsifying packets
+by referring its header or duplicate packets for redundancy.</p>
+<div class="section" id="spp-nfv">
+<h3>3.4.1. spp_nfv<a class="headerlink" href="#spp-nfv" title="Permalink to this headline">¶</a></h3>
+<p>Run <code class="docutils literal notranslate"><span class="pre">spp_nfv</span></code> with options which simply forward packets as similar
+as <code class="docutils literal notranslate"><span class="pre">l2fwd</span></code>.</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">#</span> terminal <span class="m">4</span>
+<span class="gp">$</span> <span class="nb">cd</span> /path/to/spp
+<span class="gp">$</span> sudo ./src/nfv/x86_64-native-linuxapp-gcc/spp_nfv <span class="se">\</span>
+    -l <span class="m">2</span>-3 -n <span class="m">4</span> <span class="se">\</span>
+    --proc-type secondary <span class="se">\</span>
+    --file-prefix <span class="nv">$SPP_FILE_PREFIX</span> <span class="se">\</span>
+    -- <span class="se">\</span>
+    -n <span class="m">1</span> <span class="se">\</span>
+    -s <span class="m">192</span>.168.1.100:6666
+</pre></div>
+</div>
+<p>EAL options are the same as primary process. Here is a list of application
+options of <code class="docutils literal notranslate"><span class="pre">spp_nfv</span></code>.</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">-n</span></code>: Secondary ID.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">-s</span></code>: IP address and secondary port of spp-ctl.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">--vhost-client</span></code>: Enable vhost-user client mode.</p></li>
+</ul>
+<p>Secondary ID is used to identify for sending messages and must be
+unique among all of secondaries.
+If you attempt to launch a secondary process with the same ID, it
+is failed.</p>
+<p>If <code class="docutils literal notranslate"><span class="pre">--vhost-client</span></code> option is specified, then <code class="docutils literal notranslate"><span class="pre">vhost-user</span></code> act as
+the client, otherwise the server.
+For reconnect feature from SPP to VM, <code class="docutils literal notranslate"><span class="pre">--vhost-client</span></code> option can be
+used. This reconnect features requires QEMU 2.7 (or later).
+See also <a class="reference external" href="http://dpdk.org/doc/guides/sample_app_ug/vhost.html">Vhost Sample Application</a>.</p>
+</div>
+<div class="section" id="spp-vf">
+<h3>3.4.2. spp_vf<a class="headerlink" href="#spp-vf" title="Permalink to this headline">¶</a></h3>
+<p><code class="docutils literal notranslate"><span class="pre">spp_vf</span></code> is a kind of secondary process for classify or merge packets.</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$</span> sudo ./src/vf/x86_64-native-linuxapp-gcc/spp_vf <span class="se">\</span>
+    -l <span class="m">2</span>-13 -n <span class="m">4</span> <span class="se">\</span>
+    --proc-type secondary <span class="se">\</span>
+    --file-prefix <span class="nv">$SPP_FILE_PREFIX</span> <span class="se">\</span>
+    -- <span class="se">\</span>
+    --client-id <span class="m">1</span> <span class="se">\</span>
+    -s <span class="m">192</span>.168.1.100:6666 <span class="se">\</span>
+    --vhost-client
+</pre></div>
+</div>
+<p>EAL options are the same as primary process. Here is a list of application
+options of <code class="docutils literal notranslate"><span class="pre">spp_vf</span></code>.</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">--client-id</span></code>: Client ID unique among secondary processes.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">-s</span></code>: IPv4 address and secondary port of spp-ctl.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">--vhost-client</span></code>: Enable vhost-user client mode.</p></li>
+</ul>
+</div>
+<div class="section" id="spp-mirror">
+<h3>3.4.3. spp_mirror<a class="headerlink" href="#spp-mirror" title="Permalink to this headline">¶</a></h3>
+<p><code class="docutils literal notranslate"><span class="pre">spp_mirror</span></code> is a kind of secondary process for duplicating packets,
+and options are same as <code class="docutils literal notranslate"><span class="pre">spp_vf</span></code>.</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$</span> sudo ./src/mirror/x86_64-native-linuxapp-gcc/spp_mirror <span class="se">\</span>
+    -l <span class="m">2</span>,3 -n <span class="m">4</span> <span class="se">\</span>
+    --proc-type secondary <span class="se">\</span>
+    --file-prefix <span class="nv">$SPP_FILE_PREFIX</span> <span class="se">\</span>
+    -- <span class="se">\</span>
+    --client-id <span class="m">1</span> <span class="se">\</span>
+    -s <span class="m">192</span>.168.1.100:6666 <span class="se">\</span>
+    --vhost-client
+</pre></div>
+</div>
+<p>EAL options are the same as primary process. Here is a list of application
+options of <code class="docutils literal notranslate"><span class="pre">spp_mirror</span></code>.</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">--client-id</span></code>: Client ID unique among secondary processes.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">-s</span></code>: IPv4 address and secondary port of spp-ctl.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">--vhost-client</span></code>: Enable vhost-user client mode.</p></li>
+</ul>
+</div>
+<div class="section" id="spp-pcap">
+<span id="spp-vf-gsg-howto-use-spp-pcap"></span><h3>3.4.4. spp_pcap<a class="headerlink" href="#spp-pcap" title="Permalink to this headline">¶</a></h3>
+<p>Other than PCAP feature implemented as pcap port in <code class="docutils literal notranslate"><span class="pre">spp_nfv</span></code>,
+SPP provides <code class="docutils literal notranslate"><span class="pre">spp_pcap</span></code> for capturing comparatively heavy traffic.</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$</span> sudo ./src/pcap/x86_64-native-linuxapp-gcc/spp_pcap <span class="se">\</span>
+    -l <span class="m">2</span>-5 -n <span class="m">4</span> <span class="se">\</span>
+    --proc-type secondary <span class="se">\</span>
+    --file-prefix <span class="nv">$SPP_FILE_PREFIX</span> <span class="se">\</span>
+    -- <span class="se">\</span>
+    --client-id <span class="m">1</span> <span class="se">\</span>
+    -s <span class="m">192</span>.168.1.100:6666 <span class="se">\</span>
+    -c phy:0 <span class="se">\</span>
+    --out-dir /path/to/dir <span class="se">\</span>
+    --fsize <span class="m">107374182</span>
+</pre></div>
+</div>
+<p>EAL options are the same as primary process. Here is a list of application
+options of <code class="docutils literal notranslate"><span class="pre">spp_pcap</span></code>.</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">--client-id</span></code>: Client ID unique among secondary processes.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">-s</span></code>: IPv4 address and secondary port of spp-ctl.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">-c</span></code>: Captured port. Only <code class="docutils literal notranslate"><span class="pre">phy</span></code> and <code class="docutils literal notranslate"><span class="pre">ring</span></code> are supported.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">--out-dir</span></code>: Optional. Path of dir for captured file. Default is <code class="docutils literal notranslate"><span class="pre">/tmp</span></code>.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">--fsize</span></code>: Optional. Maximum size of a capture file. Default is <code class="docutils literal notranslate"><span class="pre">1GiB</span></code>.</p></li>
+</ul>
+<p>Captured file of LZ4 is generated in <code class="docutils literal notranslate"><span class="pre">/tmp</span></code> by default.
+The name of file is consists of timestamp, resource ID of captured port,
+ID of <code class="docutils literal notranslate"><span class="pre">writer</span></code> threads and sequential number.
+Timestamp is decided when capturing is started and formatted as
+<code class="docutils literal notranslate"><span class="pre">YYYYMMDDhhmmss</span></code>.
+Both of <code class="docutils literal notranslate"><span class="pre">writer</span></code> thread ID and sequential number are started from <code class="docutils literal notranslate"><span class="pre">1</span></code>.
+Sequential number is required for the case if the size of
+captured file is reached to the maximum and another file is generated to
+continue capturing.</p>
+<p>This is an example of captured file. It consists of timestamp,
+<code class="docutils literal notranslate"><span class="pre">20190214154925</span></code>, port <code class="docutils literal notranslate"><span class="pre">phy0</span></code>, thread ID <code class="docutils literal notranslate"><span class="pre">1</span></code> and sequential number
+<code class="docutils literal notranslate"><span class="pre">1</span></code>.</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>/tmp/spp_pcap.20190214154925.phy0.1.1.pcap.lz4
+</pre></div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">spp_pcap</span></code> also generates temporary files which are owned by each of
+<code class="docutils literal notranslate"><span class="pre">writer</span></code> threads until capturing is finished or the size of captured file
+is reached to the maximum.
+This temporary file has additional extension <code class="docutils literal notranslate"><span class="pre">tmp</span></code> at the end of file
+name.</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>/tmp/spp_pcap.20190214154925.phy0.1.1.pcap.lz4.tmp
+</pre></div>
+</div>
+</div>
+<div class="section" id="launch-from-spp-cli">
+<h3>3.4.5. Launch from SPP CLI<a class="headerlink" href="#launch-from-spp-cli" title="Permalink to this headline">¶</a></h3>
+<p>You can launch SPP secondary processes from SPP CLI wihtout openning
+other terminals. <code class="docutils literal notranslate"><span class="pre">pri;</span> <span class="pre">launch</span></code> command is for any of secondary processes
+with specific options. It takes secondary type, ID and options of EAL
+and application itself as similar to launching from terminal.
+Here is an example of launching <code class="docutils literal notranslate"><span class="pre">spp_nfv</span></code>. You notice that there is no
+<code class="docutils literal notranslate"><span class="pre">--proc-type</span> <span class="pre">secondary</span></code> which should be required for secondary.
+It is added to the options by SPP CLI before launching the process.</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span># terminal 2
+# launch spp_nfv with sec ID 2
+spp &gt; pri; launch nfv 2 -l 1,2 -m 512 -- -n 2 -s 192.168.1.100:6666
+Send request to launch nfv:2.
+</pre></div>
+</div>
+<p>After running this command, you can find <code class="docutils literal notranslate"><span class="pre">nfv:2</span></code> is launched
+successfully.</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span># terminal 2
+spp &gt; status
+- spp-ctl:
+  - address: 192.168.1.100:7777
+- primary:
+  - status: running
+- secondary:
+  - processes:
+    1: nfv:2
+</pre></div>
+</div>
+<p>Instead of displaying log messages in terminal, it outputs the messages
+in a log file. All of log files of secondary processes launched with
+<code class="docutils literal notranslate"><span class="pre">pri</span></code> are located in <code class="docutils literal notranslate"><span class="pre">log/</span></code> directory under the project root.
+The name of log file is found <code class="docutils literal notranslate"><span class="pre">log/spp_nfv-2.log</span></code>.</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">#</span> terminal <span class="m">5</span>
+<span class="gp">$</span> tail -f log/spp_nfv-2.log
+<span class="go">SPP_NFV: Used lcores: 1 2</span>
+<span class="go">SPP_NFV: entering main loop on lcore 2</span>
+<span class="go">SPP_NFV: My ID 2 start handling message</span>
+<span class="go">SPP_NFV: [Press Ctrl-C to quit ...]</span>
+<span class="go">SPP_NFV: Creating socket...</span>
+<span class="go">SPP_NFV: Trying to connect ... socket 24</span>
+<span class="go">SPP_NFV: Connected</span>
+<span class="go">SPP_NFV: Received string: _get_client_id</span>
+<span class="go">SPP_NFV: token 0 = _get_client_id</span>
+<span class="go">SPP_NFV: To Server: {&quot;results&quot;:[{&quot;result&quot;:&quot;success&quot;}],&quot;client_id&quot;:2, ...</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="launch-spp-on-vm">
+<h3>3.4.6. Launch SPP on VM<a class="headerlink" href="#launch-spp-on-vm" title="Permalink to this headline">¶</a></h3>
+<p>To communicate DPDK application running on a VM,
+it is required to create a virtual device for the VM.
+In this instruction, launch a VM with qemu command and
+create <code class="docutils literal notranslate"><span class="pre">vhost-user</span></code> and <code class="docutils literal notranslate"><span class="pre">virtio-net-pci</span></code> devices on the VM.</p>
+<p>Before launching VM, you need to prepare a socket file for creating
+<code class="docutils literal notranslate"><span class="pre">vhost-user</span></code> device.
+Run <code class="docutils literal notranslate"><span class="pre">add</span></code> command with resource UID <code class="docutils literal notranslate"><span class="pre">vhost:0</span></code> to create socket file.</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span># terminal 2
+spp &gt; nfv 1; add vhost:0
+</pre></div>
+</div>
+<p>In this example, it creates socket file with index 0 from <code class="docutils literal notranslate"><span class="pre">spp_nfv</span></code> of ID 1.
+Socket file is created as <code class="docutils literal notranslate"><span class="pre">/tmp/sock0</span></code>.
+It is used as a qemu option to add vhost interface.</p>
+<p>Launch VM with <code class="docutils literal notranslate"><span class="pre">qemu-system-x86_64</span></code> for x86 64bit architecture.
+Qemu takes many options for defining resources including virtual
+devices. You cannot use this example as it is because some options are
+depend on your environment.
+You should specify disk image with <code class="docutils literal notranslate"><span class="pre">-hda</span></code>, sixth option in this
+example, and <code class="docutils literal notranslate"><span class="pre">qemu-ifup</span></code> script for assigning an IP address for the VM
+to be able to access as 12th line.</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">#</span> terminal <span class="m">5</span>
+<span class="gp">$</span> sudo qemu-system-x86_64 <span class="se">\</span>
+    -cpu host <span class="se">\</span>
+    -enable-kvm <span class="se">\</span>
+    -numa node,memdev<span class="o">=</span>mem <span class="se">\</span>
+    -mem-prealloc <span class="se">\</span>
+    -hda /path/to/image.qcow2 <span class="se">\</span>
+    -m <span class="m">4096</span> <span class="se">\</span>
+    -smp <span class="nv">cores</span><span class="o">=</span><span class="m">4</span>,threads<span class="o">=</span><span class="m">1</span>,sockets<span class="o">=</span><span class="m">1</span> <span class="se">\</span>
+    -object <span class="se">\</span>
+    memory-backend-file,id<span class="o">=</span>mem,size<span class="o">=</span>4096M,mem-path<span class="o">=</span>/dev/hugepages,share<span class="o">=</span>on <span class="se">\</span>
+    -device e1000,netdev<span class="o">=</span>net0,mac<span class="o">=</span><span class="m">00</span>:AD:BE:B3:11:00 <span class="se">\</span>
+    -netdev tap,id<span class="o">=</span>net0,ifname<span class="o">=</span>net0,script<span class="o">=</span>/path/to/qemu-ifup <span class="se">\</span>
+    -nographic <span class="se">\</span>
+    -chardev socket,id<span class="o">=</span>chr0,path<span class="o">=</span>/tmp/sock0 <span class="se">\ </span> <span class="c1"># /tmp/sock0</span>
+<span class="go">    -netdev vhost-user,id=net1,chardev=chr0,vhostforce \</span>
+<span class="go">    -device virtio-net-pci,netdev=net1,mac=00:AD:BE:B4:11:00 \</span>
+<span class="go">    -monitor telnet::44911,server,nowait</span>
+</pre></div>
+</div>
+<p>This VM has two network interfaces.
+<code class="docutils literal notranslate"><span class="pre">-device</span> <span class="pre">e1000</span></code> is a management network port
+which requires <code class="docutils literal notranslate"><span class="pre">qemu-ifup</span></code> to activate while launching.
+Management network port is used for login and setup the VM.
+<code class="docutils literal notranslate"><span class="pre">-device</span> <span class="pre">virtio-net-pci</span></code> is created for SPP or DPDK application
+running on the VM.</p>
+<p><code class="docutils literal notranslate"><span class="pre">vhost-user</span></code> is a backend of <code class="docutils literal notranslate"><span class="pre">virtio-net-pci</span></code> which requires
+a socket file <code class="docutils literal notranslate"><span class="pre">/tmp/sock0</span></code> created from secondary with <code class="docutils literal notranslate"><span class="pre">-chardev</span></code>
+option.</p>
+<p>For other options, please refer to
+<a class="reference external" href="https://qemu.weilnetz.de/doc/qemu-doc.html">QEMU User Documentation</a>.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>In general, you need to prepare several qemu images for launcing
+several VMs, but installing DPDK and SPP for several images is bother
+and time consuming.</p>
+<p>You can shortcut this tasks by creating a template image and copy it
+to the VMs. It is just one time for installing for template.</p>
+</div>
+<p>After VM is booted, you install DPDK and SPP in the VM as in the host.
+IP address of the VM is assigned while it is created and you can find
+the address in a file generated from libvirt if you use Ubuntu.</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">#</span> terminal <span class="m">5</span>
+<span class="gp">$</span> cat /var/lib/libvirt/dnsmasq/virbr0.status
+<span class="go">[</span>
+<span class="go">    {</span>
+<span class="go">        &quot;ip-address&quot;: &quot;192.168.122.100&quot;,</span>
+<span class="go">        ...</span>
+
+<span class="gp">#</span> Login VM, install DPDK and SPP
+<span class="gp">$</span> ssh user@192.168.122.100
+<span class="go">...</span>
+</pre></div>
+</div>
+<p>It is recommended to configure <code class="docutils literal notranslate"><span class="pre">/etc/default/grub</span></code> for hugepages and
+reboot the VM after installation.</p>
+<p>Finally, login to the VM, bind ports to DPDK and launch <code class="docutils literal notranslate"><span class="pre">spp-ctl</span></code>
+and <code class="docutils literal notranslate"><span class="pre">spp_primamry</span></code>.
+You should add <code class="docutils literal notranslate"><span class="pre">-b</span></code> option to be accessed from SPP CLI on host.</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">#</span> terminal <span class="m">5</span>
+<span class="gp">$</span> ssh user@192.168.122.100
+<span class="gp">$</span> <span class="nb">cd</span> /path/to/spp
+<span class="gp">$</span> python3 src/spp-ctl/spp-ctl -b <span class="m">192</span>.168.122.100
+<span class="go">...</span>
+</pre></div>
+</div>
+<p>Confirm that virtio interfaces are under the management of DPDK before
+launching DPDK processes.</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">#</span> terminal <span class="m">6</span>
+<span class="gp">$</span> ssh user@192.168.122.100
+<span class="gp">$</span> <span class="nb">cd</span> /path/to/spp
+<span class="gp">$</span> sudo ./src/primary/x86_64-native-linuxapp-gcc/spp_primary <span class="se">\</span>
+    -l <span class="m">1</span> -n <span class="m">4</span> <span class="se">\</span>
+    -m <span class="m">1024</span> <span class="se">\</span>
+    --huge-dir<span class="o">=</span>/dev/hugepages <span class="se">\</span>
+    --proc-type<span class="o">=</span>primary <span class="se">\</span>
+    --base-virtaddr 0x100000000
+<span class="go">    --file-prefix $SPP_FILE_PREFIX \</span>
+<span class="go">    -- \</span>
+<span class="go">    -p 0x03 \</span>
+<span class="go">    -n 6 \</span>
+<span class="go">    -s 192.168.122.100:5555</span>
+</pre></div>
+</div>
+<p>You can configure SPP running on the VM from SPP CLI.
+Use <code class="docutils literal notranslate"><span class="pre">server</span></code> command to switch node under the management.</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span># terminal 2
+# show list of spp-ctl nodes
+spp &gt; server
+1: 192.168.1.100:7777 *
+2: 192.168.122.100:7777
+
+# change node under the management
+spp &gt; server 2
+Switch spp-ctl to &quot;2: 192.168.122.100:7777&quot;.
+
+# confirm node is switched
+spp &gt; server
+1: 192.168.1.100:7777
+2: 192.168.122.100:7777 *
+
+# configure SPP on VM
+spp &gt; status
+...
+</pre></div>
+</div>
+<p>Now, you are ready to setup your network environment for DPDK and non-DPDK
+applications with SPP.
+SPP enables users to configure service function chaining between applications
+running on host and VMs.
+Usecases of network configuration are explained in the next chapter.</p>
+</div>
+<div class="section" id="using-virsh">
+<span id="spp-gsg-howto-virsh"></span><h3>3.4.7. Using virsh<a class="headerlink" href="#using-virsh" title="Permalink to this headline">¶</a></h3>
+<p>First of all, please check version of qemu.</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$</span> qemu-system-x86_64 --version
+</pre></div>
+</div>
+<p>You should install qemu 2.7 or higher for using vhost-user client mode.
+Refer <a class="reference external" href="https://wiki.qemu.org/index.php/Hosts/Linux">instruction</a>
+to install.</p>
+<p><code class="docutils literal notranslate"><span class="pre">virsh</span></code> is a command line interface that can be used to create, destroy,
+stop start and edit VMs and configure.</p>
+<p>You also need to install following packages to run <code class="docutils literal notranslate"><span class="pre">virt-install</span></code>.</p>
+<ul class="simple">
+<li><p>libvirt-bin</p></li>
+<li><p>virtinst</p></li>
+<li><p>bridge-utils</p></li>
+</ul>
+<div class="section" id="virt-install">
+<h4>3.4.7.1. virt-install<a class="headerlink" href="#virt-install" title="Permalink to this headline">¶</a></h4>
+<p>Install OS image with <code class="docutils literal notranslate"><span class="pre">virt-install</span></code> command.
+<code class="docutils literal notranslate"><span class="pre">--location</span></code> is a URL of installer. Use Ubuntu 16.04 for amd64 in this
+case.</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>http://archive.ubuntu.com/ubuntu/dists/xenial/main/installer-amd64/
+</pre></div>
+</div>
+<p>This is an example of <code class="docutils literal notranslate"><span class="pre">virt-install</span></code>.</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">virt-install \</span>
+<span class="go">--name VM_NAME \</span>
+<span class="go">--ram 4096 \</span>
+<span class="go">--disk path=/var/lib/libvirt/images/VM_NAME.img,size=30 \</span>
+<span class="go">--vcpus 4 \</span>
+<span class="go">--os-type linux \</span>
+<span class="go">--os-variant ubuntu16.04 \</span>
+<span class="go">--network network=default \</span>
+<span class="go">--graphics none \</span>
+<span class="go">--console pty,target_type=serial \</span>
+<span class="go">--location &#39;http://archive.ubuntu.com/ubuntu/dists/xenial/main/...&#39;</span>
+<span class="go">--extra-args &#39;console=ttyS0,115200n8 serial&#39;</span>
+</pre></div>
+</div>
+<p>You might need to enable serial console as following.</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$</span>sudo systemctl <span class="nb">enable</span> serial-getty@ttyS0.service
+<span class="gp">$</span>sudo systemctl start serial-getty@ttyS0.service
+</pre></div>
+</div>
+</div>
+<div class="section" id="edit-config">
+<h4>3.4.7.2. Edit Config<a class="headerlink" href="#edit-config" title="Permalink to this headline">¶</a></h4>
+<p>Edit configuration of VM with virsh command. The name of VMs are found from
+<code class="docutils literal notranslate"><span class="pre">virsh</span> <span class="pre">list</span></code>.</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">#</span> Find the name of VM
+<span class="gp">$</span> sudo virsh list --all
+
+<span class="gp">$</span> sudo virsh edit VM_NAME
+</pre></div>
+</div>
+<p>You need to define namespace <code class="docutils literal notranslate"><span class="pre">qemu</span></code> to use tags such as
+<code class="docutils literal notranslate"><span class="pre">&lt;qemu:commandline&gt;</span></code>.</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>xmlns:qemu=&#39;http://libvirt.org/schemas/domain/qemu/1.0&#39;
+</pre></div>
+</div>
+<p>In addition, you need to add attributes for specific resources for DPDK and SPP.</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">&lt;memoryBacking&gt;</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">&lt;qemu:commandline&gt;</span></code></p></li>
+</ul>
+<p>Take care about the index numbers of devices should be the same value such as
+<code class="docutils literal notranslate"><span class="pre">chr0</span></code> or <code class="docutils literal notranslate"><span class="pre">sock0</span></code> in <code class="docutils literal notranslate"><span class="pre">virtio-net-pci</span></code> device. This index is referred as
+ID of vhost port from SPP. MAC address defined in the attribute is used while
+registering destinations for classifier’s table.</p>
+<div class="highlight-xml notranslate"><div class="highlight"><pre><span></span><span class="nt">&lt;qemu:arg</span> <span class="na">value=</span><span class="s">&#39;virtio-net-pci,netdev=vhost-net0,mac=52:54:00:12:34:56&#39;</span><span class="nt">/&gt;</span>
+</pre></div>
+</div>
+<p>Here is an example of XML config for using with SPP.</p>
+<div class="highlight-xml notranslate"><div class="highlight"><pre><span></span><span class="nt">&lt;domain</span> <span class="na">type=</span><span class="s">&#39;kvm&#39;</span> <span class="na">xmlns:qemu=</span><span class="s">&#39;http://libvirt.org/schemas/domain/qemu/1.0&#39;</span><span class="nt">&gt;</span>
+  <span class="nt">&lt;name&gt;</span>spp-vm1<span class="nt">&lt;/name&gt;</span>
+  <span class="nt">&lt;uuid&gt;</span>d90f5420-861a-4479-8559-62d7a1545cb9<span class="nt">&lt;/uuid&gt;</span>
+  <span class="nt">&lt;memory</span> <span class="na">unit=</span><span class="s">&#39;KiB&#39;</span><span class="nt">&gt;</span>4194304<span class="nt">&lt;/memory&gt;</span>
+  <span class="nt">&lt;currentMemory</span> <span class="na">unit=</span><span class="s">&#39;KiB&#39;</span><span class="nt">&gt;</span>4194304<span class="nt">&lt;/currentMemory&gt;</span>
+  <span class="nt">&lt;memoryBacking&gt;</span>
+    <span class="nt">&lt;hugepages/&gt;</span>
+  <span class="nt">&lt;/memoryBacking&gt;</span>
+  <span class="nt">&lt;vcpu</span> <span class="na">placement=</span><span class="s">&#39;static&#39;</span><span class="nt">&gt;</span>4<span class="nt">&lt;/vcpu&gt;</span>
+  <span class="nt">&lt;os&gt;</span>
+    <span class="nt">&lt;type</span> <span class="na">arch=</span><span class="s">&#39;x86_64&#39;</span> <span class="na">machine=</span><span class="s">&#39;pc-i440fx-2.3&#39;</span><span class="nt">&gt;</span>hvm<span class="nt">&lt;/type&gt;</span>
+    <span class="nt">&lt;boot</span> <span class="na">dev=</span><span class="s">&#39;hd&#39;</span><span class="nt">/&gt;</span>
+  <span class="nt">&lt;/os&gt;</span>
+  <span class="nt">&lt;features&gt;</span>
+    <span class="nt">&lt;acpi/&gt;</span>
+    <span class="nt">&lt;apic/&gt;</span>
+    <span class="nt">&lt;pae/&gt;</span>
+  <span class="nt">&lt;/features&gt;</span>
+  <span class="nt">&lt;clock</span> <span class="na">offset=</span><span class="s">&#39;utc&#39;</span><span class="nt">/&gt;</span>
+  <span class="nt">&lt;on_poweroff&gt;</span>destroy<span class="nt">&lt;/on_poweroff&gt;</span>
+  <span class="nt">&lt;on_reboot&gt;</span>restart<span class="nt">&lt;/on_reboot&gt;</span>
+  <span class="nt">&lt;on_crash&gt;</span>restart<span class="nt">&lt;/on_crash&gt;</span>
+  <span class="nt">&lt;devices&gt;</span>
+    <span class="nt">&lt;emulator&gt;</span>/usr/local/bin/qemu-system-x86_64<span class="nt">&lt;/emulator&gt;</span>
+    <span class="nt">&lt;disk</span> <span class="na">type=</span><span class="s">&#39;file&#39;</span> <span class="na">device=</span><span class="s">&#39;disk&#39;</span><span class="nt">&gt;</span>
+      <span class="nt">&lt;driver</span> <span class="na">name=</span><span class="s">&#39;qemu&#39;</span> <span class="na">type=</span><span class="s">&#39;raw&#39;</span><span class="nt">/&gt;</span>
+      <span class="nt">&lt;source</span> <span class="na">file=</span><span class="s">&#39;/var/lib/libvirt/images/spp-vm1.qcow2&#39;</span><span class="nt">/&gt;</span>
+      <span class="nt">&lt;target</span> <span class="na">dev=</span><span class="s">&#39;hda&#39;</span> <span class="na">bus=</span><span class="s">&#39;ide&#39;</span><span class="nt">/&gt;</span>
+      <span class="nt">&lt;address</span> <span class="na">type=</span><span class="s">&#39;drive&#39;</span> <span class="na">controller=</span><span class="s">&#39;0&#39;</span> <span class="na">bus=</span><span class="s">&#39;0&#39;</span> <span class="na">target=</span><span class="s">&#39;0&#39;</span> <span class="na">unit=</span><span class="s">&#39;0&#39;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;/disk&gt;</span>
+    <span class="nt">&lt;disk</span> <span class="na">type=</span><span class="s">&#39;block&#39;</span> <span class="na">device=</span><span class="s">&#39;cdrom&#39;</span><span class="nt">&gt;</span>
+      <span class="nt">&lt;driver</span> <span class="na">name=</span><span class="s">&#39;qemu&#39;</span> <span class="na">type=</span><span class="s">&#39;raw&#39;</span><span class="nt">/&gt;</span>
+      <span class="nt">&lt;target</span> <span class="na">dev=</span><span class="s">&#39;hdc&#39;</span> <span class="na">bus=</span><span class="s">&#39;ide&#39;</span><span class="nt">/&gt;</span>
+      <span class="nt">&lt;readonly/&gt;</span>
+      <span class="nt">&lt;address</span> <span class="na">type=</span><span class="s">&#39;drive&#39;</span> <span class="na">controller=</span><span class="s">&#39;0&#39;</span> <span class="na">bus=</span><span class="s">&#39;1&#39;</span> <span class="na">target=</span><span class="s">&#39;0&#39;</span> <span class="na">unit=</span><span class="s">&#39;0&#39;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;/disk&gt;</span>
+    <span class="nt">&lt;controller</span> <span class="na">type=</span><span class="s">&#39;usb&#39;</span> <span class="na">index=</span><span class="s">&#39;0&#39;</span><span class="nt">&gt;</span>
+      <span class="nt">&lt;address</span> <span class="na">type=</span><span class="s">&#39;pci&#39;</span> <span class="na">domain=</span><span class="s">&#39;0x0000&#39;</span> <span class="na">bus=</span><span class="s">&#39;0x00&#39;</span> <span class="na">slot=</span><span class="s">&#39;0x01&#39;</span>
+      <span class="na">function=</span><span class="s">&#39;0x2&#39;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;/controller&gt;</span>
+    <span class="nt">&lt;controller</span> <span class="na">type=</span><span class="s">&#39;pci&#39;</span> <span class="na">index=</span><span class="s">&#39;0&#39;</span> <span class="na">model=</span><span class="s">&#39;pci-root&#39;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;controller</span> <span class="na">type=</span><span class="s">&#39;ide&#39;</span> <span class="na">index=</span><span class="s">&#39;0&#39;</span><span class="nt">&gt;</span>
+      <span class="nt">&lt;address</span> <span class="na">type=</span><span class="s">&#39;pci&#39;</span> <span class="na">domain=</span><span class="s">&#39;0x0000&#39;</span> <span class="na">bus=</span><span class="s">&#39;0x00&#39;</span> <span class="na">slot=</span><span class="s">&#39;0x01&#39;</span>
+      <span class="na">function=</span><span class="s">&#39;0x1&#39;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;/controller&gt;</span>
+    <span class="nt">&lt;interface</span> <span class="na">type=</span><span class="s">&#39;network&#39;</span><span class="nt">&gt;</span>
+      <span class="nt">&lt;mac</span> <span class="na">address=</span><span class="s">&#39;52:54:00:99:aa:7f&#39;</span><span class="nt">/&gt;</span>
+      <span class="nt">&lt;source</span> <span class="na">network=</span><span class="s">&#39;default&#39;</span><span class="nt">/&gt;</span>
+      <span class="nt">&lt;model</span> <span class="na">type=</span><span class="s">&#39;rtl8139&#39;</span><span class="nt">/&gt;</span>
+      <span class="nt">&lt;address</span> <span class="na">type=</span><span class="s">&#39;pci&#39;</span> <span class="na">domain=</span><span class="s">&#39;0x0000&#39;</span> <span class="na">bus=</span><span class="s">&#39;0x00&#39;</span> <span class="na">slot=</span><span class="s">&#39;0x02&#39;</span>
+      <span class="na">function=</span><span class="s">&#39;0x0&#39;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;/interface&gt;</span>
+    <span class="nt">&lt;serial</span> <span class="na">type=</span><span class="s">&#39;pty&#39;</span><span class="nt">&gt;</span>
+      <span class="nt">&lt;target</span> <span class="na">type=</span><span class="s">&#39;isa-serial&#39;</span> <span class="na">port=</span><span class="s">&#39;0&#39;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;/serial&gt;</span>
+    <span class="nt">&lt;console</span> <span class="na">type=</span><span class="s">&#39;pty&#39;</span><span class="nt">&gt;</span>
+      <span class="nt">&lt;target</span> <span class="na">type=</span><span class="s">&#39;serial&#39;</span> <span class="na">port=</span><span class="s">&#39;0&#39;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;/console&gt;</span>
+    <span class="nt">&lt;memballoon</span> <span class="na">model=</span><span class="s">&#39;virtio&#39;</span><span class="nt">&gt;</span>
+      <span class="nt">&lt;address</span> <span class="na">type=</span><span class="s">&#39;pci&#39;</span> <span class="na">domain=</span><span class="s">&#39;0x0000&#39;</span> <span class="na">bus=</span><span class="s">&#39;0x00&#39;</span> <span class="na">slot=</span><span class="s">&#39;0x03&#39;</span>
+      <span class="na">function=</span><span class="s">&#39;0x0&#39;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;/memballoon&gt;</span>
+  <span class="nt">&lt;/devices&gt;</span>
+  <span class="nt">&lt;qemu:commandline&gt;</span>
+    <span class="nt">&lt;qemu:arg</span> <span class="na">value=</span><span class="s">&#39;-cpu&#39;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;qemu:arg</span> <span class="na">value=</span><span class="s">&#39;host&#39;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;qemu:arg</span> <span class="na">value=</span><span class="s">&#39;-object&#39;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;qemu:arg</span>
+    <span class="na">value=</span><span class="s">&#39;memory-backend-file,id=mem,size=4096M,mem-path=/run/hugepages/kvm,share=on&#39;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;qemu:arg</span> <span class="na">value=</span><span class="s">&#39;-numa&#39;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;qemu:arg</span> <span class="na">value=</span><span class="s">&#39;node,memdev=mem&#39;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;qemu:arg</span> <span class="na">value=</span><span class="s">&#39;-mem-prealloc&#39;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;qemu:arg</span> <span class="na">value=</span><span class="s">&#39;-chardev&#39;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;qemu:arg</span> <span class="na">value=</span><span class="s">&#39;socket,id=chr0,path=/tmp/sock0,server&#39;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;qemu:arg</span> <span class="na">value=</span><span class="s">&#39;-device&#39;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;qemu:arg</span>
+    <span class="na">value=</span><span class="s">&#39;virtio-net-pci,netdev=vhost-net0,mac=52:54:00:12:34:56&#39;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;qemu:arg</span> <span class="na">value=</span><span class="s">&#39;-netdev&#39;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;qemu:arg</span> <span class="na">value=</span><span class="s">&#39;vhost-user,id=vhost-net0,chardev=chr0,vhostforce&#39;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;qemu:arg</span> <span class="na">value=</span><span class="s">&#39;-chardev&#39;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;qemu:arg</span> <span class="na">value=</span><span class="s">&#39;socket,id=chr1,path=/tmp/sock1,server&#39;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;qemu:arg</span> <span class="na">value=</span><span class="s">&#39;-device&#39;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;qemu:arg</span>
+    <span class="na">value=</span><span class="s">&#39;virtio-net-pci,netdev=vhost-net1,mac=52:54:00:12:34:57&#39;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;qemu:arg</span> <span class="na">value=</span><span class="s">&#39;-netdev&#39;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;qemu:arg</span> <span class="na">value=</span><span class="s">&#39;vhost-user,id=vhost-net1,chardev=chr1,vhostforce&#39;</span><span class="nt">/&gt;</span>
+  <span class="nt">&lt;/qemu:commandline&gt;</span>
+<span class="nt">&lt;/domain&gt;</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="launch-vm">
+<h4>3.4.7.3. Launch VM<a class="headerlink" href="#launch-vm" title="Permalink to this headline">¶</a></h4>
+<p>After updating XML configuration, launch VM with <code class="docutils literal notranslate"><span class="pre">virsh</span> <span class="pre">start</span></code>.</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$</span> virsh start VM_NAME
+</pre></div>
+</div>
+<p>It is required to add network configurations for processes running on the VMs.
+If this configuration is skipped, processes cannot communicate with others
+via SPP.</p>
+<p>On the VMs, add an interface and disable offload.</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">#</span> Add interface
+<span class="gp">$</span> sudo ifconfig IF_NAME inet IPADDR netmask NETMASK up
+
+<span class="gp">#</span> Disable offload
+<span class="gp">$</span> sudo ethtool -K IF_NAME tx off
+</pre></div>
+</div>
+<p>On host machine, it is also required to disable offload.</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">#</span> Disable offload <span class="k">for</span> VM
+<span class="gp">$</span> sudo ethtool -K IF_NAME tx off
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="performance_opt.html" class="btn btn-neutral float-right" title="4. Performance Optimization" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="install.html" class="btn btn-neutral float-left" title="2. Install DPDK and SPP" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

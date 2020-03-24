@@ -1,0 +1,459 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>1.7. How to Define Your App Launcher &mdash; Soft Patch Panel 19.08 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="../../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../../_static/jquery.js"></script>
+        <script type="text/javascript" src="../../_static/underscore.js"></script>
+        <script type="text/javascript" src="../../_static/doctools.js"></script>
+        <script type="text/javascript" src="../../_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="../../_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="2. Helper tools" href="../helpers/index.html" />
+    <link rel="prev" title="1.6. Use Cases" href="usecases.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../index.html" class="icon icon-home"> Soft Patch Panel
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                19.08
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../overview.html">Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../design/index.html">Design</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../gsg/index.html">Getting Started Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../usecases/index.html">Use Cases</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../commands/index.html">SPP Commands</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../index.html">Tools</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="index.html">1. SPP Container</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="overview.html">1.1. Overview</a></li>
+<li class="toctree-l3"><a class="reference internal" href="getting_started.html">1.2. Getting Started</a></li>
+<li class="toctree-l3"><a class="reference internal" href="install.html">1.3. Install</a></li>
+<li class="toctree-l3"><a class="reference internal" href="build_img.html">1.4. Build Images</a></li>
+<li class="toctree-l3"><a class="reference internal" href="app_launcher.html">1.5. App Container Launchers</a></li>
+<li class="toctree-l3"><a class="reference internal" href="usecases.html">1.6. Use Cases</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">1.7. How to Define Your App Launcher</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#build-image">1.7.1. Build Image</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#create-app-container-script">1.7.2. Create App Container Script</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#dpdk-sample-app-container">1.7.3. DPDK Sample App Container</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#none-dpdk-sample-applications-in-container">1.7.4. None DPDK Sample Applications in Container</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../helpers/index.html">2. Helper tools</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../api_ref/index.html">API Reference</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">Soft Patch Panel</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="../index.html">Tools</a> &raquo;</li>
+        
+          <li><a href="index.html">1. SPP Container</a> &raquo;</li>
+        
+      <li>1.7. How to Define Your App Launcher</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../../_sources/tools/sppc/howto_launcher.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="how-to-define-your-app-launcher">
+<span id="sppc-howto-define-appc"></span><h1>1.7. How to Define Your App Launcher<a class="headerlink" href="#how-to-define-your-app-launcher" title="Permalink to this headline">¶</a></h1>
+<p>SPP container is a set of python script for launching DPDK application
+on a container with docker command. You can launch your own application
+by preparing a container image and install your application in
+the container.
+In this chapter, you will understand how to define application container
+for your application.</p>
+<div class="section" id="build-image">
+<span id="sppc-howto-build-img"></span><h2>1.7.1. Build Image<a class="headerlink" href="#build-image" title="Permalink to this headline">¶</a></h2>
+<p>SPP container provides a build tool with version specific Dockerfiles.
+You should read the Dockerfiles to understand environmental variable
+or command path are defined.
+Build tool refer <code class="docutils literal notranslate"><span class="pre">conf/env.py</span></code> for the definitions before running
+docker build.</p>
+<p>Dockerfiles of pktgen or SPP can help your understanding for building
+app container in which your application is placed outside of DPDK’s
+directory.
+On the other hand, if you build an app container of DPDK sample
+application, you do not need to prepare your Dockerfile because all of
+examples are compiled while building DPDK’s image.</p>
+</div>
+<div class="section" id="create-app-container-script">
+<span id="sppc-howto-create-appc"></span><h2>1.7.2. Create App Container Script<a class="headerlink" href="#create-app-container-script" title="Permalink to this headline">¶</a></h2>
+<p>As explained in <a class="reference internal" href="app_launcher.html#spp-container-app-launcher"><span class="std std-ref">App Container Launchers</span></a>, app container script
+shold be prepared for each of applications.
+Application of SPP container is roughly categorized as DPDK sample apps
+or not. The former case is like that you change an existing DPDK sample
+application and run as a app container.</p>
+<p>For DPDK sample apps, it is easy to build image and create app container
+script.
+On the other hand, it is a bit complex because you should you should
+define environmental variables, command path and compilation process by
+your own.</p>
+<p>This section describes how to define app container script,
+first for DPDK sample applications,
+and then second for other than them.</p>
+</div>
+<div class="section" id="dpdk-sample-app-container">
+<span id="sppc-howto-dpdk-sample-appc"></span><h2>1.7.3. DPDK Sample App Container<a class="headerlink" href="#dpdk-sample-app-container" title="Permalink to this headline">¶</a></h2>
+<p>Procedure of App container script is defined in main() and
+consists of three steps of
+(1) parsing options, (2) setup docker command and
+(3) application command run inside the container.</p>
+<p>Here is a sample code of <a class="reference internal" href="app_launcher.html#sppc-appl-l2fwd"><span class="std std-ref">L2fwd Container</span></a>.
+<code class="docutils literal notranslate"><span class="pre">parse_args()</span></code> is defined in each
+of app container scripts to parse all of EAL, docker and application
+specific options.
+It returns a result of <code class="docutils literal notranslate"><span class="pre">parse_args()</span></code> method of
+<code class="docutils literal notranslate"><span class="pre">argparse.ArgumentParser</span></code> class.
+App container script uses standard library module <code class="docutils literal notranslate"><span class="pre">argparse</span></code>
+for parsing the arguments.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">main</span><span class="p">():</span>
+    <span class="n">args</span> <span class="o">=</span> <span class="n">parse_args</span><span class="p">()</span>
+
+    <span class="c1"># Container image name such as &#39;sppc/dpdk-ubuntu:18.04&#39;</span>
+    <span class="k">if</span> <span class="n">args</span><span class="o">.</span><span class="n">container_image</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">None</span><span class="p">:</span>
+        <span class="n">container_image</span> <span class="o">=</span> <span class="n">args</span><span class="o">.</span><span class="n">container_image</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">container_image</span> <span class="o">=</span> <span class="n">common</span><span class="o">.</span><span class="n">container_img_name</span><span class="p">(</span>
+            <span class="n">common</span><span class="o">.</span><span class="n">IMG_BASE_NAMES</span><span class="p">[</span><span class="s1">&#39;dpdk&#39;</span><span class="p">],</span>
+            <span class="n">args</span><span class="o">.</span><span class="n">dist_name</span><span class="p">,</span> <span class="n">args</span><span class="o">.</span><span class="n">dist_ver</span><span class="p">)</span>
+
+    <span class="c1"># Check for other mandatory opitons.</span>
+    <span class="k">if</span> <span class="n">args</span><span class="o">.</span><span class="n">port_mask</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+        <span class="n">common</span><span class="o">.</span><span class="n">error_exit</span><span class="p">(</span><span class="s1">&#39;--port-mask&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>If the name of container is given via <code class="docutils literal notranslate"><span class="pre">args.container_image</span></code>, it is
+decided as a combination of basename, distribution and its version.
+Basenames are defined as <code class="docutils literal notranslate"><span class="pre">IMG_BASE_NAMES</span></code> in <code class="docutils literal notranslate"><span class="pre">lib/common.py</span></code>.
+In general, You do not need to change for using DPDK sample apps.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># defined in lib/common.py</span>
+<span class="n">IMG_BASE_NAMES</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s1">&#39;dpdk&#39;</span><span class="p">:</span> <span class="s1">&#39;sppc/dpdk&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;pktgen&#39;</span><span class="p">:</span> <span class="s1">&#39;sppc/pktgen&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;spp&#39;</span><span class="p">:</span> <span class="s1">&#39;sppc/spp&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;suricata&#39;</span><span class="p">:</span> <span class="s1">&#39;sppc/suricata&#39;</span><span class="p">,</span>
+    <span class="p">}</span>
+</pre></div>
+</div>
+<p>Options can be referred via <code class="docutils literal notranslate"><span class="pre">args</span></code>. For example, the name of container
+image can be referred via <code class="docutils literal notranslate"><span class="pre">args.container_image</span></code>.</p>
+<p>Before go to step (2) and (3), you had better to check given option,
+expecially mandatory options.
+<code class="docutils literal notranslate"><span class="pre">common.error_exit()</span></code> is a helper method to print an error message
+for given option and do <code class="docutils literal notranslate"><span class="pre">exit()</span></code>. In this case, <code class="docutils literal notranslate"><span class="pre">--port-mask</span></code> must
+be given, or exit with an error message.</p>
+<p>Setup of <code class="docutils literal notranslate"><span class="pre">sock_files</span></code> is required for creating network interfaces
+for the container. <code class="docutils literal notranslate"><span class="pre">sock_files()</span></code> defined in <code class="docutils literal notranslate"><span class="pre">lib/app_helper.py</span></code> is
+provided for creating socket files from given device UIDs.</p>
+<p>Then, setup docker command and its options as step (2).
+Docker options are added by using helper method
+<code class="docutils literal notranslate"><span class="pre">setup_docker_opts()</span></code> which generates commonly used options for app
+containers.
+This methods returns a list of a part of options to give it to
+<code class="docutils literal notranslate"><span class="pre">subprocess.call()</span></code>.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Setup docker command.</span>
+<span class="n">docker_cmd</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;sudo&#39;</span><span class="p">,</span> <span class="s1">&#39;docker&#39;</span><span class="p">,</span> <span class="s1">&#39;run&#39;</span><span class="p">,</span> <span class="s1">&#39;</span><span class="se">\\</span><span class="s1">&#39;</span><span class="p">]</span>
+<span class="n">docker_opts</span> <span class="o">=</span> <span class="n">app_helper</span><span class="o">.</span><span class="n">setup_docker_opts</span><span class="p">(</span><span class="n">args</span><span class="p">,</span> <span class="n">sock_files</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>You also notice that <code class="docutils literal notranslate"><span class="pre">docker_cmd</span></code> has a backslash <code class="docutils literal notranslate"><span class="pre">\\</span></code> at the end of
+the list.
+It is only used to format the printed command on the terminal.
+If you do no care about formatting, you do not need to add this character.</p>
+<p>Next step is (3), to setup the application command.
+You should change <code class="docutils literal notranslate"><span class="pre">cmd_path</span></code> to specify your application.
+In <code class="docutils literal notranslate"><span class="pre">app/l2fwd.py</span></code>, the application compiled under <code class="docutils literal notranslate"><span class="pre">RTE_SDK</span></code> in DPDK’s
+directory, but your application might be different.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Setup l2fwd command run on container.</span>
+<span class="n">cmd_path</span> <span class="o">=</span> <span class="s1">&#39;{0:s}/examples/{2:s}/{1:s}/{2:s}&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+    <span class="n">env</span><span class="o">.</span><span class="n">RTE_SDK</span><span class="p">,</span> <span class="n">env</span><span class="o">.</span><span class="n">RTE_TARGET</span><span class="p">,</span> <span class="n">APP_NAME</span><span class="p">)</span>
+
+<span class="n">l2fwd_cmd</span> <span class="o">=</span> <span class="p">[</span><span class="n">cmd_path</span><span class="p">,</span> <span class="s1">&#39;</span><span class="se">\\</span><span class="s1">&#39;</span><span class="p">]</span>
+
+<span class="c1"># Setup EAL options.</span>
+<span class="n">eal_opts</span> <span class="o">=</span> <span class="n">app_helper</span><span class="o">.</span><span class="n">setup_eal_opts</span><span class="p">(</span><span class="n">args</span><span class="p">,</span> <span class="n">APP_NAME</span><span class="p">)</span>
+
+<span class="c1"># Setup l2fwd options.</span>
+<span class="n">l2fwd_opts</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;-p&#39;</span><span class="p">,</span> <span class="n">args</span><span class="o">.</span><span class="n">port_mask</span><span class="p">,</span> <span class="s1">&#39;</span><span class="se">\\</span><span class="s1">&#39;</span><span class="p">]</span>
+</pre></div>
+</div>
+<p>While setting up EAL option in <code class="docutils literal notranslate"><span class="pre">setup_eal_opts()</span></code>, <code class="docutils literal notranslate"><span class="pre">--file-prefix</span></code> is
+generated by using the name of application and a random number. It should
+be unique on the system because it is used as the name of hugepage file.</p>
+<p>Finally, combine command and all of options before launching from
+<code class="docutils literal notranslate"><span class="pre">subprocess.call()</span></code>.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">cmds</span> <span class="o">=</span> <span class="n">docker_cmd</span> <span class="o">+</span> <span class="n">docker_opts</span> <span class="o">+</span> <span class="p">[</span><span class="n">container_image</span><span class="p">,</span> <span class="s1">&#39;</span><span class="se">\\</span><span class="s1">&#39;</span><span class="p">]</span> <span class="o">+</span> \
+    <span class="n">l2fwd_cmd</span> <span class="o">+</span> <span class="n">eal_opts</span> <span class="o">+</span> <span class="n">l2fwd_opts</span>
+<span class="k">if</span> <span class="n">cmds</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;</span><span class="se">\\</span><span class="s1">&#39;</span><span class="p">:</span>
+    <span class="n">cmds</span><span class="o">.</span><span class="n">pop</span><span class="p">()</span>
+<span class="n">common</span><span class="o">.</span><span class="n">print_pretty_commands</span><span class="p">(</span><span class="n">cmds</span><span class="p">)</span>
+
+<span class="k">if</span> <span class="n">args</span><span class="o">.</span><span class="n">dry_run</span> <span class="ow">is</span> <span class="bp">True</span><span class="p">:</span>
+    <span class="nb">exit</span><span class="p">()</span>
+
+<span class="c1"># Remove delimiters for print_pretty_commands().</span>
+<span class="k">while</span> <span class="s1">&#39;</span><span class="se">\\</span><span class="s1">&#39;</span> <span class="ow">in</span> <span class="n">cmds</span><span class="p">:</span>
+    <span class="n">cmds</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\\</span><span class="s1">&#39;</span><span class="p">)</span>
+<span class="n">subprocess</span><span class="o">.</span><span class="n">call</span><span class="p">(</span><span class="n">cmds</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>There are some optional behaviors in the final step.
+<code class="docutils literal notranslate"><span class="pre">common.print_pretty_commands()</span></code> replaces <code class="docutils literal notranslate"><span class="pre">\\</span></code> with a newline character
+and prints command line in pretty format.
+If you give <code class="docutils literal notranslate"><span class="pre">--dry-run</span></code> option, this launcher script prints command line
+and exits without launching container.</p>
+</div>
+<div class="section" id="none-dpdk-sample-applications-in-container">
+<span id="sppc-howto-none-dpdk-sample-apps"></span><h2>1.7.4. None DPDK Sample Applications in Container<a class="headerlink" href="#none-dpdk-sample-applications-in-container" title="Permalink to this headline">¶</a></h2>
+<p>There are several application using DPDK but not included in
+<a class="reference external" href="https://dpdk.org/doc/guides/sample_app_ug/index.html">sample applications</a>.
+<code class="docutils literal notranslate"><span class="pre">pktgen.py</span></code> is an example of this type of app container.
+As described in <a class="reference internal" href="#sppc-howto-dpdk-sample-appc"><span class="std std-ref">DPDK Sample App Container</span></a>,
+app container consists of three steps and it is the same for
+this case.</p>
+<p>First of all, you define parsing option for EAL, docker and
+your application.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">parse_args</span><span class="p">():</span>
+    <span class="n">parser</span> <span class="o">=</span> <span class="n">argparse</span><span class="o">.</span><span class="n">ArgumentParser</span><span class="p">(</span>
+        <span class="n">description</span><span class="o">=</span><span class="s2">&quot;Launcher for pktgen-dpdk application container&quot;</span><span class="p">)</span>
+
+    <span class="n">parser</span> <span class="o">=</span> <span class="n">app_helper</span><span class="o">.</span><span class="n">add_eal_args</span><span class="p">(</span><span class="n">parser</span><span class="p">)</span>
+    <span class="n">parser</span> <span class="o">=</span> <span class="n">app_helper</span><span class="o">.</span><span class="n">add_appc_args</span><span class="p">(</span><span class="n">parser</span><span class="p">)</span>
+
+    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span>
+        <span class="s1">&#39;-s&#39;</span><span class="p">,</span> <span class="s1">&#39;--pcap-file&#39;</span><span class="p">,</span>
+        <span class="nb">type</span><span class="o">=</span><span class="nb">str</span><span class="p">,</span>
+        <span class="n">help</span><span class="o">=</span><span class="s2">&quot;PCAP packet flow file of port, defined as &#39;N:filename&#39;&quot;</span><span class="p">)</span>
+    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span>
+        <span class="s1">&#39;-f&#39;</span><span class="p">,</span> <span class="s1">&#39;--script-file&#39;</span><span class="p">,</span>
+        <span class="nb">type</span><span class="o">=</span><span class="nb">str</span><span class="p">,</span>
+        <span class="n">help</span><span class="o">=</span><span class="s2">&quot;Pktgen script (.pkt) to or a Lua script (.lua)&quot;</span><span class="p">)</span>
+    <span class="o">...</span>
+
+    <span class="n">parser</span> <span class="o">=</span> <span class="n">app_helper</span><span class="o">.</span><span class="n">add_sppc_args</span><span class="p">(</span><span class="n">parser</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">parser</span><span class="o">.</span><span class="n">parse_args</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>It is almost the same as <a class="reference internal" href="#sppc-howto-dpdk-sample-appc"><span class="std std-ref">DPDK Sample App Container</span></a>,
+but it has options for <code class="docutils literal notranslate"><span class="pre">pktgen</span></code> itself.
+For your application, you can simply add options to <code class="docutils literal notranslate"><span class="pre">parser</span></code> object.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">main</span><span class="p">():</span>
+    <span class="n">args</span> <span class="o">=</span> <span class="n">parse_args</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>Setup of socket files for network interfaces is the same as DPDK sample apps.
+However, you might need to change paht of command  which is run in the
+container. In <code class="docutils literal notranslate"><span class="pre">app/pktgen.py</span></code>, directory of <code class="docutils literal notranslate"><span class="pre">pktgen</span></code> is defined as
+<code class="docutils literal notranslate"><span class="pre">wd</span></code>, and the name of application s defined as <code class="docutils literal notranslate"><span class="pre">APP_NAME</span></code>.
+This directory can be changed with <code class="docutils literal notranslate"><span class="pre">--workdir</span></code> option.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Setup docker command.</span>
+<span class="k">if</span> <span class="n">args</span><span class="o">.</span><span class="n">workdir</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">None</span><span class="p">:</span>
+    <span class="n">wd</span> <span class="o">=</span> <span class="n">args</span><span class="o">.</span><span class="n">workdir</span>
+<span class="k">else</span><span class="p">:</span>
+    <span class="n">wd</span> <span class="o">=</span> <span class="s1">&#39;/root/pktgen-dpdk&#39;</span>
+<span class="n">docker_cmd</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;sudo&#39;</span><span class="p">,</span> <span class="s1">&#39;docker&#39;</span><span class="p">,</span> <span class="s1">&#39;run&#39;</span><span class="p">,</span> <span class="s1">&#39;</span><span class="se">\\</span><span class="s1">&#39;</span><span class="p">]</span>
+<span class="n">docker_opts</span> <span class="o">=</span> <span class="n">app_helper</span><span class="o">.</span><span class="n">setup_docker_opts</span><span class="p">(</span><span class="n">args</span><span class="p">,</span> <span class="n">sock_files</span><span class="p">,</span> <span class="bp">None</span><span class="p">,</span> <span class="n">wd</span><span class="p">)</span>
+
+<span class="c1"># Setup pktgen command</span>
+<span class="n">pktgen_cmd</span> <span class="o">=</span> <span class="p">[</span><span class="n">APP_NAME</span><span class="p">,</span> <span class="s1">&#39;</span><span class="se">\\</span><span class="s1">&#39;</span><span class="p">]</span>
+
+<span class="c1"># Setup EAL options.</span>
+<span class="n">eal_opts</span> <span class="o">=</span> <span class="n">app_helper</span><span class="o">.</span><span class="n">setup_eal_opts</span><span class="p">(</span><span class="n">args</span><span class="p">,</span> <span class="n">APP_NAME</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Finally, combine all of commands and its options and launch
+from <code class="docutils literal notranslate"><span class="pre">subprocess.call()</span></code>.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">cmds</span> <span class="o">=</span> <span class="n">docker_cmd</span> <span class="o">+</span> <span class="n">docker_opts</span> <span class="o">+</span> <span class="p">[</span><span class="n">container_image</span><span class="p">,</span> <span class="s1">&#39;</span><span class="se">\\</span><span class="s1">&#39;</span><span class="p">]</span> <span class="o">+</span> \
+    <span class="n">pktgen_cmd</span> <span class="o">+</span> <span class="n">eal_opts</span> <span class="o">+</span> <span class="n">pktgen_opts</span>
+<span class="k">if</span> <span class="n">cmds</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;</span><span class="se">\\</span><span class="s1">&#39;</span><span class="p">:</span>
+    <span class="n">cmds</span><span class="o">.</span><span class="n">pop</span><span class="p">()</span>
+<span class="n">common</span><span class="o">.</span><span class="n">print_pretty_commands</span><span class="p">(</span><span class="n">cmds</span><span class="p">)</span>
+
+<span class="k">if</span> <span class="n">args</span><span class="o">.</span><span class="n">dry_run</span> <span class="ow">is</span> <span class="bp">True</span><span class="p">:</span>
+    <span class="nb">exit</span><span class="p">()</span>
+
+<span class="c1"># Remove delimiters for print_pretty_commands().</span>
+<span class="k">while</span> <span class="s1">&#39;</span><span class="se">\\</span><span class="s1">&#39;</span> <span class="ow">in</span> <span class="n">cmds</span><span class="p">:</span>
+    <span class="n">cmds</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\\</span><span class="s1">&#39;</span><span class="p">)</span>
+<span class="n">subprocess</span><span class="o">.</span><span class="n">call</span><span class="p">(</span><span class="n">cmds</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>As you can see, it is almost the same as DPDK sample app container
+without application path and options of application specific.</p>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="../helpers/index.html" class="btn btn-neutral float-right" title="2. Helper tools" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="usecases.html" class="btn btn-neutral float-left" title="1.6. Use Cases" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

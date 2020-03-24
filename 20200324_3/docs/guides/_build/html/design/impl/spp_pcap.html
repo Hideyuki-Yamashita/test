@@ -1,0 +1,294 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>5.4. spp_pcap &mdash; Soft Patch Panel 19.08 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="../../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../../_static/jquery.js"></script>
+        <script type="text/javascript" src="../../_static/underscore.js"></script>
+        <script type="text/javascript" src="../../_static/doctools.js"></script>
+        <script type="text/javascript" src="../../_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="../../_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="Getting Started Guide" href="../../gsg/index.html" />
+    <link rel="prev" title="5.3. spp_mirror" href="spp_mirror.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../index.html" class="icon icon-home"> Soft Patch Panel
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                19.08
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../overview.html">Overview</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../index.html">Design</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../spp.html">1. Soft Patch Panel</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../spp_controller.html">2. SPP Controller</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../spp_primary.html">3. SPP Primary</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../spp_secondary.html">4. SPP Secondary</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="index.html">5. Implementation</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="spp_nfv.html">5.1. spp_nfv</a></li>
+<li class="toctree-l3"><a class="reference internal" href="spp_vf.html">5.2. spp_vf</a></li>
+<li class="toctree-l3"><a class="reference internal" href="spp_mirror.html">5.3. spp_mirror</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">5.4. spp_pcap</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#slave-main">5.4.1. Slave Main</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#receiving-pakcets">5.4.2. Receiving Pakcets</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#writing-packet">5.4.3. Writing Packet</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../gsg/index.html">Getting Started Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../usecases/index.html">Use Cases</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../commands/index.html">SPP Commands</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../tools/index.html">Tools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../api_ref/index.html">API Reference</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">Soft Patch Panel</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="../index.html">Design</a> &raquo;</li>
+        
+          <li><a href="index.html">5. Implementation</a> &raquo;</li>
+        
+      <li>5.4. spp_pcap</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../../_sources/design/impl/spp_pcap.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="spp-pcap">
+<span id="spp-pcap-explain"></span><h1>5.4. spp_pcap<a class="headerlink" href="#spp-pcap" title="Permalink to this headline">¶</a></h1>
+<p>This section describes implementation of <code class="docutils literal notranslate"><span class="pre">spp_pcap</span></code>.</p>
+<div class="section" id="slave-main">
+<h2>5.4.1. Slave Main<a class="headerlink" href="#slave-main" title="Permalink to this headline">¶</a></h2>
+<p>In <code class="docutils literal notranslate"><span class="pre">slave_main()</span></code>, it calls <code class="docutils literal notranslate"><span class="pre">pcap_proc_receive()</span></code> if thread type is
+receiver, or <code class="docutils literal notranslate"><span class="pre">pcap_proc_write()</span></code> if the type is writer.</p>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="cm">/* spp_pcap.c */</span>
+
+<span class="k">while</span> <span class="p">((</span><span class="n">status</span> <span class="o">=</span> <span class="n">spp_get_core_status</span><span class="p">(</span><span class="n">lcore_id</span><span class="p">))</span> <span class="o">!=</span>
+                <span class="n">SPP_CORE_STOP_REQUEST</span><span class="p">)</span> <span class="p">{</span>
+
+        <span class="k">if</span> <span class="p">(</span><span class="n">pcap_info</span><span class="o">-&gt;</span><span class="n">type</span> <span class="o">==</span> <span class="n">TYPE_RECIVE</span><span class="p">)</span>
+                <span class="n">ret</span> <span class="o">=</span> <span class="n">pcap_proc_receive</span><span class="p">(</span><span class="n">lcore_id</span><span class="p">);</span>
+        <span class="k">else</span>
+                <span class="n">ret</span> <span class="o">=</span> <span class="n">pcap_proc_write</span><span class="p">(</span><span class="n">lcore_id</span><span class="p">);</span>
+        <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="receiving-pakcets">
+<h2>5.4.2. Receiving Pakcets<a class="headerlink" href="#receiving-pakcets" title="Permalink to this headline">¶</a></h2>
+<p><code class="docutils literal notranslate"><span class="pre">pcap_proc_receive()</span></code> is for receiving packets with <code class="docutils literal notranslate"><span class="pre">rte_eth_rx_burst</span></code>
+and sending the packets to the writer thread via ring memory by using
+<code class="docutils literal notranslate"><span class="pre">rte_ring_enqueue_bulk()</span></code>.</p>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="cm">/* spp_pcap.c */</span>
+
+<span class="n">rx</span> <span class="o">=</span> <span class="o">&amp;</span><span class="n">g_pcap_option</span><span class="p">.</span><span class="n">port_cap</span><span class="p">;</span>
+<span class="n">nb_rx</span> <span class="o">=</span> <span class="n">rte_eth_rx_burst</span><span class="p">(</span><span class="n">rx</span><span class="o">-&gt;</span><span class="n">ethdev_port_id</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">bufs</span><span class="p">,</span> <span class="n">MAX_PCAP_BURST</span><span class="p">);</span>
+
+<span class="cm">/* Forward to ring for writer thread */</span>
+<span class="n">nb_tx</span> <span class="o">=</span> <span class="n">rte_ring_enqueue_burst</span><span class="p">(</span><span class="n">write_ring</span><span class="p">,</span> <span class="p">(</span><span class="kt">void</span> <span class="o">*</span><span class="p">)</span><span class="n">bufs</span><span class="p">,</span> <span class="n">nb_rx</span><span class="p">,</span> <span class="nb">NULL</span><span class="p">);</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="writing-packet">
+<h2>5.4.3. Writing Packet<a class="headerlink" href="#writing-packet" title="Permalink to this headline">¶</a></h2>
+<p><code class="docutils literal notranslate"><span class="pre">pcap_proc_write()</span></code> is for capturing packets to a file. The captured file
+is compressed with
+<a class="reference external" href="https://github.com/lz4/lz4">LZ4</a>
+which is a lossless compression algorithm and providing compression
+speed &gt; 500 MB/s per core.</p>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="n">nb_rx</span> <span class="o">=</span>  <span class="n">rte_ring_dequeue_bulk</span><span class="p">(</span><span class="n">read_ring</span><span class="p">,</span> <span class="p">(</span><span class="kt">void</span> <span class="o">*</span><span class="p">)</span><span class="n">bufs</span><span class="p">,</span> <span class="n">MAX_PKT_BURST</span><span class="p">,</span>
+                                                                <span class="nb">NULL</span><span class="p">);</span>
+<span class="k">for</span> <span class="p">(</span><span class="n">buf</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">buf</span> <span class="o">&lt;</span> <span class="n">nb_rx</span><span class="p">;</span> <span class="n">buf</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">mbuf</span> <span class="o">=</span> <span class="n">bufs</span><span class="p">[</span><span class="n">buf</span><span class="p">];</span>
+        <span class="n">rte_prefetch0</span><span class="p">(</span><span class="n">rte_pktmbuf_mtod</span><span class="p">(</span><span class="n">mbuf</span><span class="p">,</span> <span class="kt">void</span> <span class="o">*</span><span class="p">));</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">compress_file_packet</span><span class="p">(</span><span class="o">&amp;</span><span class="n">g_pcap_info</span><span class="p">[</span><span class="n">lcore_id</span><span class="p">],</span> <span class="n">mbuf</span><span class="p">)</span>
+                                                <span class="o">!=</span> <span class="n">SPPWK_RET_OK</span><span class="p">)</span> <span class="p">{</span>
+                <span class="n">RTE_LOG</span><span class="p">(</span><span class="n">ERR</span><span class="p">,</span> <span class="n">PCAP</span><span class="p">,</span> <span class="s">&quot;capture file write error: &quot;</span>
+                        <span class="s">&quot;%d (%s)</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">,</span> <span class="n">errno</span><span class="p">,</span> <span class="n">strerror</span><span class="p">(</span><span class="n">errno</span><span class="p">));</span>
+                <span class="n">ret</span> <span class="o">=</span> <span class="n">SPPWK_RET_NG</span><span class="p">;</span>
+                <span class="n">info</span><span class="o">-&gt;</span><span class="n">status</span> <span class="o">=</span> <span class="n">SPP_CAPTURE_IDLE</span><span class="p">;</span>
+                <span class="n">compress_file_operation</span><span class="p">(</span><span class="n">info</span><span class="p">,</span> <span class="n">CLOSE_MODE</span><span class="p">);</span>
+                <span class="k">break</span><span class="p">;</span>
+        <span class="p">}</span>
+<span class="p">}</span>
+<span class="k">for</span> <span class="p">(</span><span class="n">buf</span> <span class="o">=</span> <span class="n">nb_rx</span><span class="p">;</span> <span class="n">buf</span> <span class="o">&lt;</span> <span class="n">nb_rx</span><span class="p">;</span> <span class="n">buf</span><span class="o">++</span><span class="p">)</span>
+        <span class="n">rte_pktmbuf_free</span><span class="p">(</span><span class="n">bufs</span><span class="p">[</span><span class="n">buf</span><span class="p">]);</span>
+</pre></div>
+</div>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="../../gsg/index.html" class="btn btn-neutral float-right" title="Getting Started Guide" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="spp_mirror.html" class="btn btn-neutral float-left" title="5.3. spp_mirror" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

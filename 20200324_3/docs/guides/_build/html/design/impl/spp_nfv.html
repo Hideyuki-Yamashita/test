@@ -1,0 +1,377 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>5.1. spp_nfv &mdash; Soft Patch Panel 19.08 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="../../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../../_static/jquery.js"></script>
+        <script type="text/javascript" src="../../_static/underscore.js"></script>
+        <script type="text/javascript" src="../../_static/doctools.js"></script>
+        <script type="text/javascript" src="../../_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="../../_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="5.2. spp_vf" href="spp_vf.html" />
+    <link rel="prev" title="5. Implementation" href="index.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../index.html" class="icon icon-home"> Soft Patch Panel
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                19.08
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../overview.html">Overview</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../index.html">Design</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../spp.html">1. Soft Patch Panel</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../spp_controller.html">2. SPP Controller</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../spp_primary.html">3. SPP Primary</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../spp_secondary.html">4. SPP Secondary</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="index.html">5. Implementation</a><ul class="current">
+<li class="toctree-l3 current"><a class="current reference internal" href="#">5.1. spp_nfv</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#initialization">5.1.1. Initialization</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#launch-worker-threads">5.1.2. Launch Worker Threads</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#parsing-user-command">5.1.3. Parsing User Command</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="spp_vf.html">5.2. spp_vf</a></li>
+<li class="toctree-l3"><a class="reference internal" href="spp_mirror.html">5.3. spp_mirror</a></li>
+<li class="toctree-l3"><a class="reference internal" href="spp_pcap.html">5.4. spp_pcap</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../gsg/index.html">Getting Started Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../usecases/index.html">Use Cases</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../commands/index.html">SPP Commands</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../tools/index.html">Tools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../api_ref/index.html">API Reference</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">Soft Patch Panel</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="../index.html">Design</a> &raquo;</li>
+        
+          <li><a href="index.html">5. Implementation</a> &raquo;</li>
+        
+      <li>5.1. spp_nfv</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../../_sources/design/impl/spp_nfv.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="spp-nfv">
+<span id="design-impl-spp-nfv"></span><h1>5.1. spp_nfv<a class="headerlink" href="#spp-nfv" title="Permalink to this headline">¶</a></h1>
+<p><code class="docutils literal notranslate"><span class="pre">spp_nfv</span></code> is a DPDK secondary process and communicates with primary and
+other peer processes via TCP sockets or shared memory.
+<code class="docutils literal notranslate"><span class="pre">spp_nfv</span></code> consists of several threads, main thread for maanging behavior of
+<code class="docutils literal notranslate"><span class="pre">spp_nfv</span></code> and worker threads for packet forwarding.</p>
+<p>As initialization of the process, it calls <code class="docutils literal notranslate"><span class="pre">rte_eal_init()</span></code>, then specific
+initialization functions for resources of <code class="docutils literal notranslate"><span class="pre">spp_nfv</span></code> itself.</p>
+<p>After initialization, main thread launches worker threads on each of given
+slave lcores with <code class="docutils literal notranslate"><span class="pre">rte_eal_remote_launch()</span></code>. It means that <code class="docutils literal notranslate"><span class="pre">spp_nfv</span></code>
+requires two lcores at least.
+Main thread starts to accept user command after all of worker threads are
+launched.</p>
+<div class="section" id="initialization">
+<h2>5.1.1. Initialization<a class="headerlink" href="#initialization" title="Permalink to this headline">¶</a></h2>
+<p>In main funciton, <code class="docutils literal notranslate"><span class="pre">spp_nfv</span></code> calls <code class="docutils literal notranslate"><span class="pre">rte_eal_init()</span></code> first as other
+DPDK applications, <code class="docutils literal notranslate"><span class="pre">forward_array_init()</span></code> and <code class="docutils literal notranslate"><span class="pre">port_map_init()</span></code>
+for initializing port forward array which is a kind of forwarding table.</p>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="kt">int</span>
+<span class="nf">main</span><span class="p">(</span><span class="kt">int</span> <span class="n">argc</span><span class="p">,</span> <span class="kt">char</span> <span class="o">*</span><span class="n">argv</span><span class="p">[])</span>
+<span class="p">{</span>
+        <span class="p">....</span>
+
+        <span class="n">ret</span> <span class="o">=</span> <span class="n">rte_eal_init</span><span class="p">(</span><span class="n">argc</span><span class="p">,</span> <span class="n">argv</span><span class="p">);</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">ret</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">)</span>
+                <span class="k">return</span> <span class="o">-</span><span class="mi">1</span><span class="p">;</span>
+        <span class="p">....</span>
+
+        <span class="cm">/* initialize port forward array*/</span>
+        <span class="n">forward_array_init</span><span class="p">();</span>
+        <span class="n">port_map_init</span><span class="p">();</span>
+        <span class="p">....</span>
+</pre></div>
+</div>
+<p>Port forward array is implemented as an array of <code class="docutils literal notranslate"><span class="pre">port</span></code> structure.
+It consists of RX, TX ports and its forwarding functions,
+<code class="docutils literal notranslate"><span class="pre">rte_rx_burst()</span></code> and <code class="docutils literal notranslate"><span class="pre">rte_tx_burst()</span></code> actually.
+Each of ports are identified with unique port ID.
+Worker thread iterates this array and forward packets from RX port to
+TX port.</p>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="cm">/* src/shared/common.h */</span>
+
+<span class="k">struct</span> <span class="n">port</span> <span class="p">{</span>
+    <span class="kt">uint16_t</span> <span class="n">in_port_id</span><span class="p">;</span>
+    <span class="kt">uint16_t</span> <span class="n">out_port_id</span><span class="p">;</span>
+    <span class="kt">uint16_t</span> <span class="p">(</span><span class="o">*</span><span class="n">rx_func</span><span class="p">)(</span><span class="kt">uint16_t</span><span class="p">,</span> <span class="kt">uint16_t</span><span class="p">,</span> <span class="k">struct</span> <span class="n">rte_mbuf</span> <span class="o">**</span><span class="p">,</span> <span class="kt">uint16_t</span><span class="p">);</span>
+    <span class="kt">uint16_t</span> <span class="p">(</span><span class="o">*</span><span class="n">tx_func</span><span class="p">)(</span><span class="kt">uint16_t</span><span class="p">,</span> <span class="kt">uint16_t</span><span class="p">,</span> <span class="k">struct</span> <span class="n">rte_mbuf</span> <span class="o">**</span><span class="p">,</span> <span class="kt">uint16_t</span><span class="p">);</span>
+<span class="p">};</span>
+</pre></div>
+</div>
+<p>Port map is another kind of structure for managing its type and statistics.
+Port type for indicating PMD type, for example, ring, vhost or so.
+Statistics is used as a counter of packet forwarding.</p>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="cm">/* src/shared/common.h */</span>
+
+<span class="k">struct</span> <span class="n">port_map</span> <span class="p">{</span>
+        <span class="kt">int</span> <span class="n">id</span><span class="p">;</span>
+        <span class="k">enum</span> <span class="n">port_type</span> <span class="n">port_type</span><span class="p">;</span>
+        <span class="k">struct</span> <span class="n">stats</span> <span class="o">*</span><span class="n">stats</span><span class="p">;</span>
+        <span class="k">struct</span> <span class="n">stats</span> <span class="n">default_stats</span><span class="p">;</span>
+<span class="p">};</span>
+</pre></div>
+</div>
+<p>Final step of initialization is setting up memzone.
+In this step, <code class="docutils literal notranslate"><span class="pre">spp_nfv</span></code> just looks up memzone of primary process as a
+secondary.</p>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="cm">/* set up array for port data */</span>
+<span class="k">if</span> <span class="p">(</span><span class="n">rte_eal_process_type</span><span class="p">()</span> <span class="o">==</span> <span class="n">RTE_PROC_SECONDARY</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">mz</span> <span class="o">=</span> <span class="n">rte_memzone_lookup</span><span class="p">(</span><span class="n">MZ_PORT_INFO</span><span class="p">);</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">mz</span> <span class="o">==</span> <span class="nb">NULL</span><span class="p">)</span>
+                <span class="n">rte_exit</span><span class="p">(</span><span class="n">EXIT_FAILURE</span><span class="p">,</span>
+                        <span class="s">&quot;Cannot get port info structure</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">);</span>
+        <span class="n">ports</span> <span class="o">=</span> <span class="n">mz</span><span class="o">-&gt;</span><span class="n">addr</span><span class="p">;</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="launch-worker-threads">
+<h2>5.1.2. Launch Worker Threads<a class="headerlink" href="#launch-worker-threads" title="Permalink to this headline">¶</a></h2>
+<p>Worker threads are launched with <code class="docutils literal notranslate"><span class="pre">rte_eal_remote_launch()</span></code> from main thread.
+<code class="docutils literal notranslate"><span class="pre">RTE_LCORE_FOREACH_SLAVE</span></code> is a macro for traversing slave lcores while
+incrementing <code class="docutils literal notranslate"><span class="pre">lcore_id</span></code> and <code class="docutils literal notranslate"><span class="pre">rte_eal_remote_launch()</span></code> is a function
+for running a function on worker thread.</p>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="n">lcore_id</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+<span class="n">RTE_LCORE_FOREACH_SLAVE</span><span class="p">(</span><span class="n">lcore_id</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">rte_eal_remote_launch</span><span class="p">(</span><span class="n">main_loop</span><span class="p">,</span> <span class="nb">NULL</span><span class="p">,</span> <span class="n">lcore_id</span><span class="p">);</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>In this case, <code class="docutils literal notranslate"><span class="pre">main_loop</span></code> is a starting point for calling task of worker
+thread <code class="docutils literal notranslate"><span class="pre">nfv_loop()</span></code>.</p>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="k">static</span> <span class="kt">int</span>
+<span class="nf">main_loop</span><span class="p">(</span><span class="kt">void</span> <span class="o">*</span><span class="n">dummy</span> <span class="n">__rte_unused</span><span class="p">)</span>
+<span class="p">{</span>
+        <span class="n">nfv_loop</span><span class="p">();</span>
+        <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="parsing-user-command">
+<h2>5.1.3. Parsing User Command<a class="headerlink" href="#parsing-user-command" title="Permalink to this headline">¶</a></h2>
+<p>After all of worker threads are launched, main threads goes into while
+loop for waiting user command from SPP controller via TCP connection.
+If receiving a user command, it simply parses the command and make a response.
+It terminates the while loop if it receives <code class="docutils literal notranslate"><span class="pre">exit</span></code> command.</p>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="k">while</span> <span class="p">(</span><span class="n">on</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">ret</span> <span class="o">=</span> <span class="n">do_connection</span><span class="p">(</span><span class="o">&amp;</span><span class="n">connected</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">sock</span><span class="p">);</span>
+        <span class="p">....</span>
+        <span class="n">ret</span> <span class="o">=</span> <span class="n">do_receive</span><span class="p">(</span><span class="o">&amp;</span><span class="n">connected</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">sock</span><span class="p">,</span> <span class="n">str</span><span class="p">);</span>
+        <span class="p">....</span>
+        <span class="n">flg_exit</span> <span class="o">=</span> <span class="n">parse_command</span><span class="p">(</span><span class="n">str</span><span class="p">);</span>
+        <span class="p">....</span>
+        <span class="n">ret</span> <span class="o">=</span> <span class="n">do_send</span><span class="p">(</span><span class="o">&amp;</span><span class="n">connected</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">sock</span><span class="p">,</span> <span class="n">str</span><span class="p">);</span>
+        <span class="p">....</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">parse_command()</span></code> is a function for parsing user command as named.
+There are several commnads for <code class="docutils literal notranslate"><span class="pre">spp_nfv</span></code> as described in
+<a class="reference internal" href="../../commands/secondary/spp_nfv.html#commands-spp-nfv"><span class="std std-ref">Secondary Commands</span></a>.
+Command from controller is a simple plain text and action for the command
+is decided with the first token of the command.</p>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="k">static</span> <span class="kt">int</span>
+<span class="nf">parse_command</span><span class="p">(</span><span class="kt">char</span> <span class="o">*</span><span class="n">str</span><span class="p">)</span>
+<span class="p">{</span>
+        <span class="p">....</span>
+
+        <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="n">strcmp</span><span class="p">(</span><span class="n">token_list</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="s">&quot;status&quot;</span><span class="p">))</span> <span class="p">{</span>
+                <span class="n">RTE_LOG</span><span class="p">(</span><span class="n">DEBUG</span><span class="p">,</span> <span class="n">SPP_NFV</span><span class="p">,</span> <span class="s">&quot;status</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">);</span>
+                <span class="n">memset</span><span class="p">(</span><span class="n">str</span><span class="p">,</span> <span class="sc">&#39;\0&#39;</span><span class="p">,</span> <span class="n">MSG_SIZE</span><span class="p">);</span>
+        <span class="p">....</span>
+
+                <span class="p">}</span> <span class="k">else</span> <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="n">strcmp</span><span class="p">(</span><span class="n">token_list</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="s">&quot;add&quot;</span><span class="p">))</span> <span class="p">{</span>
+                <span class="n">RTE_LOG</span><span class="p">(</span><span class="n">DEBUG</span><span class="p">,</span> <span class="n">SPP_NFV</span><span class="p">,</span> <span class="s">&quot;Received add command</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">);</span>
+                <span class="k">if</span> <span class="p">(</span><span class="n">do_add</span><span class="p">(</span><span class="n">token_list</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">)</span>
+                        <span class="n">RTE_LOG</span><span class="p">(</span><span class="n">ERR</span><span class="p">,</span> <span class="n">SPP_NFV</span><span class="p">,</span> <span class="s">&quot;Failed to do_add()</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">);</span>
+
+        <span class="p">}</span> <span class="k">else</span> <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="n">strcmp</span><span class="p">(</span><span class="n">token_list</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="s">&quot;patch&quot;</span><span class="p">))</span> <span class="p">{</span>
+                <span class="n">RTE_LOG</span><span class="p">(</span><span class="n">DEBUG</span><span class="p">,</span> <span class="n">SPP_NFV</span><span class="p">,</span> <span class="s">&quot;patch</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">);</span>
+        <span class="p">....</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>For instance, if the first token is <code class="docutils literal notranslate"><span class="pre">add</span></code>, it calls <code class="docutils literal notranslate"><span class="pre">do_add()</span></code> with
+given tokens and adds port to the process.</p>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="spp_vf.html" class="btn btn-neutral float-right" title="5.2. spp_vf" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="index.html" class="btn btn-neutral float-left" title="5. Implementation" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

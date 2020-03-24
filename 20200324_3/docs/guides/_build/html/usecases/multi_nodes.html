@@ -1,0 +1,378 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>5. Multiple Nodes &mdash; Soft Patch Panel 19.08 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../_static/jquery.js"></script>
+        <script type="text/javascript" src="../_static/underscore.js"></script>
+        <script type="text/javascript" src="../_static/doctools.js"></script>
+        <script type="text/javascript" src="../_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="SPP Commands" href="../commands/index.html" />
+    <link rel="prev" title="4. spp_pcap" href="spp_pcap.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> Soft Patch Panel
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                19.08
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../overview.html">Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../design/index.html">Design</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../gsg/index.html">Getting Started Guide</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">Use Cases</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="spp_nfv.html">1. spp_nfv</a></li>
+<li class="toctree-l2"><a class="reference internal" href="spp_vf.html">2. spp_vf</a></li>
+<li class="toctree-l2"><a class="reference internal" href="spp_mirror.html">3. spp_mirror</a></li>
+<li class="toctree-l2"><a class="reference internal" href="spp_pcap.html">4. spp_pcap</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">5. Multiple Nodes</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#launch-spp-on-multiple-nodes">5.1. Launch SPP on Multiple Nodes</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#switch-nodes">5.2. Switch Nodes</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#configure-patch-panel-node">5.3. Configure Patch Panel Node</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#configure-service-vm-nodes">5.4. Configure Service VM Nodes</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#change-path-to-backup-node">5.5. Change Path to Backup Node</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../commands/index.html">SPP Commands</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../tools/index.html">Tools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../api_ref/index.html">API Reference</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">Soft Patch Panel</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="index.html">Use Cases</a> &raquo;</li>
+        
+      <li>5. Multiple Nodes</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../_sources/usecases/multi_nodes.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="multiple-nodes">
+<span id="usecase-multi-node"></span><h1>5. Multiple Nodes<a class="headerlink" href="#multiple-nodes" title="Permalink to this headline">¶</a></h1>
+<p>SPP provides multi-node support for configuring network across several nodes
+from SPP CLI. You can configure each of nodes step by step.</p>
+<p>In <a class="reference internal" href="#figure-spp-multi-nodes-vhost"><span class="std std-numref">Fig. 5.1</span></a>, there are four nodes on which
+SPP and service VMs are running. Host1 behaves as a patch panel for connecting
+between other nodes. A request is sent from a VM on host2 to a VM on host3 or
+host4. Host4 is a backup server for host3 and replaced with host3 by changing
+network configuration. Blue lines are paths for host3 and red lines are for
+host4, and changed alternatively.</p>
+<div class="figure align-default" id="id1">
+<span id="figure-spp-multi-nodes-vhost"></span><a class="reference internal image-reference" href="../_images/spp_multi_nodes_vhost.svg"><img alt="../_images/spp_multi_nodes_vhost.svg" src="../_images/spp_multi_nodes_vhost.svg" width="100%" /></a>
+<p class="caption"><span class="caption-number">Fig. 5.1 </span><span class="caption-text">Multiple nodes example</span><a class="headerlink" href="#id1" title="Permalink to this image">¶</a></p>
+</div>
+<div class="section" id="launch-spp-on-multiple-nodes">
+<h2>5.1. Launch SPP on Multiple Nodes<a class="headerlink" href="#launch-spp-on-multiple-nodes" title="Permalink to this headline">¶</a></h2>
+<p>Before SPP CLI, launch spp-ctl on each of nodes. You should give IP address
+with <code class="docutils literal notranslate"><span class="pre">-b</span></code> option to be accessed from outside of the node.
+This is an example for launching spp-ctl on host1.</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">#</span> Launch on host1
+<span class="gp">$</span> python3 src/spp-ctl/spp-ctl -b <span class="m">192</span>.168.11.101
+</pre></div>
+</div>
+<p>You also need to launch it on host2, host3 and host4 in each of terminals.</p>
+<p>After all of spp-ctls are lauched, launch SPP CLI with four <code class="docutils literal notranslate"><span class="pre">-b</span></code> options
+for each of hosts. SPP CLI is able to be launched on any of nodes.</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">#</span> Launch SPP CLI
+<span class="gp">$</span> python3 src/spp.py -b <span class="m">192</span>.168.11.101 <span class="se">\</span>
+    -b <span class="m">192</span>.168.11.102 <span class="se">\</span>
+    -b <span class="m">192</span>.168.11.103 <span class="se">\</span>
+    -b <span class="m">192</span>.168.11.104 <span class="se">\</span>
+</pre></div>
+</div>
+<p>Or you can add nodes after launching SPP CLI. Here is an example of
+launching it with first node, and adding the rest of nodes after.</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">#</span> Launch SPP CLI
+<span class="gp">$</span> python3 src/spp.py -b <span class="m">192</span>.168.11.101
+<span class="go">Welcome to the spp.  Type help or ? to list commands.</span>
+
+<span class="go">spp &gt; server add 192.168.11.102</span>
+<span class="go">Registered spp-ctl &quot;192.168.11.102:7777&quot;.</span>
+<span class="go">spp &gt; server add 192.168.11.103</span>
+<span class="go">Registered spp-ctl &quot;192.168.11.103:7777&quot;.</span>
+<span class="go">spp &gt; server add 192.168.11.104</span>
+<span class="go">Registered spp-ctl &quot;192.168.11.104:7777&quot;.</span>
+</pre></div>
+</div>
+<p>If you have succeeded to launch all of <code class="docutils literal notranslate"><span class="pre">spp-ctl</span></code> processes before,
+you can find them by running <code class="docutils literal notranslate"><span class="pre">sever</span> <span class="pre">list</span></code> command.</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">#</span> Launch SPP CLI
+<span class="go">spp &gt; server list</span>
+<span class="go">  1: 192.168.1.101:7777 *</span>
+<span class="go">  2: 192.168.1.102:7777</span>
+<span class="go">  3: 192.168.1.103:7777</span>
+<span class="go">  4: 192.168.1.104:7777</span>
+</pre></div>
+</div>
+<p>You might notice that first entry is marked with <code class="docutils literal notranslate"><span class="pre">*</span></code>. It means that
+the current node under the management is the first node.</p>
+</div>
+<div class="section" id="switch-nodes">
+<h2>5.2. Switch Nodes<a class="headerlink" href="#switch-nodes" title="Permalink to this headline">¶</a></h2>
+<p>SPP CLI manages a node marked with <code class="docutils literal notranslate"><span class="pre">*</span></code>. If you configure other nodes,
+change the managed node with <code class="docutils literal notranslate"><span class="pre">server</span></code> command.
+Here is an example to switch to third node.</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">#</span> Launch SPP CLI
+<span class="go">spp &gt; server 3</span>
+<span class="go">Switch spp-ctl to &quot;3: 192.168.1.103:7777&quot;.</span>
+</pre></div>
+</div>
+<p>And the result after changed to host3.</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">spp &gt; server list</span>
+<span class="go">  1: 192.168.1.101:7777</span>
+<span class="go">  2: 192.168.1.102:7777</span>
+<span class="go">  3: 192.168.1.103:7777 *</span>
+<span class="go">  4: 192.168.1.104:7777</span>
+</pre></div>
+</div>
+<p>You can also confirm this change by checking IP address of spp-ctl from
+<code class="docutils literal notranslate"><span class="pre">status</span></code> command.</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">spp &gt; status</span>
+<span class="go">- spp-ctl:</span>
+<span class="go">  - address: 192.168.1.103:7777</span>
+<span class="go">- primary:</span>
+<span class="go">  - status: not running</span>
+<span class="go">...</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="configure-patch-panel-node">
+<h2>5.3. Configure Patch Panel Node<a class="headerlink" href="#configure-patch-panel-node" title="Permalink to this headline">¶</a></h2>
+<p>First of all of the network configuration, setup blue lines on host1
+described in <a class="reference internal" href="#figure-spp-multi-nodes-vhost"><span class="std std-numref">Fig. 5.1</span></a>.
+You should confirm the managed server is host1.</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">spp &gt; server list</span>
+<span class="go">  1: 192.168.1.101:7777 *</span>
+<span class="go">  2: 192.168.1.102:7777</span>
+<span class="go">  ...</span>
+</pre></div>
+</div>
+<p>Patch two sets of physical ports and start forwarding.</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">spp &gt; nfv 1; patch phy:1 phy:2</span>
+<span class="go">Patch ports (phy:1 -&gt; phy:2).</span>
+<span class="go">spp &gt; nfv 1; patch phy:3 phy:0</span>
+<span class="go">Patch ports (phy:3 -&gt; phy:0).</span>
+<span class="go">spp &gt; nfv 1; forward</span>
+<span class="go">Start forwarding.</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="configure-service-vm-nodes">
+<h2>5.4. Configure Service VM Nodes<a class="headerlink" href="#configure-service-vm-nodes" title="Permalink to this headline">¶</a></h2>
+<p>It is almost similar as
+<a class="reference internal" href="spp_nfv.html#usecase-spp-nfv-l2fwd-vhost-nw"><span class="std std-ref">Setup Network Configuration in spp_nfv</span></a>
+to setup for host2, host3, and host4.</p>
+<p>For host2, swith server to host2 and run nfv commands.</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">#</span> switch to server <span class="m">2</span>
+<span class="go">spp &gt; server 2</span>
+<span class="go">Switch spp-ctl to &quot;2: 192.168.1.102:7777&quot;.</span>
+
+<span class="gp">#</span> configure
+<span class="go">spp &gt; nfv 1; patch phy:0 vhost:0</span>
+<span class="go">Patch ports (phy:0 -&gt; vhost:0).</span>
+<span class="go">spp &gt; nfv 1; patch vhost:0 phy:1</span>
+<span class="go">Patch ports (vhost:0 -&gt; phy:1).</span>
+<span class="go">spp &gt; nfv 1; forward</span>
+<span class="go">Start forwarding.</span>
+</pre></div>
+</div>
+<p>Then, swith to host3 and host4 for doing the same configuration.</p>
+</div>
+<div class="section" id="change-path-to-backup-node">
+<h2>5.5. Change Path to Backup Node<a class="headerlink" href="#change-path-to-backup-node" title="Permalink to this headline">¶</a></h2>
+<p>Finally, change path from blue lines to red lines.</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">#</span> switch to server <span class="m">1</span>
+<span class="go">spp &gt; server 2</span>
+<span class="go">Switch spp-ctl to &quot;2: 192.168.1.102:7777&quot;.</span>
+
+<span class="gp">#</span> remove blue path
+<span class="go">spp &gt; nfv 1; stop</span>
+<span class="go">Stop forwarding.</span>
+<span class="go">spp &gt; nfv 1; patch reset</span>
+
+<span class="gp">#</span> configure red path
+<span class="go">spp &gt; nfv 2; patch phy:1 phy:4</span>
+<span class="go">Patch ports (phy:1 -&gt; phy:4).</span>
+<span class="go">spp &gt; nfv 2; patch phy:5 phy:0</span>
+<span class="go">Patch ports (phy:5 -&gt; phy:0).</span>
+<span class="go">spp &gt; nfv 2; forward</span>
+<span class="go">Start forwarding.</span>
+</pre></div>
+</div>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="../commands/index.html" class="btn btn-neutral float-right" title="SPP Commands" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="spp_pcap.html" class="btn btn-neutral float-left" title="4. spp_pcap" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

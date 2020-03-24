@@ -1,0 +1,540 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>2.2. spp_vf &mdash; Soft Patch Panel 19.08 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="../../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../../_static/jquery.js"></script>
+        <script type="text/javascript" src="../../_static/underscore.js"></script>
+        <script type="text/javascript" src="../../_static/doctools.js"></script>
+        <script type="text/javascript" src="../../_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="../../_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="2.3. spp_mirror" href="spp_mirror.html" />
+    <link rel="prev" title="2.1. spp_nfv" href="spp_nfv.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../index.html" class="icon icon-home"> Soft Patch Panel
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                19.08
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../overview.html">Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../design/index.html">Design</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../gsg/index.html">Getting Started Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../usecases/index.html">Use Cases</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../index.html">SPP Commands</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../primary.html">1. Primary Commands</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="index.html">2. Secondary Commands</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="spp_nfv.html">2.1. spp_nfv</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">2.2. spp_vf</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#status">2.2.1. status</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#component">2.2.2. component</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#port">2.2.3. port</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#classifier-table">2.2.4. classifier_table</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#exit">2.2.5. exit</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="spp_mirror.html">2.3. spp_mirror</a></li>
+<li class="toctree-l3"><a class="reference internal" href="spp_pcap.html">2.4. spp_pcap</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../common.html">3. Common Commands</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../experimental.html">4. Experimental Commands</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../tools/index.html">Tools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../api_ref/index.html">API Reference</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">Soft Patch Panel</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="../index.html">SPP Commands</a> &raquo;</li>
+        
+          <li><a href="index.html">2. Secondary Commands</a> &raquo;</li>
+        
+      <li>2.2. spp_vf</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../../_sources/commands/secondary/spp_vf.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="spp-vf">
+<span id="commands-spp-vf"></span><h1>2.2. spp_vf<a class="headerlink" href="#spp-vf" title="Permalink to this headline">¶</a></h1>
+<p><code class="docutils literal notranslate"><span class="pre">spp_vf</span></code> is a kind of SPP secondary process. It is introduced for
+providing SR-IOV like features.</p>
+<p>Each of <code class="docutils literal notranslate"><span class="pre">spp_vf</span></code> processes is managed with <code class="docutils literal notranslate"><span class="pre">vf</span></code> command. It is for
+sending sub commands with specific ID called secondary ID for changing
+configuration, assigning or releasing resources.</p>
+<p>Secondary ID is referred as <code class="docutils literal notranslate"><span class="pre">--client-id</span></code> which is given as an argument
+while launching <code class="docutils literal notranslate"><span class="pre">spp_vf</span></code>. It should be unique among all of secondary
+processes including <code class="docutils literal notranslate"><span class="pre">spp_nfv</span></code> and others.</p>
+<p><code class="docutils literal notranslate"><span class="pre">vf</span></code> command takes an secondary ID and one of sub commands. Secondary ID
+and sub command should be separated with delimiter <code class="docutils literal notranslate"><span class="pre">;</span></code>, or failed to a
+command error. Some of sub commands take additional arguments for
+configuration of the process or its resource management.</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">spp &gt; vf SEC_ID; SUB_CMD</span>
+</pre></div>
+</div>
+<p>In this example, <code class="docutils literal notranslate"><span class="pre">SEC_ID</span></code> is a secondary ID and <code class="docutils literal notranslate"><span class="pre">SUB_CMD</span></code> is one of the
+following sub commands. Details of each of sub commands are described in the
+next sections.</p>
+<ul class="simple">
+<li><p>status</p></li>
+<li><p>component</p></li>
+<li><p>port</p></li>
+<li><p>classifier_table</p></li>
+</ul>
+<p><code class="docutils literal notranslate"><span class="pre">spp_vf</span></code> supports TAB completion. You can complete all of the name
+of commands and its arguments. For instance, you find all of sub commands
+by pressing TAB after <code class="docutils literal notranslate"><span class="pre">vf</span> <span class="pre">SEC_ID;</span></code>.</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">spp &gt; vf 1;  # press TAB key</span>
+<span class="go">classifier_table  component      port        status</span>
+</pre></div>
+</div>
+<p>It tries to complete all of possible arguments. However, <code class="docutils literal notranslate"><span class="pre">spp_vf</span></code> takes
+also an arbitrary parameter which cannot be predicted, for example, name of
+component MAC address. In this cases, <code class="docutils literal notranslate"><span class="pre">spp_vf</span></code> shows capitalized keyword
+for indicating it is an arbitrary parameter. Here is an exmaple of
+<code class="docutils literal notranslate"><span class="pre">component</span></code> command to initialize a worker thread. Keyword <code class="docutils literal notranslate"><span class="pre">NAME</span></code> should
+be replaced with your favorite name for the worker of the role.</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">spp &gt; vf 1; component st  # press TAB key to show args starting &#39;st&#39;</span>
+<span class="go">start  stop</span>
+<span class="go">spp &gt; vf 1; component start NAME  # &#39;NAME&#39; is shown with TAB after start</span>
+<span class="go">spp &gt; vf 1; component start fw1   # replace &#39;NAME&#39; with your favorite name</span>
+<span class="go">spp &gt; vf 1; component start fw1   # then, press TAB to show core IDs</span>
+<span class="go">5  6  7  8</span>
+</pre></div>
+</div>
+<p>It is another example of replacing keyword. <code class="docutils literal notranslate"><span class="pre">port</span></code> is a sub command for
+assigning a resource to a worker thread. <code class="docutils literal notranslate"><span class="pre">RES_UID</span></code> is replaced with
+resource UID which is a combination of port type and its ID such as
+<code class="docutils literal notranslate"><span class="pre">ring:0</span></code> or <code class="docutils literal notranslate"><span class="pre">vhost:1</span></code> to assign it as RX port of forwarder <code class="docutils literal notranslate"><span class="pre">fw1</span></code>.</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">spp &gt; vf 1; port add RES_UID</span>
+<span class="go">spp &gt; vf 1; port add ring:0 rx fw1</span>
+</pre></div>
+</div>
+<p>If you are reached to the end of arguments, no candidate keyword is displayed.
+It is a completed statement of <code class="docutils literal notranslate"><span class="pre">component</span></code> command, and TAB
+completion does not work after <code class="docutils literal notranslate"><span class="pre">forwarder</span></code> because it is ready to run.</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">spp &gt; vf 1; component start fw1 5 forwarder</span>
+<span class="go">Succeeded to start component &#39;fw1&#39; on core:5</span>
+</pre></div>
+</div>
+<p>It is also completed secondary IDs of <code class="docutils literal notranslate"><span class="pre">spp_vf</span></code> and it is helpful if you run
+several <code class="docutils literal notranslate"><span class="pre">spp_vf</span></code> processes.</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">spp &gt; vf  # press TAB after space following &#39;vf&#39;</span>
+<span class="go">1;  3;    # you find two spp_vf processes of sec ID 1, 3</span>
+</pre></div>
+</div>
+<p>By the way, it is also a case of no candidate keyword is displayed if your
+command statement is wrong. You might be encountered an error if you run the
+wrong command. Please take care.</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">spp &gt; vf 1; compo  # no candidate shown for wrong command</span>
+<span class="go">Invalid command &quot;compo&quot;.</span>
+</pre></div>
+</div>
+<div class="section" id="status">
+<span id="commands-spp-vf-status"></span><h2>2.2.1. status<a class="headerlink" href="#status" title="Permalink to this headline">¶</a></h2>
+<p>Show the information of worker threads and its resources. Status information
+consists of three parts.</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">spp &gt; vf 1; status</span>
+<span class="go">Basic Information:</span>
+<span class="go">  - client-id: 3</span>
+<span class="go">  - ports: [phy:0, phy:1, ring:0, ring:1, ring:2, ring:3, ring:4]</span>
+<span class="go">  - lcore_ids:</span>
+<span class="go">    - master: 2</span>
+<span class="go">    - slaves: [3, 4, 5, 6]</span>
+<span class="go">Classifier Table:</span>
+<span class="go">  - C0:8E:CD:38:EA:A8, ring:4</span>
+<span class="go">  - C0:8E:CD:38:BC:E6, ring:3</span>
+<span class="go">Components:</span>
+<span class="go">  - core:5 &#39;fw1&#39; (type: forward)</span>
+<span class="go">    - rx: ring:0</span>
+<span class="go">    - tx: ring:1</span>
+<span class="go">  - core:6 &#39;mg&#39; (type: merge)</span>
+<span class="go">  - core:7 &#39;cls&#39; (type: classifier)</span>
+<span class="go">    - rx: ring:2</span>
+<span class="go">    - tx: ring:3</span>
+<span class="go">    - tx: ring:4</span>
+<span class="go">  - core:8 &#39;&#39; (type: unuse)</span>
+</pre></div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">Basic</span> <span class="pre">Information</span></code> is for describing attributes of <code class="docutils literal notranslate"><span class="pre">spp_vf</span></code> itself.
+<code class="docutils literal notranslate"><span class="pre">client-id</span></code> is a secondary ID of the process and <code class="docutils literal notranslate"><span class="pre">ports</span></code> is a list of
+all of ports owned the process.</p>
+<p><code class="docutils literal notranslate"><span class="pre">Classifier</span> <span class="pre">Table</span></code> is a list of entries of <code class="docutils literal notranslate"><span class="pre">classifier</span></code> worker thread.
+Each of entry is a combination of MAC address and destination port which is
+assigned to this thread.</p>
+<p><code class="docutils literal notranslate"><span class="pre">Components</span></code> is a list of all of worker threads. Each of workers has a
+core ID running on, type of the worker and a list of resources.
+Entry of no name with <code class="docutils literal notranslate"><span class="pre">unuse</span></code> type means that no worker thread assigned to
+the core. In other words, it is ready to be assigned.</p>
+</div>
+<div class="section" id="component">
+<span id="commands-spp-vf-component"></span><h2>2.2.2. component<a class="headerlink" href="#component" title="Permalink to this headline">¶</a></h2>
+<p>Assign or release a role of forwarding to worker threads running on each of
+cores which are reserved with <code class="docutils literal notranslate"><span class="pre">-c</span></code> or <code class="docutils literal notranslate"><span class="pre">-l</span></code> option while launching
+<code class="docutils literal notranslate"><span class="pre">spp_vf</span></code>. The role of the worker is chosen from <code class="docutils literal notranslate"><span class="pre">forwarder</span></code>, <code class="docutils literal notranslate"><span class="pre">merger</span></code> or
+<code class="docutils literal notranslate"><span class="pre">classifier</span></code>.</p>
+<p><code class="docutils literal notranslate"><span class="pre">forwarder</span></code> role is for simply forwarding from source port to destination
+port.
+On the other hands, <code class="docutils literal notranslate"><span class="pre">merger</span></code> role is for receiving packets from multiple
+ports as N:1 communication, or <code class="docutils literal notranslate"><span class="pre">classifier</span></code> role is for sending packet to
+multiple ports by referring MAC address as 1:N communication.</p>
+<p>You are required to give an arbitrary name with as an ID for specifying the role.
+This name is also used while releasing the role.</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">#</span> assign <span class="s1">&#39;ROLE&#39;</span> to worker on <span class="s1">&#39;CORE_ID&#39;</span> with a <span class="s1">&#39;NAME&#39;</span>
+<span class="go">spp &gt; vf SEC_ID; component start NAME CORE_ID ROLE</span>
+
+<span class="gp">#</span> release worker <span class="s1">&#39;NAME&#39;</span> from the role
+<span class="go">spp &gt; vf SEC_ID; component stop NAME</span>
+</pre></div>
+</div>
+<p>Here are some examples of assigning roles with <code class="docutils literal notranslate"><span class="pre">component</span></code> command.</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">#</span> assign <span class="s1">&#39;forwarder&#39;</span> role with name <span class="s1">&#39;fw1&#39;</span> on core <span class="m">2</span>
+<span class="go">spp &gt; vf 2; component start fw1 2 forwarder</span>
+
+<span class="gp">#</span> assign <span class="s1">&#39;merger&#39;</span> role with name <span class="s1">&#39;mgr1&#39;</span> on core <span class="m">3</span>
+<span class="go">spp &gt; vf 2; component start mgr1 3 merger</span>
+
+<span class="gp">#</span> assign <span class="s1">&#39;classifier&#39;</span> role with name <span class="s1">&#39;cls1&#39;</span> on core <span class="m">4</span>
+<span class="go">spp &gt; vf 2; component start cls1 4 classifier</span>
+</pre></div>
+</div>
+<p>In the above examples, each different <code class="docutils literal notranslate"><span class="pre">CORE-ID</span></code> is specified to each role.
+You can assign several components on the same core, but performance might be
+decreased. This is an example for assigning two roles of <code class="docutils literal notranslate"><span class="pre">forward</span></code> and
+<code class="docutils literal notranslate"><span class="pre">merge</span></code> on the same <code class="docutils literal notranslate"><span class="pre">core</span> <span class="pre">2</span></code>.</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">#</span> assign two roles on the same <span class="s1">&#39;core 2&#39;</span>.
+<span class="go">spp &gt; vf 2; component start fw1 2 forwarder</span>
+<span class="go">spp &gt; vf 2; component start mgr1 2 merger</span>
+</pre></div>
+</div>
+<p>Examples of releasing roles.</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">#</span> release roles
+<span class="go">spp &gt; vf 2; component stop fw1</span>
+<span class="go">spp &gt; vf 2; component stop mgr1</span>
+<span class="go">spp &gt; vf 2; component stop cls1</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="port">
+<span id="commands-spp-vf-port"></span><h2>2.2.3. port<a class="headerlink" href="#port" title="Permalink to this headline">¶</a></h2>
+<p>Add or delete a port to a worker.</p>
+<div class="section" id="adding-port">
+<h3>2.2.3.1. Adding port<a class="headerlink" href="#adding-port" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">spp &gt; vf SEC_ID; port add RES_UID DIR NAME</span>
+</pre></div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">RES_UID</span></code> is with replaced with resource UID such as <code class="docutils literal notranslate"><span class="pre">ring:0</span></code> or
+<code class="docutils literal notranslate"><span class="pre">vhost:1</span></code>. <code class="docutils literal notranslate"><span class="pre">spp_vf</span></code> supports three types of port.</p>
+<blockquote>
+<div><ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">phy</span></code> : Physical NIC</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">ring</span></code> : Ring PMD</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">vhost</span></code> : Vhost PMD</p></li>
+</ul>
+</div></blockquote>
+<p><code class="docutils literal notranslate"><span class="pre">DIR</span></code> means the direction of forwarding and it should be <code class="docutils literal notranslate"><span class="pre">rx</span></code> or <code class="docutils literal notranslate"><span class="pre">tx</span></code>.
+<code class="docutils literal notranslate"><span class="pre">NAME</span></code> is the same as for <code class="docutils literal notranslate"><span class="pre">component</span></code> command.</p>
+<p>This is an example for adding ports to a classifer <code class="docutils literal notranslate"><span class="pre">cls1</span></code>. In this case,
+it is configured to receive packets from <code class="docutils literal notranslate"><span class="pre">phy:0</span></code> and send it to <code class="docutils literal notranslate"><span class="pre">ring:0</span></code>
+or <code class="docutils literal notranslate"><span class="pre">ring:1</span></code>. The destination is decided with MAC address of the packets
+by referring the table. How to configure the table is described in
+<a class="reference internal" href="#commands-spp-vf-classifier-table"><span class="std std-ref">classifier_table</span></a> command.</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">#</span> recieve from <span class="s1">&#39;phy:0&#39;</span>
+<span class="go">spp &gt; vf 2; port add phy:0 rx cls1</span>
+
+<span class="gp">#</span> send to <span class="s1">&#39;ring:0&#39;</span> and <span class="s1">&#39;ring:1&#39;</span>
+<span class="go">spp &gt; vf 2; port add ring:0 tx cls1</span>
+<span class="go">spp &gt; vf 2; port add ring:1 tx cls1</span>
+</pre></div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">spp_vf</span></code> also supports VLAN features, adding or deleting VLAN tag.
+It is used remove VLAN tags from incoming packets from outside of host
+machine, or add VLAN tag to outgoing packets.</p>
+<p>To configure VLAN features, use additional sub command <code class="docutils literal notranslate"><span class="pre">add_vlantag</span></code>
+or <code class="docutils literal notranslate"><span class="pre">del_vlantag</span></code> followed by <code class="docutils literal notranslate"><span class="pre">port</span></code> sub command.</p>
+<p>To remove VLAN tag, simply add <code class="docutils literal notranslate"><span class="pre">del_vlantag</span></code> sub command without arguments.</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">spp &gt; vf SEC_ID; port add RES_UID DIR NAME del_vlantag</span>
+</pre></div>
+</div>
+<p>On the other hand, use <code class="docutils literal notranslate"><span class="pre">add_vlantag</span></code> which takes two arguments,
+<code class="docutils literal notranslate"><span class="pre">VID</span></code> and <code class="docutils literal notranslate"><span class="pre">PCP</span></code>, for adding VLAN tag to the packets.</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">spp &gt; vf SEC_ID; port add RES_UID DIR NAME add_vlantag VID PCP</span>
+</pre></div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">VID</span></code> is a VLAN ID and <code class="docutils literal notranslate"><span class="pre">PCP</span></code> is a Priority Code Point defined in
+<a class="reference external" href="https://1.ieee802.org/">IEEE 802.1p</a>.
+It is used for QoS by defining priority ranged from lowest prioroty
+<code class="docutils literal notranslate"><span class="pre">0</span></code> to the highest <code class="docutils literal notranslate"><span class="pre">7</span></code>.</p>
+<p>Here is an example of use of VLAN features considering a use case of
+a forwarder removes VLAN tag from incoming packets and another forwarder
+adds VLAN tag before sending packet outside.</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">#</span> remove VLAN tag in forwarder <span class="s1">&#39;fw1&#39;</span>
+<span class="go">spp &gt; vf 2; port add phy:0 rx fw1 del_vlantag</span>
+
+<span class="gp">#</span> add VLAN tag with VLAN ID and PCP in forwarder <span class="s1">&#39;fw2&#39;</span>
+<span class="go">spp &gt; vf 2; port add phy:1 tx fw2 add_vlantag 101 3</span>
+</pre></div>
+</div>
+<p>Adding port may cause component to start packet forwarding. Please see
+detail in
+<a class="reference internal" href="../../design/spp_secondary.html#spp-design-spp-sec-vf"><span class="std std-ref">design spp_vf</span></a>.</p>
+<p>Until one rx port and one tx port are added, forwarder does not start packet
+forwarding. If it is requested to add more than one rx and one tx port, it
+replies an error message.
+Until at least one rx port and two tx ports are added, classifier does not
+start packet forwarding. If it is requested to add more than two rx ports, it
+replies an error message.
+Until at least two rx ports and one tx port are added, merger does not start
+packet forwarding. If it is requested to add more than two tx ports, it replies
+an error message.</p>
+</div>
+<div class="section" id="deleting-port">
+<h3>2.2.3.2. Deleting port<a class="headerlink" href="#deleting-port" title="Permalink to this headline">¶</a></h3>
+<p>Delete a port which is not used anymore.</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">spp &gt; vf SEC_ID; port del RES_UID DIR NAME</span>
+</pre></div>
+</div>
+<p>It is same as the adding port, but no need to add additional sub command
+for VLAN features.</p>
+<p>Here is an example.</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">#</span> delete rx port <span class="s1">&#39;ring:0&#39;</span> from <span class="s1">&#39;cls1&#39;</span>
+<span class="go">spp &gt; vf 2; port del ring:0 rx cls1</span>
+
+<span class="gp">#</span> delete tx port <span class="s1">&#39;vhost:1&#39;</span> from <span class="s1">&#39;mgr1&#39;</span>
+<span class="go">spp &gt; vf 2; port del vhost:1 tx mgr1</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Deleting port may cause component to stop packet forwarding.
+Please see detail in <a class="reference internal" href="../../design/spp_secondary.html#spp-design-spp-sec-vf"><span class="std std-ref">design spp_vf</span></a>.</p>
+</div>
+</div>
+</div>
+<div class="section" id="classifier-table">
+<span id="commands-spp-vf-classifier-table"></span><h2>2.2.4. classifier_table<a class="headerlink" href="#classifier-table" title="Permalink to this headline">¶</a></h2>
+<p>Register an entry of a combination of MAC address and port to
+a table of classifier.</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">#</span> add entry
+<span class="go">spp &gt; vf SEC_ID; classifier_table add mac MAC_ADDR RES_UID</span>
+
+<span class="gp">#</span> delete entry
+<span class="go">spp &gt; vf SEC_ID; classifier_table del mac MAC_ADDRESS RES_ID</span>
+</pre></div>
+</div>
+<p>This is an example to register MAC address <code class="docutils literal notranslate"><span class="pre">52:54:00:01:00:01</span></code>
+with port <code class="docutils literal notranslate"><span class="pre">ring:0</span></code>.</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">spp &gt; vf 1; classifier_table add mac 52:54:00:01:00:01 ring:0</span>
+</pre></div>
+</div>
+<p>Classifier supports the <code class="docutils literal notranslate"><span class="pre">default</span></code> entry for packets which does not
+match any of entries in the table. If you assign <code class="docutils literal notranslate"><span class="pre">ring:1</span></code> as default,
+simply specify <code class="docutils literal notranslate"><span class="pre">default</span></code> instead of MAC address.</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">spp &gt; vf 1; classifier_table add mac default ring:1</span>
+</pre></div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">classifier_table</span></code> sub command also supports VLAN features as similar
+to <code class="docutils literal notranslate"><span class="pre">port</span></code>.</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">#</span> add entry with VLAN features
+<span class="go">spp &gt; vf SEC_ID; classifier_table add vlan VID MAC_ADDR RES_UID</span>
+
+<span class="gp">#</span> delete entry of VLAN
+<span class="go">spp &gt; vf SEC_ID; classifier_table del vlan VID MAC_ADDR RES_UID</span>
+</pre></div>
+</div>
+<p>Here is an example for adding entries.</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">#</span> add entry with VLAN tag
+<span class="go">spp &gt; vf 1; classifier_table add vlan 101 52:54:00:01:00:01 ring:0</span>
+
+<span class="gp">#</span> add entry of default with VLAN tag
+<span class="go">spp &gt; vf 1; classifier_table add vlan 101 default ring:1</span>
+</pre></div>
+</div>
+<p>Delete an entry. This is an example to delete an entry with VLAN tag 101.</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">#</span> delete entry with VLAN tag
+<span class="go">spp &gt; vf 1; classifier_table del vlan 101 52:54:00:01:00:01 ring:0</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="exit">
+<h2>2.2.5. exit<a class="headerlink" href="#exit" title="Permalink to this headline">¶</a></h2>
+<p>Terminate the spp_vf.</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">spp &gt; vf 1; exit</span>
+</pre></div>
+</div>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="spp_mirror.html" class="btn btn-neutral float-right" title="2.3. spp_mirror" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="spp_nfv.html" class="btn btn-neutral float-left" title="2.1. spp_nfv" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

@@ -1,0 +1,415 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>4. SPP Secondary &mdash; Soft Patch Panel 19.08 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../_static/jquery.js"></script>
+        <script type="text/javascript" src="../_static/underscore.js"></script>
+        <script type="text/javascript" src="../_static/doctools.js"></script>
+        <script type="text/javascript" src="../_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="5. Implementation" href="impl/index.html" />
+    <link rel="prev" title="3. SPP Primary" href="spp_primary.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> Soft Patch Panel
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                19.08
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../overview.html">Overview</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">Design</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="spp.html">1. Soft Patch Panel</a></li>
+<li class="toctree-l2"><a class="reference internal" href="spp_controller.html">2. SPP Controller</a></li>
+<li class="toctree-l2"><a class="reference internal" href="spp_primary.html">3. SPP Primary</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">4. SPP Secondary</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#spp-nfv">4.1. spp_nfv</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#spp-vf">4.2. spp_vf</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#forwarder">4.2.1. Forwarder</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#merger">4.2.2. Merger</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#classifier">4.2.3. Classifier</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#spp-mirror">4.3. spp_mirror</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#mirror">4.3.1. Mirror</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#spp-pcap">4.4. spp_pcap</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="impl/index.html">5. Implementation</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../gsg/index.html">Getting Started Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../usecases/index.html">Use Cases</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../commands/index.html">SPP Commands</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../tools/index.html">Tools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../api_ref/index.html">API Reference</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">Soft Patch Panel</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="index.html">Design</a> &raquo;</li>
+        
+      <li>4. SPP Secondary</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../_sources/design/spp_secondary.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="spp-secondary">
+<span id="spp-design-spp-sec"></span><h1>4. SPP Secondary<a class="headerlink" href="#spp-secondary" title="Permalink to this headline">¶</a></h1>
+<p>SPP secondary process is a worker process in client-server multp-process
+application model. Basically, the role of secondary process is to connenct
+each of application running on host, containers or VMs for packet forwarding.
+Spp secondary process forwards packets from source port to destination port
+with DPDK’s high-performance forwarding mechanizm. In other word, it behaves
+as a cable to connect two patches ports.</p>
+<p>All of secondary processes are able to attach ring PMD and vhost PMD ports
+for sending or receiving packets with other processes. Ring port is used to
+communicate with a process running on host or container if it is implemented
+as secondary process to access shared ring memory.
+Vhost port is used for a process on container or VM and implemented as primary
+process, and no need to access shared memory of SPP primary.</p>
+<p>In addition to the basic forwarding, SPP secondary process provides several
+networking features. One of the typical example is packet cauture.
+<code class="docutils literal notranslate"><span class="pre">spp_nfv</span></code> is the simplest SPP secondary and used to connect two of processes
+or other feature ports including PCAP PMD port. PCAP PMD is to dump packets to
+a file or retrieve from.</p>
+<p>There are more specific or funcional features than <code class="docutils literal notranslate"><span class="pre">spp_nfv</span></code>. <code class="docutils literal notranslate"><span class="pre">spp_vf</span></code> is
+a simple pseudo SR-IOV feature for classifying or merging packets.
+<code class="docutils literal notranslate"><span class="pre">spp_mirror</span></code> is to duplicate incoming packets to several destination ports.</p>
+<div class="section" id="spp-nfv">
+<span id="spp-design-spp-sec-nfv"></span><h2>4.1. spp_nfv<a class="headerlink" href="#spp-nfv" title="Permalink to this headline">¶</a></h2>
+<p><code class="docutils literal notranslate"><span class="pre">spp_nfv</span></code> is the simplest SPP secondary to connect two of processes or other
+feature ports. Each of <code class="docutils literal notranslate"><span class="pre">spp_nfv</span></code> processes has a list of entries including
+source and destination ports, and forwards packets by referring the list.
+It means that one <code class="docutils literal notranslate"><span class="pre">spp_nfv</span></code> might have several forwarding paths, but
+throughput is gradually decreased if it has too much paths.
+This list is implemented as an array of <code class="docutils literal notranslate"><span class="pre">port</span></code> structure and named
+<code class="docutils literal notranslate"><span class="pre">ports_fwd_array</span></code>. The index of <code class="docutils literal notranslate"><span class="pre">ports_fwd_array</span></code> is the same as unique
+port ID.</p>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="k">struct</span> <span class="n">port</span> <span class="p">{</span>
+  <span class="kt">int</span> <span class="n">in_port_id</span><span class="p">;</span>
+  <span class="kt">int</span> <span class="n">out_port_id</span><span class="p">;</span>
+  <span class="p">...</span>
+<span class="p">};</span>
+<span class="p">...</span>
+
+<span class="cm">/* ports_fwd_array is an array of port */</span>
+<span class="k">static</span> <span class="k">struct</span> <span class="n">port</span> <span class="n">ports_fwd_array</span><span class="p">[</span><span class="n">RTE_MAX_ETHPORTS</span><span class="p">];</span>
+</pre></div>
+</div>
+<p><a class="reference internal" href="#figure-design-spp-sec-nfv-port-fwd-array"><span class="std std-numref">Fig. 4.1</span></a> describes an example of
+forwarding between ports. In this case, <code class="docutils literal notranslate"><span class="pre">spp_nfv</span></code> is responsible for
+forwarding from <code class="docutils literal notranslate"><span class="pre">port#0</span></code> to <code class="docutils literal notranslate"><span class="pre">port#2</span></code>. You notice that each of <code class="docutils literal notranslate"><span class="pre">out_port</span></code>
+entry has the destination port ID.</p>
+<div class="figure align-default" id="id1">
+<span id="figure-design-spp-sec-nfv-port-fwd-array"></span><a class="reference internal image-reference" href="../_images/spp_design_spp_sec_nfv.svg"><img alt="../_images/spp_design_spp_sec_nfv.svg" src="../_images/spp_design_spp_sec_nfv.svg" width="80%" /></a>
+<p class="caption"><span class="caption-number">Fig. 4.1 </span><span class="caption-text">Forwarding by referring ports_fwd_array</span><a class="headerlink" href="#id1" title="Permalink to this image">¶</a></p>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">spp_nfv</span></code> consists of main thread and worker thread to update the entry
+while running the process. Main thread is for waiting user command for
+updating the entry. Worker thread is for dedicating packet forwarding.
+<a class="reference internal" href="#figure-design-spp-sec-nfv-threads"><span class="std std-numref">Fig. 4.2</span></a> describes tasks in each of
+threads. Worker thread is launched from main thread after initialization.
+In worker thread, it starts forwarding if user send forward command and
+main thread accepts it.</p>
+<div class="figure align-default" id="id2">
+<span id="figure-design-spp-sec-nfv-threads"></span><a class="reference internal image-reference" href="../_images/spp_design_spp_sec_nfv_threads.svg"><img alt="../_images/spp_design_spp_sec_nfv_threads.svg" src="../_images/spp_design_spp_sec_nfv_threads.svg" width="70%" /></a>
+<p class="caption"><span class="caption-number">Fig. 4.2 </span><span class="caption-text">Main thread and worker thread in spp_nfv</span><a class="headerlink" href="#id2" title="Permalink to this image">¶</a></p>
+</div>
+</div>
+<div class="section" id="spp-vf">
+<span id="spp-design-spp-sec-vf"></span><h2>4.2. spp_vf<a class="headerlink" href="#spp-vf" title="Permalink to this headline">¶</a></h2>
+<p><code class="docutils literal notranslate"><span class="pre">spp_vf</span></code> provides a SR-IOV like network feature.</p>
+<p><code class="docutils literal notranslate"><span class="pre">spp_vf</span></code> forwards incoming packets to several destination VMs by referring
+MAC address like as a Virtual Function (VF) of SR-IOV.</p>
+<p><code class="docutils literal notranslate"><span class="pre">spp_vf</span></code> is a  multi-process and multi-thread application.
+Each of <code class="docutils literal notranslate"><span class="pre">spp_vf</span></code> has one manager thread and worker threads called as
+components.
+The manager thread provides a function for parsing a command and creating the
+components.
+The component threads have its own multiple components, ports and classifier
+tables including Virtual MAC address.
+There are three types of components, <code class="docutils literal notranslate"><span class="pre">forwarder</span></code>,
+<code class="docutils literal notranslate"><span class="pre">merger</span></code> and <code class="docutils literal notranslate"><span class="pre">classifier</span></code>.</p>
+<p>This is an example of network configuration, in which one
+<code class="docutils literal notranslate"><span class="pre">classifier</span></code>,
+one merger and four forwarders are running in <code class="docutils literal notranslate"><span class="pre">spp_vf</span></code> process
+for two destinations of vhost interface.
+Incoming packets from rx on host1 are sent to each of vhosts of VM
+by looking up destination MAC address in the packet.</p>
+<div class="figure align-default" id="id3">
+<a class="reference internal image-reference" href="../_images/spp_vf_overview.svg"><img alt="../_images/spp_vf_overview.svg" src="../_images/spp_vf_overview.svg" width="72%" /></a>
+<p class="caption"><span class="caption-number">Fig. 4.3 </span><span class="caption-text">Classification of spp_vf for two VMs</span><a class="headerlink" href="#id3" title="Permalink to this image">¶</a></p>
+</div>
+<div class="section" id="forwarder">
+<h3>4.2.1. Forwarder<a class="headerlink" href="#forwarder" title="Permalink to this headline">¶</a></h3>
+<p>Simply forwards packets from rx to tx port.
+Forwarder does not start forwarding until when at least one rx and one tx are
+added.</p>
+</div>
+<div class="section" id="merger">
+<h3>4.2.2. Merger<a class="headerlink" href="#merger" title="Permalink to this headline">¶</a></h3>
+<p>Receives packets from multiple rx ports to aggregate
+packets and sends to a desctination port.
+Merger does not start forwarding until when at least two rx and one tx are
+added.</p>
+</div>
+<div class="section" id="classifier">
+<h3>4.2.3. Classifier<a class="headerlink" href="#classifier" title="Permalink to this headline">¶</a></h3>
+<p>Sends packets to multiple tx ports based on entries of
+MAC address and destination port in a classifier table.
+This component also supports VLAN tag.</p>
+<p>For VLAN addressing, classifier has other tables than defalut.
+Classifier prepares tables for each of VLAN ID and decides
+which of table is referred
+if TPID (Tag Protocol Indetifier) is included in a packet and
+equals to 0x8100 as defined in IEEE 802.1Q standard.
+Classifier does not start forwarding until when at least one rx and two tx
+are added.</p>
+</div>
+</div>
+<div class="section" id="spp-mirror">
+<span id="spp-design-spp-sec-mirror"></span><h2>4.3. spp_mirror<a class="headerlink" href="#spp-mirror" title="Permalink to this headline">¶</a></h2>
+<p><code class="docutils literal notranslate"><span class="pre">spp_mirror</span></code> is an implementation of
+<a class="reference external" href="https://docs.openstack.org/dragonflow/latest/specs/tap_as_a_service.html">TaaS</a>
+as a SPP secondary process for port mirroring.
+TaaS stands for TAP as a Service.
+The keyword <code class="docutils literal notranslate"><span class="pre">mirror</span></code> means that it duplicates incoming packets and forwards
+to additional destination.</p>
+<div class="section" id="mirror">
+<h3>4.3.1. Mirror<a class="headerlink" href="#mirror" title="Permalink to this headline">¶</a></h3>
+<p><code class="docutils literal notranslate"><span class="pre">mirror</span></code> component has one <code class="docutils literal notranslate"><span class="pre">rx</span></code> port and two <code class="docutils literal notranslate"><span class="pre">tx</span></code> ports. Incoming packets
+from <code class="docutils literal notranslate"><span class="pre">rx</span></code> port are duplicated and sent to each of <code class="docutils literal notranslate"><span class="pre">tx</span></code> ports.</p>
+<div class="figure align-default" id="id4">
+<span id="figure-spp-mirror-design"></span><a class="reference internal image-reference" href="../_images/spp_mirror_design.svg"><img alt="../_images/spp_mirror_design.svg" src="../_images/spp_mirror_design.svg" width="45%" /></a>
+<p class="caption"><span class="caption-number">Fig. 4.4 </span><span class="caption-text">Spp_mirror component</span><a class="headerlink" href="#id4" title="Permalink to this image">¶</a></p>
+</div>
+<p>In general, copying packet is time-consuming because it requires to make a new
+region on memory space. Considering to minimize impact for performance,
+<code class="docutils literal notranslate"><span class="pre">spp_mirror</span></code> provides a choice of copying methods, <code class="docutils literal notranslate"><span class="pre">shallowocopy</span></code> or
+<code class="docutils literal notranslate"><span class="pre">deepcopy</span></code>.
+The difference between those methods is <code class="docutils literal notranslate"><span class="pre">shallowocopy</span></code> does not copy whole of
+packet data but share without header actually.
+<code class="docutils literal notranslate"><span class="pre">shallowcopy</span></code> is to share mbuf between packets to get better performance
+than <code class="docutils literal notranslate"><span class="pre">deepcopy</span></code>, but it should be used for read only for the packet.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p><code class="docutils literal notranslate"><span class="pre">shallowcopy</span></code> calls <code class="docutils literal notranslate"><span class="pre">rte_pktmbuf_clone()</span></code> internally and
+<code class="docutils literal notranslate"><span class="pre">deepcopy</span></code> create a new mbuf region.</p>
+</div>
+<p>You should choose <code class="docutils literal notranslate"><span class="pre">deepcopy</span></code> if you use VLAN feature to make no change for
+original packet while copied packet is modified.</p>
+</div>
+</div>
+<div class="section" id="spp-pcap">
+<span id="spp-design-spp-sec-pcap"></span><h2>4.4. spp_pcap<a class="headerlink" href="#spp-pcap" title="Permalink to this headline">¶</a></h2>
+<p>SPP provides a connectivity between VM and NIC as a virtual patch panel.
+However, for more practical use, operator and/or developer needs to capture
+packets. For such use, spp_pcap provides packet capturing feature from
+specific port. It is aimed to capture up to 10Gbps packets.</p>
+<p><code class="docutils literal notranslate"><span class="pre">spp_pcap</span></code> is a SPP secondary process for capturing packets from specific
+<code class="docutils literal notranslate"><span class="pre">port</span></code>. <a class="reference internal" href="#figure-spp-pcap-overview"><span class="std std-numref">Fig. 4.5</span></a> shows an overview of use of
+<code class="docutils literal notranslate"><span class="pre">spp_pcap</span></code> in which <code class="docutils literal notranslate"><span class="pre">spp_pcap</span></code> process receives packets from <code class="docutils literal notranslate"><span class="pre">phy:0</span></code>
+for capturing.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p><code class="docutils literal notranslate"><span class="pre">spp_pcap</span></code> supports only two types of ports for capturing, <code class="docutils literal notranslate"><span class="pre">phy</span></code>
+and <code class="docutils literal notranslate"><span class="pre">ring</span></code>, currently.</p>
+</div>
+<div class="figure align-default" id="id5">
+<span id="figure-spp-pcap-overview"></span><a class="reference internal image-reference" href="../_images/spp_pcap_overview.svg"><img alt="../_images/spp_pcap_overview.svg" src="../_images/spp_pcap_overview.svg" width="50%" /></a>
+<p class="caption"><span class="caption-number">Fig. 4.5 </span><span class="caption-text">Overview of spp_pcap</span><a class="headerlink" href="#id5" title="Permalink to this image">¶</a></p>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">spp_pcap</span></code> cosisits of main thread, <code class="docutils literal notranslate"><span class="pre">receiver</span></code> thread and one or more
+<code class="docutils literal notranslate"><span class="pre">wirter</span></code> threads. As design policy, the number of <code class="docutils literal notranslate"><span class="pre">receiver</span></code> is fixed
+to 1 because to make it simple and it is enough for task of receiving.
+<code class="docutils literal notranslate"><span class="pre">spp_pcap</span></code> requires at least three lcores, and assign to from master,
+<code class="docutils literal notranslate"><span class="pre">receiver</span></code> and then the rest of <code class="docutils literal notranslate"><span class="pre">writer</span></code> threads respectively.</p>
+<p>Incoming packets are received by <code class="docutils literal notranslate"><span class="pre">receiver</span></code> thread and transferred to
+<code class="docutils literal notranslate"><span class="pre">writer</span></code> threads via ring buffers between threads.</p>
+<p>Several <code class="docutils literal notranslate"><span class="pre">writer</span></code> work in parallel to store packets as files in LZ4
+format. You can capture a certain amount of heavy traffic by using much
+<code class="docutils literal notranslate"><span class="pre">writer</span></code> threads.</p>
+<p><a class="reference internal" href="#figure-spp-pcap-design"><span class="std std-numref">Fig. 4.6</span></a> shows an usecase of <code class="docutils literal notranslate"><span class="pre">spp_pcap</span></code> in which
+packets from <code class="docutils literal notranslate"><span class="pre">phy:0</span></code> are captured by using three <code class="docutils literal notranslate"><span class="pre">writer</span></code> threads.</p>
+<div class="figure align-default" id="id6">
+<span id="figure-spp-pcap-design"></span><a class="reference internal image-reference" href="../_images/spp_pcap_design.svg"><img alt="../_images/spp_pcap_design.svg" src="../_images/spp_pcap_design.svg" width="55%" /></a>
+<p class="caption"><span class="caption-number">Fig. 4.6 </span><span class="caption-text">spp_pcap internal structure</span><a class="headerlink" href="#id6" title="Permalink to this image">¶</a></p>
+</div>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="impl/index.html" class="btn btn-neutral float-right" title="5. Implementation" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="spp_primary.html" class="btn btn-neutral float-left" title="3. SPP Primary" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

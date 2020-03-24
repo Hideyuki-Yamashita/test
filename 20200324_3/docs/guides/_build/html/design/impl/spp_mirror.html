@@ -1,0 +1,311 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>5.3. spp_mirror &mdash; Soft Patch Panel 19.08 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="../../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../../_static/jquery.js"></script>
+        <script type="text/javascript" src="../../_static/underscore.js"></script>
+        <script type="text/javascript" src="../../_static/doctools.js"></script>
+        <script type="text/javascript" src="../../_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="../../_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="5.4. spp_pcap" href="spp_pcap.html" />
+    <link rel="prev" title="5.2. spp_vf" href="spp_vf.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../index.html" class="icon icon-home"> Soft Patch Panel
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                19.08
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../overview.html">Overview</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../index.html">Design</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../spp.html">1. Soft Patch Panel</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../spp_controller.html">2. SPP Controller</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../spp_primary.html">3. SPP Primary</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../spp_secondary.html">4. SPP Secondary</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="index.html">5. Implementation</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="spp_nfv.html">5.1. spp_nfv</a></li>
+<li class="toctree-l3"><a class="reference internal" href="spp_vf.html">5.2. spp_vf</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">5.3. spp_mirror</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#slave-main">5.3.1. Slave Main</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#mirroring-packets">5.3.2. Mirroring Packets</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="spp_pcap.html">5.4. spp_pcap</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../gsg/index.html">Getting Started Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../usecases/index.html">Use Cases</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../commands/index.html">SPP Commands</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../tools/index.html">Tools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../api_ref/index.html">API Reference</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">Soft Patch Panel</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="../index.html">Design</a> &raquo;</li>
+        
+          <li><a href="index.html">5. Implementation</a> &raquo;</li>
+        
+      <li>5.3. spp_mirror</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../../_sources/design/impl/spp_mirror.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="spp-mirror">
+<span id="spp-vf-explain-spp-mirror"></span><h1>5.3. spp_mirror<a class="headerlink" href="#spp-mirror" title="Permalink to this headline">¶</a></h1>
+<p>This section describes implementation of <code class="docutils literal notranslate"><span class="pre">spp_mirror</span></code>.
+It consists of master thread and several worker threads for duplicating
+packets.</p>
+<div class="section" id="slave-main">
+<h2>5.3.1. Slave Main<a class="headerlink" href="#slave-main" title="Permalink to this headline">¶</a></h2>
+<p>Main function of worker thread is defined as <code class="docutils literal notranslate"><span class="pre">slave_main()</span></code> in which
+for duplicating packets is <code class="docutils literal notranslate"><span class="pre">mirror_proc()</span></code> on each of lcores.</p>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="k">for</span> <span class="p">(</span><span class="n">cnt</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">cnt</span> <span class="o">&lt;</span> <span class="n">core</span><span class="o">-&gt;</span><span class="n">num</span><span class="p">;</span> <span class="n">cnt</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+
+    <span class="n">ret</span> <span class="o">=</span> <span class="n">mirror_proc</span><span class="p">(</span><span class="n">core</span><span class="o">-&gt;</span><span class="n">id</span><span class="p">[</span><span class="n">cnt</span><span class="p">]);</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">unlikely</span><span class="p">(</span><span class="n">ret</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">))</span>
+        <span class="k">break</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="mirroring-packets">
+<h2>5.3.2. Mirroring Packets<a class="headerlink" href="#mirroring-packets" title="Permalink to this headline">¶</a></h2>
+<p>Worker thread receives and duplicate packets. There are two modes of copying
+packets, <code class="docutils literal notranslate"><span class="pre">shallowcopy</span></code> and <code class="docutils literal notranslate"><span class="pre">deepcopy</span></code>.
+Deep copy is for duplicating whole of packet data, but less performance than
+shallow copy. Shallow copy duplicates only packet header and body is not shared
+among original packet and duplicated packet. So, changing packet data affects
+both of original and copied packet.</p>
+<p>You can configure using which of modes in Makefile. Default mode is
+<code class="docutils literal notranslate"><span class="pre">shallowcopy</span></code>. If you change the mode to <code class="docutils literal notranslate"><span class="pre">deepcopy</span></code>, comment out this
+line of CFLAGS.</p>
+<div class="highlight-makefile notranslate"><div class="highlight"><pre><span></span><span class="c"># Default mode is shallow copy.</span>
+<span class="nv">CFLAGS</span> <span class="o">+=</span> -DSPP_MIRROR_SHALLOWCOPY
+</pre></div>
+</div>
+<p>This code is a part of <code class="docutils literal notranslate"><span class="pre">mirror_proc()</span></code>. In this function,
+<code class="docutils literal notranslate"><span class="pre">rte_pktmbuf_clone()</span></code> is just called if in shallow copy
+mode, or create a new packet with <code class="docutils literal notranslate"><span class="pre">rte_pktmbuf_alloc()</span></code> for duplicated
+packet if in deep copy mode.</p>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span>             <span class="k">for</span> <span class="p">(</span><span class="n">cnt</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">cnt</span> <span class="o">&lt;</span> <span class="n">nb_rx</span><span class="p">;</span> <span class="n">cnt</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+                     <span class="n">org_mbuf</span> <span class="o">=</span> <span class="n">bufs</span><span class="p">[</span><span class="n">cnt</span><span class="p">];</span>
+                     <span class="n">rte_prefetch0</span><span class="p">(</span><span class="n">rte_pktmbuf_mtod</span><span class="p">(</span><span class="n">org_mbuf</span><span class="p">,</span> <span class="kt">void</span> <span class="o">*</span><span class="p">));</span>
+<span class="cp">#ifdef SPP_MIRROR_SHALLOWCOPY</span>
+                     <span class="cm">/* Shallow Copy */</span>
+         <span class="n">copybufs</span><span class="p">[</span><span class="n">cnt</span><span class="p">]</span> <span class="o">=</span> <span class="n">rte_pktmbuf_clone</span><span class="p">(</span><span class="n">org_mbuf</span><span class="p">,</span>
+                                                     <span class="n">g_mirror_pool</span><span class="p">);</span>
+
+<span class="cp">#else</span>
+                     <span class="k">struct</span> <span class="n">rte_mbuf</span> <span class="o">*</span><span class="n">mirror_mbuf</span> <span class="o">=</span> <span class="nb">NULL</span><span class="p">;</span>
+                     <span class="k">struct</span> <span class="n">rte_mbuf</span> <span class="o">**</span><span class="n">mirror_mbufs</span> <span class="o">=</span> <span class="o">&amp;</span><span class="n">mirror_mbuf</span><span class="p">;</span>
+                     <span class="k">struct</span> <span class="n">rte_mbuf</span> <span class="o">*</span><span class="n">copy_mbuf</span> <span class="o">=</span> <span class="nb">NULL</span><span class="p">;</span>
+                     <span class="cm">/* Deep Copy */</span>
+                     <span class="k">do</span> <span class="p">{</span>
+                             <span class="n">copy_mbuf</span> <span class="o">=</span> <span class="n">rte_pktmbuf_alloc</span><span class="p">(</span><span class="n">g_mirror_pool</span><span class="p">);</span>
+                             <span class="k">if</span> <span class="p">(</span><span class="n">unlikely</span><span class="p">(</span><span class="n">copy_mbuf</span> <span class="o">==</span> <span class="nb">NULL</span><span class="p">))</span> <span class="p">{</span>
+                                     <span class="n">rte_pktmbuf_free</span><span class="p">(</span><span class="n">mirror_mbuf</span><span class="p">);</span>
+                                     <span class="n">mirror_mbuf</span> <span class="o">=</span> <span class="nb">NULL</span><span class="p">;</span>
+                                     <span class="n">RTE_LOG</span><span class="p">(</span><span class="n">INFO</span><span class="p">,</span> <span class="n">MIRROR</span><span class="p">,</span>
+                                             <span class="s">&quot;copy mbuf alloc NG!</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">);</span>
+                                     <span class="k">break</span><span class="p">;</span>
+                             <span class="p">}</span>
+
+                             <span class="n">copy_mbuf</span><span class="o">-&gt;</span><span class="n">data_off</span> <span class="o">=</span> <span class="n">org_mbuf</span><span class="o">-&gt;</span><span class="n">data_off</span><span class="p">;</span>
+                             <span class="p">...</span>
+                             <span class="n">copy_mbuf</span><span class="o">-&gt;</span><span class="n">packet_type</span> <span class="o">=</span> <span class="n">org_mbuf</span><span class="o">-&gt;</span><span class="n">packet_type</span><span class="p">;</span>
+
+                             <span class="n">rte_memcpy</span><span class="p">(</span><span class="n">rte_pktmbuf_mtod</span><span class="p">(</span><span class="n">copy_mbuf</span><span class="p">,</span> <span class="kt">char</span> <span class="o">*</span><span class="p">),</span>
+                                     <span class="n">rte_pktmbuf_mtod</span><span class="p">(</span><span class="n">org_mbuf</span><span class="p">,</span> <span class="kt">char</span> <span class="o">*</span><span class="p">),</span>
+                                     <span class="n">org_mbuf</span><span class="o">-&gt;</span><span class="n">data_len</span><span class="p">);</span>
+
+                             <span class="o">*</span><span class="n">mirror_mbufs</span> <span class="o">=</span> <span class="n">copy_mbuf</span><span class="p">;</span>
+                             <span class="n">mirror_mbufs</span> <span class="o">=</span> <span class="o">&amp;</span><span class="n">copy_mbuf</span><span class="o">-&gt;</span><span class="n">next</span><span class="p">;</span>
+                     <span class="p">}</span> <span class="k">while</span> <span class="p">((</span><span class="n">org_mbuf</span> <span class="o">=</span> <span class="n">org_mbuf</span><span class="o">-&gt;</span><span class="n">next</span><span class="p">)</span> <span class="o">!=</span> <span class="nb">NULL</span><span class="p">);</span>
+         <span class="n">copybufs</span><span class="p">[</span><span class="n">cnt</span><span class="p">]</span> <span class="o">=</span> <span class="n">mirror_mbuf</span><span class="p">;</span>
+
+<span class="cp">#endif </span><span class="cm">/* SPP_MIRROR_SHALLOWCOPY */</span><span class="cp"></span>
+             <span class="p">}</span>
+     <span class="k">if</span> <span class="p">(</span><span class="n">cnt</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">)</span>
+                     <span class="n">nb_tx2</span> <span class="o">=</span> <span class="n">spp_eth_tx_burst</span><span class="p">(</span><span class="n">tx</span><span class="o">-&gt;</span><span class="n">dpdk_port</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span>
+                             <span class="n">copybufs</span><span class="p">,</span> <span class="n">cnt</span><span class="p">);</span>
+</pre></div>
+</div>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="spp_pcap.html" class="btn btn-neutral float-right" title="5.4. spp_pcap" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="spp_vf.html" class="btn btn-neutral float-left" title="5.2. spp_vf" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

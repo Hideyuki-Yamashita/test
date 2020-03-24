@@ -1,0 +1,277 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>1. spp-ctl REST API &mdash; Soft Patch Panel 19.08 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../_static/jquery.js"></script>
+        <script type="text/javascript" src="../_static/underscore.js"></script>
+        <script type="text/javascript" src="../_static/doctools.js"></script>
+        <script type="text/javascript" src="../_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="2. Independent of Process Type" href="proc_independ.html" />
+    <link rel="prev" title="API Reference" href="index.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> Soft Patch Panel
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                19.08
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../overview.html">Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../design/index.html">Design</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../gsg/index.html">Getting Started Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../usecases/index.html">Use Cases</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../commands/index.html">SPP Commands</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../tools/index.html">Tools</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">API Reference</a><ul class="current">
+<li class="toctree-l2 current"><a class="current reference internal" href="#">1. spp-ctl REST API</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#overview">1.1. Overview</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#request-and-response">1.1.1. Request and Response</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#error-code">1.1.2. Error code</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="proc_independ.html">2. Independent of Process Type</a></li>
+<li class="toctree-l2"><a class="reference internal" href="spp_primary.html">3. spp_primary</a></li>
+<li class="toctree-l2"><a class="reference internal" href="spp_nfv.html">4. spp_nfv</a></li>
+<li class="toctree-l2"><a class="reference internal" href="spp_vf.html">5. spp_vf</a></li>
+<li class="toctree-l2"><a class="reference internal" href="spp_mirror.html">6. spp_mirror</a></li>
+<li class="toctree-l2"><a class="reference internal" href="spp_pcap.html">7. spp_pcap</a></li>
+</ul>
+</li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">Soft Patch Panel</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="index.html">API Reference</a> &raquo;</li>
+        
+      <li>1. spp-ctl REST API</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../_sources/api_ref/overview.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="spp-ctl-rest-api">
+<span id="spp-ctl-rest-api-ref"></span><h1>1. spp-ctl REST API<a class="headerlink" href="#spp-ctl-rest-api" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="overview">
+<h2>1.1. Overview<a class="headerlink" href="#overview" title="Permalink to this headline">¶</a></h2>
+<p><code class="docutils literal notranslate"><span class="pre">spp-ctl</span></code> provides simple REST like API. It supports http only, not https.</p>
+<div class="section" id="request-and-response">
+<h3>1.1.1. Request and Response<a class="headerlink" href="#request-and-response" title="Permalink to this headline">¶</a></h3>
+<p>Request body is JSON format.
+It is accepted both <code class="docutils literal notranslate"><span class="pre">text/plain</span></code> and <code class="docutils literal notranslate"><span class="pre">application/json</span></code>
+for the content-type header.</p>
+<p>A response of <code class="docutils literal notranslate"><span class="pre">GET</span></code> is JSON format and the content-type is
+<code class="docutils literal notranslate"><span class="pre">application/json</span></code> if the request success.</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$</span> curl http://127.0.0.1:7777/v1/processes
+<span class="go">[{&quot;type&quot;: &quot;primary&quot;}, ..., {&quot;client-id&quot;: 2, &quot;type&quot;: &quot;vf&quot;}]</span>
+
+<span class="gp">$</span> curl -X POST http://localhost:7777/v1/vfs/1/components <span class="se">\</span>
+  -d <span class="s1">&#39;{&quot;core&quot;: 2, &quot;name&quot;: &quot;fwd0_tx&quot;, &quot;type&quot;: &quot;forward&quot;}&#39;</span>
+</pre></div>
+</div>
+<p>If a request is failed, the response is a text which shows error reason
+and the content-type is <code class="docutils literal notranslate"><span class="pre">text/plain</span></code>.</p>
+</div>
+<div class="section" id="error-code">
+<h3>1.1.2. Error code<a class="headerlink" href="#error-code" title="Permalink to this headline">¶</a></h3>
+<p><code class="docutils literal notranslate"><span class="pre">spp-ctl</span></code> does basic syntax and lexical check of a request.</p>
+<span id="table-spp-ctl-error-codes"></span><table class="docutils align-default" id="id1">
+<caption><span class="caption-number">Table 1.1 </span><span class="caption-text">Error codes in spp-ctl.</span><a class="headerlink" href="#id1" title="Permalink to this table">¶</a></caption>
+<colgroup>
+<col style="width: 10%" />
+<col style="width: 90%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Error</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>400</p></td>
+<td><p>Syntax or lexical error, or SPP returns error for the request.</p></td>
+</tr>
+<tr class="row-odd"><td><p>404</p></td>
+<td><p>URL is not supported, or no SPP process of client-id in a URL.</p></td>
+</tr>
+<tr class="row-even"><td><p>500</p></td>
+<td><p>System error occured in <code class="docutils literal notranslate"><span class="pre">spp-ctl</span></code>.</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="proc_independ.html" class="btn btn-neutral float-right" title="2. Independent of Process Type" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="index.html" class="btn btn-neutral float-left" title="API Reference" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

@@ -1,0 +1,472 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>5.2. spp_vf &mdash; Soft Patch Panel 19.08 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="../../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../../_static/jquery.js"></script>
+        <script type="text/javascript" src="../../_static/underscore.js"></script>
+        <script type="text/javascript" src="../../_static/doctools.js"></script>
+        <script type="text/javascript" src="../../_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="../../_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="5.3. spp_mirror" href="spp_mirror.html" />
+    <link rel="prev" title="5.1. spp_nfv" href="spp_nfv.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../index.html" class="icon icon-home"> Soft Patch Panel
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                19.08
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../overview.html">Overview</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../index.html">Design</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../spp.html">1. Soft Patch Panel</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../spp_controller.html">2. SPP Controller</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../spp_primary.html">3. SPP Primary</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../spp_secondary.html">4. SPP Secondary</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="index.html">5. Implementation</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="spp_nfv.html">5.1. spp_nfv</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">5.2. spp_vf</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#initialization">5.2.1. Initialization</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#slave-main">5.2.2. Slave Main</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#data-structure-of-classifier">5.2.3. Data structure of classifier</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#classifying-the-packet">5.2.4. Classifying the packet</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#packet-processing-in-forwarder-and-merger">5.2.5. Packet processing in forwarder and merger</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#l2-multicast-support">5.2.6. L2 Multicast Support</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#two-phase-update-for-forwarding">5.2.7. Two phase update for forwarding</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="spp_mirror.html">5.3. spp_mirror</a></li>
+<li class="toctree-l3"><a class="reference internal" href="spp_pcap.html">5.4. spp_pcap</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../gsg/index.html">Getting Started Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../usecases/index.html">Use Cases</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../commands/index.html">SPP Commands</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../tools/index.html">Tools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../api_ref/index.html">API Reference</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">Soft Patch Panel</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="../index.html">Design</a> &raquo;</li>
+        
+          <li><a href="index.html">5. Implementation</a> &raquo;</li>
+        
+      <li>5.2. spp_vf</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../../_sources/design/impl/spp_vf.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="spp-vf">
+<span id="spp-vf-explain-spp-vf"></span><h1>5.2. spp_vf<a class="headerlink" href="#spp-vf" title="Permalink to this headline">¶</a></h1>
+<p>This section describes implementation of key features of <code class="docutils literal notranslate"><span class="pre">spp_vf</span></code>.</p>
+<p><code class="docutils literal notranslate"><span class="pre">spp_vf</span></code> consists of master thread and several worker threads,
+<code class="docutils literal notranslate"><span class="pre">forwarder</span></code>, <code class="docutils literal notranslate"><span class="pre">classifier</span></code> or <code class="docutils literal notranslate"><span class="pre">merger</span></code>, as slaves.
+For classifying packets, <code class="docutils literal notranslate"><span class="pre">spp_vf</span></code> has a worker thread named <code class="docutils literal notranslate"><span class="pre">classifier</span></code>
+and a table for registering MAC address entries.</p>
+<div class="section" id="initialization">
+<h2>5.2.1. Initialization<a class="headerlink" href="#initialization" title="Permalink to this headline">¶</a></h2>
+<p>In master thread, data of classifier and VLAN features are initialized
+after <code class="docutils literal notranslate"><span class="pre">rte_eal_init()</span></code> is called.
+Port capability is a set of data for describing VLAN features.
+Then, each of worker threads are launched with <code class="docutils literal notranslate"><span class="pre">rte_eal_remote_launch()</span></code>
+on assigned lcores..</p>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span> <span class="cm">/* spp_vf.c */</span>
+
+ <span class="n">ret</span> <span class="o">=</span> <span class="n">rte_eal_init</span><span class="p">(</span><span class="n">argc</span><span class="p">,</span> <span class="n">argv</span><span class="p">);</span>
+
+ <span class="cm">/* skipping lines ... */</span>
+
+ <span class="cm">/* Start worker threads of classifier and forwarder */</span>
+<span class="kt">unsigned</span> <span class="kt">int</span> <span class="n">lcore_id</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+<span class="n">RTE_LCORE_FOREACH_SLAVE</span><span class="p">(</span><span class="n">lcore_id</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">rte_eal_remote_launch</span><span class="p">(</span><span class="n">slave_main</span><span class="p">,</span> <span class="nb">NULL</span><span class="p">,</span> <span class="n">lcore_id</span><span class="p">);</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="slave-main">
+<h2>5.2.2. Slave Main<a class="headerlink" href="#slave-main" title="Permalink to this headline">¶</a></h2>
+<p>Main function of worker thread is defined as <code class="docutils literal notranslate"><span class="pre">slave_main()</span></code> which is called
+from <code class="docutils literal notranslate"><span class="pre">rte_eal_remote_launch()</span></code>.
+Behavior of worker thread is decided in while loop in this function.
+If lcore status is not <code class="docutils literal notranslate"><span class="pre">SPPWK_LCORE_RUNNING</span></code>, worker thread does nothing.
+On the other hand, it does packet forwarding with or without classifying.
+It classifies incoming packets if component type is <code class="docutils literal notranslate"><span class="pre">SPPWK_TYPE_CLS</span></code>,
+or simply forwards packets.</p>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="cm">/* spp_vf.c */</span>
+
+<span class="k">while</span> <span class="p">((</span><span class="n">status</span> <span class="o">=</span> <span class="n">spp_get_core_status</span><span class="p">(</span><span class="n">lcore_id</span><span class="p">))</span> <span class="o">!=</span>
+    <span class="n">SPPWK_LCORE_REQ_STOP</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">status</span> <span class="o">!=</span> <span class="n">SPPWK_LCORE_RUNNING</span><span class="p">)</span>
+        <span class="k">continue</span><span class="p">;</span>
+
+    <span class="cm">/* skipping lines ... */</span>
+
+    <span class="cm">/* It is for processing multiple components. */</span>
+    <span class="k">for</span> <span class="p">(</span><span class="n">cnt</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">cnt</span> <span class="o">&lt;</span> <span class="n">core</span><span class="o">-&gt;</span><span class="n">num</span><span class="p">;</span> <span class="n">cnt</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+    <span class="cm">/* Component classification to call a function. */</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">spp_get_component_type</span><span class="p">(</span><span class="n">core</span><span class="o">-&gt;</span><span class="n">id</span><span class="p">[</span><span class="n">cnt</span><span class="p">])</span> <span class="o">==</span>
+                <span class="n">SPPWK_TYPE_CLS</span><span class="p">)</span> <span class="p">{</span>
+        <span class="cm">/* Component type for classifier. */</span>
+        <span class="n">ret</span> <span class="o">=</span> <span class="n">classify_packets</span><span class="p">(</span><span class="n">core</span><span class="o">-&gt;</span><span class="n">id</span><span class="p">[</span><span class="n">cnt</span><span class="p">]);</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">unlikely</span><span class="p">(</span><span class="n">ret</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">))</span>
+                <span class="k">break</span><span class="p">;</span>
+    <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+        <span class="cm">/* Component type for forward or merge. */</span>
+            <span class="n">ret</span> <span class="o">=</span> <span class="n">forward_packets</span><span class="p">(</span><span class="n">core</span><span class="o">-&gt;</span><span class="n">id</span><span class="p">[</span><span class="n">cnt</span><span class="p">]);</span>
+            <span class="k">if</span> <span class="p">(</span><span class="n">unlikely</span><span class="p">(</span><span class="n">ret</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">))</span>
+                <span class="k">break</span><span class="p">;</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="data-structure-of-classifier">
+<h2>5.2.3. Data structure of classifier<a class="headerlink" href="#data-structure-of-classifier" title="Permalink to this headline">¶</a></h2>
+<p>Classifier has a set of attributes for classification as
+struct <code class="docutils literal notranslate"><span class="pre">mac_classifier</span></code>, which consists of a table of MAC addresses,
+number of classifying ports, indices of ports
+and default index of port.
+Clasifier table is implemented as hash of struct <code class="docutils literal notranslate"><span class="pre">rte_hash</span></code>.</p>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="cm">/* shared/secondary/spp_worker_th/vf_deps.h */</span>
+
+<span class="cm">/* Classifier for MAC addresses. */</span>
+<span class="k">struct</span> <span class="n">mac_classifier</span> <span class="p">{</span>
+    <span class="k">struct</span> <span class="n">rte_hash</span> <span class="o">*</span><span class="n">cls_tbl</span><span class="p">;</span>  <span class="cm">/* Hash table for MAC classification. */</span>
+    <span class="kt">int</span> <span class="n">nof_cls_ports</span><span class="p">;</span>  <span class="cm">/* Num of ports classified validly. */</span>
+    <span class="kt">int</span> <span class="n">cls_ports</span><span class="p">[</span><span class="n">RTE_MAX_ETHPORTS</span><span class="p">];</span>  <span class="cm">/* Ports for classification. */</span>
+    <span class="kt">int</span> <span class="n">default_cls_idx</span><span class="p">;</span>  <span class="cm">/* Default index for classification. */</span>
+<span class="p">};</span>
+</pre></div>
+</div>
+<p>Classifier itself is defined as a struct <code class="docutils literal notranslate"><span class="pre">cls_comp_info</span></code>.
+There are several attributes in this struct including <code class="docutils literal notranslate"><span class="pre">mac_classifier</span></code>
+or <code class="docutils literal notranslate"><span class="pre">cls_port_info</span></code> or so.
+<code class="docutils literal notranslate"><span class="pre">cls_port_info</span></code> is for defining a set of attributes of ports, such as
+interface type, device ID or packet data.</p>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="cm">/* shared/secondary/spp_worker_th/vf_deps.h */</span>
+
+<span class="cm">/* classifier component information */</span>
+<span class="k">struct</span> <span class="n">cls_comp_info</span> <span class="p">{</span>
+    <span class="kt">char</span> <span class="n">name</span><span class="p">[</span><span class="n">STR_LEN_NAME</span><span class="p">];</span>  <span class="cm">/* component name */</span>
+    <span class="kt">int</span> <span class="n">mac_addr_entry</span><span class="p">;</span>  <span class="cm">/* mac address entry flag */</span>
+    <span class="k">struct</span> <span class="n">mac_classifier</span> <span class="o">*</span><span class="n">mac_clfs</span><span class="p">[</span><span class="n">NOF_VLAN</span><span class="p">];</span>  <span class="cm">/* classifiers per VLAN. */</span>
+    <span class="kt">int</span> <span class="n">nof_tx_ports</span><span class="p">;</span>  <span class="cm">/* Number of TX ports info entries. */</span>
+    <span class="cm">/* Classifier has one RX port and several TX ports. */</span>
+    <span class="k">struct</span> <span class="n">cls_port_info</span> <span class="n">rx_port_i</span><span class="p">;</span>  <span class="cm">/* RX port info classified. */</span>
+    <span class="k">struct</span> <span class="n">cls_port_info</span> <span class="n">tx_ports_i</span><span class="p">[</span><span class="n">RTE_MAX_ETHPORTS</span><span class="p">];</span>  <span class="cm">/* TX info. */</span>
+<span class="p">};</span>
+
+<span class="cm">/* Attirbutes of port for classification. */</span>
+<span class="k">struct</span> <span class="n">cls_port_info</span> <span class="p">{</span>
+    <span class="k">enum</span> <span class="n">port_type</span> <span class="n">iface_type</span><span class="p">;</span>
+    <span class="kt">int</span> <span class="n">iface_no</span><span class="p">;</span>   <span class="cm">/* Index of ports handled by classifier. */</span>
+    <span class="kt">int</span> <span class="n">iface_no_global</span><span class="p">;</span>  <span class="cm">/* ID for interface generated by spp_vf */</span>
+    <span class="kt">uint16_t</span> <span class="n">ethdev_port_id</span><span class="p">;</span>  <span class="cm">/* Ethdev port ID. */</span>
+    <span class="kt">uint16_t</span> <span class="n">nof_pkts</span><span class="p">;</span>  <span class="cm">/* Number of packets in pkts[]. */</span>
+    <span class="k">struct</span> <span class="n">rte_mbuf</span> <span class="o">*</span><span class="n">pkts</span><span class="p">[</span><span class="n">MAX_PKT_BURST</span><span class="p">];</span>  <span class="cm">/* packets to be classified. */</span>
+<span class="p">};</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="classifying-the-packet">
+<h2>5.2.4. Classifying the packet<a class="headerlink" href="#classifying-the-packet" title="Permalink to this headline">¶</a></h2>
+<p>If component type is <code class="docutils literal notranslate"><span class="pre">SPPWK_TYPE_CLS</span></code>, worker thread behaves as a classifier,
+so component calls <code class="docutils literal notranslate"><span class="pre">classify_packets()</span></code>. In this function, packets
+from RX port are received with <code class="docutils literal notranslate"><span class="pre">sppwk_eth_vlan_rx_burst()</span></code> which is derived
+from <code class="docutils literal notranslate"><span class="pre">rte_eth_rx_burst()</span></code> for adding or deleting VLAN tags.
+Received packets are classified with <code class="docutils literal notranslate"><span class="pre">classify_packet()</span></code>.</p>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="cm">/* classifier.c */</span>
+
+<span class="n">n_rx</span> <span class="o">=</span> <span class="n">sppwk_eth_vlan_rx_burst</span><span class="p">(</span><span class="n">clsd_data_rx</span><span class="o">-&gt;</span><span class="n">ethdev_port_id</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span>
+    <span class="n">rx_pkts</span><span class="p">,</span> <span class="n">MAX_PKT_BURST</span><span class="p">);</span>
+
+<span class="cm">/* skipping lines ... */</span>
+
+<span class="n">classify_packet</span><span class="p">(</span><span class="n">rx_pkts</span><span class="p">,</span> <span class="n">n_rx</span><span class="p">,</span> <span class="n">cmp_info</span><span class="p">,</span> <span class="n">clsd_data_tx</span><span class="p">);</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="packet-processing-in-forwarder-and-merger">
+<h2>5.2.5. Packet processing in forwarder and merger<a class="headerlink" href="#packet-processing-in-forwarder-and-merger" title="Permalink to this headline">¶</a></h2>
+<p>Configuration data for forwarder and merger is stored as structured
+tables <code class="docutils literal notranslate"><span class="pre">forward_rxtx</span></code>, <code class="docutils literal notranslate"><span class="pre">forward_path</span></code> and <code class="docutils literal notranslate"><span class="pre">forward_info</span></code>.
+The <code class="docutils literal notranslate"><span class="pre">forward_rxtx</span></code> has two member variables for expressing the port
+to be sent(tx) and to be receive(rx),
+<code class="docutils literal notranslate"><span class="pre">forward_path</span></code> has member variables for expressing the data path.
+Like as <code class="docutils literal notranslate"><span class="pre">mac_classifier</span></code>, <code class="docutils literal notranslate"><span class="pre">forward_info</span></code> has two tables,
+one is for updating by commands, the other is for looking up to process
+packets.</p>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="cm">/* forwarder.c */</span>
+<span class="cm">/* A set of port info of rx and tx */</span>
+<span class="k">struct</span> <span class="n">forward_rxtx</span> <span class="p">{</span>
+        <span class="k">struct</span> <span class="n">spp_port_info</span> <span class="n">rx</span><span class="p">;</span> <span class="cm">/* rx port */</span>
+        <span class="k">struct</span> <span class="n">spp_port_info</span> <span class="n">tx</span><span class="p">;</span> <span class="cm">/* tx port */</span>
+<span class="p">};</span>
+
+<span class="cm">/* Information on the path used for forward. */</span>
+<span class="k">struct</span> <span class="n">forward_path</span> <span class="p">{</span>
+        <span class="kt">char</span> <span class="n">name</span><span class="p">[</span><span class="n">STR_LEN_NAME</span><span class="p">];</span>  <span class="cm">/* Component name */</span>
+        <span class="k">volatile</span> <span class="k">enum</span> <span class="n">sppwk_worker_type</span> <span class="n">wk_type</span><span class="p">;</span>
+        <span class="kt">int</span> <span class="n">nof_rx</span><span class="p">;</span>  <span class="cm">/* Number of RX ports */</span>
+        <span class="kt">int</span> <span class="n">nof_tx</span><span class="p">;</span>  <span class="cm">/* Number of TX ports */</span>
+        <span class="k">struct</span> <span class="n">forward_rxtx</span> <span class="n">ports</span><span class="p">[</span><span class="n">RTE_MAX_ETHPORTS</span><span class="p">];</span>  <span class="cm">/* Set of RX and TX */</span>
+<span class="p">};</span>
+
+<span class="cm">/* Information for forward. */</span>
+<span class="k">struct</span> <span class="n">forward_info</span> <span class="p">{</span>
+        <span class="k">volatile</span> <span class="kt">int</span> <span class="n">ref_index</span><span class="p">;</span> <span class="cm">/* index to reference area */</span>
+        <span class="k">volatile</span> <span class="kt">int</span> <span class="n">upd_index</span><span class="p">;</span> <span class="cm">/* index to update area    */</span>
+        <span class="k">struct</span> <span class="n">forward_path</span> <span class="n">path</span><span class="p">[</span><span class="n">SPP_INFO_AREA_MAX</span><span class="p">];</span>
+                                <span class="cm">/* Information of data path */</span>
+<span class="p">};</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="l2-multicast-support">
+<h2>5.2.6. L2 Multicast Support<a class="headerlink" href="#l2-multicast-support" title="Permalink to this headline">¶</a></h2>
+<p><code class="docutils literal notranslate"><span class="pre">spp_vf</span></code> supports multicast for resolving ARP requests.
+It is implemented as <code class="docutils literal notranslate"><span class="pre">handle_l2multicast_packet()</span></code> and called from
+<code class="docutils literal notranslate"><span class="pre">classify_packet()</span></code> for incoming multicast packets.</p>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="cm">/* classify_packet() in classifier.c */</span>
+
+<span class="cm">/* L2 multicast(include broadcast) ? */</span>
+<span class="k">if</span> <span class="p">(</span><span class="n">unlikely</span><span class="p">(</span><span class="n">is_multicast_ether_addr</span><span class="p">(</span><span class="o">&amp;</span><span class="n">eth</span><span class="o">-&gt;</span><span class="n">d_addr</span><span class="p">)))</span> <span class="p">{</span>
+        <span class="n">RTE_LOG</span><span class="p">(</span><span class="n">DEBUG</span><span class="p">,</span> <span class="n">SPP_CLASSIFIER_MAC</span><span class="p">,</span>
+                        <span class="s">&quot;multicast mac address.</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">);</span>
+        <span class="n">handle_l2multicast_packet</span><span class="p">(</span><span class="n">rx_pkts</span><span class="p">[</span><span class="n">i</span><span class="p">],</span>
+                        <span class="n">classifier_info</span><span class="p">,</span>
+                        <span class="n">classified_data</span><span class="p">);</span>
+        <span class="k">continue</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>Packets are cloned with <code class="docutils literal notranslate"><span class="pre">rte_mbuf_refcnt_update()</span></code> for distributing
+multicast packets.</p>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="cm">/* classifier.c */</span>
+
+<span class="n">handle_l2multicast_packet</span><span class="p">(</span><span class="k">struct</span> <span class="n">rte_mbuf</span> <span class="o">*</span><span class="n">pkt</span><span class="p">,</span>
+        <span class="k">struct</span> <span class="n">cls_comp_info</span> <span class="o">*</span><span class="n">cmp_info</span><span class="p">,</span>
+        <span class="k">struct</span> <span class="n">cls_port_info</span> <span class="o">*</span><span class="n">clsd_data</span><span class="p">)</span>
+<span class="p">{</span>
+        <span class="kt">int</span> <span class="n">i</span><span class="p">;</span>
+        <span class="k">struct</span> <span class="n">mac_classifier</span> <span class="o">*</span><span class="n">mac_cls</span><span class="p">;</span>
+        <span class="kt">uint16_t</span> <span class="n">vid</span> <span class="o">=</span> <span class="n">get_vid</span><span class="p">(</span><span class="n">pkt</span><span class="p">);</span>
+        <span class="kt">int</span> <span class="n">gen_def_clsd_idx</span> <span class="o">=</span> <span class="n">get_general_default_classified_index</span><span class="p">(</span><span class="n">cmp_info</span><span class="p">);</span>
+        <span class="kt">int</span> <span class="n">n_act_clsd</span><span class="p">;</span>
+
+        <span class="cm">/* skipping lines... */</span>
+
+        <span class="n">rte_mbuf_refcnt_update</span><span class="p">(</span><span class="n">pkt</span><span class="p">,</span> <span class="p">(</span><span class="kt">int16_t</span><span class="p">)(</span><span class="n">n_act_clsd</span> <span class="o">-</span> <span class="mi">1</span><span class="p">));</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="two-phase-update-for-forwarding">
+<h2>5.2.7. Two phase update for forwarding<a class="headerlink" href="#two-phase-update-for-forwarding" title="Permalink to this headline">¶</a></h2>
+<p>Update of netowrk configuration in <code class="docutils literal notranslate"><span class="pre">spp_vf</span></code> is done in a short period of
+time, but not so short considering the time scale of packet forwarding.
+It might forward packets before the updating is completed possibly.
+To avoid such kind of situation, <code class="docutils literal notranslate"><span class="pre">spp_vf</span></code> has two phase update mechanism.
+Status info is referred from forwarding process after the update is completed.</p>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="kt">int</span>
+<span class="nf">flush_cmd</span><span class="p">(</span><span class="kt">void</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="kt">int</span> <span class="n">ret</span><span class="p">;</span>
+    <span class="kt">int</span> <span class="o">*</span><span class="n">p_change_comp</span><span class="p">;</span>
+    <span class="k">struct</span> <span class="n">sppwk_comp_info</span> <span class="o">*</span><span class="n">p_comp_info</span><span class="p">;</span>
+    <span class="k">struct</span> <span class="n">cancel_backup_info</span> <span class="o">*</span><span class="n">backup_info</span><span class="p">;</span>
+
+    <span class="n">sppwk_get_mng_data</span><span class="p">(</span><span class="nb">NULL</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">p_comp_info</span><span class="p">,</span> <span class="nb">NULL</span><span class="p">,</span> <span class="nb">NULL</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">p_change_comp</span><span class="p">,</span>
+            <span class="o">&amp;</span><span class="n">backup_info</span><span class="p">);</span>
+
+    <span class="n">ret</span> <span class="o">=</span> <span class="n">update_port_info</span><span class="p">();</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">ret</span> <span class="o">&lt;</span> <span class="n">SPPWK_RET_OK</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">ret</span><span class="p">;</span>
+
+    <span class="n">update_lcore_info</span><span class="p">();</span>
+
+    <span class="n">ret</span> <span class="o">=</span> <span class="n">update_comp_info</span><span class="p">(</span><span class="n">p_comp_info</span><span class="p">,</span> <span class="n">p_change_comp</span><span class="p">);</span>
+
+    <span class="n">backup_mng_info</span><span class="p">(</span><span class="n">backup_info</span><span class="p">);</span>
+    <span class="k">return</span> <span class="n">ret</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="spp_mirror.html" class="btn btn-neutral float-right" title="5.3. spp_mirror" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="spp_nfv.html" class="btn btn-neutral float-left" title="5.1. spp_nfv" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

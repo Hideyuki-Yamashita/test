@@ -1,0 +1,275 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>3. SPP Primary &mdash; Soft Patch Panel 19.08 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../_static/jquery.js"></script>
+        <script type="text/javascript" src="../_static/underscore.js"></script>
+        <script type="text/javascript" src="../_static/doctools.js"></script>
+        <script type="text/javascript" src="../_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="4. SPP Secondary" href="spp_secondary.html" />
+    <link rel="prev" title="2. SPP Controller" href="spp_controller.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> Soft Patch Panel
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                19.08
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../overview.html">Overview</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">Design</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="spp.html">1. Soft Patch Panel</a></li>
+<li class="toctree-l2"><a class="reference internal" href="spp_controller.html">2. SPP Controller</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">3. SPP Primary</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#master-and-worker-threads">3.1. Master and Worker Threads</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#worker-types">3.2. Worker Types</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="spp_secondary.html">4. SPP Secondary</a></li>
+<li class="toctree-l2"><a class="reference internal" href="impl/index.html">5. Implementation</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../gsg/index.html">Getting Started Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../usecases/index.html">Use Cases</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../commands/index.html">SPP Commands</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../tools/index.html">Tools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../api_ref/index.html">API Reference</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">Soft Patch Panel</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="index.html">Design</a> &raquo;</li>
+        
+      <li>3. SPP Primary</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../_sources/design/spp_primary.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="spp-primary">
+<span id="spp-overview-design-spp-primary"></span><h1>3. SPP Primary<a class="headerlink" href="#spp-primary" title="Permalink to this headline">¶</a></h1>
+<p>SPP is originally derived from
+<a class="reference external" href="https://doc.dpdk.org/guides/sample_app_ug/multi_process.html#client-server-multi-process-example">Client-Server Multi-process Example</a>
+of
+<a class="reference external" href="https://doc.dpdk.org/guides/sample_app_ug/multi_process.html">Multi-process Sample Application</a>
+in DPDK’s sample applications.
+<code class="docutils literal notranslate"><span class="pre">spp_primary</span></code> is a server for other secondary processes and
+basically working same as described in
+“How the Application Works” section of the sample application.</p>
+<p>However, there are some differences between <code class="docutils literal notranslate"><span class="pre">spp_primary</span></code> and
+the server process of the sample application.
+<code class="docutils literal notranslate"><span class="pre">spp_primary</span></code> has no limitation of the number of secondary processes.
+It does not work for packet forwaring without in some usecases, but just
+provide rings and memory pools for secondary processes.</p>
+<div class="section" id="master-and-worker-threads">
+<h2>3.1. Master and Worker Threads<a class="headerlink" href="#master-and-worker-threads" title="Permalink to this headline">¶</a></h2>
+<p>In SPP, Both of primary and secondary processes consist of master thread and
+worker thread as slave. Master thread is for accepting commands from a user
+for doing task, and running on a master lcore. On the other hand,
+slave thread is for packet forwarding or other process specific jobs
+as worker, and running on slave lcore. Only slave thread requires
+dedicated core for running in pole mode, and launched from
+<code class="docutils literal notranslate"><span class="pre">rte_eal_remote_launch()</span></code> or <code class="docutils literal notranslate"><span class="pre">rte_eal_mp_remote_launch()</span></code>.</p>
+<p><code class="docutils literal notranslate"><span class="pre">spp_primary</span></code> is able to run with or without worker thread selectively,
+and requires at least one lcore for server process.
+Using worker thread or not depends on your usecases.
+<code class="docutils literal notranslate"><span class="pre">spp_primary</span></code> provides two types of workers currently.</p>
+</div>
+<div class="section" id="worker-types">
+<h2>3.2. Worker Types<a class="headerlink" href="#worker-types" title="Permalink to this headline">¶</a></h2>
+<p>There are two types of worker thread in <code class="docutils literal notranslate"><span class="pre">spp_primary</span></code>. First one is
+is forwarder thread, and second one is monitor thread.</p>
+<p>As default, <code class="docutils literal notranslate"><span class="pre">spp_primary</span></code> runs packet forwarder if two or more lcores
+are given while launching the process. Behavior of this forwarder is
+same as <code class="docutils literal notranslate"><span class="pre">spp_nfv</span></code> described in the next section.
+This forwarder provides features for managing ports, patching them and
+forwarding packets between ports.
+It is useful for very simple usecase in which only few ports are patched
+and no need to do forwarding packets in parallel with several processes.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>In DPDK v18.11 or later, some of PMDs, such as vhost, do not work for
+multi-process application. It means that packets cannot forwarded
+to a VM or container via secondary process in SPP.
+In this case, you use forwarder in <code class="docutils literal notranslate"><span class="pre">spp_primary</span></code>.</p>
+</div>
+<p>Another type is monitor for displaying status of <code class="docutils literal notranslate"><span class="pre">spp_primary</span></code> in which
+statistics of RX and TX packets on each of physical ports and ring ports
+are shown periodically in terminal <code class="docutils literal notranslate"><span class="pre">spp_primary</span></code> is launched.
+Although statistics can be referred in SPP CLI by using <code class="docutils literal notranslate"><span class="pre">pri;</span> <span class="pre">status</span></code>
+command, running monitor thread is useful if you always watch statistics.</p>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="spp_secondary.html" class="btn btn-neutral float-right" title="4. SPP Secondary" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="spp_controller.html" class="btn btn-neutral float-left" title="2. SPP Controller" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

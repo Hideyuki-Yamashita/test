@@ -1,0 +1,657 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>1. spp_nfv &mdash; Soft Patch Panel 19.08 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../_static/jquery.js"></script>
+        <script type="text/javascript" src="../_static/underscore.js"></script>
+        <script type="text/javascript" src="../_static/doctools.js"></script>
+        <script type="text/javascript" src="../_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="2. spp_vf" href="spp_vf.html" />
+    <link rel="prev" title="Use Cases" href="index.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> Soft Patch Panel
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                19.08
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../overview.html">Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../design/index.html">Design</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../gsg/index.html">Getting Started Guide</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">Use Cases</a><ul class="current">
+<li class="toctree-l2 current"><a class="current reference internal" href="#">1. spp_nfv</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#single-spp-nfv">1.1. Single spp_nfv</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#configure-spp-nfv-as-l2fwd">1.1.1. Configure spp_nfv as L2fwd</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#configure-spp-nfv-for-loopback">1.1.2. Configure spp_nfv for Loopback</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#dual-spp-nfv">1.2. Dual spp_nfv</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#configure-two-spp-nfv-as-l2fwd">1.2.1. Configure Two spp_nfv as L2fwd</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#configure-two-spp-nfv-for-loopback">1.2.2. Configure two spp_nfv for Loopback</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#dual-spp-nfv-with-ring-pmd">1.3. Dual spp_nfv with Ring PMD</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#ring-pmd">1.3.1. Ring PMD</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#uni-directional-l2fwd">1.3.2. Uni-Directional L2fwd</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#bi-directional-l2fwd">1.3.3. Bi-Directional L2fwd</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#single-spp-nfv-with-vhost-pmd">1.4. Single spp_nfv with Vhost PMD</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#vhost-pmd">1.4.1. Vhost PMD</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#setup-vhost-pmd">1.4.2. Setup Vhost PMD</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#setup-network-configuration-in-spp-nfv">1.4.3. Setup Network Configuration in spp_nfv</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#single-spp-nfv-with-pcap-pmd">1.5. Single spp_nfv with PCAP PMD</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#pcap-pmd">1.5.1. PCAP PMD</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#capture-incoming-packets">1.5.2. Capture Incoming Packets</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#restore-dumped-packets">1.5.3. Restore dumped Packets</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="spp_vf.html">2. spp_vf</a></li>
+<li class="toctree-l2"><a class="reference internal" href="spp_mirror.html">3. spp_mirror</a></li>
+<li class="toctree-l2"><a class="reference internal" href="spp_pcap.html">4. spp_pcap</a></li>
+<li class="toctree-l2"><a class="reference internal" href="multi_nodes.html">5. Multiple Nodes</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../commands/index.html">SPP Commands</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../tools/index.html">Tools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../api_ref/index.html">API Reference</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">Soft Patch Panel</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="index.html">Use Cases</a> &raquo;</li>
+        
+      <li>1. spp_nfv</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../_sources/usecases/spp_nfv.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="spp-nfv">
+<span id="spp-usecases-nfv"></span><h1>1. spp_nfv<a class="headerlink" href="#spp-nfv" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="single-spp-nfv">
+<span id="spp-usecases-nfv-single-spp-nfv"></span><h2>1.1. Single spp_nfv<a class="headerlink" href="#single-spp-nfv" title="Permalink to this headline">¶</a></h2>
+<p>The most simple usecase mainly for testing performance of packet
+forwarding on host.
+One <code class="docutils literal notranslate"><span class="pre">spp_nfv</span></code> and two physical ports.</p>
+<p>In this usecase, try to configure two senarios.</p>
+<ul class="simple">
+<li><p>Configure <code class="docutils literal notranslate"><span class="pre">spp_nfv</span></code> as L2fwd</p></li>
+<li><p>Configure <code class="docutils literal notranslate"><span class="pre">spp_nfv</span></code> for Loopback</p></li>
+</ul>
+<p>First of all, Check the status of <code class="docutils literal notranslate"><span class="pre">spp_nfv</span></code> from SPP CLI.</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">spp &gt; nfv 1; status</span>
+<span class="go">- status: idling</span>
+<span class="go">- lcore_ids:</span>
+<span class="go">  - master: 1</span>
+<span class="go">  - slave: 2</span>
+<span class="go">- ports:</span>
+<span class="go">  - phy:0</span>
+<span class="go">  - phy:1</span>
+</pre></div>
+</div>
+<p>This status message explains that <code class="docutils literal notranslate"><span class="pre">nfv</span> <span class="pre">1</span></code> has two physical ports.</p>
+<div class="section" id="configure-spp-nfv-as-l2fwd">
+<h3>1.1.1. Configure spp_nfv as L2fwd<a class="headerlink" href="#configure-spp-nfv-as-l2fwd" title="Permalink to this headline">¶</a></h3>
+<p>Assing the destination of ports with <code class="docutils literal notranslate"><span class="pre">patch</span></code> subcommand and
+start forwarding.
+Patch from <code class="docutils literal notranslate"><span class="pre">phy:0</span></code> to <code class="docutils literal notranslate"><span class="pre">phy:1</span></code> and <code class="docutils literal notranslate"><span class="pre">phy:1</span></code> to <code class="docutils literal notranslate"><span class="pre">phy:0</span></code>,
+which means it is bi-directional connection.</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">spp &gt; nfv 1; patch phy:0 phy:1</span>
+<span class="go">Patch ports (phy:0 -&gt; phy:1).</span>
+<span class="go">spp &gt; nfv 1; patch phy:1 phy:0</span>
+<span class="go">Patch ports (phy:1 -&gt; phy:0).</span>
+<span class="go">spp &gt; nfv 1; forward</span>
+<span class="go">Start forwarding.</span>
+</pre></div>
+</div>
+<p>Confirm that status of <code class="docutils literal notranslate"><span class="pre">nfv</span> <span class="pre">1</span></code> is updated to <code class="docutils literal notranslate"><span class="pre">running</span></code> and ports are
+patches as you defined.</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">spp &gt; nfv 1; status</span>
+<span class="go">- status: running</span>
+<span class="go">- lcore_ids:</span>
+<span class="go">  - master: 1</span>
+<span class="go">  - slave: 2</span>
+<span class="go">- ports:</span>
+<span class="go">  - phy:0 -&gt; phy:1</span>
+<span class="go">  - phy:1 -&gt; phy:0</span>
+</pre></div>
+</div>
+<div class="figure align-default" id="id1">
+<span id="figure-spp-nfv-as-l2fwd"></span><a class="reference internal image-reference" href="../_images/spp_nfv_l2fwd.svg"><img alt="../_images/spp_nfv_l2fwd.svg" src="../_images/spp_nfv_l2fwd.svg" width="60%" /></a>
+<p class="caption"><span class="caption-number">Fig. 1.2 </span><span class="caption-text">spp_nfv as l2fwd</span><a class="headerlink" href="#id1" title="Permalink to this image">¶</a></p>
+</div>
+<p>Stop forwarding and reset patch to clear configuration.
+<code class="docutils literal notranslate"><span class="pre">patch</span> <span class="pre">reset</span></code> is to clear all of patch configurations.</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">spp &gt; nfv 1; stop</span>
+<span class="go">Stop forwarding.</span>
+<span class="go">spp &gt; nfv 1; patch reset</span>
+<span class="go">Clear all of patches.</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="configure-spp-nfv-for-loopback">
+<h3>1.1.2. Configure spp_nfv for Loopback<a class="headerlink" href="#configure-spp-nfv-for-loopback" title="Permalink to this headline">¶</a></h3>
+<p>Patch <code class="docutils literal notranslate"><span class="pre">phy:0</span></code> to <code class="docutils literal notranslate"><span class="pre">phy:0</span></code> and <code class="docutils literal notranslate"><span class="pre">phy:1</span></code> to <code class="docutils literal notranslate"><span class="pre">phy:1</span></code>
+for loopback.</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">spp &gt; nfv 1; patch phy:0 phy:0</span>
+<span class="go">Patch ports (phy:0 -&gt; phy:0).</span>
+<span class="go">spp &gt; nfv 1; patch phy:1 phy:1</span>
+<span class="go">Patch ports (phy:1 -&gt; phy:1).</span>
+<span class="go">spp &gt; nfv 1; forward</span>
+<span class="go">Start forwarding.</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="dual-spp-nfv">
+<h2>1.2. Dual spp_nfv<a class="headerlink" href="#dual-spp-nfv" title="Permalink to this headline">¶</a></h2>
+<p>Use case for testing performance of packet forwarding
+with two <code class="docutils literal notranslate"><span class="pre">spp_nfv</span></code> on host.
+Throughput is expected to be better than
+<a class="reference internal" href="#spp-usecases-nfv-single-spp-nfv"><span class="std std-ref">Single spp_nfv</span></a>
+usecase because bi-directional forwarding of single <code class="docutils literal notranslate"><span class="pre">spp_nfv</span></code> is shared
+with two of uni-directional forwarding between dual <code class="docutils literal notranslate"><span class="pre">spp_nfv</span></code>.</p>
+<p>In this usecase, configure two senarios almost similar to previous section.</p>
+<ul class="simple">
+<li><p>Configure Two <code class="docutils literal notranslate"><span class="pre">spp_nfv</span></code> as L2fwd</p></li>
+<li><p>Configure Two <code class="docutils literal notranslate"><span class="pre">spp_nfv</span></code> for Loopback</p></li>
+</ul>
+<div class="section" id="configure-two-spp-nfv-as-l2fwd">
+<h3>1.2.1. Configure Two spp_nfv as L2fwd<a class="headerlink" href="#configure-two-spp-nfv-as-l2fwd" title="Permalink to this headline">¶</a></h3>
+<p>Assing the destination of ports with <code class="docutils literal notranslate"><span class="pre">patch</span></code> subcommand and
+start forwarding.
+Patch from <code class="docutils literal notranslate"><span class="pre">phy:0</span></code> to <code class="docutils literal notranslate"><span class="pre">phy:1</span></code> for <code class="docutils literal notranslate"><span class="pre">nfv</span> <span class="pre">1</span></code> and
+from <code class="docutils literal notranslate"><span class="pre">phy:1</span></code> to <code class="docutils literal notranslate"><span class="pre">phy:0</span></code> for <code class="docutils literal notranslate"><span class="pre">nfv</span> <span class="pre">2</span></code>.</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">spp &gt; nfv 1; patch phy:0 phy:1</span>
+<span class="go">Patch ports (phy:0 -&gt; phy:1).</span>
+<span class="go">spp &gt; nfv 2; patch phy:1 phy:0</span>
+<span class="go">Patch ports (phy:1 -&gt; phy:0).</span>
+<span class="go">spp &gt; nfv 1; forward</span>
+<span class="go">Start forwarding.</span>
+<span class="go">spp &gt; nfv 2; forward</span>
+<span class="go">Start forwarding.</span>
+</pre></div>
+</div>
+<div class="figure align-default" id="id2">
+<span id="figure-spp-two-nfv-as-l2fwd"></span><a class="reference internal image-reference" href="../_images/spp_two_nfv_l2fwd.svg"><img alt="../_images/spp_two_nfv_l2fwd.svg" src="../_images/spp_two_nfv_l2fwd.svg" width="60%" /></a>
+<p class="caption"><span class="caption-number">Fig. 1.3 </span><span class="caption-text">Two spp_nfv as l2fwd</span><a class="headerlink" href="#id2" title="Permalink to this image">¶</a></p>
+</div>
+</div>
+<div class="section" id="configure-two-spp-nfv-for-loopback">
+<h3>1.2.2. Configure two spp_nfv for Loopback<a class="headerlink" href="#configure-two-spp-nfv-for-loopback" title="Permalink to this headline">¶</a></h3>
+<p>Patch <code class="docutils literal notranslate"><span class="pre">phy:0</span></code> to <code class="docutils literal notranslate"><span class="pre">phy:0</span></code> for <code class="docutils literal notranslate"><span class="pre">nfv</span> <span class="pre">1</span></code> and
+<code class="docutils literal notranslate"><span class="pre">phy:1</span></code> to <code class="docutils literal notranslate"><span class="pre">phy:1</span></code> for <code class="docutils literal notranslate"><span class="pre">nfv</span> <span class="pre">2</span></code> for loopback.</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">spp &gt; nfv 1; patch phy:0 phy:0</span>
+<span class="go">Patch ports (phy:0 -&gt; phy:0).</span>
+<span class="go">spp &gt; nfv 2; patch phy:1 phy:1</span>
+<span class="go">Patch ports (phy:1 -&gt; phy:1).</span>
+<span class="go">spp &gt; nfv 1; forward</span>
+<span class="go">Start forwarding.</span>
+<span class="go">spp &gt; nfv 2; forward</span>
+<span class="go">Start forwarding.</span>
+</pre></div>
+</div>
+<div class="figure align-default" id="id3">
+<span id="figure-spp-two-nfv-loopback"></span><a class="reference internal image-reference" href="../_images/spp_two_nfv_loopback.svg"><img alt="../_images/spp_two_nfv_loopback.svg" src="../_images/spp_two_nfv_loopback.svg" width="62%" /></a>
+<p class="caption"><span class="caption-number">Fig. 1.4 </span><span class="caption-text">Two spp_nfv for loopback</span><a class="headerlink" href="#id3" title="Permalink to this image">¶</a></p>
+</div>
+</div>
+</div>
+<div class="section" id="dual-spp-nfv-with-ring-pmd">
+<h2>1.3. Dual spp_nfv with Ring PMD<a class="headerlink" href="#dual-spp-nfv-with-ring-pmd" title="Permalink to this headline">¶</a></h2>
+<p>In this usecase, configure two senarios by using ring PMD.</p>
+<ul class="simple">
+<li><p>Uni-Directional L2fwd</p></li>
+<li><p>Bi-Directional L2fwd</p></li>
+</ul>
+<div class="section" id="ring-pmd">
+<h3>1.3.1. Ring PMD<a class="headerlink" href="#ring-pmd" title="Permalink to this headline">¶</a></h3>
+<p>Ring PMD is an interface for communicating between secondaries on host.
+The maximum number of ring PMDs is defined as <code class="docutils literal notranslate"><span class="pre">-n</span></code>  option of
+<code class="docutils literal notranslate"><span class="pre">spp_primary</span></code> and ring ID is started from 0.</p>
+<p>Ring PMD is added by using <code class="docutils literal notranslate"><span class="pre">add</span></code> subcommand.
+All of ring PMDs is showed with <code class="docutils literal notranslate"><span class="pre">status</span></code> subcommand.</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">spp &gt; nfv 1; add ring:0</span>
+<span class="go">Add ring:0.</span>
+<span class="go">spp &gt; nfv 1; status</span>
+<span class="go">- status: idling</span>
+<span class="go">- lcore_ids:</span>
+<span class="go">  - master: 1</span>
+<span class="go">  - slave: 2</span>
+<span class="go">- ports:</span>
+<span class="go">  - phy:0</span>
+<span class="go">  - phy:1</span>
+<span class="go">  - ring:0</span>
+</pre></div>
+</div>
+<p>Notice that <code class="docutils literal notranslate"><span class="pre">ring:0</span></code> is added to <code class="docutils literal notranslate"><span class="pre">nfv</span> <span class="pre">1</span></code>.
+You can delete it with <code class="docutils literal notranslate"><span class="pre">del</span></code> command if you do not need to
+use it anymore.</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">spp &gt; nfv 1; del ring:0</span>
+<span class="go">Delete ring:0.</span>
+<span class="go">spp &gt; nfv 1; status</span>
+<span class="go">- status: idling</span>
+<span class="go">- lcore_ids:</span>
+<span class="go">  - master: 1</span>
+<span class="go">  - slave: 2</span>
+<span class="go">- ports:</span>
+<span class="go">  - phy:0</span>
+<span class="go">  - phy:1</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="uni-directional-l2fwd">
+<h3>1.3.2. Uni-Directional L2fwd<a class="headerlink" href="#uni-directional-l2fwd" title="Permalink to this headline">¶</a></h3>
+<p>Add a ring PMD and connect two <code class="docutils literal notranslate"><span class="pre">spp_nvf</span></code> processes.
+To configure network path, add <code class="docutils literal notranslate"><span class="pre">ring:0</span></code> to <code class="docutils literal notranslate"><span class="pre">nfv</span> <span class="pre">1</span></code> and <code class="docutils literal notranslate"><span class="pre">nfv</span> <span class="pre">2</span></code>.
+Then, connect it with <code class="docutils literal notranslate"><span class="pre">patch</span></code> subcommand.</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">spp &gt; nfv 1; add ring:0</span>
+<span class="go">Add ring:0.</span>
+<span class="go">spp &gt; nfv 2; add ring:0</span>
+<span class="go">Add ring:0.</span>
+<span class="go">spp &gt; nfv 1; patch phy:0 ring:0</span>
+<span class="go">Patch ports (phy:0 -&gt; ring:0).</span>
+<span class="go">spp &gt; nfv 2; patch ring:0 phy:1</span>
+<span class="go">Patch ports (ring:0 -&gt; phy:1).</span>
+<span class="go">spp &gt; nfv 1; forward</span>
+<span class="go">Start forwarding.</span>
+<span class="go">spp &gt; nfv 2; forward</span>
+<span class="go">Start forwarding.</span>
+</pre></div>
+</div>
+<div class="figure align-default" id="id4">
+<span id="figure-spp-uni-directional-l2fwd"></span><a class="reference internal image-reference" href="../_images/spp_unidir_l2fwd.svg"><img alt="../_images/spp_unidir_l2fwd.svg" src="../_images/spp_unidir_l2fwd.svg" width="72%" /></a>
+<p class="caption"><span class="caption-number">Fig. 1.5 </span><span class="caption-text">Uni-Directional l2fwd</span><a class="headerlink" href="#id4" title="Permalink to this image">¶</a></p>
+</div>
+</div>
+<div class="section" id="bi-directional-l2fwd">
+<h3>1.3.3. Bi-Directional L2fwd<a class="headerlink" href="#bi-directional-l2fwd" title="Permalink to this headline">¶</a></h3>
+<p>Add two ring PMDs to two <code class="docutils literal notranslate"><span class="pre">spp_nvf</span></code> processes.
+For bi-directional forwarding,
+patch <code class="docutils literal notranslate"><span class="pre">ring:0</span></code> for a path from <code class="docutils literal notranslate"><span class="pre">nfv</span> <span class="pre">1</span></code> to <code class="docutils literal notranslate"><span class="pre">nfv</span> <span class="pre">2</span></code>
+and <code class="docutils literal notranslate"><span class="pre">ring:1</span></code> for another path from <code class="docutils literal notranslate"><span class="pre">nfv</span> <span class="pre">2</span></code> to <code class="docutils literal notranslate"><span class="pre">nfv</span> <span class="pre">1</span></code>.</p>
+<p>First, add <code class="docutils literal notranslate"><span class="pre">ring:0</span></code> and <code class="docutils literal notranslate"><span class="pre">ring:1</span></code> to <code class="docutils literal notranslate"><span class="pre">nfv</span> <span class="pre">1</span></code>.</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">spp &gt; nfv 1; add ring:0</span>
+<span class="go">Add ring:0.</span>
+<span class="go">spp &gt; nfv 1; add ring:1</span>
+<span class="go">Add ring:1.</span>
+<span class="go">spp &gt; nfv 1; status</span>
+<span class="go">- status: idling</span>
+<span class="go">- lcore_ids:</span>
+<span class="go">  - master: 1</span>
+<span class="go">  - slave: 2</span>
+<span class="go">- ports:</span>
+<span class="go">  - phy:0</span>
+<span class="go">  - phy:1</span>
+<span class="go">  - ring:0</span>
+<span class="go">  - ring:1</span>
+</pre></div>
+</div>
+<p>Then, add <code class="docutils literal notranslate"><span class="pre">ring:0</span></code> and <code class="docutils literal notranslate"><span class="pre">ring:1</span></code> to <code class="docutils literal notranslate"><span class="pre">nfv</span> <span class="pre">2</span></code>.</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">spp &gt; nfv 2; add ring:0</span>
+<span class="go">Add ring:0.</span>
+<span class="go">spp &gt; nfv 2; add ring:1</span>
+<span class="go">Add ring:1.</span>
+<span class="go">spp &gt; nfv 2; status</span>
+<span class="go">- status: idling</span>
+<span class="go">- lcore_ids:</span>
+<span class="go">  - master: 1</span>
+<span class="go">  - slave: 3</span>
+<span class="go">- ports:</span>
+<span class="go">  - phy:0</span>
+<span class="go">  - phy:1</span>
+<span class="go">  - ring:0</span>
+<span class="go">  - ring:1</span>
+</pre></div>
+</div>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">spp &gt; nfv 1; patch phy:0 ring:0</span>
+<span class="go">Patch ports (phy:0 -&gt; ring:0).</span>
+<span class="go">spp &gt; nfv 1; patch ring:1 phy:0</span>
+<span class="go">Patch ports (ring:1 -&gt; phy:0).</span>
+<span class="go">spp &gt; nfv 2; patch phy:1 ring:1</span>
+<span class="go">Patch ports (phy:1 -&gt; ring:0).</span>
+<span class="go">spp &gt; nfv 2; patch ring:0 phy:1</span>
+<span class="go">Patch ports (ring:0 -&gt; phy:1).</span>
+<span class="go">spp &gt; nfv 1; forward</span>
+<span class="go">Start forwarding.</span>
+<span class="go">spp &gt; nfv 2; forward</span>
+<span class="go">Start forwarding.</span>
+</pre></div>
+</div>
+<div class="figure align-default" id="id5">
+<span id="figure-spp-bi-directional-l2fwd"></span><a class="reference internal image-reference" href="../_images/spp_bidir_l2fwd.svg"><img alt="../_images/spp_bidir_l2fwd.svg" src="../_images/spp_bidir_l2fwd.svg" width="72%" /></a>
+<p class="caption"><span class="caption-number">Fig. 1.6 </span><span class="caption-text">Bi-Directional l2fwd</span><a class="headerlink" href="#id5" title="Permalink to this image">¶</a></p>
+</div>
+</div>
+</div>
+<div class="section" id="single-spp-nfv-with-vhost-pmd">
+<h2>1.4. Single spp_nfv with Vhost PMD<a class="headerlink" href="#single-spp-nfv-with-vhost-pmd" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="vhost-pmd">
+<h3>1.4.1. Vhost PMD<a class="headerlink" href="#vhost-pmd" title="Permalink to this headline">¶</a></h3>
+<p>Vhost PMD is an interface for communicating between on hsot and guest VM.
+As described in
+<a class="reference internal" href="../gsg/howto_use.html#spp-gsg-howto-use"><span class="std std-ref">How to Use</span></a>,
+vhost must be created by <code class="docutils literal notranslate"><span class="pre">add</span></code> subcommand before the VM is launched.</p>
+</div>
+<div class="section" id="setup-vhost-pmd">
+<h3>1.4.2. Setup Vhost PMD<a class="headerlink" href="#setup-vhost-pmd" title="Permalink to this headline">¶</a></h3>
+<p>In this usecase, add <code class="docutils literal notranslate"><span class="pre">vhost:0</span></code> to <code class="docutils literal notranslate"><span class="pre">nfv</span> <span class="pre">1</span></code> for communicating
+with the VM.
+First, check if <code class="docutils literal notranslate"><span class="pre">/tmp/sock0</span></code> is already exist.
+You should remove it already exist to avoid a failure of socket file
+creation.</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">#</span> remove sock0 <span class="k">if</span> already exist
+<span class="gp">$</span> ls /tmp <span class="p">|</span> grep sock
+<span class="go">sock0 ...</span>
+<span class="gp">$</span> sudo rm /tmp/sock0
+</pre></div>
+</div>
+<p>Create <code class="docutils literal notranslate"><span class="pre">/tmp/sock0</span></code> from <code class="docutils literal notranslate"><span class="pre">nfv</span> <span class="pre">1</span></code>.</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">spp &gt; nfv 1; add vhost:0</span>
+<span class="go">Add vhost:0.</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="setup-network-configuration-in-spp-nfv">
+<span id="usecase-spp-nfv-l2fwd-vhost-nw"></span><h3>1.4.3. Setup Network Configuration in spp_nfv<a class="headerlink" href="#setup-network-configuration-in-spp-nfv" title="Permalink to this headline">¶</a></h3>
+<p>Launch a VM by using the vhost interface created in the previous step.
+Lauunching VM is described in
+<a class="reference internal" href="../gsg/howto_use.html#spp-gsg-howto-use"><span class="std std-ref">How to Use</span></a>.</p>
+<p>Patch <code class="docutils literal notranslate"><span class="pre">phy:0</span></code> to <code class="docutils literal notranslate"><span class="pre">vhost:0</span></code> and <code class="docutils literal notranslate"><span class="pre">vhost:1</span></code> to <code class="docutils literal notranslate"><span class="pre">phy:1</span></code> from <code class="docutils literal notranslate"><span class="pre">nfv</span> <span class="pre">1</span></code>
+running on host.</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">spp &gt; nfv 1; patch phy:0 vhost:0</span>
+<span class="go">Patch ports (phy:0 -&gt; vhost:0).</span>
+<span class="go">spp &gt; nfv 1; patch vhost:1 phy:1</span>
+<span class="go">Patch ports (vhost:1 -&gt; phy:1).</span>
+<span class="go">spp &gt; nfv 1; forward</span>
+<span class="go">Start forwarding.</span>
+</pre></div>
+</div>
+<p>Finally, start forwarding inside the VM by using two vhost ports
+to confirm that network on host is configured.</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$</span> sudo <span class="nv">$RE_SDK</span>/examples/build/l2fwd -l <span class="m">0</span>-1 -- -p 0x03
+</pre></div>
+</div>
+<div class="figure align-default" id="id6">
+<span id="figure-spp-nfv-l2fwd-vhost"></span><a class="reference internal image-reference" href="../_images/spp_nfv_l2fwd_vhost.svg"><img alt="../_images/spp_nfv_l2fwd_vhost.svg" src="../_images/spp_nfv_l2fwd_vhost.svg" width="72%" /></a>
+<p class="caption"><span class="caption-number">Fig. 1.7 </span><span class="caption-text">Single spp_nfv with vhost PMD</span><a class="headerlink" href="#id6" title="Permalink to this image">¶</a></p>
+</div>
+</div>
+</div>
+<div class="section" id="single-spp-nfv-with-pcap-pmd">
+<h2>1.5. Single spp_nfv with PCAP PMD<a class="headerlink" href="#single-spp-nfv-with-pcap-pmd" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="pcap-pmd">
+<h3>1.5.1. PCAP PMD<a class="headerlink" href="#pcap-pmd" title="Permalink to this headline">¶</a></h3>
+<p>Pcap PMD is an interface for capturing or restoring traffic.
+For usign pcap PMD, you should set <code class="docutils literal notranslate"><span class="pre">CONFIG_RTE_LIBRTE_PMD_PCAP</span></code>
+and <code class="docutils literal notranslate"><span class="pre">CONFIG_RTE_PORT_PCAP</span></code> to <code class="docutils literal notranslate"><span class="pre">y</span></code> and compile DPDK before SPP.
+Refer to
+<a class="reference internal" href="../gsg/install.html#setup-install-dpdk-spp"><span class="std std-ref">Install DPDK and SPP</span></a>
+for details of setting up.</p>
+<p>Pcap PMD has two different streams for rx and tx.
+Tx device is for capturing packets and rx is for restoring captured
+packets.
+For rx device, you can use any of pcap files other than SPP’s pcap PMD.</p>
+<p>To start using pcap pmd, just using <code class="docutils literal notranslate"><span class="pre">add</span></code> subcommand as ring.
+Here is an example for creating pcap PMD <code class="docutils literal notranslate"><span class="pre">pcap:1</span></code>.</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">spp &gt; nfv 1; add pcap:1</span>
+</pre></div>
+</div>
+<p>After running it, you can find two of pcap files in <code class="docutils literal notranslate"><span class="pre">/tmp</span></code>.</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$</span> ls /tmp <span class="p">|</span> grep pcap$
+<span class="go">spp-rx1.pcap</span>
+<span class="go">spp-tx1.pcap</span>
+</pre></div>
+</div>
+<p>If you already have a dumped file, you can use it by it putting as
+<code class="docutils literal notranslate"><span class="pre">/tmp/spp-rx1.pcap</span></code> before running the <code class="docutils literal notranslate"><span class="pre">add</span></code> subcommand.
+SPP does not overwrite rx pcap file if it already exist,
+and it just overwrites tx pcap file.</p>
+</div>
+<div class="section" id="capture-incoming-packets">
+<h3>1.5.2. Capture Incoming Packets<a class="headerlink" href="#capture-incoming-packets" title="Permalink to this headline">¶</a></h3>
+<p>As the first usecase, add a pcap PMD and capture incoming packets from
+<code class="docutils literal notranslate"><span class="pre">phy:0</span></code>.</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">spp &gt; nfv 1; add pcap 1</span>
+<span class="go">Add pcap:1.</span>
+<span class="go">spp &gt; nfv 1; patch phy:0 pcap:1</span>
+<span class="go">Patch ports (phy:0 -&gt; pcap:1).</span>
+<span class="go">spp &gt; nfv 1; forward</span>
+<span class="go">Start forwarding.</span>
+</pre></div>
+</div>
+<div class="figure align-default" id="id7">
+<span id="figure-spp-pcap-incoming"></span><a class="reference internal image-reference" href="../_images/spp_pcap_incoming.svg"><img alt="../_images/spp_pcap_incoming.svg" src="../_images/spp_pcap_incoming.svg" width="60%" /></a>
+<p class="caption"><span class="caption-number">Fig. 1.8 </span><span class="caption-text">Rapture incoming packets</span><a class="headerlink" href="#id7" title="Permalink to this image">¶</a></p>
+</div>
+<p>In this example, we use pktgen.
+Once you start forwarding packets from pktgen, you can see
+that the size of <code class="docutils literal notranslate"><span class="pre">/tmp/spp-tx1.pcap</span></code> is increased rapidly
+(or gradually, it depends on the rate).</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">Pktgen:/&gt; set 0 size 1024</span>
+<span class="go">Pktgen:/&gt; start 0</span>
+</pre></div>
+</div>
+<p>To stop capturing, simply stop forwarding of <code class="docutils literal notranslate"><span class="pre">spp_nfv</span></code>.</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">spp &gt; nfv 1; stop</span>
+<span class="go">Stop forwarding.</span>
+</pre></div>
+</div>
+<p>You can analyze the dumped pcap file with other tools like as wireshark.</p>
+</div>
+<div class="section" id="restore-dumped-packets">
+<h3>1.5.3. Restore dumped Packets<a class="headerlink" href="#restore-dumped-packets" title="Permalink to this headline">¶</a></h3>
+<p>In this usecase, use dumped file in previsou section.
+Copy <code class="docutils literal notranslate"><span class="pre">spp-tx1.pcap</span></code> to <code class="docutils literal notranslate"><span class="pre">spp-rx2.pcap</span></code> first.</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$</span> sudo cp /tmp/spp-tx1.pcap /tmp/spp-rx2.pcap
+</pre></div>
+</div>
+<p>Then, add pcap PMD <code class="docutils literal notranslate"><span class="pre">pcap:2</span></code> to another <code class="docutils literal notranslate"><span class="pre">spp_nfv</span></code>.</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">spp &gt; nfv 2; add pcap:2</span>
+<span class="go">Add pcap:2.</span>
+</pre></div>
+</div>
+<div class="figure align-default" id="id8">
+<span id="figure-spp-pcap-restoring"></span><a class="reference internal image-reference" href="../_images/spp_pcap_restoring.svg"><img alt="../_images/spp_pcap_restoring.svg" src="../_images/spp_pcap_restoring.svg" width="60%" /></a>
+<p class="caption"><span class="caption-number">Fig. 1.9 </span><span class="caption-text">Restore dumped packets</span><a class="headerlink" href="#id8" title="Permalink to this image">¶</a></p>
+</div>
+<p>You can find that <code class="docutils literal notranslate"><span class="pre">spp-tx2.pcap</span></code> is creaeted and <code class="docutils literal notranslate"><span class="pre">spp-rx2.pcap</span></code>
+still remained.</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$</span> ls -al /tmp/spp*.pcap
+<span class="go">-rw-r--r-- 1 root root         24  ...  /tmp/spp-rx1.pcap</span>
+<span class="go">-rw-r--r-- 1 root root 2936703640  ...  /tmp/spp-rx2.pcap</span>
+<span class="go">-rw-r--r-- 1 root root 2936703640  ...  /tmp/spp-tx1.pcap</span>
+<span class="go">-rw-r--r-- 1 root root          0  ...  /tmp/spp-tx2.pcap</span>
+</pre></div>
+</div>
+<p>To confirm packets are restored, patch <code class="docutils literal notranslate"><span class="pre">pcap:2</span></code> to <code class="docutils literal notranslate"><span class="pre">phy:1</span></code>
+and watch received packets on pktgen.</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">spp &gt; nfv 2; patch pcap:2 phy:1</span>
+<span class="go">Patch ports (pcap:2 -&gt; phy:1).</span>
+<span class="go">spp &gt; nfv 2; forward</span>
+<span class="go">Start forwarding.</span>
+</pre></div>
+</div>
+<p>After started forwarding, you can see that packet count is increased.</p>
+</div>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="spp_vf.html" class="btn btn-neutral float-right" title="2. spp_vf" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="index.html" class="btn btn-neutral float-left" title="Use Cases" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

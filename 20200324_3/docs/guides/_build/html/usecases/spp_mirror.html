@@ -1,0 +1,541 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>3. spp_mirror &mdash; Soft Patch Panel 19.08 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../_static/jquery.js"></script>
+        <script type="text/javascript" src="../_static/underscore.js"></script>
+        <script type="text/javascript" src="../_static/doctools.js"></script>
+        <script type="text/javascript" src="../_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="4. spp_pcap" href="spp_pcap.html" />
+    <link rel="prev" title="2. spp_vf" href="spp_vf.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> Soft Patch Panel
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                19.08
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../overview.html">Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../design/index.html">Design</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../gsg/index.html">Getting Started Guide</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">Use Cases</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="spp_nfv.html">1. spp_nfv</a></li>
+<li class="toctree-l2"><a class="reference internal" href="spp_vf.html">2. spp_vf</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">3. spp_mirror</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#duplicate-packets">3.1. Duplicate Packets</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#network-configuration">3.1.1. Network Configuration</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#setup-spp">3.1.2. Setup SPP</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#launch-spp-mirror">3.1.3. Launch spp_mirror</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id1">3.1.4. Duplicate Packets</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#stop-mirroring">3.1.5. Stop Mirroring</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#monitoring-packets">3.2. Monitoring Packets</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#setup-spp-and-vms">3.2.1. Setup SPP and VMs</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#netowrk-configuration">3.2.2. Netowrk Configuration</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id2">3.2.3. Launch spp_mirror</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#receive-packet-on-vm3">3.2.4. Receive Packet on VM3</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id3">3.2.5. Stop Mirroring</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="spp_pcap.html">4. spp_pcap</a></li>
+<li class="toctree-l2"><a class="reference internal" href="multi_nodes.html">5. Multiple Nodes</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../commands/index.html">SPP Commands</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../tools/index.html">Tools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../api_ref/index.html">API Reference</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">Soft Patch Panel</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="index.html">Use Cases</a> &raquo;</li>
+        
+      <li>3. spp_mirror</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../_sources/usecases/spp_mirror.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="spp-mirror">
+<span id="spp-usecases-mirror"></span><h1>3. spp_mirror<a class="headerlink" href="#spp-mirror" title="Permalink to this headline">¶</a></h1>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p><code class="docutils literal notranslate"><span class="pre">--file-prefix</span></code> option is not required in this section because there is
+not DPDK application other than SPP.</p>
+</div>
+<div class="section" id="duplicate-packets">
+<h2>3.1. Duplicate Packets<a class="headerlink" href="#duplicate-packets" title="Permalink to this headline">¶</a></h2>
+<p>Simply duplicate incoming packets and send to two destinations.
+Remote <code class="docutils literal notranslate"><span class="pre">host1</span></code> sends ARP packets by using ping command and
+<code class="docutils literal notranslate"><span class="pre">spp_mirror</span></code> running on local <code class="docutils literal notranslate"><span class="pre">host2</span></code> duplicates packets to
+destination ports.</p>
+<div class="section" id="network-configuration">
+<h3>3.1.1. Network Configuration<a class="headerlink" href="#network-configuration" title="Permalink to this headline">¶</a></h3>
+<p>Detailed configuration is described in
+<a class="reference internal" href="#figure-spp-mirror-use-cases-nw-config"><span class="std std-numref">Fig. 3.2</span></a>.
+In this diagram, incoming packets from <code class="docutils literal notranslate"><span class="pre">phy:0</span></code> are mirrored.
+In <code class="docutils literal notranslate"><span class="pre">spp_mirror</span></code> process, worker thread <code class="docutils literal notranslate"><span class="pre">mir</span></code> copies incoming packets and
+sends to two destinations <code class="docutils literal notranslate"><span class="pre">phy:1</span></code> and <code class="docutils literal notranslate"><span class="pre">phy:2</span></code>.</p>
+<div class="figure align-default" id="id4">
+<span id="figure-spp-mirror-use-cases-nw-config"></span><a class="reference internal image-reference" href="../_images/mirror_dup_nwconf.svg"><img alt="../_images/mirror_dup_nwconf.svg" src="../_images/mirror_dup_nwconf.svg" width="75%" /></a>
+<p class="caption"><span class="caption-number">Fig. 3.2 </span><span class="caption-text">Duplicate packets with spp_mirror</span><a class="headerlink" href="#id4" title="Permalink to this image">¶</a></p>
+</div>
+</div>
+<div class="section" id="setup-spp">
+<h3>3.1.2. Setup SPP<a class="headerlink" href="#setup-spp" title="Permalink to this headline">¶</a></h3>
+<p>Change directory to spp and confirm that it is already compiled.</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$</span> <span class="nb">cd</span> /path/to/spp
+</pre></div>
+</div>
+<p>Launch <code class="docutils literal notranslate"><span class="pre">spp-ctl</span></code> before launching SPP primary and secondary processes.
+You also need to launch <code class="docutils literal notranslate"><span class="pre">spp.py</span></code>  if you use <code class="docutils literal notranslate"><span class="pre">spp_mirror</span></code> from CLI.
+<code class="docutils literal notranslate"><span class="pre">-b</span></code> option is for binding IP address to communicate other SPP processes,
+but no need to give it explicitly if <code class="docutils literal notranslate"><span class="pre">127.0.0.1</span></code> or <code class="docutils literal notranslate"><span class="pre">localhost</span></code> .</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">#</span> terminal <span class="m">1</span>
+<span class="gp">#</span> Launch spp-ctl
+<span class="gp">$</span> python3 ./src/spp-ctl/spp-ctl -b <span class="m">192</span>.168.1.100
+</pre></div>
+</div>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">#</span> terminal <span class="m">2</span>
+<span class="gp">#</span> Launch SPP CLI
+<span class="gp">$</span> python3 ./src/spp.py -b <span class="m">192</span>.168.1.100
+</pre></div>
+</div>
+<p>Start <code class="docutils literal notranslate"><span class="pre">spp_primary</span></code> with core list option <code class="docutils literal notranslate"><span class="pre">-l</span> <span class="pre">1</span></code> and
+three ports <code class="docutils literal notranslate"><span class="pre">-p</span> <span class="pre">0x07</span></code>.</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">#</span> terminal <span class="m">3</span>
+<span class="gp">$</span> sudo ./src/primary/x86_64-native-linuxapp-gcc/spp_primary <span class="se">\</span>
+    -l <span class="m">1</span> -n <span class="m">4</span> <span class="se">\</span>
+    --socket-mem <span class="m">512</span>,512 <span class="se">\</span>
+    --huge-dir<span class="o">=</span>/run/hugepages/kvm <span class="se">\</span>
+    --proc-type<span class="o">=</span>primary <span class="se">\</span>
+    -- <span class="se">\</span>
+    -p 0x07 -n <span class="m">10</span> -s <span class="m">192</span>.168.1.100:5555
+</pre></div>
+</div>
+</div>
+<div class="section" id="launch-spp-mirror">
+<h3>3.1.3. Launch spp_mirror<a class="headerlink" href="#launch-spp-mirror" title="Permalink to this headline">¶</a></h3>
+<p>Run secondary process <code class="docutils literal notranslate"><span class="pre">spp_mirror</span></code>.</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">#</span> terminal <span class="m">4</span>
+<span class="gp">$</span> sudo ./src/mirror/x86_64-native-linuxapp-gcc/app/spp_mirror <span class="se">\</span>
+ -l <span class="m">0</span>,2 -n <span class="m">4</span> <span class="se">\</span>
+ --proc-type secondary <span class="se">\</span>
+ -- <span class="se">\</span>
+ --client-id <span class="m">1</span> <span class="se">\</span>
+ -s <span class="m">192</span>.168.1.100:6666 <span class="se">\</span>
+</pre></div>
+</div>
+<p>Start mirror component with core ID 2.</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">#</span> terminal <span class="m">2</span>
+<span class="go">spp &gt; mirror 1; component start mir 2 mirror</span>
+</pre></div>
+</div>
+<p>Add <code class="docutils literal notranslate"><span class="pre">phy:0</span></code> as rx port, and <code class="docutils literal notranslate"><span class="pre">phy:1</span></code> and <code class="docutils literal notranslate"><span class="pre">phy:2</span></code> as tx ports.</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span># terminal 2
+# add ports to mir
+spp &gt; mirror 1; port add phy:0 rx mir
+spp &gt; mirror 1; port add phy:1 tx mir
+spp &gt; mirror 1; port add phy:2 tx mir
+</pre></div>
+</div>
+</div>
+<div class="section" id="id1">
+<h3>3.1.4. Duplicate Packets<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h3>
+<p>To check packets are mirrored, you run tcpdump for <code class="docutils literal notranslate"><span class="pre">ens1</span></code> and <code class="docutils literal notranslate"><span class="pre">ens2</span></code>.
+As you run ping for <code class="docutils literal notranslate"><span class="pre">ens0</span></code> next, you will see the same ARP requests trying
+to resolve <code class="docutils literal notranslate"><span class="pre">192.168.140.21</span></code> on terminal 1 and 2.</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">#</span> terminal <span class="m">1</span> at host1
+<span class="gp">#</span> capture on ens1
+<span class="gp">$</span> sudo tcpdump -i ens1
+<span class="go">tcpdump: verbose output suppressed, use -v or -vv for full protocol decode</span>
+<span class="go">listening on ens1, link-type EN10MB (Ethernet), capture size 262144 bytes</span>
+<span class="go">21:18:44.183261 ARP, Request who-has 192.168.140.21 tell R740n15, length 28</span>
+<span class="go">21:18:45.202182 ARP, Request who-has 192.168.140.21 tell R740n15, length 28</span>
+<span class="go">....</span>
+</pre></div>
+</div>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">#</span> terminal <span class="m">2</span> at host1
+<span class="gp">#</span> capture on ens2
+<span class="gp">$</span> sudo tcpdump -i ens2
+<span class="go">tcpdump: verbose output suppressed, use -v or -vv for full protocol decode</span>
+<span class="go">listening on ens2, link-type EN10MB (Ethernet), capture size 262144 bytes</span>
+<span class="go">21:18:44.183261 ARP, Request who-has 192.168.140.21 tell R740n15, length 28</span>
+<span class="go">21:18:45.202182 ARP, Request who-has 192.168.140.21 tell R740n15, length 28</span>
+<span class="go">...</span>
+</pre></div>
+</div>
+<p>Start to send ARP request with ping.</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">#</span> terminal <span class="m">3</span> at host1
+<span class="gp">#</span> send packet from NIC0
+<span class="gp">$</span> ping <span class="m">192</span>.168.140.21 -I ens0
+</pre></div>
+</div>
+</div>
+<div class="section" id="stop-mirroring">
+<h3>3.1.5. Stop Mirroring<a class="headerlink" href="#stop-mirroring" title="Permalink to this headline">¶</a></h3>
+<p>Delete ports for components.</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span># Delete port for mir
+spp &gt; mirror 1; port del phy:0 rx mir
+spp &gt; mirror 1; port del phy:1 tx mir
+spp &gt; mirror 1; port del phy:2 tx mir
+</pre></div>
+</div>
+<p>Next, stop components.</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">#</span> Stop mirror
+<span class="go">spp &gt; mirror 1; component stop mir 2 mirror</span>
+
+<span class="go">spp &gt; mirror 1; status</span>
+<span class="go">Basic Information:</span>
+<span class="go">  - client-id: 1</span>
+<span class="go">  - ports: [phy:0, phy:1]</span>
+<span class="go">  - lcore_ids:</span>
+<span class="go">    - master: 0</span>
+<span class="go">    - slave: 2</span>
+<span class="go">Components:</span>
+<span class="go">  - core:2 &#39;&#39; (type: unuse)</span>
+</pre></div>
+</div>
+<p>Finally, terminate <code class="docutils literal notranslate"><span class="pre">spp_mirror</span></code> to finish this usecase.</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">spp &gt; mirror 1; exit</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="monitoring-packets">
+<span id="spp-usecases-mirror-monitor"></span><h2>3.2. Monitoring Packets<a class="headerlink" href="#monitoring-packets" title="Permalink to this headline">¶</a></h2>
+<p>Duplicate classified packets for monitoring before going to a VM.
+In this usecase, we are only interested in packets going to <code class="docutils literal notranslate"><span class="pre">VM1</span></code>.
+Although you might be able to run packet monitor app on host,
+run monitor on <code class="docutils literal notranslate"><span class="pre">VM3</span></code> considering more NFV like senario.
+You use <code class="docutils literal notranslate"><span class="pre">spp_mirror</span></code> for copying, and <code class="docutils literal notranslate"><span class="pre">spp_vf</span></code> classifying packets.</p>
+<div class="figure align-default" id="id5">
+<span id="figure-usecase-monitor-overview"></span><a class="reference internal image-reference" href="../_images/mirror_monitor_overview.svg"><img alt="../_images/mirror_monitor_overview.svg" src="../_images/mirror_monitor_overview.svg" width="60%" /></a>
+<p class="caption"><span class="caption-number">Fig. 3.3 </span><span class="caption-text">Monitoring with spp_mirror</span><a class="headerlink" href="#id5" title="Permalink to this image">¶</a></p>
+</div>
+<div class="section" id="setup-spp-and-vms">
+<h3>3.2.1. Setup SPP and VMs<a class="headerlink" href="#setup-spp-and-vms" title="Permalink to this headline">¶</a></h3>
+<p>Launch <code class="docutils literal notranslate"><span class="pre">spp-ctl</span></code> before launching SPP primary and secondary processes.
+You also need to launch <code class="docutils literal notranslate"><span class="pre">spp.py</span></code>  if you use <code class="docutils literal notranslate"><span class="pre">spp_vf</span></code> from CLI.
+<code class="docutils literal notranslate"><span class="pre">-b</span></code> option is for binding IP address to communicate other SPP processes,
+but no need to give it explicitly if <code class="docutils literal notranslate"><span class="pre">127.0.0.1</span></code> or <code class="docutils literal notranslate"><span class="pre">localhost</span></code> although
+doing explicitly in this example to be more understandable.</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">#</span> terminal <span class="m">1</span>
+<span class="gp">$</span> python3 ./src/spp-ctl/spp-ctl -b <span class="m">192</span>.168.1.100
+</pre></div>
+</div>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">#</span> terminal <span class="m">2</span>
+<span class="gp">$</span> python3 ./src/spp.py -b <span class="m">192</span>.168.1.100
+</pre></div>
+</div>
+<p>Start spp_primary with core list option <code class="docutils literal notranslate"><span class="pre">-l</span> <span class="pre">1</span></code>.</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">#</span> terminal <span class="m">3</span>
+<span class="gp">#</span> Type the following in different terminal
+<span class="gp">$</span> sudo ./src/primary/x86_64-native-linuxapp-gcc/spp_primary <span class="se">\</span>
+    -l <span class="m">1</span> -n <span class="m">4</span> <span class="se">\</span>
+    --socket-mem <span class="m">512</span>,512 <span class="se">\</span>
+    --huge-dir<span class="o">=</span>/run/hugepages/kvm <span class="se">\</span>
+    --proc-type<span class="o">=</span>primary <span class="se">\</span>
+    -- <span class="se">\</span>
+    -p 0x03 <span class="se">\</span>
+    -n <span class="m">10</span> -s <span class="m">192</span>.168.1.100:5555
+</pre></div>
+</div>
+</div>
+<div class="section" id="netowrk-configuration">
+<h3>3.2.2. Netowrk Configuration<a class="headerlink" href="#netowrk-configuration" title="Permalink to this headline">¶</a></h3>
+<p>Detailed configuration of <a class="reference internal" href="#figure-usecase-monitor-overview"><span class="std std-numref">Fig. 3.3</span></a>
+is described in <a class="reference internal" href="#figure-usecase-monitor-nwconfig"><span class="std std-numref">Fig. 3.4</span></a>.
+In this senario, worker thread <code class="docutils literal notranslate"><span class="pre">mir</span></code> copies incoming packets
+from though <code class="docutils literal notranslate"><span class="pre">ring:0</span></code>.
+Then, sends to orignal destination <code class="docutils literal notranslate"><span class="pre">VM1</span></code> and anohter one <code class="docutils literal notranslate"><span class="pre">VM3</span></code>.</p>
+<div class="figure align-default" id="id6">
+<span id="figure-usecase-monitor-nwconfig"></span><a class="reference internal image-reference" href="../_images/mirror_monitor_nwconf.svg"><img alt="../_images/mirror_monitor_nwconf.svg" src="../_images/mirror_monitor_nwconf.svg" width="80%" /></a>
+<p class="caption"><span class="caption-number">Fig. 3.4 </span><span class="caption-text">Network configuration of monitoring packets</span><a class="headerlink" href="#id6" title="Permalink to this image">¶</a></p>
+</div>
+<p>Launch <code class="docutils literal notranslate"><span class="pre">VM1</span></code>, <code class="docutils literal notranslate"><span class="pre">VM2</span></code> and <code class="docutils literal notranslate"><span class="pre">spp_vf</span></code> with core list <code class="docutils literal notranslate"><span class="pre">-l</span> <span class="pre">0,2-8</span></code>.</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">#</span> terminal <span class="m">4</span>
+<span class="gp">$</span> sudo ./src/vf/x86_64-native-linuxapp-gcc/spp_vf <span class="se">\</span>
+    -l <span class="m">0</span>,2-8 <span class="se">\</span>
+    -n <span class="m">4</span> --proc-type secondary <span class="se">\</span>
+    -- <span class="se">\</span>
+    --client-id <span class="m">1</span> <span class="se">\</span>
+    -s <span class="m">192</span>.168.1.100:6666 <span class="se">\</span>
+    --vhost-client
+</pre></div>
+</div>
+<p>Start components in <code class="docutils literal notranslate"><span class="pre">spp_vf</span></code>.</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span># terminal 2
+spp &gt; vf 1; component start cls 2 classifier
+spp &gt; vf 1; component start mgr 3 merge
+spp &gt; vf 1; component start fwd1 4 forward
+spp &gt; vf 1; component start fwd2 5 forward
+spp &gt; vf 1; component start fwd3 6 forward
+spp &gt; vf 1; component start fwd4 7 forward
+spp &gt; vf 1; component start fwd5 8 forward
+</pre></div>
+</div>
+<p>Add ports for components.</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span># terminal 2
+spp &gt; vf 1; port add phy:0 rx cls
+spp &gt; vf 1; port add ring:0 tx cls
+spp &gt; vf 1; port add ring:1 tx cls
+
+spp &gt; vf 1; port add ring:2 rx mgr
+spp &gt; vf 1; port add ring:3 rx mgr
+spp &gt; vf 1; port add phy:0 tx mgr
+
+spp &gt; vf 1; port add ring:5 rx fwd1
+spp &gt; vf 1; port add vhost:0 tx fwd1
+
+spp &gt; vf 1; port add ring:1 rx fwd2
+spp &gt; vf 1; port add vhost:2 tx fwd2
+
+spp &gt; vf 1; port add vhost:1 rx fwd3
+spp &gt; vf 1; port add ring:2 tx fwd3
+
+spp &gt; vf 1; port add vhost:3 rx fwd4
+spp &gt; vf 1; port add ring:3 tx fwd4
+
+spp &gt; vf 1; port add ring:4 rx fwd5
+spp &gt; vf 1; port add vhost:4 tx fwd5
+</pre></div>
+</div>
+<p>Add classifier table entries.</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span># terminal 2
+spp &gt; vf 1; classifier_table add mac 52:54:00:12:34:56 ring:0
+spp &gt; vf 1; classifier_table add mac 52:54:00:12:34:58 ring:1
+</pre></div>
+</div>
+</div>
+<div class="section" id="id2">
+<h3>3.2.3. Launch spp_mirror<a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h3>
+<p>Run <code class="docutils literal notranslate"><span class="pre">spp_mirror</span></code>.</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">#</span> terminal <span class="m">6</span>
+<span class="gp">$</span> sudo ./src/mirror/x86_64-native-linuxapp-gcc/app/spp_mirror <span class="se">\</span>
+  -l <span class="m">0</span>,9 <span class="se">\</span>
+  -n <span class="m">4</span> --proc-type secondary <span class="se">\</span>
+  -- <span class="se">\</span>
+  --client-id <span class="m">2</span> <span class="se">\</span>
+  -s <span class="m">192</span>.168.1.100:6666 <span class="se">\</span>
+  --vhost-client
+</pre></div>
+</div>
+<p>Start mirror component with lcore ID 9.</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">#</span> terminal <span class="m">2</span>
+<span class="go">spp &gt; mirror 2; component start mir 9 mirror</span>
+</pre></div>
+</div>
+<p>Add <code class="docutils literal notranslate"><span class="pre">ring:0</span></code> as rx port, <code class="docutils literal notranslate"><span class="pre">ring:4</span></code> and <code class="docutils literal notranslate"><span class="pre">ring:5</span></code> as tx ports.</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span># terminal 2
+spp &gt; mirror 2; port add ring:0 rx mir
+spp &gt; mirror 2; port add ring:4 tx mir
+spp &gt; mirror 2; port add ring:5 tx mir
+</pre></div>
+</div>
+</div>
+<div class="section" id="receive-packet-on-vm3">
+<h3>3.2.4. Receive Packet on VM3<a class="headerlink" href="#receive-packet-on-vm3" title="Permalink to this headline">¶</a></h3>
+<p>You can capture incoming packets on <code class="docutils literal notranslate"><span class="pre">VM3</span></code> and compare it with on <code class="docutils literal notranslate"><span class="pre">VM1</span></code>.
+To capture incoming packets , use tcpdump for the interface,
+<code class="docutils literal notranslate"><span class="pre">ens4</span></code> in this case.</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">#</span> terminal <span class="m">5</span>
+<span class="gp">#</span> capture on ens4 of VM1
+<span class="gp">$</span> tcpdump -i ens4
+</pre></div>
+</div>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">#</span> terminal <span class="m">7</span>
+<span class="gp">#</span> capture on ens4 of VM3
+<span class="gp">$</span> tcpdump -i ens4
+</pre></div>
+</div>
+<p>You send packets from the remote <code class="docutils literal notranslate"><span class="pre">host1</span></code> and confirm packets are received.
+IP address is the same as <a class="reference internal" href="spp_vf.html#spp-usecases-vf"><span class="std std-ref">Usecase of spp_vf</span></a>.</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">#</span> Send packets from host1
+<span class="gp">$</span> ping <span class="m">192</span>.168.140.21
+</pre></div>
+</div>
+</div>
+<div class="section" id="id3">
+<h3>3.2.5. Stop Mirroring<a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h3>
+<p>Graceful shutdown of secondary processes is same as previous usecases.</p>
+</div>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="spp_pcap.html" class="btn btn-neutral float-right" title="4. spp_pcap" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="spp_vf.html" class="btn btn-neutral float-left" title="2. spp_vf" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

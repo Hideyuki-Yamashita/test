@@ -1,0 +1,532 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>3. Common Commands &mdash; Soft Patch Panel 19.08 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../_static/jquery.js"></script>
+        <script type="text/javascript" src="../_static/underscore.js"></script>
+        <script type="text/javascript" src="../_static/doctools.js"></script>
+        <script type="text/javascript" src="../_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="4. Experimental Commands" href="experimental.html" />
+    <link rel="prev" title="2.4. spp_pcap" href="secondary/spp_pcap.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> Soft Patch Panel
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                19.08
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../overview.html">Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../design/index.html">Design</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../gsg/index.html">Getting Started Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../usecases/index.html">Use Cases</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">SPP Commands</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="primary.html">1. Primary Commands</a></li>
+<li class="toctree-l2"><a class="reference internal" href="secondary/index.html">2. Secondary Commands</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">3. Common Commands</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#status">3.1. status</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#config">3.2. config</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#show-config">3.2.1. Show Config</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#set-config">3.2.2. Set Config</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#playback">3.3. playback</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#record">3.4. record</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#history">3.5. history</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#redo">3.6. redo</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#server">3.7. server</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#env">3.8. env</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#pwd">3.9. pwd</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#cd">3.10. cd</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#ls">3.11. ls</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#mkdir">3.12. mkdir</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#cat">3.13. cat</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#less">3.14. less</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#bye">3.15. bye</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#exit">3.16. exit</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#help">3.17. help</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="experimental.html">4. Experimental Commands</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../tools/index.html">Tools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../api_ref/index.html">API Reference</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">Soft Patch Panel</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="index.html">SPP Commands</a> &raquo;</li>
+        
+      <li>3. Common Commands</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../_sources/commands/common.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="common-commands">
+<span id="commands-common"></span><h1>3. Common Commands<a class="headerlink" href="#common-commands" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="status">
+<span id="commands-common-status"></span><h2>3.1. status<a class="headerlink" href="#status" title="Permalink to this headline">¶</a></h2>
+<p>Show the status of SPP processes.</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">spp &gt; status</span>
+<span class="go">- spp-ctl:</span>
+<span class="go">  - address: 172.30.202.151:7777</span>
+<span class="go">- primary:</span>
+<span class="go">  - status: running</span>
+<span class="go">- secondary:</span>
+<span class="go">  - processes:</span>
+<span class="go">    1: nfv:1</span>
+<span class="go">    2: vf:3</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="config">
+<span id="commands-common-config"></span><h2>3.2. config<a class="headerlink" href="#config" title="Permalink to this headline">¶</a></h2>
+<p>Show or update config params.</p>
+<p>Config params used for changing behaviour of SPP CLI. For instance, if you
+change command prompt, you can set any of prompt with <code class="docutils literal notranslate"><span class="pre">config</span></code> command
+other than default <code class="docutils literal notranslate"><span class="pre">spp</span> <span class="pre">&gt;</span></code>.</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span># set prompt to &quot;$ spp &quot;
+spp &gt; config prompt &quot;$ spp &quot;
+Set prompt: &quot;$ spp &quot;
+$ spp
+</pre></div>
+</div>
+<div class="section" id="show-config">
+<h3>3.2.1. Show Config<a class="headerlink" href="#show-config" title="Permalink to this headline">¶</a></h3>
+<p>To show the list of config all of params, simply run <code class="docutils literal notranslate"><span class="pre">config</span></code>.</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span># show list of config
+spp &gt; config
+- max_secondary: &quot;16&quot;       # The maximum number of secondary processes
+- sec_nfv_nof_lcores: &quot;1&quot;   # Default num of lcores for workers of spp_nfv
+- topo_size: &quot;60%&quot;  # Percentage or ratio of topo
+- sec_base_lcore: &quot;1&quot;       # Shared lcore among secondaries
+....
+</pre></div>
+</div>
+<p>Or show params only started from <code class="docutils literal notranslate"><span class="pre">sec_</span></code>, add the keyword to the commnad.</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span># show config started from `sec_`
+spp &gt; config sec_
+- sec_vhost_cli: &quot;&quot; # Vhost client mode, activated if set any of values
+- sec_mem: &quot;-m 512&quot; # Mem size
+- sec_nfv_nof_lcores: &quot;1&quot;   # Default num of lcores for workers of spp_nfv
+- sec_base_lcore: &quot;1&quot;       # Shared lcore among secondaryes
+....
+</pre></div>
+</div>
+</div>
+<div class="section" id="set-config">
+<h3>3.2.2. Set Config<a class="headerlink" href="#set-config" title="Permalink to this headline">¶</a></h3>
+<p>One of typical uses of <code class="docutils literal notranslate"><span class="pre">config</span></code> command is to change the default params of
+other commands. <code class="docutils literal notranslate"><span class="pre">pri;</span> <span class="pre">launch</span></code> takes several options for launching secondary
+process and it is completed by using default params started from <code class="docutils literal notranslate"><span class="pre">sec_</span></code>.</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>spp &gt; pri; launch nfv 2  # press TAB for completion
+spp &gt; pri; launch nfv 2 -l 1,2 -m 512 -- -n 2 -s 192.168.11.59:6666
+</pre></div>
+</div>
+<p>The default number of memory size is <code class="docutils literal notranslate"><span class="pre">-m</span> <span class="pre">512</span></code> and the definition
+<code class="docutils literal notranslate"><span class="pre">sec_mem</span></code> can be changed with <code class="docutils literal notranslate"><span class="pre">config</span></code> command.
+Here is an example of changing <code class="docutils literal notranslate"><span class="pre">-m</span> <span class="pre">512</span></code> to <code class="docutils literal notranslate"><span class="pre">--socket-mem</span> <span class="pre">512,0</span></code>.</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>spp &gt; config sec_mem &quot;--socket-mem 512,0&quot;
+Set sec_mem: &quot;--socket-mem 512,0&quot;
+</pre></div>
+</div>
+<p>After updating the param, expanded options is also updated.</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>spp &gt; pri; launch nfv 2  # press TAB for completion
+spp &gt; pri; launch nfv 2 -l 1,2 --socket-mem 512,0 -- -n 2 -s ...
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="playback">
+<span id="commands-common-playback"></span><h2>3.3. playback<a class="headerlink" href="#playback" title="Permalink to this headline">¶</a></h2>
+<p>Restore network configuration from a recipe file which defines a set
+of SPP commands.
+You can prepare a recipe file by using <code class="docutils literal notranslate"><span class="pre">record</span></code> command or editing
+file by hand.</p>
+<p>It is recommended to use extension <code class="docutils literal notranslate"><span class="pre">.rcp</span></code> to be self-sxplanatory as
+a recipe, although you can use any of extensions such as <code class="docutils literal notranslate"><span class="pre">.txt</span></code> or
+<code class="docutils literal notranslate"><span class="pre">.log</span></code>.</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">spp &gt; playback /path/to/my.rcp</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="record">
+<span id="commands-common-record"></span><h2>3.4. record<a class="headerlink" href="#record" title="Permalink to this headline">¶</a></h2>
+<p>Start recording user’s input and create a recipe file for loading
+from <code class="docutils literal notranslate"><span class="pre">playback</span></code> commnad.
+Recording recipe is stopped by executing <code class="docutils literal notranslate"><span class="pre">exit</span></code> or <code class="docutils literal notranslate"><span class="pre">playback</span></code>
+command.</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">spp &gt; record /path/to/my.rcp</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>It is not supported to stop recording without <code class="docutils literal notranslate"><span class="pre">exit</span></code> or <code class="docutils literal notranslate"><span class="pre">playback</span></code>
+command.
+It is planned to support <code class="docutils literal notranslate"><span class="pre">stop</span></code> command for stopping record in
+next relase.</p>
+</div>
+</div>
+<div class="section" id="history">
+<span id="commands-common-history"></span><h2>3.5. history<a class="headerlink" href="#history" title="Permalink to this headline">¶</a></h2>
+<p>Show command history. Command history is recorded in a file named
+<code class="docutils literal notranslate"><span class="pre">$HOME/.spp_history</span></code>. It does not add some command which are no
+meaning for history, <code class="docutils literal notranslate"><span class="pre">bye</span></code>, <code class="docutils literal notranslate"><span class="pre">exit</span></code>, <code class="docutils literal notranslate"><span class="pre">history</span></code> and <code class="docutils literal notranslate"><span class="pre">redo</span></code>.</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">spp &gt; history</span>
+<span class="go">  1  ls</span>
+<span class="go">  2  cat file.txt</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="redo">
+<span id="commands-common-redo"></span><h2>3.6. redo<a class="headerlink" href="#redo" title="Permalink to this headline">¶</a></h2>
+<p>Execute command of index of history.</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">spp &gt; redo 5  # exec 5th command in the history</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="server">
+<span id="commands-common-server"></span><h2>3.7. server<a class="headerlink" href="#server" title="Permalink to this headline">¶</a></h2>
+<p>Switch SPP REST API server.</p>
+<p>SPP CLI is able to manage several SPP nodes via REST API servers.
+It is also abaivable to register new one, or unregister.</p>
+<p>Show all of registered servers by running <code class="docutils literal notranslate"><span class="pre">server</span> <span class="pre">list</span></code> or simply
+<code class="docutils literal notranslate"><span class="pre">server</span></code>. Notice that <code class="docutils literal notranslate"><span class="pre">*</span></code> means that the first node is under the
+control of SPP CLI.</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">spp &gt; server</span>
+<span class="go">  1: 192.168.1.101:7777 *</span>
+<span class="go">  2: 192.168.1.102:7777</span>
+
+<span class="go">spp &gt; server list  # same as above</span>
+<span class="go">  1: 192.168.1.101:7777 *</span>
+<span class="go">  2: 192.168.1.102:7777</span>
+</pre></div>
+</div>
+<p>Switch to other server by running <code class="docutils literal notranslate"><span class="pre">server</span></code> with index or address displayed
+in the list. Port number can be omitted if it is default <code class="docutils literal notranslate"><span class="pre">7777</span></code>.</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">#</span> Switch to the second node
+<span class="go">spp &gt; server 2</span>
+<span class="go">Switch spp-ctl to &quot;2: 192.168.1.102:7777&quot;.</span>
+
+<span class="gp">#</span> Switch to firt one again with address
+<span class="go">spp &gt; server 192.168.1.101  # no need for port num</span>
+<span class="go">Switch spp-ctl to &quot;1: 192.168.1.101:7777&quot;.</span>
+</pre></div>
+</div>
+<p>Register new one by using <code class="docutils literal notranslate"><span class="pre">add</span></code> command, or unregister by <code class="docutils literal notranslate"><span class="pre">del</span></code> command
+with address. For unregistering, node is also specified with index.</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">#</span> Register
+<span class="go">spp &gt; server add 192.168.122.177</span>
+<span class="go">Registered spp-ctl &quot;192.168.122.177:7777&quot;.</span>
+
+<span class="gp">#</span> Unregister second one
+<span class="go">spp &gt; server del 2  # or 192.168.1.102</span>
+<span class="go">Unregistered spp-ctl &quot;192.168.1.102:7777&quot;.</span>
+</pre></div>
+</div>
+<p>You cannot unregister node under the control, or switch to other one before.</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">spp &gt; server del 1</span>
+<span class="go">Cannot del server &quot;1&quot; in use!</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="env">
+<span id="commands-common-env"></span><h2>3.8. env<a class="headerlink" href="#env" title="Permalink to this headline">¶</a></h2>
+<p>Show environmental variables. It is mainly used to find variables related to
+SPP.</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">#</span> show all env varibles.
+<span class="go">spp &gt; env</span>
+
+<span class="gp">#</span> show env varibles starts with <span class="sb">`</span>SPP<span class="sb">`</span>.
+<span class="go">spp &gt; env SPP</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="pwd">
+<span id="commands-common-pwd"></span><h2>3.9. pwd<a class="headerlink" href="#pwd" title="Permalink to this headline">¶</a></h2>
+<p>Show current path.</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">spp&gt; pwd</span>
+<span class="go">/path/to/curdir</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="cd">
+<span id="commands-common-cd"></span><h2>3.10. cd<a class="headerlink" href="#cd" title="Permalink to this headline">¶</a></h2>
+<p>Change current directory.</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">spp&gt; cd /path/to/dir</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="ls">
+<span id="commands-common-ls"></span><h2>3.11. ls<a class="headerlink" href="#ls" title="Permalink to this headline">¶</a></h2>
+<p>Show a list of directory contents.</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">spp&gt; ls /path/to/dir</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="mkdir">
+<span id="commands-common-mkdir"></span><h2>3.12. mkdir<a class="headerlink" href="#mkdir" title="Permalink to this headline">¶</a></h2>
+<p>Make a directory.</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">spp&gt; mkdir /path/to/dir</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="cat">
+<span id="commands-common-cat"></span><h2>3.13. cat<a class="headerlink" href="#cat" title="Permalink to this headline">¶</a></h2>
+<p>Show contents of a file.</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">spp&gt; cat /path/to/file</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="less">
+<span id="commands-common-less"></span><h2>3.14. less<a class="headerlink" href="#less" title="Permalink to this headline">¶</a></h2>
+<p>Show contents of a file.</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">spp&gt; less /path/to/file</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="bye">
+<span id="commands-common-bye"></span><h2>3.15. bye<a class="headerlink" href="#bye" title="Permalink to this headline">¶</a></h2>
+<p><code class="docutils literal notranslate"><span class="pre">bye</span></code> command is for terminating SPP processes.
+It supports two types of termination as sub commands.</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>sec</p></li>
+<li><p>all</p></li>
+</ul>
+</div></blockquote>
+<p>First one is for terminating only secondary processes at once.</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">spp &gt; bye sec</span>
+<span class="go">Closing secondary ...</span>
+<span class="go">Exit nfv 1</span>
+<span class="go">Exit vf 3.</span>
+</pre></div>
+</div>
+<p>Second one is for all SPP processes other than controller.</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">spp &gt; bye all</span>
+<span class="go">Closing secondary ...</span>
+<span class="go">Exit nfv 1</span>
+<span class="go">Exit vf 3.</span>
+<span class="go">Closing primary ...</span>
+<span class="go">Exit primary</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="exit">
+<span id="commands-common-exit"></span><h2>3.16. exit<a class="headerlink" href="#exit" title="Permalink to this headline">¶</a></h2>
+<p>Same as <code class="docutils literal notranslate"><span class="pre">bye</span></code> command but just for terminating SPP controller and
+not for other processes.</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">spp &gt; exit</span>
+<span class="go">Thank you for using Soft Patch Panel</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="help">
+<span id="commands-common-help"></span><h2>3.17. help<a class="headerlink" href="#help" title="Permalink to this headline">¶</a></h2>
+<p>Show help message for SPP commands.</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">spp &gt; help</span>
+
+<span class="go">Documented commands (type help &lt;topic&gt;):</span>
+<span class="go">========================================</span>
+<span class="go">bye  exit     inspect   ls      nfv       pwd     server  topo_resize</span>
+<span class="go">cat  help     less      mirror  playback  record  status  topo_subgraph</span>
+<span class="go">cd   history  load_cmd  mkdir   pri       redo    topo    vf</span>
+
+<span class="go">spp &gt; help status</span>
+<span class="go">Display status info of SPP processes</span>
+
+<span class="go">    spp &gt; status</span>
+
+<span class="go">spp &gt; help nfv</span>
+<span class="go">Send a command to spp_nfv specified with ID.</span>
+
+<span class="go">    Spp_nfv is specified with secondary ID and takes sub commands.</span>
+
+<span class="go">    spp &gt; nfv 1; status</span>
+<span class="go">    spp &gt; nfv 1; add ring:0</span>
+<span class="go">    spp &gt; nfv 1; patch phy:0 ring:0</span>
+
+<span class="go">    You can refer all of sub commands by pressing TAB after</span>
+<span class="go">    &#39;nfv 1;&#39;.</span>
+
+<span class="go">    spp &gt; nfv 1;  # press TAB</span>
+<span class="go">    add     del     exit    forward patch   status  stop</span>
+</pre></div>
+</div>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="experimental.html" class="btn btn-neutral float-right" title="4. Experimental Commands" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="secondary/spp_pcap.html" class="btn btn-neutral float-left" title="2.4. spp_pcap" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

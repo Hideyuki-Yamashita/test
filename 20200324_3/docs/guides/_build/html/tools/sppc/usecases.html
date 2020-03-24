@@ -1,0 +1,773 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>1.6. Use Cases &mdash; Soft Patch Panel 19.08 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="../../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../../_static/jquery.js"></script>
+        <script type="text/javascript" src="../../_static/underscore.js"></script>
+        <script type="text/javascript" src="../../_static/doctools.js"></script>
+        <script type="text/javascript" src="../../_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="../../_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="1.7. How to Define Your App Launcher" href="howto_launcher.html" />
+    <link rel="prev" title="1.5. App Container Launchers" href="app_launcher.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../index.html" class="icon icon-home"> Soft Patch Panel
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                19.08
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../overview.html">Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../design/index.html">Design</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../gsg/index.html">Getting Started Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../usecases/index.html">Use Cases</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../commands/index.html">SPP Commands</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../index.html">Tools</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="index.html">1. SPP Container</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="overview.html">1.1. Overview</a></li>
+<li class="toctree-l3"><a class="reference internal" href="getting_started.html">1.2. Getting Started</a></li>
+<li class="toctree-l3"><a class="reference internal" href="install.html">1.3. Install</a></li>
+<li class="toctree-l3"><a class="reference internal" href="build_img.html">1.4. Build Images</a></li>
+<li class="toctree-l3"><a class="reference internal" href="app_launcher.html">1.5. App Container Launchers</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">1.6. Use Cases</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#perfromance-test-of-vhost-in-single-node">1.6.1. Perfromance Test of Vhost in Single Node</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#performance-test-of-ring">1.6.2. Performance Test of Ring</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#pktgen-and-l2fwd">1.6.3. Pktgen and L2fwd</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#pktgen-and-l2fwd-using-less-lcores">1.6.4. Pktgen and L2fwd using less Lcores</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#load-balancer-and-pktgen">1.6.5. Load-Balancer and Pktgen</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="howto_launcher.html">1.7. How to Define Your App Launcher</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../helpers/index.html">2. Helper tools</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../api_ref/index.html">API Reference</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">Soft Patch Panel</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="../index.html">Tools</a> &raquo;</li>
+        
+          <li><a href="index.html">1. SPP Container</a> &raquo;</li>
+        
+      <li>1.6. Use Cases</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../../_sources/tools/sppc/usecases.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="use-cases">
+<span id="spp-container-usecases"></span><h1>1.6. Use Cases<a class="headerlink" href="#use-cases" title="Permalink to this headline">¶</a></h1>
+<p>SPP Container provides an easy way to configure network path
+for DPDK application running on containers.
+It is useful for testing your NFV applications with <code class="docutils literal notranslate"><span class="pre">testpmd</span></code> or
+<code class="docutils literal notranslate"><span class="pre">pktgen</span></code> quickly, or providing a reproducible environment for evaluation
+with a configuration files.</p>
+<p>In addition, using container requires less CPU and memory resources
+comparing with using virtual machines.
+It means that users can try to test variety kinds of use cases without
+using expensive servers.</p>
+<p>This chapter describes examples of simple use cases of SPP container.</p>
+<div class="section" id="perfromance-test-of-vhost-in-single-node">
+<span id="sppc-usecases-test-vhost-single"></span><h2>1.6.1. Perfromance Test of Vhost in Single Node<a class="headerlink" href="#perfromance-test-of-vhost-in-single-node" title="Permalink to this headline">¶</a></h2>
+<p>First use case is a simple performance test of vhost PMDs as shown in
+<a class="reference internal" href="#figure-sppc-usecase-vhost"><span class="std std-numref">Fig. 1.12</span></a>.
+Two of containers of <code class="docutils literal notranslate"><span class="pre">spp_nfv</span></code> are connected with a ring PMD and
+all of app container processes run on a single node.</p>
+<div class="figure align-default" id="id1">
+<span id="figure-sppc-usecase-vhost"></span><a class="reference internal image-reference" href="../../_images/sppc_usecase_vhost.svg"><img alt="../../_images/sppc_usecase_vhost.svg" src="../../_images/sppc_usecase_vhost.svg" width="58%" /></a>
+<p class="caption"><span class="caption-number">Fig. 1.12 </span><span class="caption-text">Test of vhost PMD in a single node</span><a class="headerlink" href="#id1" title="Permalink to this image">¶</a></p>
+</div>
+<p>You use three terminals in this example, first one is for <code class="docutils literal notranslate"><span class="pre">spp-ctl</span></code>,
+second one is for SPP CLI and third one is for managing app containers.
+First of all, launch <code class="docutils literal notranslate"><span class="pre">spp-ctl</span></code> in terminal 1.</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">#</span> Terminal <span class="m">1</span>
+<span class="gp">$</span> <span class="nb">cd</span> /path/to/spp
+<span class="gp">$</span> python3 src/spp-ctl/spp-ctl
+</pre></div>
+</div>
+<p>Then, <code class="docutils literal notranslate"><span class="pre">spp.py</span></code> in terminal 2.</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">#</span> Terminal <span class="m">2</span>
+<span class="gp">$</span> <span class="nb">cd</span> /path/to/spp
+<span class="gp">$</span> python3 src/spp.py
+</pre></div>
+</div>
+<p>Move to terminal 3, launch app containers of <code class="docutils literal notranslate"><span class="pre">spp_primary</span></code>
+and <code class="docutils literal notranslate"><span class="pre">spp_nfv</span></code> step by step in background mode.
+You notice that vhost device is attached with <code class="docutils literal notranslate"><span class="pre">-d</span> <span class="pre">tap:1</span></code> which is not
+required if you have physical ports on host.
+It is because that SPP primary requires at least one port even if
+it is no need.
+You can also assign a physical port instead of this vhost device.</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">#</span> Terminal <span class="m">3</span>
+<span class="gp">$</span> <span class="nb">cd</span> /path/to/spp/tools/sppc
+<span class="gp">$</span> python3 app/spp-primary.py -l <span class="m">0</span> -p 0x01 -d tap:1
+<span class="gp">$</span> python3 app/spp-nfv.py -i <span class="m">1</span> -l <span class="m">1</span>-2
+<span class="gp">$</span> python3 app/spp-nfv.py -i <span class="m">2</span> -l <span class="m">3</span>-4
+</pre></div>
+</div>
+<p>Then, add two vhost PMDs for pktgen app container from SPP CLI.</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">#</span> Terminal <span class="m">2</span>
+<span class="go">spp &gt; nfv 1; add vhost:1</span>
+<span class="go">spp &gt; nfv 2; add vhost:2</span>
+</pre></div>
+</div>
+<p>It is ready for launching pktgen app container. In this usecase,
+use five lcores for pktgen. One lcore is used for master, and remaining
+lcores are used for rx and tx evenly.
+Device ID option <code class="docutils literal notranslate"><span class="pre">-d</span> <span class="pre">vhost:1,vhost:2</span></code> is for refferring vhost 1 and 2.</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">#</span> Terminal <span class="m">3</span>
+<span class="gp">$</span> python3 app/pktgen.py -fg -l <span class="m">5</span>-9 -d vhost:1,vhost:2
+</pre></div>
+</div>
+<p>Finally, configure network path from SPP controller,</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">#</span> Terminal <span class="m">2</span>
+<span class="go">spp &gt; nfv 1; patch ring:0 vhost:1</span>
+<span class="go">spp &gt; nfv 2; patch vhost:2 ring:0</span>
+<span class="go">spp &gt; nfv 1; forward</span>
+<span class="go">spp &gt; nfv 2; forward</span>
+</pre></div>
+</div>
+<p>and start forwarding from pktgen.</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">#</span> Terminal <span class="m">3</span>
+<span class="gp">$</span> Pktgen:/&gt; start <span class="m">1</span>
+</pre></div>
+</div>
+<p>You find that packet count of rx of port 0 and tx of port 1
+is increased rapidlly.</p>
+</div>
+<div class="section" id="performance-test-of-ring">
+<span id="sppc-usecases-test-ring"></span><h2>1.6.2. Performance Test of Ring<a class="headerlink" href="#performance-test-of-ring" title="Permalink to this headline">¶</a></h2>
+<p>Ring PMD is a very fast path to communicate between DPDK processes.
+It is a kind of zero-copy data passing via shared memory and better
+performance than vhost PMD.
+Currently, only <code class="docutils literal notranslate"><span class="pre">spp_nfv</span></code> provides ring PMD in SPP container.
+It is also possible other DPDK applications to have ring PMD interface
+for SPP technically,
+but not implemented yet.</p>
+<p>This use case is for testing performance of ring PMDs.
+As described in <a class="reference internal" href="#figure-sppc-usecase-ring"><span class="std std-numref">Fig. 1.13</span></a>,
+each of app containers on which <code class="docutils literal notranslate"><span class="pre">spp_nfv</span></code> is running are connected
+with ring PMDs in serial.</p>
+<div class="figure align-default" id="id2">
+<span id="figure-sppc-usecase-ring"></span><a class="reference internal image-reference" href="../../_images/sppc_usecase_ring.svg"><img alt="../../_images/sppc_usecase_ring.svg" src="../../_images/sppc_usecase_ring.svg" width="100%" /></a>
+<p class="caption"><span class="caption-number">Fig. 1.13 </span><span class="caption-text">Test of ring PMD</span><a class="headerlink" href="#id2" title="Permalink to this image">¶</a></p>
+</div>
+<p>You use three terminals on host 1, first one is for <code class="docutils literal notranslate"><span class="pre">spp-ctl</span></code>,
+second one is for <code class="docutils literal notranslate"><span class="pre">spp.py</span></code>, and third one is for <code class="docutils literal notranslate"><span class="pre">spp_nfv</span></code> app containers.
+Pktgen on host 2 is started forwarding after setup on host 1 is finished.</p>
+<p>First, launch <code class="docutils literal notranslate"><span class="pre">spp-ctl</span></code> in terminal 1.</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">#</span> Terminal <span class="m">1</span>
+<span class="gp">$</span> <span class="nb">cd</span> /path/to/spp
+<span class="gp">$</span> python3 src/spp-ctl/spp-ctl
+</pre></div>
+</div>
+<p>Then, launch <code class="docutils literal notranslate"><span class="pre">spp.py</span></code> in terminal 2.</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">#</span> Terminal <span class="m">2</span>
+<span class="gp">$</span> <span class="nb">cd</span> /path/to/spp
+<span class="gp">$</span> python3 src/spp.py
+</pre></div>
+</div>
+<p>In terminal 3, launch <code class="docutils literal notranslate"><span class="pre">spp_primary</span></code> and <code class="docutils literal notranslate"><span class="pre">spp_nfv</span></code> containers
+in background mode.
+In this case, you attach physical ports to <code class="docutils literal notranslate"><span class="pre">spp_primary</span></code> with
+portmask option.</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">#</span> Terminal <span class="m">3</span>
+<span class="gp">$</span> <span class="nb">cd</span> /path/to/spp/tools/sppc
+<span class="gp">$</span> python3 app/spp-primary.py -l <span class="m">0</span> -p 0x03
+<span class="gp">$</span> python3 app/spp-nfv.py -i <span class="m">1</span> -l <span class="m">1</span>-2
+<span class="gp">$</span> python3 app/spp-nfv.py -i <span class="m">2</span> -l <span class="m">3</span>-4
+<span class="gp">$</span> python3 app/spp-nfv.py -i <span class="m">3</span> -l <span class="m">5</span>-6
+<span class="gp">$</span> python3 app/spp-nfv.py -i <span class="m">4</span> -l <span class="m">7</span>-8
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>It might happen an error to input if the number of SPP process is
+increased. It also might get bothered to launch several SPP
+processes if the number is large.</p>
+<p>You can use <code class="docutils literal notranslate"><span class="pre">tools/spp-launcher.py</span></code> to launch SPP processes
+at once. Here is an example for launching <code class="docutils literal notranslate"><span class="pre">spp_primary</span></code> and
+four <code class="docutils literal notranslate"><span class="pre">spp_nfv</span></code> processes. <code class="docutils literal notranslate"><span class="pre">-n</span></code> is for specifying the nubmer of
+<code class="docutils literal notranslate"><span class="pre">spp_nfv</span></code>.</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$</span> python3 tools/spp-launcher.py -n <span class="m">4</span>
+</pre></div>
+</div>
+<p>You will find that lcore assignment is the same as below.
+Lcore is assigned from 0 for primary, and next two lcores for the
+first <code class="docutils literal notranslate"><span class="pre">spp_nfv</span></code>.</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$</span> python3 app/spp-primary.py -l <span class="m">0</span> -p 0x03
+<span class="gp">$</span> python3 app/spp-nfv.py -i <span class="m">1</span> -l <span class="m">1</span>,2
+<span class="gp">$</span> python3 app/spp-nfv.py -i <span class="m">2</span> -l <span class="m">3</span>,4
+<span class="gp">$</span> python3 app/spp-nfv.py -i <span class="m">3</span> -l <span class="m">5</span>,6
+<span class="gp">$</span> python3 app/spp-nfv.py -i <span class="m">4</span> -l <span class="m">7</span>,8
+</pre></div>
+</div>
+<p>You can also assign lcores with <code class="docutils literal notranslate"><span class="pre">--shared</span></code> to master lcore
+be shared among <code class="docutils literal notranslate"><span class="pre">spp_nfv</span></code> processes.
+It is useful to reduce the usage of lcores as explained in
+<a class="reference internal" href="#sppc-usecases-pktgen-l2fwd-less-lcores"><span class="std std-ref">Pktgen and L2fwd using less Lcores</span></a>.</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$</span> python3 tools/spp-launcher.py -n <span class="m">4</span> --shared
+</pre></div>
+</div>
+<p>The result of assignment of this command is the same as below.
+Master lcore 1 is shared among secondary processes.</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$</span> python3 app/spp-primary.py -l <span class="m">0</span> -p 0x03
+<span class="gp">$</span> python3 app/spp-nfv.py -i <span class="m">1</span> -l <span class="m">1</span>,2
+<span class="gp">$</span> python3 app/spp-nfv.py -i <span class="m">2</span> -l <span class="m">1</span>,3
+<span class="gp">$</span> python3 app/spp-nfv.py -i <span class="m">3</span> -l <span class="m">1</span>,4
+<span class="gp">$</span> python3 app/spp-nfv.py -i <span class="m">4</span> -l <span class="m">1</span>,5
+</pre></div>
+</div>
+</div>
+<p>Add ring PMDs considering which of rings is shared between which of
+containers.
+You can use recipe scripts from <code class="docutils literal notranslate"><span class="pre">playback</span></code> command instead of
+typing commands step by step.
+For this usecase example, it is included in
+<code class="docutils literal notranslate"><span class="pre">recipes/sppc/samples/test_ring.rcp</span></code>.</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">#</span> Terminal <span class="m">2</span>
+<span class="go">spp &gt; nfv 1; add ring:0</span>
+<span class="go">spp &gt; nfv 2; add ring:1</span>
+<span class="go">spp &gt; nfv 2; add ring:2</span>
+<span class="go">spp &gt; nfv 3; add ring:2</span>
+<span class="go">spp &gt; nfv 3; add ring:3</span>
+<span class="go">spp &gt; nfv 4; add ring:3</span>
+</pre></div>
+</div>
+<p>Then, patch all of ports to be configured containers are connected
+in serial.</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">#</span> Terminal <span class="m">2</span>
+<span class="go">spp &gt; nfv 1; patch phy:0 ring:0</span>
+<span class="go">spp &gt; nfv 2; patch ring:0 ring:1</span>
+<span class="go">spp &gt; nfv 3; patch ring:1 ring:2</span>
+<span class="go">spp &gt; nfv 3; patch ring:2 ring:3</span>
+<span class="go">spp &gt; nfv 4; patch ring:3 phy:1</span>
+<span class="go">spp &gt; nfv 1; forward</span>
+<span class="go">spp &gt; nfv 2; forward</span>
+<span class="go">spp &gt; nfv 3; forward</span>
+<span class="go">spp &gt; nfv 4; forward</span>
+</pre></div>
+</div>
+<p>After setup on host 1 is finished, start forwarding from pktgen on host 2.
+You can see the throughput of rx and tx ports on pktgen’s terminal.
+You also find that the throughput is almost not decreased and keeping wire
+rate speed even after it through several chained containers.</p>
+</div>
+<div class="section" id="pktgen-and-l2fwd">
+<span id="sppc-usecases-pktgen-l2fwd"></span><h2>1.6.3. Pktgen and L2fwd<a class="headerlink" href="#pktgen-and-l2fwd" title="Permalink to this headline">¶</a></h2>
+<p>To consider more practical service function chaining like use case,
+connect not only SPP processes, but also DPDK application to <code class="docutils literal notranslate"><span class="pre">pktgen</span></code>.
+In this example, use <code class="docutils literal notranslate"><span class="pre">l2fwd</span></code> app container as a DPDK application
+for simplicity.
+You can also use other DPDK applications as similar to this example
+as described in next sections.</p>
+<div class="figure align-default" id="id3">
+<span id="figure-sppc-usecase-l2fwdpktgen"></span><a class="reference internal image-reference" href="../../_images/sppc_usecase_l2fwdpktgen.svg"><img alt="../../_images/sppc_usecase_l2fwdpktgen.svg" src="../../_images/sppc_usecase_l2fwdpktgen.svg" width="95%" /></a>
+<p class="caption"><span class="caption-number">Fig. 1.14 </span><span class="caption-text">Chainning pktgen and l2fwd</span><a class="headerlink" href="#id3" title="Permalink to this image">¶</a></p>
+</div>
+<p>This configuration requires more CPUs than previous example.
+It is up to 14 lcores, but you can reduce lcores to do the trick.
+It is a trade-off between usage and performance.
+In this case, we focus on the usage of maximum lcores to get high
+performance.</p>
+<p>Here is a list of lcore assignment for each of app containers.</p>
+<ul class="simple">
+<li><p>One lcore for <code class="docutils literal notranslate"><span class="pre">spp_primary</span></code> container.</p></li>
+<li><p>Eight lcores for four <code class="docutils literal notranslate"><span class="pre">spp_nfv</span></code> containers.</p></li>
+<li><p>Three lcores for <code class="docutils literal notranslate"><span class="pre">pktgen</span></code> container.</p></li>
+<li><p>Two lcores for <code class="docutils literal notranslate"><span class="pre">l2fwd</span></code> container.</p></li>
+</ul>
+<p>First of all, launch <code class="docutils literal notranslate"><span class="pre">spp-ctl</span></code> and <code class="docutils literal notranslate"><span class="pre">spp.py</span></code>.</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">#</span> Terminal <span class="m">1</span>
+<span class="gp">$</span> <span class="nb">cd</span> /path/to/spp
+<span class="gp">$</span> python3 src/spp-ctl/spp-ctl
+
+<span class="gp">#</span> Terminal <span class="m">2</span>
+<span class="gp">$</span> <span class="nb">cd</span> /path/to/spp
+<span class="gp">$</span> python3 src/spp.py
+</pre></div>
+</div>
+<p>Then, launch <code class="docutils literal notranslate"><span class="pre">spp_primary</span></code> and <code class="docutils literal notranslate"><span class="pre">spp_nfv</span></code> containers in background.
+It does not use physical NICs as similar to
+<a class="reference internal" href="#sppc-usecases-test-vhost-single"><span class="std std-ref">Perfromance Test of Vhost in Single Node</span></a>.
+Use four of <code class="docutils literal notranslate"><span class="pre">spp_nfv</span></code> containers for using four vhost PMDs.</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">#</span> Terminal <span class="m">3</span>
+<span class="gp">$</span> <span class="nb">cd</span> /path/to/spp/tools/sppc
+<span class="gp">$</span> python3 app/spp-primary.py -l <span class="m">0</span> -p 0x01 -d tap:1
+<span class="gp">$</span> python3 app/spp-nfv.py -i <span class="m">1</span> -l <span class="m">1</span>-2
+<span class="gp">$</span> python3 app/spp-nfv.py -i <span class="m">2</span> -l <span class="m">3</span>-4
+<span class="gp">$</span> python3 app/spp-nfv.py -i <span class="m">3</span> -l <span class="m">5</span>-6
+<span class="gp">$</span> python3 app/spp-nfv.py -i <span class="m">4</span> -l <span class="m">7</span>-8
+</pre></div>
+</div>
+<p>Assign ring and vhost PMDs. Each of vhost IDs to be the same as
+its secondary ID.</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">#</span> Terminal <span class="m">2</span>
+<span class="go">spp &gt; nfv 1; add vhost:1</span>
+<span class="go">spp &gt; nfv 2; add vhost:2</span>
+<span class="go">spp &gt; nfv 3; add vhost:3</span>
+<span class="go">spp &gt; nfv 4; add vhost:4</span>
+<span class="go">spp &gt; nfv 1; add ring:0</span>
+<span class="go">spp &gt; nfv 4; add ring:0</span>
+<span class="go">spp &gt; nfv 2; add ring:1</span>
+<span class="go">spp &gt; nfv 3; add ring:1</span>
+</pre></div>
+</div>
+<p>After vhost PMDs are created, you can launch containers
+of <code class="docutils literal notranslate"><span class="pre">pktgen</span></code> and <code class="docutils literal notranslate"><span class="pre">l2fwd</span></code>.</p>
+<p>In this case, <code class="docutils literal notranslate"><span class="pre">pktgen</span></code> container owns vhost 1 and 2,</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">#</span> Terminal <span class="m">3</span>
+<span class="gp">$</span> <span class="nb">cd</span> /path/to/spp/tools/sppc
+<span class="gp">$</span> python3 app/pktgen.py -l <span class="m">9</span>-11 -d vhost:1,vhost:2
+</pre></div>
+</div>
+<p>and <code class="docutils literal notranslate"><span class="pre">l2fwd</span></code> container owns vhost 3 and 4.</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">#</span> Terminal <span class="m">4</span>
+<span class="gp">$</span> <span class="nb">cd</span> /path/to/spp/tools/sppc
+<span class="gp">$</span> python app/l2fwd.py -l <span class="m">12</span>-13 -d vhost:3,vhost:4
+</pre></div>
+</div>
+<p>Then, configure network path by pactching each of ports
+and start forwarding from SPP controller.</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">#</span> Terminal <span class="m">2</span>
+<span class="go">spp &gt; nfv 1; patch ring:0 vhost:1</span>
+<span class="go">spp &gt; nfv 2; patch vhost:2 ring:1</span>
+<span class="go">spp &gt; nfv 3; patch ring:1 vhost:3</span>
+<span class="go">spp &gt; nfv 4; patch vhost:4 ring:0</span>
+<span class="go">spp &gt; nfv 1; forward</span>
+<span class="go">spp &gt; nfv 2; forward</span>
+<span class="go">spp &gt; nfv 3; forward</span>
+<span class="go">spp &gt; nfv 4; forward</span>
+</pre></div>
+</div>
+<p>Finally, start forwarding from <code class="docutils literal notranslate"><span class="pre">pktgen</span></code> container.
+You can see that packet count is increased on both of
+<code class="docutils literal notranslate"><span class="pre">pktgen</span></code> and <code class="docutils literal notranslate"><span class="pre">l2fwd</span></code>.</p>
+<p>For this usecase example, recipe scripts are included in
+<code class="docutils literal notranslate"><span class="pre">recipes/sppc/samples/pg_l2fwd.rcp</span></code>.</p>
+</div>
+<div class="section" id="pktgen-and-l2fwd-using-less-lcores">
+<span id="sppc-usecases-pktgen-l2fwd-less-lcores"></span><h2>1.6.4. Pktgen and L2fwd using less Lcores<a class="headerlink" href="#pktgen-and-l2fwd-using-less-lcores" title="Permalink to this headline">¶</a></h2>
+<p>This section describes the effort of reducing the usage of lcore for
+<a class="reference internal" href="#sppc-usecases-pktgen-l2fwd"><span class="std std-ref">Pktgen and L2fwd</span></a>.</p>
+<p>Here is a list of lcore assignment for each of app containers.
+It is totally 7 lcores while the maximum number is 14.</p>
+<ul class="simple">
+<li><p>One lcore for <code class="docutils literal notranslate"><span class="pre">spp_primary</span></code> container.</p></li>
+<li><p>Three lcores for four <code class="docutils literal notranslate"><span class="pre">spp_nfv</span></code> containers.</p></li>
+<li><p>Two lcores for pktgen container.</p></li>
+<li><p>One lcores for l2fwd container.</p></li>
+</ul>
+<div class="figure align-default" id="id4">
+<span id="figure-sppc-usecase-l2fwdpktgen-less"></span><a class="reference internal image-reference" href="../../_images/sppc_usecase_l2fwdpktgen_less.svg"><img alt="../../_images/sppc_usecase_l2fwdpktgen_less.svg" src="../../_images/sppc_usecase_l2fwdpktgen_less.svg" width="95%" /></a>
+<p class="caption"><span class="caption-number">Fig. 1.15 </span><span class="caption-text">Pktgen and l2fwd using less lcores</span><a class="headerlink" href="#id4" title="Permalink to this image">¶</a></p>
+</div>
+<p>First of all, launch <code class="docutils literal notranslate"><span class="pre">spp-ctl</span></code> and <code class="docutils literal notranslate"><span class="pre">spp.py</span></code>.</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">#</span> Terminal <span class="m">1</span>
+<span class="gp">$</span> <span class="nb">cd</span> /path/to/spp
+<span class="gp">$</span> python3 src/spp-ctl/spp-ctl
+
+<span class="gp">#</span> Terminal <span class="m">2</span>
+<span class="gp">$</span> <span class="nb">cd</span> /path/to/spp
+<span class="gp">$</span> python3 src/spp.py
+</pre></div>
+</div>
+<p>Launch <code class="docutils literal notranslate"><span class="pre">spp_primary</span></code> and <code class="docutils literal notranslate"><span class="pre">spp_nfv</span></code> containers in background.
+It does not use physical NICs as similar to
+<a class="reference internal" href="#sppc-usecases-test-vhost-single"><span class="std std-ref">Perfromance Test of Vhost in Single Node</span></a>.
+Use two of <code class="docutils literal notranslate"><span class="pre">spp_nfv</span></code> containers for using four vhost PMDs.</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">#</span> Terminal <span class="m">3</span>
+<span class="gp">$</span> <span class="nb">cd</span> /path/to/spp/tools/sppc
+<span class="gp">$</span> python3 app/spp-primary.py -l <span class="m">0</span> -p 0x01 -d tap:1
+<span class="gp">$</span> python3 app/spp-nfv.py -i <span class="m">1</span> -l <span class="m">1</span>,2
+<span class="gp">$</span> python3 app/spp-nfv.py -i <span class="m">2</span> -l <span class="m">1</span>,3
+</pre></div>
+</div>
+<p>The number of process and CPUs are fewer than previous example.
+You can reduce the number of <code class="docutils literal notranslate"><span class="pre">spp_nfv</span></code> processes by assigning
+several vhost PMDs to one process, although performance is decreased
+possibly.
+For the number of lcores, you can reduce it by sharing
+the master lcore 1 which has no heavy tasks.</p>
+<p>Assign each of two vhost PMDs to the processes.</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">#</span> Terminal <span class="m">2</span>
+<span class="go">spp &gt; nfv 1; add vhost:1</span>
+<span class="go">spp &gt; nfv 1; add vhost:2</span>
+<span class="go">spp &gt; nfv 2; add vhost:3</span>
+<span class="go">spp &gt; nfv 2; add vhost:4</span>
+<span class="go">spp &gt; nfv 1; add ring:0</span>
+<span class="go">spp &gt; nfv 1; add ring:1</span>
+<span class="go">spp &gt; nfv 2; add ring:0</span>
+<span class="go">spp &gt; nfv 2; add ring:1</span>
+</pre></div>
+</div>
+<p>After vhost PMDs are created, you can launch containers
+of <code class="docutils literal notranslate"><span class="pre">pktgen</span></code> and <code class="docutils literal notranslate"><span class="pre">l2fwd</span></code>.
+These processes also share the master lcore 1 with others.</p>
+<p>In this case, <code class="docutils literal notranslate"><span class="pre">pktgen</span></code> container uses vhost 1 and 2,</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">#</span> Terminal <span class="m">3</span>
+<span class="gp">$</span> python app/pktgen.py -l <span class="m">1</span>,4,5 -d vhost:1,vhost:2
+</pre></div>
+</div>
+<p>and <code class="docutils literal notranslate"><span class="pre">l2fwd</span></code> container uses vhost 3 and 4.</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">#</span> Terminal <span class="m">4</span>
+<span class="gp">$</span> <span class="nb">cd</span> /path/to/spp/tools/sppc
+<span class="gp">$</span> python app/l2fwd.py -l <span class="m">1</span>,6 -d vhost:3,vhost:4
+</pre></div>
+</div>
+<p>Then, configure network path by pactching each of ports
+and start forwarding from SPP controller.</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">#</span> Terminal <span class="m">2</span>
+<span class="go">spp &gt; nfv 1; patch ring:0 vhost:1</span>
+<span class="go">spp &gt; nfv 1; patch vhost:2 ring:1</span>
+<span class="go">spp &gt; nfv 3; patch ring:1 vhost:3</span>
+<span class="go">spp &gt; nfv 4; patch vhost:4 ring:0</span>
+<span class="go">spp &gt; nfv 1; forward</span>
+<span class="go">spp &gt; nfv 2; forward</span>
+<span class="go">spp &gt; nfv 3; forward</span>
+<span class="go">spp &gt; nfv 4; forward</span>
+</pre></div>
+</div>
+<p>Finally, start forwarding from <code class="docutils literal notranslate"><span class="pre">pktgen</span></code> container.
+You can see that packet count is increased on both of
+<code class="docutils literal notranslate"><span class="pre">pktgen</span></code> and <code class="docutils literal notranslate"><span class="pre">l2fwd</span></code>.</p>
+<p>For this usecase example, recipe scripts are included in
+<code class="docutils literal notranslate"><span class="pre">recipes/sppc/samples/pg_l2fwd_less.rcp</span></code>.</p>
+</div>
+<div class="section" id="load-balancer-and-pktgen">
+<span id="sppc-usecases-lb-pktgen"></span><h2>1.6.5. Load-Balancer and Pktgen<a class="headerlink" href="#load-balancer-and-pktgen" title="Permalink to this headline">¶</a></h2>
+<p>Previous examples are all the single-path configurations and do not
+have branches.
+To explain how to setup a multi-path configuration, we use
+<a class="reference external" href="https://dpdk.org/doc/guides/sample_app_ug/load_balancer.html">Load-Balancer</a>
+application in this example.
+It is an application distributes packet I/O task with several worker
+lcores to share IP addressing.</p>
+<div class="figure align-default" id="id5">
+<span id="figure-sppc-usecase-lb-pktgen"></span><a class="reference internal image-reference" href="../../_images/sppc_usecase_lb_pktgen.svg"><img alt="../../_images/sppc_usecase_lb_pktgen.svg" src="../../_images/sppc_usecase_lb_pktgen.svg" width="100%" /></a>
+<p class="caption"><span class="caption-number">Fig. 1.16 </span><span class="caption-text">Multi-path configuration with load_balancer and pktgen</span><a class="headerlink" href="#id5" title="Permalink to this image">¶</a></p>
+</div>
+<p>Packets from tx of <code class="docutils literal notranslate"><span class="pre">pktgen</span></code>, through ring:0, are received by rx
+of <code class="docutils literal notranslate"><span class="pre">load_balancer</span></code>.
+Then, <code class="docutils literal notranslate"><span class="pre">load_balancer</span></code> classify the packets to decide the
+destionations.
+You can count received packets on rx ports of <code class="docutils literal notranslate"><span class="pre">pktgen</span></code>.</p>
+<p>There are six <code class="docutils literal notranslate"><span class="pre">spp_nfv</span></code> and two DPDK applications in this example.
+To reduce the number of lcores, configure lcore assignment to share
+the master lcore.
+Do not assign several vhosts to a process to avoid the performance
+degradation.
+It is 15 lcores required to the configuration.</p>
+<p>Here is a list of lcore assignment for each of app containers.</p>
+<ul class="simple">
+<li><p>One lcore for <code class="docutils literal notranslate"><span class="pre">spp_primary</span></code> container.</p></li>
+<li><p>Seven lcores for four <code class="docutils literal notranslate"><span class="pre">spp_nfv</span></code> containers.</p></li>
+<li><p>Three lcores for <code class="docutils literal notranslate"><span class="pre">pktgen</span></code> container.</p></li>
+<li><p>Four lcores for <code class="docutils literal notranslate"><span class="pre">load_balancer</span></code> container.</p></li>
+</ul>
+<p>First of all, launch <code class="docutils literal notranslate"><span class="pre">spp-ctl</span></code> and <code class="docutils literal notranslate"><span class="pre">spp.py</span></code>.</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">#</span> Terminal <span class="m">1</span>
+<span class="gp">$</span> <span class="nb">cd</span> /path/to/spp
+<span class="gp">$</span> python3 src/spp-ctl/spp-ctl
+
+<span class="gp">#</span> Terminal <span class="m">2</span>
+<span class="gp">$</span> <span class="nb">cd</span> /path/to/spp
+<span class="gp">$</span> python3 src/spp.py
+</pre></div>
+</div>
+<p>Launch <code class="docutils literal notranslate"><span class="pre">spp_primary</span></code> and <code class="docutils literal notranslate"><span class="pre">spp_nfv</span></code> containers in background.
+It does not use physical NICs as similar to
+<a class="reference internal" href="#sppc-usecases-test-vhost-single"><span class="std std-ref">Perfromance Test of Vhost in Single Node</span></a>.
+Use six <code class="docutils literal notranslate"><span class="pre">spp_nfv</span></code> containers for using six vhost PMDs.</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">#</span> Terminal <span class="m">3</span>
+<span class="gp">$</span> <span class="nb">cd</span> /path/to/spp/tools/sppc
+<span class="gp">$</span> python3 app/spp-primary.py -l <span class="m">0</span> -p 0x01 -d tap:1
+<span class="gp">$</span> python3 app/spp-nfv.py -i <span class="m">1</span> -l <span class="m">1</span>,2
+<span class="gp">$</span> python3 app/spp-nfv.py -i <span class="m">2</span> -l <span class="m">1</span>,3
+<span class="gp">$</span> python3 app/spp-nfv.py -i <span class="m">3</span> -l <span class="m">1</span>,4
+<span class="gp">$</span> python3 app/spp-nfv.py -i <span class="m">4</span> -l <span class="m">1</span>,5
+<span class="gp">$</span> python3 app/spp-nfv.py -i <span class="m">5</span> -l <span class="m">1</span>,6
+<span class="gp">$</span> python3 app/spp-nfv.py -i <span class="m">6</span> -l <span class="m">1</span>,7
+</pre></div>
+</div>
+<p>Assign ring and vhost PMDs. Each of vhost IDs to be the same as
+its secondary ID.</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">#</span> Terminal <span class="m">2</span>
+<span class="go">spp &gt; nfv 1; add vhost:1</span>
+<span class="go">spp &gt; nfv 2; add vhost:2</span>
+<span class="go">spp &gt; nfv 3; add vhost:3</span>
+<span class="go">spp &gt; nfv 4; add vhost:4</span>
+<span class="go">spp &gt; nfv 5; add vhost:5</span>
+<span class="go">spp &gt; nfv 6; add vhost:6</span>
+<span class="go">spp &gt; nfv 1; add ring:0</span>
+<span class="go">spp &gt; nfv 2; add ring:1</span>
+<span class="go">spp &gt; nfv 3; add ring:2</span>
+<span class="go">spp &gt; nfv 4; add ring:0</span>
+<span class="go">spp &gt; nfv 5; add ring:1</span>
+<span class="go">spp &gt; nfv 6; add ring:2</span>
+</pre></div>
+</div>
+<p>And patch all of ports.</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">#</span> Terminal <span class="m">2</span>
+<span class="go">spp &gt; nfv 1; patch vhost:1 ring:0</span>
+<span class="go">spp &gt; nfv 2; patch ring:1 vhost:2</span>
+<span class="go">spp &gt; nfv 3; patch ring:2 vhost:3</span>
+<span class="go">spp &gt; nfv 4; patch ring:0 vhost:4</span>
+<span class="go">spp &gt; nfv 5; patch vhost:5 ring:1</span>
+<span class="go">spp &gt; nfv 6; patch vhost:6 ring:2</span>
+</pre></div>
+</div>
+<p>You had better to check that network path is configured properly.
+<code class="docutils literal notranslate"><span class="pre">topo</span></code> command is useful for checking it with a graphical image.
+Define two groups of vhost PMDs as <code class="docutils literal notranslate"><span class="pre">c1</span></code> and <code class="docutils literal notranslate"><span class="pre">c2</span></code> with
+<code class="docutils literal notranslate"><span class="pre">topo_subgraph</span></code> command before.</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">#</span> Terminal <span class="m">2</span>
+<span class="gp">#</span> define c1 and c2 to <span class="nb">help</span> your understanding
+<span class="go">spp &gt; topo_subgraph add c1 vhost:1,vhost:2,vhost:3</span>
+<span class="go">spp &gt; topo_subgraph add c2 vhost:4,vhost:5,vhost:6</span>
+
+<span class="gp">#</span> show network diagram
+<span class="go">spp &gt; topo term</span>
+</pre></div>
+</div>
+<p>Finally, launch <code class="docutils literal notranslate"><span class="pre">pktgen</span></code> and <code class="docutils literal notranslate"><span class="pre">load_balancer</span></code> app containers
+to start traffic monitoring.</p>
+<p>For <code class="docutils literal notranslate"><span class="pre">pktgen</span></code> container, assign lcores 8-10 and vhost 1-3.
+<code class="docutils literal notranslate"><span class="pre">-T</span></code> options is required to enable color terminal output.</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">#</span> Terminal <span class="m">3</span>
+<span class="gp">$</span> <span class="nb">cd</span> /path/to/spp/tools/sppc
+<span class="gp">$</span> python3 app/pktgen.py -l <span class="m">8</span>-10 -d vhost:1,vhost:2,vhost:3 -T
+</pre></div>
+</div>
+<p>For <code class="docutils literal notranslate"><span class="pre">load_balancer</span></code> container, assign lcores 12-15 and vhost 4-6.
+Four lcores are assigned to rx, tx and two workers.
+You should add <code class="docutils literal notranslate"><span class="pre">-nq</span></code> option because this example requires three
+or more queues. In this case, assign 4 queues.</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">#</span> Terminal <span class="m">4</span>
+<span class="gp">$</span> <span class="nb">cd</span> /path/to/spp/tools/sppc
+<span class="gp">$</span> python3 app/load_balancer.py -l <span class="m">11</span>-14 <span class="se">\</span>
+  -d vhost:4,vhost:5,vhost:6 <span class="se">\</span>
+  -fg -nq <span class="m">4</span> <span class="se">\</span>
+  -rx <span class="s2">&quot;(0,0,11),(0,1,11),(0,2,11)&quot;</span> <span class="se">\</span>
+  -tx <span class="s2">&quot;(0,12),(1,12),(2,12)&quot;</span> <span class="se">\</span>
+  -w <span class="m">13</span>,14 <span class="se">\</span>
+  --lpm <span class="s2">&quot;1.0.0.0/24=&gt;0; 1.0.1.0/24=&gt;1; 1.0.2.0/24=&gt;2;&quot;</span>
+</pre></div>
+</div>
+<p>Then, configure network path by pactching each of ports
+and start forwarding from SPP controller.</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">#</span> Terminal <span class="m">2</span>
+<span class="go">spp &gt; nfv 1; forward</span>
+<span class="go">spp &gt; nfv 2; forward</span>
+<span class="go">spp &gt; nfv 3; forward</span>
+<span class="go">spp &gt; nfv 4; forward</span>
+<span class="go">spp &gt; nfv 5; forward</span>
+<span class="go">spp &gt; nfv 6; forward</span>
+</pre></div>
+</div>
+<p>You start forwarding from <code class="docutils literal notranslate"><span class="pre">pktgen</span></code> container.
+The destination of <code class="docutils literal notranslate"><span class="pre">load_balancer</span></code> is decided by considering
+LPM rules. Try to classify incoming packets to port 1 on the
+<code class="docutils literal notranslate"><span class="pre">load_balancer</span></code> application.</p>
+<p>On <code class="docutils literal notranslate"><span class="pre">pktgen</span></code>, change the destination IP address of port 0
+to <code class="docutils literal notranslate"><span class="pre">1.0.1.100</span></code>, and start.</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">#</span> Terminal <span class="m">3</span>
+<span class="go">Pktgen:/&gt; set 0 dst ip 1.0.1.100</span>
+<span class="go">Pktgen:/&gt; start 0</span>
+</pre></div>
+</div>
+<p>As forwarding on port 0 is started, you will find the packet count of
+port 1 is increase rapidly.
+You can change the destination IP address and send packets to port 2
+by stopping to forward,
+changing the destination IP address to <code class="docutils literal notranslate"><span class="pre">1.0.2.100</span></code> and restart
+forwarding.</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">#</span> Terminal <span class="m">3</span>
+<span class="go">Pktgen:/&gt; stop 0</span>
+<span class="go">Pktgen:/&gt; set 0 dst ip 1.0.2.100</span>
+<span class="go">Pktgen:/&gt; start 0</span>
+</pre></div>
+</div>
+<p>You might not be able to stop <code class="docutils literal notranslate"><span class="pre">load_balancer</span></code> application with <em>Ctrl-C</em>.
+In this case, terminate it with <code class="docutils literal notranslate"><span class="pre">docker</span> <span class="pre">kill</span></code> directly as explained in
+<a class="reference internal" href="app_launcher.html#sppc-appl-load-balancer"><span class="std std-ref">Load-Balancer Container</span></a>.
+You can find the name of container from <code class="docutils literal notranslate"><span class="pre">docker</span> <span class="pre">ps</span></code>.</p>
+<p>For this usecase example, recipe scripts are included in
+<code class="docutils literal notranslate"><span class="pre">recipes/sppc/samples/lb_pg.rcp</span></code>.</p>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="howto_launcher.html" class="btn btn-neutral float-right" title="1.7. How to Define Your App Launcher" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="app_launcher.html" class="btn btn-neutral float-left" title="1.5. App Container Launchers" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

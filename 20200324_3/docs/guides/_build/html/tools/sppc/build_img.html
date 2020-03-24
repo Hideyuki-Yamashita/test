@@ -1,0 +1,428 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>1.4. Build Images &mdash; Soft Patch Panel 19.08 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="../../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../../_static/jquery.js"></script>
+        <script type="text/javascript" src="../../_static/underscore.js"></script>
+        <script type="text/javascript" src="../../_static/doctools.js"></script>
+        <script type="text/javascript" src="../../_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="../../_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="1.5. App Container Launchers" href="app_launcher.html" />
+    <link rel="prev" title="1.3. Install" href="install.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../index.html" class="icon icon-home"> Soft Patch Panel
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                19.08
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../overview.html">Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../design/index.html">Design</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../gsg/index.html">Getting Started Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../usecases/index.html">Use Cases</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../commands/index.html">SPP Commands</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../index.html">Tools</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="index.html">1. SPP Container</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="overview.html">1.1. Overview</a></li>
+<li class="toctree-l3"><a class="reference internal" href="getting_started.html">1.2. Getting Started</a></li>
+<li class="toctree-l3"><a class="reference internal" href="install.html">1.3. Install</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">1.4. Build Images</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#version-control-for-images">1.4.1. Version Control for Images</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#dockerfiles">1.4.2. Dockerfiles</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#build-suricata-image">1.4.3. Build suricata image</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#inspect-inside-of-container">1.4.4. Inspect Inside of Container</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="app_launcher.html">1.5. App Container Launchers</a></li>
+<li class="toctree-l3"><a class="reference internal" href="usecases.html">1.6. Use Cases</a></li>
+<li class="toctree-l3"><a class="reference internal" href="howto_launcher.html">1.7. How to Define Your App Launcher</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../helpers/index.html">2. Helper tools</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../api_ref/index.html">API Reference</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">Soft Patch Panel</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="../index.html">Tools</a> &raquo;</li>
+        
+          <li><a href="index.html">1. SPP Container</a> &raquo;</li>
+        
+      <li>1.4. Build Images</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../../_sources/tools/sppc/build_img.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="build-images">
+<span id="spp-container-build-img"></span><h1>1.4. Build Images<a class="headerlink" href="#build-images" title="Permalink to this headline">¶</a></h1>
+<p>As explained in <a class="reference internal" href="getting_started.html"><span class="doc">Getting Started</span></a> section,
+container image is built with <code class="docutils literal notranslate"><span class="pre">build/main.py</span></code>.
+This script is for running <code class="docutils literal notranslate"><span class="pre">docker</span> <span class="pre">build</span></code> with a set of
+<code class="docutils literal notranslate"><span class="pre">--build-args</span></code> options for building DPDK applications.</p>
+<p>This script supports building application from any of repositories.
+For example, you can build SPP hosted on your repository
+<code class="docutils literal notranslate"><span class="pre">https://github.com/your/spp.git</span></code>
+with DPDK 18.11 as following.</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$</span> <span class="nb">cd</span> /path/to/spp/tools/sppc
+<span class="gp">$</span> python3 build/main.py -t spp <span class="se">\</span>
+  --dpdk-branch v18.11 <span class="se">\</span>
+  --spp-repo https://github.com/your/spp.git
+</pre></div>
+</div>
+<p>Refer all of options running with <code class="docutils literal notranslate"><span class="pre">-h</span></code> option.</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$</span> python3 build/main.py -h
+<span class="go">usage: main.py [-h] [-t TARGET] [-ci CONTAINER_IMAGE]</span>
+<span class="go">               [--dist-name DIST_NAME] [--dist-ver DIST_VER]</span>
+<span class="go">               [--dpdk-repo DPDK_REPO] [--dpdk-branch DPDK_BRANCH]</span>
+<span class="go">               [--pktgen-repo PKTGEN_REPO] [--pktgen-branch PKTGEN_BRANCH]</span>
+<span class="go">               [--spp-repo SPP_REPO] [--spp-branch SPP_BRANCH]</span>
+<span class="go">               [--suricata-repo SURICATA_REPO]</span>
+<span class="go">               [--suricata-branch SURICATA_BRANCH]</span>
+<span class="go">               [--only-envsh] [--dry-run]</span>
+
+<span class="go">Docker image builder for DPDK applications</span>
+
+<span class="go">optional arguments:</span>
+<span class="go">  -h, --help            show this help message and exit</span>
+<span class="go">  -t TARGET, --target TARGET</span>
+<span class="go">                        Build target (&#39;dpdk&#39;, &#39;pktgen&#39;, &#39;spp&#39; or &#39;suricata&#39;)</span>
+<span class="go">  -ci CONTAINER_IMAGE, --container-image CONTAINER_IMAGE</span>
+<span class="go">                        Name of container image</span>
+<span class="go">  --dist-name DIST_NAME</span>
+<span class="go">                        Name of Linux distribution</span>
+<span class="go">  --dist-ver DIST_VER   Version of Linux distribution</span>
+<span class="go">  --dpdk-repo DPDK_REPO</span>
+<span class="go">                        Git URL of DPDK</span>
+<span class="go">  --dpdk-branch DPDK_BRANCH</span>
+<span class="go">                        Specific version or branch of DPDK</span>
+<span class="go">  --pktgen-repo PKTGEN_REPO</span>
+<span class="go">                        Git URL of pktgen-dpdk</span>
+<span class="go">  --pktgen-branch PKTGEN_BRANCH</span>
+<span class="go">                        Specific version or branch of pktgen-dpdk</span>
+<span class="go">  --spp-repo SPP_REPO   Git URL of SPP</span>
+<span class="go">  --spp-branch SPP_BRANCH</span>
+<span class="go">                        Specific version or branch of SPP</span>
+<span class="go">  --suricata-repo SURICATA_REPO</span>
+<span class="go">                        Git URL of DPDK-Suricata</span>
+<span class="go">  --suricata-branch SURICATA_BRANCH</span>
+<span class="go">                        Specific version or branch of DPDK-Suricata</span>
+<span class="go">  --only-envsh          Create config &#39;env.sh&#39; and exit without docker build</span>
+<span class="go">  --dry-run             Print matrix for checking and exit without docker</span>
+<span class="go">                        build</span>
+</pre></div>
+</div>
+<div class="section" id="version-control-for-images">
+<span id="sppc-build-img-vci"></span><h2>1.4.1. Version Control for Images<a class="headerlink" href="#version-control-for-images" title="Permalink to this headline">¶</a></h2>
+<p>SPP container provides version control as combination of
+target name, Linux distribution name and version.
+Built images are referred such as <code class="docutils literal notranslate"><span class="pre">sppc/dpdk-ubuntu:latest</span></code>,
+<code class="docutils literal notranslate"><span class="pre">sppc/spp-ubuntu:16.04</span></code> or so.
+<code class="docutils literal notranslate"><span class="pre">sppc</span></code> is just a prefix to indicate an image of SPP container.</p>
+<p>Build script decides a name from given options or default values.
+If you run build script with only target and without distribution
+name and version, it uses default values <code class="docutils literal notranslate"><span class="pre">ubuntu</span></code> and <code class="docutils literal notranslate"><span class="pre">latest</span></code>.</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">#</span> build <span class="s1">&#39;sppc/dpdk-ubuntu:latest&#39;</span>
+<span class="gp">$</span> python3 build/main.py -t dpdk
+
+<span class="gp">#</span> build <span class="s1">&#39;sppc/spp-ubuntu:16.04&#39;</span>
+<span class="gp">$</span> python3 build/main.py -t spp --dist-ver <span class="m">16</span>.04
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>SPP container does not support distributions other than Ubuntu
+currently.
+It is because SPP container has no Dockerfiles for building
+CentOS, Fedora or so. It will be supported in a future release.</p>
+<p>You can build any of distributions with build script
+if you prepare Dockerfile by yourself.
+How Dockerfiles are managed is described in
+<a class="reference internal" href="#sppc-build-img-dockerfiles"><span class="std std-ref">Dockerfiles</span></a> section.</p>
+</div>
+<p>App container scripts also understand this naming rule.
+For launching <code class="docutils literal notranslate"><span class="pre">testpmd</span></code> on Ubuntu 18.04,
+simply give <code class="docutils literal notranslate"><span class="pre">--dist-ver</span></code> to indicate the version and other options
+for <code class="docutils literal notranslate"><span class="pre">testpmd</span></code> itself.</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">#</span> launch testpmd on <span class="s1">&#39;sppc/dpdk-ubuntu:18.04&#39;</span>
+<span class="gp">$</span> python3 app/testpmd.py --dist-ver <span class="m">18</span>.04 -l <span class="m">3</span>-4 ...
+</pre></div>
+</div>
+<p>But, how can we build images for different versions of DPDK,
+such as 18.11 and 19.11, on the same distribution?
+In this case, you can use <code class="docutils literal notranslate"><span class="pre">--container-image</span></code> or <code class="docutils literal notranslate"><span class="pre">-ci</span></code> option for
+using any of names. It is also referred from app container scripts.</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">#</span> build image with arbitrary name
+<span class="gp">$</span> python3 build/main.py -t dpdk -ci sppc/dpdk18.11-ubuntu:latest <span class="se">\</span>
+  --dpdk-branch v18.11
+
+<span class="gp">#</span> launch testpmd with <span class="s1">&#39;-ci&#39;</span>
+<span class="gp">$</span> python3 app/testpmd.py -ci sppc/dpdk18.11-ubuntu:latest -l <span class="m">3</span>-4 ...
+</pre></div>
+</div>
+</div>
+<div class="section" id="dockerfiles">
+<span id="sppc-build-img-dockerfiles"></span><h2>1.4.2. Dockerfiles<a class="headerlink" href="#dockerfiles" title="Permalink to this headline">¶</a></h2>
+<p>SPP container includes Dockerfiles for each of distributions and
+its versions.
+For instance, Dockerfiles for Ubuntu are found in <code class="docutils literal notranslate"><span class="pre">build/ubuntu</span></code>
+directory.
+You notice that each of Dockerfiles has its version as a part of
+file name.
+In other words, the list of Dockerfiles under the <code class="docutils literal notranslate"><span class="pre">ubuntu</span></code> directory
+shows all of supported versions of Ubuntu.
+You can not find Dockerfiles for CentOS as <code class="docutils literal notranslate"><span class="pre">build/centos</span></code> or other
+distributions because it is not supported currently.
+It is included in a future release.</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$</span> tree build/ubuntu/
+<span class="go">build/ubuntu/</span>
+<span class="go">|--- dpdk</span>
+<span class="go">|    |--- Dockerfile.16.04</span>
+<span class="go">|    |--- Dockerfile.18.04</span>
+<span class="go">|    ---- Dockerfile.latest</span>
+<span class="go">|--- pktgen</span>
+<span class="go">|    |--- Dockerfile.16.04</span>
+<span class="go">|    |--- Dockerfile.18.04</span>
+<span class="go">|    ---- Dockerfile.latest</span>
+<span class="go">|--- spp</span>
+<span class="go">|    |--- Dockerfile.16.04</span>
+<span class="go">|    |--- Dockerfile.18.04</span>
+<span class="go">|    ---- Dockerfile.latest</span>
+<span class="go">---- suricata</span>
+<span class="go">     |--- Dockerfile.16.04</span>
+<span class="go">     |--- Dockerfile.18.04</span>
+<span class="go">     ---- Dockerfile.latest</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="build-suricata-image">
+<span id="sppc-build-img-suricata"></span><h2>1.4.3. Build suricata image<a class="headerlink" href="#build-suricata-image" title="Permalink to this headline">¶</a></h2>
+<p>Building DPDK, pktgen and SPP is completed by just running <code class="docutils literal notranslate"><span class="pre">build/main.py</span></code>
+script. However, building suricata requires few additional few steps.</p>
+<p>First, build an image with <code class="docutils literal notranslate"><span class="pre">main.py</span></code> script as similar to other apps.
+In this example, use DPDK v18.11 and Ubuntu 18.04.</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$</span> python3 build/main.py -t suricata --dpdk-branch v18.11 --dist-ver <span class="m">18</span>.04
+</pre></div>
+</div>
+<p>After build is completed, you can find image named as
+<code class="docutils literal notranslate"><span class="pre">sppc/suricata-ubuntu:18.04</span></code> from <code class="docutils literal notranslate"><span class="pre">docker</span> <span class="pre">images</span></code>.
+Run bash command with this image, and execute an installer script in home
+directory which is created while building.</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$</span> docker run -it sppc/suricata-ubuntu:18.04 /bin/bash
+<span class="gp">#</span> ./install_suricata.sh
+</pre></div>
+</div>
+<p>It clones and compiles suricata under home directory. You can find
+<code class="docutils literal notranslate"><span class="pre">$HOME/DPDK_SURICATA-4_1_1</span></code> after runing this script is completed.</p>
+<p>Although now you are ready to use suricata, it takes a little time for doing
+this task everytime you run the app container.
+For skipping this task, you can create another image from running container
+with <code class="docutils literal notranslate"><span class="pre">docker</span> <span class="pre">commit</span></code> command.</p>
+<p>Logout and create a new docker image with <code class="docutils literal notranslate"><span class="pre">docker</span> <span class="pre">commit</span></code> image’s
+container ID. In this example, new image is named as
+<cite>sppc/suricata-ubuntu2:18.04</cite>.</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">#</span> <span class="nb">exit</span>
+<span class="gp">$</span> docker ps -a
+<span class="go">CONTAINER_ID  sppc/suricata-ubuntu:18.04  &quot;/bin/bash&quot;  3 minutes ...</span>
+<span class="gp">$</span> docker commit CONTAINER_ID sppc/suricata-ubuntu2:18.04
+</pre></div>
+</div>
+<p>You can run compiled suricata with the new image with docker as following,
+or app container launcher with specific options as described in.
+<a class="reference internal" href="app_launcher.html#sppc-appl-suricata"><span class="std std-ref">Suricata Container</span></a>.</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$</span> docker run -it sppc/suricata-ubuntu:18.04 /bin/bash
+<span class="gp">#</span> suricata --build-info
+</pre></div>
+</div>
+</div>
+<div class="section" id="inspect-inside-of-container">
+<span id="sppc-build-img-inspect"></span><h2>1.4.4. Inspect Inside of Container<a class="headerlink" href="#inspect-inside-of-container" title="Permalink to this headline">¶</a></h2>
+<p>Container is useful, but just bit annoying to inspect inside
+the container because it is cleaned up immediately after process
+is finished and there is no clue what is happened in.</p>
+<p><code class="docutils literal notranslate"><span class="pre">build/run.sh</span></code> is a helper script to inspect inside the container.
+You can run <code class="docutils literal notranslate"><span class="pre">bash</span></code> on the container to confirm behaviour of
+targetting application, or run any of command.</p>
+<p>This script refers <code class="docutils literal notranslate"><span class="pre">ubuntu/dpdk/env.sh</span></code> for Ubuntu image  to include
+environment variables.
+So, it is failed to <code class="docutils literal notranslate"><span class="pre">build/run.sh</span></code> if this config file
+does not exist.
+You can create it from <code class="docutils literal notranslate"><span class="pre">build/main.py</span></code> with <code class="docutils literal notranslate"><span class="pre">--only-envsh</span></code> option
+if you removed it accidentally.</p>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="app_launcher.html" class="btn btn-neutral float-right" title="1.5. App Container Launchers" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="install.html" class="btn btn-neutral float-left" title="1.3. Install" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

@@ -1,0 +1,652 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>6. spp_mirror &mdash; Soft Patch Panel 19.08 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../_static/jquery.js"></script>
+        <script type="text/javascript" src="../_static/underscore.js"></script>
+        <script type="text/javascript" src="../_static/doctools.js"></script>
+        <script type="text/javascript" src="../_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="7. spp_pcap" href="spp_pcap.html" />
+    <link rel="prev" title="5. spp_vf" href="spp_vf.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> Soft Patch Panel
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                19.08
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../overview.html">Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../design/index.html">Design</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../gsg/index.html">Getting Started Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../usecases/index.html">Use Cases</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../commands/index.html">SPP Commands</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../tools/index.html">Tools</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">API Reference</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="overview.html">1. spp-ctl REST API</a></li>
+<li class="toctree-l2"><a class="reference internal" href="proc_independ.html">2. Independent of Process Type</a></li>
+<li class="toctree-l2"><a class="reference internal" href="spp_primary.html">3. spp_primary</a></li>
+<li class="toctree-l2"><a class="reference internal" href="spp_nfv.html">4. spp_nfv</a></li>
+<li class="toctree-l2"><a class="reference internal" href="spp_vf.html">5. spp_vf</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">6. spp_mirror</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#get-v1-mirrors-client-id">6.1. GET /v1/mirrors/{client_id}</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#request-path">6.1.1. Request (path)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#request-example">6.1.2. Request example</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#response">6.1.3. Response</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#response-example">6.1.4. Response example</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#equivalent-cli-command">6.1.5. Equivalent CLI command</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#post-v1-mirrors-client-id-components">6.2. POST /v1/mirrors/{client_id}/components</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#id1">6.2.1. Request (path)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#request-body">6.2.2. Request (body)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id2">6.2.3. Request example</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id3">6.2.4. Response</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id4">6.2.5. Equivalent CLI command</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#delete-v1-mirrors-client-id-components-name">6.3. DELETE /v1/mirrors/{client_id}/components/{name}</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#id5">6.3.1. Request (path)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id6">6.3.2. Request example</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id7">6.3.3. Response</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id8">6.3.4. Equivalent CLI command</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#put-v1-mirrors-client-id-components-name-ports">6.4. PUT /v1/mirrors/{client_id}/components/{name}/ports</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#id9">6.4.1. Request (path)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id10">6.4.2. Request (body)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id11">6.4.3. Request example</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id12">6.4.4. Response</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id13">6.4.5. Equivalent CLI command</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="spp_pcap.html">7. spp_pcap</a></li>
+</ul>
+</li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">Soft Patch Panel</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="index.html">API Reference</a> &raquo;</li>
+        
+      <li>6. spp_mirror</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../_sources/api_ref/spp_mirror.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="spp-mirror">
+<span id="spp-ctl-rest-api-spp-mirror"></span><h1>6. spp_mirror<a class="headerlink" href="#spp-mirror" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="get-v1-mirrors-client-id">
+<h2>6.1. GET /v1/mirrors/{client_id}<a class="headerlink" href="#get-v1-mirrors-client-id" title="Permalink to this headline">¶</a></h2>
+<p>Get the information of the <code class="docutils literal notranslate"><span class="pre">spp_mirror</span></code> process.</p>
+<ul class="simple">
+<li><p>Normal response codes: 200</p></li>
+<li><p>Error response codes: 400, 404</p></li>
+</ul>
+<div class="section" id="request-path">
+<h3>6.1.1. Request (path)<a class="headerlink" href="#request-path" title="Permalink to this headline">¶</a></h3>
+<span id="table-spp-ctl-mirrors-get"></span><table class="docutils align-default" id="id14">
+<caption><span class="caption-number">Table 6.1 </span><span class="caption-text">Request parameter for getting spp_mirror.</span><a class="headerlink" href="#id14" title="Permalink to this table">¶</a></caption>
+<colgroup>
+<col style="width: 24%" />
+<col style="width: 20%" />
+<col style="width: 57%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Name</p></th>
+<th class="head"><p>Type</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>client_id</p></td>
+<td><p>integer</p></td>
+<td><p>client id.</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="request-example">
+<h3>6.1.2. Request example<a class="headerlink" href="#request-example" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$</span> curl -X GET -H <span class="s1">&#39;application/json&#39;</span> <span class="se">\</span>
+  http://127.0.0.1:7777/v1/mirrors/1
+</pre></div>
+</div>
+</div>
+<div class="section" id="response">
+<h3>6.1.3. Response<a class="headerlink" href="#response" title="Permalink to this headline">¶</a></h3>
+<span id="table-spp-ctl-spp-mirror-res"></span><table class="docutils align-default" id="id15">
+<caption><span class="caption-number">Table 6.2 </span><span class="caption-text">Response params of getting spp_mirror.</span><a class="headerlink" href="#id15" title="Permalink to this table">¶</a></caption>
+<colgroup>
+<col style="width: 24%" />
+<col style="width: 12%" />
+<col style="width: 64%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Name</p></th>
+<th class="head"><p>Type</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>client-id</p></td>
+<td><p>integer</p></td>
+<td><p>client id.</p></td>
+</tr>
+<tr class="row-odd"><td><p>ports</p></td>
+<td><p>array</p></td>
+<td><p>an array of port ids used by the process.</p></td>
+</tr>
+<tr class="row-even"><td><p>components</p></td>
+<td><p>array</p></td>
+<td><p>an array of component objects in the process.</p></td>
+</tr>
+</tbody>
+</table>
+<p>Component objects:</p>
+<span id="table-spp-ctl-spp-mirror-res-comp"></span><table class="docutils align-default" id="id16">
+<caption><span class="caption-number">Table 6.3 </span><span class="caption-text">Component objects of getting spp_mirror.</span><a class="headerlink" href="#id16" title="Permalink to this table">¶</a></caption>
+<colgroup>
+<col style="width: 10%" />
+<col style="width: 10%" />
+<col style="width: 79%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Name</p></th>
+<th class="head"><p>Type</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>core</p></td>
+<td><p>integer</p></td>
+<td><p>core id running on the component</p></td>
+</tr>
+<tr class="row-odd"><td><p>name</p></td>
+<td><p>string</p></td>
+<td><p>an array of port ids used by the process.</p></td>
+</tr>
+<tr class="row-even"><td><p>type</p></td>
+<td><p>string</p></td>
+<td><p>an array of component objects in the process.</p></td>
+</tr>
+<tr class="row-odd"><td><p>rx_port</p></td>
+<td><p>array</p></td>
+<td><p>an array of port objects connected to the rx side of the component.</p></td>
+</tr>
+<tr class="row-even"><td><p>tx_port</p></td>
+<td><p>array</p></td>
+<td><p>an array of port objects connected to the tx side of the component.</p></td>
+</tr>
+</tbody>
+</table>
+<p>Port objects:</p>
+<span id="table-spp-ctl-spp-mirror-res-port"></span><table class="docutils align-default" id="id17">
+<caption><span class="caption-number">Table 6.4 </span><span class="caption-text">Port objects of getting spp_vf.</span><a class="headerlink" href="#id17" title="Permalink to this table">¶</a></caption>
+<colgroup>
+<col style="width: 11%" />
+<col style="width: 11%" />
+<col style="width: 78%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Name</p></th>
+<th class="head"><p>Type</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>port</p></td>
+<td><p>string</p></td>
+<td><p>port id. port id is the form {interface_type}:{interface_id}.</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="response-example">
+<h3>6.1.4. Response example<a class="headerlink" href="#response-example" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+  <span class="nt">&quot;client-id&quot;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
+  <span class="nt">&quot;ports&quot;</span><span class="p">:</span> <span class="p">[</span>
+    <span class="s2">&quot;phy:0&quot;</span><span class="p">,</span> <span class="s2">&quot;phy:1&quot;</span><span class="p">,</span> <span class="s2">&quot;ring:0&quot;</span><span class="p">,</span> <span class="s2">&quot;ring:1&quot;</span><span class="p">,</span> <span class="s2">&quot;ring:2&quot;</span>
+  <span class="p">],</span>
+  <span class="nt">&quot;components&quot;</span><span class="p">:</span> <span class="p">[</span>
+    <span class="p">{</span>
+      <span class="nt">&quot;core&quot;</span><span class="p">:</span> <span class="mi">2</span><span class="p">,</span>
+      <span class="nt">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;mr0&quot;</span><span class="p">,</span>
+      <span class="nt">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;mirror&quot;</span><span class="p">,</span>
+      <span class="nt">&quot;rx_port&quot;</span><span class="p">:</span> <span class="p">[</span>
+        <span class="p">{</span>
+        <span class="nt">&quot;port&quot;</span><span class="p">:</span> <span class="s2">&quot;ring:0&quot;</span>
+        <span class="p">}</span>
+      <span class="p">],</span>
+      <span class="nt">&quot;tx_port&quot;</span><span class="p">:</span> <span class="p">[</span>
+        <span class="p">{</span>
+          <span class="nt">&quot;port&quot;</span><span class="p">:</span> <span class="s2">&quot;ring:1&quot;</span>
+        <span class="p">},</span>
+        <span class="p">{</span>
+          <span class="nt">&quot;port&quot;</span><span class="p">:</span> <span class="s2">&quot;ring:2&quot;</span>
+        <span class="p">}</span>
+      <span class="p">]</span>
+    <span class="p">},</span>
+    <span class="p">{</span>
+      <span class="nt">&quot;core&quot;</span><span class="p">:</span> <span class="mi">3</span><span class="p">,</span>
+      <span class="nt">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;unuse&quot;</span>
+    <span class="p">}</span>
+  <span class="p">]</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>The component which type is <code class="docutils literal notranslate"><span class="pre">unused</span></code> is to indicate unused core.</p>
+</div>
+<div class="section" id="equivalent-cli-command">
+<h3>6.1.5. Equivalent CLI command<a class="headerlink" href="#equivalent-cli-command" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>spp &gt; mirror {client_id}; status
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="post-v1-mirrors-client-id-components">
+<h2>6.2. POST /v1/mirrors/{client_id}/components<a class="headerlink" href="#post-v1-mirrors-client-id-components" title="Permalink to this headline">¶</a></h2>
+<p>Start component.</p>
+<ul class="simple">
+<li><p>Normal response codes: 204</p></li>
+<li><p>Error response codes: 400, 404</p></li>
+</ul>
+<div class="section" id="id1">
+<h3>6.2.1. Request (path)<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h3>
+<span id="table-spp-ctl-spp-mirror-components"></span><table class="docutils align-default" id="id18">
+<caption><span class="caption-number">Table 6.5 </span><span class="caption-text">Request params of components of spp_mirror.</span><a class="headerlink" href="#id18" title="Permalink to this table">¶</a></caption>
+<colgroup>
+<col style="width: 33%" />
+<col style="width: 27%" />
+<col style="width: 39%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Name</p></th>
+<th class="head"><p>Type</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>client_id</p></td>
+<td><p>integer</p></td>
+<td><p>client id.</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="request-body">
+<h3>6.2.2. Request (body)<a class="headerlink" href="#request-body" title="Permalink to this headline">¶</a></h3>
+<span id="table-spp-ctl-spp-mirror-components-res"></span><table class="docutils align-default" id="id19">
+<caption><span class="caption-number">Table 6.6 </span><span class="caption-text">Response params of components of spp_mirror.</span><a class="headerlink" href="#id19" title="Permalink to this table">¶</a></caption>
+<colgroup>
+<col style="width: 12%" />
+<col style="width: 10%" />
+<col style="width: 78%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Name</p></th>
+<th class="head"><p>Type</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>name</p></td>
+<td><p>string</p></td>
+<td><p>component name. must be unique in the process.</p></td>
+</tr>
+<tr class="row-odd"><td><p>core</p></td>
+<td><p>integer</p></td>
+<td><p>core id.</p></td>
+</tr>
+<tr class="row-even"><td><p>type</p></td>
+<td><p>string</p></td>
+<td><p>component type. only <code class="docutils literal notranslate"><span class="pre">mirror</span></code> is available.</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="id2">
+<h3>6.2.3. Request example<a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$</span> curl -X POST -H <span class="s1">&#39;application/json&#39;</span> <span class="se">\</span>
+  -d <span class="s1">&#39;{&quot;name&quot;: &quot;mr1&quot;, &quot;core&quot;: 12, &quot;type&quot;: &quot;mirror&quot;}&#39;</span> <span class="se">\</span>
+  http://127.0.0.1:7777/v1/mirrors/1/components
+</pre></div>
+</div>
+</div>
+<div class="section" id="id3">
+<h3>6.2.4. Response<a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h3>
+<p>There is no body content for the response of a successful <code class="docutils literal notranslate"><span class="pre">POST</span></code> request.</p>
+</div>
+<div class="section" id="id4">
+<h3>6.2.5. Equivalent CLI command<a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>spp &gt; mirror {client_id}; component start {name} {core} {type}
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="delete-v1-mirrors-client-id-components-name">
+<h2>6.3. DELETE /v1/mirrors/{client_id}/components/{name}<a class="headerlink" href="#delete-v1-mirrors-client-id-components-name" title="Permalink to this headline">¶</a></h2>
+<p>Stop component.</p>
+<ul class="simple">
+<li><p>Normal response codes: 204</p></li>
+<li><p>Error response codes: 400, 404</p></li>
+</ul>
+<div class="section" id="id5">
+<h3>6.3.1. Request (path)<a class="headerlink" href="#id5" title="Permalink to this headline">¶</a></h3>
+<span id="table-spp-ctl-spp-mirror-del"></span><table class="docutils align-default" id="id20">
+<caption><span class="caption-number">Table 6.7 </span><span class="caption-text">Request params of deleting component of spp_mirror.</span><a class="headerlink" href="#id20" title="Permalink to this table">¶</a></caption>
+<colgroup>
+<col style="width: 21%" />
+<col style="width: 17%" />
+<col style="width: 62%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Name</p></th>
+<th class="head"><p>Type</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>client_id</p></td>
+<td><p>integer</p></td>
+<td><p>client id.</p></td>
+</tr>
+<tr class="row-odd"><td><p>name</p></td>
+<td><p>string</p></td>
+<td><p>component name.</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="id6">
+<h3>6.3.2. Request example<a class="headerlink" href="#id6" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$</span> curl -X DELETE -H <span class="s1">&#39;application/json&#39;</span> <span class="se">\</span>
+  http://127.0.0.1:7777/v1/mirrors/1/components/mr1
+</pre></div>
+</div>
+</div>
+<div class="section" id="id7">
+<h3>6.3.3. Response<a class="headerlink" href="#id7" title="Permalink to this headline">¶</a></h3>
+<p>There is no body content for the response of a successful <code class="docutils literal notranslate"><span class="pre">POST</span></code> request.</p>
+</div>
+<div class="section" id="id8">
+<h3>6.3.4. Equivalent CLI command<a class="headerlink" href="#id8" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>spp &gt; mirror {client_id}; component stop {name}
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="put-v1-mirrors-client-id-components-name-ports">
+<h2>6.4. PUT /v1/mirrors/{client_id}/components/{name}/ports<a class="headerlink" href="#put-v1-mirrors-client-id-components-name-ports" title="Permalink to this headline">¶</a></h2>
+<p>Add or delete port to the component.</p>
+<ul class="simple">
+<li><p>Normal response codes: 204</p></li>
+<li><p>Error response codes: 400, 404</p></li>
+</ul>
+<div class="section" id="id9">
+<h3>6.4.1. Request (path)<a class="headerlink" href="#id9" title="Permalink to this headline">¶</a></h3>
+<span id="table-spp-ctl-spp-mirror-comp-port"></span><table class="docutils align-default" id="id21">
+<caption><span class="caption-number">Table 6.8 </span><span class="caption-text">Request params for ports of component of spp_mirror.</span><a class="headerlink" href="#id21" title="Permalink to this table">¶</a></caption>
+<colgroup>
+<col style="width: 23%" />
+<col style="width: 19%" />
+<col style="width: 57%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Name</p></th>
+<th class="head"><p>Type</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>client_id</p></td>
+<td><p>integer</p></td>
+<td><p>client id.</p></td>
+</tr>
+<tr class="row-odd"><td><p>name</p></td>
+<td><p>string</p></td>
+<td><p>component name.</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="id10">
+<h3>6.4.2. Request (body)<a class="headerlink" href="#id10" title="Permalink to this headline">¶</a></h3>
+<span id="table-spp-ctl-spp-mirror-comp-port-body"></span><table class="docutils align-default" id="id22">
+<caption><span class="caption-number">Table 6.9 </span><span class="caption-text">Request body params for ports of component of spp_mirror.</span><a class="headerlink" href="#id22" title="Permalink to this table">¶</a></caption>
+<colgroup>
+<col style="width: 11%" />
+<col style="width: 11%" />
+<col style="width: 78%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Name</p></th>
+<th class="head"><p>Type</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>action</p></td>
+<td><p>string</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">attach</span></code> or <code class="docutils literal notranslate"><span class="pre">detach</span></code>.</p></td>
+</tr>
+<tr class="row-odd"><td><p>port</p></td>
+<td><p>string</p></td>
+<td><p>port id. port id is the form {interface_type}:{interface_id}.</p></td>
+</tr>
+<tr class="row-even"><td><p>dir</p></td>
+<td><p>string</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">rx</span></code> or <code class="docutils literal notranslate"><span class="pre">tx</span></code>.</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="id11">
+<h3>6.4.3. Request example<a class="headerlink" href="#id11" title="Permalink to this headline">¶</a></h3>
+<p>Attach rx port of <code class="docutils literal notranslate"><span class="pre">ring:1</span></code> to component named <code class="docutils literal notranslate"><span class="pre">mr1</span></code>.</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$</span> curl -X PUT -H <span class="s1">&#39;application/json&#39;</span> <span class="se">\</span>
+  -d <span class="s1">&#39;{&quot;action&quot;: &quot;attach&quot;, &quot;port&quot;: &quot;ring:1&quot;, &quot;dir&quot;: &quot;rx&quot;}&#39;</span> <span class="se">\</span>
+  http://127.0.0.1:7777/v1/mirrors/1/components/mr1/ports
+</pre></div>
+</div>
+<p>Detach tx port of <code class="docutils literal notranslate"><span class="pre">ring:1</span></code> from component named <code class="docutils literal notranslate"><span class="pre">mr1</span></code>.</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$</span> curl -X PUT -H <span class="s1">&#39;application/json&#39;</span> <span class="se">\</span>
+  -d <span class="s1">&#39;{&quot;action&quot;: &quot;detach&quot;, &quot;port&quot;: &quot;ring:0&quot;, &quot;dir&quot;: &quot;tx&quot;}&#39;</span> <span class="se">\</span>
+  http://127.0.0.1:7777/v1/mirrors/1/components/mr1/ports
+</pre></div>
+</div>
+</div>
+<div class="section" id="id12">
+<h3>6.4.4. Response<a class="headerlink" href="#id12" title="Permalink to this headline">¶</a></h3>
+<p>There is no body content for the response of a successful <code class="docutils literal notranslate"><span class="pre">PUT</span></code> request.</p>
+</div>
+<div class="section" id="id13">
+<h3>6.4.5. Equivalent CLI command<a class="headerlink" href="#id13" title="Permalink to this headline">¶</a></h3>
+<p>Action is <code class="docutils literal notranslate"><span class="pre">attach</span></code>.</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>spp &gt; mirror {client_id}; port add {port} {dir} {name}
+</pre></div>
+</div>
+<p>Action is <code class="docutils literal notranslate"><span class="pre">detach</span></code>.</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>spp &gt; mirror {client_id}; port del {port} {dir} {name}
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="spp_pcap.html" class="btn btn-neutral float-right" title="7. spp_pcap" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="spp_vf.html" class="btn btn-neutral float-left" title="5. spp_vf" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>
