@@ -1,5 +1,5 @@
 From b46531ede8a886076a2a239190a188315d5d3718 Mon Sep 17 00:00:00 2001
-From: Hideyuki Yamashita <yamashita.hideyuki@po.ntt-tx.co.jp>
+From: Hideyuki Yamashita <yamashita.hideyuki@ntt-tx.co.jp>
 Date: Fri, 6 Mar 2020 16:47:05 +0900
 Subject: [PATCH v2 00/11] Add Hardware offload document
 
