@@ -65,7 +65,7 @@ index 54aead4..bc89c65 100644
 +
 +   ``validate`` and/or ``create`` in flow command tends to take long
 +   parameters. But you should enter it as one line.
-+   CLI assumes that new line means ``commmand is entered``. So command
++   CLI assumes that new line means ``command is entered``. So command
 +   should be entered without using new line.
 +
 +You can delete specific flow rule.
@@ -85,7 +85,7 @@ index 54aead4..bc89c65 100644
 +   1       1       0       i--     ETH VLAN => QUEUE OF_POP_VLAN
 +   2       0       0       i--     ETH => JUMP
 +
-+The following is the paraemters to be displayed.
++The following is the parameters to be displayed.
 +
 +* ``ID``: Identifier of the rule which is unique per physical port.
 +* ``Group``: Group number the rule belongs.
