@@ -1,0 +1,173 @@
+Return-path: <owner-x-fn-spp-ml@ntt-tx.co.jp>
+Received: from zssg-mailmd105.ddreams.local
+ (zssg-mailmd105.ddreams.local [10.160.123.100])
+ by zssg-mailms320.ddreams.local (NTT DoCoMo Mail System)
+ with ESMTP id <0QBS0097NC0CF3A0@NTTDoCoMo.co.jp>; Fri,
+ 12 Jun 2020 08:31:24 +0900 (JST)
+Received: from smtp_saver-daemon.zssg-mailmd105.ddreams.local by
+ zssg-mailmd105.ddreams.local (dDREAMS) id <0QBS00C32C0C3P00@dDREAMS>; Fri,
+ 12 Jun 2020 08:31:24 +0900 (JST)
+Received: from tcp_intranet-daemon.zssg-mailmd105.ddreams.local by
+ zssg-mailmd105.ddreams.local (dDREAMS) id <0QBS00C04C0CR700@dDREAMS>; Fri,
+ 12 Jun 2020 08:31:24 +0900 (JST)
+Received: from zssg-mailmf102.ddreams.local
+ (zssg-mailmf900.ddreams.local [10.160.172.84]) by zssg-mailmd105.ddreams.local
+ (dDREAMS) with ESMTP id <0QBS010NWC0CJ7D0@dDREAMS> for
+ mlchannel]:x-fn-spp-ml@ntt-tx.co.jp (ORCPT x-fn-spp-ml@ntt-tx.co.jp); Fri,
+ 12 Jun 2020 08:31:24 +0900 (JST)
+Received: from zssg-mailmf102.ddreams.local (unknown [127.0.0.1])
+	by zssg-mailmf102.ddreams.local (Postfix) with ESMTP id 96F517E603A	for
+ <x-fn-spp-ml@ntt-tx.co.jp>; Fri, 12 Jun 2020 08:31:24 +0900 (JST)
+Received: from zssg-mailmf102.ddreams.local (unknown [127.0.0.1])
+	by IMSVA (Postfix) with ESMTP id 95D528E6054	for <x-fn-spp-ml@ntt-tx.co.jp>;
+ Fri, 12 Jun 2020 08:31:24 +0900 (JST)
+Received: from localhost (unknown [127.0.0.1])	by IMSVA (Postfix)
+ with SMTP id 944558E6050	for <x-fn-spp-ml@ntt-tx.co.jp>; Fri,
+ 12 Jun 2020 08:31:24 +0900 (JST)
+X-IMSS-HAND-OFF-DIRECTIVE: localhost:10026
+Received: from zssg-mailmf102.ddreams.local (unknown [127.0.0.1])
+	by IMSVA (Postfix) with ESMTP id 33B248E6042	for <x-fn-spp-ml@ntt-tx.co.jp>;
+ Fri, 12 Jun 2020 08:31:24 +0900 (JST)
+Received: from imss02.silk.ntt-tx.co.jp (unknown [10.160.183.139])
+	by zssg-mailmf102.ddreams.local (Postfix)
+ with ESMTPS	for <x-fn-spp-ml@ntt-tx.co.jp>; Fri,
+ 12 Jun 2020 08:31:24 +0900 (JST)
+Received: from imss02.silk.ntt-tx.co.jp (localhost [127.0.0.1])
+ by imss02.silk.ntt-tx.co.jp (unknown) with ESMTP id 05BNVN9M029281 for
+ unknown; Fri, 12 Jun 2020 08:31:23 +0900
+Received: from mail02.ics.ntt-tx.co.jp
+ (mail02.ics.ntt-tx.co.jp [10.254.107.24]) by imss02.silk.ntt-tx.co.jp
+ (unknown) with ESMTP id 05BNVNe6029277 for unknown; Fri,
+ 12 Jun 2020 08:31:23 +0900
+Authentication-results: mail02.ics.ntt-tx.co.jp; spf=pass
+ smtp.mailfrom=spp-bounces@dpdk.org
+Received: from dpdk.org (dpdk.org [92.243.14.124])	by mail02.ics.ntt-tx.co.jp
+ (unknown) with ESMTP id 05BNVHaN000884	for unknown; Fri,
+ 12 Jun 2020 08:31:23 +0900
+Received: from [92.243.14.124] (localhost [127.0.0.1])	by dpdk.org (Postfix)
+ with ESMTP id 48A84E07;	Fri, 12 Jun 2020 01:31:16 +0200 (CEST)
+Received: from mail.valinux.co.jp (mail.valinux.co.jp [210.128.90.3])
+ by dpdk.org (Postfix) with ESMTP id A821D2AB for <spp@dpdk.org>; Fri,
+ 12 Jun 2020 01:31:14 +0200 (CEST)
+Received: from localhost (localhost [127.0.0.1])
+ by mail.valinux.co.jp (Postfix) with ESMTP id 7426EA0371; Fri,
+ 12 Jun 2020 08:31:12 +0900 (JST)
+X-Virus-Scanned: Debian amavisd-new at valinux.co.jp
+Received: from mail.valinux.co.jp ([127.0.0.1])
+ by localhost (mail.valinux.co.jp [127.0.0.1]) (amavisd-new, port 10024)
+ with ESMTP id FtAfq1-3pT7M; Fri, 12 Jun 2020 08:31:12 +0900 (JST)
+Received: from valinux.co.jp (vagw.valinux.co.jp [210.128.90.14])
+ by mail.valinux.co.jp (Postfix) with ESMTP id 46B24A036B; Fri,
+ 12 Jun 2020 08:31:12 +0900 (JST)
+From: Itsuro Oda <oda@valinux.co.jp>
+To: spp@dpdk.org, yasufum.o@gmail.com
+Date: Fri, 12 Jun 2020 08:31:12 +0900
+Message-id: <20200611233112.5976-1-oda@valinux.co.jp>
+X-Mailer: git-send-email 2.17.1
+Subject: (x-fn-spp-ml 788) [spp] [PATCH] tools/sppc: improvement of Dockerfile
+ for SPP	container
+X-BeenThere: spp@dpdk.org
+X-Mailman-Version: 2.1.15
+Precedence: list
+List-Id: Soft Patch Panel <spp.dpdk.org>
+List-Unsubscribe: <https://mails.dpdk.org/options/spp>,
+ <mailto:spp-request@dpdk.org?subject=unsubscribe>
+List-Archive: <http://mails.dpdk.org/archives/spp/>
+List-Post: <mailto:spp@dpdk.org>
+List-Help: <mailto:spp-request@dpdk.org?subject=help>
+List-Subscribe: <https://mails.dpdk.org/listinfo/spp>,
+ <mailto:spp-request@dpdk.org?subject=subscribe>
+Errors-to: spp-bounces@dpdk.org
+Sender: spp <spp-bounces@dpdk.org>
+X-TM-AS-GCONF: 00
+X-MLNAME: x-fn-spp-ml@ntt-tx.co.jp
+Delivered-to: x-fn-spp-ml@ntt-tx.co.jp
+X-MD-STAMP: ON
+
+This patch includes some improvements of Dockerfile used by
+building SPP containers.
+
+* remove a nonexistent command path
+* add some useful command paths
+* specify a value of 'make -j' option of making DPDK not to
+  exhaust system resources by compiling processes.
+
+Signed-off-by: Itsuro Oda <oda@valinux.co.jp>
+---
+ tools/sppc/build/ubuntu/spp/Dockerfile.16.04  | 5 +++--
+ tools/sppc/build/ubuntu/spp/Dockerfile.18.04  | 5 +++--
+ tools/sppc/build/ubuntu/spp/Dockerfile.latest | 5 +++--
+ 3 files changed, 9 insertions(+), 6 deletions(-)
+
+diff --git a/tools/sppc/build/ubuntu/spp/Dockerfile.16.04 b/tools/sppc/build/ubuntu/spp/Dockerfile.16.04
+index 3e060df..7c81b3a 100644
+--- a/tools/sppc/build/ubuntu/spp/Dockerfile.16.04
++++ b/tools/sppc/build/ubuntu/spp/Dockerfile.16.04
+@@ -19,7 +19,8 @@ ENV PATH ${rte_sdk}/${rte_target}/app:${PATH}
+ ENV PATH ${home_dir}/${spp_dir}/src/primary/${rte_target}/:${PATH}
+ ENV PATH ${home_dir}/${spp_dir}/src/nfv/${rte_target}/:${PATH}
+ ENV PATH ${home_dir}/${spp_dir}/src/vf/${rte_target}/:${PATH}
+-ENV PATH ${home_dir}/${spp_dir}/src/vm/${rte_target}/:${PATH}
++ENV PATH ${home_dir}/${spp_dir}/src/mirror/${rte_target}/:${PATH}
++ENV PATH ${home_dir}/${spp_dir}/src/pcap/${rte_target}/:${PATH}
+ 
+ WORKDIR $home_dir
+ RUN git clone ${dpdk_branch} ${dpdk_repo}
+@@ -27,7 +28,7 @@ RUN git clone ${spp_branch} ${spp_repo}
+ 
+ # Compile DPDK and SPP
+ WORKDIR ${rte_sdk}
+-RUN make -j install T=${rte_target}
++RUN make -j 4 install T=${rte_target}
+ 
+ WORKDIR ${home_dir}/${spp_dir}
+ RUN make -j
+diff --git a/tools/sppc/build/ubuntu/spp/Dockerfile.18.04 b/tools/sppc/build/ubuntu/spp/Dockerfile.18.04
+index e35fbc2..9b90dd4 100644
+--- a/tools/sppc/build/ubuntu/spp/Dockerfile.18.04
++++ b/tools/sppc/build/ubuntu/spp/Dockerfile.18.04
+@@ -19,7 +19,8 @@ ENV PATH ${rte_sdk}/${rte_target}/app:${PATH}
+ ENV PATH ${home_dir}/${spp_dir}/src/primary/${rte_target}/:${PATH}
+ ENV PATH ${home_dir}/${spp_dir}/src/nfv/${rte_target}/:${PATH}
+ ENV PATH ${home_dir}/${spp_dir}/src/vf/${rte_target}/:${PATH}
+-ENV PATH ${home_dir}/${spp_dir}/src/vm/${rte_target}/:${PATH}
++ENV PATH ${home_dir}/${spp_dir}/src/mirror/${rte_target}/:${PATH}
++ENV PATH ${home_dir}/${spp_dir}/src/pcap/${rte_target}/:${PATH}
+ ENV DEBIAN_FRONTEND noninteractive
+ 
+ WORKDIR $home_dir
+@@ -28,7 +29,7 @@ RUN git clone ${spp_branch} ${spp_repo}
+ 
+ # Compile DPDK and SPP
+ WORKDIR ${rte_sdk}
+-RUN make -j install T=${rte_target}
++RUN make -j 4 install T=${rte_target}
+ 
+ WORKDIR ${home_dir}/${spp_dir}
+ RUN make -j
+diff --git a/tools/sppc/build/ubuntu/spp/Dockerfile.latest b/tools/sppc/build/ubuntu/spp/Dockerfile.latest
+index a1ffc80..7e6f5ac 100644
+--- a/tools/sppc/build/ubuntu/spp/Dockerfile.latest
++++ b/tools/sppc/build/ubuntu/spp/Dockerfile.latest
+@@ -19,7 +19,8 @@ ENV PATH ${rte_sdk}/${rte_target}/app:${PATH}
+ ENV PATH ${home_dir}/${spp_dir}/src/primary/${rte_target}/:${PATH}
+ ENV PATH ${home_dir}/${spp_dir}/src/nfv/${rte_target}/:${PATH}
+ ENV PATH ${home_dir}/${spp_dir}/src/vf/${rte_target}/:${PATH}
+-ENV PATH ${home_dir}/${spp_dir}/src/vm/${rte_target}/:${PATH}
++ENV PATH ${home_dir}/${spp_dir}/src/mirror/${rte_target}/:${PATH}
++ENV PATH ${home_dir}/${spp_dir}/src/pcap/${rte_target}/:${PATH}
+ ENV DEBIAN_FRONTEND noninteractive
+ 
+ WORKDIR $home_dir
+@@ -28,7 +29,7 @@ RUN git clone ${spp_branch} ${spp_repo}
+ 
+ # Compile DPDK and SPP
+ WORKDIR ${rte_sdk}
+-RUN make -j install T=${rte_target}
++RUN make -j 4 install T=${rte_target}
+ 
+ WORKDIR ${home_dir}/${spp_dir}
+ RUN make -j
+-- 
+2.17.0
+
