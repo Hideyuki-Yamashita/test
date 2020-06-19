@@ -1,0 +1,139 @@
+Return-path: <owner-x-fn-spp-ml@ntt-tx.co.jp>
+Received: from zssg-mailmd106.ddreams.local
+ (zssg-mailmd106.ddreams.local [10.160.123.101])
+ by zssg-mailms320.ddreams.local (NTT DoCoMo Mail System)
+ with ESMTP id <0QBL00W8UJ8TQX20@NTTDoCoMo.co.jp>; Mon,
+ 08 Jun 2020 16:24:29 +0900 (JST)
+Received: from smtp_saver-daemon.zssg-mailmd106.ddreams.local by
+ zssg-mailmd106.ddreams.local (dDREAMS) id <0QBL00K5EJ8TS500@dDREAMS>; Mon,
+ 08 Jun 2020 16:24:29 +0900 (JST)
+Received: from tcp_intranet-daemon.zssg-mailmd106.ddreams.local by
+ zssg-mailmd106.ddreams.local (dDREAMS) id <0QBL00K0MJ8TYF00@dDREAMS>; Mon,
+ 08 Jun 2020 16:24:29 +0900 (JST)
+Received: from zssg-mailmf102.ddreams.local
+ (zssg-mailmf900.ddreams.local [10.160.172.84]) by zssg-mailmd106.ddreams.local
+ (dDREAMS) with ESMTP id <0QBL00J3JJ8TIT10@dDREAMS> for
+ mlchannel]:x-fn-spp-ml@ntt-tx.co.jp (ORCPT x-fn-spp-ml@ntt-tx.co.jp); Mon,
+ 08 Jun 2020 16:24:29 +0900 (JST)
+Received: from zssg-mailmf102.ddreams.local (unknown [127.0.0.1])
+	by zssg-mailmf102.ddreams.local (Postfix) with ESMTP id 451157E603B	for
+ <x-fn-spp-ml@ntt-tx.co.jp>; Mon,  8 Jun 2020 16:24:29 +0900 (JST)
+Received: from zssg-mailmf102.ddreams.local (unknown [127.0.0.1])
+	by IMSVA (Postfix) with ESMTP id 445428E6056	for <x-fn-spp-ml@ntt-tx.co.jp>;
+ Mon,  8 Jun 2020 16:24:29 +0900 (JST)
+Received: from localhost (unknown [127.0.0.1])	by IMSVA (Postfix)
+ with SMTP id 42B378E6066	for <x-fn-spp-ml@ntt-tx.co.jp>; Mon,
+ 8 Jun 2020 16:24:29 +0900 (JST)
+X-IMSS-HAND-OFF-DIRECTIVE: localhost:10026
+Received: from zssg-mailmf102.ddreams.local (unknown [127.0.0.1])
+	by IMSVA (Postfix) with ESMTP id 467ED8E6042	for <x-fn-spp-ml@ntt-tx.co.jp>;
+ Mon,  8 Jun 2020 16:24:28 +0900 (JST)
+Received: from imss02.silk.ntt-tx.co.jp (unknown [10.160.183.139])
+	by zssg-mailmf102.ddreams.local (Postfix)
+ with ESMTPS	for <x-fn-spp-ml@ntt-tx.co.jp>; Mon,
+ 8 Jun 2020 16:24:28 +0900 (JST)
+Received: from imss02.silk.ntt-tx.co.jp (localhost [127.0.0.1])
+ by imss02.silk.ntt-tx.co.jp (unknown) with ESMTP id 0587OQKD015866 for
+ unknown; Mon, 8 Jun 2020 16:24:26 +0900
+Received: from mail02.ics.ntt-tx.co.jp
+ (mail02.ics.ntt-tx.co.jp [10.254.107.24]) by imss02.silk.ntt-tx.co.jp
+ (unknown) with ESMTP id 0587OQsq015863 for unknown; Mon,
+ 8 Jun 2020 16:24:26 +0900
+Authentication-results: mail02.ics.ntt-tx.co.jp; spf=pass
+ smtp.mailfrom=spp-bounces@dpdk.org
+Received: from dpdk.org (dpdk.org [92.243.14.124])	by mail02.ics.ntt-tx.co.jp
+ (unknown) with ESMTP id 0587OLkc028341	for unknown; Mon,
+ 8 Jun 2020 16:24:27 +0900
+Received: from [92.243.14.124] (localhost [127.0.0.1])	by dpdk.org (Postfix)
+ with ESMTP id 14C801BE8D;	Mon,  8 Jun 2020 09:24:21 +0200 (CEST)
+Received: from mail-pl1-f172.google.com
+ (mail-pl1-f172.google.com [209.85.214.172]) by dpdk.org (Postfix)
+ with ESMTP id 8CECD1BE85 for <spp@dpdk.org>; Mon,
+ 8 Jun 2020 09:24:19 +0200 (CEST)
+Received: by mail-pl1-f172.google.com with SMTP id bg4so6315912plb.3 for
+ <spp@dpdk.org>; Mon, 08 Jun 2020 00:24:19 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
+ h=from:to:subject:date:message-id:in-reply-to:references;
+ bh=JHGCm9BXExNF9Y6rxxWcX2qS6KNCxTpXnBFkAPGVqpY=;
+ b=J6+v7OJGOt3+gkII5eJyxJXzno9+hnNOrzegzMFCF/epz/amfQuhaC3JMng+2wH1qa
+ aRY8lSb2p6BStEytL1bEK1gSVZaeInn004fg4gfSBMV3NV9PlinkH34eFbvwsMdISdLZ
+ LycYclPntOInA73tWD8dt/HExlI/8RKwzApVFufDMHu+UdGpVJqLcco9Ry2fW6wMBtAe
+ W9NVHQeetATGVfzu/NJgmvZSTNk2Ek8oRuEYuZb5hkPSEYw8dZ0Ev7e+fMija4ptCocL
+ hUBU4ofaldDBfcSPLTDUAqiEyc/6RImuyxmxWuNXThQa2huDJTGZwP9WRqd0CG10gFcX YbLQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=1e100.net;
+ s=20161025; h=x-gm-message-state:from:to:subject:date:message-id:in-reply-to
+ :references; bh=JHGCm9BXExNF9Y6rxxWcX2qS6KNCxTpXnBFkAPGVqpY=;
+ b=sKkBceObUT2eqUHFqf88d60zkgKSdaCuyWgnxLqJFBaYZMhyxmuiL8/xdLuxbY+9QI
+ /+br0tSOLWYqMw8Xd0Qz1olxQp6rrXjiqd3KjepE1NPWgPNHTXC/IvngEv/oyh/Q5Qth
+ iPwaptGFXLmpHf0dr1KbA8x5nmM/WlZT66sCxlrT/L1GYo2qcr2ppymDuDDRjMR3AqSk
+ tvqpyi8mMr8mt5yL35LuHd88N2qwwqGqhiTuGfSwDdMi3NOUXh0StEw6yrMLG6Qq8HtU
+ jaqdNdEhIxJ7emciBF0/r1YXX8SqI3vgg326BZPTRInrTOzY9zCwSs+ppBzij7TOSHle VNKg==
+X-Gm-Message-State: AOAM531odMl89sVPtdZZq1MQPZCkMISoGyjMXAywvCJ1qgIODT/WrvYV
+ P796M75A8BlDORQf5dln9ZLjpV8gqSU=
+X-Google-Smtp-Source:
+ ABdhPJzyVz9G1GSw2p/qetbC5IRAISdkFZNZbwMmNQi2RDzly/p6bw9yujuJLDQ+47EGPrpmQ6nukw==
+X-Received: by 2002:a17:90a:bf13:: with SMTP id
+ c19mr14619529pjs.186.1591601058652; Mon, 08 Jun 2020 00:24:18 -0700 (PDT)
+Received: from localhost.localdomain
+ ([2400:4050:c8c2:de00:24f0:5bb7:ec39:8998]) by smtp.gmail.com with ESMTPSA id
+ mu17sm16499743pjb.53.2020.06.08.00.24.17
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256); Mon,
+ 08 Jun 2020 00:24:18 -0700 (PDT)
+From: Yasufumi Ogawa <yasufum.o@gmail.com>
+To: spp@dpdk.org, ferruh.yigit@intel.com, yasufum.o@gmail.com
+Date: Mon, 08 Jun 2020 16:24:12 +0900
+Message-id: <20200608072412.18349-2-yasufum.o@gmail.com>
+X-Mailer: git-send-email 2.17.1
+In-reply-to: <20200608072412.18349-1-yasufum.o@gmail.com>
+References: <20200608072412.18349-1-yasufum.o@gmail.com>
+Subject: (x-fn-spp-ml 780) [spp] [PATCH 1/1] Update SPP maintainers
+X-BeenThere: spp@dpdk.org
+X-Mailman-Version: 2.1.15
+Precedence: list
+List-Id: Soft Patch Panel <spp.dpdk.org>
+List-Unsubscribe: <https://mails.dpdk.org/options/spp>,
+ <mailto:spp-request@dpdk.org?subject=unsubscribe>
+List-Archive: <http://mails.dpdk.org/archives/spp/>
+List-Post: <mailto:spp@dpdk.org>
+List-Help: <mailto:spp-request@dpdk.org?subject=help>
+List-Subscribe: <https://mails.dpdk.org/listinfo/spp>,
+ <mailto:spp-request@dpdk.org?subject=subscribe>
+Errors-to: spp-bounces@dpdk.org
+Sender: spp <spp-bounces@dpdk.org>
+X-TM-AS-GCONF: 00
+X-MLNAME: x-fn-spp-ml@ntt-tx.co.jp
+Delivered-to: x-fn-spp-ml@ntt-tx.co.jp
+X-MD-STAMP: ON
+
+This update is to take Ferruh Yigit off from SPP maintainers.
+
+Signed-off-by: Yasufumi Ogawa <yasufum.o@gmail.com>
+---
+ CONTRIBUTING.txt | 1 -
+ MAINTAINERS      | 1 -
+ 2 files changed, 2 deletions(-)
+
+diff --git a/CONTRIBUTING.txt b/CONTRIBUTING.txt
+index 2467547..957b7fb 100644
+--- a/CONTRIBUTING.txt
++++ b/CONTRIBUTING.txt
+@@ -48,5 +48,4 @@ Coding Guidelines
+ Maintainer
+ ----------
+ 
+-* Ferruh Yigit <ferruh.yigit@intel.com>
+ * Yasufumi Ogawa <ogawa.yasufumi@lab.ntt.co.jp>
+diff --git a/MAINTAINERS b/MAINTAINERS
+index b848ae6..892db3f 100644
+--- a/MAINTAINERS
++++ b/MAINTAINERS
+@@ -23,6 +23,5 @@ General Project Administration
+ ------------------------------
+ 
+ Main Branch
+-M: Ferruh Yigit <ferruh.yigit@intel.com>
+ M: Yasufumi Ogawa <yasufum.o@gmail.com>
+ T: git://dpdk.org/apps/spp
+-- 
+2.17.1
+
