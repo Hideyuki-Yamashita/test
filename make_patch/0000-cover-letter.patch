@@ -1,0 +1,34 @@
+From 5d311548d49e5748d46dcc9056f5644746789cea Mon Sep 17 00:00:00 2001
+From: Hideyuki Yamashita <yamashita.hideyuki@ntt-tx.co.jp>
+Date: Fri, 19 Jun 2020 14:23:36 +0900
+Subject: [PATCH 0/5] remove ringlatency stats functionality
+
+This patch set removes 'ringlatency stats'
+functionality which is not used anymore.
+
+Hideyuki Yamashita (5):
+  Makefile: remove ringlatency stats functionality
+  shared: remove ringlatency stats functionality
+  vf: remove ringlatency stats functionality
+  pcap: remove ringlatency stats functionality
+  mirror: remove ringlatency stats functionality
+
+ src/mirror/Makefile                           |   6 -
+ src/mirror/spp_mirror.c                       |  43 ----
+ src/pcap/Makefile                             |   2 -
+ src/pcap/spp_pcap.c                           |   8 -
+ .../secondary/spp_worker_th/cmd_utils.h       |   3 -
+ .../secondary/spp_worker_th/latency_stats.c   | 240 ------------------
+ .../secondary/spp_worker_th/latency_stats.h   | 167 ------------
+ .../secondary/spp_worker_th/port_capability.c |  47 ----
+ src/vf/Makefile                               |   6 -
+ src/vf/classifier.c                           |  19 +-
+ src/vf/forwarder.c                            |  19 +-
+ src/vf/spp_vf.c                               |  27 --
+ 12 files changed, 8 insertions(+), 579 deletions(-)
+ delete mode 100644 src/shared/secondary/spp_worker_th/latency_stats.c
+ delete mode 100644 src/shared/secondary/spp_worker_th/latency_stats.h
+
+-- 
+2.17.1
+

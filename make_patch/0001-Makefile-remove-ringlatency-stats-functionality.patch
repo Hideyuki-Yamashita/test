@@ -1,0 +1,86 @@
+From 8241beb8d615a1c8220d93276e81ce31a56394cc Mon Sep 17 00:00:00 2001
+From: Hideyuki Yamashita <yamashita.hideyuki@ntt-tx.co.jp>
+Date: Wed, 10 Jun 2020 10:21:05 +0900
+Subject: [PATCH 1/5] Makefile: remove ringlatency stats functionality
+
+This patch tries to remove ringlatency stats functionality.
+
+Signed-off-by: Hideyuki Yamashita <yamashita.hideyuki@ntt-tx.co.jp>
+Signed-off-by: Naoki Takada <ntakada14@gmail.com>
+---
+ src/mirror/Makefile | 6 ------
+ src/pcap/Makefile   | 2 --
+ src/vf/Makefile     | 6 ------
+ 3 files changed, 14 deletions(-)
+
+diff --git a/src/mirror/Makefile b/src/mirror/Makefile
+index e878c89..6cc960c 100644
+--- a/src/mirror/Makefile
++++ b/src/mirror/Makefile
+@@ -26,7 +26,6 @@ SRCS-y += $(SPP_WKT_DIR)/port_capability.c
+ SRCS-y += $(SPP_WKT_DIR)/conn_spp_ctl.c
+ SRCS-y += $(SPP_WKT_DIR)/cmd_parser.c
+ SRCS-y += $(SPP_WKT_DIR)/cmd_runner.c
+-SRCS-y += $(SPP_WKT_DIR)/latency_stats.c
+ SRCS-y += $(SPP_WKT_DIR)/cmd_res_formatter.c
+ 
+ CFLAGS += -DALLOW_EXPERIMENTAL_API
+@@ -43,11 +42,6 @@ CFLAGS += -DSPP_MIRROR_SHALLOWCOPY
+ # Optional Settings
+ #CFLAGS += -DSPP_DEMONIZE
+ 
+-# TODO(Hideyuki Yamashita) ringlatencystats cannot run because a fatal
+-# bug in initialization of this feature. So you should not use it until
+-# this fatal bug is fixed.
+-#CFLAGS += -DSPP_RINGLATENCYSTATS_ENABLE
+-
+ ifeq ($(CONFIG_RTE_BUILD_SHARED_LIB),y)
+ LDLIBS += -lrte_pmd_ring
+ LDLIBS += -lrte_pmd_vhost
+diff --git a/src/pcap/Makefile b/src/pcap/Makefile
+index 4e53952..6da03f6 100644
+--- a/src/pcap/Makefile
++++ b/src/pcap/Makefile
+@@ -24,7 +24,6 @@ SRCS-y += $(SPP_SEC_DIR)/utils.c
+ SRCS-y += $(SPP_SEC_DIR)/string_buffer.c
+ SRCS-y += $(SPP_WKT_DIR)/conn_spp_ctl.c
+ SRCS-y += $(SPP_WKT_DIR)/port_capability.c
+-SRCS-y += $(SPP_WKT_DIR)/latency_stats.c
+ 
+ CFLAGS += -DALLOW_EXPERIMENTAL_API
+ CFLAGS += $(WERROR_FLAGS) -O3 -MMD
+@@ -34,7 +33,6 @@ CFLAGS += -I$(SRCDIR)/../shared
+ 
+ # Optional Settings
+ #CFLAGS += -DSPP_DEMONIZE
+-#CFLAGS += -DSPP_RINGLATENCYSTATS_ENABLE
+ 
+ LDLIBS += -llz4
+ 
+diff --git a/src/vf/Makefile b/src/vf/Makefile
+index 1daddb6..ebaed37 100644
+--- a/src/vf/Makefile
++++ b/src/vf/Makefile
+@@ -20,7 +20,6 @@ SRCS-y += $(SPP_SEC_DIR)/string_buffer.c
+ SRCS-y += $(SPP_SEC_DIR)/json_helper.c
+ SRCS-y += $(SPP_SEC_DIR)/common.c
+ SRCS-y += $(SPP_SEC_DIR)/utils.c $(SPP_SEC_DIR)/add_port.c
+-SRCS-y += $(SPP_WKT_DIR)/latency_stats.c
+ SRCS-y += $(SPP_WKT_DIR)/port_capability.c
+ SRCS-y += $(SPP_WKT_DIR)/conn_spp_ctl.c
+ SRCS-y += $(SPP_WKT_DIR)/cmd_parser.c
+@@ -38,11 +37,6 @@ CFLAGS += -DSPP_VF_MODULE
+ # Optional Settings
+ #CFLAGS += -DSPP_DEMONIZE
+ 
+-# TODO(Hideyuki Yamashita) ringlatencystats cannot run because a fatal
+-# bug in initialization of this feature. So you should not use it until
+-# this fatal bug is fixed.
+-#CFLAGS += -DSPP_RINGLATENCYSTATS_ENABLE
+-
+ ifeq ($(CONFIG_RTE_BUILD_SHARED_LIB),y)
+ LDLIBS += -lrte_pmd_ring
+ LDLIBS += -lrte_pmd_vhost
+-- 
+2.17.1
+

@@ -1,0 +1,44 @@
+From bca37040127b776c68c88de02259cb99a38bb059 Mon Sep 17 00:00:00 2001
+From: Hideyuki Yamashita <yamashita.hideyuki@ntt-tx.co.jp>
+Date: Wed, 10 Jun 2020 11:13:26 +0900
+Subject: [PATCH 4/5] pcap: remove ringlatency stats functionality
+
+This patch tries to remove ringlatency stats functionality.
+
+Signed-off-by: Hideyuki Yamashita <yamashita.hideyuki@ntt-tx.co.jp>
+Signed-off-by: Naoki Takada <ntakada14@gmail.com>
+---
+ src/pcap/spp_pcap.c | 8 --------
+ 1 file changed, 8 deletions(-)
+
+diff --git a/src/pcap/spp_pcap.c b/src/pcap/spp_pcap.c
+index 1f20e1e..5bb987f 100644
+--- a/src/pcap/spp_pcap.c
++++ b/src/pcap/spp_pcap.c
+@@ -23,9 +23,6 @@
+ #include "shared/secondary/utils.h"
+ #include "shared/secondary/spp_worker_th/port_capability.h"
+ 
+-#ifdef SPP_RINGLATENCYSTATS_ENABLE
+-#include "shared/secondary/spp_worker_th/latency_stats.h"
+-#endif
+ 
+ /* Declare global variables */
+ #define RTE_LOGTYPE_SPP_PCAP RTE_LOGTYPE_USER2
+@@ -847,13 +844,8 @@ static int pcap_proc_receive(int lcore_id)
+ 
+ 	/* Receive packets */
+ 	rx = &g_pcap_option.port_cap;
+-#ifdef SPP_RINGLATENCYSTATS_ENABLE
+-	nb_rx = sppwk_eth_ring_stats_rx_burst(rx->ethdev_port_id,
+-			rx->iface_type, rx->iface_no, 0, bufs, MAX_PCAP_BURST);
+-#else
+ 	nb_rx = rte_eth_rx_burst(rx->ethdev_port_id, rx->queue_no, bufs,
+ 			MAX_PCAP_BURST);
+-#endif
+ 	if (unlikely(nb_rx == 0))
+ 		return SPPWK_RET_OK;
+ 
+-- 
+2.17.1
+
