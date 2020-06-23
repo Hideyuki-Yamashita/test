@@ -1,0 +1,35 @@
+From 8c486512aebfe38a09fedd35a2cb511c97a994ab Mon Sep 17 00:00:00 2001
+From: Hideyuki Yamashita <yamashita.hideyuki@ntt-tx.co.jp>
+Date: Thu, 14 May 2020 17:03:57 +0900
+Subject: [PATCH v2 4/5] makefile: change default build target
+
+This patch changes default build target from x86_64-native-linuxapp-gcc
+to x86_64-native-linux-gcc.
+
+From the following link, x86_64-native-linuxapp-gcc is not supported.
+
+https://doc.dpdk.org/guides-20.02/linux_gsg/
+build_dpdk.html#compiling-and-installing-dpdk-system-wide
+
+Signed-off-by: Hideyuki Yamashita <yamashita.hideyuki@ntt-tx.co.jp>
+Signed-off-by: Naoki Takada <ntakada14@gmail.com>
+---
+ GNUmakefile | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/GNUmakefile b/GNUmakefile
+index 0db3aaa..555dbb3 100644
+--- a/GNUmakefile
++++ b/GNUmakefile
+@@ -5,7 +5,7 @@ VERSION := 19.11
+ 
+ ifneq ($(RTE_SDK),)
+ # Default target, can be overriden by command line or environment
+-RTE_TARGET ?= x86_64-native-linuxapp-gcc
++RTE_TARGET ?= x86_64-native-linux-gcc
+ 
+ include $(RTE_SDK)/mk/rte.vars.mk
+ 
+-- 
+2.17.1
+

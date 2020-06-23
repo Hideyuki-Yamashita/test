@@ -1,0 +1,37 @@
+From 0dbbb46a47b2f188d56f51ba6075d438c11625a0 Mon Sep 17 00:00:00 2001
+From: Hideyuki Yamashita <yamashita.hideyuki@ntt-tx.co.jp>
+Date: Thu, 14 May 2020 15:25:59 +0900
+Subject: [PATCH v2 2/5] docs: resolve broken reference link
+
+This patch resolves broken link in reference section.
+This is pointed out by DPDK bugzilla.
+
+https://bugs.dpdk.org/show_bug.cgi?id=441
+
+Signed-off-by: Hideyuki Yamashita <yamashita.hideyuki@ntt-tx.co.jp>
+Signed-off-by: Naoki Takada <ntakada14@gmail.com>
+---
+ docs/guides/design/spp.rst | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/docs/guides/design/spp.rst b/docs/guides/design/spp.rst
+index 2c3ee46..43da0d4 100644
+--- a/docs/guides/design/spp.rst
++++ b/docs/guides/design/spp.rst
+@@ -27,11 +27,11 @@ SPP primary process is responsible for resource management, for example,
+ initializing ports, mbufs or shared memory. On the other hand,
+ secondary processes of ``spp_nfv`` are working for forwarding
+ `[1]
+-<https://dpdksummit.com/Archive/pdf/2017USA/Implementation%20and%20Testing%20of%20Soft%20Patch%20Panel.pdf>`_.
++<https://www.dpdk.org/wp-content/uploads/sites/35/2018/06/Implementation-and-Testing-of-Soft-Patch-Panel.pdf>`_.
+ 
+ 
+ Reference
+ ---------
+ 
+ * [1] `Implementation and Testing of Soft Patch Panel
+-  <https://dpdksummit.com/Archive/pdf/2017USA/Implementation%20and%20Testing%20of%20Soft%20Patch%20Panel.pdf>`_
++  <https://www.dpdk.org/wp-content/uploads/sites/35/2018/06/Implementation-and-Testing-of-Soft-Patch-Panel.pdf>`_
+-- 
+2.17.1
+

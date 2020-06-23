@@ -1,0 +1,32 @@
+From 75455ef585b698fb9aefd2a91f271f74b6838358 Mon Sep 17 00:00:00 2001
+From: Hideyuki Yamashita <yamashita.hideyuki@ntt-tx.co.jp>
+Date: Thu, 14 May 2020 15:06:16 +0900
+Subject: [PATCH v2 1/5] docs: remove unnecessary usage of ethtool
+
+This patch removes unnecessary usage of ethtool on host side
+in how_to_use section.
+
+Signed-off-by: Hideyuki Yamashita <yamashita.hideyuki@ntt-tx.co.jp>
+Signed-off-by: Naoki Takada <ntakada14@gmail.com>
+---
+ docs/guides/gsg/howto_use.rst | 7 -------
+ 1 file changed, 7 deletions(-)
+
+diff --git a/docs/guides/gsg/howto_use.rst b/docs/guides/gsg/howto_use.rst
+index 2e4be2f..a57813d 100644
+--- a/docs/guides/gsg/howto_use.rst
++++ b/docs/guides/gsg/howto_use.rst
+@@ -1035,10 +1035,3 @@ On the VMs, add an interface and disable offload.
+ 
+     # Disable offload
+     $ sudo ethtool -K IF_NAME tx off
+-
+-On host machine, it is also required to disable offload.
+-
+-.. code-block:: console
+-
+-    # Disable offload for VM
+-    $ sudo ethtool -K IF_NAME tx off
+-- 
+2.17.1
+
