@@ -1,0 +1,69 @@
+From a1cdd81733cd7e93f1302ff7cda56be0d83fe0a1 Mon Sep 17 00:00:00 2001
+From: Hideyuki Yamashita <yamashita.hideyuki@ntt-tx.co.jp>
+Date: Fri, 19 Jun 2020 21:00:38 +0900
+Subject: [PATCH] docs: add bug report chapter
+
+This patch adds how to issue bug using Bugzilla in RST document.
+Also reference is addded from "CONTRIBUTING.txt".
+
+Signed-off-by: Hideyuki Yamashita <yamashita.hideyuki@ntt-tx.co.jp>
+Signed-off-by: Naoki Takada <ntakada14@gmail.com>
+
+Change-Id: Ic327e119561e8754fae32a73760531920a0a97ee
+---
+ CONTRIBUTING.txt           |  6 ++++++
+ docs/guides/bug_report.rst | 12 ++++++++++++
+ docs/guides/index.rst      |  1 +
+ 3 files changed, 19 insertions(+)
+ create mode 100644 docs/guides/bug_report.rst
+
+diff --git a/CONTRIBUTING.txt b/CONTRIBUTING.txt
+index 957b7fb..3b24738 100644
+--- a/CONTRIBUTING.txt
++++ b/CONTRIBUTING.txt
+@@ -45,6 +45,12 @@ Coding Guidelines
+ * C code should follow the DPDK coding standards.
+ * Python code should follow PEP8.
+ 
++Bug report
++----------
++
++How to issue bug is described in "Bug report" chapter
++in the RST document.
++
+ Maintainer
+ ----------
+ 
+diff --git a/docs/guides/bug_report.rst b/docs/guides/bug_report.rst
+new file mode 100644
+index 0000000..70ec187
+--- /dev/null
++++ b/docs/guides/bug_report.rst
+@@ -0,0 +1,12 @@
++..  SPDX-License-Identifier: BSD-3-Clause
++    Copyright(c) 2020 Nippon Telegraph and Telephone Corporation
++
++Bug Report
++==========
++
++SPP is hosted project of DPDK.
++DPDK uses Bugzilla as its bug tracking system.
++
++Users can issue SPP related bugs in the following link:
++
++https://bugs.dpdk.org/buglist.cgi?bug_status=__open__&product=SPP
+diff --git a/docs/guides/index.rst b/docs/guides/index.rst
+index 70ec4a6..3ea80ef 100644
+--- a/docs/guides/index.rst
++++ b/docs/guides/index.rst
+@@ -15,6 +15,7 @@ SPP documentation
+    commands/index
+    tools/index
+    api_ref/index
++   bug_report
+ 
+ This documentation is the latest tagged version, but some of the latest
+ developing features might be not included.
+-- 
+2.17.1
+
