@@ -1,0 +1,30 @@
+From c669265384ce591d42be8a327b5e2d1572fea284 Mon Sep 17 00:00:00 2001
+From: Hideyuki Yamashita <yamashita.hideyuki@ntt-tx.co.jp>
+Date: Mon, 22 Jun 2020 18:49:17 +0900
+Subject: [PATCH v2 0/5] updates for catching up DPDK20.02
+
+v2:
+* separate configuration of 'igb_uio' from that of 'PCAP' 
+* move consideration of NUMA node to performance section
+
+Hideyuki Yamashita (5):
+  docs: remove unnecessary usage of ethtool
+  docs: resolve broken reference link
+  docs: catch up updates in dpdk-20.02
+  makefile: change default build target
+  docs: add note regarding NUMA configuration
+
+ GNUmakefile                             |  2 +-
+ docs/guides/design/spp.rst              |  4 +-
+ docs/guides/gsg/howto_use.rst           | 27 +++++-------
+ docs/guides/gsg/install.rst             | 11 ++++-
+ docs/guides/gsg/performance_opt.rst     | 55 +++++++++++++++++++++++++
+ docs/guides/tools/sppc/app_launcher.rst |  2 +-
+ docs/guides/usecases/spp_mirror.rst     | 10 ++---
+ docs/guides/usecases/spp_pcap.rst       |  4 +-
+ docs/guides/usecases/spp_vf.rst         |  8 ++--
+ 9 files changed, 90 insertions(+), 33 deletions(-)
+
+-- 
+2.17.1
+

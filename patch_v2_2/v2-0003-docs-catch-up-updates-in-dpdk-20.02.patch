@@ -1,0 +1,271 @@
+From 23ef6c1df10e366909afa42660a7c9fc5a0f0a40 Mon Sep 17 00:00:00 2001
+From: Hideyuki Yamashita <yamashita.hideyuki@ntt-tx.co.jp>
+Date: Thu, 14 May 2020 16:49:03 +0900
+Subject: [PATCH v2 3/5] docs: catch up updates in dpdk-20.02
+
+This patch catch up the following updates in dpdk-20.02.
+- new config to generate IGB_UIO module
+- change supported target from x86_64-native-linuxapp-gcc to
+  x86_64_native-linux-gcc
+
+Signed-off-by: Hideyuki Yamashita <yamashita.hideyuki@ntt-tx.co.jp>
+Signed-off-by: Naoki Takada <ntakada14@gmail.com>
+---
+ docs/guides/gsg/howto_use.rst           | 20 ++++++++++----------
+ docs/guides/gsg/install.rst             | 11 ++++++++++-
+ docs/guides/tools/sppc/app_launcher.rst |  2 +-
+ docs/guides/usecases/spp_mirror.rst     | 10 +++++-----
+ docs/guides/usecases/spp_pcap.rst       |  4 ++--
+ docs/guides/usecases/spp_vf.rst         |  8 ++++----
+ 6 files changed, 32 insertions(+), 23 deletions(-)
+
+diff --git a/docs/guides/gsg/howto_use.rst b/docs/guides/gsg/howto_use.rst
+index a57813d..f182198 100644
+--- a/docs/guides/gsg/howto_use.rst
++++ b/docs/guides/gsg/howto_use.rst
+@@ -120,7 +120,7 @@ It is same as following options launching from terminal.
+ 
+ .. code-block:: console
+ 
+-    $ sudo ./src/nfv/x86_64-native-linuxapp-gcc/spp_nfv \
++    $ sudo ./src/nfv/x86_64-native-linux-gcc/spp_nfv \
+         -l 1,2 -n 4 -m 512 \
+         --proc-type secondary \
+         --file-prefix spp \
+@@ -383,7 +383,7 @@ To launch SPP primary, run ``spp_primary`` with specific options.
+ .. code-block:: console
+ 
+     # terminal 3
+-    $ sudo ./src/primary/x86_64-native-linuxapp-gcc/spp_primary \
++    $ sudo ./src/primary/x86_64-native-linux-gcc/spp_primary \
+         -l 0 -n 4 \
+         --socket-mem 512,512 \
+         --huge-dir /dev/hugepages \
+@@ -430,7 +430,7 @@ Here is an example for launching ``spp_primary`` with monitor thread.
+ .. code-block:: console
+ 
+     # terminal 3
+-    $ sudo ./src/primary/x86_64-native-linuxapp-gcc/spp_primary \
++    $ sudo ./src/primary/x86_64-native-linux-gcc/spp_primary \
+         -l 0-1 -n 4 \   # two lcores
+         --socket-mem 512,512 \
+         --huge-dir /dev/hugepages \
+@@ -453,7 +453,7 @@ secondary processes.
+ .. code-block:: console
+ 
+     # terminal 3
+-    $ sudo ./src/primary/x86_64-native-linuxapp-gcc/spp_primary \
++    $ sudo ./src/primary/x86_64-native-linux-gcc/spp_primary \
+         -l 0 -n 4 \
+         --socket-mem 512,512 \
+         --huge-dir=/dev/hugepages \
+@@ -473,7 +473,7 @@ with white list option.
+ .. code-block:: console
+ 
+     # terminal 3
+-    $ sudo ./src/primary/x86_64-native-linuxapp-gcc/spp_primary \
++    $ sudo ./src/primary/x86_64-native-linux-gcc/spp_primary \
+         -l 0 -n 4 \
+         -w 0000:03:00.0,dv_flow_en=1 \
+         -w 0000:04:00.0,dv_flow_en=1 \
+@@ -524,7 +524,7 @@ as ``l2fwd``.
+ 
+     # terminal 4
+     $ cd /path/to/spp
+-    $ sudo ./src/nfv/x86_64-native-linuxapp-gcc/spp_nfv \
++    $ sudo ./src/nfv/x86_64-native-linux-gcc/spp_nfv \
+         -l 2-3 -n 4 \
+         --proc-type secondary \
+         --file-prefix $SPP_FILE_PREFIX \
+@@ -559,7 +559,7 @@ spp_vf
+ 
+ .. code-block:: console
+ 
+-    $ sudo ./src/vf/x86_64-native-linuxapp-gcc/spp_vf \
++    $ sudo ./src/vf/x86_64-native-linux-gcc/spp_vf \
+         -l 2-13 -n 4 \
+         --proc-type secondary \
+         --file-prefix $SPP_FILE_PREFIX \
+@@ -584,7 +584,7 @@ and options are same as ``spp_vf``.
+ 
+ .. code-block:: console
+ 
+-    $ sudo ./src/mirror/x86_64-native-linuxapp-gcc/spp_mirror \
++    $ sudo ./src/mirror/x86_64-native-linux-gcc/spp_mirror \
+         -l 2,3 -n 4 \
+         --proc-type secondary \
+         --file-prefix $SPP_FILE_PREFIX \
+@@ -611,7 +611,7 @@ SPP provides ``spp_pcap`` for capturing comparatively heavy traffic.
+ 
+ .. code-block:: console
+ 
+-    $ sudo ./src/pcap/x86_64-native-linuxapp-gcc/spp_pcap \
++    $ sudo ./src/pcap/x86_64-native-linux-gcc/spp_pcap \
+         -l 2-5 -n 4 \
+         --proc-type secondary \
+         --file-prefix $SPP_FILE_PREFIX \
+@@ -828,7 +828,7 @@ launching DPDK processes.
+     # terminal 6
+     $ ssh user@192.168.122.100
+     $ cd /path/to/spp
+-    $ sudo ./src/primary/x86_64-native-linuxapp-gcc/spp_primary \
++    $ sudo ./src/primary/x86_64-native-linux-gcc/spp_primary \
+         -l 1 -n 4 \
+         -m 1024 \
+         --huge-dir=/dev/hugepages \
+diff --git a/docs/guides/gsg/install.rst b/docs/guides/gsg/install.rst
+index 2abf330..102d61e 100644
+--- a/docs/guides/gsg/install.rst
++++ b/docs/guides/gsg/install.rst
+@@ -129,6 +129,15 @@ config file ``common_base`` should be changed to ``y`` to enable PCAP.
+     ...
+     CONFIG_RTE_PORT_PCAP=y
+ 
++Compilation of igb_uio module is disabled by default in DPDK configuration.
++``CONFIG_RTE_EAL_IGB_UIO`` defined in config file ``common_base`` should be
++changed to ``y`` to enable compilation of igb_uio.
++
++.. code-block:: console
++
++    # dpdk/config/common_base
++    CONFIG_RTE_EAL_IGB_UIO=y
++
+ If you use MLX5 NIC, ``CONFIG_RTE_LIBRTE_MLX5_PMD`` defined in
+ config file ``common_base`` should be changed to ``y``.
+ 
+@@ -143,7 +152,7 @@ Compile DPDK with target environment.
+ 
+     $ cd dpdk
+     $ export RTE_SDK=$(pwd)
+-    $ export RTE_TARGET=x86_64-native-linuxapp-gcc  # depends on your env
++    $ export RTE_TARGET=x86_64-native-linux-gcc  # depends on your env
+     $ make install T=$RTE_TARGET
+ 
+ Pyhton
+diff --git a/docs/guides/tools/sppc/app_launcher.rst b/docs/guides/tools/sppc/app_launcher.rst
+index b368a15..40f40ca 100644
+--- a/docs/guides/tools/sppc/app_launcher.rst
++++ b/docs/guides/tools/sppc/app_launcher.rst
+@@ -831,7 +831,7 @@ and three vhost interfaces.
+      sudo docker run \
+      ...
+      sppc/pktgen-ubuntu:latest \
+-     /root/dpdk/../pktgen-dpdk/app/x86_64-native-linuxapp-gcc/pktgen \
++     /root/dpdk/../pktgen-dpdk/app/x86_64-native-linux-gcc/pktgen \
+      -l 8-14 \
+      ...
+      -- \
+diff --git a/docs/guides/usecases/spp_mirror.rst b/docs/guides/usecases/spp_mirror.rst
+index 4164a16..00d6eef 100644
+--- a/docs/guides/usecases/spp_mirror.rst
++++ b/docs/guides/usecases/spp_mirror.rst
+@@ -70,7 +70,7 @@ three ports ``-p 0x07``.
+ .. code-block:: console
+ 
+    # terminal 3
+-   $ sudo ./src/primary/x86_64-native-linuxapp-gcc/spp_primary \
++   $ sudo ./src/primary/x86_64-native-linux-gcc/spp_primary \
+        -l 1 -n 4 \
+        --socket-mem 512,512 \
+        --huge-dir=/run/hugepages/kvm \
+@@ -87,7 +87,7 @@ Run secondary process ``spp_mirror``.
+ .. code-block:: console
+ 
+     # terminal 4
+-    $ sudo ./src/mirror/x86_64-native-linuxapp-gcc/app/spp_mirror \
++    $ sudo ./src/mirror/x86_64-native-linux-gcc/app/spp_mirror \
+      -l 0,2 -n 4 \
+      --proc-type secondary \
+      -- \
+@@ -230,7 +230,7 @@ Start spp_primary with core list option ``-l 1``.
+ 
+     # terminal 3
+     # Type the following in different terminal
+-    $ sudo ./src/primary/x86_64-native-linuxapp-gcc/spp_primary \
++    $ sudo ./src/primary/x86_64-native-linux-gcc/spp_primary \
+         -l 1 -n 4 \
+         --socket-mem 512,512 \
+         --huge-dir=/run/hugepages/kvm \
+@@ -261,7 +261,7 @@ Launch ``VM1``, ``VM2`` and ``spp_vf`` with core list ``-l 0,2-8``.
+ .. code-block:: console
+ 
+    # terminal 4
+-   $ sudo ./src/vf/x86_64-native-linuxapp-gcc/spp_vf \
++   $ sudo ./src/vf/x86_64-native-linux-gcc/spp_vf \
+        -l 0,2-8 \
+        -n 4 --proc-type secondary \
+        -- \
+@@ -329,7 +329,7 @@ Run ``spp_mirror``.
+ .. code-block:: console
+ 
+     # terminal 6
+-    $ sudo ./src/mirror/x86_64-native-linuxapp-gcc/app/spp_mirror \
++    $ sudo ./src/mirror/x86_64-native-linux-gcc/app/spp_mirror \
+       -l 0,9 \
+       -n 4 --proc-type secondary \
+       -- \
+diff --git a/docs/guides/usecases/spp_pcap.rst b/docs/guides/usecases/spp_pcap.rst
+index 543538d..e94cfc4 100644
+--- a/docs/guides/usecases/spp_pcap.rst
++++ b/docs/guides/usecases/spp_pcap.rst
+@@ -59,7 +59,7 @@ Then, run ``spp_primary`` with one physical port.
+ .. code-block:: console
+ 
+     # terminal 3
+-    $ sudo ./src/primary/x86_64-native-linuxapp-gcc/spp_primary \
++    $ sudo ./src/primary/x86_64-native-linux-gcc/spp_primary \
+         -l 0 -n 4 \
+         --socket-mem 512,512 \
+         --huge-dir /run/hugepages/kvm \
+@@ -79,7 +79,7 @@ writer threads.
+ .. code-block:: console
+ 
+     # terminal 4
+-    $ sudo ./src/pcap/x86_64-native-linuxapp-gcc/spp_pcap \
++    $ sudo ./src/pcap/x86_64-native-linux-gcc/spp_pcap \
+        -l 1-6 -n 4 --proc-type=secondary \
+        -- \
+        --client-id 1 -s 192.168.1.100:6666 \
+diff --git a/docs/guides/usecases/spp_vf.rst b/docs/guides/usecases/spp_vf.rst
+index c45feb8..6056636 100644
+--- a/docs/guides/usecases/spp_vf.rst
++++ b/docs/guides/usecases/spp_vf.rst
+@@ -52,7 +52,7 @@ Launch ``spp-ctl`` and SPP CLI before primary and secondary processes.
+ .. code-block:: console
+ 
+     # terminal 3
+-    $ sudo ./src/primary/x86_64-native-linuxapp-gcc/spp_primary \
++    $ sudo ./src/primary/x86_64-native-linux-gcc/spp_primary \
+         -l 1 -n 4 \
+         --socket-mem 512,512 \
+         --huge-dir=/run/hugepages/kvm \
+@@ -68,7 +68,7 @@ worker threads.
+ .. code-block:: console
+ 
+      # terminal 4
+-     $ sudo ./src/vf/x86_64-native-linuxapp-gcc/spp_vf \
++     $ sudo ./src/vf/x86_64-native-linux-gcc/spp_vf \
+         -l 2-6 \
+         -n 4 --proc-type=secondary \
+         -- \
+@@ -281,7 +281,7 @@ Launch ``spp-ctl`` and SPP CLI before primary and secondary processes.
+ .. code-block:: console
+ 
+     # terminal 3
+-    $ sudo ./src/primary/x86_64-native-linuxapp-gcc/spp_primary \
++    $ sudo ./src/primary/x86_64-native-linux-gcc/spp_primary \
+         -l 1 -n 4 \
+         --socket-mem 512,512 \
+         --huge-dir=/run/hugepages/kvm \
+@@ -295,7 +295,7 @@ to use twelve lcores.
+ .. code-block:: console
+ 
+     # terminal 4
+-    $ sudo ./src/vf/x86_64-native-linuxapp-gcc/spp_vf \
++    $ sudo ./src/vf/x86_64-native-linux-gcc/spp_vf \
+         -l 0,2-13 \
+         -n 4 --proc-type=secondary \
+         -- \
+-- 
+2.17.1
+
