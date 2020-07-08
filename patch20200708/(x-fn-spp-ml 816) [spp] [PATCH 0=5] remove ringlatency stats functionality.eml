@@ -1,0 +1,132 @@
+Return-path: <owner-x-fn-spp-ml@ntt-tx.co.jp>
+Received: from zssg-mailmd106.ddreams.local
+ (zssg-mailmd106.ddreams.local [10.160.123.101])
+ by zssg-mailms320.ddreams.local (NTT DoCoMo Mail System)
+ with ESMTP id <0QCA00KBCZNVK870@NTTDoCoMo.co.jp>; Mon,
+ 22 Jun 2020 10:19:07 +0900 (JST)
+Received: from smtp_saver-daemon.zssg-mailmd106.ddreams.local by
+ zssg-mailmd106.ddreams.local (dDREAMS) id <0QCA00B1UZNVD100@dDREAMS>; Mon,
+ 22 Jun 2020 10:19:07 +0900 (JST)
+Received: from tcp_intranet-daemon.zssg-mailmd106.ddreams.local by
+ zssg-mailmd106.ddreams.local (dDREAMS) id <0QCA00A1UZNVC200@dDREAMS>; Mon,
+ 22 Jun 2020 10:19:07 +0900 (JST)
+Received: from zssg-mailmf104.ddreams.local
+ (zssg-mailmf900.ddreams.local [10.160.172.84]) by zssg-mailmd106.ddreams.local
+ (dDREAMS) with ESMTP id <0QCA01E6UZNV1070@dDREAMS> for
+ mlchannel]:x-fn-spp-ml@ntt-tx.co.jp (ORCPT x-fn-spp-ml@ntt-tx.co.jp); Mon,
+ 22 Jun 2020 10:19:07 +0900 (JST)
+Received: from zssg-mailmf104.ddreams.local (unknown [127.0.0.1])
+	by zssg-mailmf104.ddreams.local (Postfix) with ESMTP id 866267E6038	for
+ <x-fn-spp-ml@ntt-tx.co.jp>; Mon, 22 Jun 2020 10:19:07 +0900 (JST)
+Received: from zssg-mailmf104.ddreams.local (unknown [127.0.0.1])
+	by IMSVA (Postfix) with ESMTP id 850A08E6068	for <x-fn-spp-ml@ntt-tx.co.jp>;
+ Mon, 22 Jun 2020 10:19:07 +0900 (JST)
+Received: from localhost (unknown [127.0.0.1])	by IMSVA (Postfix)
+ with SMTP id 835578E6062	for <x-fn-spp-ml@ntt-tx.co.jp>; Mon,
+ 22 Jun 2020 10:19:07 +0900 (JST)
+X-IMSS-HAND-OFF-DIRECTIVE: localhost:10026
+Received: from zssg-mailmf104.ddreams.local (unknown [127.0.0.1])
+	by IMSVA (Postfix) with ESMTP id E60858E6062	for <x-fn-spp-ml@ntt-tx.co.jp>;
+ Mon, 22 Jun 2020 10:19:06 +0900 (JST)
+Received: from imss02.silk.ntt-tx.co.jp (unknown [10.160.183.139])
+	by zssg-mailmf104.ddreams.local (Postfix)
+ with ESMTPS	for <x-fn-spp-ml@ntt-tx.co.jp>; Mon,
+ 22 Jun 2020 10:19:06 +0900 (JST)
+Received: from imss02.silk.ntt-tx.co.jp (localhost [127.0.0.1])
+ by imss02.silk.ntt-tx.co.jp (unknown) with ESMTP id 05M1J694009660 for
+ unknown; Mon, 22 Jun 2020 10:19:06 +0900
+Received: from mail02.ics.ntt-tx.co.jp
+ (mail02.ics.ntt-tx.co.jp [10.254.107.24]) by imss02.silk.ntt-tx.co.jp
+ (unknown) with ESMTP id 05M1J6r1009655 for unknown; Mon,
+ 22 Jun 2020 10:19:06 +0900
+Authentication-results: mail02.ics.ntt-tx.co.jp; spf=pass
+ smtp.mailfrom=spp-bounces@dpdk.org
+Received: from dpdk.org (dpdk.org [92.243.14.124])	by mail02.ics.ntt-tx.co.jp
+ (unknown) with ESMTP id 05M1J0I6018823	for unknown; Mon,
+ 22 Jun 2020 10:19:06 +0900
+Received: from [92.243.14.124] (localhost [127.0.0.1])	by dpdk.org (Postfix)
+ with ESMTP id 5BC2A1C0D1;	Mon, 22 Jun 2020 03:18:59 +0200 (CEST)
+Received: from dish-sg.nttdocomo.co.jp
+ (dish-sg.nttdocomo.co.jp [202.19.227.74]) by dpdk.org (Postfix)
+ with ESMTP id BC3131C0C0 for <spp@dpdk.org>; Mon,
+ 22 Jun 2020 03:18:57 +0200 (CEST)
+X-dD-Source: Outbound
+Received: from zssg-mailmd106.ddreams.local
+ (zssg-mailmd900.ddreams.local [10.160.172.63]) by zssg-mailou104.ddreams.local
+ (Postfix) with ESMTP id 3F1D41200F0; Mon, 22 Jun 2020 10:18:55 +0900 (JST)
+Received: from zssg-mailmf106.ddreams.local
+ (zssg-mailmf900.ddreams.local [10.160.172.84]) by zssg-mailmd106.ddreams.local
+ (dDREAMS) with ESMTP id <0QCA01EYRZNJ1060@dDREAMS>; Mon,
+ 22 Jun 2020 10:18:55 +0900 (JST)
+Received: from zssg-mailmf106.ddreams.local (unknown [127.0.0.1])
+ by zssg-mailmf106.ddreams.local (Postfix) with ESMTP id 2303E7E6032;	Mon,
+ 22 Jun 2020 10:18:55 +0900 (JST)
+Received: from zssg-mailmf106.ddreams.local (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 21BCB8E6063;	Mon,
+ 22 Jun 2020 10:18:55 +0900 (JST)
+Received: from localhost (unknown [127.0.0.1])	by IMSVA (Postfix)
+ with SMTP id 207D88E605F;	Mon, 22 Jun 2020 10:18:55 +0900 (JST)
+Received: from zssg-mailmf106.ddreams.local (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id D91458E6057;	Mon,
+ 22 Jun 2020 10:18:54 +0900 (JST)
+Received: from davinci.ntt-tx.co.jp (unknown [10.160.183.139])
+ by zssg-mailmf106.ddreams.local (Postfix) with ESMTP;	Mon,
+ 22 Jun 2020 10:18:54 +0900 (JST)
+From: x-fn-spp-ml@ntt-tx.co.jp
+To: spp@dpdk.org, yasufum.o@gmail.com
+Date: Mon, 22 Jun 2020 10:18:49 +0900
+Message-id: <20200622011854.8059-1-x-fn-spp-ml@ntt-tx.co.jp>
+X-Mailer: git-send-email 2.25.1
+MIME-version: 1.0
+Content-transfer-encoding: 8bit
+X-TM-AS-GCONF: 00
+Subject: (x-fn-spp-ml 816) [spp] [PATCH 0/5] remove ringlatency stats
+ functionality
+X-BeenThere: spp@dpdk.org
+X-Mailman-Version: 2.1.15
+Precedence: list
+List-Id: Soft Patch Panel <spp.dpdk.org>
+List-Unsubscribe: <https://mails.dpdk.org/options/spp>,
+ <mailto:spp-request@dpdk.org?subject=unsubscribe>
+List-Archive: <http://mails.dpdk.org/archives/spp/>
+List-Post: <mailto:spp@dpdk.org>
+List-Help: <mailto:spp-request@dpdk.org?subject=help>
+List-Subscribe: <https://mails.dpdk.org/listinfo/spp>,
+ <mailto:spp-request@dpdk.org?subject=subscribe>
+Errors-to: spp-bounces@dpdk.org
+Sender: spp <spp-bounces@dpdk.org>
+X-MLNAME: x-fn-spp-ml@ntt-tx.co.jp
+Delivered-to: x-fn-spp-ml@ntt-tx.co.jp
+X-MD-STAMP: ON
+
+From: Hideyuki Yamashita <yamashita.hideyuki@ntt-tx.co.jp>
+
+This patch set removes 'ringlatency stats'
+functionality which is not used anymore.
+
+Hideyuki Yamashita (5):
+  Makefile: remove ringlatency stats functionality
+  shared: remove ringlatency stats functionality
+  vf: remove ringlatency stats functionality
+  pcap: remove ringlatency stats functionality
+  mirror: remove ringlatency stats functionality
+
+ src/mirror/Makefile                           |   6 -
+ src/mirror/spp_mirror.c                       |  43 ----
+ src/pcap/Makefile                             |   2 -
+ src/pcap/spp_pcap.c                           |   8 -
+ .../secondary/spp_worker_th/cmd_utils.h       |   3 -
+ .../secondary/spp_worker_th/latency_stats.c   | 240 ------------------
+ .../secondary/spp_worker_th/latency_stats.h   | 167 ------------
+ .../secondary/spp_worker_th/port_capability.c |  47 ----
+ src/vf/Makefile                               |   6 -
+ src/vf/classifier.c                           |  19 +-
+ src/vf/forwarder.c                            |  19 +-
+ src/vf/spp_vf.c                               |  27 --
+ 12 files changed, 8 insertions(+), 579 deletions(-)
+ delete mode 100644 src/shared/secondary/spp_worker_th/latency_stats.c
+ delete mode 100644 src/shared/secondary/spp_worker_th/latency_stats.h
+
+-- 
+2.17.1
+

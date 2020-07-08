@@ -1,0 +1,272 @@
+Return-path: <owner-x-fn-spp-ml@ntt-tx.co.jp>
+Received: from zssg-mailmd105.ddreams.local
+ (zssg-mailmd105.ddreams.local [10.160.123.100])
+ by zssg-mailms320.ddreams.local (NTT DoCoMo Mail System)
+ with ESMTP id <0QCA00KDHZNYK870@NTTDoCoMo.co.jp>; Mon,
+ 22 Jun 2020 10:19:10 +0900 (JST)
+Received: from smtp_saver-daemon.zssg-mailmd105.ddreams.local by
+ zssg-mailmd105.ddreams.local (dDREAMS) id <0QCA00D2EZNYS600@dDREAMS>; Mon,
+ 22 Jun 2020 10:19:10 +0900 (JST)
+Received: from tcp_intranet-daemon.zssg-mailmd105.ddreams.local by
+ zssg-mailmd105.ddreams.local (dDREAMS) id <0QCA00C26ZNYDD00@dDREAMS>; Mon,
+ 22 Jun 2020 10:19:10 +0900 (JST)
+Received: from zssg-mailmf101.ddreams.local
+ (zssg-mailmf900.ddreams.local [10.160.172.84]) by zssg-mailmd105.ddreams.local
+ (dDREAMS) with ESMTP id <0QCA005EVZNY8B50@dDREAMS> for
+ mlchannel]:x-fn-spp-ml@ntt-tx.co.jp (ORCPT x-fn-spp-ml@ntt-tx.co.jp); Mon,
+ 22 Jun 2020 10:19:10 +0900 (JST)
+Received: from zssg-mailmf101.ddreams.local (unknown [127.0.0.1])
+	by zssg-mailmf101.ddreams.local (Postfix) with ESMTP id 226DE7E6034	for
+ <x-fn-spp-ml@ntt-tx.co.jp>; Mon, 22 Jun 2020 10:19:10 +0900 (JST)
+Received: from zssg-mailmf101.ddreams.local (unknown [127.0.0.1])
+	by IMSVA (Postfix) with ESMTP id 214758E6058	for <x-fn-spp-ml@ntt-tx.co.jp>;
+ Mon, 22 Jun 2020 10:19:10 +0900 (JST)
+Received: from localhost (unknown [127.0.0.1])	by IMSVA (Postfix)
+ with SMTP id 14E868E605D	for <x-fn-spp-ml@ntt-tx.co.jp>; Mon,
+ 22 Jun 2020 10:19:10 +0900 (JST)
+X-IMSS-HAND-OFF-DIRECTIVE: localhost:10026
+Received: from zssg-mailmf101.ddreams.local (unknown [127.0.0.1])
+	by IMSVA (Postfix) with ESMTP id 266048E6056	for <x-fn-spp-ml@ntt-tx.co.jp>;
+ Mon, 22 Jun 2020 10:19:09 +0900 (JST)
+Received: from imss02.silk.ntt-tx.co.jp (unknown [10.160.183.139])
+	by zssg-mailmf101.ddreams.local (Postfix)
+ with ESMTPS	for <x-fn-spp-ml@ntt-tx.co.jp>; Mon,
+ 22 Jun 2020 10:19:09 +0900 (JST)
+Received: from imss02.silk.ntt-tx.co.jp (localhost [127.0.0.1])
+ by imss02.silk.ntt-tx.co.jp (unknown) with ESMTP id 05M1J8Bj009695 for
+ unknown; Mon, 22 Jun 2020 10:19:08 +0900
+Received: from mail02.ics.ntt-tx.co.jp
+ (mail02.ics.ntt-tx.co.jp [10.254.107.24]) by imss02.silk.ntt-tx.co.jp
+ (unknown) with ESMTP id 05M1J8RH009692 for unknown; Mon,
+ 22 Jun 2020 10:19:08 +0900
+Authentication-results: mail02.ics.ntt-tx.co.jp; spf=pass
+ smtp.mailfrom=spp-bounces@dpdk.org
+Received: from dpdk.org (dpdk.org [92.243.14.124])	by mail02.ics.ntt-tx.co.jp
+ (unknown) with ESMTP id 05M1J23Y018831	for unknown; Mon,
+ 22 Jun 2020 10:19:07 +0900
+Received: from [92.243.14.124] (localhost [127.0.0.1])	by dpdk.org (Postfix)
+ with ESMTP id AD6251C10F;	Mon, 22 Jun 2020 03:19:01 +0200 (CEST)
+Received: from dish-sg.nttdocomo.co.jp
+ (dish-sg.nttdocomo.co.jp [202.19.227.74]) by dpdk.org (Postfix)
+ with ESMTP id 039921C0D8 for <spp@dpdk.org>; Mon,
+ 22 Jun 2020 03:19:00 +0200 (CEST)
+X-dD-Source: Outbound
+Received: from zssg-mailmd102.ddreams.local
+ (zssg-mailmd900.ddreams.local [10.160.172.63]) by zssg-mailou101.ddreams.local
+ (Postfix) with ESMTP id 858981200E9; Mon, 22 Jun 2020 10:18:58 +0900 (JST)
+Received: from zssg-mailmf106.ddreams.local
+ (zssg-mailmf900.ddreams.local [10.160.172.84]) by zssg-mailmd102.ddreams.local
+ (dDREAMS) with ESMTP id <0QCA00UDQZNL4EF0@dDREAMS>; Mon,
+ 22 Jun 2020 10:18:58 +0900 (JST)
+Received: from zssg-mailmf106.ddreams.local (unknown [127.0.0.1])
+ by zssg-mailmf106.ddreams.local (Postfix) with ESMTP id 6F25F7E603B;	Mon,
+ 22 Jun 2020 10:18:58 +0900 (JST)
+Received: from zssg-mailmf106.ddreams.local (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 6E3258E6042;	Mon,
+ 22 Jun 2020 10:18:58 +0900 (JST)
+Received: from localhost (unknown [127.0.0.1])	by IMSVA (Postfix)
+ with SMTP id 6BB618E6063;	Mon, 22 Jun 2020 10:18:58 +0900 (JST)
+Received: from zssg-mailmf106.ddreams.local (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 3CEF18E605F;	Mon,
+ 22 Jun 2020 10:18:58 +0900 (JST)
+Received: from davinci.ntt-tx.co.jp (unknown [10.160.183.139])
+ by zssg-mailmf106.ddreams.local (Postfix) with ESMTP;	Mon,
+ 22 Jun 2020 10:18:58 +0900 (JST)
+From: x-fn-spp-ml@ntt-tx.co.jp
+To: spp@dpdk.org, yasufum.o@gmail.com
+Date: Mon, 22 Jun 2020 10:18:52 +0900
+Message-id: <20200622011854.8059-4-x-fn-spp-ml@ntt-tx.co.jp>
+X-Mailer: git-send-email 2.25.1
+In-reply-to: <20200622011854.8059-1-x-fn-spp-ml@ntt-tx.co.jp>
+References: <20200622011854.8059-1-x-fn-spp-ml@ntt-tx.co.jp>
+MIME-version: 1.0
+Content-transfer-encoding: 8bit
+X-TM-AS-GCONF: 00
+Subject: (x-fn-spp-ml 820) [spp] [PATCH 3/5] vf: remove ringlatency stats
+ functionality
+X-BeenThere: spp@dpdk.org
+X-Mailman-Version: 2.1.15
+Precedence: list
+List-Id: Soft Patch Panel <spp.dpdk.org>
+List-Unsubscribe: <https://mails.dpdk.org/options/spp>,
+ <mailto:spp-request@dpdk.org?subject=unsubscribe>
+List-Archive: <http://mails.dpdk.org/archives/spp/>
+List-Post: <mailto:spp@dpdk.org>
+List-Help: <mailto:spp-request@dpdk.org?subject=help>
+List-Subscribe: <https://mails.dpdk.org/listinfo/spp>,
+ <mailto:spp-request@dpdk.org?subject=subscribe>
+Errors-to: spp-bounces@dpdk.org
+Sender: spp <spp-bounces@dpdk.org>
+X-MLNAME: x-fn-spp-ml@ntt-tx.co.jp
+Delivered-to: x-fn-spp-ml@ntt-tx.co.jp
+X-MD-STAMP: ON
+
+From: Hideyuki Yamashita <yamashita.hideyuki@ntt-tx.co.jp>
+
+This patch tries to remove ringlatency stats functionality.
+
+Signed-off-by: Hideyuki Yamashita <yamashita.hideyuki@ntt-tx.co.jp>
+Signed-off-by: Naoki Takada <ntakada14@gmail.com>
+---
+ src/vf/classifier.c | 19 ++++---------------
+ src/vf/forwarder.c  | 19 ++++---------------
+ src/vf/spp_vf.c     | 27 ---------------------------
+ 3 files changed, 8 insertions(+), 57 deletions(-)
+
+diff --git a/src/vf/classifier.c b/src/vf/classifier.c
+index 2d95289..58d0f03 100644
+--- a/src/vf/classifier.c
++++ b/src/vf/classifier.c
+@@ -29,9 +29,6 @@
+ #include "shared/secondary/spp_worker_th/vf_deps.h"
+ #include "shared/secondary/spp_worker_th/port_capability.h"
+ 
+-#ifdef SPP_RINGLATENCYSTATS_ENABLE
+-#include "shared/secondary/spp_worker_th/latency_stats.h"
+-#endif
+ 
+ #define RTE_LOGTYPE_VF_CLS RTE_LOGTYPE_USER1
+ 
+@@ -424,15 +421,11 @@ transmit_packets(struct cls_port_info *clsd_data)
+ 	uint16_t n_tx;
+ 
+ 	/* transmit packets */
+-#ifdef SPP_RINGLATENCYSTATS_ENABLE
+-	n_tx = sppwk_eth_vlan_ring_stats_tx_burst(clsd_data->ethdev_port_id,
+-			clsd_data->iface_type, clsd_data->iface_no,
+-			0, clsd_data->pkts, clsd_data->nof_pkts);
+-#else
++
+ 	n_tx = sppwk_eth_vlan_tx_burst(clsd_data->ethdev_port_id,
+ 			clsd_data->queue_no, clsd_data->pkts,
+ 			clsd_data->nof_pkts);
+-#endif
++
+ 
+ 	/* free cannot transmit packets */
+ 	if (unlikely(n_tx != clsd_data->nof_pkts)) {
+@@ -758,14 +751,10 @@ classify_packets(int comp_id)
+ 		return SPPWK_RET_OK;
+ 
+ 	/* Retrieve packets */
+-#ifdef SPP_RINGLATENCYSTATS_ENABLE
+-	n_rx = sppwk_eth_vlan_ring_stats_rx_burst(clsd_data_rx->ethdev_port_id,
+-			clsd_data_rx->iface_type, clsd_data_rx->iface_no,
+-			0, rx_pkts, MAX_PKT_BURST);
+-#else
++
+ 	n_rx = sppwk_eth_vlan_rx_burst(clsd_data_rx->ethdev_port_id,
+ 			clsd_data_rx->queue_no, rx_pkts, MAX_PKT_BURST);
+-#endif
++
+ 	if (unlikely(n_rx == 0))
+ 		return SPPWK_RET_OK;
+ 
+diff --git a/src/vf/forwarder.c b/src/vf/forwarder.c
+index 66e1682..a95d472 100644
+--- a/src/vf/forwarder.c
++++ b/src/vf/forwarder.c
+@@ -9,9 +9,6 @@
+ #include "shared/secondary/spp_worker_th/vf_deps.h"
+ #include "shared/secondary/spp_worker_th/port_capability.h"
+ 
+-#ifdef SPP_RINGLATENCYSTATS_ENABLE
+-#include "shared/secondary/spp_worker_th/latency_stats.h"
+-#endif
+ 
+ #define RTE_LOGTYPE_FORWARD RTE_LOGTYPE_USER1
+ 
+@@ -214,27 +211,19 @@ forward_packets(int id)
+ 		rx = &path->ports[cnt].rx;
+ 		tx = &path->ports[cnt].tx;
+ 
+-#ifdef SPP_RINGLATENCYSTATS_ENABLE
+-		nb_rx = sppwk_eth_vlan_ring_stats_rx_burst(rx->ethdev_port_id,
+-				rx->iface_type, rx->iface_no, 0,
+-				bufs, MAX_PKT_BURST);
+-#else
++
+ 		nb_rx = sppwk_eth_vlan_rx_burst(rx->ethdev_port_id,
+ 				rx->queue_no, bufs, MAX_PKT_BURST);
+-#endif
++
+ 		if (unlikely(nb_rx == 0))
+ 			continue;
+ 
+ 		/* Send packets */
+ 		if (tx->ethdev_port_id >= 0)
+-#ifdef SPP_RINGLATENCYSTATS_ENABLE
+-			nb_tx = sppwk_eth_vlan_ring_stats_tx_burst(
+-					tx->ethdev_port_id, tx->iface_type,
+-					tx->iface_no, 0, bufs, nb_rx);
+-#else
++
+ 			nb_tx = sppwk_eth_vlan_tx_burst(tx->ethdev_port_id,
+ 					tx->queue_no, bufs, nb_rx);
+-#endif
++
+ 
+ 		/* Discard remained packets to release mbuf */
+ 		if (unlikely(nb_tx < nb_rx)) {
+diff --git a/src/vf/spp_vf.c b/src/vf/spp_vf.c
+index ab2e9f2..c2cc795 100644
+--- a/src/vf/spp_vf.c
++++ b/src/vf/spp_vf.c
+@@ -19,9 +19,6 @@
+ 
+ #define RTE_LOGTYPE_SPP_VF RTE_LOGTYPE_USER1
+ 
+-#ifdef SPP_RINGLATENCYSTATS_ENABLE
+-#include "shared/secondary/spp_worker_th/latency_stats.h"
+-#endif
+ 
+ /* getopt_long return value for long option */
+ enum SPP_LONGOPT_RETVAL {
+@@ -280,24 +277,6 @@ main(int argc, char *argv[])
+ 		if (unlikely(ret != SPPWK_RET_OK))
+ 			break;
+ 
+-#ifdef SPP_RINGLATENCYSTATS_ENABLE
+-		int port_type, port_id;
+-		char dev_name[RTE_DEV_NAME_MAX_LEN] = { 0 };
+-		int nof_rings = 0;
+-		for (int i = 0; i < RTE_MAX_ETHPORTS; i++) {
+-			if (!rte_eth_dev_is_valid_port(i))
+-				continue;
+-			rte_eth_dev_get_name_by_port(i, dev_name);
+-			ret = parse_dev_name(dev_name, &port_type, &port_id);
+-			if (port_type == RING)
+-				nof_rings++;
+-		}
+-		ret = sppwk_init_ring_latency_stats(
+-				SPP_RING_LATENCY_STATS_SAMPLING_INTERVAL,
+-				nof_rings);
+-		if (unlikely(ret != SPPWK_RET_OK))
+-			break;
+-#endif /* SPP_RINGLATENCYSTATS_ENABLE */
+ 
+ 		/* Start worker threads of classifier and forwarder */
+ 		RTE_LCORE_FOREACH_SLAVE(lcore_id) {
+@@ -332,9 +311,6 @@ main(int argc, char *argv[])
+ 			*/
+ 			usleep(100);
+ 
+-#ifdef SPP_RINGLATENCYSTATS_ENABLE
+-			print_ring_latency_stats(&g_iface_info);
+-#endif /* SPP_RINGLATENCYSTATS_ENABLE */
+ 		}
+ 
+ 		if (unlikely(ret != SPPWK_RET_OK)) {
+@@ -358,9 +334,6 @@ main(int argc, char *argv[])
+ 	 */
+ 	del_vhost_sockfile(g_iface_info.vhost);
+ 
+-#ifdef SPP_RINGLATENCYSTATS_ENABLE
+-	sppwk_clean_ring_latency_stats();
+-#endif /* SPP_RINGLATENCYSTATS_ENABLE */
+ 
+ 	RTE_LOG(INFO, SPP_VF, "Exit spp_vf.\n");
+ 	return ret;
+-- 
+2.17.1
+

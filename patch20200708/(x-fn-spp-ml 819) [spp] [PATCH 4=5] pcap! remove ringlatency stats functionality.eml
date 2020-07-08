@@ -1,0 +1,144 @@
+Return-path: <owner-x-fn-spp-ml@ntt-tx.co.jp>
+Received: from zssg-mailmd106.ddreams.local
+ (zssg-mailmd106.ddreams.local [10.160.123.101])
+ by zssg-mailms320.ddreams.local (NTT DoCoMo Mail System)
+ with ESMTP id <0QCA00KDBZNYK870@NTTDoCoMo.co.jp>; Mon,
+ 22 Jun 2020 10:19:10 +0900 (JST)
+Received: from smtp_saver-daemon.zssg-mailmd106.ddreams.local by
+ zssg-mailmd106.ddreams.local (dDREAMS) id <0QCA00B0WZNXQU00@dDREAMS>; Mon,
+ 22 Jun 2020 10:19:09 +0900 (JST)
+Received: from tcp_intranet-daemon.zssg-mailmd106.ddreams.local by
+ zssg-mailmd106.ddreams.local (dDREAMS) id <0QCA00A1WZNXC200@dDREAMS>; Mon,
+ 22 Jun 2020 10:19:09 +0900 (JST)
+Received: from zssg-mailmf104.ddreams.local
+ (zssg-mailmf900.ddreams.local [10.160.172.84]) by zssg-mailmd106.ddreams.local
+ (dDREAMS) with ESMTP id <0QCA01E90ZNX1070@dDREAMS> for
+ mlchannel]:x-fn-spp-ml@ntt-tx.co.jp (ORCPT x-fn-spp-ml@ntt-tx.co.jp); Mon,
+ 22 Jun 2020 10:19:09 +0900 (JST)
+Received: from zssg-mailmf104.ddreams.local (unknown [127.0.0.1])
+	by zssg-mailmf104.ddreams.local (Postfix) with ESMTP id CB0DD7E6038	for
+ <x-fn-spp-ml@ntt-tx.co.jp>; Mon, 22 Jun 2020 10:19:09 +0900 (JST)
+Received: from zssg-mailmf104.ddreams.local (unknown [127.0.0.1])
+	by IMSVA (Postfix) with ESMTP id C98138E6062	for <x-fn-spp-ml@ntt-tx.co.jp>;
+ Mon, 22 Jun 2020 10:19:09 +0900 (JST)
+Received: from localhost (unknown [127.0.0.1])	by IMSVA (Postfix)
+ with SMTP id C7FF28E605D	for <x-fn-spp-ml@ntt-tx.co.jp>; Mon,
+ 22 Jun 2020 10:19:09 +0900 (JST)
+X-IMSS-HAND-OFF-DIRECTIVE: localhost:10026
+Received: from zssg-mailmf104.ddreams.local (unknown [127.0.0.1])
+	by IMSVA (Postfix) with ESMTP id 2222B8E605D	for <x-fn-spp-ml@ntt-tx.co.jp>;
+ Mon, 22 Jun 2020 10:19:09 +0900 (JST)
+Received: from imss01.silk.ntt-tx.co.jp (unknown [10.160.183.139])
+	by zssg-mailmf104.ddreams.local (Postfix)
+ with ESMTPS	for <x-fn-spp-ml@ntt-tx.co.jp>; Mon,
+ 22 Jun 2020 10:19:09 +0900 (JST)
+Received: from imss01.silk.ntt-tx.co.jp (localhost [127.0.0.1])
+ by imss01.silk.ntt-tx.co.jp (unknown) with ESMTP id 05M1J9mM011134 for
+ unknown; Mon, 22 Jun 2020 10:19:09 +0900
+Received: from mail01.ics.ntt-tx.co.jp
+ (mail01.ics.ntt-tx.co.jp [10.254.107.23]) by imss01.silk.ntt-tx.co.jp
+ (unknown) with ESMTP id 05M1J9LC011125 for unknown; Mon,
+ 22 Jun 2020 10:19:09 +0900
+Authentication-results: mail01.ics.ntt-tx.co.jp; spf=pass
+ smtp.mailfrom=spp-bounces@dpdk.org
+Received: from dpdk.org (dpdk.org [92.243.14.124])	by mail01.ics.ntt-tx.co.jp
+ (unknown) with ESMTP id 05M1J2LZ022012	for unknown; Mon,
+ 22 Jun 2020 10:19:08 +0900
+Received: from [92.243.14.124] (localhost [127.0.0.1])	by dpdk.org (Postfix)
+ with ESMTP id B8AA31C114;	Mon, 22 Jun 2020 03:19:01 +0200 (CEST)
+Received: from dish-sg.nttdocomo.co.jp
+ (dish-sg.nttdocomo.co.jp [202.19.227.74]) by dpdk.org (Postfix)
+ with ESMTP id BC3171C0D8 for <spp@dpdk.org>; Mon,
+ 22 Jun 2020 03:19:00 +0200 (CEST)
+X-dD-Source: Outbound
+Received: from zssg-mailmd103.ddreams.local
+ (zssg-mailmd900.ddreams.local [10.160.172.63]) by zssg-mailou104.ddreams.local
+ (Postfix) with ESMTP id EA2921200DC; Mon, 22 Jun 2020 10:18:59 +0900 (JST)
+Received: from zssg-mailmf106.ddreams.local
+ (zssg-mailmf900.ddreams.local [10.160.172.84]) by zssg-mailmd103.ddreams.local
+ (dDREAMS) with ESMTP id <0QCA00RIVZNN2D50@dDREAMS>; Mon,
+ 22 Jun 2020 10:18:59 +0900 (JST)
+Received: from zssg-mailmf106.ddreams.local (unknown [127.0.0.1])
+ by zssg-mailmf106.ddreams.local (Postfix) with ESMTP id 71A667E603A;	Mon,
+ 22 Jun 2020 10:18:59 +0900 (JST)
+Received: from zssg-mailmf106.ddreams.local (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 708448E6063;	Mon,
+ 22 Jun 2020 10:18:59 +0900 (JST)
+Received: from localhost (unknown [127.0.0.1])	by IMSVA (Postfix)
+ with SMTP id 6EBD88E605A;	Mon, 22 Jun 2020 10:18:59 +0900 (JST)
+Received: from zssg-mailmf106.ddreams.local (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 5072F8E6069;	Mon,
+ 22 Jun 2020 10:18:59 +0900 (JST)
+Received: from davinci.ntt-tx.co.jp (unknown [10.160.183.139])
+ by zssg-mailmf106.ddreams.local (Postfix) with ESMTP;	Mon,
+ 22 Jun 2020 10:18:59 +0900 (JST)
+From: x-fn-spp-ml@ntt-tx.co.jp
+To: spp@dpdk.org, yasufum.o@gmail.com
+Date: Mon, 22 Jun 2020 10:18:53 +0900
+Message-id: <20200622011854.8059-5-x-fn-spp-ml@ntt-tx.co.jp>
+X-Mailer: git-send-email 2.25.1
+In-reply-to: <20200622011854.8059-1-x-fn-spp-ml@ntt-tx.co.jp>
+References: <20200622011854.8059-1-x-fn-spp-ml@ntt-tx.co.jp>
+MIME-version: 1.0
+Content-transfer-encoding: 8bit
+X-TM-AS-GCONF: 00
+Subject: (x-fn-spp-ml 819) [spp] [PATCH 4/5] pcap: remove ringlatency stats
+ functionality
+X-BeenThere: spp@dpdk.org
+X-Mailman-Version: 2.1.15
+Precedence: list
+List-Id: Soft Patch Panel <spp.dpdk.org>
+List-Unsubscribe: <https://mails.dpdk.org/options/spp>,
+ <mailto:spp-request@dpdk.org?subject=unsubscribe>
+List-Archive: <http://mails.dpdk.org/archives/spp/>
+List-Post: <mailto:spp@dpdk.org>
+List-Help: <mailto:spp-request@dpdk.org?subject=help>
+List-Subscribe: <https://mails.dpdk.org/listinfo/spp>,
+ <mailto:spp-request@dpdk.org?subject=subscribe>
+Errors-to: spp-bounces@dpdk.org
+Sender: spp <spp-bounces@dpdk.org>
+X-MLNAME: x-fn-spp-ml@ntt-tx.co.jp
+Delivered-to: x-fn-spp-ml@ntt-tx.co.jp
+X-MD-STAMP: ON
+
+From: Hideyuki Yamashita <yamashita.hideyuki@ntt-tx.co.jp>
+
+This patch tries to remove ringlatency stats functionality.
+
+Signed-off-by: Hideyuki Yamashita <yamashita.hideyuki@ntt-tx.co.jp>
+Signed-off-by: Naoki Takada <ntakada14@gmail.com>
+---
+ src/pcap/spp_pcap.c | 8 --------
+ 1 file changed, 8 deletions(-)
+
+diff --git a/src/pcap/spp_pcap.c b/src/pcap/spp_pcap.c
+index 1f20e1e..5bb987f 100644
+--- a/src/pcap/spp_pcap.c
++++ b/src/pcap/spp_pcap.c
+@@ -23,9 +23,6 @@
+ #include "shared/secondary/utils.h"
+ #include "shared/secondary/spp_worker_th/port_capability.h"
+ 
+-#ifdef SPP_RINGLATENCYSTATS_ENABLE
+-#include "shared/secondary/spp_worker_th/latency_stats.h"
+-#endif
+ 
+ /* Declare global variables */
+ #define RTE_LOGTYPE_SPP_PCAP RTE_LOGTYPE_USER2
+@@ -847,13 +844,8 @@ static int pcap_proc_receive(int lcore_id)
+ 
+ 	/* Receive packets */
+ 	rx = &g_pcap_option.port_cap;
+-#ifdef SPP_RINGLATENCYSTATS_ENABLE
+-	nb_rx = sppwk_eth_ring_stats_rx_burst(rx->ethdev_port_id,
+-			rx->iface_type, rx->iface_no, 0, bufs, MAX_PCAP_BURST);
+-#else
+ 	nb_rx = rte_eth_rx_burst(rx->ethdev_port_id, rx->queue_no, bufs,
+ 			MAX_PCAP_BURST);
+-#endif
+ 	if (unlikely(nb_rx == 0))
+ 		return SPPWK_RET_OK;
+ 
+-- 
+2.17.1
+

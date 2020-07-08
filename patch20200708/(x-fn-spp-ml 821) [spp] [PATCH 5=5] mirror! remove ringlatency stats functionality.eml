@@ -1,0 +1,215 @@
+Return-path: <owner-x-fn-spp-ml@ntt-tx.co.jp>
+Received: from zssg-mailmd102.ddreams.local
+ (zssg-mailmd102.ddreams.local [10.160.123.97]) by zssg-mailms320.ddreams.local
+ (NTT DoCoMo Mail System) with ESMTP id <0QCA00KFFZO3K870@NTTDoCoMo.co.jp>;
+ Mon, 22 Jun 2020 10:19:15 +0900 (JST)
+Received: from smtp_saver-daemon.zssg-mailmd102.ddreams.local by
+ zssg-mailmd102.ddreams.local (dDREAMS) id <0QCA00534ZO3NL00@dDREAMS>; Mon,
+ 22 Jun 2020 10:19:15 +0900 (JST)
+Received: from tcp_intranet-daemon.zssg-mailmd102.ddreams.local by
+ zssg-mailmd102.ddreams.local (dDREAMS) id <0QCA00508ZO3SA00@dDREAMS>; Mon,
+ 22 Jun 2020 10:19:15 +0900 (JST)
+Received: from zssg-mailmf106.ddreams.local
+ (zssg-mailmf900.ddreams.local [10.160.172.84]) by zssg-mailmd102.ddreams.local
+ (dDREAMS) with ESMTP id <0QCA00UR7ZO24EF0@dDREAMS> for
+ mlchannel]:x-fn-spp-ml@ntt-tx.co.jp (ORCPT x-fn-spp-ml@ntt-tx.co.jp); Mon,
+ 22 Jun 2020 10:19:14 +0900 (JST)
+Received: from zssg-mailmf106.ddreams.local (unknown [127.0.0.1])
+	by zssg-mailmf106.ddreams.local (Postfix) with ESMTP id 9E84A7E603A	for
+ <x-fn-spp-ml@ntt-tx.co.jp>; Mon, 22 Jun 2020 10:19:14 +0900 (JST)
+Received: from zssg-mailmf106.ddreams.local (unknown [127.0.0.1])
+	by IMSVA (Postfix) with ESMTP id 9D25B8E605F	for <x-fn-spp-ml@ntt-tx.co.jp>;
+ Mon, 22 Jun 2020 10:19:14 +0900 (JST)
+Received: from localhost (unknown [127.0.0.1])	by IMSVA (Postfix)
+ with SMTP id 9C50A8E605A	for <x-fn-spp-ml@ntt-tx.co.jp>; Mon,
+ 22 Jun 2020 10:19:14 +0900 (JST)
+X-IMSS-HAND-OFF-DIRECTIVE: localhost:10026
+Received: from zssg-mailmf106.ddreams.local (unknown [127.0.0.1])
+	by IMSVA (Postfix) with ESMTP id 043B18E6066	for <x-fn-spp-ml@ntt-tx.co.jp>;
+ Mon, 22 Jun 2020 10:19:14 +0900 (JST)
+Received: from imss01.silk.ntt-tx.co.jp (unknown [10.160.183.139])
+	by zssg-mailmf106.ddreams.local (Postfix)
+ with ESMTPS	for <x-fn-spp-ml@ntt-tx.co.jp>; Mon,
+ 22 Jun 2020 10:19:13 +0900 (JST)
+Received: from imss01.silk.ntt-tx.co.jp (localhost [127.0.0.1])
+ by imss01.silk.ntt-tx.co.jp (unknown) with ESMTP id 05M1JEph011161 for
+ unknown; Mon, 22 Jun 2020 10:19:14 +0900
+Received: from mail01.ics.ntt-tx.co.jp
+ (mail01.ics.ntt-tx.co.jp [10.254.107.23]) by imss01.silk.ntt-tx.co.jp
+ (unknown) with ESMTP id 05M1JEF3011158 for unknown; Mon,
+ 22 Jun 2020 10:19:14 +0900
+Authentication-results: mail01.ics.ntt-tx.co.jp; spf=pass
+ smtp.mailfrom=spp-bounces@dpdk.org
+Received: from dpdk.org (dpdk.org [92.243.14.124])	by mail01.ics.ntt-tx.co.jp
+ (unknown) with ESMTP id 05M1J7ZQ022020	for unknown; Mon,
+ 22 Jun 2020 10:19:12 +0900
+Received: from [92.243.14.124] (localhost [127.0.0.1])	by dpdk.org (Postfix)
+ with ESMTP id CD3851C0D8;	Mon, 22 Jun 2020 03:19:03 +0200 (CEST)
+Received: from dish-sg.nttdocomo.co.jp
+ (dish-sg.nttdocomo.co.jp [202.19.227.74]) by dpdk.org (Postfix)
+ with ESMTP id 570981C0C0 for <spp@dpdk.org>; Mon,
+ 22 Jun 2020 03:19:02 +0200 (CEST)
+X-dD-Source: Outbound
+Received: from zssg-mailmd101.ddreams.local
+ (zssg-mailmd900.ddreams.local [10.160.172.63]) by zssg-mailou104.ddreams.local
+ (Postfix) with ESMTP id 9BC7C1200F0; Mon, 22 Jun 2020 10:19:01 +0900 (JST)
+Received: from zssg-mailmf106.ddreams.local
+ (zssg-mailmf900.ddreams.local [10.160.172.84]) by zssg-mailmd101.ddreams.local
+ (dDREAMS) with ESMTP id <0QCA01106ZNPX610@dDREAMS>; Mon,
+ 22 Jun 2020 10:19:01 +0900 (JST)
+Received: from zssg-mailmf106.ddreams.local (unknown [127.0.0.1])
+ by zssg-mailmf106.ddreams.local (Postfix) with ESMTP id 7B2A17E603A;	Mon,
+ 22 Jun 2020 10:19:01 +0900 (JST)
+Received: from zssg-mailmf106.ddreams.local (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 7A0938E605A;	Mon,
+ 22 Jun 2020 10:19:01 +0900 (JST)
+Received: from localhost (unknown [127.0.0.1])	by IMSVA (Postfix)
+ with SMTP id 78ACA8E6042;	Mon, 22 Jun 2020 10:19:01 +0900 (JST)
+Received: from zssg-mailmf106.ddreams.local (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 62B518E6042;	Mon,
+ 22 Jun 2020 10:19:00 +0900 (JST)
+Received: from davinci.ntt-tx.co.jp (unknown [10.160.183.139])
+ by zssg-mailmf106.ddreams.local (Postfix) with ESMTP;	Mon,
+ 22 Jun 2020 10:19:00 +0900 (JST)
+From: x-fn-spp-ml@ntt-tx.co.jp
+To: spp@dpdk.org, yasufum.o@gmail.com
+Date: Mon, 22 Jun 2020 10:18:54 +0900
+Message-id: <20200622011854.8059-6-x-fn-spp-ml@ntt-tx.co.jp>
+X-Mailer: git-send-email 2.25.1
+In-reply-to: <20200622011854.8059-1-x-fn-spp-ml@ntt-tx.co.jp>
+References: <20200622011854.8059-1-x-fn-spp-ml@ntt-tx.co.jp>
+MIME-version: 1.0
+Content-transfer-encoding: 8bit
+X-TM-AS-GCONF: 00
+Subject: (x-fn-spp-ml 821) [spp] [PATCH 5/5] mirror: remove ringlatency stats
+ functionality
+X-BeenThere: spp@dpdk.org
+X-Mailman-Version: 2.1.15
+Precedence: list
+List-Id: Soft Patch Panel <spp.dpdk.org>
+List-Unsubscribe: <https://mails.dpdk.org/options/spp>,
+ <mailto:spp-request@dpdk.org?subject=unsubscribe>
+List-Archive: <http://mails.dpdk.org/archives/spp/>
+List-Post: <mailto:spp@dpdk.org>
+List-Help: <mailto:spp-request@dpdk.org?subject=help>
+List-Subscribe: <https://mails.dpdk.org/listinfo/spp>,
+ <mailto:spp-request@dpdk.org?subject=subscribe>
+Errors-to: spp-bounces@dpdk.org
+Sender: spp <spp-bounces@dpdk.org>
+X-MLNAME: x-fn-spp-ml@ntt-tx.co.jp
+Delivered-to: x-fn-spp-ml@ntt-tx.co.jp
+X-MD-STAMP: ON
+
+From: Hideyuki Yamashita <yamashita.hideyuki@ntt-tx.co.jp>
+
+This patch tries to remove ringlatency stats functionality.
+
+Signed-off-by: Hideyuki Yamashita <yamashita.hideyuki@ntt-tx.co.jp>
+Signed-off-by: Naoki Takada <ntakada14@gmail.com>
+---
+ src/mirror/spp_mirror.c | 43 -----------------------------------------
+ 1 file changed, 43 deletions(-)
+
+diff --git a/src/mirror/spp_mirror.c b/src/mirror/spp_mirror.c
+index 2bfbf66..a2925f3 100644
+--- a/src/mirror/spp_mirror.c
++++ b/src/mirror/spp_mirror.c
+@@ -20,9 +20,6 @@
+ #include "shared/secondary/spp_worker_th/cmd_utils.h"
+ #include "shared/secondary/spp_worker_th/port_capability.h"
+ 
+-#ifdef SPP_RINGLATENCYSTATS_ENABLE
+-#include "shared/secondary/spp_worker_th/latency_stats.h"
+-#endif
+ 
+ /* Declare global variables */
+ #define RTE_LOGTYPE_MIRROR RTE_LOGTYPE_USER1
+@@ -336,13 +333,8 @@ mirror_proc(int id)
+ 
+ 	rx = &path->ports[0].rx;
+ 
+-#ifdef SPP_RINGLATENCYSTATS_ENABLE
+-	nb_rx = sppwk_eth_ring_stats_rx_burst(rx->ethdev_port_id,
+-			rx->iface_type, rx->iface_no, 0, bufs, MAX_PKT_BURST);
+-#else
+ 	nb_rx = rte_eth_rx_burst(rx->ethdev_port_id, rx->queue_no, bufs,
+ 			MAX_PKT_BURST);
+-#endif
+ 
+ 	if (unlikely(nb_rx == 0))
+ 		return SPPWK_RET_OK;
+@@ -399,26 +391,15 @@ mirror_proc(int id)
+ 		}
+ 
+ 		if (cnt != 0)
+-#ifdef SPP_RINGLATENCYSTATS_ENABLE
+-			nb_tx2 = sppwk_eth_ring_stats_tx_burst(
+-					tx->ethdev_port_id, tx->iface_type,
+-					tx->iface_no, 0, copybufs, cnt);
+-#else
+ 			nb_tx2 = rte_eth_tx_burst(tx->ethdev_port_id,
+ 					tx->queue_no, copybufs, cnt);
+-#endif
+ 	}
+ 
+ 	/* orginal */
+ 	tx = &path->ports[0].tx;
+ 	if (tx->ethdev_port_id >= 0)
+-#ifdef SPP_RINGLATENCYSTATS_ENABLE
+-		nb_tx1 = sppwk_eth_ring_stats_tx_burst(tx->ethdev_port_id,
+-				tx->iface_type, tx->iface_no, 0, bufs, nb_rx);
+-#else
+ 		nb_tx1 = rte_eth_tx_burst(tx->ethdev_port_id, tx->queue_no,
+ 				bufs, nb_rx);
+-#endif
+ 	nb_tx = nb_tx1;
+ 
+ 	if (nb_tx1 != nb_tx2)
+@@ -570,24 +551,6 @@ main(int argc, char *argv[])
+ 		if (unlikely(ret_cmd_init != SPPWK_RET_OK))
+ 			break;
+ 
+-#ifdef SPP_RINGLATENCYSTATS_ENABLE
+-		int port_type, port_id;
+-		char dev_name[RTE_DEV_NAME_MAX_LEN] = { 0 };
+-		int nof_rings = 0;
+-		for (int i = 0; i < RTE_MAX_ETHPORTS; i++) {
+-			if (!rte_eth_dev_is_valid_port(i))
+-				continue;
+-			rte_eth_dev_get_name_by_port(i, dev_name);
+-			ret = parse_dev_name(dev_name, &port_type, &port_id);
+-			if (port_type == RING)
+-				nof_rings++;
+-		}
+-		int ret_ringlatency = sppwk_init_ring_latency_stats(
+-				SPP_RING_LATENCY_STATS_SAMPLING_INTERVAL,
+-				nof_rings);
+-		if (unlikely(ret_ringlatency != SPPWK_RET_OK))
+-			break;
+-#endif /* SPP_RINGLATENCYSTATS_ENABLE */
+ 
+ 		/* Start worker threads of classifier and forwarder */
+ 		lcore_id = 0;
+@@ -630,9 +593,6 @@ main(int argc, char *argv[])
+ 			 */
+ 			usleep(100);
+ 
+-#ifdef SPP_RINGLATENCYSTATS_ENABLE
+-			print_ring_latency_stats(&g_iface_info);
+-#endif /* SPP_RINGLATENCYSTATS_ENABLE */
+ 		}
+ 
+ 		if (unlikely(ret_do != SPPWK_RET_OK)) {
+@@ -653,9 +613,6 @@ main(int argc, char *argv[])
+ 	 /* Remove vhost sock file if not running in vhost-client mode. */
+ 	del_vhost_sockfile(g_iface_info.vhost);
+ 
+-#ifdef SPP_RINGLATENCYSTATS_ENABLE
+-	sppwk_clean_ring_latency_stats();
+-#endif /* SPP_RINGLATENCYSTATS_ENABLE */
+ 
+ 	RTE_LOG(INFO, MIRROR, "Exit spp_mirror.\n");
+ 	return ret;
+-- 
+2.17.1
+
