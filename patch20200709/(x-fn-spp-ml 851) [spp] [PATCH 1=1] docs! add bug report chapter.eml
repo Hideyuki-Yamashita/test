@@ -1,0 +1,171 @@
+Return-path: <owner-x-fn-spp-ml@ntt-tx.co.jp>
+Received: from zssg-mailmd105.ddreams.local
+ (zssg-mailmd105.ddreams.local [10.160.123.100])
+ by zssg-mailms320.ddreams.local (NTT DoCoMo Mail System)
+ with ESMTP id <0QCH001YG2AG3C60@NTTDoCoMo.co.jp>; Thu,
+ 25 Jun 2020 17:01:28 +0900 (JST)
+Received: from smtp_saver-daemon.zssg-mailmd105.ddreams.local by
+ zssg-mailmd105.ddreams.local (dDREAMS) id <0QCH00F502AG1H00@dDREAMS>; Thu,
+ 25 Jun 2020 17:01:28 +0900 (JST)
+Received: from tcp_intranet-daemon.zssg-mailmd105.ddreams.local by
+ zssg-mailmd105.ddreams.local (dDREAMS) id <0QCH00E0S2AGYV00@dDREAMS>; Thu,
+ 25 Jun 2020 17:01:28 +0900 (JST)
+Received: from zssg-mailmf104.ddreams.local
+ (zssg-mailmf900.ddreams.local [10.160.172.84]) by zssg-mailmd105.ddreams.local
+ (dDREAMS) with ESMTP id <0QCH014782AG4RF0@dDREAMS> for
+ mlchannel]:x-fn-spp-ml@ntt-tx.co.jp (ORCPT x-fn-spp-ml@ntt-tx.co.jp); Thu,
+ 25 Jun 2020 17:01:28 +0900 (JST)
+Received: from zssg-mailmf104.ddreams.local (unknown [127.0.0.1])
+	by zssg-mailmf104.ddreams.local (Postfix) with ESMTP id 2BA507E6038	for
+ <x-fn-spp-ml@ntt-tx.co.jp>; Thu, 25 Jun 2020 17:01:28 +0900 (JST)
+Received: from zssg-mailmf104.ddreams.local (unknown [127.0.0.1])
+	by IMSVA (Postfix) with ESMTP id 291308E605E	for <x-fn-spp-ml@ntt-tx.co.jp>;
+ Thu, 25 Jun 2020 17:01:28 +0900 (JST)
+Received: from localhost (unknown [127.0.0.1])	by IMSVA (Postfix)
+ with SMTP id 265D38E6050	for <x-fn-spp-ml@ntt-tx.co.jp>; Thu,
+ 25 Jun 2020 17:01:28 +0900 (JST)
+X-IMSS-HAND-OFF-DIRECTIVE: localhost:10026
+Received: from zssg-mailmf104.ddreams.local (unknown [127.0.0.1])
+	by IMSVA (Postfix) with ESMTP id CAFD18E6056	for <x-fn-spp-ml@ntt-tx.co.jp>;
+ Thu, 25 Jun 2020 17:01:27 +0900 (JST)
+Received: from imss02.silk.ntt-tx.co.jp (unknown [10.160.183.139])
+	by zssg-mailmf104.ddreams.local (Postfix)
+ with ESMTPS	for <x-fn-spp-ml@ntt-tx.co.jp>; Thu,
+ 25 Jun 2020 17:01:27 +0900 (JST)
+Received: from imss02.silk.ntt-tx.co.jp (localhost [127.0.0.1])
+ by imss02.silk.ntt-tx.co.jp (unknown) with ESMTP id 05P81RgF022219 for
+ unknown; Thu, 25 Jun 2020 17:01:27 +0900
+Received: from mail02.ics.ntt-tx.co.jp
+ (mail02.ics.ntt-tx.co.jp [10.254.107.24]) by imss02.silk.ntt-tx.co.jp
+ (unknown) with ESMTP id 05P81Rqv022216 for unknown; Thu,
+ 25 Jun 2020 17:01:27 +0900
+Authentication-results: mail02.ics.ntt-tx.co.jp; spf=pass
+ smtp.mailfrom=spp-bounces@dpdk.org
+Received: from dpdk.org (dpdk.org [92.243.14.124])	by mail02.ics.ntt-tx.co.jp
+ (unknown) with ESMTP id 05P81LAD021831	for unknown; Thu,
+ 25 Jun 2020 17:01:26 +0900
+Received: from [92.243.14.124] (localhost [127.0.0.1])	by dpdk.org (Postfix)
+ with ESMTP id 2BBE71B203;	Thu, 25 Jun 2020 10:01:20 +0200 (CEST)
+Received: from dish-sg.nttdocomo.co.jp
+ (dish-sg.nttdocomo.co.jp [202.19.227.74]) by dpdk.org (Postfix)
+ with ESMTP id 35EEBAAD5 for <spp@dpdk.org>; Thu,
+ 25 Jun 2020 10:01:18 +0200 (CEST)
+X-dD-Source: Outbound
+Received: from zssg-mailmd105.ddreams.local
+ (zssg-mailmd900.ddreams.local [10.160.172.63]) by zssg-mailou103.ddreams.local
+ (Postfix) with ESMTP id 85D9B1200EA; Thu, 25 Jun 2020 17:01:17 +0900 (JST)
+Received: from zssg-mailmf101.ddreams.local
+ (zssg-mailmf900.ddreams.local [10.160.172.84]) by zssg-mailmd105.ddreams.local
+ (dDREAMS) with ESMTP id <0QCH014W22A44RE0@dDREAMS>; Thu,
+ 25 Jun 2020 17:01:17 +0900 (JST)
+Received: from zssg-mailmf101.ddreams.local (unknown [127.0.0.1])
+ by zssg-mailmf101.ddreams.local (Postfix) with ESMTP id 5FFCF7E603B;	Thu,
+ 25 Jun 2020 17:01:17 +0900 (JST)
+Received: from zssg-mailmf101.ddreams.local (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 5E05A8E6054;	Thu,
+ 25 Jun 2020 17:01:17 +0900 (JST)
+Received: from localhost (unknown [127.0.0.1])	by IMSVA (Postfix)
+ with SMTP id 5BFC68E6055;	Thu, 25 Jun 2020 17:01:17 +0900 (JST)
+Received: from zssg-mailmf101.ddreams.local (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 173E48E6051;	Thu,
+ 25 Jun 2020 17:01:17 +0900 (JST)
+Received: from davinci.ntt-tx.co.jp (unknown [10.160.183.139])
+ by zssg-mailmf101.ddreams.local (Postfix) with ESMTP;	Thu,
+ 25 Jun 2020 17:01:17 +0900 (JST)
+From: x-fn-spp-ml@ntt-tx.co.jp
+To: spp@dpdk.org, yasufum.o@gmail.com
+Date: Thu, 25 Jun 2020 17:01:15 +0900
+Message-id: <20200625080115.19054-2-x-fn-spp-ml@ntt-tx.co.jp>
+X-Mailer: git-send-email 2.25.1
+MIME-version: 1.0
+Content-transfer-encoding: 8bit
+X-TM-AS-GCONF: 00
+Subject: (x-fn-spp-ml 851) [spp] [PATCH 1/1] docs: add bug report chapter
+X-BeenThere: spp@dpdk.org
+X-Mailman-Version: 2.1.15
+Precedence: list
+List-Id: Soft Patch Panel <spp.dpdk.org>
+List-Unsubscribe: <https://mails.dpdk.org/options/spp>,
+ <mailto:spp-request@dpdk.org?subject=unsubscribe>
+List-Archive: <http://mails.dpdk.org/archives/spp/>
+List-Post: <mailto:spp@dpdk.org>
+List-Help: <mailto:spp-request@dpdk.org?subject=help>
+List-Subscribe: <https://mails.dpdk.org/listinfo/spp>,
+ <mailto:spp-request@dpdk.org?subject=subscribe>
+Errors-to: spp-bounces@dpdk.org
+Sender: spp <spp-bounces@dpdk.org>
+X-MLNAME: x-fn-spp-ml@ntt-tx.co.jp
+Delivered-to: x-fn-spp-ml@ntt-tx.co.jp
+X-MD-STAMP: ON
+
+From: Hideyuki Yamashita <yamashita.hideyuki@ntt-tx.co.jp>
+
+This patch adds how to issue bug using Bugzilla in RST document.
+Also reference is addded from "CONTRIBUTING.txt".
+
+Signed-off-by: Hideyuki Yamashita <yamashita.hideyuki@ntt-tx.co.jp>
+Signed-off-by: Naoki Takada <ntakada14@gmail.com>
+---
+ CONTRIBUTING.txt           |  6 ++++++
+ docs/guides/bug_report.rst | 18 ++++++++++++++++++
+ docs/guides/index.rst      |  1 +
+ 3 files changed, 25 insertions(+)
+ create mode 100644 docs/guides/bug_report.rst
+
+diff --git a/CONTRIBUTING.txt b/CONTRIBUTING.txt
+index 957b7fb..3b24738 100644
+--- a/CONTRIBUTING.txt
++++ b/CONTRIBUTING.txt
+@@ -45,6 +45,12 @@ Coding Guidelines
+ * C code should follow the DPDK coding standards.
+ * Python code should follow PEP8.
+ 
++Bug report
++----------
++
++How to issue bug is described in "Bug report" chapter
++in the RST document.
++
+ Maintainer
+ ----------
+ 
+diff --git a/docs/guides/bug_report.rst b/docs/guides/bug_report.rst
+new file mode 100644
+index 0000000..e9064e3
+--- /dev/null
++++ b/docs/guides/bug_report.rst
+@@ -0,0 +1,18 @@
++..  SPDX-License-Identifier: BSD-3-Clause
++    Copyright(c) 2020 Nippon Telegraph and Telephone Corporation
++
++Bug Report
++==========
++
++SPP is hosted project of DPDK.
++DPDK uses Bugzilla as its bug tracking system.
++
++Users can issue SPP related bugs in the following link:
++
++https://bugs.dpdk.org/enter_bug.cgi?product=SPP
++
++Note that to issue new bug, you have to create account to the Bugzilla.
++
++You can view open SPP related bugs in the following link:
++
++https://bugs.dpdk.org/buglist.cgi?bug_status=__open__&product=SPP
+\ No newline at end of file
+diff --git a/docs/guides/index.rst b/docs/guides/index.rst
+index 70ec4a6..3ea80ef 100644
+--- a/docs/guides/index.rst
++++ b/docs/guides/index.rst
+@@ -15,6 +15,7 @@ SPP documentation
+    commands/index
+    tools/index
+    api_ref/index
++   bug_report
+ 
+ This documentation is the latest tagged version, but some of the latest
+ developing features might be not included.
+-- 
+2.17.1
+
