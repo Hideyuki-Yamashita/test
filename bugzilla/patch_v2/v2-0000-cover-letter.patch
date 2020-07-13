@@ -1,0 +1,19 @@
+From 28438e8e3183f7824f4fbdbe045e2dc3905cd9a0 Mon Sep 17 00:00:00 2001
+From: Hideyuki Yamashita <yamashita.hideyuki@ntt-tx.co.jp>
+Date: Mon, 13 Jul 2020 17:00:54 +0900
+Subject: [PATCH v2 0/1] *** SUBJECT HERE ***
+
+*** BLURB HERE ***
+
+Hideyuki Yamashita (1):
+  docs: add bug report chapter
+
+ CONTRIBUTING.txt           |  7 +++++++
+ docs/guides/bug_report.rst | 16 ++++++++++++++++
+ docs/guides/index.rst      |  1 +
+ 3 files changed, 24 insertions(+)
+ create mode 100644 docs/guides/bug_report.rst
+
+-- 
+2.17.1
+
