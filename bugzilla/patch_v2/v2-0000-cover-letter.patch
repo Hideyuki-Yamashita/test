@@ -1,9 +1,10 @@
 From 28438e8e3183f7824f4fbdbe045e2dc3905cd9a0 Mon Sep 17 00:00:00 2001
 From: Hideyuki Yamashita <yamashita.hideyuki@ntt-tx.co.jp>
 Date: Mon, 13 Jul 2020 17:00:54 +0900
-Subject: [PATCH v2 0/1] *** SUBJECT HERE ***
+Subject: [PATCH v2 0/1] add bug report chapter
 
-*** BLURB HERE ***
+v2:
+* remove unnecessary white space, modify typos.
 
 Hideyuki Yamashita (1):
   docs: add bug report chapter
